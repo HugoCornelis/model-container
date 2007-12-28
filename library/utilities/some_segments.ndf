@@ -1,0 +1,404 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+PUBLIC_MODELS
+
+	CELL two_segments
+
+		SEGMENT soma
+
+			BINDABLES
+				OUTPUT Vm
+			END BINDABLES
+
+			BINDINGS
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( rel_X = 0.000e-6 ),
+				PARAMETER ( rel_Y = 0.000e-6 ),
+				PARAMETER ( rel_Z = 0.000e-6 ),
+				PARAMETER ( DIA = 29.80e-6 ),
+			END PARAMETERS
+
+		END SEGMENT
+
+		SEGMENT main[0]
+
+			BINDABLES
+				OUTPUT Vm
+			END BINDABLES
+
+			BINDINGS
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( PARENT = ^/soma ),
+				PARAMETER ( rel_X = 5.557e-6 ),
+				PARAMETER ( rel_Y = 9.447e-6 ),
+				PARAMETER ( rel_Z = 9.447e-6 ),
+				PARAMETER ( DIA = 7.72e-6 ),
+			END PARAMETERS
+
+		END SEGMENT
+
+	END CELL
+
+	CELL three_segments
+
+		SEGMENT soma
+
+			BINDABLES
+				OUTPUT Vm
+			END BINDABLES
+
+			BINDINGS
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( rel_X = 0.000e-6 ),
+				PARAMETER ( rel_Y = 0.000e-6 ),
+				PARAMETER ( rel_Z = 0.000e-6 ),
+				PARAMETER ( DIA = 29.80e-6 ),
+			END PARAMETERS
+
+		END SEGMENT
+
+		SEGMENT main[0]
+
+			BINDABLES
+				OUTPUT Vm
+			END BINDABLES
+
+			BINDINGS
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( PARENT = ^/soma ),
+				PARAMETER ( rel_X = 5.557e-6 ),
+				PARAMETER ( rel_Y = 9.447e-6 ),
+				PARAMETER ( rel_Z = 9.447e-6 ),
+				PARAMETER ( DIA = 7.72e-6 ),
+			END PARAMETERS
+
+		END SEGMENT
+
+		SEGMENT main[1]
+
+			BINDABLES
+				OUTPUT Vm
+			END BINDABLES
+
+			BINDINGS
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( PARENT = ^/main[0] ),
+				PARAMETER ( rel_X = 8.426e-6 ),
+				PARAMETER ( rel_Y = 1.124e-6 ),
+				PARAMETER ( rel_Z = 21.909e-6 ),
+				PARAMETER ( DIA = 8.22e-6 ),
+			END PARAMETERS
+		END SEGMENT
+
+	END CELL
+
+	CELL grouped_two_segments
+
+		SEGMENT_GROUP segments
+
+			SEGMENT soma
+
+				BINDABLES
+					OUTPUT Vm
+				END BINDABLES
+
+				BINDINGS
+				END BINDINGS
+
+				PARAMETERS
+// 					PARAMETER ( PARENT = ^/none ),
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 29.80e-6 )
+				END PARAMETERS
+			END SEGMENT
+
+			SEGMENT main[0]
+
+				BINDABLES
+					OUTPUT Vm
+				END BINDABLES
+
+				BINDINGS
+				END BINDINGS
+
+				PARAMETERS
+					PARAMETER ( PARENT = ^/soma ),
+					PARAMETER ( rel_X = 5.557e-6 ),
+					PARAMETER ( rel_Y = 9.447e-6 ),
+					PARAMETER ( rel_Z = 9.447e-6 ),
+					PARAMETER ( DIA = 7.72e-6 )
+				END PARAMETERS
+			END SEGMENT
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+	CELL grouped_three_segments
+
+		SEGMENT_GROUP segments
+
+			SEGMENT soma
+
+				BINDABLES
+					OUTPUT Vm
+				END BINDABLES
+
+				BINDINGS
+				END BINDINGS
+
+				PARAMETERS
+// 					PARAMETER ( PARENT = ^/none ),
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 29.80e-6 )
+				END PARAMETERS
+			END SEGMENT
+
+			SEGMENT main[0]
+
+				BINDABLES
+					OUTPUT Vm
+				END BINDABLES
+
+				BINDINGS
+				END BINDINGS
+
+				PARAMETERS
+					PARAMETER ( PARENT = ^/soma ),
+					PARAMETER ( rel_X = 5.557e-6 ),
+					PARAMETER ( rel_Y = 9.447e-6 ),
+					PARAMETER ( rel_Z = 9.447e-6 ),
+					PARAMETER ( DIA = 7.72e-6 )
+				END PARAMETERS
+			END SEGMENT
+
+			SEGMENT main[1]
+
+				BINDABLES
+					OUTPUT Vm
+				END BINDABLES
+
+				BINDINGS
+				END BINDINGS
+
+				PARAMETERS
+					PARAMETER ( PARENT = ^/main[0] ),
+					PARAMETER ( rel_X = 8.426e-6 ),
+					PARAMETER ( rel_Y = 1.124e-6 ),
+					PARAMETER ( rel_Z = 21.909e-6 ),
+					PARAMETER ( DIA = 8.22e-6 )
+				END PARAMETERS
+			END SEGMENT
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+	CELL grouped_ten_segments
+
+		SEGMENT_GROUP segments
+
+			SEGMENT soma
+
+				BINDABLES
+					OUTPUT Vm
+				END BINDABLES
+
+				BINDINGS
+				END BINDINGS
+
+				PARAMETERS
+// 					PARAMETER ( PARENT = ^/none ),
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 29.80e-6 )
+				END PARAMETERS
+			END SEGMENT
+
+			SEGMENT main[0]
+
+				BINDABLES
+					OUTPUT Vm
+				END BINDABLES
+
+				BINDINGS
+				END BINDINGS
+
+				PARAMETERS
+					PARAMETER ( PARENT = ^/soma ),
+					PARAMETER ( rel_X = 5.557e-6 ),
+					PARAMETER ( rel_Y = 9.447e-6 ),
+					PARAMETER ( rel_Z = 9.447e-6 ),
+					PARAMETER ( DIA = 7.72e-6 )
+				END PARAMETERS
+			END SEGMENT
+
+			SEGMENT main[1]
+
+				BINDABLES
+					OUTPUT Vm
+				END BINDABLES
+
+				BINDINGS
+				END BINDINGS
+
+				PARAMETERS
+					PARAMETER ( PARENT = ^/main[0] ),
+					PARAMETER ( rel_X = 8.426e-6 ),
+					PARAMETER ( rel_Y = 1.124e-6 ),
+					PARAMETER ( rel_Z = 21.909e-6 ),
+					PARAMETER ( DIA = 8.22e-6 )
+				END PARAMETERS
+			END SEGMENT
+
+			SEGMENT main[2]
+
+				BINDABLES
+					OUTPUT Vm
+				END BINDABLES
+
+				BINDINGS
+				END BINDINGS
+
+				PARAMETERS
+					PARAMETER ( PARENT = ^/main[1] ),
+					PARAMETER ( rel_X = 1.666e-6 ),
+					PARAMETER ( rel_Y = 1.111e-6 ),
+					PARAMETER ( rel_Z = 6.666e-6 ),
+					PARAMETER ( DIA = 8.50e-6 )
+				END PARAMETERS
+			END SEGMENT
+
+			SEGMENT main[3]
+
+				BINDABLES
+					OUTPUT Vm
+				END BINDABLES
+
+				BINDINGS
+				END BINDINGS
+
+				PARAMETERS
+					PARAMETER ( PARENT = ^/main[2] ),
+					PARAMETER ( rel_X = -2.779e-6 ),
+					PARAMETER ( rel_Y = 2.223e-6 ),
+					PARAMETER ( rel_Z = 1.667e-6 ),
+					PARAMETER ( DIA = 9.22e-6 )
+				END PARAMETERS
+			END SEGMENT
+
+			SEGMENT main[4]
+
+				BINDABLES
+					OUTPUT Vm
+				END BINDABLES
+
+				BINDINGS
+				END BINDINGS
+
+				PARAMETERS
+					PARAMETER ( PARENT = ^/main[3] ),
+					PARAMETER ( rel_X = -1.111e-6 ),
+					PARAMETER ( rel_Y = 6.109e-6 ),
+					PARAMETER ( rel_Z = 5.553e-6 ),
+					PARAMETER ( DIA = 8.89e-6 )
+				END PARAMETERS
+			END SEGMENT
+
+			SEGMENT main[5]
+
+				BINDABLES
+					OUTPUT Vm
+				END BINDABLES
+
+				BINDINGS
+				END BINDINGS
+
+				PARAMETERS
+					PARAMETER ( PARENT = ^/main[4] ),
+					PARAMETER ( rel_X = -1.111e-6 ),
+					PARAMETER ( rel_Y = -0.555e-6 ),
+					PARAMETER ( rel_Z = 4.998e-6 ),
+					PARAMETER ( DIA = 8.44e-6 )
+				END PARAMETERS
+			END SEGMENT
+
+			SEGMENT main[6]
+
+				BINDABLES
+					OUTPUT Vm
+				END BINDABLES
+
+				BINDINGS
+				END BINDINGS
+
+				PARAMETERS
+					PARAMETER ( PARENT = ^/main[5] ),
+					PARAMETER ( rel_X = -1.749e-6 ),
+					PARAMETER ( rel_Y = 0.583e-6 ),
+					PARAMETER ( rel_Z = 3.498e-6 ),
+					PARAMETER ( DIA = 8.61e-6 )
+				END PARAMETERS
+			END SEGMENT
+
+			SEGMENT main[7]
+
+				BINDABLES
+					OUTPUT Vm
+				END BINDABLES
+
+				BINDINGS
+				END BINDINGS
+
+				PARAMETERS
+					PARAMETER ( PARENT = ^/main[6] ),
+					PARAMETER ( rel_X = -3.890e-6 ),
+					PARAMETER ( rel_Y = 3.334e-6 ),
+					PARAMETER ( rel_Z = 6.669e-6 ),
+					PARAMETER ( DIA = 7.78e-6 )
+				END PARAMETERS
+			END SEGMENT
+
+			SEGMENT main[8]
+
+				BINDABLES
+					OUTPUT Vm
+				END BINDABLES
+
+				BINDINGS
+				END BINDINGS
+
+				PARAMETERS
+					PARAMETER ( PARENT = ^/main[7] ),
+					PARAMETER ( rel_X = -6.665e-6 ),
+					PARAMETER ( rel_Y = -1.111e-6 ),
+					PARAMETER ( rel_Z = 9.441e-6 ),
+					PARAMETER ( DIA = 8.44e-6 )
+				END PARAMETERS
+			END SEGMENT
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS

@@ -1,0 +1,58 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+IMPORT
+
+	FILE gate1 "gates/k2_activation.ndf"
+
+	FILE gate2 "gates/k2_concentration.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS gate1::/k2_activation k2_gate_activation END ALIAS
+
+	ALIAS gate2::/k2_concentration k2_gate_concentration END ALIAS
+
+	CHANNEL k2
+		BINDINGS
+			INPUT ^->Vm,
+			INPUT ^/Ca_pool->concen
+		END BINDINGS
+
+		PARAMETERS
+			PARAMETER ( CHANNEL_TYPE = "ChannelActConc" ),
+		END PARAMETERS
+
+		CHILD k2_gate_activation k2_gate_activation
+			PARAMETERS
+				PARAMETER ( state_init = 0.063531859768213905 ),
+			END PARAMETERS
+		END CHILD
+
+		CHILD k2_gate_concentration k2_gate_concentration
+			PARAMETERS
+				PARAMETER ( state_init = 0.0099009900989999993 ),
+			END PARAMETERS
+		END CHILD
+
+		PARAMETERS
+			PARAMETER ( GMAX = 3.90 ),
+			PARAMETER ( Ek = -0.085 )
+		END PARAMETERS
+	END CHANNEL
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	ALIAS k2 k2 END ALIAS
+
+END PUBLIC_MODELS
+
+

@@ -1,0 +1,113 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+PUBLIC_MODELS
+
+	HH_GATE cap_activation
+		BINDABLES
+			INPUT Vm,OUTPUT activation
+		END BINDABLES
+
+		BINDINGS
+			INPUT ..->Vm
+		END BINDINGS
+
+		GATE_KINETIC_FORWARD forward
+
+			BINDABLES
+				INPUT Vm, OUTPUT rate
+			END BINDABLES
+
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			PARAMETERS
+
+				//m 1: multiplier
+
+				PARAMETER ( Multiplier = 8.5e3 ),
+
+				//m 2: multiplier membrane dependence, 0.0 for no dependence
+
+				PARAMETER ( MembraneDependence = 0.0 ),
+
+				//m 3: choose between nominator or denominator, 1 means nominator, -1
+				//m means denominator
+
+				PARAMETER ( Nominator = -1.0 ),
+
+				//m 4: nominator or denominator offset
+
+				PARAMETER ( DeNominatorOffset = 1.0 ),
+
+				//m 5: membrane offset
+
+				PARAMETER ( MembraneOffset = -8.0e-3 ),
+
+				//m 6: denormalized time constant
+
+				PARAMETER ( TauDenormalizer = -12.5e-3 ),
+
+			END PARAMETERS
+
+		END GATE_KINETIC_FORWARD
+
+		GATE_KINETIC_BACKWARD backward
+
+			BINDABLES
+				INPUT Vm, OUTPUT rate
+			END BINDABLES
+
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			PARAMETERS
+
+				//m 1: multiplier
+
+				PARAMETER ( Multiplier = 35.0e3 ),
+
+				//m 2: multiplier membrane dependence, 0.0 for no dependence
+
+				PARAMETER ( MembraneDependence = 0.0 ),
+
+				//m 3: choose between nominator or denominator, 1 means nominator, -1
+				//m means denominator
+
+				PARAMETER ( Nominator = -1.0 ),
+
+				//m 4: nominator or denominator offset
+
+				PARAMETER ( DeNominatorOffset = 1.0 ),
+
+				//m 5: membrane offset
+
+				PARAMETER ( MembraneOffset = 74.0e-3 ),
+
+				//m 6: denormalized time constant
+
+				PARAMETER ( TauDenormalizer = 14.5e-3 ),
+
+			END PARAMETERS
+
+		END GATE_KINETIC_BACKWARD
+
+		PARAMETERS
+
+			//m initial value, commonly forward over backward steady states
+
+			PARAMETER ( state_init = 0.001391094927 ),
+			PARAMETER ( POWER = 1.0 ),
+		END PARAMETERS
+
+	END HH_GATE
+
+END PUBLIC_MODELS
+
+

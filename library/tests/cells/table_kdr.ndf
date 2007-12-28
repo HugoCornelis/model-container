@@ -1,0 +1,101 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+
+	FILE soma "tests/segments/soma.ndf"
+
+	FILE gate1 "gates/kdr_steadystate.ndf"
+
+	FILE gate2 "gates/kdr_tau.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS gate1::/kdr_steadystate kdr_gate_steadystate END ALIAS
+
+	ALIAS gate2::/kdr_tau kdr_gate_tau END ALIAS
+
+	CHANNEL kdr
+		BINDABLES
+			INPUT Vm,OUTPUT Gk,OUTPUT Ik
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( CHANNEL_TYPE = "ChannelSteadyStateSteppedTau" ),
+		END PARAMETERS
+
+		CHILD kdr_gate_steadystate kdr_gate_steadystate
+			PARAMETERS
+				PARAMETER ( state_init = 0.003599440607 ),
+			END PARAMETERS
+		END CHILD
+
+		CHILD kdr_gate_tau kdr_gate_tau
+			PARAMETERS
+				PARAMETER ( state_init = 0.9999799396 ),
+			END PARAMETERS
+		END CHILD
+
+	END CHANNEL
+
+	SEGMENT soma2
+
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+			INPUT kdr->Ik
+		END BINDINGS
+
+		OPTIONS SPHERICAL
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 1.000 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+		CHILD kdr
+			kdr
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 6000.0 ),
+				PARAMETER ( Ek = -0.085 )
+			END PARAMETERS
+		END CHILD
+
+	END SEGMENT
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CELL table_kdr
+
+		SEGMENT_GROUP segments
+
+			CHILD soma2 soma
+				PARAMETERS
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 29.80e-6 )
+				END PARAMETERS
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

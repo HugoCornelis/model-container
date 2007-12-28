@@ -1,0 +1,98 @@
+#!/usr/bin/perl -w
+#
+#
+# build script to be used to unpack and test a dist tarball.
+#
+# builds in /tmp/neurospaces/<whatever>, and runs the tests.
+#
+
+use strict;
+
+
+{
+    # $Format: "system 'mkdir --parents \"/tmp/neurospaces/$ProjectVersion$\"'";$
+system 'mkdir --parents "/tmp/neurospaces/0.1675"'
+}
+
+if ($?)
+{
+    die "mkdir failed";
+}
+
+
+{
+    # $Format: "system \"cp '/local_home/local_home/hugo/neurospaces_project/neurospaces/source/c/snapshots/0/neurospacesread-$ProjectVersion$.tar.gz' '/tmp/neurospaces/$ProjectVersion$'\"";$
+system "cp '/local_home/local_home/hugo/neurospaces_project/neurospaces/source/c/snapshots/0/neurospacesread-0.1675.tar.gz' '/tmp/neurospaces/0.1675'"
+}
+
+if ($?)
+{
+    die "cp failed";
+}
+
+
+{
+    # $Format: "chdir \"/tmp/neurospaces/$ProjectVersion$\"";$
+chdir "/tmp/neurospaces/0.1675"
+}
+
+if ($?)
+{
+    die "chdir failed";
+}
+
+
+{
+    # $Format: "system \"tar xfz 'neurospacesread-$ProjectVersion$.tar.gz'\"";$
+system "tar xfz 'neurospacesread-0.1675.tar.gz'"
+}
+
+if ($?)
+{
+    die "cp failed";
+}
+
+
+{
+    # $Format: "chdir \"neurospacesread-$ProjectVersion$\"";$
+chdir "neurospacesread-0.1675"
+}
+
+if ($?)
+{
+    die "chdir failed";
+}
+
+
+{
+    # $Format: "system \"./configure\"";$
+system "./configure"
+}
+
+if ($?)
+{
+    die "configure failed";
+}
+
+
+{
+    # $Format: "system 'make'";$
+system 'make'
+}
+
+if ($?)
+{
+    die "make failed";
+}
+
+
+{
+    # $Format: "system 'make test'";$
+system 'make test'
+}
+
+if ($?)
+{
+    die "test failed";
+}
+

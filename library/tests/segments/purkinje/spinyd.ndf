@@ -1,0 +1,135 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+
+	FILE ca_pool "pools/purkinje_ca.ndf"
+	FILE cap "tests/channels/cap.ndf"
+	FILE cat "tests/channels/cat.ndf"
+	FILE gaba "channels/gaba.ndf"
+	FILE k2 "tests/channels/k2.ndf"
+// 	FILE ka "tests/channels/ka.ndf"
+	FILE kc "tests/channels/kc.ndf"
+	FILE km "tests/channels/km.ndf"
+	FILE non_nmda "channels/non_nmda.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS ca_pool::/Ca_concen ca_pool END ALIAS
+	ALIAS cap::/cap cap END ALIAS
+	ALIAS cat::/cat cat END ALIAS
+	ALIAS gaba::/Purk_GABA gaba END ALIAS
+	ALIAS k2::/k2 k2 END ALIAS
+// 	ALIAS ka::/ka ka END ALIAS
+	ALIAS kc::/kc kc END ALIAS
+	ALIAS km::/km km END ALIAS
+	ALIAS non_nmda::/Purk_non_NMDA non_nmda END ALIAS
+
+	SEGMENT spinyd_ni
+
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+                	INPUT cap->Ik,
+                	INPUT cat->Ik,
+                	INPUT k2->Ik,
+                	INPUT kc->Ik,
+                	INPUT km->Ik,
+		END BINDINGS
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 3.0 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+		CHILD cat
+			cat
+			BINDINGS
+                		INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+		CHILD cap
+			cap
+			BINDINGS
+                		INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+// 		CHILD ka
+// 			ka
+// 			BINDINGS
+//                 		INPUT ^->Vm
+// 			END BINDINGS
+// 		END CHILD
+
+		CHILD kc
+			kc
+			BINDINGS
+                		INPUT ^->Vm,
+                		INPUT ^/ca_pool->concen
+			END BINDINGS
+		END CHILD
+
+		CHILD k2
+			k2
+			BINDINGS
+                		INPUT ^->Vm,
+                		INPUT ^/ca_pool->concen
+			END BINDINGS
+		END CHILD
+
+		CHILD km
+			km
+			BINDINGS
+                		INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 0.130 ),
+			END PARAMETERS
+		END CHILD
+
+		CHILD ca_pool
+			ca_pool
+			BINDINGS
+                		INPUT ^/cat->Ik,
+                		INPUT ^/cap->Ik
+			END BINDINGS
+		END CHILD
+
+	END SEGMENT
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	ALIAS spinyd_ni spinyd_ni END ALIAS
+
+	ALIAS spinyd_ni spinyd
+
+		CHILD gaba
+			stellate
+			BINDINGS
+                		INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 70.0 ),
+				PARAMETER ( Ek = -0.080 ),
+// 				PARAMETER ( FREQUENCY = 0.0 )
+			END PARAMETERS
+		END CHILD
+
+	END ALIAS
+
+END PUBLIC_MODELS
+
+

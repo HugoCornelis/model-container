@@ -1,0 +1,80 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+// Morphology file for Granule cell
+//   http://www.bbf.uia.ac.be/
+
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE mapper "mappers/spikereceiver.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS mapper::/Synapse Synapse END ALIAS
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	// this synchan is available but not used in this granule cell model
+
+	CHANNEL NMDA
+		BINDABLES
+			INPUT Vm,OUTPUT exp2->Gk,OUTPUT Ik
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER
+			( GMAX = MGBLOCK
+				(PARAMETER ( GMAX = 0.59622292775268682 ),
+					/* 1200.0e-12 / 2012.67e-12 */
+					PARAMETER ( CMg = 1.2 ),
+					PARAMETER ( KMg_A = 1.92 ),
+					PARAMETER ( KMg_B = 0.01613 ),
+					PARAMETER ( Vm = ^->Vm)) ),
+			PARAMETER ( Ek = 0.0 )
+		END PARAMETERS
+
+		CHILD Synapse synapse
+		END CHILD
+
+		// I need input/output relation here
+
+		// I still have to see how this fits into the whole
+		// design,
+		// see also gaba.ndf for use of EXP2_EQUATION
+
+		EXP2_EQUATION exp2
+			BINDABLES
+				INPUT activation,OUTPUT Gk
+			END BINDABLES
+			BINDINGS
+	               		INPUT ../synapse->activation
+			END BINDINGS
+
+			PARAMETERS
+
+				// Reinoud also divides these by
+				// Q10_synapse
+				// I don't know why
+
+				PARAMETER ( TAU1 = 40e-3 ),
+				PARAMETER ( TAU2 = 3e-3 )
+
+			END PARAMETERS
+
+		END EXP2_EQUATION
+
+	END CHANNEL
+
+END PUBLIC_MODELS
+
+

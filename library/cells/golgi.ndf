@@ -1,0 +1,357 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+// Morphology file for Golgi cell
+//   http://www.bbf.uia.ac.be/
+
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE mapper "mappers/spikegenerator.ndf"
+
+	FILE inna "channels/golgi_inna.ndf"
+
+	FILE kdr "channels/golgi_kdr.ndf"
+
+	FILE ka "channels/golgi_ka.ndf"
+
+	FILE cahva "channels/golgi_cahva.ndf"
+
+	FILE h "channels/golgi_h.ndf"
+
+	FILE kc "channels/golgi_kc.ndf"
+
+	FILE nmda "channels/golgi_nmda.ndf"
+
+	FILE ampa "channels/golgi_ampa.ndf"
+
+	FILE gabaa "channels/golgi_gabaa.ndf"
+
+	FILE gabab "channels/golgi_gabab.ndf"
+
+	FILE concen "pools/golgi_ca.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	// Seems that Reinoud took all the Golgi channels from granule 
+	// cell (or vice versa)
+
+	ALIAS mapper::/SpikeGen SpikeGen END ALIAS
+
+	ALIAS inna::/InNa InNa END ALIAS
+
+	ALIAS kdr::/KDr KDr END ALIAS
+
+	ALIAS ka::/KA KA END ALIAS
+
+	ALIAS cahva::/CaHVA CaHVA END ALIAS
+
+	ALIAS h::/H H END ALIAS
+
+	ALIAS kc::/Moczyd_KC Moczyd_KC END ALIAS
+
+	ALIAS nmda::/NMDA NMDA END ALIAS
+
+	ALIAS ampa::/AMPA AMPA END ALIAS
+
+	ALIAS gabaa::/GABAA GABAA END ALIAS
+
+	ALIAS gabab::/GABAB GABAB END ALIAS
+
+	ALIAS concen::/Ca_concen Ca_concen END ALIAS
+
+	/* example only, not used */
+
+	GROUP CalciumComplex 
+		BINDABLES
+			INPUT Vm,OUTPUT CaHVA->Gk,OUTPUT CaHVA->Ik
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( DIA =  ^->DIA ),
+			PARAMETER ( LENGTH =  ^->LENGTH )
+		END PARAMETERS
+
+		CHILD Ca_concen
+			Ca_pool
+			BINDINGS
+                		INPUT CaHVA->Ik
+			END BINDINGS
+		END CHILD
+
+		CHILD CaHVA
+			CaHVA
+			BINDINGS
+                		INPUT ^->Vm,
+                		INPUT ^/Ca_pool->concen
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 5.0 ),
+	
+				// Cin,Cout,valency,T
+	
+				PARAMETER 
+				( Ek = NERNST
+					(PARAMETER ( Cin = ^/Ca_pool->concen ),
+						PARAMETER ( Cout = 2.4 ),
+						PARAMETER ( valency = ^/Ca_pool->VAL) ,/* 2.0, */
+						PARAMETER ( T = 37.0) ))
+			END PARAMETERS
+		END CHILD
+
+	END GROUP
+
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	// export Golgi cell with soma segment with all channels
+
+	CELL Golgi
+
+{*
+		PARAMETERS
+			PARAMETER ( ROTATE_ANGLE = 1.570796326794895004727943 ),
+			PARAMETER ( ROTATE_CENTER_X = 0.0 ),
+			PARAMETER ( ROTATE_CENTER_Y = 0.0 ),
+			PARAMETER ( ROTATE_CENTER_Z = 0.0 ),
+			PARAMETER ( ROTATE_AXIS_X = 0.0 ),
+			PARAMETER ( ROTATE_AXIS_Y = 0.0 ),
+			PARAMETER ( ROTATE_AXIS_Z = 0.1 )
+		END PARAMETERS
+*}
+
+{*
+** scaled values for Golgi cell, after rescaling from Gabbiani model,
+** without scaling to surface (units of siemens/cm^2), with some additional
+** explanation from Reinoud''s Granule cell const file :
+**
+** float GInNas = 2.5       \  //   correction for 10 mV shift of (in-)activation rates
+**              * 2         \  //   correction for 37 deg. Celsius
+**              * scaling_f \  //   conversion to single segment
+**              * 10        \  //   conversion to SI units (S/m^2)
+**              * 70           //   the Gabbiani value
+** 
+** 
+** For Granule  cell : one scaling factor :
+** 
+** float scaling_f = 314.15 / 2012.67 // surface soma over surface full Gabbiani model,
+** // scaling needed because active channels only on soma in Gabbiani model
+** 
+** 
+** For Golgi cell : two scaling factors :
+** 
+** float scaling_f1 = 314.15 / 31000.0 
+** float scaling_f2 = 1.1e9 / 78e6 
+** 
+** 
+** genesis #35 > echo {GInNas}
+** echo {GInNas}
+** 400.1579818
+** genesis #36 > echo {GKDrs}
+** echo {GKDrs}
+** 67.88394334
+** genesis #37 > echo {GKAs}
+** echo {GKAs}
+** 5.244927833
+** genesis #38 > echo {GCaHVAs}
+** echo {GCaHVAs}
+** 8.317569479
+** genesis #39 > echo {GHs}
+** echo {GHs}
+** 1.714962779
+** genesis #40 > echo {GMocs}
+** echo {GMocs}
+** 5.716542597
+**
+*}
+
+		SEGMENT Golgi_soma
+			BINDABLES
+				OUTPUT Vm
+			END BINDABLES
+
+			BINDINGS
+                		INPUT CaHVA->Ik,
+                		INPUT H->Ik,
+                		INPUT InNa->Ik,
+                		INPUT KA->Ik,
+                		INPUT KDr->Ik,
+//                 		INPUT stellate->Ik,
+                		INPUT mf_AMPA->Ik,
+                		INPUT pf_AMPA->Ik
+			END BINDINGS
+
+			OPTIONS SPHERICAL
+
+			CHILD SpikeGen
+				spikegen
+				BINDINGS
+                			INPUT soma->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( THRESHOLD = 0.02 ),
+					PARAMETER ( REFRACTORY = 0.002 )
+				END PARAMETERS
+			END CHILD
+
+			PARAMETERS
+				PARAMETER ( DIA = 3e-5 ),
+				PARAMETER ( Vm_init = -0.065 ),
+				PARAMETER ( RM = 3.03 ),
+				PARAMETER ( RA = 1.00 ),
+				PARAMETER ( CM = 0.010 ),
+				PARAMETER ( ELEAK = -0.055 )
+			END PARAMETERS
+
+			CHILD Ca_concen
+				Ca_pool
+				BINDINGS
+                			INPUT ^/CaHVA->Ik
+				END BINDINGS
+			END CHILD
+
+			CHILD CaHVA
+				CaHVA
+				BINDINGS
+                			INPUT ^->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 8.317569479 ),
+	
+					// Cin,Cout,valency,T
+	
+					PARAMETER 
+					( Ek = NERNST
+						(PARAMETER ( Cin = ^/Ca_pool->concen ),
+							PARAMETER ( Cout = 2.4 ),
+							PARAMETER ( valency = ^/Ca_pool->VAL) ,/* 2.0, */
+							PARAMETER ( T = 37.0) ))
+				END PARAMETERS
+			END CHILD
+
+			CHILD H
+				H
+				BINDINGS
+                			INPUT ^->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 1.714962779 ),
+					PARAMETER ( Ek = -0.042 )
+				END PARAMETERS
+			END CHILD
+
+			CHILD InNa
+				InNa
+				BINDINGS
+                			INPUT ^->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 400.1579818 ),
+					PARAMETER ( Ek = 0.055 )
+				END PARAMETERS
+			END CHILD
+
+			CHILD KA
+				KA
+				BINDINGS
+                			INPUT ^->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 5.244927833 ),
+					PARAMETER ( Ek = -0.090 )
+				END PARAMETERS
+			END CHILD
+
+			CHILD KDr
+				KDr
+				BINDINGS
+                			INPUT ^->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 67.88394334 ),
+					PARAMETER ( Ek = -0.090 )
+				END PARAMETERS
+			END CHILD
+
+			CHILD Moczyd_KC
+				Moczyd_KC
+				BINDINGS
+                			INPUT ^->Vm,
+                			INPUT ^/Ca_pool->concen
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 5.716542597 ),
+					PARAMETER ( Ek = -0.090 )
+				END PARAMETERS
+			END CHILD
+
+			// channels with synapses
+
+{*
+** genesis #19 > echo {G_GABAAs}
+** echo {G_GABAAs}
+** 1
+** genesis #20 > echo {GNMDAs}
+** echo {GNMDAs}
+** 0.5962229278
+** genesis #21 > echo {GAMPAs}
+** echo {GAMPAs}
+** 0.3577337567
+** genesis #22 > echo {G_GABABs}
+** echo {G_GABABs}
+** 1
+** genesis #23 > 
+*}
+
+/* 			CHILD GABAA */
+/* 				stellate */
+/* 				BINDINGS */
+/* 					INPUT ^->Vm */
+/* 				END BINDINGS */
+/* 				PARAMETERS */
+/* 					PARAMETER ( GMAX = 1.0 ), */
+/* 					PARAMETER ( Ek = -0.070 ), */
+/* 					PARAMETER ( NORMALIZE = SUM(PARAMETER (COUNT = synapse)) ) */
+/* 				END PARAMETERS */
+/* 			END CHILD */
+
+			CHILD AMPA
+				mf_AMPA
+				BINDINGS
+					INPUT ^->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 0.3577337567 ),
+					PARAMETER ( Ek = 0.0 ),
+					PARAMETER ( NORMALIZE = SUM(PARAMETER (COUNT = synapse)) )
+				END PARAMETERS
+			END CHILD
+
+			CHILD AMPA
+				pf_AMPA
+				BINDINGS
+					INPUT ^->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 0.3577337567 ),
+					PARAMETER ( Ek = 0.0 ),
+					PARAMETER ( NORMALIZE = SUM(PARAMETER (COUNT = synapse)) )
+				END PARAMETERS
+			END CHILD
+
+		END SEGMENT
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

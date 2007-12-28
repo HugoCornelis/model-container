@@ -1,0 +1,72 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+// Morphology file for Golgi cell
+//   http://www.bbf.uia.ac.be/
+
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE mapper "mappers/spikereceiver.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS mapper::/Synapse Synapse END ALIAS
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CHANNEL AMPA
+		BINDABLES
+			INPUT Vm,OUTPUT exp2->Gk,OUTPUT Ik
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( GMAX = 0.3577337567 ),
+			PARAMETER ( Ek = 0.0 )
+		END PARAMETERS
+
+		CHILD Synapse synapse
+		END CHILD
+
+		// I need input/output relation here
+
+		// I still have to see how this fits into the whole
+		// design,
+		// see also gaba.ndf for use of EXP2_EQUATION
+
+		EXP2_EQUATION exp2
+			BINDABLES
+				INPUT activation,OUTPUT Gk
+			END BINDABLES
+			BINDINGS
+                		INPUT ../synapse->activation
+			END BINDINGS
+
+			PARAMETERS
+
+				// Reinoud also divides these by
+				// Q10_synapse
+				// I don't know why
+
+				PARAMETER ( TAU1 = 1.5e-3 ),
+				PARAMETER ( TAU2 = 0.09e-3 )
+
+			END PARAMETERS
+
+		END EXP2_EQUATION
+
+	END CHANNEL
+
+
+END PUBLIC_MODELS
+
+

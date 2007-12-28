@@ -1,0 +1,95 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+
+	FILE gate1 "gates/k2_activation.ndf"
+
+	FILE gate2 "gates/k2_concentration.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS gate1::/k2_activation k2_gate_activation END ALIAS
+
+	ALIAS gate2::/k2_concentration k2_gate_concentration END ALIAS
+
+	CHANNEL k2
+		BINDABLES
+			INPUT Vm,OUTPUT Gk,OUTPUT Ik
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( CHANNEL_TYPE = "ChannelActConc" ),
+		END PARAMETERS
+
+		CHILD k2_gate_activation k2_gate_activation
+			PARAMETERS
+				PARAMETER ( state_init = 0.063531859768213905 ),
+			END PARAMETERS
+		END CHILD
+
+		CHILD k2_gate_concentration k2_gate_concentration
+			PARAMETERS
+				PARAMETER ( state_init = 0.0099009900989999993 ),
+			END PARAMETERS
+		END CHILD
+
+	END CHANNEL
+
+	SEGMENT maind
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+			INPUT k2->Ik
+		END BINDINGS
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 3.0 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 ),
+
+			PARAMETER ( rel_X = 5.557e-6 ),
+			PARAMETER ( rel_Y = 9.447e-6 ),
+			PARAMETER ( rel_Z = 9.447e-6 ),
+			PARAMETER ( DIA = 7.72e-6 ),
+		END PARAMETERS
+
+		CHILD k2
+			k2
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 3.90 ),
+				PARAMETER ( Ek = -0.085 )
+			END PARAMETERS
+		END CHILD
+
+	END SEGMENT
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CELL table_k2
+
+		SEGMENT_GROUP segments
+
+			CHILD maind main[0]
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

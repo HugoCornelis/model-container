@@ -1,0 +1,118 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+IMPORT
+
+	FILE gate1 "gates/cat_activation.ndf"
+
+	FILE gate2 "gates/cat_inactivation.ndf"
+
+	FILE ca_pool "pools/purkinje_ca.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS gate1::/cat_activation cat_gate_activation END ALIAS
+
+	ALIAS gate2::/cat_inactivation cat_gate_inactivation END ALIAS
+
+	ALIAS ca_pool::/Ca_concen ca_pool END ALIAS
+
+	CHANNEL cat
+		BINDABLES
+			INPUT Vm,OUTPUT Gk,OUTPUT Ik
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
+		END PARAMETERS
+
+		CHILD cat_gate_activation cat_gate_activation
+		END CHILD
+
+		CHILD cat_gate_inactivation cat_gate_inactivation
+		END CHILD
+
+	END CHANNEL
+
+	SEGMENT soma2
+
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+			INPUT cat->Ik
+		END BINDINGS
+
+		OPTIONS SPHERICAL
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.0280 ),
+			PARAMETER ( RM = 1.000 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+		CHILD cat
+			cat
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 5.0 ),
+				PARAMETER ( Ek = 0.1375262439 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD ca_pool
+			ca_pool
+			BINDINGS
+				INPUT ^/cat->Ik
+			END BINDINGS
+		END CHILD
+
+	END SEGMENT
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	ALIAS cat cat
+		PARAMETERS
+			PARAMETER ( GMAX = 5.0 ),
+			PARAMETER
+			( Ek = NERNST
+				(PARAMETER ( Cin = ^/ca_pool->concen ),
+					PARAMETER ( Cout = 2.4 ),
+					PARAMETER ( valency = ^/ca_pool->VAL) ,/* 2.0, */
+					PARAMETER ( T = 37.0) )),
+		END PARAMETERS
+	END ALIAS
+
+	CELL pool1
+
+		SEGMENT_GROUP segments
+
+			CHILD soma2 soma
+				PARAMETERS
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 29.80e-6 )
+				END PARAMETERS
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

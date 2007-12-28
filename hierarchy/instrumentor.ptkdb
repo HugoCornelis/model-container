@@ -1,0 +1,33 @@
+$files = {
+           '_<./hierarchy/instrumentor' => [
+                                             {
+                                               'expr' => undef,
+                                               'value' => '1',
+                                               'text' => '    my $definitions = shift;
+',
+                                               'fname' => './hierarchy/instrumentor',
+                                               'type' => 'user',
+                                               'line' => '137'
+                                             }
+                                           ]
+         };
+$expr_list = [
+               {
+                 'expr' => '$type',
+                 'depth' => -1
+               },
+               {
+                 'expr' => '$isa',
+                 'depth' => -1
+               },
+               {
+                 'expr' => '$methodname',
+                 'depth' => -1
+               },
+               {
+                 'expr' => '$method',
+                 'depth' => -1
+               }
+             ];
+$eval_saved_text = undef;
+$main_win_geometry = '1272x941+0+0';

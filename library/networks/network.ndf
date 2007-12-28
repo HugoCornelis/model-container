@@ -1,0 +1,405 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+//A comment: 
+// This is version 0.2 of the neurospaces netdef file definition 
+
+NEUROSPACES NDF
+	// neurospaces netdef file
+
+// VERSION 0.4
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE Fibers "fibers/mossyfiber.ndf"
+
+	FILE Golgi "populations/golgi.ndf"
+
+	FILE Granule "populations/granule.ndf"
+
+	FILE Purkinje "populations/purkinje.ndf"
+
+END IMPORT
+
+
+PRIVATE_MODELS
+
+	ALIAS Granule::/GranulePopulation GranulePopulation END ALIAS
+
+	ALIAS Golgi::/GolgiPopulation GolgiPopulation END ALIAS
+
+	ALIAS Purkinje::/PurkinjePopulation PurkinjePopulation END ALIAS
+
+	ALIAS Fibers::/MossyFiberArray MossyFibers END ALIAS
+
+END PRIVATE_MODELS
+
+
+PUBLIC_MODELS
+
+	NETWORK CerebellarCortex
+
+// 		ALGORITHM ConnectionChecker
+// 			ALGORITHM_INSTANCE BackwardProjectionA
+// 			{ -name BackwardProjection/GABAA }
+// 		END ALGORITHM
+
+		ALGORITHM ConnectionChecker
+			BackwardProjectionA
+			PARAMETERS
+				PARAMETER ( PROJECTION_NAME = "BackwardProjection/GABAA" ),
+			END PARAMETERS
+// 			{ -name BackwardProjection/GABAA }
+		END ALGORITHM
+
+// 		ALGORITHM ConnectionChecker
+// 			ALGORITHM_INSTANCE BackwardProjectionB
+// 			{ -name BackwardProjection/GABAB }
+// 		END ALGORITHM
+
+		ALGORITHM ConnectionChecker
+			BackwardProjectionB
+			PARAMETERS
+				PARAMETER ( PROJECTION_NAME = "BackwardProjection/GABAB" ),
+			END PARAMETERS
+// 			{ -name BackwardProjection/GABAB }
+		END ALGORITHM
+
+// 		ALGORITHM ConnectionChecker
+// 			ALGORITHM_INSTANCE ForwardProjection
+// 			{ -name ForwardProjection }
+// 		END ALGORITHM
+
+		ALGORITHM ConnectionChecker
+			ForwardProjection
+			PARAMETERS
+				PARAMETER ( PROJECTION_NAME = "ForwardProjection" ),
+			END PARAMETERS
+// 			{ -name ForwardProjection }
+		END ALGORITHM
+
+// 		ALGORITHM ProjectionVolume
+// 			ALGORITHM_INSTANCE Granules2Purkinjes
+// 			{ -name ParallelFiberProjection -randseed 1212 -prob 0.005 -pre spikegen -post par -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -15 -15 -15 15 15 15 -weight 2.0 -delay radial 0.5 }
+// 		END ALGORITHM
+
+// 		ALGORITHM ProjectionVolume
+// 			ALGORITHM_INSTANCE Mossies2Golgis
+// 			{ -name MossyFiberProjection/GolgiComponent -randseed 1212 -prob 1 -pre spikegen -post mf_AMPA -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -5 -5 -5 5 5 5 -weight 0.0 -delay fixed 0.0 }
+// 		END ALGORITHM
+
+		ALGORITHM ProjectionVolume
+			Mossies2Golgis
+			PARAMETERS
+				PARAMETER ( PROJECTION_NAME = "MossyFiberProjection/GolgiComponent" ),
+				PARAMETER ( RANDOMSEED = 1212.0 ),
+				PARAMETER ( PROBABILITY = 1.0 ),
+				PARAMETER ( PRE = "spikegen" ),
+				PARAMETER ( POST = "mf_AMPA" ),
+				PARAMETER ( SOURCE_TYPE = "box" ),
+				PARAMETER ( SOURCE_X1 = -1e10 ),
+				PARAMETER ( SOURCE_Y1 = -1e10 ),
+				PARAMETER ( SOURCE_Z1 = -1e10 ),
+				PARAMETER ( SOURCE_X2 = 1e10 ),
+				PARAMETER ( SOURCE_Y2 = 1e10 ),
+				PARAMETER ( SOURCE_Z2 = 1e10 ),
+				PARAMETER ( DESTINATION_TYPE = "box" ),
+				PARAMETER ( DESTINATION_X1 = -5.0 ),
+				PARAMETER ( DESTINATION_Y1 = -5.0 ),
+				PARAMETER ( DESTINATION_Z1 = -5.0 ),
+				PARAMETER ( DESTINATION_X2 = 5.0 ),
+				PARAMETER ( DESTINATION_Y2 = 5.0 ),
+				PARAMETER ( DESTINATION_Z2 = 5.0 ),
+				PARAMETER ( WEIGHT = 0.0 ),
+				PARAMETER ( DELAY_TYPE = "fixed" ),
+				PARAMETER ( FIXED_DELAY = 0.0 ),
+			END PARAMETERS
+// 			{ -name MossyFiberProjection/GolgiComponent -randseed 1212 -prob 1 -pre spikegen -post mf_AMPA -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -5 -5 -5 5 5 5 -weight 0.0 -delay fixed 0.0 }
+		END ALGORITHM
+
+// 		ALGORITHM ProjectionVolume
+// 			ALGORITHM_INSTANCE Mossies2Granules_NMDA
+// 			{ -name MossyFiberProjection/GranuleComponent/NMDA -randseed 1212 -prob 0.3061 -pre spikegen -post mf_NMDA -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -0.0006 -0.0006 -0.0006 0.0006 0.0006 0.0006 -weight 4.0 -delay fixed 0.0 }
+// 		END ALGORITHM
+
+		ALGORITHM ProjectionVolume
+			Mossies2Granules_NMDA
+			PARAMETERS
+				PARAMETER ( PROJECTION_NAME = "MossyFiberProjection/GranuleComponent/NMDA" ),
+				PARAMETER ( RANDOMSEED = 1212.0 ),
+				PARAMETER ( PROBABILITY = 0.3061 ),
+				PARAMETER ( PRE = "spikegen" ),
+				PARAMETER ( POST = "mf_NMDA" ),
+				PARAMETER ( SOURCE_TYPE = "box" ),
+				PARAMETER ( SOURCE_X1 = -1e10 ),
+				PARAMETER ( SOURCE_Y1 = -1e10 ),
+				PARAMETER ( SOURCE_Z1 = -1e10 ),
+				PARAMETER ( SOURCE_X2 = 1e10 ),
+				PARAMETER ( SOURCE_Y2 = 1e10 ),
+				PARAMETER ( SOURCE_Z2 = 1e10 ),
+				PARAMETER ( DESTINATION_TYPE = "box" ),
+				PARAMETER ( DESTINATION_X1 = -0.0006 ),
+				PARAMETER ( DESTINATION_Y1 = -0.0006 ),
+				PARAMETER ( DESTINATION_Z1 = -0.0006 ),
+				PARAMETER ( DESTINATION_X2 = 0.0006 ),
+				PARAMETER ( DESTINATION_Y2 = 0.0006 ),
+				PARAMETER ( DESTINATION_Z2 = 0.0006 ),
+				PARAMETER ( WEIGHT = 4.0 ),
+				PARAMETER ( DELAY_TYPE = "fixed" ),
+				PARAMETER ( FIXED_DELAY = 0.0 ),
+			END PARAMETERS
+// 			{ -name MossyFiberProjection/GranuleComponent/NMDA -randseed 1212 -prob 0.3061 -pre spikegen -post mf_NMDA -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -0.0006 -0.0006 -0.0006 0.0006 0.0006 0.0006 -weight 4.0 -delay fixed 0.0 }
+		END ALGORITHM
+
+// 		ALGORITHM ProjectionVolume
+// 			ALGORITHM_INSTANCE Mossies2Granules_AMPA
+// 			{ -name MossyFiberProjection/GranuleComponent/AMPA -randseed 1212 -prob 0.3061 -pre spikegen -post mf_AMPA -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -0.0006 -0.0006 -0.0006 0.0006 0.0006 0.0006 -weight 6.0 -delay fixed 0.0 }
+// 		END ALGORITHM
+
+		ALGORITHM ProjectionVolume
+			Mossies2Granules_AMPA
+			PARAMETERS
+				PARAMETER ( PROJECTION_NAME = "MossyFiberProjection/GranuleComponent/AMPA" ),
+				PARAMETER ( RANDOMSEED = 1212.0 ),
+				PARAMETER ( PROBABILITY = 0.3061 ),
+				PARAMETER ( PRE = "spikegen" ),
+				PARAMETER ( POST = "mf_AMPA" ),
+				PARAMETER ( SOURCE_TYPE = "box" ),
+				PARAMETER ( SOURCE_X1 = -1e10 ),
+				PARAMETER ( SOURCE_Y1 = -1e10 ),
+				PARAMETER ( SOURCE_Z1 = -1e10 ),
+				PARAMETER ( SOURCE_X2 = 1e10 ),
+				PARAMETER ( SOURCE_Y2 = 1e10 ),
+				PARAMETER ( SOURCE_Z2 = 1e10 ),
+				PARAMETER ( DESTINATION_TYPE = "box" ),
+				PARAMETER ( DESTINATION_X1 = -0.0006 ),
+				PARAMETER ( DESTINATION_Y1 = -0.0006 ),
+				PARAMETER ( DESTINATION_Z1 = -0.0006 ),
+				PARAMETER ( DESTINATION_X2 = 0.0006 ),
+				PARAMETER ( DESTINATION_Y2 = 0.0006 ),
+				PARAMETER ( DESTINATION_Z2 = 0.0006 ),
+				PARAMETER ( WEIGHT = 6.0 ),
+				PARAMETER ( DELAY_TYPE = "fixed" ),
+				PARAMETER ( FIXED_DELAY = 0.0 ),
+			END PARAMETERS
+// 			{ -name MossyFiberProjection/GranuleComponent/AMPA -randseed 1212 -prob 0.3061 -pre spikegen -post mf_AMPA -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -0.0006 -0.0006 -0.0006 0.0006 0.0006 0.0006 -weight 6.0 -delay fixed 0.0 }
+		END ALGORITHM
+
+
+// 		ALGORITHM ProjectionVolume
+// 			ALGORITHM_INSTANCE Granules2Golgis
+// 			{ -name ForwardProjection -randseed 1212 -prob 1.0 -pre spikegen -post pf_AMPA -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -0.0025 -0.0003 -0.0025 0.0025 0.0003 0.0025 -weight 45.0 -delay radial 0.5 }
+// 		END ALGORITHM
+
+		ALGORITHM ProjectionVolume
+			Granules2Golgis
+			PARAMETERS
+				PARAMETER ( PROJECTION_NAME = "ForwardProjection" ),
+				PARAMETER ( RANDOMSEED = 1212.0 ),
+				PARAMETER ( PROBABILITY = 1.0 ),
+				PARAMETER ( PRE = "spikegen" ),
+				PARAMETER ( POST = "pf_AMPA" ),
+				PARAMETER ( SOURCE_TYPE = "box" ),
+				PARAMETER ( SOURCE_X1 = -1e10 ),
+				PARAMETER ( SOURCE_Y1 = -1e10 ),
+				PARAMETER ( SOURCE_Z1 = -1e10 ),
+				PARAMETER ( SOURCE_X2 = 1e10 ),
+				PARAMETER ( SOURCE_Y2 = 1e10 ),
+				PARAMETER ( SOURCE_Z2 = 1e10 ),
+				PARAMETER ( DESTINATION_TYPE = "box" ),
+				PARAMETER ( DESTINATION_X1 = -0.0025 ),
+				PARAMETER ( DESTINATION_Y1 = -0.0003 ),
+				PARAMETER ( DESTINATION_Z1 = -0.0025 ),
+				PARAMETER ( DESTINATION_X2 = 0.0025 ),
+				PARAMETER ( DESTINATION_Y2 = 0.0003 ),
+				PARAMETER ( DESTINATION_Z2 = 0.0025 ),
+				PARAMETER ( WEIGHT = 45.0 ),
+				PARAMETER ( DELAY_TYPE = "radial" ),
+				PARAMETER ( VELOCITY = 0.5 ),
+			END PARAMETERS
+// 			{ -name ForwardProjection -randseed 1212 -prob 1.0 -pre spikegen -post pf_AMPA -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -0.0025 -0.0003 -0.0025 0.0025 0.0003 0.0025 -weight 45.0 -delay radial 0.5 }
+		END ALGORITHM
+
+// 		ALGORITHM ProjectionVolume
+// 			ALGORITHM_INSTANCE Golgis2Granules_GABAA
+// 			{ -name BackwardProjection/GABAA -randseed 1212 -prob 1 -pre spikegen -post GABAA -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -0.00015 -0.00015 -0.00015 0.00015 0.00015 0.00015 -weight 45.0 -delay fixed 0.0 }
+// 		END ALGORITHM
+
+		ALGORITHM ProjectionVolume
+			Golgis2Granules_GABAA
+			PARAMETERS
+				PARAMETER ( PROJECTION_NAME = "BackwardProjection/GABAA" ),
+				PARAMETER ( RANDOMSEED = 1212.0 ),
+				PARAMETER ( PROBABILITY = 1.0 ),
+				PARAMETER ( PRE = "spikegen" ),
+				PARAMETER ( POST = "GABAA" ),
+				PARAMETER ( SOURCE_TYPE = "box" ),
+				PARAMETER ( SOURCE_X1 = -1e10 ),
+				PARAMETER ( SOURCE_Y1 = -1e10 ),
+				PARAMETER ( SOURCE_Z1 = -1e10 ),
+				PARAMETER ( SOURCE_X2 = 1e10 ),
+				PARAMETER ( SOURCE_Y2 = 1e10 ),
+				PARAMETER ( SOURCE_Z2 = 1e10 ),
+				PARAMETER ( DESTINATION_TYPE = "box" ),
+				PARAMETER ( DESTINATION_X1 = -0.00015 ),
+				PARAMETER ( DESTINATION_Y1 = -0.00015 ),
+				PARAMETER ( DESTINATION_Z1 = -0.00015 ),
+				PARAMETER ( DESTINATION_X2 = 0.00015 ),
+				PARAMETER ( DESTINATION_Y2 = 0.00015 ),
+				PARAMETER ( DESTINATION_Z2 = 0.00015 ),
+				PARAMETER ( WEIGHT = 45.0 ),
+				PARAMETER ( DELAY_TYPE = "fixed" ),
+				PARAMETER ( FIXED_DELAY = 0.0 ),
+			END PARAMETERS
+// 			{ -name BackwardProjection/GABAA -randseed 1212 -prob 1 -pre spikegen -post GABAA -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -0.00015 -0.00015 -0.00015 0.00015 0.00015 0.00015 -weight 45.0 -delay fixed 0.0 }
+		END ALGORITHM
+
+// 		ALGORITHM ProjectionVolume
+// 			ALGORITHM_INSTANCE Golgis2Granules_GABAB
+// 			{ -name BackwardProjection/GABAB -randseed 1212 -prob 1 -pre spikegen -post GABAB -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -0.00015 -0.00015 -0.00015 0.00015 0.00015 0.00015 -weight 9.0 -delay fixed 0.0 }
+// 		END ALGORITHM
+
+		ALGORITHM ProjectionVolume
+			Golgis2Granules_GABAB
+			PARAMETERS
+				PARAMETER ( PROJECTION_NAME = "BackwardProjection/GABAB" ),
+				PARAMETER ( RANDOMSEED = 1212.0 ),
+				PARAMETER ( PROBABILITY = 1.0 ),
+				PARAMETER ( PRE = "spikegen" ),
+				PARAMETER ( POST = "GABAB" ),
+				PARAMETER ( SOURCE_TYPE = "box" ),
+				PARAMETER ( SOURCE_X1 = -1e10 ),
+				PARAMETER ( SOURCE_Y1 = -1e10 ),
+				PARAMETER ( SOURCE_Z1 = -1e10 ),
+				PARAMETER ( SOURCE_X2 = 1e10 ),
+				PARAMETER ( SOURCE_Y2 = 1e10 ),
+				PARAMETER ( SOURCE_Z2 = 1e10 ),
+				PARAMETER ( DESTINATION_TYPE = "box" ),
+				PARAMETER ( DESTINATION_X1 = -0.00015 ),
+				PARAMETER ( DESTINATION_Y1 = -0.00015 ),
+				PARAMETER ( DESTINATION_Z1 = -0.00015 ),
+				PARAMETER ( DESTINATION_X2 = 0.00015 ),
+				PARAMETER ( DESTINATION_Y2 = 0.00015 ),
+				PARAMETER ( DESTINATION_Z2 = 0.00015 ),
+				PARAMETER ( WEIGHT = 9.0 ),
+				PARAMETER ( DELAY_TYPE = "fixed" ),
+				PARAMETER ( FIXED_DELAY = 0.0 ),
+			END PARAMETERS
+// 			{ -name BackwardProjection/GABAB -randseed 1212 -prob 1 -pre spikegen -post GABAB -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -0.00015 -0.00015 -0.00015 0.00015 0.00015 0.00015 -weight 9.0 -delay fixed 0.0 }
+		END ALGORITHM
+
+
+/* 		PARAMETERS */
+/* 			PARAMETER ( X = 0.0 ), */
+/* 			PARAMETER ( Y = 10.0 ), */
+/* 			PARAMETER ( Z = 0.0 ) */
+/* 		END PARAMETERS */
+
+/* 		PARAMETERS */
+/* 			PARAMETER ( ROTATE_ANGLE = 1.570796326794895004727943 ), */
+/* 			PARAMETER ( ROTATE_CENTER_X = 0.0 ), */
+/* 			PARAMETER ( ROTATE_CENTER_Y = 0.0 ), */
+/* 			PARAMETER ( ROTATE_CENTER_Z = 0.0 ), */
+/* 			PARAMETER ( ROTATE_AXIS_X = 1.0 ), */
+/* 			PARAMETER ( ROTATE_AXIS_Y = 0.0 ), */
+/* 			PARAMETER ( ROTATE_AXIS_Z = 0.0 ) */
+/* 		END PARAMETERS */
+
+
+		CHILD MossyFibers 
+			MossyFibers
+			PARAMETERS
+				PARAMETER ( X = -0.00012 ),
+				PARAMETER ( Y = -0.000075 ),
+				PARAMETER ( Z = -0.0001 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD GranulePopulation 
+			Granules
+			PARAMETERS
+				PARAMETER ( X = 2.5e-05 ),
+				PARAMETER ( Y = 1.875e-05 ),
+				PARAMETER ( Z = -0.00005 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD GolgiPopulation
+			Golgis
+
+			PARAMETERS
+				PARAMETER ( X = 0.00015 ),
+				PARAMETER ( Y = 0.00010 ),
+				PARAMETER ( Z = 0.00005 )
+{*		,		PARAMETER ( ROTATE_ANGLE = 1.570796326794895004727943 ),
+				PARAMETER ( ROTATE_CENTER_X = 0.0 ),
+				PARAMETER ( ROTATE_CENTER_Y = 0.0 ),
+				PARAMETER ( ROTATE_CENTER_Z = 0.0 ),
+				PARAMETER ( ROTATE_AXIS_X = 0.0 ),
+				PARAMETER ( ROTATE_AXIS_Y = 0.0 ),
+				PARAMETER ( ROTATE_AXIS_Z = 0.1 )
+*}
+			END PARAMETERS
+		END CHILD
+
+		CHILD PurkinjePopulation Purkinjes
+		END CHILD
+
+		PROJECTION MossyFiberProjection
+			PROJECTION GranuleComponent
+				PROJECTION NMDA
+					PARAMETERS
+						PARAMETER ( SOURCE = ../../../MossyFibers ),
+						PARAMETER ( TARGET = ../../../Granules )
+					END PARAMETERS
+				END PROJECTION
+				PROJECTION AMPA
+					PARAMETERS
+						PARAMETER ( SOURCE = ../../../MossyFibers ),
+						PARAMETER ( TARGET = ../../../Granules )
+					END PARAMETERS
+				END PROJECTION
+			END PROJECTION
+			PROJECTION GolgiComponent
+				PARAMETERS
+					PARAMETER ( SOURCE = ../../MossyFibers ),
+					PARAMETER ( TARGET = ../../Golgis )
+				END PARAMETERS
+			END PROJECTION
+		END PROJECTION
+
+		PROJECTION ForwardProjection
+			PARAMETERS
+				PARAMETER ( SOURCE = ../Granules ),
+				PARAMETER ( TARGET = ../Golgis )
+			END PARAMETERS
+		END PROJECTION
+
+		PROJECTION BackwardProjection
+			PROJECTION GABAA
+				PARAMETERS
+					PARAMETER ( SOURCE = ../../Golgis ),
+					PARAMETER ( TARGET = ../../Granules )
+				END PARAMETERS
+			END PROJECTION
+			PROJECTION GABAB
+				PARAMETERS
+					PARAMETER ( SOURCE = ../../Golgis ),
+					PARAMETER ( TARGET = ../../Granules )
+				END PARAMETERS
+			END PROJECTION
+		END PROJECTION
+
+		PROJECTION ParallelFiberProjection
+			PARAMETERS
+				PARAMETER ( SOURCE = ../Granules ),
+				PARAMETER ( TARGET = ../Purkinjes )
+			END PARAMETERS
+		END PROJECTION
+
+	END NETWORK
+
+END PUBLIC_MODELS
+
+

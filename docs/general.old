@@ -1,0 +1,212 @@
+
+Intro :
+
+Setup of biological realistic neural models involves fine tuned parameters
+at levels reaching from system level to molecular level. The neurospaces 
+description file format is a descriptive language to build such models.
+Hooks are provided for a variety of purposes : to attach spines to the 
+segments of a cell derived from a morphology file or to build connections
+between existing networks. The object oriented nature allows to build and 
+test new neurons from prototypical segments as found in existing models. The 
+flexibility of the language allows to dynamically attach new parameters to 
+existing object types. This is important for e.g. exotic connection types as
+found in the cerebellar cortex where the position of a Purkinje cell is not 
+as important as the position of its individual spines to lay connections with
+granule cells.
+
+
+Purpose : 
+
+Provide a flexible and extendable language with partial semantics that is able
+to model any topology in a neuro-biological simulation. Any valid 
+sentence of the language gives a possible neuro-biological network model.
+The semantics of the language associate values with the components of the 
+sentence. If this sentence is filled with (biologically) realistic values, the 
+whole is an instantiation of the model in time or model instance (as opposed
+to an instantiation of the language, ie sentence). Doing a simulation 
+starts from an instantiation of a model and goes through a (possible 
+infinite) number of model instances. 
+
+In simulation practice the number of model instances during a simulation is 
+normally bound by :
+(1) simulation time and 
+(2) the fact of using a particular numerical method (e.g. Crank-Nicholson).
+
+A model instance that corresponds to a particular time is a snapshot of the 
+model. The model instance that corresponds to the current time is the current 
+model instance, current snapshot or current network. A description module
+remembers how to address a subset of the current snapshot. The union of all
+elements maintained by all description modules gives the full snapshot and can
+be described with a valid sentence of the modelling language. The intersection
+of the set of elements maintained by different description modules, is empty 
+(it should be possible though to distribute a description module across 
+multiple machines such that the parts of the module at the different machines
+keep track of the same elements of a snapshot of a model).
+
+A solution module is responsible for the evolution of a subset of the
+network instance. An assigned responsibility is the link between a subset of 
+the network instance and a solution module. A strict solution configuration is
+an assignment such that no element of the network instance is assigned to 
+different solution modules and no element of the network instance is not 
+assigned.
+
+
+Methods :
+
+To describe a snapshot, the language provides keywords with structural
+purpose, keywords that instantiate classes and methods to describe
+connectivity between the classes. Connectivity between classes is
+provided with two mechanisms : attachment points and functional
+connections.  An attachment point models an influence that is not
+physically existent e.g. discrete events.  Attachment points are the
+medium for spike events.  Attachment points can have a number of
+associated parameters (e.g. spiking connection with delay and weight).
+A functional connection lets different classes pass evolved values
+(i.e. calculated values) between them. Normally functional connections
+don't need additional parameters on a per connection basis (as opposed
+to connections on attachment points).
+
+
+1. Classes can be instantiated. Every class models a biological component. 
+
+	POOL : shell concentration computation
+		output : [Ca2+]
+
+	SEGMENT : spatially discretized cable equation.
+		output : Vm
+
+	CHANNEL : HH like channel
+		output : channel conductance
+
+1. At each level of granularity : inheritance
+	Purkinje cell inherits from cell
+2. Automatic multiple instantiation
+	Multiple instantiation of segments
+	Multiple instantiation of Golgi-Granule oscillator
+	Multiple instantiation of connections
+
+Purpose : 
+1. Define a framework/set of classes that pass values between them at any
+possible moment in time. The values that are passed between the classes are 
+the inputs and outputs. They form the connections of a topological network 
+with the classes as nodes.
+2. Classes can instantiate other classes in two different manners
+	1. Implicit : input/output from the instantiated class are used 
+		internally to anticipate the input/output from other 
+		instantiated classes
+
+		SEGMENT Purk_maind
+			/* instantiate POOL element */
+			HAS Ca_concen Ca_pool CaT CaP
+			/* instantiate CHANNEL element */
+			HAS CaT CaT GMAX 5.0 NERNST Ca_pool 2.4
+
+	2. Explicit : input and output from the instantiated class propagate 
+		to the new class (are visible for objects/classes that are
+		instantiated at the same hierarchical level.)
+
+		
+
+
+defines : 
+	- SYNAPSE (all levels)
+	- SPIKEGEN (all levels)
+	- SEGMENTS (cell level)
+
+
+equation level : includes equation.ned
+molecular level : includes molecular.nmd
+cell level : includes cell.ncd
+network level : includes network.nnd
+
+
+SEGMENT : cell level
+ALPHA_EQUATION, EXP2_EQUATION, HH_EQUATION : equation level
+POOL : molecular level
+
+
+file sections :
+
+1. general header : 
+	general attributes, version information, file type information,
+	author, date, references, (informal) model description
+
+	allows identification of the file
+
+	not enclosed between keywords, starts with '
+			#!neurospacesread -f 
+			// -*- NEUROSPACES -*-
+		'
+		to allow easy identification as executable and give easy 
+		access to emacs's major mode.
+
+	keywords :
+		NEUROSPACES, NND, NCD, NMD, NED, VERSION, AUTHOR, DATE, REFS
+
+
+UNITS seconds meters voltage siemens
+
+
+
+2. dependency section :
+	imports models that are used in the prototypes section.
+	Only neurospaces description files may be used as dependencies (except
+	for CHANTABLEFILE for now, this number may increase or decrease in 
+	the future). The name of the file is aliased to a name that is unique
+	for this file only. The alias is called a dependency alias. The 
+	dependency aliases are visible in the prototype section only.
+
+	allows model components to be shared between models that are 
+	independent at their own level.
+
+	enclosed with DEPENDENCIES ... END DEPENDENCIES
+
+	keywords :
+		CHANTABLEFILE (this one could be temporarily), CHANNELEQFILE,
+		NETFILE, CELLFILE
+
+
+3. prototoype section :
+	defines all prototypes that are used in the model section.
+	all levels are acceptable for the type of prototypes, e.g. it is 
+	allowed to have channel prototypes and segment prototypes in a 
+	file that sits at the network level. Prototypes can be level-nested :
+	a segment prototype may have hardcoded channels.
+	The dependencies that are enumerated in the dependency section are 
+	referenced by the dependency alias.
+	If a model from the dependency section has to be used in the model 
+	section, is has to be 'exported' because the visibility scope of the
+	dependency aliases ends at the end of the prototype section.
+
+	If we allowed dependencies to be used in the model without aliasing,
+	naming conflicts could arise if the models that are imported have the
+	same name as other imported models and/or prototypes. It could perhaps
+	be convenient to maintain the alias in the model section such that the
+	imported models could still be addressed with a hierarchical notation.
+
+	allows model components to be shared in the same model.
+
+	enclosed with PROTOTYPES ... END PROTOTYPES
+
+	keywords :
+		DEFINE, 
+
+4. model section :
+	The model section uses the defined prototypes to build up one or more
+	models. Every model has a name that allows it to be imported into 
+	other models. The top level model is the model that has to be 
+	simulated. Perhaps it is better to make the convention that the model
+	with name '.main' ('main' at the top level in the naming hierarchy)
+	has to be simulated. 
+
+	allows independent testing and tuning of components.
+
+	enclosed with MODEL ... END MODEL
+
+	keywords :
+		RECEIVES EVENTS, GENERATES EVENTS,
+		ALPHA_EQUATION, EXP2_EQUATION, HH_EQUATION,
+		SEGMENTS, SEGMENT, CHANNEL, NETWORK, 
+		HAS, IS, 
+		ORIGIN, RELATIVE,
+		PARAMETERS

@@ -1,0 +1,768 @@
+#!/usr/bin/perl -w
+#!/usr/bin/perl -d:ptkdb
+#
+# $ProjectVersion: 0.1675 $
+#
+
+use strict;
+
+
+use Getopt::Long;
+
+use IO::File;
+
+
+my $option_help;
+my $option_null_checks;
+my $option_static_inline;
+my $option_verbose;
+
+
+sub build_indices
+{
+    my $definitions = shift;
+
+    my $rules = $definitions->{rules};
+    my $symbols = $definitions->{symbols};
+
+    dump_annotated_symbol_rules($definitions);
+}
+
+
+sub dump_annotated_symbol_rules
+{
+    my $definitions = shift;
+
+    use Data::Dumper;
+
+    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/dump_annotated_symbol_rules");
+
+    print $file Dumper($definitions);
+
+    $file->close();
+}
+
+
+sub generate_anysymbol_rules
+{
+    my $definitions = shift;
+
+    my $rules = $definitions->{rules};
+    my $symbols = $definitions->{symbols};
+
+    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+	= gmtime(time());
+
+    my $date = gmtime();
+
+    # determine filenames
+
+    my $filename = "anysymbol";
+
+    # open file, write header
+
+    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
+
+    print $file "/**
+**
+** All symbols reduce to this symbol.
+**
+** Semantic action: default copy stack top, using base type.
+**
+** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+**
+*/
+
+";
+
+    print $file "AnySymbol
+";
+
+    my $first = 1;
+
+    foreach my $symbol_name (keys %$symbols)
+    {
+	if ($first)
+	{
+	    print $file "	:
+";
+	}
+	else
+	{
+	    print $file "	|
+";
+	}
+
+	print $file "		${symbol_name}Symbol
+";
+    }
+
+    print $file "	;
+
+
+";
+
+    $file->close();
+}
+
+
+sub generate_anysymbol_types
+{
+    my $definitions = shift;
+
+    my $rules = $definitions->{rules};
+    my $symbols = $definitions->{symbols};
+
+    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+	= gmtime(time());
+
+    my $date = gmtime();
+
+    # determine filenames
+
+    my $filename = "anysymbol";
+
+    # open file, write header
+
+    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.types");
+
+    print $file "/**
+**
+** All symbols reduce to this symbol.
+**
+** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+**
+*/
+
+";
+
+    print $file "%type <$definitions->{typing}->{base}> AnySymbol
+
+
+";
+
+    $file->close();
+}
+
+
+sub generate_specific_symbol_rules
+{
+    my $definitions = shift;
+
+    my $rules = $definitions->{rules};
+    my $symbols = $definitions->{symbols};
+
+    foreach my $symbol_name (keys %$symbols)
+    {
+	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+	    = gmtime(time());
+
+	my $date = gmtime();
+
+	# determine filenames
+
+	my $filename = "${symbol_name}_symbol";
+
+	# open file, write header
+
+	my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
+
+	print $file "/**
+**
+** $symbol_name component rules
+**
+** Semantic action: default copy stack top, using base type.
+**
+** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+**
+*/
+
+";
+
+	my $components = $symbols->{$symbol_name}->{components};
+
+	if (!@$components)
+	{
+	    next;
+	}
+
+	print $file "${symbol_name}Component
+";
+
+	my $first = 1;
+
+	foreach my $component_name (@$components)
+	{
+	    if ($first)
+	    {
+		print $file "	:
+";
+	    }
+	    else
+	    {
+		print $file "	|
+";
+	    }
+
+	    print $file "		${component_name}Symbol
+";
+	}
+
+	print $file "	;
+
+
+";
+
+	$file->close();
+    }
+}
+
+
+sub generate_specific_symbol_types
+{
+    my $definitions = shift;
+
+    my $rules = $definitions->{rules};
+    my $symbols = $definitions->{symbols};
+
+    foreach my $symbol_name (keys %$symbols)
+    {
+	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+	    = gmtime(time());
+
+	my $date = gmtime();
+
+	# determine filenames
+
+	my $filename = "${symbol_name}_symbol";
+
+	# open file, write header
+
+	my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.types");
+
+	print $file "/**
+**
+** $symbol_name typing
+**
+** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+**
+*/
+
+";
+
+	print $file "%type <$definitions->{symbols}->{$symbol_name}->{typing}->{base}> ${symbol_name}Symbol
+";
+
+	my $components = $symbols->{$symbol_name}->{components};
+
+	if (!@$components)
+	{
+	    next;
+	}
+
+	print $file "%type <$definitions->{symbols}->{$symbol_name}->{typing}->{base}> ${symbol_name}Component
+";
+	print $file "%type <$definitions->{symbols}->{$symbol_name}->{typing}->{id}> ${symbol_name}SectionFront
+";
+	print $file "%type <$definitions->{symbols}->{$symbol_name}->{typing}->{spec}> ${symbol_name}Description
+";
+
+	print $file "
+
+";
+
+	$file->close();
+    }
+}
+
+
+sub generate_specific_section_rules
+{
+    my $definitions = shift;
+
+    my $rules = $definitions->{rules};
+    my $symbols = $definitions->{symbols};
+
+    foreach my $symbol_name (keys %$symbols)
+    {
+	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+	    = gmtime(time());
+
+	my $date = gmtime();
+
+	# determine filenames
+
+	my $filename = "${symbol_name}_section";
+
+	# open file, write header
+
+	my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
+
+	print $file "/**
+**
+** $symbol_name section rules
+**
+** Semantic action: copy stack top, using promoting to base type.
+**
+** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+**
+*/
+
+";
+
+	print $file "${symbol_name}Symbol
+";
+
+	print $file "	:
+		${symbol_name}Section
+		{
+#line
+
+		    \$\$ = &\$1$symbols->{$symbol_name}->{typing}->{to_base};
+		}
+	;
+
+";
+
+	$file->close();
+    }
+}
+
+
+sub generate_specific_section_types
+{
+    my $definitions = shift;
+
+    my $rules = $definitions->{rules};
+    my $symbols = $definitions->{symbols};
+
+    foreach my $symbol_name (keys %$symbols)
+    {
+	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+	    = gmtime(time());
+
+	my $date = gmtime();
+
+	# determine filenames
+
+	my $filename = "${symbol_name}_section";
+
+	# open file, write header
+
+	my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.types");
+
+	print $file "/**
+**
+** $symbol_name section typing
+**
+** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+**
+*/
+
+";
+
+	print $file "%type <$definitions->{symbols}->{$symbol_name}->{typing}->{spec}> ${symbol_name}Section
+";
+	print $file "
+
+";
+
+	$file->close();
+    }
+}
+
+
+sub generate_specific_section_2_rules
+{
+    my $definitions = shift;
+
+    my $rules = $definitions->{rules};
+    my $symbols = $definitions->{symbols};
+
+    foreach my $symbol_name (keys %$symbols)
+    {
+	{
+	    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+		= gmtime(time());
+
+	    my $date = gmtime();
+
+	    # determine filenames
+
+	    my $filename = "${symbol_name}_description_1";
+
+	    # open file, write header
+
+	    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
+
+	    print $file "/**
+**
+** $symbol_name section rules
+**
+** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+**
+*/
+
+";
+
+	    print $file "${symbol_name}Section
+";
+
+	    print $file "	:
+";
+
+	    my $specific_section = $rules->{specific_section};
+
+	    my $parts = $specific_section->{parts};
+
+	    #! note the subtle copy operation, expect the unexpected otherwise
+
+	    foreach my $part ( @{ [ @$parts, ] }, )
+	    {
+		$part =~ s/specific_description/${symbol_name}Description/g;
+		$part =~ s/specific_end/${symbol_name}End/g;
+		$part =~ s/specific_front/${symbol_name}Front/g;
+		$part =~ s/specific_token/$symbols->{$symbol_name}->{specific_token}/g;
+
+		print $file "$part\n";
+	    }
+
+	    print $file "		{\n";
+	    print $file $specific_section->{semantic};
+	    print $file "		}\n";
+
+	    $file->close();
+	}
+
+	{
+	    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+		= gmtime(time());
+
+	    my $date = gmtime();
+
+	    # determine filenames
+
+	    my $filename = "${symbol_name}_description_2";
+
+	    # open file, write header
+
+	    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
+
+	    print $file "/**
+**
+** $symbol_name front rules
+**
+** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+**
+*/
+
+";
+
+	    print $file "${symbol_name}Front
+";
+
+	    print $file "	:
+";
+
+	    my $specific_front = $rules->{specific_front};
+
+	    my $parts = $specific_front->{parts};
+
+	    #! note the subtle copy operation, expect the unexpected otherwise
+
+	    foreach my $part ( @{ [ @$parts, ] }, )
+	    {
+		$part =~ s/specific_description/${symbol_name}Description/g;
+		$part =~ s/specific_end/${symbol_name}End/g;
+		$part =~ s/specific_front/${symbol_name}Front/g;
+		$part =~ s/specific_token/$symbols->{$symbol_name}->{specific_token}/g;
+
+		print $file "$part\n";
+	    }
+
+	    print $file "		{\n";
+	    print $file $specific_front->{semantic};
+	    print $file "		}\n";
+
+	    $file->close();
+	}
+
+	{
+	    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+		= gmtime(time());
+
+	    my $date = gmtime();
+
+	    # determine filenames
+
+	    my $filename = "${symbol_name}_description_3";
+
+	    # open file, write header
+
+	    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
+
+	    print $file "/**
+**
+** $symbol_name end rules
+**
+** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+**
+*/
+
+";
+
+	    print $file "${symbol_name}End
+";
+
+	    print $file "	:
+";
+
+	    my $specific_end = $rules->{specific_end};
+
+	    my $parts = $specific_end->{parts};
+
+	    #! note the subtle copy operation, expect the unexpected otherwise
+
+	    foreach my $part ( @{ [ @$parts, ] }, )
+	    {
+		$part =~ s/specific_description/${symbol_name}Description/g;
+		$part =~ s/specific_end/${symbol_name}End/g;
+		$part =~ s/specific_front/${symbol_name}Front/g;
+		$part =~ s/specific_token/$symbols->{$symbol_name}->{specific_token}/g;
+
+		print $file "$part\n";
+	    }
+
+	    print $file "		{\n";
+	    print $file $specific_end->{semantic};
+	    print $file "		}\n";
+
+	    $file->close();
+	}
+
+	{
+	    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+		= gmtime(time());
+
+	    my $date = gmtime();
+
+	    # determine filenames
+
+	    my $filename = "${symbol_name}_description_4";
+
+	    # open file, write header
+
+	    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
+
+	    print $file "/**
+**
+** $symbol_name description rules
+**
+** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+**
+*/
+
+";
+
+	    print $file "${symbol_name}Description
+";
+
+	    print $file "	:
+";
+
+	    my $specific_description = $rules->{specific_description};
+
+	    my $global_parts = $specific_description->{parts};
+
+	    #! note the subtle copy operation, expect the unexpected otherwise
+
+	    foreach my $subpart ( @$global_parts, )
+	    {
+		my $parts = $subpart->{parts};
+
+		foreach my $part ( @{ [ @$parts, ] }, )
+		{
+		    $part =~ s/specific_description/${symbol_name}Description/g;
+		    $part =~ s/specific_end/${symbol_name}End/g;
+		    $part =~ s/specific_front/${symbol_name}Front/g;
+		    $part =~ s/specific_token/$symbols->{$symbol_name}->{specific_token}/g;
+
+		    print $file "$part\n";
+		}
+
+		print $file "		{\n";
+
+		#t add symbol type checker here.
+
+		my $semantic = $subpart->{semantic};
+
+		$semantic =~ s/specific_allocator/$symbols->{$symbol_name}->{specific_allocator}/g;
+		$semantic =~ s/specific_description/${symbol_name}Description/g;
+		$semantic =~ s/specific_end/${symbol_name}End/g;
+		$semantic =~ s/specific_front/${symbol_name}Front/g;
+		$semantic =~ s/specific_to_base/$symbols->{$symbol_name}->{typing}->{to_base}/g;
+		$semantic =~ s/specific_token/$symbols->{$symbol_name}->{specific_token}/g;
+
+		print $file $semantic;
+
+		print $file "		}\n";
+	    }
+
+	    $file->close();
+	}
+
+    }
+}
+
+
+sub generate_specific_section_2_types
+{
+    my $definitions = shift;
+
+    my $rules = $definitions->{rules};
+    my $symbols = $definitions->{symbols};
+
+    foreach my $symbol_name (keys %$symbols)
+    {
+	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+	    = gmtime(time());
+
+	my $date = gmtime();
+
+	# determine filenames
+
+	my $filename = "${symbol_name}_section_2";
+
+	# open file, write header
+
+	my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.types");
+
+	print $file "/**
+**
+** $symbol_name section typing
+**
+** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+**
+*/
+
+";
+
+	print $file "%type <$definitions->{symbols}->{$symbol_name}->{typing}->{spec}> ${symbol_name}Section
+";
+	print $file "
+
+";
+
+	$file->close();
+    }
+}
+
+
+sub generate_sentinels
+{
+    my $definitions = shift;
+
+    my $rules = $definitions->{rules};
+    my $symbols = $definitions->{symbols};
+
+    `touch /tmp/grammar/$definitions->{name}/.sentinel`;
+}
+
+
+sub identifier_xml_to_perl
+{
+    my $identifier = shift;
+
+    my $result = $identifier;
+
+    $result =~ s/([A-Z]{2,})([A-Z])/_\L$1\E$2/g;
+
+    $result =~ s/([A-Z])(?![A-Z])/_\l$1/g;
+
+    return $result;
+}
+
+
+sub identifier_perl_to_xml
+{
+    my $identifier = shift;
+
+    my $result = $identifier;
+
+    $result =~ s/^([a-z])/\u$1/;
+
+    $result =~ s/_([a-z0-9])/\u$1/g;
+
+    return $result;
+}
+
+
+sub main
+{
+    my $result
+	= GetOptions
+	    (
+	     "help!" => \$option_help,
+	     "null-checks!" => \$option_null_checks,
+	     "static-inline!" => \$option_static_inline,
+	     "v|verbose+" => \$option_verbose,
+	    );
+
+    if ($option_help)
+    {
+	print
+	    "
+$0: generate a grammar file with semantic annotations, given a set of symbols and their relationships.
+
+options :
+    help           print usage information.
+    null-checks    generate null pointer checks.
+    v|verbose      tell what is being done, specify multiple times to get
+                   more feedback.
+";
+
+	exit 1;
+    }
+
+    my $definitions = do $ARGV[0];
+
+    `mkdir /tmp/grammar`;
+
+    `mkdir /tmp/grammar/$definitions->{name}`;
+
+    build_indices($definitions);
+
+    # generate any symbol types and rules
+
+    generate_anysymbol_types($definitions);
+
+    generate_anysymbol_rules($definitions);
+
+    # generate specific symbol types and rules
+
+    generate_specific_symbol_types($definitions);
+
+    generate_specific_symbol_rules($definitions);
+
+    # generate specific section types and rules (1)
+
+    generate_specific_section_types($definitions);
+
+    generate_specific_section_rules($definitions);
+
+    # generate specific section types and rules (2)
+
+#     generate_specific_section_2_types($definitions);
+
+    generate_specific_section_2_rules($definitions);
+
+    # generate the sentinel file for make
+
+    generate_sentinels($definitions);
+
+}
+
+
+main();
+
+

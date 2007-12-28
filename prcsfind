@@ -1,0 +1,2 @@
+#!/bin/sh
+prcs execute -f --all --not directory -- grep -n "$@" {} /dev/null

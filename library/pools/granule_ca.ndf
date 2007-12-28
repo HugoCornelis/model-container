@@ -1,0 +1,48 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+PRIVATE_MODELS
+
+	POOL Ca_concen
+		BINDABLES
+			INPUT Ik,OUTPUT concen
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( concen_init = 75.5e-6 ),
+			PARAMETER ( BASE = 75.5e-6 ),
+			PARAMETER ( TAU = 0.01 ),
+			PARAMETER ( VAL = 2.0 ),
+			PARAMETER ( DIA =  ..->DIA ),
+			PARAMETER ( LENGTH =  ..->LENGTH ),
+			PARAMETER ( THICK = 6.0e-7 ),
+			PARAMETER
+			( BETA = FIXED
+				(PARAMETER ( value = 1.97731713e+11 ),
+					PARAMETER ( scale = 1.0)  ))
+		END PARAMETERS
+
+	END POOL
+
+END PRIVATE_MODELS
+
+
+PUBLIC_MODELS
+
+	ALIAS Ca_concen Ca_concen END ALIAS
+
+	ALIAS Ca_concen 
+		Ca_concen_standalone
+		PARAMETERS
+			PARAMETER ( LENGTH = 1.2e-5 ),
+			PARAMETER ( DIA = 1.2e-6 )
+		END PARAMETERS
+	END ALIAS
+
+END PUBLIC_MODELS
+
+

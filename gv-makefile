@@ -1,0 +1,25 @@
+#!/usr/bin/perl -w
+# -*- cperl -*-
+
+use Makefile::GraphViz;
+
+
+use strict;
+
+
+my $parser = Makefile::GraphViz->new();
+$parser->parse('Makefile');
+
+# plot the tree rooted at the install target in Makefile:
+my $gv = $parser->plot('install');  # A GraphViz object returned.
+$gv->as_ps('install.ps');
+
+`gv install.ps`;
+
+# # plot the forest consists of all the targets in Makefile:
+# $gv = $parser->plot_all();
+# $gv->as_png('default.png');
+
+# you can also invoke all the methods inherited from the Makefile::Parser class:
+my @targets = $parser->targets();
+

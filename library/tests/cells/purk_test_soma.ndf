@@ -1,0 +1,67 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+
+	FILE maind "tests/segments/purkinje/maind.ndf"
+	FILE soma "tests/segments/purkinje/soma.ndf"
+	FILE spine "segments/spines/purkinje.ndf"
+// 	FILE spinyd "segments/purkinje/spinyd.ndf"
+	FILE thickd "tests/segments/purkinje/thickd.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS maind::/maind maind END ALIAS
+	ALIAS soma::/soma soma END ALIAS
+	ALIAS spine::/Purk_spine Purkinje_spine END ALIAS
+// 	ALIAS spinyd::/spinyd spinyd END ALIAS
+	ALIAS thickd::/thickd thickd END ALIAS
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CELL purk_test_soma
+
+		// original model had 3.17 as max dia, I changed this to 3.18 to
+		// get around rounding differences between the genesis based model
+		// and this one.
+
+// 		ALGORITHM Spines
+// 			ALGORITHM_INSTANCE SpinesNormal_13_1
+// 			{ Purkinje_spine 0.00 3.18 13 1}
+// 		END ALGORITHM
+
+		ALGORITHM Spines
+			SpinesNormal_13_1
+			PARAMETERS
+				PARAMETER ( PROTOTYPE = "Purkinje_spine" ),
+				PARAMETER ( DIA_MIN = 0.0 ),
+				PARAMETER ( DIA_MAX = 3.18 ),
+				PARAMETER ( SPINE_DENSITY = 13.0 ),
+				PARAMETER ( SPINE_FREQUENCY = 1.0 ),
+			END PARAMETERS
+		END ALGORITHM
+
+		SEGMENT_GROUP segments
+
+			CHILD soma soma
+				PARAMETERS
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 29.80e-6 )
+				END PARAMETERS
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

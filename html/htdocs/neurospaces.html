@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html><head><title></title>
+
+<meta name="generator" content="txt2html v1.28"></head>
+
+<body>
+<h1><a name="section-1.">Hugo Cornelis - Neurospaces design goals</a></h1>
+
+<p>
+Neurospaces is a data container for large and complex neuronal models.
+It is used as an abstraction layer on top of a simulator and deals
+with end-user concepts instead of mathematical equations.  This allows
+to optimize the simulator separately from the modeling package.
+
+</p><p>
+The optimization of a neuronal simulator consists of ultimate accuracy
+and performance.  Transforming complex biological parameters into
+precomputed tables and optimizing for a high CPU cache hit ratio are
+the most important features for a good simulator, and gives the
+simulator a performance boost of about a factor four.
+
+</p><p>
+Neurospaces on the other hand, abstracts away all the mathematical and
+computational details of the simulator.  Optimized to store large
+models in little memory -- it stores neuronal models in a fraction of
+the memory that would be used by conventional simulators -- it allows
+for automatic partitioning of the model such that simulations can be
+run in parallel.  From the modeler's side, Neurospaces will be able to
+import and export NeuroML files, facilitating exchange of models and
+ideas, and fostering computational neuroscience.
+
+
+</p><h2><a name="section-2.">References:</a></h2>
+
+<p>
+H. Cornelis and E. De Schutter, Neurospaces: Separating modeling and simulation,
+Neurocomputing 52-54: 227-231 (2003) <br>
+<a href="http://www.tnb.ua.ac.be/publications/pub065/Cornelis_NeuComp_03.pdf">
+http://www.tnb.ua.ac.be/publications/pub065/Cornelis_NeuComp_03.pdf</a>
+
+</p><p>
+H. Cornelis and E. De Schutter, Neurospaces parameter handling,
+Neurocomputing 58-60: 1079-1084 (2004)<br>
+<a href="http://www.tnb.ua.ac.be/publications/pub081/CornelisNC04.pdf">
+http://www.tnb.ua.ac.be/publications/pub081/CornelisNC04.pdf</a>
+
+</p><p>
+H. Cornelis, Examining Neuronal models with Neurospaces studio (2006).
+(preprint?)
+
+</p></body></html>

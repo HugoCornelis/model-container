@@ -1,0 +1,5 @@
+# a heights file.
+heights_mapping:
+    - 0.2e-7: Purk_spine inserted_excitation
+    - 0.3e-7: Purk_spine inserted_excitation
+    - 0.4e-7: Purk_spine inserted_excitation

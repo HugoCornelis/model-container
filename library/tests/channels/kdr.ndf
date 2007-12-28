@@ -1,0 +1,52 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+IMPORT
+
+	FILE gate1 "gates/kdr_steadystate.ndf"
+
+	FILE gate2 "gates/kdr_tau.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS gate1::/kdr_steadystate kdr_steadystate END ALIAS
+
+	ALIAS gate2::/kdr_tau kdr_tau END ALIAS
+
+	CHANNEL kdr
+		BINDABLES
+			INPUT Vm,OUTPUT Gk,OUTPUT Ik
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( CHANNEL_TYPE = "ChannelSteadyStateSteppedTau" ),
+		END PARAMETERS
+
+		CHILD kdr_steadystate kdr_steadystate
+		END CHILD
+
+		CHILD kdr_tau kdr_tau
+		END CHILD
+
+	END CHANNEL
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	ALIAS kdr kdr
+		PARAMETERS
+			PARAMETER ( GMAX = 6000.0 ),
+			PARAMETER ( Ek = -0.085 ),
+		END PARAMETERS
+	END ALIAS
+
+END PUBLIC_MODELS
+
+

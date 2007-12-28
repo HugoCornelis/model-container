@@ -1,0 +1,173 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+// Morphology file for a mushroom shaped spine, see JCNS20, 349--365, Holmes et al.
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE mapper "mappers/spikereceiver.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS mapper::/Synapse Synapse END ALIAS
+
+	CHANNEL AMPA
+		BINDABLES
+			INPUT Vm,OUTPUT exp2->Gk,OUTPUT Ik
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( GMAX = 496.0 ),
+			PARAMETER ( Ek = 0.0 )
+		END PARAMETERS
+
+		CHILD Synapse synapse
+		END CHILD
+
+		EXP2_EQUATION exp2
+			BINDABLES
+				INPUT activation,OUTPUT Gk
+			END BINDABLES
+			BINDINGS
+	               		INPUT ../synapse->activation
+			END BINDINGS
+
+			PARAMETERS
+
+				PARAMETER ( TAU1 = 0.34e-3 ),
+				PARAMETER ( TAU2 = 1.65e-3 )
+
+			END PARAMETERS
+
+		END EXP2_EQUATION
+
+	END CHANNEL
+
+	CHANNEL NMDA
+		BINDABLES
+			INPUT Vm,OUTPUT exp2->Gk,OUTPUT Ik
+		END BINDABLES
+
+		CHILD Synapse synapse
+		END CHILD
+
+		EXP2_EQUATION exp2
+			BINDABLES
+				INPUT activation,OUTPUT Gk
+			END BINDABLES
+			BINDINGS
+	               		INPUT ../synapse->activation
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( TAU1 = 3.5e-3 ),
+				PARAMETER ( TAU2 = 40.0e-3 )
+			END PARAMETERS
+
+		END EXP2_EQUATION
+
+		//t MG block needs to be corrected.
+
+		PARAMETERS
+			PARAMETER ( GMAX = MGBLOCK
+					(PARAMETER ( GMAX = 99.0 ),
+						PARAMETER ( CMg = 1.2 ),
+						PARAMETER ( KMg_A = 1.92 ),
+						PARAMETER ( KMg_B = 0.01613 ),
+						PARAMETER ( Vm = ^->Vm)) ),
+		END PARAMETERS
+	END CHANNEL
+
+	SEGMENT spine_head
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+			INPUT ampa->Ik,
+			INPUT nmda->Ik
+		END BINDINGS
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 3.0 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+		CHILD AMPA ampa
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+		CHILD NMDA nmda
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 99.0 ),
+				PARAMETER ( Ek = 0.0 ),
+			END PARAMETERS
+		END CHILD
+
+	END SEGMENT
+
+	SEGMENT spine_neck
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS END BINDINGS
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 3.0 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+	END SEGMENT
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	SEGMENT_GROUP mushroom_spine
+
+		// parent of spine neck is parent segment
+
+		CHILD spine_neck neck
+			PARAMETERS
+				PARAMETER ( PARENT = ../.. ),
+				PARAMETER ( rel_X = 0.000e-6 ),
+				PARAMETER ( rel_Y = 0.000e-6 ),
+				PARAMETER ( rel_Z = 0.43e-6 ),
+				PARAMETER ( DIA = 0.2e-6 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD spine_head head
+			PARAMETERS
+				PARAMETER ( PARENT = ../neck ),
+				PARAMETER ( rel_X = 0.000e-6 ),
+				PARAMETER ( rel_Y = 0.000e-6 ),
+				PARAMETER ( rel_Z = 1.7e-6 ),
+				PARAMETER ( DIA = 0.45e-6 )
+			END PARAMETERS
+		END CHILD
+
+	END SEGMENT_GROUP
+
+END PUBLIC_MODELS
+
+

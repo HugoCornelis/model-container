@@ -1,0 +1,79 @@
+#!/usr/bin/perl -w
+##
+## Neurospaces: a library which implements a global typed symbol table to
+## be used in neurobiological model maintenance and simulation.
+##
+## $Id: 2vcg 1.5 Sun, 18 Feb 2007 15:53:33 -0600 hugo $
+##
+
+##############################################################################
+##'
+##' Neurospaces : testbed C implementation that integrates with genesis
+##'
+##' Copyright (C) 1999-2007 Hugo Cornelis
+##'
+##' functional ideas ..	Hugo Cornelis, hugo.cornelis@gmail.com
+##'
+##' coding ............	Hugo Cornelis, hugo.cornelis@gmail.com
+##'
+##############################################################################
+
+
+=head1 INTERNAL FUNCTIONALITY
+
+This section describes internals of this file.  It may or may not be
+correct.
+
+
+=cut
+
+=head2 C<$ARGV[0]>
+
+file to convert to vcg, if not supplied or only '-', reads
+from stdin.
+
+=cut
+
+# read file
+
+$_ = $ARGV[0] ;
+
+if (defined and /^[^-]\b/)
+  {
+    @_ = `cat $_` ;
+  }
+else
+  {
+    @_ = `cat` ;
+  }
+
+
+# preamble
+
+print "graph:\n{\n" ;
+print "  title: \"forestspace\"\n" ;
+print "  port_sharing: yes\n" ;
+print "  layoutalgorithm: mindepthslow\n" ;
+print "  layout_downfactor: 39\n" ;
+print "  layout_upfactor: 0\n" ;
+print "  layout_nearfactor: 0\n" ;
+print "  nearedges: no\n" ;
+print "  splines: yes\n" ;
+print "  straight_phase: yes\n" ;
+print "  priority_phase: yes\n" ;
+print "  cmin: 10\n" ;
+
+# sort and make uniq
+
+@_ = sort @_ ;
+
+# output file
+
+print @_ ;
+
+
+# end neurospaces-xml
+
+print "\n}\n" ;
+
+

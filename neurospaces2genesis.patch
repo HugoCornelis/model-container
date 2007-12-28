@@ -1,0 +1,25 @@
+prcs: Producing diffs from 0.347 to 0.347(w).
+Index: 0.347/Makefile.am
+--- 0.347/Makefile.am Tue, 20 Mar 2001 10:53:48 +0100 hugo (neurospaces/b/22_Makefile.a 1.45 644)
++++ 0.347(w)/Makefile.am Tue, 20 Mar 2001 15:30:29 +0100 hugo (neurospaces/b/22_Makefile.a 1.45 644)
+@@ -25,7 +25,7 @@
+ 
+ SUBDIRS = algorithms
+ 
+-CC = g++
++CC = gcc
+ LEX_OUTPUT_ROOT = lex.parser
+ LFLAGS=-il -Pparser
+ YFLAGS=-dv -p parser
+Index: 0.347/algorithms/Makefile.am
+--- 0.347/algorithms/Makefile.am Mon, 19 Mar 2001 17:21:34 +0100 hugo (neurospaces/b/46_Makefile.a 1.9 644)
++++ 0.347(w)/algorithms/Makefile.am Tue, 20 Mar 2001 15:30:37 +0100 hugo (neurospaces/b/46_Makefile.a 1.9 644)
+@@ -23,7 +23,7 @@
+ ##'
+ ##############################################################################
+ 
+-CC = g++
++CC = gcc
+ 
+ CFLAGS=-g -Wmissing-prototypes -Wmissing-declarations -I..
+ 

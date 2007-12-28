@@ -1,0 +1,2092 @@
+#!/usr/bin/perl -w
+#!/usr/bin/perl -d:ptkdb -w
+##
+## Neurospaces: a library which implements a global typed symbol table to
+## be used in neurobiological model maintenance and simulation.
+##
+## $Id: morphology2ndf 1.54 Wed, 14 Nov 2007 14:41:50 -0600 hugo $
+##
+
+##############################################################################
+##'
+##' Neurospaces : testbed C implementation that integrates with genesis
+##'
+##' Copyright (C) 1999-2007 Hugo Cornelis
+##'
+##' functional ideas ..	Hugo Cornelis, hugo.cornelis@gmail.com
+##'
+##' coding ............	Hugo Cornelis, hugo.cornelis@gmail.com
+##'
+##############################################################################
+
+
+=head1 INTERNAL FUNCTIONALITY
+
+This section describes internals of this file.  It may or may not be
+correct.
+
+
+=cut
+
+=head2 C<$ARGV[0]>
+
+file to convert to neurospaces-description-format, if not supplied or
+only '-', reads from stdin.
+
+=cut
+
+
+use strict;
+
+
+my $option_configuration_filename;
+my $option_force_library;
+my $option_optional_configuration_filename;
+my $option_output_format = 'ndf';
+# my $option_prototype_configuration;
+my $option_shrinkage;
+my $option_soma_offset;
+my $option_spine_prototypes = [];
+my $option_no_use_library;
+my $option_verbose;
+my $option_yaml = 0;
+
+
+my $cellname;
+
+my $converted_aliasses = {};
+
+my $line_count = 1;
+
+my $morphology = {};
+
+my $previous = {};
+
+my $source_type;
+
+
+my $configuration;
+
+my $variables;
+
+
+my $input_formats
+    = {
+#        '.ndf' => {
+# 		  description => "neurospaces description format",
+# 		  suffix => ".ndf",
+# 		 },
+       '.p' => {
+		description => "genesis morphology file",
+		suffix => ".p",
+	       },
+       '.swc' => {
+		  description => ".swc file (can you give me a better description please ?)",
+		  suffix => ".swc",
+		 },
+      };
+
+my $output_formats
+    = {
+       ndf => {
+	       description => "neurospaces description format",
+	       suffix => ".ndf",
+	      },
+#        off => {
+# 	       description => "geomview edges/faces format",
+# 	       suffix => ".off",
+# 	      },
+      };
+
+my $readcell_commands
+    = {
+
+       # COMPARTMENT COORDINATES
+
+       (
+	'*relative' => 'flag',
+	'*absolute' => 'flag',
+	'*polar' => 'flag',
+	'*cartesian' => 'flag',
+	'*lambda_warn' => {
+			   arguments => [
+					 'MIN',
+					 'MAX',
+					],
+			   type => 'algorithm',
+			  },
+	'*lambda_unwarn' => 'flag',
+	'*double_endpoint' => 'flag',
+	'*double_endpoint_off' => 'flag',
+	'*origin' => {
+		      type => 'variable',
+		      variables => {
+				    origin => 1,
+				   },
+		     },
+       ),
+
+       # COMPARTMENT SHAPE
+
+       (
+	'*spherical' => 'flag',
+	'*cylindrical' => 'flag',
+	'*symmetric' => 'ignore',
+	'*asymmetric' => 'ignore',
+       ),
+
+       # PARAMETER VALUES
+
+       (
+	'*set_compt_param' => {
+			       type => 'variable',
+			       variables => {
+					     CM => 1,
+					     ELEAK => 1,
+					     EREST_ACT => 1,
+					     RA => 1,
+					     RM => 1,
+					    },
+			      },
+	'*set_global' => {
+			  type => 'variable',
+			  variables => {
+					CM => 1,
+					ELEAK => 1,
+					EREST_ACT => 1,
+					RA => 1,
+					RM => 1,
+				       },
+			 },
+	'*start_cell' => {
+			  arguments => 'CELL_NAME',
+			  type => 'command',
+			 },
+	'*append_to_cell' => {
+			      arguments => 'CELL_NAME',
+			      type => 'command',
+			     },
+	'*makeproto' => {
+			 arguments => 'COMP_NAME',
+			 type => 'command',
+			},
+	'*compt' => {
+		     type => 'prototype',
+		     arguments => 'PROTOTYPE',
+		    },
+	'*memb_factor' => {
+			   arguments => 'MEMB_FACTOR',
+			   type => 'algorithm',
+			  },
+	'*add_spines' => {
+			  arguments => [
+					'DENDR_DIAM',
+					'SPINE_DENS',
+					'SPINE_SUR',
+				       ],
+			  type => 'algorithm',
+			 },
+	'*rand_spines' => {
+			   arguments => [
+					 'DENDR_DIAM',
+					 'SPINE_DENS',
+					 'SPINE_SURF',
+					 'AV_LENGTH',
+					 'SPINE_FREQ',
+					 'spine_proto',
+					],
+			   processor =>
+			   sub
+			   {
+			       my $self = shift;
+
+			       my $command = shift;
+
+			       my $arguments = shift;
+
+			       my $result;
+
+			       $arguments =~ m'(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)';
+
+			       my $DENDR_DIAM = $1;
+			       my $SPINE_DENS = $2;
+			       my $SPINE_SURF = $3;
+			       my $AV_LENGTH = $4;
+			       my $SPINE_FREQ = $5;
+			       my $spine_proto = $6;
+
+			       $spine_proto =~ s(.*/)();
+
+			       my $instance_name = "Spines__${DENDR_DIAM}__${SPINE_DENS}__${SPINE_SURF}__${AV_LENGTH}__${SPINE_FREQ}__${spine_proto}";
+
+			       $instance_name =~ s/\./_/g;
+
+			       $result = <<EOT;
+
+ALGORITHM Spines
+	$instance_name
+	PARAMETERS
+		PARAMETER ( PROTOTYPE = "$spine_proto" ),
+		PARAMETER ( DIA_MIN = 0.00 ),
+		PARAMETER ( DIA_MAX = $DENDR_DIAM ),
+		PARAMETER ( SPINE_DENSITY = $SPINE_DENS ),
+		PARAMETER ( SPINE_FREQUENCY = $SPINE_FREQ ),
+	END PARAMETERS
+END ALGORITHM
+EOT
+
+			       my $spine_prototypes = $configuration->{prototypes}->{spine_prototypes};
+
+			       # if there are no spine prototypes in the config
+
+			       if (!@{$spine_prototypes || [] })
+			       {
+				   # convert the algorithm reference
+
+				   return $result;
+			       }
+
+			       # else
+
+			       else
+			       {
+				   # spines are only added according to the configuration, but not here
+
+				   return '';
+			       }
+			   },
+			   type => 'algorithm',
+			  },
+	'*mrand_spines' => {
+			    arguments => [
+					  'DENDR_MIN',
+					  'DENDR_DIAM',
+					  'SPINE_DENS',
+					  'SPINE_SURF',
+					  'AV_LENGTH',
+					  'SPINE_FREQ',
+					  'spine_proto',
+					 ],
+			    type => 'algorithm',
+			   },
+	'*fixed_spines' => {
+			    arguments => [
+					  'DENDR_DIAM',
+					  'SPINE_NUM',
+					  'SPINE_SURF',
+					  'SPINE_SKIP',
+					  'spine_proto',
+					 ],
+			    type => 'algorithm',
+			   },
+	'*mfixed_spines' => {
+			     arguments => [
+					   'DENDR_MIN',
+					   'DENDR_DIAM',
+					   'SPINE_NUM',
+					   'SPINE_SURF',
+					   'SPINE_SKIP',
+					   'spine_proto',
+					  ],
+			     type => 'algorithm',
+			    },
+	'*rand_branches' => {
+			     arguments => [
+					   'MAX_DIA',
+					   'RAND_FREQ',
+					   'NUM_ORDERS',
+					   'POSTFIX',
+					   'NUM_COMPS',
+					   'MIN_L',
+					   'MAX_L',
+					   'MIN_D',
+					   'MAX_D',
+					   (
+					    '[NUM_COMPS',
+					    'MIN_L',
+					    'MAX_L',
+					    'MIN_D',
+					    'MAX_D]',
+					   ),
+					  ],
+			     type => 'algorithm',
+			    },
+       ),
+      };
+
+
+package Data;
+
+sub merge
+{
+    my $target = shift;
+
+    my $source = shift;
+
+    my $options = shift;
+
+    # copy the detransformed values into the contents data.
+
+    #
+    # subs to merge two datastructures.
+    #
+
+    local $Data::data_merger_any
+	= sub
+	  {
+	      my $contents = shift;
+
+	      my $data = shift;
+
+	      # simply check what kind of data structure we are dealing
+	      # with and forward to the right sub.
+
+	      my $type = ref $contents;
+
+	      if ($type eq 'HASH')
+	      {
+		  &$Data::data_merger_hash($contents, $data);
+	      }
+	      elsif ($type eq 'ARRAY')
+	      {
+		  &$Data::data_merger_array($contents, $data);
+	      }
+	      else
+	      {
+		  die "$0: *** Error: Document error: data_merger_any encounters an unknown data type $type";
+	      }
+	  };
+
+    local $Data::data_merger_hash
+	= sub
+	  {
+	      my $contents = shift;
+
+	      my $data = shift;
+
+	      # loop over all values in the contents hash.
+
+	      foreach my $section (keys %$data)
+	      {
+		  if (exists $contents->{$section})
+		  {
+		      my $value = $data->{$section};
+
+		      my $contents_type = ref $contents->{$section};
+		      my $value_type = ref $value;
+
+		      if ($contents_type && $value_type)
+		      {
+			  if ($contents_type eq $value_type)
+			  {
+			      # two references of the same type, go one
+			      # level deeper.
+
+			      &$Data::data_merger_any($contents->{$section}, $value);
+			  }
+			  else
+			  {
+			      die "$0: *** Error: Document error: contents_type is '$contents_type' and does not match with value_type $value_type";
+			  }
+		      }
+		      elsif (!$contents_type && !$value_type)
+		      {
+			  # copy scalar value
+
+			  $contents->{$section} = $value;
+		      }
+		      else
+		      {
+			  die "$0: *** Error: Document error: contents_type is '$contents_type' and does not match with value_type $value_type";
+		      }
+		  }
+		  else
+		  {
+		      #t could be a new key being added.
+		  }
+	      }
+	  };
+
+    local $Data::data_merger_array
+	= sub
+	  {
+	      my $contents = shift;
+
+	      my $data = shift;
+
+	      # loop over all values in the contents array.
+
+	      my $count = 0;
+
+	      foreach my $section (@$data)
+	      {
+		  if (exists $contents->[$count]
+		      || $options->{arrays}->{overwrite} eq 1)
+		  {
+		      my $value = $data->[$count];
+
+		      my $contents_type = ref $contents->[$count];
+		      my $value_type = ref $value;
+
+		      if ($contents_type && $value_type)
+		      {
+			  if ($contents_type eq $value_type)
+			  {
+			      # two references of the same type, go one
+			      # level deeper.
+
+			      &$Data::data_merger_any($contents->[$count], $value);
+			  }
+			  else
+			  {
+			      die "$0: *** Error: Document error: contents_type is '$contents_type' and does not match with value_type $value_type";
+			  }
+		      }
+		      elsif (!$contents_type && $value_type
+			     && $options->{arrays}->{overwrite} eq 1)
+		      {
+			  # overwrite array content
+
+			  $contents->[$count] = $value;
+		      }
+		      elsif (!$contents_type && !$value_type)
+		      {
+			  # copy scalar value
+
+			  $contents->[$count] = $value;
+		      }
+		      else
+		      {
+			  die "$0: *** Error: Document error: contents_type is '$contents_type' and does not match with value_type $value_type";
+		      }
+		  }
+		  else
+		  {
+		      #t could be a new key being added.
+		  }
+
+		  $count++;
+	      }
+	  };
+
+    #t Should actually use a simple iterator over the detransformed data
+    #t that keeps track of examined paths.  Then use the path to store
+    #t encountered value in the original data.
+
+    #t Note that the iterator is partly implemented in Sesa::Transform and
+    #t Sesa::TreeDocument.  A further abstraction could be useful.
+
+    # first inductive step : merge all data.
+
+    &$Data::data_merger_hash($target, $source);
+
+    return $target;
+}
+
+
+package main;
+
+sub main
+{
+    read_cmd_line();
+
+    # read file
+
+    local $/;
+
+    $_ = <>;
+
+    if (!defined)
+    {
+	die "$0: *** Error: Error reading input (file not found ?)";
+    }
+
+    # generate a preamble, initialize output_state
+
+    my $output_state = output({ name => $cellname, }, 'initialize', );
+
+
+    # convert, line by line
+
+    #! (readcell also processes its files line by line, with numerous bugs
+    #! as a result, with some luck I introduce the same bugs overhere,
+    #! i.e. the same behavior.
+
+    my @lines = split '\n';
+
+    foreach my $line (@lines)
+    {
+	if ($source_type =~ /genesis/)
+	{
+	    # remove single line comments
+
+	    #! probably should keep the comments
+
+	    $line =~ s(//.*)();
+
+	    # a command
+
+	    if ($line =~ /^(\*\S*)\s*(.*)/)
+	    {
+		my $command = $1;
+
+		my $arguments = $2;
+
+		$arguments =~ s(\s*//.*$)();
+
+		my $result = process_command($command, $arguments);
+
+		if (defined $result)
+		{
+		    $output_state = output($output_state, 'commands', $result);
+		}
+	    }
+	    elsif ($line =~ /^(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s*/)
+	    {
+		my $segment = $1;
+
+		my $parent = $2;
+
+		my $x = $3 * 1e-6;
+		my $y = $4 * 1e-6;
+		my $z = $5 * 1e-6;
+		my $dia = $6 * 1e-6;
+
+		if ($parent eq '.')
+		{
+		    $parent = $previous->{segment};
+		}
+
+		if (exists $morphology->{$segment})
+		{
+		    die "$0: *** Error: Multiple segments with the same name ($segment)";
+		}
+
+		$morphology->{$segment}
+		    = {
+		       geometry => {
+				    x => $x,
+				    y => $y,
+				    z => $z,
+				    dia => $dia,
+				   },
+		       parent => $parent,
+		      };
+
+		my $result = process_segment($segment, $parent, $x, $y, $z, $dia);
+
+		if (defined $result)
+		{
+		    $output_state = output($output_state, 'segments', $result);
+		}
+
+		$previous
+		    = {
+		       'segment' => $segment,
+		       'x' => $x,
+		       'y' => $y,
+		       'z' => $z,
+		       'dia' => $dia,
+		      };
+	    }
+	    elsif ($line =~ /^\s*/)
+	    {
+	    }
+	    elsif ($line =~ /^(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s*/)
+	    {
+		# double endpoint not supported
+
+		print STDERR "$0: *** error: double endpoints and active mechanisms are not supported for conversion of genesis based morphologies (line $line_count).\n";
+	    }
+	    else
+	    {
+		# something else not yet supported
+
+		print STDERR "$0: *** error: found something not supported for conversion of genesis based morphologies ($line).\n";
+	    }
+	}
+	elsif ($source_type =~ /swc/)
+	{
+	    # remove single line comments
+
+	    #! probably should keep the comments
+
+	    $line =~ s(#.*)();
+
+	    # parse point line
+
+	    if ($line =~ /^\s*(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s*/)
+	    {
+		my $segment_number = $1;
+
+		#t this is currently a guess
+
+		my $tag = $2;
+
+		my $x = $3 * 1e-6;
+		my $y = $4 * 1e-6;
+		my $z = $5 * 1e-6;
+		my $dia = $6 * 1e-6;
+
+		my $parent_number = $7;
+
+		# convert names to something neurospaces can work with
+
+		my $segment;
+
+		my $parent;
+
+		if ($parent_number eq -1)
+		{
+		    $segment = "soma";
+
+		    $parent = "none";
+
+		    $morphology->{conversion}->{"s_$segment_number"} = "soma";
+		}
+		else
+		{
+		    $segment = "s_$segment_number";
+
+		    $parent = $morphology->{conversion}->{"s_$parent_number"} || "s_$parent_number";
+
+		}
+
+		#! actually for genesis, but you never know where and how some things propagate
+
+		if ($parent_number eq '.')
+		{
+		    $parent = $previous->{segment};
+		}
+
+		if (exists $morphology->{$segment})
+		{
+		    die "$0: *** Error: Multiple segments with the same number ($segment_number)";
+		}
+
+		$morphology->{$segment}
+		    = {
+		       geometry => {
+				    x => $x,
+				    y => $y,
+				    z => $z,
+				    dia => $dia,
+				   },
+		       parent => $parent,
+		       tag => $tag,
+		      };
+
+		my $result = process_segment($segment, $parent, $x, $y, $z, $dia, $tag);
+
+		if (defined $result)
+		{
+		    $output_state = output($output_state, 'segments', $result);
+		}
+
+		$previous
+		    = {
+		       'segment' => $segment,
+		       'x' => $x,
+		       'y' => $y,
+		       'z' => $z,
+		       'dia' => $dia,
+		      };
+	    }
+	    elsif ($line =~ /^\s*/)
+	    {
+	    }
+	    else
+	    {
+		# something else not yet supported
+
+		print STDERR "$0: *** error: found something not supported for conversion of genesis based morphologies ($line).\n";
+	    }
+	}
+
+	$line_count++;
+    }
+
+    $output_state = output($output_state, 'finish', );
+
+    if ($option_yaml)
+    {
+	use YAML;
+
+	print Dump($morphology);
+    }
+
+    if ($output_state)
+    {
+	1;
+    }
+    else
+    {
+	0;
+    }
+}
+
+
+sub output
+{
+    my $output_state = shift;
+
+    my $command = shift;
+
+    my $string = shift;
+
+    # if initializing
+
+    if (!$output_state->{initialized})
+    {
+	my $name = $output_state->{name};
+
+	my $date = gmtime();
+
+	my $imports = "";
+
+	my $private_models = "";
+
+	my $prototype_configuration = $configuration->{prototypes};
+
+	if ($prototype_configuration->{aliasses})
+	{
+# 	    my $aliasses = $prototype_configuration->{aliasses};
+
+	    $imports = "
+IMPORT
+
+";
+
+	    $private_models = "
+PRIVATE_MODELS
+
+";
+
+	    my $index = 'a';
+
+	    foreach my $modelname (sort keys %$converted_aliasses)
+	    {
+		my $filename = $converted_aliasses->{$modelname};
+
+		my $namespace = $index;
+
+		$imports .= "	FILE $namespace \"$filename\"
+";
+		$private_models .= "	ALIAS ${namespace}::/$modelname $modelname END ALIAS
+";
+
+		$index++;
+	    }
+
+	    $imports .= "
+END IMPORT
+";
+	
+	    $private_models .= "
+END PRIVATE_MODELS
+";
+
+	}
+
+	my $yaml_configuration = '';
+
+	{
+	    use YAML;
+
+	    $yaml_configuration = Dump($configuration);
+
+	    $yaml_configuration = join "\n", map { "// $_" } split "\n", $yaml_configuration;
+	}
+
+	# loop over all possible interpreter_sequences
+
+	#! last is default
+
+	my $interpreter_sequence = "/usr/local/bin/neurospacesparse";
+
+	foreach my $interpreter (
+				 qw(
+				    /opt/bin/neurospacesparse
+				    /usr/bin/neurospacesparse
+				    /usr/local/bin/neurospacesparse
+				   )
+				)
+	{
+	    if (-e $interpreter)
+	    {
+		$interpreter_sequence = $interpreter;
+
+		last;
+	    }
+	}
+
+	my $output
+	    = "#!$interpreter_sequence
+// -*- NEUROSPACES -*-
+// Neurospaces morphology file for a neuron
+// converted by $0, $date
+//
+// $0 configuration follows:
+//
+$yaml_configuration
+//
+
+NEUROSPACES NDF
+$imports
+$private_models
+
+PUBLIC_MODELS
+
+	CELL $name
+";
+
+	$output_state->{initialized} = 1;
+	$output_state->{preamble} = $output;
+    }
+
+    # process string to output
+
+    if (defined $string)
+    {
+	# proper indent
+
+	my $indent = "\t";
+
+	if ($command eq 'segments')
+	{
+	    #! add indent for segment group
+
+	    $indent .= "\t\t";
+	}
+
+	$string =~ s/^/$indent/mg;
+
+	# remember to output in the correct section
+
+	$output_state->{$command} .= $string;
+    }
+
+    # if output terminating
+
+    if ($command eq 'finish')
+    {
+	if ($option_yaml)
+	{
+	    return undef;
+	}
+
+	# print preamble
+
+	print $output_state->{preamble} || "";
+
+	# print commands (mainly algorithms)
+
+	print $output_state->{commands} || "";
+
+	# start segment group
+
+	my $segment_group_name = "segments"; # "segments_$output_state->{name}";
+
+	my $spine_prototypes = $configuration->{prototypes}->{spine_prototypes};
+
+	my $count = 0;
+
+	foreach my $spine_prototype ( @{ [ @{$spine_prototypes || []} ] } )
+	{
+	    # replace colons and other stuff
+
+	    my $spine_label = $spine_prototype;
+
+	    $spine_label =~ s/::/_/g;
+
+	    my $fDendrDiaMin = $configuration->{algorithms}->{spines}->{fDendrDiaMin};
+	    my $fDendrDiaMax = $configuration->{algorithms}->{spines}->{fDendrDiaMax};
+	    my $fSpineDensity = $configuration->{algorithms}->{spines}->{fSpineDensity};
+	    my $fSpineFrequency = $configuration->{algorithms}->{spines}->{fSpineFrequency};
+
+	    my $instance_name = "Spines__${count}__${spine_label}";
+
+	    print
+"
+		ALGORITHM Spines
+			$instance_name
+			PARAMETERS
+				PARAMETER ( PROTOTYPE = \"$spine_prototype\" ),
+				PARAMETER ( DIA_MIN = $fDendrDiaMin ),
+				PARAMETER ( DIA_MAX = $fDendrDiaMax ),
+				PARAMETER ( SPINE_DENSITY = $fSpineDensity ),
+				PARAMETER ( SPINE_FREQUENCY = $fSpineFrequency ),
+			END PARAMETERS
+		END ALGORITHM
+";
+
+	    $count++;
+	}
+
+	print
+"
+		SEGMENT_GROUP $segment_group_name
+
+";
+
+	# print segments
+
+	print $output_state->{segments};
+
+	# end segment group
+
+	print
+"
+		END SEGMENT_GROUP
+
+";
+
+	# print tail
+
+	print
+"	END CELL
+
+END PUBLIC_MODELS
+
+";
+
+	# signal ok
+
+	return undef;
+    }
+
+    # else
+
+    else
+    {
+	# return state for next output
+
+	return $output_state;
+    }
+}
+
+
+sub process_command
+{
+    my $command = shift;
+
+    my $arguments = shift;
+
+    my $processed = 0;
+
+    my $output;
+
+    # if a command specification exists for this command
+
+    if (exists $readcell_commands->{$command})
+    {
+	my $command_specifier = $readcell_commands->{$command};
+
+	# for non structured specifications
+
+	my $ref = ref $command_specifier;
+
+	if (!$ref)
+	{
+	    # process flags as variables
+
+	    if ($command_specifier eq 'flag')
+	    {
+		$variables->{$command} = 1;
+
+		$processed = 1;
+	    }
+
+	    # process ignored commands
+
+	    elsif ($command_specifier eq 'ignore')
+	    {
+		$processed = 1;
+	    }
+	}
+
+	# for structured specifications
+
+	elsif ($ref =~ m'HASH')
+	{
+	    # look at the type of the command
+
+	    my $type = $command_specifier->{type};
+
+	    if ($type eq 'command')
+	    {
+	    }
+
+	    # needs to be converted to an algorithm ?
+
+	    elsif ($type eq 'algorithm')
+	    {
+		# call the command specific processor
+
+		my $processor = $command_specifier->{processor};
+
+		if (defined $processor)
+		{
+		    $output = &$processor($command_specifier, $command, $arguments);
+
+		    if (defined $output)
+		    {
+			$processed = 1;
+
+			if ($output =~ m/spines/i)
+			{
+			    my $has_spines = 1;
+			}
+		    }
+		}
+		else
+		{
+		    die "$0: *** Error: Attempted conversion of $command, but this is not supported yet.";
+		}
+	    }
+
+	    # related to variables ?
+
+	    elsif ($type eq 'variable')
+	    {
+		# set the variable
+
+		$arguments =~ /(\S*)\s+(\S*)/;
+
+		my $varname = $1;
+
+		my $value = $2;
+
+		$variables->{$varname} = $value;
+
+		$processed = 1;
+	    }
+
+	    # setting the prototype ?
+
+	    elsif ($type eq 'prototype')
+	    {
+		# set the prototype
+
+		$arguments =~ m(.*/(\S*));
+
+		my $prototype = $1;
+
+		$variables->{prototype} = $prototype;
+
+		$processed = 1;
+	    }
+	}
+    }
+    else
+    {
+	$processed = 1;
+
+	print STDERR "Unknown command $command at line $line_count\n";
+    }
+
+    if (!$processed)
+    {
+	print STDERR "Unknown command definition for $command at line $line_count (internal error)\n";
+    }
+
+    return $output;
+}
+
+
+sub process_segment
+{
+    my ($segment, $parent, $x, $y, $z, $dia, $tag) = @_;
+
+    if ($variables->{'*absolute'}
+       || $source_type =~ /swc/)
+    {
+	if ($parent eq 'none')
+	{
+	    #! this is the way genesis does it, plain wrong but compatible.
+
+	    $x = $variables->{origin}->{'x'};
+	    $y = $variables->{origin}->{'y'};
+	    $z = $variables->{origin}->{'z'};
+	}
+	else
+	{
+	    if (!exists $morphology->{$parent})
+	    {
+		die "$0: *** Error: $parent does not exist, but is used as parent";
+	    }
+	    else
+	    {
+		$x -= $morphology->{$parent}->{geometry}->{'x'};
+		$y -= $morphology->{$parent}->{geometry}->{'y'};
+		$z -= $morphology->{$parent}->{geometry}->{'z'};
+	    }
+	}
+    }
+
+    # if soma_offset option
+
+    if ($configuration->{options}->{relocation}->{soma_offset})
+    {
+	# for a soma
+
+	if ($parent eq 'none')
+	{
+	    # register soma offset
+
+	    #! make sure we are working on a copy of the configuration
+
+	    $variables->{soma} = { %{$variables->{soma} || {}}, };
+
+	    $variables->{soma}->{x} = $x;
+	    $variables->{soma}->{y} = $y;
+	    $variables->{soma}->{z} = $z;
+	}
+
+	# else
+
+	else
+	{
+	    # apply soma offset
+
+	    $x -= $variables->{soma}->{x};
+	    $y -= $variables->{soma}->{y};
+	    $z -= $variables->{soma}->{z};
+	}
+    }
+
+    # do shrinkage correction
+
+    #! so here we are working in relative coordinate mode
+
+    if ($configuration->{options}->{histology}->{shrinkage} ne 1)
+    {
+	my $shrinkage = $configuration->{options}->{histology}->{shrinkage};
+
+	$x *= $shrinkage;
+	$y *= $shrinkage;
+	$z *= $shrinkage;
+
+	$dia *= $shrinkage;
+    }
+
+    # default prototype: from global variables
+
+    my $prototype = $variables->{prototype};
+
+    # if prototype conversion requested
+
+    my $prototype_index = 0;
+
+    my $prototype_configuration = $configuration->{prototypes};
+
+    if ($prototype_configuration->{parameter_2_prototype})
+    {
+	# if tag based conversion (eg. for swc files)
+
+	my $parameter_2_prototype = $prototype_configuration->{parameter_2_prototype};
+
+	if (exists $parameter_2_prototype->[0]->{tag})
+	{
+	    # loop over all prototype relations (sorted to priority)
+
+	    foreach my $relation (@$parameter_2_prototype)
+	    {
+		if (defined $tag)
+		{
+		    if (!defined $relation->{tag})
+		    {
+			die "$0: invalid tag based configuration (all entries need a tag value)";
+		    }
+
+		    # if the segment has this tag
+
+		    if ($tag =~ /^("|'|)?$relation->{tag}\1$/)
+		    {
+			# break loop
+
+			last;
+		    }
+
+		    # increment prototype_index that we will assign to the segment
+
+		    $prototype_index++;
+		}
+	    }
+
+	    # set prototype according to index
+
+	    if (exists $parameter_2_prototype->[$prototype_index])
+	    {
+		$prototype = $parameter_2_prototype->[$prototype_index]->{prototype};
+	    }
+	}
+
+	# else, diameter based conversion
+
+	else
+	{
+	    # loop over all prototype relations (sorted to priority)
+
+	    foreach my $relation (@$parameter_2_prototype)
+	    {
+		if (exists $relation->{dia})
+		{
+		    # if the segment does not satisfy the relation
+
+		    if ($dia < $relation->{dia})
+		    {
+			# break loop
+
+			last;
+		    }
+		}
+
+		# increment prototype_index that we will assign to the segment
+
+		$prototype_index++;
+
+		# if there is a parent
+
+		if (defined $parent
+		    && $parent ne 'none')
+		{
+		    # if the parent has a lower prototype
+
+		    if (exists $morphology->{$parent})
+		    {
+			my $parent_prototype_index
+			    = defined $morphology->{$parent}->{prototype_index}
+				? $morphology->{$parent}->{prototype_index}
+				    : 10000;
+
+			if ($prototype_index > $parent_prototype_index)
+			{
+			    # correct prototype
+
+			    $prototype_index = $parent_prototype_index;
+			}
+		    }
+
+		    # if there is no parent
+
+		    else
+		    {
+			# force to be the soma
+
+			#! not really correct, but don't see any other way with
+			#! genesis .p files, ie. genesis is broken by design in this matter
+
+			$prototype_index = $#$parameter_2_prototype;
+		    }
+		}
+	    }
+
+	    # set prototype according to index
+
+	    $prototype = $parameter_2_prototype->[$prototype_index]->{prototype};
+
+	    # if there is a parent
+
+	    if (defined $parent
+		&& $parent ne 'none')
+	    {
+		# if the parent has a lower prototype
+
+		if (exists $morphology->{$parent})
+		{
+		    my $parent_prototype_index
+			= defined $morphology->{$parent}->{prototype_index}
+			    ? $morphology->{$parent}->{prototype_index}
+				: 10000;
+
+		    if ($prototype_index > $parent_prototype_index)
+		    {
+			# correct prototype
+
+			$prototype_index = $parent_prototype_index;
+		    }
+		}
+	    }
+
+	    # if there is no parent
+
+	    else
+	    {
+		# force to be the soma
+
+		#! not really correct, but don't see any other way with
+		#! genesis .p files, ie. genesis is broken by design in this matter
+
+		$prototype_index = $#$parameter_2_prototype;
+	    }
+
+	    # set prototype according to index
+
+	    $prototype = $parameter_2_prototype->[$prototype_index]->{prototype};
+
+	}
+    }
+
+    # if there is a separate mapping to map individual segments to something special
+
+    if ($prototype_configuration->{name_2_prototype})
+    {
+	# loop over all these mappings
+
+	my $name_2_prototype = $prototype_configuration->{name_2_prototype};
+
+	foreach my $name_mapper (@$name_2_prototype)
+	{
+	    # if the segment name matches
+
+	    if (defined $name_mapper->{name}
+		&& $segment eq $name_mapper->{name})
+	    {
+		# set the prototype
+
+		$prototype = $name_mapper->{prototype};
+	    }
+	    elsif (defined $name_mapper->{regex}
+		   && $segment =~ /$name_mapper->{regex}/)
+	    {
+		$prototype = $name_mapper->{prototype};
+	    }
+	}
+    }
+
+    # loop over the somatopetal path
+
+    my $path_somatopetal = [];
+
+    my $somatopetal_neighbour = $parent;
+
+    while (defined $somatopetal_neighbour
+	   && $somatopetal_neighbour ne 'none')
+    {
+	# collect path info
+
+	my $string = "$somatopetal_neighbour (";
+
+	if (defined $morphology->{$somatopetal_neighbour}->{prototype})
+	{
+	    $string .= $morphology->{$somatopetal_neighbour}->{prototype};
+	}
+	else
+	{
+	    $string .= '__UNDEF__';
+	}
+
+	$string .= ", $morphology->{$somatopetal_neighbour}->{geometry}->{'dia'})";
+
+	push @$path_somatopetal, $string;
+
+	$somatopetal_neighbour = $morphology->{$somatopetal_neighbour}->{parent};
+    }
+
+    # fill in the morphology that we are going to use
+
+    $morphology->{$segment}->{prototype} = $prototype;
+
+    $morphology->{$segment}->{prototype_index} = $prototype_index;
+
+    $morphology->{$segment}->{path_somatopetal} = $path_somatopetal;
+
+    # fill in comments
+
+    my $comments = "";
+
+    # look for parent
+
+    my $parent_parameter = $parent eq 'none' ? "" : "		PARAMETER ( PARENT = ^/$parent ),";
+
+    # look for a tag (supported only by swc for the moment
+
+    my $tag_parameter = defined $tag ? "		PARAMETER ( TAG = \"$tag\" ),\n" : "";
+
+    # reformat the coordinates and the diameter
+
+    #! to reproduce edsjb1994 as close as possible
+
+    foreach my $parameter (qw(x y z dia))
+    {
+	my $value = eval "\$$parameter";
+
+	# add the decimal point if none
+
+	if ($value !~ /\./)
+	{
+	    $value =~ s/^([-0-9]*)/$1.0/;
+	}
+
+	# transform 1e-07 to 1e-06
+
+	if ($value =~ /^([-0-9]+)\.([0-9]+)e-07$/)
+	{
+	    my $integer = $1;
+	    my $fraction = $2;
+
+	    $integer =~ s/^(.*)(.)$/$1/;
+
+	    my $shift = $2;
+
+	    if ($integer =~ /^$/)
+	    {
+		$integer = '0';
+	    }
+
+	    if ($integer =~ /^-$/)
+	    {
+		$integer = '-0';
+	    }
+
+	    $fraction = $shift . $fraction;
+
+	    $value = $integer . '.' . $fraction . 'e-06';
+	}
+
+	# transform 1e-05 to 1e-06
+
+	if ($value =~ /^([-0-9]+)\.([0-9]+)e-05$/)
+	{
+	    my $integer = $1;
+	    my $fraction = $2;
+
+	    $fraction =~ s/^(.)(.*)$/$2/;
+
+	    my $shift = $1;
+
+	    if ($fraction =~ /^$/)
+	    {
+		$fraction = '0';
+	    }
+
+	    $integer = $integer . $shift;
+
+	    $value = $integer . '.' . $fraction . 'e-06';
+	}
+
+	# make sure we have two ending digits for the diameter
+
+	if ($value =~ /^([-0-9]+)\.([0-9]+)e-06$/
+	    && $parameter eq 'dia')
+	{
+	    my $integer = $1;
+	    my $fraction = $2;
+
+	    if ($fraction =~ /^..$/)
+	    {
+		$fraction .= '';
+	    }
+
+	    if ($fraction =~ /^.$/)
+	    {
+		$fraction .= '0';
+	    }
+
+	    if ($fraction =~ /^$/)
+	    {
+		$fraction .= '00';
+	    }
+
+	    $value = $integer . '.' . $fraction . 'e-06';
+	}
+
+	# make sure we have three ending digits for the diameter
+
+	if ($value =~ /^([-0-9]+)\.([0-9]+)e-06$/
+	    && $parameter ne 'dia')
+	{
+	    my $integer = $1;
+	    my $fraction = $2;
+
+	    if ($fraction =~ /^..$/)
+	    {
+		$fraction .= '0';
+	    }
+
+	    if ($fraction =~ /^.$/)
+	    {
+		$fraction .= '00';
+	    }
+
+	    if ($fraction =~ /^$/)
+	    {
+		$fraction .= '000';
+	    }
+
+	    $value = $integer . '.' . $fraction . 'e-06';
+	}
+
+	# make sure we have a decimal point
+
+	#t this one has become obsolete correct ?
+
+	#t I need tests for all the functionality of this script
+
+	if ($value =~ /^[0-9]*$/)
+	{
+	    $value .= '.0';
+	}
+
+	# treat zero point specially
+
+	$value =~ s/^0.0$/0.000e-6/g;
+
+	# not sure about this one
+
+	$value =~ s/e-0*([0-9]+)/e-$1/g;
+
+	#! note: force a string operation in the eval, otherwise perl
+	#! might efficiently remove trailing zeros, undoing what we
+	#! have done
+
+	eval "\$$parameter = '$value'";
+    }
+
+    if ($option_output_format eq 'ndf')
+    {
+	# produce ndf result
+
+	if (defined $prototype)
+	{
+	    my $result = <<EOT;
+${comments}CHILD $prototype $segment
+	PARAMETERS
+$parent_parameter
+		PARAMETER ( rel_X = $x ),
+		PARAMETER ( rel_Y = $y ),
+		PARAMETER ( rel_Z = $z ),
+		PARAMETER ( DIA = $dia ),
+$tag_parameter	END PARAMETERS
+END CHILD
+EOT
+
+	    return $result;
+	}
+	else
+	{
+	    return "
+// no prototype defined for $segment ($x, $y, $z, $dia)
+";
+	}
+    }
+
+    elsif ($option_output_format eq 'off')
+    {
+	return "$x $y $z";
+    }
+
+    die "$0: *** Error: unknown output format ($option_output_format) in process_segment()";
+
+}
+
+
+my $column_option_parser
+    = sub
+      {
+	  my $option_name = shift;
+
+	  my $option_value = shift;
+
+	  # construct option name
+
+	  $option_name =~ s/-/_/g;
+
+	  $option_name = "\$option_$option_name";
+
+	  # loop over the specifications
+
+	  my $specifications = [ split '.', $option_value, ];
+
+	  #! disabled for the moment
+
+	  $specifications = [ $option_value, ];
+
+	  foreach my $specification (@$specifications)
+	  {
+	      # loop over columns
+
+	      my $values = [ split ',', $specification, ];
+
+	      # loop over all given values
+
+	      map
+	      {
+		  # determine start and end (column)
+
+		  my $start;
+		  my $end;
+
+		  if (/([0-9]*)-([0-9]*)/)
+		  {
+		      $start = $1;
+		      $end = $2;
+		  }
+		  else
+		  {
+		      $start = $_;
+		      $end = $_;
+		  }
+
+		  $start eq '' and $start = 1;
+
+		  #! what to use as maximum ?
+
+		  $end eq '' and $end = 1000;
+
+		  # loop over the range in the given value
+
+		  foreach ($start .. $end)
+		  {
+		      # offset the range
+
+		      my $column = $_ - 1;
+
+		      # store the given column
+
+		      eval "${option_name}->{$column} = 1;"
+		  }
+	      }
+		  # for each value given
+
+		  @$values;
+	  }
+      };
+
+
+sub read_cmd_line
+{
+    use Getopt::Long;
+
+    my $option_help;
+    my $option_output_formats;
+    my $option_input_formats;
+    my $option_show_configuration;
+    my $option_show_library;
+
+    my $result
+	= GetOptions
+	    (
+	     "accumulator-columns=s" => $column_option_parser,
+	     "configuration-filename=s" => \$option_configuration_filename,
+	     "force-library!" => \$option_force_library,
+	     "help!" => \$option_help,
+	     "input-format-list!" => \$option_input_formats,
+	     "optional-configuration-filename=s" => \$option_optional_configuration_filename,
+	     "output-format=s" => \$option_output_format,
+	     "output-format-list!" => \$option_output_formats,
+# 	     "prototypes=s" => \$option_prototype_configuration,
+	     "show-configuration" => \$option_show_configuration,
+	     "show-library" => \$option_show_library,
+	     "shrinkage=s", => \$option_shrinkage,
+	     "soma-offset!" => \$option_soma_offset,
+	     "spine-prototypes=s" => $option_spine_prototypes,
+	     "no-use-library!" => \$option_no_use_library,
+	     "v|verbose+" => \$option_verbose,
+	     "y|yaml" => \$option_yaml,
+	    );
+
+    my $default_configuration
+	= {
+	   prototypes => {
+			  aliasses => [
+				       "segments/spines/purkinje.ndf::Purk_spine",
+				       'tests/segments/purkinje/maind.ndf::maind',
+				       'tests/segments/purkinje/soma.ndf::soma',
+				       'tests/segments/purkinje/spinyd.ndf::spinyd',
+				       'tests/segments/purkinje/thickd.ndf::thickd',
+				      ],
+			  parameter_2_prototype => [
+						    {
+						     dia => 3.18e-6,
+						     prototype => 'spinyd',
+						    },
+						    {
+						     dia => 7.71e-6,
+						     prototype => 'thickd',
+						    },
+						    {
+						     dia => 2.8e-5,
+						     prototype => 'maind',
+						    },
+						    {
+						     dia => 1,
+						     prototype => 'soma',
+						    },
+						   ],
+			  spine_prototypes => [],
+			 },
+	   variables => {
+			 origin => {
+				    x => 0,
+				    y => 0,
+				    z => 0,
+				   },
+			},
+	   options => {
+		       histology => {
+				     shrinkage => 1,
+				    },
+		       relocation => {
+				      soma_offset => 1,
+				     },
+		      },
+	  };
+
+
+    use YAML 'LoadFile';
+
+    my $morphology2ndf_configuration;
+
+    if (!$option_no_use_library)
+    {
+	eval
+	{
+	    $morphology2ndf_configuration = LoadFile("/etc/neurospaces/morphology2ndf/morphology2ndf.yml");
+	};
+    }
+
+    $configuration = $morphology2ndf_configuration->{morphology2ndf} || $default_configuration;
+
+    my $config_variables = $configuration->{variables};
+
+    $variables
+	= {
+	   %$config_variables,
+	  };
+
+    if ($option_input_formats)
+    {
+	use YAML;
+
+	print Dump({ "input formats known by $0" => $input_formats, }, );
+
+	exit 0;
+    }
+
+    if ($option_output_formats)
+    {
+	use YAML;
+
+	print Dump({ "output formats known by $0" => $output_formats, }, );
+
+	exit 0;
+    }
+
+    if (!exists $output_formats->{$option_output_format})
+    {
+	print "*** Error: unknown output format $option_output_format\n\n";
+
+	use YAML;
+
+	print Dump({ "output formats known by $0" => $output_formats, }, );
+
+	exit 0;
+    }
+
+    if ($option_show_library)
+    {
+	use YAML;
+
+	print Dump($configuration->{library});
+
+	exit 0;
+    }
+
+    if ($option_help
+	|| (!@ARGV
+	    && !$option_show_configuration))
+    {
+	print
+	    "
+$0 <options> <genesis .p file | .swc file>
+
+$0: convert morphology files to neurospaces morphology files.
+
+options :
+    configuration-filename  configuration filename (if none, a default configuration is used,
+                                or a library configuration (in /etc) is used,
+                                use the show-configuration option to see what it looks like).
+    force-library           force the use of library values, ignoring command line options.
+    help                    print usage information.
+    input-format-list       list all input formats and exit.
+    optional-configuration-filename
+                            an configuration filename that is used if it is available,
+                            overriding the configuration-filename option.
+    output-format           output format, default is 'ndf'.
+    output-format-list      list all output formats and exit.
+    prototypes              prototype configuration (filename or code).
+    show-configuration      show the configuration after applying morphology logic and exit.
+    show-library            show the library with specific settings for each morphology.
+    shrinkage               shrinkage correction factor (1 is default)
+    soma-offset             apply soma offset to all compartments (puts the soma at the origin)
+    spine-prototypes        add spines with this prototype.
+    no-use-library          do not use the library with specific settings for each morphology.
+    verbose                 set verbosity level.
+    yaml                    yaml output instead of ndf.
+";
+
+	exit 1;
+    }
+
+    # figure out the cell name
+
+    if ($ARGV[0])
+    {
+	$cellname = $ARGV[0] ;
+
+	if (0 && $cellname =~ /\.ndf$/i)
+	{
+	    $source_type = 'neurospaces description format';
+
+	    $cellname =~ s/\.ndf$//i;
+	}
+	elsif ($cellname =~ /\.p$/i)
+	{
+	    $source_type = 'genesis morphology';
+
+	    $cellname =~ s/\.p$//i;
+	}
+	elsif ($cellname =~ /\.swc$/i)
+	{
+	    $source_type = 'swc morphology';
+
+	    $cellname =~ s/\.swc$//i;
+	}
+	else
+	{
+	    die "$0: *** Error: unknown filename extension for file ($cellname)";
+	}
+    }
+    else
+    {
+	#! from stdin, although that is not really supported anymore
+
+	$cellname = 'noname';
+    }
+
+    $cellname =~ s(.*/)();
+
+    $cellname =~ s(\.)(_)g;
+    $cellname =~ s(\-)(_)g;
+
+    # if configuration filename
+
+    if (defined $option_configuration_filename)
+    {
+	# read the configuration from a filename
+
+	eval
+	{
+	    $configuration = LoadFile($option_configuration_filename);
+	};
+
+	if (!defined $configuration
+	    || $@)
+	{
+	    die "$0: *** Error: cannot read configuration file $option_configuration_filename ($@), bailing out";
+	}
+
+    }
+
+    # if optional configuration filename
+
+    if (defined $option_optional_configuration_filename)
+    {
+	# read the configuration from a filename
+
+	my $optional_configuration;
+
+	eval
+	{
+	    $optional_configuration = LoadFile($option_optional_configuration_filename);
+	};
+
+	if (!defined $optional_configuration
+	    || $@
+	    and $option_verbose)
+	{
+	    print "$0: *** Message: cannot read optional configuration file $option_optional_configuration_filename ($@)";
+	}
+
+	if (defined $optional_configuration)
+	{
+	    $configuration = $optional_configuration;
+	}
+    }
+
+    # we have a cell name, which can be mapped to library specific settings
+
+    # if need to use the library
+
+    if (!$option_no_use_library)
+    {
+	# if there is an entry in the library for this cell
+
+	if (exists $configuration->{library}->{$cellname})
+	{
+	    # overwrite the configuration that will be applied, with specifics for this morphology
+
+	    Data::merge($configuration, $configuration->{library}->{$cellname}, { arrays => { overwrite => 1, }, }, );
+	}
+    }
+
+    # correct the configuration for the command line settings
+
+    if (defined $option_shrinkage)
+    {
+	if (!$option_force_library)
+	{
+	    $configuration->{options}->{histology}->{shrinkage} = $option_shrinkage;
+	}
+	else
+	{
+	    print STDERR "Ignoring shrinkage option of $option_shrinkage, using library value (if any)\n";
+	}
+    }
+
+    if (defined $option_soma_offset
+	&& $option_soma_offset ne 1)
+    {
+	if (!$option_force_library)
+	{
+	    $configuration->{options}->{relocation}->{soma_offset} = $option_soma_offset;
+	}
+	else
+	{
+	    print STDERR "Ignoring soma_offset option, using library value (if any)\n";
+	}
+    }
+
+    if (@$option_spine_prototypes)
+    {
+	if (!$option_force_library)
+	{
+	    $configuration->{prototypes}->{spine_prototypes} = $option_spine_prototypes;
+
+	    if (!$configuration->{algorithms}->{spines})
+	    {
+		use YAML;
+
+		$configuration->{algorithms}->{spines}
+		    = YAML::Load('---
+fDendrDiaMax: 3.18
+fDendrDiaMin: 0.00
+fSpineDensity: 13.0
+fSpineFrequency: 1.0
+');
+	    }
+	}
+	else
+	{
+	    print STDERR "Ignoring spine prototypes, using library value (if any)\n";
+	}
+    }
+
+    # reconfigure: put prototypes in dia order, soma must be at last index
+
+    my $prototype_configuration;
+
+#     if (defined $option_prototype_configuration)
+#     {
+# 	$prototype_configuration = do $option_prototype_configuration;
+
+# 	if (!defined $prototype_configuration)
+# 	{
+# 	    die "$0: *** Error: Prototype configuration not found";
+# 	}
+#     }
+#     else
+    {
+	$prototype_configuration = $configuration->{prototypes};
+    }
+
+    if (exists $prototype_configuration->{parameter_2_prototype}->[0]->{dia})
+    {
+	$prototype_configuration->{parameter_2_prototype}
+	    = [
+	       sort
+	       {
+		   if (exists $a->{dia}
+		       && exists $b->{dia})
+		   {
+		       $a->{dia} <=> $b->{dia}
+		   }
+# 		   elsif (exists $a->{tag}
+# 			  && exists $b->{tag})
+# 		   {
+# 		       $a->{tag} <=> $b->{tag}
+# 		   }
+		   else
+		   {
+		       die "$0: *** Error: the prototype_configuration does not use dia and tag in a consistent way (must use exactly one of them)";
+		   }
+	       }
+	       @{ $prototype_configuration->{parameter_2_prototype} },
+	      ];
+    }
+
+    # process aliasses to a structured format
+
+    my $aliasses = $prototype_configuration->{aliasses};
+
+    foreach my $alias (sort @$aliasses)
+    {
+	if ($alias =~ m/^(.*?)::(.*)$/)
+	{
+	    my $filename = "$1";
+
+	    my $modelname = "$2";
+
+	    if (defined $converted_aliasses->{$modelname})
+	    {
+		die "$0: multiple use of alias $modelname";
+	    }
+
+	    $converted_aliasses->{$modelname} = $filename;
+	}
+	else
+	{
+	    die "$0: *** Error: Illegal alias specification ($alias)";
+	}
+    }
+
+#     $prototype_configuration->{aliasses} = $converted_aliasses;
+
+    # check if the prototype configuration is consistent
+
+    foreach my $relation (@{ $prototype_configuration->{parameter_2_prototype} })
+    {
+	my $prototype = $relation->{prototype};
+
+	if (!defined $prototype)
+	{
+	    die "$0: undefined prototype in the parameter_2_prototype section of the configuration";
+	}
+
+	if (!defined $converted_aliasses->{$prototype})
+	{
+	    die "$0: prototype $prototype used, but not in the aliasses section, there is no file associated with this prototype";
+	}
+    }
+
+    # if the user asked for the configuration for this morphology
+
+    if ($option_show_configuration)
+    {
+	use YAML;
+
+	print Dump($configuration);
+
+	exit 0;
+    }
+
+    #t do some sanity checks on the configuration
+
+}
+
+
+main();
+
+

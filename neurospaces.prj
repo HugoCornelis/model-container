@@ -1,0 +1,2510 @@
+;; -*- Prcs -*-
+;;
+;; Neurospaces: a library which implements a global typed symbol table to
+;; be used in neurobiological model maintenance and simulation.
+;;
+;; $ProjectVersion$
+;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;'
+;;' Neurospaces : testbed C implementation that integrates with genesis
+;;'
+;;' Copyright (C) 1999-2007 Hugo Cornelis
+;;'
+;;' functional ideas ..	Hugo Cornelis, hugo.cornelis@gmail.com
+;;'
+;;' coding ............	Hugo Cornelis, hugo.cornelis@gmail.com
+;;'
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(Created-By-Prcs-Version 1 3 3)
+(Project-Description "Neurospaces : testbed C implementation that integrates with genesis")
+(Project-Version neurospaces 0 1675)
+(Parent-Version neurospaces 0 1674)
+(Version-Log "
+	1. Bugfix: distcheck was still trying to copy the perl library.
+		This was removed in the previous checkin.
+")
+(New-Version-Log
+"")
+(Checkin-Time "Thu, 27 Dec 2007 15:58:18 -0600")
+(Checkin-Login hugo)
+(Populate-Ignore ("~$" "\\.o$" "core$" "\\.emacs\\.desktop" "\\.a$"
+		  "\\.gz$" "Templates.DB" "\\.class"
+		  "obsolete" "\\.deps" "\\(\\(^#\\)\\|\\(/#\\)\\).*#$"
+		  "^xref-html"
+		  "Makefile$"
+		  "Makefile.in$"
+		  "config.status"
+		  "config.log"
+		  "config.h"
+		  "config.h.in"
+		  "configure$"
+		  "parser.[ch]"
+		  "stamp-h1"
+		  "autom4te.cache"
+		  "missing"
+		  "install.sh"
+		  "donumberlines"
+		  "donumberlines.c"
+		  "neurospacesparse"
+		  "convertors/.in"
+		  "convertors/des2xml_comment.c"
+		  "convertors/des2xml_comment"
+		  "convertors/des2xml"
+		  "depcomp"
+		  "TAGS"
+		  "ylwrap"
+		  "parser.rules.numbered"
+		  "parser.y"
+		  "network.q2"
+		  "analyzer.c"
+		  "parser.output"
+		  "mail.txt"
+		  "xs_initialize.c"
+		  "_Inline"
+		  "^perl_run"
+		  "install.ps"
+		  "tests/html"
+		  "semantic.cache"
+		  "glue/swig/perl/SwiggableNeurospaces.pm"
+		  "glue/swig/perl/swiggable_neurospaces_wrap.c"
+		  "docs/logo1.png"
+		  "docs/logo2.xcf.bz2"
+		  "docs/logo1.xcf.bz2"
+		  "funding.text"
+		  "notes.txt"
+		  "glue/swig/perl/SwiggableNeurospaces.so"
+		  "^installed"
+		  "^hierarchy/output"
+		  "^html/htdocs/neurospaces_project"
+))
+(Project-Keywords)
+(Files
+;; This is a comment.  Fill in files here.
+;; For example:  (prcs/checkout.cc ())
+
+;; Files added by populate at Tue, 07 Sep 1999 15:25:39 +0000,
+;; to version 0.0(w), by hugo:
+
+  (library/networks/network.ndf (neurospaces/0_network.nn 1.72 755))
+  
+  
+  
+  
+  (description.tokens (neurospaces/5_global.tok 1.51 644))
+  (neurospaces/neurospaces.h (neurospaces/6_global.h 1.74 644))
+  
+;  (cellparser.rules (neosimparser/8_cellparser 1.23 664))
+;  (cellparser.decl (neosimparser/9_cellparser 1.8 664))
+;  (cellparser.additions (neosimparser/10_cellparser 1.11 664))
+  
+  (analyzer.l (neurospaces/12_analyzer.l 1.74 644))
+  
+
+;; Files added by populate at Tue, 07 Sep 1999 18:05:03 +0000,
+;; to version 0.2(w), by hugo:
+
+  (neurospaces/lexsupport.h (neurospaces/14_analyzer.h 1.9 644))
+  (lexsupport.c (neurospaces/15_analyzer.c 1.13 644))
+
+;; Files added by populate at Tue, 14 Sep 1999 17:10:04 +0000,
+;; to version 0.13(w), by hugo:
+
+  
+  (neurospaces.c (neurospaces/17_global.c 1.118 644))
+  (library/cells/purk2m9s.ndf (neurospaces/18_Purk2M9s.n 1.50 755))
+  (library/morphologies/Purk2M9s.p (neurospaces/19_Purk2M9s.p 1.4 644))
+  
+
+;; Files added by populate at Thu, 16 Sep 1999 11:57:48 +0000,
+;; to version 0.15(w), by hugo:
+
+  (library/segments/purkinje_thickd.ndf (neurospaces/21_Purk_thick 1.42 755))
+  (library/segments/purkinje_spinyd.ndf (neurospaces/22_Purk_spiny 1.41 755))
+  
+  (library/segments/spines/purkinje.ndf (neurospaces/24_Purk_spine 1.47 755))
+  (library/segments/purkinje_soma.ndf (neurospaces/25_Purk_soma. 1.51 755))
+  (library/segments/purkinje_maind.ndf (neurospaces/26_Purk_maind 1.56 755))
+
+
+  (library/channels/gaba.ndf (neurospaces/27_GABA.ned 1.31 755))
+  (library/cells/cell1.ndf (neurospaces/28_cell1.ncd 1.36 755))
+
+;; Files added by populate at Mon, 15 Nov 1999 15:32:02 +0000,
+;; to version 0.19(w), by hugo:
+
+  (docs/general.old (neurospaces/29_README 1.10 644))
+
+;; Files added by populate at Thu, 25 Nov 1999 16:14:40 +0000,
+;; to version 0.20(w), by hugo:
+
+  (library/cells/golgi.ndf (neurospaces/30_Golgi.ncd 1.52.1.5 755))
+
+;; Files added by populate at Tue, 30 Nov 1999 12:15:14 +0000,
+;; to version 0.20(w), by hugo:
+
+  (library/cells/granule.ndf (neurospaces/31_Granule.nc 1.46.1.3 755))
+
+;; Files added by populate at Tue, 30 Nov 1999 15:12:30 +0000,
+;; to version 0.20(w), by hugo:
+
+  
+  
+
+;; Files added by populate at Mon, 17 Jan 2000 15:23:43 +0000,
+;; to version 0.22(w), by hugo:
+
+  
+  
+  
+
+;; Files added by populate at Fri, 04 Feb 2000 14:40:46 +0000,
+;; to version 0.35(w), by hugo:
+
+  (neurospaces/symbols.h (neurospaces/37_imported.h 1.52 644))
+  (symbols.c (neurospaces/38_imported.c 1.64 644))
+
+;; Files added by populate at Fri, 04 Feb 2000 15:44:29 +0000,
+;; to version 0.35(w), by hugo:
+
+  (neurospaces/hines_list.h (neurospaces/39_hines_list 1.10 750))
+
+;; Files added by populate at Tue, 08 Feb 2000 17:03:23 +0000,
+;; to version 0.38(w), by hugo:
+
+  (neurospaces/hines_listlist.h (neurospaces/40_hines_list 1.7 644))
+  (hines_listlist.c (neurospaces/41_hines_list 1.2 644))
+
+;; Files added by populate at Tue, 08 Feb 2000 20:58:57 +0000,
+;; to version 0.38(w), by hugo:
+
+  (neurospaces/symboltable.h (neurospaces/42_symboltabl 1.44.1.69 644))
+
+;; Files added by populate at Tue, 15 Feb 2000 10:19:50 +0000,
+;; to version 0.42(w), by hugo:
+
+  (symboltable.c (neurospaces/43_symboltabl 1.41.1.176 644))
+
+;; Files added by populate at Tue, 15 Feb 2000 13:50:59 +0000,
+;; to version 0.42(w), by hugo:
+
+  
+  
+
+;; Files deleted by depopulate at Wed, 16 Feb 2000 14:10:42 +0000,
+;; from version 0.44(w), by hugo:
+
+  ; (equationparser.rules ())
+  ; (equationparser.decl ())
+  ; (equationparser.additions ())
+
+;; Files deleted by depopulate at Wed, 16 Feb 2000 14:12:57 +0000,
+;; from version 0.44(w), by hugo:
+
+  ; (netparser.rules ())
+  ; (netparser.decl ())
+  ; (netparser.additions ())
+
+;; Files renamed at Wed, 16 Feb 2000 14:12:57 +0000,
+;; from version 0.44(w), by hugo:
+
+  (parser.rules (neurospaces/8_cellparser 1.242 644))
+  (parser.decl (neurospaces/9_cellparser 1.60 644))
+  (parser.additions (neurospaces/10_cellparser 1.24 644))
+
+;; Files deleted by depopulate at Wed, 16 Feb 2000 14:20:25 +0000,
+;; from version 0.44(w), by hugo:
+
+  ; (net.l ())
+  ; (cell.l ())
+
+;; Files added by populate at Thu, 17 Feb 2000 17:41:01 +0000,
+;; to version 0.48(w), by hugo:
+
+  (neurospaces/pool.h (neurospaces/46_pool.h 1.20.1.37 644))
+  (pool.c (neurospaces/47_pool.c 1.56 644))
+  (neurospaces/idin.h (neurospaces/48_idin.h 1.36 644))
+  (idin.c (neurospaces/49_idin.c 1.31 644))
+  (neurospaces/parameters.h (neurospaces/50_parameters 1.48 644))
+  (parameters.c (neurospaces/51_parameters 1.71 644))
+  (neurospaces/equation.h (neurospaces/b/0_equation.h 1.26 644))
+  (equation.c (neurospaces/b/1_equation.c 1.31 644))
+  (neurospaces/channel.h (neurospaces/b/2_channel.h 1.23.1.52 644))
+  (channel.c (neurospaces/b/3_channel.c 1.87 644))
+
+;; Files added by populate at Mon, 21 Feb 2000 13:17:39 +0000,
+;; to version 0.53(w), by hugo:
+
+  (neurospaces/segment.h (neurospaces/b/4_compartmen 1.104 644))
+  (segment.c (neurospaces/b/5_compartmen 1.137 644))
+
+;; Files added by populate at Tue, 07 Mar 2000 19:27:34 +0000,
+;; to version 0.56(w), by hugo:
+
+  (library/channels/non_nmda.ndf (neurospaces/b/6_non_NMDA.n 1.24 755))
+
+;; Files added by populate at Fri, 10 Mar 2000 17:59:51 +0000,
+;; to version 0.59(w), by hugo:
+
+  (neurospaces/positionD3.h (neurospaces/b/7_positionD3 1.13 644))
+
+;; Files added by populate at Fri, 10 Mar 2000 18:00:50 +0000,
+;; to version 0.59(w), by hugo:
+
+  (positionD3.c (neurospaces/b/8_positionD3 1.12 644))
+
+;; Files added by populate at Fri, 10 Mar 2000 18:10:04 +0000,
+;; to version 0.60(w), by hugo:
+
+  
+  
+
+;; Files added by populate at Fri, 10 Mar 2000 20:43:25 +0000,
+;; to version 0.62(w), by hugo:
+
+  (neurospaces/double.h (neurospaces/b/11_double.h 1.9 644))
+
+;; Files added by populate at Tue, 14 Mar 2000 10:38:24 +0000,
+;; to version 0.63(w), by hugo:
+
+  
+  
+
+;; Files added by populate at Wed, 15 Mar 2000 14:57:06 +0000,
+;; to version 0.65(w), by hugo:
+
+  (neurospaces/inputoutput.h (neurospaces/b/14_inputoutpu 1.21 644))
+  (inputoutput.c (neurospaces/b/15_inputoutpu 1.23 644))
+
+;; Files added by populate at Wed, 15 Mar 2000 19:31:50 +0000,
+;; to version 0.65(w), by hugo:
+
+  (neurospaces/function.h (neurospaces/b/16_function.h 1.26 644))
+  (function.c (neurospaces/b/17_function.c 1.33 644))
+
+;; Files added by populate at Thu, 16 Mar 2000 10:36:56 +0000,
+;; to version 0.66(w), by hugo:
+
+  (neurospaces/cell.h (neurospaces/b/18_cell.h 1.61 644))
+  (cell.c (neurospaces/b/19_cell.c 1.78 644))
+
+;; Files added by populate at Thu, 16 Mar 2000 18:24:41 +0000,
+;; to version 0.67(w), by hugo:
+
+  (neurospaces/attachment.h (neurospaces/b/20_virtual.h 1.27 644))
+  (attachment.c (neurospaces/b/21_virtual.c 1.34 644))
+
+;; Files added by populate at Fri, 24 Mar 2000 14:40:32 +0000,
+;; to version 0.70(w), by hugo:
+
+  (Makefile.am (neurospaces/b/22_Makefile.a 1.185 644))
+  (configure.in (neurospaces/b/23_configure. 1.40 644))
+
+;; Files added by populate at Wed, 29 Mar 2000 09:48:24 +0000,
+;; to version 0.74(w), by hugo:
+
+  (neurospaces/parsersupport.h (neurospaces/b/24_parsersupp 1.44 644))
+  (parsersupport.c (neurospaces/b/25_parsersupp 1.87 644))
+
+;; Files added by populate at Thu, 30 Mar 2000 16:34:34 +0000,
+;; to version 0.75(w), by hugo:
+
+  (neurospaces/algorithm.h (neurospaces/b/26_module.h 1.20 644))
+  (algorithm.c (neurospaces/b/27_module.c 1.45 644))
+
+;; Files added by populate at Mon, 03 Apr 2000 12:30:57 +0000,
+;; to version 0.76(w), by hugo:
+
+  (neurospaces/modelevent.h (neurospaces/b/28_modelevent 1.27 644))
+  (modelevent.c (neurospaces/b/29_modelevent 1.46 644))
+
+;; Files added by populate at Thu, 27 Apr 2000 20:49:42 +0000,
+;; to version 0.92(w), by hugo:
+
+  (neurospaces/pidinstack.h (neurospaces/b/30_pidinstack 1.48 644))
+  (pidinstack.c (neurospaces/b/31_pidinstack 1.59 644))
+
+;; Files added by populate at Thu, 04 May 2000 10:37:47 +0000,
+;; to version 0.97(w), by hugo:
+
+  (neurospaces/querymachine.h (neurospaces/b/32_querymachi 1.14 644))
+  (querymachine.c (neurospaces/b/33_querymachi 1.231 644))
+
+;; Files added by populate at Mon, 08 May 2000 20:39:21 +0000,
+;; to version 0.107(w), by hugo:
+
+  (neurospaces/population.h (neurospaces/b/34_population 1.48 644))
+  (population.c (neurospaces/b/35_population 1.75 644))
+
+;; Files added by populate at Tue, 09 May 2000 09:11:36 +0000,
+;; to version 0.108(w), by hugo:
+
+  (neurospaces/vector.h (neurospaces/b/36_vector.h 1.32 644))
+  (vector.c (neurospaces/b/37_vector.c 1.22 644))
+
+;; Files added by populate at Tue, 09 May 2000 14:48:16 +0000,
+;; to version 0.111(w), by hugo:
+
+  (neurospaces/network.h (neurospaces/b/38_network.h 1.36 644))
+  (network.c (neurospaces/b/39_network.c 1.47 644))
+
+;; Files added by populate at Wed, 10 May 2000 17:15:39 +0000,
+;; to version 0.116(w), by hugo:
+
+  (algorithms/event/serialsegment.h (neurospaces/b/40_serialcomp 1.19 644))
+  (algorithms/event/serialsegment.c (neurospaces/b/41_serialcomp 1.30 644))
+  (algorithms/event/serialcell.h (neurospaces/b/42_serialcell 1.17 644))
+  (algorithms/event/serialcell.c (neurospaces/b/43_serialcell 1.24 644))
+  (algorithms/event/purkinjespine.h (neurospaces/b/44_purkinjesp 1.10 644))
+  (algorithms/event/purkinjespine.c (neurospaces/b/45_purkinjesp 1.47 644))
+
+;; Files added by populate at Wed, 10 May 2000 17:16:24 +0000,
+;; to version 0.116(w), by hugo:
+
+  (algorithms/event/Makefile.am (neurospaces/b/46_Makefile.a 1.24 644))
+  (algorithms/event/configure.in (neurospaces/b/47_configure. 1.12 644))
+
+;; Files added by populate at Wed, 10 May 2000 17:18:27 +0000,
+;; to version 0.116(w), by hugo:
+
+  (algorithms/event/aclocal.m4 (neurospaces/b/48_aclocal.m4 1.6 644))
+  (aclocal.m4 (neurospaces/b/49_aclocal.m4 1.6 644))
+
+;; Files added by populate at Wed, 10 May 2000 18:48:53 +0000,
+;; to version 0.117(w), by hugo:
+
+  (algorithms/event/cerebellum.h (neurospaces/b/50_cerebellum 1.8 644))
+  (algorithms/event/cerebellum.c (neurospaces/b/51_cerebellum 1.19 644))
+
+;; Files added by populate at Mon, 15 May 2000 09:56:49 +0000,
+;; to version 0.120(w), by hugo:
+
+  (neurospaces/projection.h (neurospaces/c/0_projection 1.40 644))
+  (projection.c (neurospaces/c/1_projection 1.67 644))
+  (neurospaces/connection.h (neurospaces/c/2_connection 1.46 644))
+  (connection.c (neurospaces/c/3_connection 1.56 644))
+
+;; Files added by populate at Mon, 15 May 2000 15:25:33 +0000,
+;; to version 0.121(w), by hugo:
+
+  (algorithms/event/serialprojection.h (neurospaces/c/4_serialproj 1.13 644))
+  (algorithms/event/serialprojection.c (neurospaces/c/5_serialproj 1.21 644))
+  (algorithms/event/serialpopulation.h (neurospaces/c/6_serialpopu 1.13 644))
+  (algorithms/event/serialpopulation.c (neurospaces/c/7_serialpopu 1.22 644))
+  (algorithms/event/serialnetwork.h (neurospaces/c/8_serialnetw 1.13 644))
+  (algorithms/event/serialnetwork.c (neurospaces/c/9_serialnetw 1.18 644))
+  (algorithms/event/serialconnection.h (neurospaces/c/10_serialconn 1.12 644))
+  (algorithms/event/serialconnection.c (neurospaces/c/11_serialconn 1.25 644))
+
+;; Files added by populate at Thu, 18 May 2000 13:03:14 +0000,
+;; to version 0.123(w), by hugo:
+
+  (algorithms/event/serializers.h (neurospaces/c/12_serializer 1.12 644))
+
+;; Files deleted by depopulate at Mon, 22 May 2000 13:38:10 +0000,
+;; from version 0.129(w), by hugo:
+
+  ; (dependencies.h ())
+  ; (dependencies.c ())
+
+;; Files added by populate at Tue, 30 May 2000 17:33:08 +0200,
+;; to version 0.136(w), by hugo:
+
+  
+  
+
+;; Files added by populate at Tue, 30 May 2000 21:20:59 +0200,
+;; to version 0.136(w), by hugo:
+
+  (neurospaces/group.h (neurospaces/c/15_extended.h 1.29 644))
+  (group.c (neurospaces/c/16_extended.c 1.42 644))
+
+;; Files added by populate at Wed, 14 Jun 2000 20:29:17 +0200,
+;; to version 0.141(w), by hugo:
+
+  (main.c (neurospaces/c/17_main.c 1.18 644))
+
+;; Files added by populate at Tue, 01 Aug 2000 13:24:58 +0200,
+;; to version 0.164(w), by hugo:
+
+  (neurospaces/iol.h (neurospaces/c/18_bio.h 1.8.1.23 644))
+  (iol.c (neurospaces/c/19_bio.c 1.18 644))
+
+;; Files added by populate at Tue, 01 Aug 2000 16:18:00 +0200,
+;; to version 0.165(w), by hugo:
+
+  (neurospaces/iohier.h (neurospaces/c/20_biohier.h 1.6.1.47 644))
+  (iohier.c (neurospaces/c/21_biohier.c 1.63 644))
+
+;; Files added by populate at Wed, 02 Aug 2000 10:37:12 +0200,
+;; to version 0.166(w), by hugo:
+
+  (library/channels/purkinje_km.ndf (neurospaces/c/22_km.nmd 1.18 755))
+  (library/channels/purkinje_kdr.ndf (neurospaces/c/23_kdr.nmd 1.18 755))
+  (library/channels/purkinje_kc.ndf (neurospaces/c/24_kc.nmd 1.19 755))
+  (library/channels/purkinje_ka.ndf (neurospaces/c/25_ka.nmd 1.18 755))
+  (library/channels/purkinje_k2.ndf (neurospaces/c/26_k2.nmd 1.19 755))
+  (library/channels/purkinje_climb.ndf (neurospaces/c/27_climb.nmd 1.14 755))
+  (library/channels/purkinje_cat.ndf (neurospaces/c/28_cat.nmd 1.18 755))
+  (library/channels/purkinje_cap.ndf (neurospaces/c/29_cap.nmd 1.18 755))
+  (library/channels/purkinje_basket.ndf (neurospaces/c/30_basket.nmd 1.14 755))
+
+;; Files added by populate at Wed, 02 Aug 2000 11:46:05 +0200,
+;; to version 0.166(w), by hugo:
+
+  (library/channels/purkinje_nap.ndf (neurospaces/c/31_nap.nmd 1.18 755))
+  (library/channels/purkinje_naf.ndf (neurospaces/c/32_naf.nmd 1.19 755))
+  (library/channels/purkinje_h2.ndf (neurospaces/c/33_h2.nmd 1.18 755))
+  (library/channels/purkinje_h1.ndf (neurospaces/c/34_h1.nmd 1.18 755))
+
+;; Files added by populate at Wed, 02 Aug 2000 11:57:29 +0200,
+;; to version 0.166(w), by hugo:
+
+  (library/channels/nmda.ndf (neurospaces/c/35_NMDA.ned 1.22 755))
+
+;; Files added by populate at Thu, 03 Aug 2000 10:58:02 +0200,
+;; to version 0.170(w), by hugo:
+
+  (neurospaces/biocomp.h (neurospaces/c/36_biocomp.h 1.6.1.83 644))
+  (biocomp.c (neurospaces/c/37_biocomp.c 1.98 644))
+
+;; Files added by populate at Tue, 08 Aug 2000 16:24:35 +0200,
+;; to version 0.178(w), by hugo:
+
+  (neurospaces/iocontainer.h (neurospaces/c/38_iocontaine 1.6.1.23 644))
+  (iocontainer.c (neurospaces/c/39_iocontaine 1.6.1.17 644))
+
+;; Files added by populate at Wed, 16 Aug 2000 15:59:50 +0200,
+;; to version 0.184(w), by hugo:
+
+  (neurospaces/psymbolstack.h (neurospaces/c/40_psymbolsta 1.19 644))
+  (psymbolstack.c (neurospaces/c/41_psymbolsta 1.14 644))
+
+;; Files added by populate at Wed, 16 Aug 2000 16:31:44 +0200,
+;; to version 0.184(w), by hugo:
+
+  (countcode (neurospaces/c/42_countcode 1.5 755))
+
+;; Files added by populate at Thu, 17 Aug 2000 17:28:00 +0200,
+;; to version 0.191(w), by hugo:
+
+  (neurospaces/namespace.h (neurospaces/c/43_namespace. 1.14 644))
+
+;; Files added by populate at Fri, 18 Aug 2000 17:50:13 +0200,
+;; to version 0.195(w), by hugo:
+
+  (neurospaces/parcontainer.h (neurospaces/c/44_parcontain 1.18 644))
+  (parcontainer.c (neurospaces/c/45_parcontain 1.14 644))
+
+;; Files added by populate at Tue, 22 Aug 2000 14:32:55 +0200,
+;; to version 0.199(w), by hugo:
+
+  (neurospaces/symbolvirtual_protos.h (neurospaces/c/46_symbolvirt 1.94 644))
+
+;; Files added by populate at Wed, 13 Sep 2000 18:42:04 +0200,
+;; to version 0.228(w), by hugo:
+
+  (neurospaces/genesis/olf/olf_defs.h (neurospaces/c/47_olf_defs.h 1.1 750))
+  (neurospaces/genesis/olf/olf_struct.h (neurospaces/c/48_olf_struct 1.2 750))
+  (neurospaces/genesis/sim/sim_struct.h (neurospaces/c/49_sim_struct 1.2 750))
+
+;; Files added by populate at Wed, 13 Sep 2000 18:46:53 +0200,
+;; to version 0.228(w), by hugo:
+
+  (library/channels/Purkinje_h2.tab (neurospaces/c/50_Purk_h2.ta 1.1 644) :no-keywords)
+  (library/channels/Purkinje_h1.tab (neurospaces/c/51_Purk_h1.ta 1.1 644) :no-keywords)
+  (library/channels/Purkinje_nap.tab (neurospaces/d/0_Purk_NaP.t 1.1 644) :no-keywords)
+  (library/channels/Purkinje_naf.tab (neurospaces/d/1_Purk_NaF.t 1.1 644) :no-keywords)
+  (library/channels/Purkinje_kdr.tab (neurospaces/d/2_Purk_Kdr.t 1.1 644) :no-keywords)
+  (library/channels/Purkinje_km.tab (neurospaces/d/3_Purk_KM.ta 1.1 644) :no-keywords)
+  (library/channels/Purkinje_kc.tab (neurospaces/d/4_Purk_KC.ta 1.1 644) :no-keywords)
+  (library/channels/Purkinje_ka.tab (neurospaces/d/5_Purk_KA.ta 1.1 644) :no-keywords)
+  (library/channels/Purkinje_k2.tab (neurospaces/d/6_Purk_K2.ta 1.1 644) :no-keywords)
+  (library/channels/Purkinje_cat.tab (neurospaces/d/7_Purk_CaT.t 1.1 644) :no-keywords)
+  (library/channels/Purkinje_cap.tab (neurospaces/d/8_Purk_CaP.t 1.1 644) :no-keywords)
+
+;; Files added by populate at Wed, 13 Sep 2000 18:52:34 +0200,
+;; to version 0.228(w), by hugo:
+
+  (library/channels/Golgi_kdr37.tab (neurospaces/d/9_Golgi_KDr3 1.1 644) :no-keywords)
+  (library/channels/Golgi_kca37.tab (neurospaces/d/10_Golgi_KCa3 1.1 644) :no-keywords)
+  (library/channels/Golgi_ka37.tab (neurospaces/d/11_Golgi_KA37 1.1 644) :no-keywords)
+  (library/channels/Golgi_inna37.tab (neurospaces/d/12_Golgi_InNa 1.1 644) :no-keywords)
+  (library/channels/Golgi_h37.tab (neurospaces/d/13_Golgi_H37. 1.1 644) :no-keywords)
+  (library/channels/Golgi_cahva37.tab (neurospaces/d/14_Golgi_CaHV 1.1 644) :no-keywords)
+
+;; Files added by populate at Wed, 13 Sep 2000 18:55:23 +0200,
+;; to version 0.228(w), by hugo:
+
+  (library/channels/Granule_kdr37.tab (neurospaces/d/15_Granule_KD 1.1 644) :no-keywords)
+  (library/channels/Granule_kca37.tab (neurospaces/d/16_Granule_KC 1.1 644) :no-keywords)
+  (library/channels/Granule_ka37.tab (neurospaces/d/17_Granule_KA 1.1 644) :no-keywords)
+  (library/channels/Granule_inna37.tab (neurospaces/d/18_Granule_In 1.1 644) :no-keywords)
+  (library/channels/Granule_h37.tab (neurospaces/d/19_Granule_H3 1.1 644) :no-keywords)
+  (library/channels/Granule_cahva37.tab (neurospaces/d/20_Granule_Ca 1.1 644) :no-keywords)
+
+;; Files added by populate at Mon, 25 Sep 2000 19:59:07 +0200,
+;; to version 0.243(w), by hugo:
+
+  
+
+;; Files added by populate at Tue, 21 Nov 2000 19:04:21 +0100,
+;; to version 0.267(w), by hugo:
+
+  
+
+;; Files added by populate at Wed, 06 Dec 2000 11:38:04 +0100,
+;; to version 0.279(w), by hugo:
+
+  
+  
+
+;; Files added by populate at Tue, 19 Dec 2000 10:45:39 +0100,
+;; to version 0.294(w), by hugo:
+
+  
+  
+
+;; Files added by populate at Fri, 29 Dec 2000 19:24:49 +0100,
+;; to version 0.300(w), by hugo:
+
+  (neurospaces/treespacetraversal.h (neurospaces/d/27_symbolrun. 1.37 644))
+  (treespacetraversal.c (neurospaces/d/28_symbolrun. 1.43 644))
+
+;; Files added by populate at Tue, 09 Jan 2001 12:44:01 +0100,
+;; to version 0.302(w), by hugo:
+
+  (neurospaces/projectionquery.h (neurospaces/d/29_projection 1.30 644))
+  (projectionquery.c (neurospaces/d/30_projection 1.61 644))
+
+;; Files added by populate at Mon, 22 Jan 2001 14:29:53 +0100,
+;; to version 0.306(w), by hugo:
+
+  (neurospaces/solverinfo.h (neurospaces/d/31_solverinfo 1.17 644))
+  (solverinfo.c (neurospaces/d/32_solverinfo 1.28 644))
+
+;; Files added by populate at Wed, 21 Feb 2001 10:48:45 +0100,
+;; to version 0.321(w), by hugo:
+
+  (network.q (neurospaces/d/33_network.q 1.16 644))
+
+;; Files added by populate at Mon, 26 Feb 2001 13:15:37 +0100,
+;; to version 0.322(w), by hugo:
+
+  
+  
+
+;; Files added by populate at Wed, 28 Feb 2001 19:05:45 +0100,
+;; to version 0.326(w), by hugo:
+
+  (namespace.c (neurospaces/d/36_namespace. 1.13 644))
+
+;; Files added by populate at Fri, 02 Mar 2001 16:41:58 +0100,
+;; to version 0.327(w), by hugo:
+
+  (neurospaces/dependencyfile.h (neurospaces/d/37_dependency 1.9 644))
+  (dependencyfile.c (neurospaces/d/38_dependency 1.11 644))
+  (neurospaces/defsym.h (neurospaces/d/39_defsym.h 1.16 644))
+  (defsym.c (neurospaces/d/40_defsym.c 1.18 644))
+  (neurospaces/importedfile.h (neurospaces/d/41_importedfi 1.22 644))
+  (importedfile.c (neurospaces/d/42_importedfi 1.31 644))
+
+;; Files added by populate at Wed, 07 Mar 2001 16:09:29 +0100,
+;; to version 0.332(w), by hugo:
+
+  (TODO.txt (neurospaces/d/43_TODO.txt 1.202 644))
+
+;; Files added by populate at Fri, 09 Mar 2001 14:34:38 +0100,
+;; to version 0.332(w), by hugo:
+
+  (license.txt (neurospaces/d/44_COPYRIGHT 1.4 644))
+
+;; Files added by populate at Fri, 09 Mar 2001 18:23:53 +0100,
+;; to version 0.332(w), by hugo:
+
+  (purkinje.q (neurospaces/d/45_purkinje.q 1.4 644))
+
+;; Files added by populate at Tue, 13 Mar 2001 13:48:12 +0100,
+;; to version 0.338(w), by hugo:
+
+  (prcsfind (neurospaces/d/46_prcsfind 1.4 755))
+
+;; Files added by populate at Tue, 13 Mar 2001 13:58:05 +0100,
+;; to version 0.338(w), by hugo:
+
+  (algorithms/symbol/spines.h (neurospaces/d/47_spines.h 1.8 644))
+  (algorithms/symbol/spines.c (neurospaces/d/48_spines.c 1.43 644))
+
+;; Files deleted by depopulate at Tue, 20 Mar 2001 15:28:57 +0100,
+;; from version 0.347(w), by hugo:
+
+  ; (neosimparser.log ())
+
+;; Files added by populate at Tue, 20 Mar 2001 15:31:34 +0100,
+;; to version 0.347(w), by hugo:
+
+  (neurospaces2genesis.patch (neurospaces/d/49_neurospace 1.3 644))
+
+;; Files added by populate at Fri, 23 Mar 2001 18:11:25 +0100,
+;; to version 0.352(w), by hugo:
+
+  (prcspatch (neurospaces/d/50_prcspatch 1.3 755))
+
+;; Files added by populate at Thu, 05 Apr 2001 17:03:35 +0200,
+;; to version 0.357(w), by hugo:
+
+  (library/segments/purkinje_soma2.ndf (neurospaces/d/51_Purk_soma2 1.17 755))
+
+;; Files added by populate at Wed, 11 Apr 2001 10:38:07 +0200,
+;; to version 0.357(w), by hugo:
+
+  (network.fig (neurospaces/e/0_network.fi 1.1 644))
+
+;; Files added by populate at Wed, 06 Jun 2001 10:02:23 +0200,
+;; to version 0.367(w), by hugo:
+
+  (library/fibers/mossyfiber.ndf (neurospaces/e/1_MossyFiber 1.20 755))
+  (neurospaces/randomvalue.h (neurospaces/e/2_randomvalu 1.21 644))
+  (randomvalue.c (neurospaces/e/3_randomvalu 1.36 644))
+
+;; Files added by populate at Thu, 07 Jun 2001 13:42:25 +0200,
+;; to version 0.368(w), by hugo:
+
+  (library/networks/input.ndf (neurospaces/e/4_Input.nnd 1.17 644))
+
+;; Files added by populate at Thu, 14 Jun 2001 16:11:48 +0200,
+;; to version 0.372(w), by hugo:
+
+  (acconfig.h (neurospaces/e/5_acconfig.h 1.6 644))
+
+;; Files added by populate at Mon, 25 Jun 2001 16:17:44 +0200,
+;; to version 0.374(w), by hugo:
+
+  (neurospaces/root.h (neurospaces/e/6_root.h 1.15 644))
+  (root.c (neurospaces/e/7_root.c 1.36 644))
+
+;; Files added by populate at Thu, 02 Aug 2001 16:06:33 +0200,
+;; to version 0.385(w), by hugo:
+
+  (library/cells/purkinjesmall.ndf (neurospaces/e/8_PurkSmall. 1.24 644))
+
+;; Files added by populate at Thu, 02 Aug 2001 16:45:03 +0200,
+;; to version 0.385(w), by hugo:
+
+  (library/segments/purkinje_soma_small.ndf (neurospaces/e/9_Purk_soma_ 1.13 644))
+  (library/segments/purkinje_maind_small.ndf (neurospaces/e/10_Purk_maind 1.13 644))
+
+;; Files added by populate at Thu, 23 Aug 2001 11:13:58 +0200,
+;; to version 0.390(w), by hugo:
+
+  (purkinjesmall.q (neurospaces/e/11_purksmall. 1.1 644))
+
+;; Files added by populate at Thu, 30 Aug 2001 13:57:43 +0200,
+;; to version 0.391(w), by hugo:
+
+  (neurospaces/psymbolserialstack.h (neurospaces/e/12_psymbolser 1.8 644))
+  (psymbolserialstack.c (neurospaces/e/13_psymbolser 1.8 644))
+
+;; Files added by populate at Tue, 18 Sep 2001 16:08:49 +0200,
+;; to version 0.392(w), by hugo:
+
+  (library/mappers/spikereceiver.ndf (neurospaces/e/14_spikerecei 1.8 644))
+  (library/mappers/spikegenerator.ndf (neurospaces/e/15_spikegener 1.8 644))
+  (library/pools/granule_ca.ndf (neurospaces/e/16_granule_ca 1.8 644))
+  (library/pools/golgi_ca.ndf (neurospaces/e/17_golgi_ca.n 1.8 644))
+  (library/utilities () :directory)
+  (library/projections () :directory)
+  (library/populations () :directory)
+  (library/channels/granule_nmda.ndf (neurospaces/e/18_granule_nm 1.13 644))
+  (library/channels/granule_gabab.ndf (neurospaces/e/19_granule_ga 1.12 644))
+  (library/channels/granule_gabaa.ndf (neurospaces/e/20_granule_ga 1.12 644))
+  (library/channels/granule_ampa.ndf (neurospaces/e/21_granule_am 1.12 644))
+  (library/channels/granule_kdr.ndf (neurospaces/e/22_granule_kd 1.7 644))
+  (library/channels/granule_kc.ndf (neurospaces/e/23_granule_kc 1.7 644))
+  (library/channels/granule_ka.ndf (neurospaces/e/24_granule_ka 1.7 644))
+  (library/channels/granule_inna.ndf (neurospaces/e/25_granule_in 1.7 644))
+  (library/channels/granule_h.ndf (neurospaces/e/26_granule_h. 1.7 644))
+  (library/channels/golgi_inna.ndf (neurospaces/e/27_golgi_inna 1.7 644))
+  (library/channels/golgi_h.ndf (neurospaces/e/28_golgi_h.nd 1.7 644))
+  (library/channels/golgi_gabab.ndf (neurospaces/e/29_golgi_gaba 1.12 644))
+  (library/channels/golgi_ampa.ndf (neurospaces/e/30_golgi_ampa 1.12 644))
+  (library/channels/granule_cahva.ndf (neurospaces/e/31_granule_ca 1.7 644))
+  (library/channels/golgi_kdr.ndf (neurospaces/e/32_golgi_kdr. 1.7 644))
+  (library/channels/golgi_gabaa.ndf (neurospaces/e/33_golgi_gaba 1.12 644))
+  (library/channels/golgi_kc.ndf (neurospaces/e/34_golgi_kc.n 1.7 644))
+  (library/channels/golgi_nmda.ndf (neurospaces/e/35_golgi_nmda 1.13 644))
+  (library/channels/golgi_ka.ndf (neurospaces/e/36_golgi_ka.n 1.7 644))
+  (library/channels/golgi_cahva.ndf (neurospaces/e/37_golgi_cahv 1.7 644))
+
+;; Files added by populate at Thu, 20 Sep 2001 10:10:27 +0200,
+;; to version 0.395(w), by hugo:
+
+  (library/channels/gaba.xml (neurospaces/e/38_gaba.xml 1.7 644))
+
+;; Files added by populate at Mon, 24 Sep 2001 17:41:47 +0200,
+;; to version 0.397(w), by hugo:
+
+  (algorithms/symbol/aclocal.m4 (neurospaces/e/39_aclocal.m4 1.4 644))
+  (algorithms/symbol/configure.in (neurospaces/e/40_configure. 1.8 644))
+  (algorithms/symbol/Makefile.am (neurospaces/e/41_Makefile.a 1.26 644))
+  (algorithms/configure.in (neurospaces/e/42_configure. 1.6 644))
+  (algorithms/aclocal.m4 (neurospaces/e/43_aclocal.m4 1.4 644))
+  (algorithms/Makefile.am (neurospaces/e/44_Makefile.a 1.6 644))
+
+;; Files added by populate at Mon, 24 Sep 2001 18:16:40 +0200,
+;; to version 0.397(w), by hugo:
+
+  (algorithms/main.c (neurospaces/e/45_main.c 1.1 644))
+
+;; Files added by populate at Tue, 25 Sep 2001 09:52:14 +0200,
+;; to version 0.399(w), by hugo:
+
+  (algorithms/symbol/grid3d.h (neurospaces/e/46_grid3d.h 1.7 644))
+  (algorithms/symbol/grid3d.c (neurospaces/e/47_grid3d.c 1.23 644))
+
+;; Files added by populate at Tue, 25 Sep 2001 10:39:31 +0200,
+;; to version 0.399(w), by hugo:
+
+  (library/populations/golgi.ndf (neurospaces/e/48_golgi.ndf 1.9.1.7 644))
+
+;; Files added by populate at Tue, 25 Sep 2001 13:54:50 +0200,
+;; to version 0.399(w), by hugo:
+
+  (library/populations/granule.ndf (neurospaces/e/49_granule.nd 1.7.1.7 644))
+
+;; Files added by populate at Tue, 25 Sep 2001 14:05:04 +0200,
+;; to version 0.399(w), by hugo:
+
+  (library/populations/purkinje.ndf (neurospaces/e/50_purkinje.n 1.18 644))
+
+;; Files added by populate at Thu, 27 Sep 2001 16:12:09 +0200,
+;; to version 0.400(w), by hugo:
+
+  (neurospaces/algorithmset.h (neurospaces/e/51_moduleset. 1.11 644))
+  (algorithmset.c (neurospaces/f/0_moduleset. 1.22 644))
+  (neurospaces/algorithminstance.h (neurospaces/f/1_moduleinst 1.12 644))
+  (algorithminstance.c (neurospaces/f/2_moduleinst 1.12 644))
+  (neurospaces/algorithmclass.h (neurospaces/f/3_moduleclas 1.10 644))
+  (algorithmclass.c (neurospaces/f/4_moduleclas 1.8 644))
+
+;; Files added by populate at Tue, 02 Oct 2001 11:58:41 +0200,
+;; to version 0.404(w), by hugo:
+
+  
+  
+
+;; Files added by populate at Mon, 08 Oct 2001 10:42:56 +0200,
+;; to version 0.405(w), by hugo:
+
+  (algorithms/symbol/projectionrandomized.h (neurospaces/f/7_projection 1.6 644))
+  (algorithms/symbol/projectionrandomized.c (neurospaces/f/8_projection 1.21 644))
+
+;; Files added by populate at Tue, 23 Oct 2001 15:33:50 +0200,
+;; to version 0.406(w), by hugo:
+
+  (library/populations/purkinjesmall.ndf (neurospaces/f/9_purkinjesm 1.9 644))
+  (library/populations/granulesmall.ndf (neurospaces/f/10_granulesma 1.11 644))
+  (library/populations/golgismall.ndf (neurospaces/f/11_golgismall 1.11 644))
+  (library/networks/networksmall.ndf (neurospaces/f/12_networksma 1.17 755))
+
+;; Files added by populate at Tue, 30 Oct 2001 12:40:02 +0100,
+;; to version 0.407(w), by hugo:
+
+  (library/pools/purkinje_ca.ndf (neurospaces/f/13_purkinje_c 1.10 644))
+
+;; Files added by populate at Mon, 05 Nov 2001 09:31:37 +0100,
+;; to version 0.409(w), by hugo:
+
+  (algorithms/symbol/projectionvolume.h (neurospaces/f/14_projection 1.6 644))
+  (algorithms/symbol/projectionvolume.c (neurospaces/f/15_projection 1.25 644))
+
+;; Files added by populate at Thu, 08 Nov 2001 16:00:46 +0100,
+;; to version 0.410(w), by hugo:
+
+  (neurospaces/orderedconnectioncache.h (neurospaces/f/16_orderedcon 1.6 644))
+  (orderedconnectioncache.c (neurospaces/f/17_orderedcon 1.14 644))
+  (neurospaces/connectioncache.h (neurospaces/f/18_connection 1.8 644))
+  (connectioncache.c (neurospaces/f/19_connection 1.7 644))
+
+;; Files added by populate at Thu, 08 Nov 2001 18:57:08 +0100,
+;; to version 0.410(w), by hugo:
+
+  (neurospaces/cachedconnection.h (neurospaces/f/20_cachedconn 1.15 644))
+  (cachedconnection.c (neurospaces/f/21_cachedconn 1.7 644))
+
+;; Files added by populate at Tue, 13 Nov 2001 18:28:27 +0100,
+;; to version 0.412(w), by hugo:
+
+  (library/fibers/mossyfiberlarge.ndf (neurospaces/f/22_mossyfiber 1.13 755))
+  (library/networks/networklarge.ndf (neurospaces/f/23_networklar 1.12 755))
+  (library/populations/granulelarge.ndf (neurospaces/f/24_granulelar 1.10 644))
+  (library/populations/golgilarge.ndf (neurospaces/f/25_golgilarge 1.10 644))
+
+;; Files added by populate at Mon, 26 Nov 2001 14:01:26 +0100,
+;; to version 0.415(w), by hugo:
+
+  (algorithms/symbol/randomize.h (neurospaces/f/26_randomize. 1.6 644))
+  (algorithms/symbol/randomize.c (neurospaces/f/27_randomize. 1.15 644))
+
+;; Files added by populate at Thu, 29 Nov 2001 15:32:11 +0100,
+;; to version 0.416(w), by hugo:
+
+  (neurospaces/solvermapper.h (neurospaces/f/28_solvermapp 1.6 644))
+
+;; Files added by populate at Tue, 04 Dec 2001 14:00:12 +0100,
+;; to version 0.417(w), by hugo:
+
+  (library/fibers/mossyfiber.xml (neurospaces/f/29_mossyfiber 1.5 644))
+
+;; Files added by populate at Wed, 05 Dec 2001 14:02:55 +0100,
+;; to version 0.418(w), by hugo:
+
+  (convertors/des2xml.pl (neurospaces/f/30_des2xml.pl 1.12 755))
+  
+  
+
+;; Files added by populate at Wed, 05 Dec 2001 16:18:35 +0100,
+;; to version 0.418(w), by hugo:
+
+  (convertors/xml2des.xsl (neurospaces/f/33_xml2des.xs 1.4 644))
+
+;; Files added by populate at Wed, 05 Dec 2001 16:23:37 +0100,
+;; to version 0.418(w), by hugo:
+
+  (convertors/xml2html.xsl (neurospaces/f/34_xml2html.x 1.2 644))
+  (convertors/samples/gaba.xml (neurospaces/f/35_gaba.xml 1.2 644))
+  (convertors/samples/mossyfiber.xml (neurospaces/f/36_mossyfiber 1.4 644))
+
+;; Files added by populate at Wed, 02 Jan 2002 16:16:58 +0100,
+;; to version 0.420(w), by hugo:
+
+  (neurospaces/vectorsegment.h (neurospaces/f/37_vectorsegm 1.18 644))
+  (vectorsegment.c (neurospaces/f/38_vectorsegm 1.35 644))
+  (neurospaces/vectorconnectionsymbol.h (neurospaces/f/39_vectorconn 1.15 644))
+  (vectorconnectionsymbol.c (neurospaces/f/40_vectorconn 1.25 644))
+
+;; Files added by populate at Mon, 07 Jan 2002 15:59:52 +0100,
+;; to version 0.422(w), by hugo:
+
+  (convertors/des2xml_comment.l (neurospaces/f/41_des2xml_co 1.4 644))
+  (convertors/Makefile.am (neurospaces/f/42_Makefile.a 1.10 644))
+  (convertors/des2xml.c (neurospaces/f/43_des2xml.c 1.5 644))
+  (convertors/aclocal.m4 (neurospaces/f/44_aclocal.m4 1.4 644))
+
+;; Files added by populate at Tue, 22 Jan 2002 11:05:29 +0100,
+;; to version 0.425(w), by hugo:
+
+  (convertors/configure.in (neurospaces/f/45_configure. 1.4 644))
+
+;; Files added by populate at Fri, 07 Jun 2002 20:20:15 +0200,
+;; to version 0.426(w), by hugo:
+
+  (.gdbinit (neurospaces/f/46_.gdbinit 1.2.1.10 644))
+
+;; Files added by populate at Tue, 17 Dec 2002 13:45:04 +0000,
+;; to version 0.429(w), by hugo:
+
+  (neurospaces.dxgen (neurospaces/f/47_neurospace 1.2 644))
+  
+  
+  
+  
+  
+
+;; Files added by populate at Thu, 06 Feb 2003 11:16:22 +0000,
+;; to version 0.433(w), by hugo:
+
+  (library/fibers/mossyfibersmall.ndf (neurospaces/g/1_mossyfiber 1.8 644))
+  (convertors/2vcg (neurospaces/g/2_2vcg 1.5 755))
+
+;; Files added by populate at Wed, 12 Feb 2003 12:53:34 +0000,
+;; to version 0.435(w), by hugo:
+
+  (library/morphologies/purk2m9.tex (neurospaces/g/3_purk2m9.te 1.1 644))
+  (library/morphologies/purk2m9s.tex (neurospaces/g/4_purk2m9s.t 1.1 644))
+
+;; Files added by populate at Wed, 26 Mar 2003 16:55:03 +0000,
+;; to version 0.438(w), by hugo:
+
+  (library/networks/supernetworksmall.ndf (neurospaces/g/5_supernetwo 1.7 644))
+  (library/networks/supernetwork.ndf (neurospaces/g/6_supernetwo 1.10 644))
+
+;; Files added by populate at Thu, 15 May 2003 12:19:38 +0000,
+;; to version 0.441(w), by hugo:
+
+  (algorithms/symbol/connectionchecker.h (neurospaces/g/7_connection 1.5 644))
+  (algorithms/symbol/connectionchecker.c (neurospaces/g/8_connection 1.16 644))
+
+;; Files added by populate at Thu, 22 May 2003 17:20:38 +0000,
+;; to version 0.443(w), by hugo:
+
+  (library/networks/granular-layer.ndf (neurospaces/g/9_granular-l 1.9 644))
+
+;; Files added by populate at Thu, 09 Feb 2006 12:05:47 -0600,
+;; to version 0.447(w), by hugo:
+
+  (tests/run (neurospaces/g/10_purkinje.t 1.80 755))
+
+;; Files added by populate at Fri, 10 Feb 2006 09:47:23 -0600,
+;; to version 0.449(w), by hugo:
+
+  (library/networks/network-test.ndf (neurospaces/g/11_network-te 1.10 644))
+
+;; Files added by populate at Fri, 10 Feb 2006 10:10:40 -0600,
+;; to version 0.450(w), by hugo:
+
+  (tests/specifications/matching.t (neurospaces/g/12_matching.t 1.12 644))
+  (tests/specifications/purkinje.t (neurospaces/g/13_purkinje.t 1.29 644))
+  (tests/specifications/network.t (neurospaces/g/14_network.t 1.18 644))
+
+;; Files added by populate at Fri, 10 Feb 2006 10:12:23 -0600,
+;; to version 0.450(w), by hugo:
+
+  (tests/specifications/connections.t (neurospaces/g/15_connection 1.27 644))
+
+;; Files added by populate at Fri, 10 Feb 2006 10:24:42 -0600,
+;; to version 0.450(w), by hugo:
+
+  (tests/specifications/files.t (neurospaces/g/16_files.t 1.24 644))
+
+;; Files deleted by depopulate at Fri, 10 Feb 2006 14:38:07 -0600,
+;; from version 0.451(w), by hugo:
+
+  ; (mail.txt ())
+
+;; Files added by populate at Fri, 10 Feb 2006 16:06:48 -0600,
+;; to version 0.454(w), by hugo:
+
+  (tests/specifications/coordinates.t (neurospaces/g/17_coordinate 1.18 644))
+  (tests/specifications/algorithms.t (neurospaces/g/18_modules.t 1.24 644))
+
+;; Files added by populate at Mon, 13 Feb 2006 11:18:06 -0600,
+;; to version 0.455(w), by hugo:
+
+  (autoconf.warnings (neurospaces/g/19_autoconf.w 1.1 644))
+
+;; Files added by populate at Mon, 13 Feb 2006 17:29:04 -0600,
+;; to version 0.456(w), by hugo:
+
+  (tests/specifications/structure.t (neurospaces/g/20_structure. 1.24 644))
+
+;; Files added by populate at Mon, 13 Feb 2006 18:25:17 -0600,
+;; to version 0.457(w), by hugo:
+
+  (neurospaces/vtable.h (neurospaces/g/21_vtable.h 1.22 644))
+
+;; Files added by populate at Wed, 15 Feb 2006 14:35:04 -0600,
+;; to version 0.466(w), by hugo:
+
+  (docs/features.outline (neurospaces/g/22_README 1.2 644))
+
+;; Files added by populate at Tue, 21 Feb 2006 16:31:14 -0600,
+;; to version 0.476(w), by hugo:
+
+  
+  
+
+;; Files added by populate at Thu, 23 Feb 2006 14:01:57 -0600,
+;; to version 0.480(w), by hugo:
+
+  
+  
+
+;; Files added by populate at Thu, 23 Feb 2006 17:15:16 -0600,
+;; to version 0.483(w), by hugo:
+
+  
+  
+
+;; Files added by populate at Tue, 28 Feb 2006 14:10:32 -0600,
+;; to version 0.499(w), by hugo:
+
+  
+  (tests/run.ptkdb (neurospaces/g/30_run.ptkdb 1.8 644))
+  (tests/specifications/0_startup.t (neurospaces/g/31_startup.t 1.12 644))
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+;; Files added by populate at Tue, 28 Feb 2006 14:43:03 -0600,
+;; to version 0.500(w), by hugo:
+
+  
+
+;; Files added by populate at Tue, 28 Feb 2006 15:04:28 -0600,
+;; to version 0.500(w), by hugo:
+
+  
+
+;; Files added by populate at Tue, 28 Feb 2006 17:08:14 -0600,
+;; to version 0.501(w), by hugo:
+
+  
+  
+
+;; Files added by populate at Fri, 03 Mar 2006 16:23:05 -0600,
+;; to version 0.503(w), by hugo:
+
+  (bootstrap (neurospaces/i/43_generate 1.4 644))
+
+;; Files deleted by depopulate at Fri, 03 Mar 2006 19:37:52 -0600,
+;; from version 0.503(w), by hugo:
+
+  ; (tests/models/pools/granule_ca.ndf ())
+  ; (tests/models/pools/purkinje_ca.ndf ())
+  ; (tests/models/pools/golgi_ca.ndf ())
+  ; (tests/models/projections () :directory)
+  ; (tests/models/segments/purkinje_thickd.ndf ())
+  ; (tests/models/segments/purkinje_soma_small.ndf ())
+  ; (tests/models/segments/purkinje_soma.ndf ())
+  ; (tests/models/segments/purkinje_soma2.ndf ())
+  ; (tests/models/segments/purkinje_spinyd.ndf ())
+  ; (tests/models/segments/purkinje_spine2.ndf ())
+  ; (tests/models/segments/purkinje_spine.ndf ())
+  ; (tests/models/segments/purkinje_maind_small.ndf ())
+  ; (tests/models/segments/purkinje_maind.ndf ())
+  ; (tests/models/channels/Purkinje_naf.tab () :no-keywords)
+  ; (tests/models/channels/granule_h.ndf ())
+  ; (tests/models/channels/Purkinje_nap.tab () :no-keywords)
+  ; (tests/models/channels/granule_nmda.ndf ())
+  ; (tests/models/channels/Granule_h37.tab () :no-keywords)
+  ; (tests/models/channels/granule_kdr.ndf ())
+  ; (tests/models/channels/golgi_nmda.ndf ())
+  ; (tests/models/channels/Golgi_kca37.tab () :no-keywords)
+  ; (tests/models/channels/purkinje_h2.ndf ())
+  ; (tests/models/channels/golgi_ka.ndf ())
+  ; (tests/models/channels/golgi_kc.ndf ())
+  ; (tests/models/channels/Golgi_h37.tab () :no-keywords)
+  ; (tests/models/channels/Purkinje_k2.tab () :no-keywords)
+  ; (tests/models/channels/Purkinje_km.tab () :no-keywords)
+  ; (tests/models/channels/golgi_gabaa.ndf ())
+  ; (tests/models/channels/Purkinje_ka.tab () :no-keywords)
+  ; (tests/models/channels/purkinje_kdr.ndf ())
+  ; (tests/models/channels/purkinje_cap.ndf ())
+  ; (tests/models/channels/Purkinje_h2.tab () :no-keywords)
+  ; (tests/models/channels/Purkinje_h1.tab () :no-keywords)
+  ; (tests/models/channels/nmda.ndf ())
+  ; (tests/models/channels/granule_kc.ndf ())
+  ; (tests/models/channels/golgi_kdr.ndf ())
+  ; (tests/models/channels/Golgi_cahva37.tab () :no-keywords)
+  ; (tests/models/channels/purkinje_kc.ndf ())
+  ; (tests/models/channels/Granule_kca37.tab () :no-keywords)
+  ; (tests/models/channels/purkinje_ka.ndf ())
+  ; (tests/models/channels/Purkinje_cat.tab () :no-keywords)
+  ; (tests/models/channels/granule_inna.ndf ())
+  ; (tests/models/channels/Granule_kdr37.tab () :no-keywords)
+  ; (tests/models/channels/golgi_gabab.ndf ())
+  ; (tests/models/channels/Granule_ka37.tab () :no-keywords)
+  ; (tests/models/channels/Granule_inna37.tab () :no-keywords)
+  ; (tests/models/channels/Purkinje_kdr.tab () :no-keywords)
+  ; (tests/models/channels/golgi_cahva.ndf ())
+  ; (tests/models/channels/non_nmda.ndf ())
+  ; (tests/models/channels/granule_ka.ndf ())
+  ; (tests/models/channels/purkinje_h1.ndf ())
+  ; (tests/models/channels/Granule_cahva37.tab () :no-keywords)
+  ; (tests/models/channels/granule_ampa.ndf ())
+  ; (tests/models/channels/golgi_ampa.ndf ())
+  ; (tests/models/channels/golgi_inna.ndf ())
+  ; (tests/models/channels/purkinje_naf.ndf ())
+  ; (tests/models/channels/Golgi_ka37.tab () :no-keywords)
+  ; (tests/models/channels/granule_cahva.ndf ())
+  ; (tests/models/channels/purkinje_basket.ndf ())
+  ; (tests/models/channels/gaba.ndf ())
+  ; (tests/models/channels/Golgi_kdr37.tab () :no-keywords)
+  ; (tests/models/channels/purkinje_cat.ndf ())
+  ; (tests/models/channels/purkinje_nap.ndf ())
+  ; (tests/models/channels/purkinje_k2.ndf ())
+  ; (tests/models/channels/Purkinje_kc.tab () :no-keywords)
+  ; (tests/models/channels/purkinje_km.ndf ())
+  ; (tests/models/channels/purkinje_climb.ndf ())
+  ; (tests/models/channels/Golgi_inna37.tab () :no-keywords)
+  ; (tests/models/channels/Purkinje_cap.tab () :no-keywords)
+  ; (tests/models/channels/golgi_h.ndf ())
+  ; (tests/models/channels/granule_gabab.ndf ())
+  ; (tests/models/channels/granule_gabaa.ndf ())
+  ; (tests/models/channels/gaba.xml ())
+  ; (tests/models/fibers/mossyfiberlarge.ndf ())
+  ; (tests/models/fibers/mossyfibersmall.ndf ())
+  ; (tests/models/fibers/mossyfiber.ndf ())
+  ; (tests/models/fibers/mossyfiber.xml ())
+  ; (tests/models/fibers/mossyfiber-eval.ndf ())
+  ; (tests/models/populations/granule-eval.ndf ())
+  ; (tests/models/populations/golgi.ndf ())
+  ; (tests/models/populations/golgi-eval.ndf ())
+  ; (tests/models/populations/granule.ndf ())
+  ; (tests/models/populations/purkinje.ndf ())
+  ; (tests/models/populations/granulelarge.ndf ())
+  ; (tests/models/populations/golgilarge.ndf ())
+  ; (tests/models/populations/purkinje-eval.ndf ())
+  ; (tests/models/populations/purkinjesmall.ndf ())
+  ; (tests/models/populations/granulesmall.ndf ())
+  ; (tests/models/populations/golgismall.ndf ())
+  ; (tests/models/networks/supernetworksmall.ndf ())
+  ; (tests/models/networks/network-eval.ndf ())
+  ; (tests/models/networks/network.ndf ())
+  ; (tests/models/networks/input.ndf ())
+  ; (tests/models/networks/supernetwork.ndf ())
+  ; (tests/models/networks/network-test.ndf ())
+  ; (tests/models/networks/networksmall.ndf ())
+  ; (tests/models/networks/network2.ndf.old ())
+  ; (tests/models/networks/networklarge.ndf ())
+  ; (tests/models/networks/granular-layer.ndf ())
+  ; (tests/models/utilities () :directory)
+  ; (tests/models/cells/purk2m9.tex ())
+  ; (tests/models/cells/cell1.ndf ())
+  ; (tests/models/cells/cell.ndf.old ())
+  ; (tests/models/cells/purk2m9s.ndf ())
+  ; (tests/models/cells/purk2m9s.tex ())
+  ; (tests/models/cells/golgi.ndf ())
+  ; (tests/models/cells/granule.ndf ())
+  ; (tests/models/cells/golgi_test.ndf ())
+  ; (tests/models/cells/granule_test.ndf ())
+  ; (tests/models/cells/purkinjesmall.ndf ())
+  ; (tests/models/cells/Purk2M9s.p ())
+  ; (tests/models/mappers/spikegenerator.ndf ())
+  ; (tests/models/mappers/spikereceiver.ndf ())
+
+;; Files added by populate at Sun, 05 Mar 2006 16:26:18 -0600,
+;; to version 0.508(w), by hugo:
+
+  
+
+;; Files added by populate at Mon, 06 Mar 2006 16:30:38 -0600,
+;; to version 0.509(w), by hugo:
+
+  (biolevel.c (neurospaces/i/45_biolevel.c 1.21 644))
+  (neurospaces/biolevel.h (neurospaces/i/46_biolevel.h 1.4 644))
+
+;; Files added by populate at Tue, 07 Mar 2006 10:07:55 -0600,
+;; to version 0.509(w), by hugo:
+
+  (tests/specifications/biolevels.t (neurospaces/i/47_biolevels. 1.22 644))
+
+;; Files added by populate at Tue, 07 Mar 2006 17:44:39 -0600,
+;; to version 0.510(w), by hugo:
+
+  
+
+;; Files added by populate at Wed, 08 Mar 2006 15:03:05 -0600,
+;; to version 0.514(w), by hugo:
+
+  
+
+;; Files added by populate at Thu, 09 Mar 2006 12:21:04 -0600,
+;; to version 0.521(w), by hugo:
+
+  
+
+;; Files added by populate at Thu, 09 Mar 2006 13:30:53 -0600,
+;; to version 0.523(w), by hugo:
+
+  
+
+;; Files added by populate at Fri, 10 Mar 2006 23:04:38 -0600,
+;; to version 0.531(w), by hugo:
+
+  
+  
+
+;; Files added by populate at Fri, 10 Mar 2006 23:07:04 -0600,
+;; to version 0.532(w), by hugo:
+
+  
+
+;; Files added by populate at Thu, 16 Mar 2006 15:26:50 -0600,
+;; to version 0.540(w), by hugo:
+
+  (tests/specifications/algorithms/grid.t (neurospaces/j/3_grid.t 1.14 644))
+  (tests/specifications/algorithms/spines.t (neurospaces/j/4_spines.t 1.19 644))
+
+;; Files added by populate at Fri, 17 Mar 2006 15:14:25 -0600,
+;; to version 0.543(w), by hugo:
+
+  (gv-makefile (neurospaces/j/5_gv-makefil 1.1 755))
+
+;; Files added by populate at Fri, 17 Mar 2006 22:56:45 -0600,
+;; to version 0.544(w), by hugo:
+
+  
+
+;; Files added by populate at Wed, 22 Mar 2006 16:20:05 -0600,
+;; to version 0.555(w), by hugo:
+
+  (library/projectionqueries/nopars (neurospaces/j/7_matrix2 1.2 644))
+  (library/projectionqueries/complete (neurospaces/j/8_matrix 1.5 644))
+
+;; Files added by populate at Wed, 22 Mar 2006 17:02:11 -0600,
+;; to version 0.555(w), by hugo:
+
+  (tests/specifications/projectionquery.t (neurospaces/j/9_projection 1.16 644))
+
+;; Files added by populate at Mon, 27 Mar 2006 18:05:22 -0600,
+;; to version 0.557(w), by hugo:
+
+  (hierarchy/symbols (neurospaces/j/10_definition 1.79 755))
+
+;; Files added by populate at Mon, 27 Mar 2006 18:16:31 -0600,
+;; to version 0.557(w), by hugo:
+
+  (hierarchy/instrumentor.ptkdb (neurospaces/j/11_generator. 1.4 644))
+  (hierarchy/instrumentor (neurospaces/j/12_generator 1.42 755))
+
+;; Files deleted by depopulate at Tue, 28 Mar 2006 16:36:25 -0600,
+;; from version 0.563(w), by hugo:
+
+  ; (proxy.h ())
+  ; (proxy.c ())
+
+;; Files deleted by depopulate at Tue, 28 Mar 2006 16:36:37 -0600,
+;; from version 0.563(w), by hugo:
+
+  ; (alias.h ())
+  ; (alias.c ())
+
+;; Files added by populate at Wed, 29 Mar 2006 11:54:30 -0600,
+;; to version 0.565(w), by hugo:
+
+  (test-dist (neurospaces/j/13_build-dist 1.8 755))
+
+;; Files added by populate at Wed, 29 Mar 2006 15:56:41 -0600,
+;; to version 0.573(w), by hugo:
+
+  (abstract.txt (neurospaces/j/14_abstract.t 1.1 644))
+
+;; Files added by populate at Thu, 30 Mar 2006 12:41:48 -0600,
+;; to version 0.575(w), by hugo:
+
+  (tests/specifications/nesting.t (neurospaces/j/15_nesting.t 1.19 644))
+
+;; Files deleted by depopulate at Thu, 30 Mar 2006 15:13:09 -0600,
+;; from version 0.576(w), by hugo:
+
+  ; (2.nnd ())
+  ; (1.nnd ())
+
+;; Files added by populate at Thu, 30 Mar 2006 18:00:20 -0600,
+;; to version 0.576(w), by hugo:
+
+  (neurospaces/cachedparameter.h (neurospaces/j/16_cachedpara 1.4 644))
+  (cachedparameter.c (neurospaces/j/17_cachedpara 1.5 644))
+  (neurospaces/parametercache.h (neurospaces/j/18_parameterc 1.6 644))
+  (parametercache.c (neurospaces/j/19_parameterc 1.6 644))
+
+;; Files added by populate at Fri, 31 Mar 2006 17:45:32 -0600,
+;; to version 0.579(w), by hugo:
+
+  (tests/specifications/parametercaching.t (neurospaces/j/20_parameterc 1.13 644))
+
+;; Files added by populate at Tue, 04 Apr 2006 10:14:59 -0500,
+;; to version 0.587(w), by hugo:
+
+  (tests/specifications/parsing.t (neurospaces/j/21_parsing.t 1.37 644))
+
+;; Files added by populate at Tue, 04 Apr 2006 11:16:40 -0500,
+;; to version 0.587(w), by hugo:
+
+  (docs/HOWTO.outline (neurospaces/j/22_HOWTO.outl 1.32 644))
+
+;; Files added by populate at Wed, 05 Apr 2006 13:25:46 -0500,
+;; to version 0.593(w), by hugo:
+
+  (convertors/morphology2ndf (neurospaces/j/23_readcell2n 1.54 755))
+
+;; Files added by populate at Thu, 06 Apr 2006 11:32:03 -0500,
+;; to version 0.596(w), by hugo:
+
+  (html/htdocs/index.html (neurospaces/j/24_index.html 1.111 644))
+  (html/cgi-bin () :directory)
+
+;; Files added by populate at Sat, 08 Apr 2006 16:14:48 -0500,
+;; to version 0.598(w), by hugo:
+
+  (convertors/morphology2ndf.ptkdb (neurospaces/j/25_readcell2n 1.4 644))
+  
+  (html/htdocs/neurospaces.html (neurospaces/j/27_neurospace 1.1 644))
+
+;; Files added by populate at Tue, 11 Apr 2006 17:16:52 -0500,
+;; to version 0.599(w), by hugo:
+
+  (tests/specifications/namespace.t (neurospaces/j/29_namespace. 1.19 644))
+
+;; Files deleted by populate at Tue, 11 Apr 2006 17:23:35 -0500,
+;; from version 0.601(w), by hugo:
+
+  ; (D3segment.c ())
+  ; (D3segment.h ())
+
+;; Files added by populate at Thu, 13 Apr 2006 16:00:55 -0500,
+;; to version 0.609(w), by hugo:
+
+  (dist-build (neurospaces/j/30_dist-build 1.7 755))
+
+;; Files added by populate at Thu, 13 Apr 2006 16:21:14 -0500,
+;; to version 0.609(w), by hugo:
+
+  (get-dist (neurospaces/j/31_get-dist 1.2 644))
+
+;; Files added by populate at Mon, 17 Apr 2006 21:48:12 -0500,
+;; to version 0.614(w), by hugo:
+
+  
+
+;; Files added by populate at Mon, 17 Apr 2006 22:21:34 -0500,
+;; to version 0.614(w), by hugo:
+
+  
+
+;; Files added by populate at Sun, 23 Apr 2006 16:27:02 -0500,
+;; to version 0.619(w), by hugo:
+
+  (neurospaces/workload.h (neurospaces/j/34_workload.h 1.8 644))
+  (workload.c (neurospaces/j/35_workload.c 1.14 644))
+
+;; Files added by populate at Sun, 23 Apr 2006 16:27:11 -0500,
+;; to version 0.619(w), by hugo:
+
+  (neurospaces/traversalinfo.h (neurospaces/j/36_traversali 1.6 644))
+  (traversalinfo.c (neurospaces/j/37_traversali 1.17 644))
+
+;; Files added by populate at Tue, 25 Apr 2006 21:58:24 -0500,
+;; to version 0.622(w), by hugo:
+
+  (fiber.c (neurospaces/j/38_fiber.c 1.17 644))
+  (neurospaces/fiber.h (neurospaces/j/39_fiber.h 1.12 644))
+  (tests/specifications/workload.t (neurospaces/j/40_workload.t 1.14 644))
+
+;; Files added by populate at Thu, 27 Apr 2006 10:52:11 -0500,
+;; to version 0.624(w), by hugo:
+
+  (tests/specifications/code/symboltypes.t (neurospaces/j/41_symboltype 1.12 644))
+
+;; Files added by populate at Fri, 28 Apr 2006 10:42:58 -0500,
+;; to version 0.624(w), by hugo:
+
+  (tests/specifications/code/biolevels.t (neurospaces/j/42_biolevels. 1.9 644))
+
+;; Files added by populate at Fri, 28 Apr 2006 19:04:28 -0500,
+;; to version 0.625(w), by hugo:
+
+  
+
+;; Files added by populate at Fri, 28 Apr 2006 20:59:03 -0500,
+;; to version 0.626(w), by hugo:
+
+  (tests/specifications/parameters.t (neurospaces/j/44_parameters 1.13 644))
+
+;; Files added by populate at Tue, 02 May 2006 21:15:26 -0500,
+;; to version 0.627(w), by hugo:
+
+  
+
+;; Files added by populate at Fri, 05 May 2006 22:48:53 -0500,
+;; to version 0.630(w), by hugo:
+
+  (tests/specifications/version.t (neurospaces/j/46_version.t 1.4 644))
+
+;; Files deleted by depopulate at Sat, 06 May 2006 22:17:01 -0500,
+;; from version 0.631(w), by hugo:
+
+  ; (library/cells/cell.ndf.old ())
+
+;; Files deleted by depopulate at Sat, 06 May 2006 22:21:16 -0500,
+;; from version 0.631(w), by hugo:
+
+  ; (library/networks/network2.ndf.old ())
+
+;; Files deleted by depopulate at Sun, 07 May 2006 21:22:27 -0500,
+;; from version 0.633(w), by hugo:
+
+  ; (algorithms/symbol/projection3d.h ())
+  ; (algorithms/symbol/projection3d.c ())
+
+;; Files added by populate at Mon, 08 May 2006 22:14:26 -0500,
+;; to version 0.634(w), by hugo:
+
+  (algorithms/symbol/connectioncheckerinstance.c (neurospaces/j/47_connection 1.24 644))
+  (algorithms/symbol/connectioncheckerinstance.h (neurospaces/j/48_connection 1.5 644))
+  (algorithms/symbol/grid3dinstance.c (neurospaces/j/49_grid3dinst 1.22 644))
+  (algorithms/symbol/grid3dinstance.h (neurospaces/j/50_grid3dinst 1.5 644))
+  (algorithms/symbol/projectionrandomizedinstance.c (neurospaces/j/51_projection 1.25 644))
+  (algorithms/symbol/projectionrandomizedinstance.h (neurospaces/k/0_projection 1.5 644))
+  (algorithms/symbol/projectionvolumeinstance.c (neurospaces/k/1_projection 1.34 644))
+  (algorithms/symbol/projectionvolumeinstance.h (neurospaces/k/2_projection 1.5 644))
+  (algorithms/symbol/randomizeinstance.c (neurospaces/k/3_randomizei 1.25 644))
+  (algorithms/symbol/randomizeinstance.h (neurospaces/k/4_randomizei 1.5 644))
+  (algorithms/symbol/spinesinstance.c (neurospaces/k/5_spinesinst 1.44 644))
+  (algorithms/symbol/spinesinstance.h (neurospaces/k/6_spinesinst 1.5 644))
+
+;; Files added by populate at Fri, 12 May 2006 17:28:43 -0500,
+;; to version 0.637(w), by hugo:
+
+  
+  
+  
+  (tests/tests_2_html (neurospaces/k/11_generate_h 1.31 755))
+
+;; Files added by populate at Tue, 30 May 2006 18:07:59 -0500,
+;; to version 0.650(w), by hugo:
+
+  (hierarchy/algorithminstances (neurospaces/k/12_algorithmi 1.8 644))
+  (hierarchy/algorithmclasses (neurospaces/k/13_algorithmc 1.2 755))
+  (tests/tests_2_html.ptkdb (neurospaces/k/14_tests_2_ht 1.3 644))
+
+;; Files deleted by depopulate at Fri, 02 Jun 2006 13:38:15 -0500,
+;; from version 0.652(w), by hugo:
+
+  ; (Makefile.old ())
+
+;; Files added by populate at Sun, 04 Jun 2006 23:33:25 -0500,
+;; to version 0.653(w), by hugo:
+
+  (neurospaces/algorithminstance_vtable.h (neurospaces/k/15_algorithmi 1.4 644))
+  (algorithms/symbol/contextworkerinstance.c (neurospaces/k/16_contextwor 1.4 644))
+  (algorithms/symbol/connectionworkerinstance.h (neurospaces/k/17_connection 1.3 644))
+  (algorithms/symbol/contextworkerinstance.h (neurospaces/k/18_contextwor 1.3 644))
+  (algorithms/symbol/connectionworkerinstance.c (neurospaces/k/19_connection 1.6 644))
+
+;; Files deleted by depopulate at Wed, 07 Jun 2006 11:43:03 -0500,
+;; from version 0.655(w), by hugo:
+
+  ; (library/segments/purkinje_spine2.ndf ())
+
+;; Files added by populate at Wed, 07 Jun 2006 12:01:06 -0500,
+;; to version 0.655(w), by hugo:
+
+  (library/segments/spines/thin.ndf (neurospaces/k/20_thin.ndf 1.6 644))
+  (library/segments/spines/stubby.ndf (neurospaces/k/21_stubby.ndf 1.6 644))
+  (library/segments/spines/mushroom.ndf (neurospaces/k/22_mushroom.n 1.6 644))
+
+;; Files added by populate at Thu, 22 Jun 2006 21:14:53 -0500,
+;; to version 0.665(w), by hugo:
+
+  (library/networks/purkinje-cell-layer.ndf (neurospaces/k/23_purkinje-c 1.4 644))
+  (library/networks/cerebellar-cortex.ndf (neurospaces/k/24_cerebellar 1.6 644))
+  (library/networks/white-matter.ndf (neurospaces/k/25_white-matt 1.3 644))
+
+;; Files deleted by depopulate at Tue, 27 Jun 2006 14:29:40 -0500,
+;; from version 0.668(w), by hugo:
+
+  ; (library/cells/golgi_test.ndf ())
+  ; (library/cells/granule_test.ndf ())
+
+;; Files deleted by depopulate at Tue, 27 Jun 2006 14:33:34 -0500,
+;; from version 0.668(w), by hugo:
+
+  ; (library/cns2006/network.ndf ())
+
+;; Files deleted by depopulate at Tue, 27 Jun 2006 14:38:04 -0500,
+;; from version 0.668(w), by hugo:
+
+  ; (library/fibers/mossyfiber-eval.ndf ())
+
+;; Files deleted by depopulate at Tue, 27 Jun 2006 14:38:17 -0500,
+;; from version 0.668(w), by hugo:
+
+  ; (library/networks/network-eval.ndf ())
+
+;; Files deleted by depopulate at Tue, 27 Jun 2006 14:38:30 -0500,
+;; from version 0.668(w), by hugo:
+
+  ; (library/populations/purkinje-eval.ndf ())
+
+;; Files deleted by depopulate at Tue, 27 Jun 2006 14:38:38 -0500,
+;; from version 0.668(w), by hugo:
+
+  ; (library/populations/granule-eval.ndf ())
+
+;; Files deleted by depopulate at Tue, 27 Jun 2006 14:38:42 -0500,
+;; from version 0.668(w), by hugo:
+
+  ; (library/populations/golgi-eval.ndf ())
+
+;; Files added by populate at Fri, 14 Jul 2006 12:47:53 -0500,
+;; to version 0.671(w), by hugo:
+
+  (tests/specifications/switches.t (neurospaces/k/26_switches.t 1.35 644))
+
+;; Files added by populate at Wed, 26 Jul 2006 13:09:11 -0500,
+;; to version 0.677(w), by hugo:
+
+  (html/htdocs/CNS2006-workshop/img16.png (neurospaces/k/27_img16.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img11.png (neurospaces/k/28_img11.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img6.png (neurospaces/k/29_img6.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/text10.html (neurospaces/k/30_text10.htm 1.1 644))
+  (html/htdocs/CNS2006-workshop/first0.png (neurospaces/k/31_first0.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img18.png (neurospaces/k/32_img18.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/text12.html (neurospaces/k/33_text12.htm 1.1 644))
+  (html/htdocs/CNS2006-workshop/next0.png (neurospaces/k/34_next0.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img3.png (neurospaces/k/35_img3.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img19.html (neurospaces/k/36_img19.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/text18.html (neurospaces/k/37_text18.htm 1.1 644))
+  (html/htdocs/CNS2006-workshop/img1.png (neurospaces/k/38_img1.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/text14.html (neurospaces/k/39_text14.htm 1.1 644))
+  (html/htdocs/CNS2006-workshop/text1.html (neurospaces/k/40_text1.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/img13.png (neurospaces/k/41_img13.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img10.png (neurospaces/k/42_img10.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/text3.html (neurospaces/k/43_text3.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/img19.png (neurospaces/k/44_img19.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/text15.html (neurospaces/k/45_text15.htm 1.1 644))
+  (html/htdocs/CNS2006-workshop/img1.html (neurospaces/k/46_img1.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/index.png (neurospaces/k/47_index.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/next1.png (neurospaces/k/48_next1.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/text6.html (neurospaces/k/49_text6.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/text0.html (neurospaces/k/50_text0.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/text7.html (neurospaces/k/51_text7.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/last0.png (neurospaces/l/0_last0.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img15.png (neurospaces/l/1_img15.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img15.html (neurospaces/l/2_img15.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/text5.html (neurospaces/l/3_text5.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/first1.png (neurospaces/l/4_first1.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/last1.png (neurospaces/l/5_last1.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img9.html (neurospaces/l/6_img9.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/img5.html (neurospaces/l/7_img5.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/img16.html (neurospaces/l/8_img16.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/img7.html (neurospaces/l/9_img7.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/img4.html (neurospaces/l/10_img4.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/text16.html (neurospaces/l/11_text16.htm 1.1 644))
+  (html/htdocs/CNS2006-workshop/text13.html (neurospaces/l/12_text13.htm 1.1 644))
+  (html/htdocs/CNS2006-workshop/img3.html (neurospaces/l/13_img3.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/img9.png (neurospaces/l/14_img9.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/text2.html (neurospaces/l/15_text2.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/img12.html (neurospaces/l/16_img12.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/img6.html (neurospaces/l/17_img6.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/text19.html (neurospaces/l/18_text19.htm 1.1 644))
+  (html/htdocs/CNS2006-workshop/img8.html (neurospaces/l/19_img8.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/text11.html (neurospaces/l/20_text11.htm 1.1 644))
+  (html/htdocs/CNS2006-workshop/text17.html (neurospaces/l/21_text17.htm 1.1 644))
+  (html/htdocs/CNS2006-workshop/img5.png (neurospaces/l/22_img5.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img7.png (neurospaces/l/23_img7.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img11.html (neurospaces/l/24_img11.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/prev0.png (neurospaces/l/25_prev0.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img0.png (neurospaces/l/26_img0.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img13.html (neurospaces/l/27_img13.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/img0.html (neurospaces/l/28_img0.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/img17.html (neurospaces/l/29_img17.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/text.png (neurospaces/l/30_text.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/text4.html (neurospaces/l/31_text4.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/img12.png (neurospaces/l/32_img12.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/text8.html (neurospaces/l/33_text8.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/text9.html (neurospaces/l/34_text9.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/img8.png (neurospaces/l/35_img8.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img2.html (neurospaces/l/36_img2.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/img14.png (neurospaces/l/37_img14.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img10.html (neurospaces/l/38_img10.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/prev1.png (neurospaces/l/39_prev1.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img14.html (neurospaces/l/40_img14.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/img17.png (neurospaces/l/41_img17.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img18.html (neurospaces/l/42_img18.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/index.html (neurospaces/l/43_index.html 1.1 644))
+  (html/htdocs/CNS2006-workshop/img2.png (neurospaces/l/44_img2.png 1.1 644) :no-keywords)
+  (html/htdocs/CNS2006-workshop/img4.png (neurospaces/l/45_img4.png 1.1 644) :no-keywords)
+
+;; Files added by populate at Tue, 05 Sep 2006 16:18:45 -0500,
+;; to version 0.696(w), by hugo:
+
+  (tests/command_extractor (neurospaces/l/46_command_ex 1.3 755))
+
+;; Files added by populate at Fri, 29 Sep 2006 21:40:39 -0500,
+;; to version 0.712(w), by hugo:
+
+  (neurospaces/axonhillock.h (neurospaces/l/47_axonhilloc 1.16 644))
+  (tests.config (neurospaces/l/48_tests.conf 1.3 644))
+  (tests/command_extractor.ptkdb (neurospaces/l/49_command_ex 1.1 644))
+  (axonhillock.c (neurospaces/l/50_axonhilloc 1.17 644))
+
+;; Files added by populate at Wed, 04 Oct 2006 15:06:46 -0500,
+;; to version 0.713(w), by hugo:
+
+  
+
+;; Files added by populate at Fri, 27 Oct 2006 13:03:06 -0500,
+;; to version 0.716(w), by hugo:
+
+  (library/segments/purkinje_soma_passive.ndf (neurospaces/m/0_purkinje_s 1.2 644))
+  (library/segments/purkinje_spinyd_passive.ndf (neurospaces/m/1_purkinje_s 1.2 644))
+  (library/segments/purkinje_thickd_passive.ndf (neurospaces/m/2_purkinje_t 1.2 644))
+  (library/segments/purkinje_maind_passive.ndf (neurospaces/m/3_purkinje_m 1.2 644))
+
+;; Files added by populate at Sun, 12 Nov 2006 07:11:33 -0600,
+;; to version 0.718(w), by hugo:
+
+  (lexsupport.patch (neurospaces/m/4_lexsupport 1.1 644))
+
+;; Files added by populate at Sat, 02 Dec 2006 09:57:44 -0600,
+;; to version 0.730(w), by hugo:
+
+  (docs/logos/ns-main-logo-dark2-notext.jpg (neurospaces/m/5_ns-main-lo 1.1 644) :no-keywords)
+  (docs/logos/ns-main-logo-dark2.jpg (neurospaces/m/6_ns-main-lo 1.1 644) :no-keywords)
+  (docs/logos/ns-neuron-pictogram.jpg (neurospaces/m/7_ns-neuron- 1.1 644) :no-keywords)
+  (docs/logos/ns-ion-pictogram.jpg (neurospaces/m/8_ns-ion-pic 1.1 644) :no-keywords)
+  (docs/logos/ns-brain-pictogram.jpg (neurospaces/m/9_ns-brain-p 1.1 644) :no-keywords)
+  (html/htdocs/logos/ns-brain-pictogram.jpg (../../../docs/logos/ns-brain-pictogram.jpg) :symlink)
+  (html/htdocs/logos/ns-neuron-pictogram.jpg (../../../docs/logos/ns-neuron-pictogram.jpg) :symlink)
+  (html/htdocs/logos/ns-ion-pictogram.jpg (../../../docs/logos/ns-ion-pictogram.jpg) :symlink)
+  (html/htdocs/logos/ns-main-logo-dark2-notext.jpg (../../../docs/logos/ns-main-logo-dark2-notext.jpg) :symlink)
+  (html/htdocs/logos/ns-main-logo-dark2.jpg (../../../docs/logos/ns-main-logo-dark2.jpg) :symlink)
+  
+
+;; Files deleted by depopulate at Sun, 03 Dec 2006 10:25:47 -0600,
+;; from version 0.731(w), by hugo:
+
+  ; (html/htdocs/semantic.cache ())
+
+;; Files added by populate at Sun, 03 Dec 2006 19:51:41 -0600,
+;; to version 0.734(w), by hugo:
+
+  (docs/logos/ns-main-logo-dark2-notext-320x256.jpg (neurospaces/m/11_ns-main-lo 1.1 644) :no-keywords)
+  (docs/logos/ns-neuron-pictogram-128x128.jpg (neurospaces/m/12_ns-neuron- 1.1 644) :no-keywords)
+  (docs/logos/ns-brain-pictogram-128x128.jpg (neurospaces/m/13_ns-brain-p 1.1 644) :no-keywords)
+  (docs/logos/ns-ion-pictogram-128x128.jpg (neurospaces/m/14_ns-ion-pic 1.1 644) :no-keywords)
+  (docs/logos/ns-main-logo-dark2-384x320.jpg (neurospaces/m/15_ns-main-lo 1.1 644) :no-keywords)
+
+;; Files added by populate at Sun, 03 Dec 2006 21:03:56 -0600,
+;; to version 0.737(w), by hugo:
+
+  (docs/logos/ns-ion-pictogram-32x32.jpg (neurospaces/m/16_ns-ion-pic 1.1 644) :no-keywords)
+  (docs/logos/ns-brain-pictogram-32x32.jpg (neurospaces/m/17_ns-brain-p 1.1 644) :no-keywords)
+  (docs/logos/ns-neuron-pictogram-32x32.jpg (neurospaces/m/18_ns-neuron- 1.1 644) :no-keywords)
+  (docs/logos/ns-main-logo-dark2-notext-32x32.jpg (neurospaces/m/19_ns-main-lo 1.1 644) :no-keywords)
+
+;; Files added by populate at Mon, 04 Dec 2006 17:37:35 -0600,
+;; to version 0.742(w), by hugo:
+
+  (tests/html/ns-main-logo-dark2-notext-32x32.jpg (../../docs/logos/ns-main-logo-dark2-notext-32x32.jpg) :symlink)
+  (tests/html/library/ns-main-logo-dark2-notext-32x32.jpg (../../../docs/logos/ns-main-logo-dark2-notext-32x32.jpg) :symlink)
+  (tests/html/library/code/ns-main-logo-dark2-notext-32x32.jpg (../../../../docs/logos/ns-main-logo-dark2-notext-32x32.jpg) :symlink)
+  (tests/html/library/algorithms/ns-main-logo-dark2-notext-32x32.jpg (../../../../docs/logos/ns-main-logo-dark2-notext-32x32.jpg) :symlink)
+  (tests/html/code/ns-main-logo-dark2-notext-32x32.jpg (../../../docs/logos/ns-main-logo-dark2-notext-32x32.jpg) :symlink)
+  (tests/html/algorithms/ns-main-logo-dark2-notext-32x32.jpg (../../../docs/logos/ns-main-logo-dark2-notext-32x32.jpg) :symlink)
+
+;; Files added by populate at Fri, 08 Dec 2006 12:18:46 -0600,
+;; to version 0.747(w), by hugo:
+
+  
+
+;; Files added by populate at Fri, 08 Dec 2006 13:06:49 -0600,
+;; to version 0.748(w), by hugo:
+
+  (docs/logos/favicon.ico (neurospaces/m/20_favicon.ic 1.1 644) :no-keywords)
+  (html/htdocs/favicon.ico (../../docs/logos/favicon.ico) :symlink)
+  (html/htdocs/publications/about/Cornelis_NeuComp_07.pdf (neurospaces/m/21_Cornelis_N 1.1 644) :no-keywords)
+  (html/htdocs/publications/about/Cornelis_NeuComp_04.pdf (neurospaces/m/22_Cornelis_N 1.1 644) :no-keywords)
+  (html/htdocs/publications/about/Cornelis_NeuComp_03.pdf (neurospaces/m/23_Cornelis_N 1.1 644) :no-keywords)
+
+;; Files added by populate at Wed, 03 Jan 2007 15:24:55 -0600,
+;; to version 0.755(w), by hugo:
+
+  (library/gates/naf_activation.ndf (neurospaces/m/24_naf_activa 1.9 644))
+
+;; Files added by populate at Thu, 04 Jan 2007 16:56:38 -0600,
+;; to version 0.756(w), by hugo:
+
+  (gatekinetic.c (neurospaces/m/25_gatekineti 1.13 644))
+  (hhgate.c (neurospaces/m/26_conceptual 1.14 644))
+  (neurospaces/gatekinetic.h (neurospaces/m/27_gatekineti 1.7 644))
+  (neurospaces/hhgate.h (neurospaces/m/28_conceptual 1.8 644))
+
+;; Files added by populate at Thu, 04 Jan 2007 17:13:06 -0600,
+;; to version 0.756(w), by hugo:
+
+  (tests/specifications/gates.t (neurospaces/m/29_gates.t 1.8 644))
+
+;; Files added by populate at Thu, 11 Jan 2007 10:37:38 -0600,
+;; to version 0.776(w), by hugo:
+
+  (library/channels/purkinje_naf2.ndf (neurospaces/m/30_purkinje_n 1.3 644))
+
+;; Files added by populate at Sun, 14 Jan 2007 18:12:25 -0600,
+;; to version 0.787(w), by hugo:
+
+  (glue/swig/neurospaces.i (neurospaces/m/31_neurospace 1.31 644))
+  (glue/swig/aclocal.m4 (neurospaces/m/32_aclocal.m4 1.1 644))
+  (glue/swig/perl/aclocal.m4 (neurospaces/m/33_aclocal.m4 1.1 644))
+
+;; Files added by populate at Sun, 14 Jan 2007 18:36:01 -0600,
+;; to version 0.787(w), by hugo:
+
+  (glue/swig/perl/tests/neurospaces_test.pm (neurospaces/m/34_neurospace 1.23 755))
+
+;; Files added by populate at Mon, 15 Jan 2007 22:12:33 -0600,
+;; to version 0.791(w), by hugo:
+
+  (algorithmsymbol.c (neurospaces/m/35_algorithms 1.11 644))
+  (neurospaces/algorithmsymbol.h (neurospaces/m/36_algorithms 1.8 644))
+
+;; Files deleted by depopulate at Tue, 16 Jan 2007 17:02:34 -0600,
+;; from version 0.800(w), by hugo:
+
+  ; (donumberlines.l ())
+
+;; Files added by populate at Sat, 20 Jan 2007 10:39:19 -0600,
+;; to version 0.803(w), by hugo:
+
+  (tests/specifications/code/allocations.t (neurospaces/m/37_allocation 1.6 644))
+
+;; Files deleted by depopulate at Wed, 24 Jan 2007 12:27:34 -0600,
+;; from version 0.814(w), by hugo:
+
+  ; (html/htdocs/tests () :directory)
+
+;; Files added by populate at Thu, 01 Feb 2007 15:14:51 -0600,
+;; to version 0.823(w), by hugo:
+
+  (neurospaces/traversablealgorithm.h (neurospaces/m/38_traversabl 1.4 644))
+
+;; Files added by populate at Thu, 01 Feb 2007 17:05:51 -0600,
+;; to version 0.825(w), by hugo:
+
+  (tests/specifications/errors.t (neurospaces/m/39_errors.t 1.27 644))
+
+;; Files added by populate at Thu, 01 Feb 2007 17:28:28 -0600,
+;; to version 0.825(w), by hugo:
+
+  (library/utilities/circle.ndf (neurospaces/m/40_circle.ndf 1.4 644))
+
+;; Files added by populate at Thu, 01 Feb 2007 19:52:42 -0600,
+;; to version 0.827(w), by hugo:
+
+  (library/utilities/syntaxerror.ndf (neurospaces/m/41_syntaxerro 1.2 644))
+
+;; Files added by populate at Thu, 01 Feb 2007 22:06:47 -0600,
+;; to version 0.832(w), by hugo:
+
+  (segmenter.c (neurospaces/m/42_segmenter. 1.49 644))
+  (neurospaces/segmenter.h (neurospaces/m/43_segmenter. 1.15 644))
+
+;; Files deleted by depopulate at Wed, 07 Feb 2007 09:39:39 -0600,
+;; from version 0.848(w), by hugo:
+
+  ; (channelvirtual_protos.c ())
+  ; (connectionvirtual_protos.c ())
+
+;; Files deleted by depopulate at Wed, 07 Feb 2007 09:39:49 -0600,
+;; from version 0.848(w), by hugo:
+
+  ; (neurospaces/channelvirtual_protos.h ())
+  ; (neurospaces/connectionvirtual_protos.h ())
+
+;; Files deleted by depopulate at Wed, 07 Feb 2007 09:42:57 -0600,
+;; from version 0.849(w), by hugo:
+
+  ; (segmentvirtual_protos.c ())
+
+;; Files deleted by depopulate at Wed, 07 Feb 2007 09:43:04 -0600,
+;; from version 0.849(w), by hugo:
+
+  ; (neurospaces/segmentvirtual_protos.h ())
+
+;; Files added by populate at Mon, 12 Feb 2007 14:38:22 -0600,
+;; to version 0.857(w), by hugo:
+
+  (tests/tests.config (neurospaces/m/44_tests.conf 1.4 644))
+
+;; Files added by populate at Wed, 21 Feb 2007 16:58:43 -0600,
+;; to version 0.869(w), by hugo:
+
+  (library/tests/segments/maind.ndf (neurospaces/m/45_maind.ndf 1.2 644))
+  (library/tests/segments/soma.ndf (neurospaces/m/46_soma.ndf 1.2 644))
+  (library/tests/cells/tensizesp.ndf (neurospaces/m/47_tensizesp. 1.4 644))
+
+;; Files added by populate at Thu, 22 Feb 2007 09:29:43 -0600,
+;; to version 0.870(w), by hugo:
+
+  (glue/swig/perl/Neurospaces.pm (neurospaces/m/48_Neurospace 1.48 644))
+
+;; Files added by populate at Fri, 23 Feb 2007 22:13:42 -0600,
+;; to version 0.873(w), by hugo:
+
+  (library/tests/cells/c1c2p2.ndf (neurospaces/m/49_c1c2p2.ndf 1.2 644))
+  (library/tests/cells/c1c2p1.ndf (neurospaces/m/50_c1c2p1.ndf 1.2 644))
+  (library/tests/cells/triplep.ndf (neurospaces/m/51_triplep.nd 1.2 644))
+  (library/tests/cells/fork4p3.ndf (neurospaces/n/0_fork4p3.nd 1.2 644))
+  (library/tests/cells/fork4p2.ndf (neurospaces/n/1_fork4p2.nd 1.2 644))
+  (library/tests/cells/fork4p1.ndf (neurospaces/n/2_fork4p1.nd 1.2 644))
+  (library/tests/cells/fork3p.ndf (neurospaces/n/3_fork3p.ndf 1.2 644))
+  (library/tests/cells/doublep.ndf (neurospaces/n/4_doublep.nd 1.2 644))
+  (library/tests/cells/singlep.ndf (neurospaces/n/5_singlep.nd 1.2 644))
+
+;; Files added by populate at Fri, 02 Mar 2007 22:07:26 -0600,
+;; to version 0.889(w), by hugo:
+
+  (library/tests/cells/singlea_naf.ndf (neurospaces/n/6_singlea_na 1.6 644))
+
+;; Files added by populate at Mon, 05 Mar 2007 14:27:52 -0600,
+;; to version 0.889(w), by hugo:
+
+  (library/gates/naf_inactivation.ndf (neurospaces/n/7_naf_inacti 1.6 644))
+
+;; Files added by populate at Tue, 06 Mar 2007 17:10:41 -0600,
+;; to version 0.889(w), by hugo:
+
+  (library/tests/cells/table_naf.ndf (neurospaces/n/8_table_naf. 1.6 644))
+  (library/tests/cells/pool1.ndf (neurospaces/n/9_pool1.ndf 1.5 644))
+
+;; Files added by populate at Tue, 06 Mar 2007 17:37:14 -0600,
+;; to version 0.889(w), by hugo:
+
+  (library/gates/cat_inactivation.ndf (neurospaces/n/10_cat_inacti 1.6 644))
+  (library/gates/cat_activation.ndf (neurospaces/n/11_cat_activa 1.7 644))
+
+;; Files added by populate at Wed, 07 Mar 2007 15:12:59 -0600,
+;; to version 0.890(w), by hugo:
+
+  (tests/specifications/pools.t (neurospaces/n/12_pools.t 1.8 644))
+
+;; Files added by populate at Thu, 08 Mar 2007 12:20:20 -0600,
+;; to version 0.895(w), by hugo:
+
+  (library/tests/cells/pool2.ndf (neurospaces/n/13_pool2.ndf 1.5 644))
+
+;; Files added by populate at Thu, 08 Mar 2007 13:56:23 -0600,
+;; to version 0.897(w), by hugo:
+
+  (library/tests/cells/pool1_feedback1.ndf (neurospaces/n/14_pool1_feed 1.8 644))
+  (library/gates/kc_concentration.ndf (neurospaces/n/15_kc_concent 1.4 644))
+  (library/gates/kc_activation.ndf (neurospaces/n/16_kc_activat 1.4 644))
+
+;; Files added by populate at Thu, 08 Mar 2007 15:19:34 -0600,
+;; to version 0.897(w), by hugo:
+
+  (concentrationgatekinetic.c (neurospaces/n/17_concentrat 1.5 644))
+  (neurospaces/concentrationgatekinetic.h (neurospaces/n/18_concentrat 1.2 644))
+
+;; Files added by populate at Thu, 08 Mar 2007 20:06:59 -0600,
+;; to version 0.900(w), by hugo:
+
+  (library/tests/cells/pool1_feedback2.ndf (neurospaces/n/19_pool1_feed 1.5 644))
+
+;; Files added by populate at Mon, 12 Mar 2007 23:29:41 -0500,
+;; to version 0.908(w), by hugo:
+
+  (grammar/ruler (neurospaces/n/20_ruler 1.2 755))
+  (grammar/symbols (neurospaces/n/21_symbols 1.2 644))
+  (grammar/ruler.ptkdb (neurospaces/n/22_ruler.ptkd 1.1 644))
+
+;; Files added by populate at Tue, 13 Mar 2007 11:03:01 -0500,
+;; to version 0.911(w), by hugo:
+
+  (library/gates/k2_concentration.ndf (neurospaces/n/23_k2_concent 1.3 644))
+  (library/gates/k2_activation.ndf (neurospaces/n/24_k2_activat 1.4 644))
+  (library/gates/ka_inactivation.ndf (neurospaces/n/25_ka_inactiv 1.4 644))
+  (library/gates/ka_activation.ndf (neurospaces/n/26_ka_activat 1.4 644))
+  (library/gates/cap_inactivation.ndf (neurospaces/n/27_cap_inacti 1.4 644))
+  (library/gates/cap_activation.ndf (neurospaces/n/28_cap_activa 1.4 644))
+  (library/gates/nap_activation.ndf (neurospaces/n/29_nap_activa 1.4 644))
+
+;; Files added by populate at Tue, 13 Mar 2007 14:54:05 -0500,
+;; to version 0.912(w), by hugo:
+
+  (library/gates/kdr_steadystate.ndf (neurospaces/n/30_kdr_steady 1.5 644))
+
+;; Files added by populate at Tue, 13 Mar 2007 16:51:54 -0500,
+;; to version 0.912(w), by hugo:
+
+  (library/gates/kdr_tau.ndf (neurospaces/n/31_kdr_tau.nd 1.4 644))
+
+;; Files added by populate at Thu, 15 Mar 2007 17:17:41 -0500,
+;; to version 0.914(w), by hugo:
+
+  (library/gates/kh.ndf (neurospaces/n/32_kh.ndf 1.5 644))
+  (library/gates/km.ndf (neurospaces/n/33_km.ndf 1.3 644))
+
+;; Files added by populate at Sat, 17 Mar 2007 11:09:59 -0500,
+;; to version 0.917(w), by hugo:
+
+  (library/tests/cells/purk_test.ndf (neurospaces/n/34_purk_test. 1.8 644))
+
+;; Files added by populate at Sat, 17 Mar 2007 11:16:06 -0500,
+;; to version 0.918(w), by hugo:
+
+  (html/htdocs/history.html (neurospaces/n/35_history.ht 1.3 644))
+
+;; Files added by populate at Sat, 17 Mar 2007 20:50:13 -0500,
+;; to version 0.919(w), by hugo:
+
+  (library/tests/channels/cat.ndf (neurospaces/n/36_cat.ndf 1.2 644))
+  (library/tests/segments/purkinje/soma.ndf (neurospaces/n/37_soma.ndf 1.5 644))
+  (library/tests/segments/purkinje/maind.ndf (neurospaces/n/38_maind.ndf 1.3 644))
+  (library/tests/channels/nap.ndf (neurospaces/n/39_nap.ndf 1.2 644))
+  (library/tests/channels/kh.ndf (neurospaces/n/40_kh.ndf 1.2 644))
+  (library/tests/channels/naf.ndf (neurospaces/n/41_naf.ndf 1.2 644))
+  (library/tests/channels/k2.ndf (neurospaces/n/42_k2.ndf 1.2 644))
+  (library/tests/channels/kc.ndf (neurospaces/n/43_kc.ndf 1.3 644))
+  (library/tests/channels/km.ndf (neurospaces/n/44_km.ndf 1.2 644))
+  (library/tests/channels/kdr.ndf (neurospaces/n/45_kdr.ndf 1.2 644))
+  (library/tests/channels/ka.ndf (neurospaces/n/46_ka.ndf 1.2 644))
+  (library/tests/channels/cap.ndf (neurospaces/n/47_cap.ndf 1.4 644))
+  (library/tests/segments/purkinje/thickd.ndf (neurospaces/n/48_thickd.ndf 1.4 644))
+
+;; Files added by populate at Tue, 20 Mar 2007 14:39:23 -0500,
+;; to version 0.931(w), by hugo:
+
+  (library/tests/cells/table_kh.ndf (neurospaces/n/49_table_kh.n 1.2 644))
+  (library/tests/cells/table_nap.ndf (neurospaces/n/50_table_nap. 1.2 644))
+  (library/tests/cells/table_kdr.ndf (neurospaces/n/51_table_kdr. 1.2 644))
+  (library/tests/cells/table_kc.ndf (neurospaces/o/0_table_kc.n 1.2 644))
+  (library/tests/cells/table_ka.ndf (neurospaces/o/1_table_ka.n 1.2 644))
+  (library/tests/cells/table_k2.ndf (neurospaces/o/2_table_k2.n 1.2 644))
+  (library/tests/cells/table_cat.ndf (neurospaces/o/3_table_cat. 1.2 644))
+  (library/tests/cells/table_cap.ndf (neurospaces/o/4_table_cap. 1.3 644))
+  (library/tests/cells/table_km.ndf (neurospaces/o/5_table_km.n 1.2 644))
+
+;; Files added by populate at Fri, 23 Mar 2007 11:42:17 -0500,
+;; to version 0.942(w), by hugo:
+
+  (library/tests/cells/channel1_nernst1.ndf (neurospaces/o/6_pool1_nern 1.3 644))
+  (library/tests/cells/purk_test_soma.ndf (neurospaces/o/7_purk_test_ 1.3 644))
+  (library/tests/cells/pool1_contributors2.ndf (neurospaces/o/8_pool1_cont 1.2 644))
+
+;; Files added by populate at Fri, 23 Mar 2007 17:44:15 -0500,
+;; to version 0.945(w), by hugo:
+
+  (library/tests/cells/channel2_nernst2.ndf (neurospaces/o/9_channel2_n 1.2 644))
+
+;; Files added by populate at Sun, 01 Apr 2007 16:29:05 -0500,
+;; to version 0.964(w), by hugo:
+
+  (library/tests/segments/purkinje/axon.ndf (neurospaces/o/10_axon.ndf 1.1 644))
+  (library/tests/cells/purk_test_axon.ndf (neurospaces/o/11_purk_test_ 1.1 644))
+
+;; Files added by populate at Sun, 01 Apr 2007 18:09:05 -0500,
+;; to version 0.966(w), by hugo:
+
+  (library/tests/segments/purkinje/spinyd.ndf (neurospaces/o/12_spinyd.ndf 1.4 644))
+  (library/tests/cells/purkinje/edsjb1994.ndf (neurospaces/o/13_edsjb1994. 1.4 644))
+
+;; Files added by populate at Wed, 04 Apr 2007 21:55:14 -0500,
+;; to version 0.969(w), by hugo:
+
+  (library/tests/cells/springmass3.ndf (neurospaces/o/14_springmass 1.2 644))
+
+;; Files added by populate at Thu, 05 Apr 2007 17:27:50 -0500,
+;; to version 0.973(w), by hugo:
+
+  (tests/specifications/parameteroperations.t (neurospaces/o/15_parameters 1.12 644))
+
+;; Files added by populate at Tue, 10 Apr 2007 13:37:34 -0500,
+;; to version 0.990(w), by hugo:
+
+  (html/htdocs/cbi.png (neurospaces/o/16_cbi.png 1.1 644) :no-keywords)
+
+;; Files added by populate at Wed, 18 Apr 2007 17:23:24 -0500,
+;; to version 0.1013(w), by hugo:
+
+  (library/utilities/functions.ndf (neurospaces/o/17_functions. 1.2 644))
+  (tests/specifications/functions.t (neurospaces/o/18_functions. 1.3 644))
+  (glue/swig/perl/Neurospaces/Query.pm (neurospaces/o/19_Query.pm 1.1 644))
+  (glue/swig/perl/Neurospaces/Traversal.pm (neurospaces/o/20_Traversal. 1.3 644))
+
+;; Files added by populate at Sat, 21 Apr 2007 21:20:27 -0500,
+;; to version 0.1029(w), by hugo:
+
+  
+
+;; Files added by populate at Wed, 02 May 2007 21:08:03 -0500,
+;; to version 0.1047(w), by hugo:
+
+  (glue/swig/perl/neurospaces.i (neurospaces/o/22_neurospace 1.23 644))
+
+;; Files added by populate at Fri, 18 May 2007 15:20:43 -0500,
+;; to version 0.1121(w), by hugo:
+
+  (neurospaces_make.out (neurospaces/o/23_neurospace 1.1 644))
+
+;; Files added by populate at Fri, 25 May 2007 22:20:44 -0500,
+;; to version 0.1158(w), by hugo:
+
+  (tests/specifications/environment.t (neurospaces/o/24_environmen 1.4 644))
+
+;; Files added by populate at Sat, 26 May 2007 09:23:27 -0500,
+;; to version 0.1162(w), by hugo:
+
+  (tests/specifications/code/parametertypes.t (neurospaces/o/25_parametert 1.1 644))
+
+;; Files deleted by depopulate at Tue, 29 May 2007 20:33:38 -0500,
+;; from version 0.1172(w), by hugo:
+
+  ; (perl/Neurospaces_embed.pm ())
+  ; (perl/Neurospaces/SolverInfo.pm ())
+  ; (perl/Threads.pm ())
+  ; (perl/Neurospaces/GUI/Components/Node.pm ())
+  ; (perl/Neurospaces/GUI.pm ())
+  ; (perl/Neurospaces/GUI/Components/Link.pm ())
+  ; (perl/Neurospaces/GUI/Components/Cell.pm ())
+  ; (perl/Neurospaces/GUI/Tools/Renderer.pm ())
+  ; (perl/Neurospaces/GUI/Components/Network.pm ())
+  ; (perl/Neurospaces/Biolevels.pm ())
+  ; (perl/Neurospaces/GUI/Matrix.pm ())
+  ; (perl/Neurospaces/GUI/Namespaces.pm ())
+  ; (perl/Neurospaces/GUI/Files.pm ())
+  ; (perl/Neurospaces/GUI/Algorithms.pm ())
+  ; (perl/Neurospaces/GUI/Extractor.pm ())
+  ; (perl/Neurospaces/GUI/Workload.pm ())
+  ; (perl/Neurospaces/GUI/Command.pm ())
+  ; (perl/stubs.pm ())
+  ; (perl/Neurospaces/Modeler.pm ())
+
+;; Files deleted by depopulate at Tue, 29 May 2007 20:34:20 -0500,
+;; from version 0.1172(w), by hugo:
+
+  ; (perl/Neurospaces.c ())
+  ; (perl/Neurospaces.h ())
+
+;; Files deleted by depopulate at Tue, 29 May 2007 20:35:00 -0500,
+;; from version 0.1172(w), by hugo:
+
+  ; (perl/Neurospaces/GUI/Tools/numbers-7x11.txt ())
+
+;; Files deleted by depopulate at Tue, 29 May 2007 20:35:12 -0500,
+;; from version 0.1172(w), by hugo:
+
+  ; (perl/test ())
+
+;; Files deleted by depopulate at Tue, 29 May 2007 20:36:45 -0500,
+;; from version 0.1172(w), by hugo:
+
+  ; (br2p.c ())
+
+;; Files deleted by depopulate at Tue, 29 May 2007 20:36:53 -0500,
+;; from version 0.1172(w), by hugo:
+
+  ; (neurospaces/br2p.h ())
+
+;; Files added by populate at Mon, 04 Jun 2007 22:07:21 -0500,
+;; to version 0.1174(w), by hugo:
+
+  (library/contours/section1.ndf (neurospaces/o/26_section1.n 1.3 644))
+  (vectorcontour.c (neurospaces/o/27_vectorcont 1.5 644))
+  (contourpoint.c (neurospaces/o/28_contourpoi 1.6 644))
+  (emcontour.c (neurospaces/o/29_emcontour. 1.5 644))
+  (neurospaces/vectorcontour.h (neurospaces/o/30_vectorcont 1.2 644))
+  (neurospaces/emcontour.h (neurospaces/o/31_emcontour. 1.2 644))
+  (neurospaces/contourpoint.h (neurospaces/o/32_contourpoi 1.3 644))
+
+;; Files added by populate at Tue, 05 Jun 2007 16:13:05 -0500,
+;; to version 0.1183(w), by hugo:
+
+  (convertors/contours2ndf (neurospaces/o/33_contours2n 1.7 755))
+
+;; Files added by populate at Wed, 06 Jun 2007 23:05:33 -0500,
+;; to version 0.1188(w), by hugo:
+
+  (convertors/contours2ndf.ptkdb (neurospaces/o/34_contours2n 1.2 644))
+  (cachedcoordinate.c (neurospaces/o/35_cachedcoor 1.1 644))
+  (coordinatecache.c (neurospaces/o/36_coordinate 1.4 644))
+  (tests/specifications/coordinatecaching.t (neurospaces/o/37_coordinate 1.5 644))
+  (neurospaces/cachedcoordinate.h (neurospaces/o/38_cachedcoor 1.1 644))
+  (neurospaces/coordinatecache.h (neurospaces/o/39_coordinate 1.1 644))
+
+;; Files added by populate at Sun, 10 Jun 2007 10:03:06 -0500,
+;; to version 0.1205(w), by hugo:
+
+  (cacheregistry.c (neurospaces/o/40_cacheregis 1.2 644))
+  (neurospaces/cacheregistry.h (neurospaces/o/41_cacheregis 1.2 644))
+
+;; Files added by populate at Tue, 19 Jun 2007 16:06:09 -0500,
+;; to version 0.1235(w), by hugo:
+
+  (algorithms/symbol/inserterinstance.h (neurospaces/o/42_inserterin 1.1 644))
+  (algorithms/symbol/inserterinstance.c (neurospaces/o/43_inserterin 1.24 644))
+  (algorithms/symbol/inserter.h (neurospaces/o/44_inserter.h 1.1 644))
+  (algorithms/symbol/inserter.c (neurospaces/o/45_inserter.c 1.3 644))
+  (library/segments/micron2.ndf (neurospaces/o/46_micron2.nd 1.4 644))
+  (tests/specifications/algorithms/inserter.t (neurospaces/o/47_inserter.t 1.13 644))
+
+;; Files added by populate at Tue, 19 Jun 2007 21:58:07 -0500,
+;; to version 0.1236(w), by hugo:
+
+  (library/algorithm_data/inserter_excitation.heights (neurospaces/o/48_inserter.h 1.7 644))
+
+;; Files added by populate at Sun, 24 Jun 2007 18:09:59 -0500,
+;; to version 0.1263(w), by hugo:
+
+  (library/algorithm_data/inserter_spines.heights (neurospaces/o/49_inserter_s 1.1 644))
+  (library/algorithm_data/inserter_inhibition.heights (neurospaces/o/50_inserter_i 1.1 644))
+  (library/utilities/incomplete_inserter.ndf (neurospaces/o/51_incomplete 1.1 644))
+
+;; Files added by populate at Sun, 24 Jun 2007 21:49:42 -0500,
+;; to version 0.1268(w), by hugo:
+
+  (algorithms/symbol/replacerinstance.h (neurospaces/p/0_replacerin 1.1 644))
+  (algorithms/symbol/replacerinstance.c (neurospaces/p/1_replacerin 1.8 644))
+  (algorithms/symbol/replacer.c (neurospaces/p/2_replacer.c 1.1 644))
+  (algorithms/symbol/replacer.h (neurospaces/p/3_replacer.h 1.1 644))
+
+;; Files added by populate at Mon, 25 Jun 2007 15:20:04 -0500,
+;; to version 0.1271(w), by hugo:
+
+  (docs/paper.outline (neurospaces/p/4_paper.outl 1.8 644))
+  (NOTES (neurospaces/p/5_NOTES 1.8 644))
+
+;; Files added by populate at Thu, 28 Jun 2007 12:07:00 -0500,
+;; to version 0.1295(w), by hugo:
+
+  (library/event_data/events.yml (neurospaces/p/6_events.yml 1.1 644))
+  (library/tests/cells/springmass4.ndf (neurospaces/p/7_springmass 1.2 644))
+
+;; Files added by populate at Sat, 30 Jun 2007 13:09:10 -0500,
+;; to version 0.1310(w), by hugo:
+
+  (library/cells/purk2m9s_partitioned.ndf (neurospaces/p/8_purk2m9s_p 1.3 644))
+  (library/tests/cells/purkinje/edsjb1994_partitioned.ndf (neurospaces/p/9_edsjb1994_ 1.2 644))
+
+;; Files added by populate at Sat, 30 Jun 2007 15:08:44 -0500,
+;; to version 0.1311(w), by hugo:
+
+  (library/utilities/parents.ndf (neurospaces/p/10_parents.nd 1.2 644))
+
+;; Files added by populate at Fri, 06 Jul 2007 18:11:57 -0500,
+;; to version 0.1322(w), by hugo:
+
+  (tests/introduction.html (neurospaces/p/11_introducti 1.1 644))
+
+;; Files added by populate at Mon, 30 Jul 2007 11:59:08 -0500,
+;; to version 0.1336(w), by hugo:
+
+  (html/htdocs/technologies.html (neurospaces/p/12_technologi 1.4 644))
+
+;; Files added by populate at Mon, 30 Jul 2007 12:00:05 -0500,
+;; to version 0.1337(w), by hugo:
+
+  (html/htdocs/CNS2007-workshop/text.jpg (neurospaces/p/13_text.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/index.jpg (neurospaces/p/14_index.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/last1.jpg (neurospaces/p/15_last1.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/last0.jpg (neurospaces/p/16_last0.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/next1.jpg (neurospaces/p/17_next1.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/next0.jpg (neurospaces/p/18_next0.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/prev1.jpg (neurospaces/p/19_prev1.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/prev0.jpg (neurospaces/p/20_prev0.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/first1.jpg (neurospaces/p/21_first1.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/first0.jpg (neurospaces/p/22_first0.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/index.html (neurospaces/p/23_index.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/text12.html (neurospaces/p/24_text12.htm 1.1 644))
+  (html/htdocs/CNS2007-workshop/text11.html (neurospaces/p/25_text11.htm 1.1 644))
+  (html/htdocs/CNS2007-workshop/text10.html (neurospaces/p/26_text10.htm 1.1 644))
+  (html/htdocs/CNS2007-workshop/text9.html (neurospaces/p/27_text9.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/text8.html (neurospaces/p/28_text8.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/text7.html (neurospaces/p/29_text7.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/text6.html (neurospaces/p/30_text6.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/text5.html (neurospaces/p/31_text5.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/text4.html (neurospaces/p/32_text4.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/text3.html (neurospaces/p/33_text3.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/text2.html (neurospaces/p/34_text2.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/text1.html (neurospaces/p/35_text1.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/text0.html (neurospaces/p/36_text0.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/img12.html (neurospaces/p/37_img12.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/img11.html (neurospaces/p/38_img11.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/img10.html (neurospaces/p/39_img10.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/img9.html (neurospaces/p/40_img9.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/img8.html (neurospaces/p/41_img8.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/img7.html (neurospaces/p/42_img7.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/img6.html (neurospaces/p/43_img6.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/img5.html (neurospaces/p/44_img5.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/img4.html (neurospaces/p/45_img4.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/img3.html (neurospaces/p/46_img3.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/img2.html (neurospaces/p/47_img2.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/img1.html (neurospaces/p/48_img1.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/img0.html (neurospaces/p/49_img0.html 1.1 644))
+  (html/htdocs/CNS2007-workshop/img12.jpg (neurospaces/p/50_img12.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/img11.jpg (neurospaces/p/51_img11.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/img10.jpg (neurospaces/q/0_img10.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/img9.jpg (neurospaces/q/1_img9.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/img8.jpg (neurospaces/q/2_img8.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/img7.jpg (neurospaces/q/3_img7.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/img6.jpg (neurospaces/q/4_img6.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/img5.jpg (neurospaces/q/5_img5.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/img4.jpg (neurospaces/q/6_img4.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/img3.jpg (neurospaces/q/7_img3.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/img2.jpg (neurospaces/q/8_img2.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/img1.jpg (neurospaces/q/9_img1.jpg 1.1 644) :no-keywords)
+  (html/htdocs/CNS2007-workshop/img0.jpg (neurospaces/q/10_img0.jpg 1.1 644) :no-keywords)
+
+;; Files added by populate at Wed, 08 Aug 2007 16:11:43 -0500,
+;; to version 0.1357(w), by hugo:
+
+  (tests/specifications/convertors/morphology2ndf.t (neurospaces/q/11_morphology 1.14 644))
+
+;; Files added by populate at Wed, 08 Aug 2007 16:31:56 -0500,
+;; to version 0.1357(w), by hugo:
+
+  (library/morphologies/C170897A-P3.CNG.swc (neurospaces/q/12_C170897A-P 1.1 644))
+
+;; Files added by populate at Wed, 08 Aug 2007 17:36:28 -0500,
+;; to version 0.1360(w), by hugo:
+
+  (library/conversions/morphology2ndf.yml (neurospaces/q/13_morphology 1.2 644))
+
+;; Files added by populate at Thu, 09 Aug 2007 15:51:21 -0500,
+;; to version 0.1361(w), by hugo:
+
+  (library/conversions/morphology2ndf_error.yml (neurospaces/q/14_morphology 1.1 644))
+
+;; Files added by populate at Thu, 09 Aug 2007 16:15:13 -0500,
+;; to version 0.1362(w), by hugo:
+
+  (library/conversions/morphology2ndf_error_soma_dendrite.yml (neurospaces/q/15_morphology 1.1 644))
+  (library/conversions/morphology2ndf_soma_dendrite.yml (neurospaces/q/16_morphology 1.1 644))
+
+;; Files added by populate at Tue, 14 Aug 2007 19:00:02 -0500,
+;; to version 0.1369(w), by hugo:
+
+  (library/tests/networks/spiker3.ndf (neurospaces/q/17_spiker3.nd 1.9 644))
+
+;; Files added by populate at Wed, 22 Aug 2007 18:03:20 -0500,
+;; to version 0.1385(w), by hugo:
+
+  (vectorconnection.c (neurospaces/q/18_vectorconn 1.8 644))
+  (neurospaces/vectorconnection.h (neurospaces/q/19_vectorconn 1.3 644))
+
+;; Files added by populate at Wed, 22 Aug 2007 18:04:20 -0500,
+;; to version 0.1385(w), by hugo:
+
+  (connectionsymbol.c (neurospaces/q/20_connection 1.12 644))
+  (neurospaces/connectionsymbol.h (neurospaces/q/21_connection 1.4 644))
+
+;; Files added by populate at Tue, 04 Sep 2007 16:04:28 -0500,
+;; to version 0.1430(w), by hugo:
+
+  (html/htdocs/info.html (neurospaces/q/22_info.html 1.4 644))
+
+;; Files added by populate at Fri, 07 Sep 2007 14:43:44 -0500,
+;; to version 0.1445(w), by hugo:
+
+  (traversablealgorithm.c (neurospaces/q/23_traversabl 1.2 644))
+
+;; Files added by populate at Wed, 12 Sep 2007 18:19:50 -0500,
+;; to version 0.1460(w), by hugo:
+
+  (library/utilities/some_segments.ndf (neurospaces/q/24_some_segme 1.4 644))
+
+;; Files added by populate at Thu, 13 Sep 2007 18:02:12 -0500,
+;; to version 0.1463(w), by hugo:
+
+  (tests/specifications/meshing.t (neurospaces/q/25_meshing.t 1.10 644))
+
+;; Files added by populate at Tue, 18 Sep 2007 18:47:04 -0500,
+;; to version 0.1482(w), by hugo:
+
+  (library/conversions/morphology2ndf_inconsistent_alias.yml (neurospaces/q/26_morphology 1.1 644))
+  (library/conversions/morphology2ndf_edsjb1994.yml (neurospaces/q/27_morphology 1.1 644))
+
+;; Files added by populate at Thu, 20 Sep 2007 13:55:22 -0500,
+;; to version 0.1486(w), by hugo:
+
+  (html/cgi-bin/xframes.cgi (neurospaces/q/28_xframes.cg 1.1 755))
+  (html/cgi-bin/c.cgi (neurospaces/q/29_c.cgi 1.1 755))
+
+;; Files added by populate at Mon, 24 Sep 2007 22:35:29 -0500,
+;; to version 0.1492(w), by hugo:
+
+  (hierarchy/types_2_html (neurospaces/q/30_types_2_ht 1.4 755))
+
+;; Files added by populate at Tue, 25 Sep 2007 22:02:39 -0500,
+;; to version 0.1500(w), by hugo:
+
+  (tests/specifications/perl/basic.t (neurospaces/q/31_perl.t 1.14 644))
+  (glue/swig/perl/tests/neurospaces_test_traversal.pm (neurospaces/q/32_neurospace 1.5 755))
+  (glue/swig/perl/tests/neurospaces_test_algorithm.pm (neurospaces/q/33_neurospace 1.5 755))
+
+;; Files added by populate at Tue, 25 Sep 2007 22:09:49 -0500,
+;; to version 0.1501(w), by hugo:
+
+  (glue/swig/perl/tests/neurospaces_test_neuromorpho.pm (neurospaces/q/34_neurospace 1.4 755))
+
+;; Files deleted by depopulate at Wed, 26 Sep 2007 13:22:10 -0500,
+;; from version 0.1510(w), by hugo:
+
+  ; (bin/neurospaces ())
+
+;; Files added by populate at Wed, 26 Sep 2007 13:49:01 -0500,
+;; to version 0.1511(w), by hugo:
+
+  (configure.scan (neurospaces/q/35_configure. 1.1 644))
+  (glue/swig/Makefile.am (neurospaces/q/36_Makefile.a 1.1 644))
+  (glue/swig/configure.ac (neurospaces/q/37_configure. 1.1 644))
+  (glue/swig/perl/Makefile.am (neurospaces/q/38_Makefile.a 1.1 644))
+  (glue/swig/perl/configure.ac (neurospaces/q/39_configure. 1.1 644))
+
+;; Files added by populate at Thu, 27 Sep 2007 18:33:20 -0500,
+;; to version 0.1518(w), by hugo:
+
+  (tests/specifications/segmenters.t (neurospaces/q/40_segmenters 1.20 644))
+
+;; Files added by populate at Fri, 05 Oct 2007 15:06:05 -0500,
+;; to version 0.1563(w), by hugo:
+
+  (tests/specifications/symboloperations.t (neurospaces/q/41_symboloper 1.3 644))
+
+;; Files added by populate at Fri, 05 Oct 2007 15:56:37 -0500,
+;; to version 0.1564(w), by hugo:
+
+  (glue/swig/perl/tests/neurospaces_load_command_options.pm (neurospaces/q/42_neurospace 1.2 755))
+
+;; Files added by populate at Sat, 13 Oct 2007 22:20:45 -0500,
+;; to version 0.1606(w), by hugo:
+
+  (glue/swig/perl/tests/neurospaces_add_component.pm (neurospaces/q/43_neurospace 1.1 755))
+
+;; Files added by populate at Sun, 14 Oct 2007 19:39:35 -0500,
+;; to version 0.1609(w), by hugo:
+
+  (library/event_data/event_0.001.yml (neurospaces/q/44_event_0.00 1.1 644))
+
+;; Files added by populate at Fri, 19 Oct 2007 16:41:13 -0500,
+;; to version 0.1613(w), by hugo:
+
+  (library/channels/hodgkin-huxley/sodium.ndf (neurospaces/q/45_sodium.ndf 1.1 644))
+  (library/channels/hodgkin-huxley/potassium.ndf (neurospaces/q/46_potassium. 1.1 644))
+  (library/tests/cells/hh1.ndf (neurospaces/q/47_hh1.ndf 1.5 644))
+
+;; Files added by populate at Sat, 20 Oct 2007 18:08:25 -0500,
+;; to version 0.1618(w), by hugo:
+
+  (library/segments/hodgkin_huxley.ndf (neurospaces/q/48_hodgkin_hu 1.1 644))
+
+;; Files added by populate at Sat, 20 Oct 2007 19:11:33 -0500,
+;; to version 0.1620(w), by hugo:
+
+  (glue/swig/perl/tests/neurospaces_delete_component.pm (neurospaces/q/49_neurospace 1.1 755))
+
+;; Files added by populate at Sat, 20 Oct 2007 20:52:29 -0500,
+;; to version 0.1622(w), by hugo:
+
+  (glue/swig/perl/tests/neurospaces_with_configuration.pm (neurospaces/q/50_neurospace 1.2 755))
+
+;; Files added by populate at Sun, 21 Oct 2007 21:56:51 -0500,
+;; to version 0.1625(w), by hugo:
+
+  (library/event_data/soma_vm_trace.yml (neurospaces/q/51_soma_vm_tr 1.3 644))
+
+;; Files added by populate at Thu, 06 Dec 2007 13:41:19 -0600,
+;; to version 0.1661(w), by hugo:
+
+  (bojum-install-CPAN.txt (neurospaces/r/0_bojum-inst 1.1 644))
+
+;; Files added by populate at Thu, 06 Dec 2007 13:57:49 -0600,
+;; to version 0.1662(w), by hugo:
+
+  (neurospaces_check_bojum.out (neurospaces/r/1_neurospace 1.1 644))
+
+;; Files deleted by depopulate at Wed, 26 Dec 2007 21:41:34 -0600,
+;; from version 0.1673(w), by hugo:
+
+  ; (perl/Data/Transformator.pm ())
+  ; (perl/Data/Comparator.pm ())
+  ; (perl/Data/Differences.pm ())
+)
+(Merge-Parents)
+(New-Merge-Parents)

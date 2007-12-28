@@ -1,0 +1,287 @@
+dnl
+dnl Neurospaces: a library which implements a global typed symbol table to
+dnl be used in neurobiological model maintenance and simulation.
+dnl
+dnl $Id: configure.in 1.40 Wed, 10 Oct 2007 16:57:00 -0500 hugo $
+dnl
+
+dnl //////////////////////////////////////////////////////////////////////////
+dnl
+dnl Neurospaces : testbed C implementation that integrates with genesis
+dnl
+dnl Copyright (C) 1999-2007 Hugo Cornelis
+dnl
+dnl functional ideas ..	Hugo Cornelis, hugo.cornelis@gmail.com
+dnl
+dnl coding ............	Hugo Cornelis, hugo.cornelis@gmail.com
+dnl
+dnl //////////////////////////////////////////////////////////////////////////
+
+dnl Process this file with autoconf to produce a configure script.
+AC_REVISION($ProjectHeader: neurospaces 0.1675 Thu, 27 Dec 2007 15:58:18 -0600 hugo $)
+AC_REVISION($Id: configure.in 1.40 Wed, 10 Oct 2007 16:57:00 -0500 hugo $)
+AC_INIT(neurospaces.c)
+
+AM_CONFIG_HEADER(config.h)
+
+dnl Determine whether symbols in prototypes have serial ID's lower or higher than in instances / references. 1 means lower (prototype symbols come first in regular traversals)
+
+dnl this is the only variant present at the moment
+
+AC_DEFINE(PRE_PROTO_TRAVERSAL)
+
+# Checks for enablng subsets.
+AC_ARG_ENABLE(subset_segment, AS_HELP_STRING([--with-subset-segment   enable the segment subset translator]) )
+
+if test x"$with_subset_segment" == "xyes" ; then
+
+    echo "segment subset is enabled"
+
+    AC_DEFINE(TREESPACES_SUBSET_SEGMENT, 1, [enable the segment subset])
+
+else
+
+    echo "segment subset is disabled"
+
+fi
+
+
+AC_ARG_ENABLE(subset_mechanism, AS_HELP_STRING([--with-subset-mechanism   enable the mechanism subset translator]) )
+
+if test x"$with_subset_mechanism" == "xyes" ; then
+
+    echo "mechanism subset is enabled"
+
+    AC_DEFINE(TREESPACES_SUBSET_MECHANISM, 1, [enable the mechanism subset])
+
+else
+
+    echo "mechanism subset is disabled"
+
+fi
+
+
+# Check for delete operation
+AC_ARG_ENABLE(delete_operation, AS_HELP_STRING([--with-delete-operation   enable the delete operation]) )
+
+if test x"$with_delete_operation" == "xyes" ; then
+
+    echo "delete operation is enabled"
+
+    AC_DEFINE(DELETE_OPERATION, 1, [enable the delete operation])
+
+else
+
+    echo "delete operation is disabled"
+
+fi
+
+
+# determine linker flags for perl embedding
+
+PERL_CCOPTS=`perl -MExtUtils::Embed -e ccopts`
+AC_SUBST(PERL_CCOPTS)
+
+PERL_LDADD=`perl -MExtUtils::Embed -e ldopts`
+AC_SUBST(PERL_LDADD)
+
+PERL_LDFLAGS=`perl -MExtUtils::Embed -e ldopts`
+AC_SUBST(PERL_LDFLAGS)
+
+dnl all subdirs
+
+AC_CONFIG_SUBDIRS(algorithms convertors glue/swig)
+
+dnl $Format: "AM_INIT_AUTOMAKE(neurospacesread,$ProjectVersion$)" $
+AM_INIT_AUTOMAKE(neurospacesread,0.1675)
+
+dnl Checks for programs.
+AC_PROG_AWK
+AC_PROG_YACC
+AC_PROG_CC
+AM_PROG_LEX
+AC_ARG_PROGRAM
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_RANLIB
+
+dnl Checks for libraries.
+dnl Replace `main' with a function in -lcurses:
+AC_CHECK_LIB(curses, main)
+dnl Replace `main' with a function in -lfl:
+AC_CHECK_LIB(fl, main)
+dnl Replace `main' with a function in -lhistory:
+AC_CHECK_LIB(history, main)
+dnl Replace `main' with a function in -lm:
+AC_CHECK_LIB(m, main)
+dnl Replace `main' with a function in -lreadline:
+AC_CHECK_LIB(readline, main)
+
+
+dnl Checks for header files.
+AC_HEADER_STDC
+AC_HEADER_STDBOOL
+AC_CHECK_HEADERS(limits.h malloc.h sys/time.h unistd.h float.h stddef.h)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_C_INLINE
+AC_TYPE_SIZE_T
+AC_HEADER_TIME
+
+dnl Checks for library functions.
+AC_FUNC_MALLOC
+AC_FUNC_REALLOC
+AC_FUNC_STRTOD
+AC_FUNC_STRFTIME
+AC_FUNC_VPRINTF
+AC_CHECK_FUNCS(getrusage gettimeofday strcspn strspn strtod strtol memset sqrt strcasecmp strpbrk strrchr)
+AC_CHECK_FUNCS(getcwd strtol,
+,
+echo "Could not find needed functions : getcwd or strtol"
+WARNED=yes
+
+# this is only a test of autoconf's functionality
+
+)
+
+if test -n "${CXXFLAGS}"; then
+  user_set_cxxflags=yes
+fi
+AC_PROG_CXX
+if test X$user_set_cxxflags != Xyes; then
+  CXXFLAGS="-g"
+fi
+
+dnl below checks for libgc.
+
+dnl dnl Handle possible dlopen requirement for libgc
+dnl dnl Isn't this internal to something in autoconf?  Couldn't find it...
+dnl AC_CHECK_LIB([dld], [shl_load], [lt_cv_dlopen="shl_load" lt_cv_dlopen_libs="-dld"], [AC_CHECK_FUNC([dlopen],
+dnl           [lt_cv_dlopen="dlopen"],
+dnl       [AC_CHECK_LIB([dl], [dlopen],
+dnl             [lt_cv_dlopen="dlopen" lt_cv_dlopen_libs="-ldl"],
+dnl         [AC_CHECK_LIB([svld], [dlopen],
+dnl               [lt_cv_dlopen="dlopen" lt_cv_dlopen_libs="-lsvld"],
+dnl           [AC_CHECK_LIB([dld], [dld_link],
+dnl                 [lt_cv_dlopen="dld_link" lt_cv_dlopen_libs="-dld"])
+dnl           ])
+dnl         ])
+dnl       ])
+dnl     ])
+
+dnl AC_CHECK_HEADERS([gc.h gc/gc.h],
+dnl                  [
+dnl 		    # To test for the different required libs, I have to
+dnl 		    # overcome autoconf's caching system, so I change the
+dnl 		    # desired function name.  They're all in libgc.
+dnl 		    # The "break" will exit from the top level
+dnl                     # AC_CHECK_HEADERS.
+dnl 		    gc_libs=""
+dnl 		    AC_CHECK_LIB(gc, GC_init,
+dnl                                  [gc_ok=yes;
+dnl 				  LIBS="-lgc $gc_libs $LIBS";
+dnl 				  break], [gc_ok=no], [$gc_libs])
+dnl 		    gc_libs="-lpthread"
+dnl 		    AC_CHECK_LIB(gc, GC_malloc,
+dnl                                  [gc_ok=yes;
+dnl 				  LIBS="-lgc $gc_libs $LIBS";
+dnl                                   break], [gc_ok=no], [$gc_libs])
+dnl 		    gc_libs="$lt_cv_dlopen_libs"
+dnl 		    AC_CHECK_LIB(gc, GC_realloc,
+dnl                                  [gc_ok=yes;
+dnl 				  LIBS="-lgc $gc_libs $LIBS";
+dnl                                   break], [gc_ok=no], [$gc_libs])
+dnl 		    gc_libs="-lpthread $lt_cv_dlopen_libs"
+dnl 		    AC_CHECK_LIB(gc, GC_free,
+dnl                                  [gc_ok=yes;
+dnl 				  LIBS="-lgc $gc_libs $LIBS";
+dnl 				  break], [gc_ok=no], [$gc_libs])
+dnl 		    break],
+dnl                  [gc_ok=no])
+dnl if test "x$gc_ok" = "xyes"; then
+dnl 	AC_MSG_CHECKING([libgc version 6.4+])
+dnl 	AC_RUN_IFELSE(
+dnl 		[AC_LANG_SOURCE([[
+dnl 			#ifdef HAVE_GC_GC_H
+dnl 			# include <gc/gc.h>
+dnl 			#else
+dnl 			# include <gc.h>
+dnl 			#endif
+dnl 			#include <stdio.h>
+dnl 			extern unsigned GC_version;
+dnl 			int main(void){
+dnl 				unsigned min = ((6 << 16) | (4 << 8) | 0);
+dnl 				printf("%d.%d.%d ",GC_version >> 16, (GC_version >> 8) & 0xFF, GC_version & 0xFF);
+dnl 				if (GC_version>=min) return 0;
+dnl 				return 1;
+dnl 			}]])],
+dnl 		[gc_ok=yes],
+dnl 		[gc_ok=no]
+dnl 	)
+dnl 	AC_MSG_RESULT([$gc_ok])
+dnl fi
+dnl if test "x$gc_ok" != "xyes"; then
+dnl 	AC_MSG_ERROR([libgc (the Boehm Conservative Collector) 6.4+, is needed to compile neurospaces -- http://www.hpl.hp.com/personal/Hans_Boehm/gc])
+dnl fi
+
+
+# determine the model library to install
+
+#! it seems to be impossible to specify this using regex ranges
+
+dnl MODEL_DESCRIPTION_FILES=`find library -iname "*.ndf" -printf "%p " | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
+MODEL_DESCRIPTION_FILES=`find library -iname "*.ndf" -printf "%p " | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
+AC_SUBST(MODEL_DESCRIPTION_FILES)
+
+MODEL_XML_FILES=`find library -iname "*.xml" -printf "%p " | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
+AC_SUBST(MODEL_XML_FILES)
+
+MODEL_PROJECTIONCACHES=`find library/projectionqueries -type f -printf "%p "`
+AC_SUBST(MODEL_PROJECTIONCACHES)
+
+MODEL_GENESIS_TABFILES=`find library -iname "*.tab" -printf "%p "`
+AC_SUBST(MODEL_GENESIS_TABFILES)
+
+MODEL_GENESIS_MORPHOLOGYFILES=`find library -iname "*.p" -printf "%p "`
+AC_SUBST(MODEL_GENESIS_MORPHOLOGYFILES)
+
+MODEL_SWC_MORPHOLOGYFILES=`find library -iname "*.swc" -printf "%p " | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
+AC_SUBST(MODEL_SWC_MORPHOLOGYFILES)
+
+MODEL_TEXFILES=`find library -iname "*.tex" -printf "%p "`
+AC_SUBST(MODEL_TEXFILES)
+
+MODEL_YAMLFILES=`find library -iname "*.yml" -printf "%p "`
+AC_SUBST(MODEL_YAMLFILES)
+
+ALGORITHM_DATA=`find library/algorithm_data -type f -printf "%p "`
+AC_SUBST(ALGORITHM_DATA)
+
+
+# determine the test library to install
+
+TEST_SPECIFICATION_FILES=`echo -n "tests/introduction.html " && find tests/specifications -iname "*.t" -printf "%p " && find tests/specifications/strings -iname "*.txt" -printf "%p "`
+AC_SUBST(TEST_SPECIFICATION_FILES)
+
+
+dnl AC_OUTPUT(Makefile config.h)
+
+AC_OUTPUT(Makefile)
+
+if test "$WARNED" = "yes"; then
+
+# this is only a test of autoconf's functionality
+
+echo ""
+echo "* Warnings were generated during configure.  You may proceed building"
+echo "* neurospaces, but you probably want to fix the problem before"
+echo "* running it."
+echo "* If you think configure's results are wrong,"
+echo "* you may wish to edit the file 'config.h' before running make."
+echo "* After building, be sure to run the command 'neurospaces config' to"
+echo "* see if the problem persists. "
+echo "*"
+echo "* Know that this is only a test of autoconf's functionality. "
+echo ""
+fi

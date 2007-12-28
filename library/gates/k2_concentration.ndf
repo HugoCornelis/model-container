@@ -1,0 +1,55 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+PUBLIC_MODELS
+
+	HH_GATE k2_concentration
+		BINDABLES
+			INPUT Vm,OUTPUT activation
+		END BINDABLES
+
+		BINDINGS
+               		INPUT ..->concen
+		END BINDINGS
+
+		CONCENTRATION_GATE_KINETIC concentration_kinetic
+
+			BINDABLES
+				INPUT Vm, OUTPUT rate
+			END BINDABLES
+
+			BINDINGS
+	               		INPUT ..->concen
+			END BINDINGS
+
+			PARAMETERS
+
+				//m basal level, A in EDS1994
+
+				PARAMETER ( Base = 0.20e-3 ),
+
+				//m time constant, B in EDS1994
+
+				PARAMETER ( Tau = 0.010 ),
+
+			END PARAMETERS
+
+		END CONCENTRATION_GATE_KINETIC
+
+		PARAMETERS
+
+			//m initial value, commonly forward over backward steady states
+
+			PARAMETER ( state_init = 0.0099009900989999993 ),
+			PARAMETER ( POWER = 2.0 ),
+		END PARAMETERS
+
+	END HH_GATE
+
+END PUBLIC_MODELS
+
+

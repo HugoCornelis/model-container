@@ -1,0 +1,53 @@
+#!/usr/local/bin/neurospacesparse -h
+// -*- NEUROSPACES -*-
+// Equations for Pukeinje cell non_NMDA synapse.
+// parameters copied from GABA synapse
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE mapper "mappers/spikereceiver.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS mapper::/Synapse Synapse END ALIAS
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CHANNEL NMDA
+		BINDABLES
+			INPUT Vm,OUTPUT exp2->Gk,OUTPUT Ik
+		END BINDABLES
+
+		CHILD Synapse synapse
+		END CHILD
+
+		EXP2_EQUATION exp2
+			BINDABLES
+				INPUT activation,OUTPUT Gk
+			END BINDABLES
+			BINDINGS
+	               		INPUT ../synapse->activation
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( TAU1 = 0.0005 ),
+				PARAMETER ( TAU2 = 0.0012 )
+			END PARAMETERS
+
+		END EXP2_EQUATION
+
+	END CHANNEL
+
+END PUBLIC_MODELS
+
+

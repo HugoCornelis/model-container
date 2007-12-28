@@ -1,0 +1,322 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+// Morphology file for Granule cell
+//   http://www.bbf.uia.ac.be/
+
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE mapper "mappers/spikegenerator.ndf"
+
+	FILE inna "channels/granule_inna.ndf"
+
+	FILE kdr "channels/granule_kdr.ndf"
+
+	FILE ka "channels/granule_ka.ndf"
+
+	FILE cahva "channels/granule_cahva.ndf"
+
+	FILE h "channels/granule_h.ndf"
+
+	FILE kc "channels/granule_kc.ndf"
+
+	FILE nmda "channels/granule_nmda.ndf"
+
+	FILE ampa "channels/granule_ampa.ndf"
+
+	FILE gabaa "channels/granule_gabaa.ndf"
+
+	FILE gabab "channels/granule_gabab.ndf"
+
+	FILE concen "pools/granule_ca.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	// Seems that Reinoud took all the Golgi channels from granule 
+	// cells
+
+	ALIAS mapper::/SpikeGen SpikeGen END ALIAS
+
+	ALIAS inna::/InNa InNa END ALIAS
+
+	ALIAS kdr::/KDr KDr END ALIAS
+
+	ALIAS ka::/KA KA END ALIAS
+
+	ALIAS cahva::/CaHVA CaHVA END ALIAS
+
+	ALIAS h::/H H END ALIAS
+
+	ALIAS kc::/Moczyd_KC Moczyd_KC END ALIAS
+
+	ALIAS nmda::/NMDA NMDA END ALIAS
+
+	ALIAS ampa::/AMPA AMPA END ALIAS
+
+	ALIAS gabaa::/GABAA GABAA END ALIAS
+
+	ALIAS gabab::/GABAB GABAB END ALIAS
+
+	ALIAS concen::/Ca_concen Ca_concen END ALIAS
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CELL Granule
+
+{*
+** scaled values for Golgi cell, after rescaling from Gabbiani model,
+** without scaling to surface (units of siemens/cm^2), with some additional
+** explanation from Reinouds Granule cell const file :
+**
+** float GInNas = 2.5       \  //   correction for 10 mV shift of (in-)activation rates
+**              * 2         \  //   correction for 37 deg. Celsius
+**              * scaling_f \  //   conversion to single segment
+**              * 10        \  //   conversion to SI units (S/m^2)
+**              * 70           //   the Gabbiani value
+** 
+** 
+** For Granule  cell : one scaling factor :
+** 
+** float scaling_f = 314.15 / 2012.67 // surface soma over surface full Gabbiani model,
+** // scaling needed because active channels only on soma in Gabbiani model
+** 
+** 
+** For Golgi cell : two scaling factors :
+** 
+** float scaling_f1 = 314.15 / 31000.0 
+** float scaling_f2 = 1.1e9 / 78e6 
+** 
+** 
+** genesis #0 > echo {GInNas}
+** echo {GInNas}
+** 546.3016789
+** genesis #1 > echo {GKDrs}
+** echo {GKDrs}
+** 88.96913056
+** genesis #2 > echo {GKAs}
+** echo {GKAs}
+** 11.45672664
+** genesis #3 > echo {GCaHVAs}
+** echo {GCaHVAs}
+** 9.084216489
+** genesis #4 > echo {GHs}
+** echo {GHs}
+** 0.309050664
+** genesis #5 > echo {GMocs}
+** echo {GMocs}
+** 179.8112954
+** genesis #6 > 
+**
+*}
+
+		SEGMENT Granule_soma
+			BINDABLES
+				OUTPUT Vm
+			END BINDABLES
+
+			BINDINGS
+                		INPUT CaHVA->Ik,
+                		INPUT H->Ik,
+                		INPUT InNa->Ik,
+                		INPUT KA->Ik,
+                		INPUT KDr->Ik,
+                		INPUT mf_NMDA->Ik,
+                		INPUT mf_AMPA->Ik,
+                		INPUT GABAA->Ik,
+                		INPUT GABAB->Ik
+			END BINDINGS
+
+			OPTIONS SPHERICAL
+
+			CHILD SpikeGen
+				spikegen
+				BINDINGS
+                			INPUT ^->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( THRESHOLD = 0.02 ),
+					PARAMETER ( REFRACTORY = 0.002 )
+				END PARAMETERS
+			END CHILD
+
+			PARAMETERS
+				PARAMETER ( DIA = 1e-5 ),
+				PARAMETER ( Vm_init = -0.065 ),
+				PARAMETER ( RM = 3.03 ),
+				PARAMETER ( RA = 1.00 ),
+				PARAMETER ( CM = 0.010 ),
+				PARAMETER
+				( ELEAK = randomize
+						(PARAMETER ( min = -0.075 ),
+							PARAMETER ( max = -0.065),
+							PARAMETER ( seed = SERIAL()) ) )
+			END PARAMETERS
+
+			CHILD InNa
+				InNa
+				BINDINGS
+                			INPUT ^->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 546.3016789 ),
+					PARAMETER ( Ek = 0.055 )
+				END PARAMETERS
+			END CHILD
+
+			CHILD Ca_concen
+				Ca_pool
+				BINDINGS
+                			INPUT ^/CaHVA->Ik
+				END BINDINGS
+			END CHILD
+
+			CHILD CaHVA
+				CaHVA
+				BINDINGS
+                			INPUT ^->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 9.084216489 ),
+					PARAMETER ( Ek = 0.080 )
+				END PARAMETERS
+			END CHILD
+
+			CHILD H
+				H
+				BINDINGS
+                			INPUT ^->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 0.309050664 ),
+					PARAMETER ( Ek = -0.042 )
+				END PARAMETERS
+			END CHILD
+
+			CHILD KA
+				KA
+				BINDINGS
+                			INPUT ^->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 11.45672664 ),
+					PARAMETER ( Ek = -0.090 )
+				END PARAMETERS
+			END CHILD
+
+			CHILD KDr
+				KDr
+				BINDINGS
+                			INPUT ^->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 88.96913056 ),
+					PARAMETER ( Ek = -0.090 )
+				END PARAMETERS
+			END CHILD
+
+			CHILD Moczyd_KC
+				Moczyd_KC
+				BINDINGS
+                			INPUT ^->Vm,
+                			INPUT ^/Ca_pool->concen
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 179.8112954 ),
+					PARAMETER ( Ek = -0.090 )
+				END PARAMETERS
+			END CHILD
+
+			// channels with synapses
+
+{*
+** genesis #6 > echo {G_GABAAs}
+** echo {G_GABAAs}
+** 1
+** genesis #7 > echo {GNMDAs}
+** echo {GNMDAs}
+** 0.5962229278
+** genesis #8 > echo {GAMPAs}
+** echo {GAMPAs}
+** 0.3577337567
+** genesis #9 > echo {G_GABABs}
+** echo {G_GABABs}
+** 1
+** genesis #10 > 
+*}
+			CHILD AMPA
+				mf_AMPA
+				BINDINGS
+                			INPUT ^->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 0.3577337567 ),
+						/* 720.0e-12 / 2012.67e-12 */
+					PARAMETER ( Ek = 0.0 ),
+					PARAMETER ( NORMALIZE = SUM(PARAMETER (COUNT = synapse)) )
+				END PARAMETERS
+			END CHILD
+
+			CHILD NMDA
+				mf_NMDA
+				BINDINGS
+                			INPUT ^->Vm
+				END BINDINGS
+
+				/* TODO : check parameters of MGBLOCK() */
+				/* Vm and GMAX should be removed ? */
+
+				PARAMETERS
+					PARAMETER
+					( GMAX = MGBLOCK
+						(PARAMETER ( GMAX = 0.59622292775268682 ),
+							/* 1200.0e-12 / 2012.67e-12 */
+							PARAMETER ( CMg = 1.2 ),
+							PARAMETER ( KMg_A = 1.92 ),
+							PARAMETER ( KMg_B = 0.01613 ),
+							PARAMETER ( Vm = ^->Vm)) ),
+					PARAMETER ( Ek = 0.0 ),
+					PARAMETER ( NORMALIZE = SUM(PARAMETER (COUNT = synapse)) )
+				END PARAMETERS
+			END CHILD
+
+			CHILD GABAA
+				GABAA
+				BINDINGS
+                			INPUT ^->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 1.0 ),
+					PARAMETER ( Ek = -0.070 ),
+					PARAMETER ( NORMALIZE = SUM(PARAMETER (COUNT = synapse)) )
+				END PARAMETERS
+			END CHILD
+
+			CHILD GABAB
+				GABAB
+				BINDINGS
+                			INPUT ^->Vm
+				END BINDINGS
+				PARAMETERS
+					PARAMETER ( GMAX = 1.0 ),
+					PARAMETER ( Ek = -0.070 ),
+					PARAMETER ( NORMALIZE = SUM(PARAMETER (COUNT = synapse)) )
+				END PARAMETERS
+			END CHILD
+
+		END SEGMENT
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

@@ -1,0 +1,68 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.4
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE P "cells/purk2m9s.ndf"
+
+END IMPORT
+
+
+PRIVATE_MODELS
+
+	ALIAS P::/Purkinje Purkinje_cell END ALIAS
+
+END PRIVATE_MODELS
+
+
+PUBLIC_MODELS
+
+	POPULATION PurkinjePopulation
+
+//				proto		#x	dx	#y	dy	#z	dz
+
+// 		ALGORITHM Grid3D
+// 			ALGORITHM_INSTANCE PurkinjeGrid
+// 			{ Purkinje_cell	1	0.1	1	0.2	1	0.9}
+// 		END ALGORITHM
+
+		ALGORITHM Grid3D
+			PurkinjeGrid
+			PARAMETERS
+				PARAMETER ( PROTOTYPE = "Purkinje_cell" ),
+				PARAMETER ( X_COUNT = 1.0 ),
+				PARAMETER ( X_DISTANCE = 0.1 ),
+				PARAMETER ( Y_COUNT = 1.0 ),
+				PARAMETER ( Y_DISTANCE = 0.2 ),
+				PARAMETER ( Z_COUNT = 1.0 ),
+				PARAMETER ( Z_DISTANCE = 0.9 ),
+			END PARAMETERS
+		END ALGORITHM
+
+		PARAMETERS
+			PARAMETER ( ROTATE_ANGLE = 1.570796326794895004727943 ),
+			PARAMETER ( ROTATE_CENTER_X = 0.0 ),
+			PARAMETER ( ROTATE_CENTER_Y = 0.0 ),
+			PARAMETER ( ROTATE_CENTER_Z = 0.0 ),
+			PARAMETER ( ROTATE_AXIS_X = 0.0 ),
+			PARAMETER ( ROTATE_AXIS_Y = 0.0 ),
+			PARAMETER ( ROTATE_AXIS_Z = 0.1 )
+		END PARAMETERS
+
+		PARAMETERS
+			PARAMETER ( X = 0.0 ),
+			PARAMETER ( Y = 0.0 ),
+			PARAMETER ( Z = 0.1 )
+		END PARAMETERS
+
+	END POPULATION
+
+END PUBLIC_MODELS
+
+

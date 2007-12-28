@@ -1,0 +1,36 @@
+flex 2.5.4 -> 2.5.31 patch
+Index: 0.718/lexsupport.c
+--- 0.718/lexsupport.c Fri, 17 Feb 2006 18:55:06 -0600 hugo (neurospaces/15_analyzer.c 1.8 644)
++++ 0.718(w)/lexsupport.c Sun, 12 Nov 2006 04:52:12 -0600 hugo (neurospaces/15_analyzer.c 1.8 644)
+@@ -32,7 +32,7 @@
+ 
+     //- remove lexical buffer
+ 
+-    yy_delete_buffer(*ppyyBuffer);
++    parser_delete_buffer(*ppyyBuffer);
+     *ppyyBuffer = NULL;
+ }
+ 
+@@ -47,11 +47,11 @@
+ {
+     //- create new lexical buffer for selected file
+ 
+-    *ppyyBuffer = yy_create_buffer(pFILE,YY_BUF_SIZE);
++    *ppyyBuffer = parser_create_buffer(pFILE,YY_BUF_SIZE);
+ 
+     //- make new buffer active
+ 
+-    yy_switch_to_buffer(*ppyyBuffer);
++    parser_switch_to_buffer(*ppyyBuffer);
+ 
+     //- push lexical initial state on lexical stack
+ 
+@@ -63,7 +63,7 @@
+ {
+     //- make given buffer active
+ 
+-    yy_switch_to_buffer(pyyBuffer);
++    parser_switch_to_buffer(pyyBuffer);
+ 
+     //- pop lexical state
+ 

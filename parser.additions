@@ -1,0 +1,126 @@
+// -*- c -*-
+//
+// Neurospaces: a library which implements a global typed symbol table to
+// be used in neurobiological model maintenance and simulation.
+//
+// $Id: parser.additions 1.24 Sun, 18 Feb 2007 15:53:33 -0600 hugo $
+//
+
+//////////////////////////////////////////////////////////////////////////////
+//'
+//' Neurospaces : testbed C implementation that integrates with genesis
+//'
+//' Copyright (C) 1999-2007 Hugo Cornelis
+//'
+//' functional ideas ..	Hugo Cornelis, hugo.cornelis@gmail.com
+//'
+//' coding ............	Hugo Cornelis, hugo.cornelis@gmail.com
+//'
+//////////////////////////////////////////////////////////////////////////////
+
+
+#line 23 "parser.additions"
+
+
+#ifdef STAND_ALONE
+
+char *pcInputName=NULL;
+
+int main(int argc,char *argv[])
+{
+    extern int errorcount;
+
+    int bFail = 0;
+
+    struct ParserContext acRootContext;
+
+#ifdef DEBUGPARSER
+    parserdebug = 1;
+#endif
+    printf("nnd compiler\n");
+    if (argc == 1)
+    {
+	fprintf(stderr,"%s: Error, no files to compile.\n",argv[0]);
+	exit(EXIT_FAILURE);
+    }
+    pcInputName = argv[1];
+    if ((inputfile = fopen(pcInputName,"r")) == NULL)
+    {
+	fprintf(stderr,"%s: Error opening %s\n",argv[0],argv[1]);
+	exit(EXIT_FAILURE);
+    }
+
+#ifdef DEBUGCODE
+    if ((dbgfile = fopen(pcInputName,"r")) == NULL)
+    {
+	fprintf(stderr,"%s: Error opening %s (2)\n",argv[0],argv[1]);
+	fclose(yyin);
+	exit(EXIT_FAILURE);
+    }
+#endif
+
+    //- set yyin
+
+    //! lexical analyzer will automatically allocate one yy_buffer for yyin
+
+    yyin = inputfile;
+
+    acRootContext.pacPrev = NULL;
+    acRootContext.pacNext = NULL;
+    acRootContext.pcFilename = pcInputName;
+    acRootContext.iLineNumber = 1;
+    acRootContext.pFILE = inputfile;
+
+    //- set parse level and nesting level
+
+    acRootContext.iLevel = 0;
+    acRootContext.iNestingLevel = 0;
+
+    // set current parser context
+
+    //pacCurrent = &acRootContext;
+
+    //- parse the network file
+
+    bFail = parserparse(&acRootContext);
+
+    if (bFail)
+    {
+	fprintf(stderr,"%s: Compilation failed with %i errors.\n",argv[0],errorcount);
+	exit(EXIT_FAILURE);
+    }
+
+    if (errorcount)
+    {
+	fprintf
+	    (stderr,
+	     "%s: Compilation failed with %i error%s.\n",
+	     argv[0],
+	     errorcount,
+	     errorcount == 1 ? "" : "s");
+    } else {
+	fprintf(stderr,"%s: No errors.\n",argv[0]);
+    }
+#ifdef DEBUGCODE
+    fclose(dbgfile);
+#endif
+    fclose(inputfile);		/* ==yyin	*/
+    exit(0);
+}
+
+#endif
+
+
+//! see parser.decl for an explanation on this
+
+#ifdef parsererror
+#undef parsererror
+#endif
+
+int parsererror(PARSERCONTEXT *pacParserContext,char *pcError)
+{
+    NeurospacesError(pacParserContext,"(?) level",pcError);
+    return(0);
+}
+
+

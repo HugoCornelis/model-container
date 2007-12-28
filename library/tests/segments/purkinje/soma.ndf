@@ -1,0 +1,119 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+
+	FILE ca_pool "pools/purkinje_ca.ndf"
+	FILE cat "tests/channels/cat.ndf"
+	FILE ka "tests/channels/ka.ndf"
+	FILE kdr "tests/channels/kdr.ndf"
+	FILE kh "tests/channels/kh.ndf"
+	FILE km "tests/channels/km.ndf"
+	FILE naf "tests/channels/naf.ndf"
+	FILE nap "tests/channels/nap.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS ca_pool::/Ca_concen ca_pool END ALIAS
+	ALIAS cat::/cat cat END ALIAS
+	ALIAS ka::/ka ka END ALIAS
+	ALIAS kdr::/kdr kdr END ALIAS
+	ALIAS kh::/kh kh END ALIAS
+	ALIAS km::/km km END ALIAS
+	ALIAS naf::/naf naf END ALIAS
+	ALIAS nap::/nap nap END ALIAS
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	SEGMENT soma
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+			INPUT cat->Ik,
+			INPUT kh->Ik,
+			INPUT naf->Ik,
+			INPUT nap->Ik,
+			INPUT ka->Ik,
+			INPUT kdr->Ik,
+			INPUT km->Ik,
+		END BINDINGS
+
+		OPTIONS SPHERICAL
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 1.000 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+		CHILD km
+			km
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+		CHILD kdr
+			kdr
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+		CHILD ka
+			ka
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+		CHILD kh
+			kh
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+		CHILD nap
+			nap
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+		CHILD naf
+			naf
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+		CHILD cat
+			cat
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+		CHILD ca_pool
+			ca_pool
+			BINDINGS
+				INPUT ^/cat->Ik
+			END BINDINGS
+		END CHILD
+
+	END SEGMENT
+
+END PUBLIC_MODELS
+
+

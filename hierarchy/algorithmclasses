@@ -1,0 +1,58 @@
+#!/usr/bin/perl -w
+#!/usr/bin/perl -d:ptkdb
+#
+# $ProjectVersion: 0.1675 $
+#
+
+use strict;
+
+
+my $class_hierarchy
+    = {
+       # base type
+
+       (
+	algorithmclass => {
+			   allows => {
+				      'create_instance' => 'algorithmclass',
+				      'print_info' => 'algorithmclass',
+				     },
+			   isa => undef,
+			   name => 'AlgorithmClass',
+			  },
+       ),
+      };
+
+
+my $object_methods
+    = {
+       'create_instance' => 2,
+       'print_info' => 3,
+      };
+
+
+my $object_methods_return_types
+    = {
+       'create_instance' => {
+			     type => 'struct AlgorithmInstance *',
+			     selector => '.uSelector.aiFunc',
+			    },
+       'print_info' => {
+			type => 'int',
+			selector => '.uSelector.iFunc',
+		       },
+      };
+
+
+my $definitions
+    = {
+       class_hierarchy => $class_hierarchy,
+       name => 'algorithmclasses',
+       object_methods => $object_methods,
+       object_methods_return_types => $object_methods_return_types,
+      };
+
+
+return $definitions;
+
+

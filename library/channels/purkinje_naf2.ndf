@@ -1,0 +1,43 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE gate1 "gates/naf_activation.ndf"
+
+	FILE gate2 "gates/naf_inactivation.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS gate1::/NaF_activation NaF_activation END ALIAS
+
+	ALIAS gate2::/NaF_inactivation NaF_inactivation END ALIAS
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CHANNEL NaF
+		BINDABLES
+			INPUT Vm,OUTPUT Gk,OUTPUT Ik
+		END BINDABLES
+
+		CHILD NaF_activation activation
+		END CHILD
+
+		CHILD NaF_inactivation inactivation
+		END CHILD
+
+	END CHANNEL
+
+END PUBLIC_MODELS
+
+

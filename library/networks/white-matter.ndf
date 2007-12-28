@@ -1,0 +1,41 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.4
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE Fibers "fibers/mossyfiber.ndf"
+
+END IMPORT
+
+
+PRIVATE_MODELS
+
+	ALIAS Fibers::/MossyFiberArray MossyFibers END ALIAS
+
+END PRIVATE_MODELS
+
+
+PUBLIC_MODELS
+
+	NETWORK WhiteMatter
+
+		CHILD MossyFibers 
+			MossyFibers
+			PARAMETERS
+				PARAMETER ( X = -0.00012 ),
+				PARAMETER ( Y = -0.000075 ),
+				PARAMETER ( Z = -0.0001 )
+			END PARAMETERS
+		END CHILD
+
+	END NETWORK
+
+END PUBLIC_MODELS
+
+

@@ -1,0 +1,330 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+// Morphology file for Purkinje cell
+// Based on Erik De Schutter's 1994 Purkinje cell model.
+// Original data provided by Rapp, Yarom and Segev, Hebrew University Jerusalem
+// Active membrane model with 1 spine on every spiny segment
+// References: Rapp, M., Segev, I., and Yarom, Y. (1994) Physiology,
+//   morphology and detailed passive models of cerebellar Purkinje cells.
+//   J.  Physiol. (London), 471: 87-99.
+//             De Schutter, E. and Bower, J. M. (1994) An active membrane
+//   model of the cerebellar Purkinje cell: I. Simulation of current
+//   clamps in slice. J. Neurophysiol., 71: 375-400.
+//   http://www.bbf.uia.ac.be/TNB/TNB_pub8.html
+//             De Schutter, E. and Bower, J. M. (1994) An active membrane
+//   model of the cerebellar Purkinje cell: II. Simulation of synaptic
+//   responses. J. Neurophysiol., 71: 401-419.
+//   http://www.bbf.uia.ac.be/TNB/TNB_pub7.html
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE mapper
+		"mappers/spikegenerator.ndf"
+
+	FILE Purk_GABA
+		"channels/gaba.ndf"
+
+	FILE CaT
+		"channels/purkinje_cat.ndf"
+
+	FILE h1
+		"channels/purkinje_h1.ndf"
+
+	FILE h2
+		"channels/purkinje_h2.ndf"
+
+	FILE KA
+		"channels/purkinje_ka.ndf"
+
+	FILE Kdr
+		"channels/purkinje_kdr.ndf"
+
+	FILE KM
+		"channels/purkinje_km.ndf"
+
+	FILE NaF
+		"channels/purkinje_naf.ndf"
+
+	FILE NaP
+		"channels/purkinje_nap.ndf"
+
+	FILE Ca_pool
+		"pools/purkinje_ca.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	//
+	// by setting up an alias in the dependencies, one can add more 
+	// prototypes to GABA.ndf, without causing conflicts in the actual
+	// exported prototype in the model section of this file.
+	//
+
+	ALIAS mapper::/SpikeGen SpikeGen END ALIAS
+
+	ALIAS Purk_GABA::/Purk_GABA GABA END ALIAS
+
+	ALIAS CaT::/CaT CaT END ALIAS
+
+	ALIAS h1::/h1 h1 END ALIAS
+
+	ALIAS h2::/h2 h2 END ALIAS
+
+	ALIAS KA::/KA KA END ALIAS
+
+	ALIAS Kdr::/Kdr Kdr END ALIAS
+
+	ALIAS KM::/KM KM END ALIAS
+
+	ALIAS NaF::/NaF NaF END ALIAS
+
+	ALIAS NaP::/NaP NaP END ALIAS
+
+	ALIAS Ca_pool::/Ca_concen Ca_pool END ALIAS
+
+	//
+	// implement a calcium pool that is dependent on other channels
+	// and influences a potassium channel
+	//
+
+	GROUP CalciumDynamicsSystem
+		BINDABLES
+			INPUT Vm,OUTPUT CaT->Gk,OUTPUT CaT->Ik
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( DIA =  ^->DIA ),
+			PARAMETER ( LENGTH =  ^->LENGTH )
+		END PARAMETERS
+
+		CHILD CaT
+			CaT
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 5.0 ),
+				PARAMETER ( Ek = 0.1375262439 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD Ca_pool
+			Ca_pool
+			BINDINGS
+				INPUT ^/CaT->Ik
+			END BINDINGS
+		END CHILD
+
+	END GROUP
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	// normal definition for segment of the soma of a 
+	// Purkinje cell
+
+	SEGMENT Purk_soma
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+			INPUT CaT->Ik,
+			INPUT h1->Ik,
+			INPUT h2->Ik,
+			INPUT NaF->Ik,
+			INPUT NaP->Ik,
+			INPUT KA->Ik,
+			INPUT Kdr->Ik,
+			INPUT KM->Ik,
+			INPUT basket->Ik
+		END BINDINGS
+
+		OPTIONS SPHERICAL
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 1.000 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+		/*
+		** in the current model not present
+		** taken from Reinouds granule cell
+		*/
+
+		CHILD SpikeGen
+			spikegen
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( THRESHOLD = 0.02 ),
+				PARAMETER ( REFRACTORY = 0.002 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD NaF
+			NaF
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 75000.0 ),
+				PARAMETER ( Ek = 0.045 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD NaP
+			NaP
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 10.0 ),
+				PARAMETER ( Ek = 0.045 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD CaT
+			CaT
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 5.0 ),
+				PARAMETER ( Ek = 0.1375262439 )
+			END PARAMETERS
+		END CHILD
+
+/*
+		// this should be equivalent as the previous two
+
+		CHILD CalciumDynamicsSystem
+			CalciumSystem
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+*/
+
+		CHILD KA
+			KA
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 150.0 ),
+				PARAMETER ( Ek = -0.085 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD Kdr
+			Kdr
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 6000.0 ),
+				PARAMETER ( Ek = -0.085 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD KM
+			KM
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 0.400 ),
+				PARAMETER ( Ek = -0.085 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD h1
+			h1
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 3.00 ),
+				PARAMETER ( Ek = -0.030 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD h2
+			h2
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 3.00 ),
+				PARAMETER ( Ek = -0.030 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD Ca_pool
+			Ca_pool
+			BINDINGS
+				INPUT ^/CaT->Ik
+			END BINDINGS
+		END CHILD
+
+		// channels with synapses
+
+		CHILD GABA
+			basket
+			BINDINGS
+                		INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 20.0 ),
+				PARAMETER ( Ek = -0.080 )
+			END PARAMETERS
+		END CHILD
+
+	END SEGMENT
+
+// 	GROUP CalciumDynamicsSystem
+// 		BINDABLES
+// 			INPUT Vm,OUTPUT CaT->Gk,OUTPUT CaT->Ik
+// 		END BINDABLES
+
+// 		PARAMETERS
+// 			PARAMETER ( DIA =  ^->DIA ),
+// 			PARAMETER ( LENGTH =  ^->LENGTH )
+// 		END PARAMETERS
+
+// 		CHILD CaT
+// 			CaT
+// 			BINDINGS
+//                 		INPUT ^->Vm
+// 			END BINDINGS
+// 			PARAMETERS
+// 				PARAMETER ( GMAX = 5.0 ),
+// 				PARAMETER ( Ek = 0.1375262439 )
+// 			END PARAMETERS
+// 		END CHILD
+
+// 		CHILD Ca_pool
+// 			Ca_pool
+// 			BINDINGS
+//                 		INPUT ^/CaT->Ik
+// 			END BINDINGS
+// 		END CHILD
+
+// 	END GROUP
+
+END PUBLIC_MODELS
+
+

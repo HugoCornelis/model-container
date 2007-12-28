@@ -1,0 +1,205 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+// Morphology file for Purkinje cell
+// Based on Erik De Schutter's 1994 Purkinje cell model.
+// Original data provided by Rapp, Yarom and Segev, Hebrew University Jerusalem
+// Active membrane model with 1 spine on every spiny segment
+// References: Rapp, M., Segev, I., and Yarom, Y. (1994) Physiology,
+//   morphology and detailed passive models of cerebellar Purkinje cells.
+//   J.  Physiol. (London), 471: 87-99.
+//             De Schutter, E. and Bower, J. M. (1994) An active membrane
+//   model of the cerebellar Purkinje cell: I. Simulation of current
+//   clamps in slice. J. Neurophysiol., 71: 375-400.
+//   http://www.bbf.uia.ac.be/TNB/TNB_pub8.html
+//             De Schutter, E. and Bower, J. M. (1994) An active membrane
+//   model of the cerebellar Purkinje cell: II. Simulation of synaptic
+//   responses. J. Neurophysiol., 71: 401-419.
+//   http://www.bbf.uia.ac.be/TNB/TNB_pub7.html
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE GABA
+		"channels/gaba.ndf"
+
+	FILE non_NMDA
+		"channels/non_nmda.ndf"
+
+	FILE CaP
+		"channels/purkinje_cap.ndf"
+
+	FILE CaT
+		"channels/purkinje_cat.ndf"
+
+	FILE K2
+		"channels/purkinje_k2.ndf"
+
+	FILE KA
+		"channels/purkinje_ka.ndf"
+
+	FILE KC
+		"channels/purkinje_kc.ndf"
+
+	FILE Kdr
+		"channels/purkinje_kdr.ndf"
+
+	FILE KM
+		"channels/purkinje_km.ndf"
+
+	FILE Ca_pool
+		"pools/purkinje_ca.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS GABA::/Purk_GABA GABA END ALIAS
+
+	ALIAS non_NMDA::/Purk_non_NMDA non_NMDA END ALIAS
+
+	ALIAS CaP::/CaP CaP END ALIAS
+
+	ALIAS CaT::/CaT CaT END ALIAS
+
+	ALIAS K2::/K2 K2 END ALIAS
+
+	ALIAS KA::/KA KA END ALIAS
+
+	ALIAS KC::/KC KC END ALIAS
+
+	ALIAS Kdr::/Kdr Kdr END ALIAS
+
+	ALIAS KM::/KM KM END ALIAS
+
+	ALIAS Ca_pool::/Ca_concen Ca_pool END ALIAS
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	// normal definition for segments of a spiny dendrite of a
+	// Purkinje cell
+
+	SEGMENT Purk_spinyd
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+                	INPUT CaP->Ik,
+                	INPUT CaT->Ik,
+                	INPUT K2->Ik,
+                	INPUT KC->Ik,
+                	INPUT KM->Ik,
+                	INPUT stellate->Ik
+		END BINDINGS
+
+		OPTIONS CYLINDRICAL
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 3.0 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+		CHILD CaT
+			CaT
+			BINDINGS
+                		INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 5.0 ),
+				PARAMETER
+				( Ek = NERNST
+					(PARAMETER ( Cin = ^/Ca_pool->concen ),
+						PARAMETER ( Cout = 2.4 ),
+						PARAMETER ( valency = ^/Ca_pool->VAL) ,/* 2.0, */
+						PARAMETER ( T = 37.0) ))
+			END PARAMETERS
+		END CHILD
+
+		CHILD CaP
+			CaP
+			BINDINGS
+                		INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 45.0 ),
+				PARAMETER
+				( Ek = NERNST
+					(PARAMETER ( Cin = ^/Ca_pool->concen ),
+						PARAMETER ( Cout = 2.4 ),
+						PARAMETER ( valency = ^/Ca_pool->VAL), /* 2.0, */
+						PARAMETER ( T = 37.0) ))
+			END PARAMETERS
+		END CHILD
+
+		CHILD KM
+			KM
+			BINDINGS
+                		INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 0.130 ),
+				PARAMETER ( Ek = -0.085 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD KC
+			KC
+			BINDINGS
+                		INPUT ^->Vm,
+                		INPUT ^/Ca_pool->concen
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 800.0 ),
+				PARAMETER ( Ek = -0.085 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD K2
+			K2
+			BINDINGS
+                		INPUT ^->Vm,
+                		INPUT ^/Ca_pool->concen
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 3.90 ),
+				PARAMETER ( Ek = -0.085 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD Ca_pool
+			Ca_pool
+			BINDINGS
+                		INPUT ^/CaT->Ik,
+                		INPUT ^/CaP->Ik
+			END BINDINGS
+		END CHILD
+
+		// channels with synapses
+
+		CHILD GABA
+			stellate
+			BINDINGS
+                		INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 70.0 ),
+				PARAMETER ( Ek = -0.080 ),
+				PARAMETER ( FREQUENCY = 0.0 )
+			END PARAMETERS
+		END CHILD
+
+	END SEGMENT
+
+END PUBLIC_MODELS
+
+

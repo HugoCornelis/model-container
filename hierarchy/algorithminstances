@@ -1,0 +1,252 @@
+#!/usr/bin/perl -w
+#!/usr/bin/perl -d:ptkdb
+#
+# $ProjectVersion: 0.1675 $
+#
+
+use strict;
+
+
+my $class_hierarchy
+    = {
+       # base type
+
+       (
+	algorithm_instance => {
+			       allows => {
+					  'print_info' => 'algorithm_instance',
+					  'symbol_handler' => 'algorithm_instance',
+					  'parse_parameters' => undef,
+					 },
+			       description => 'the fact of that an algorithm can modify or inspect the model in the symbol table',
+			       isa => undef,
+			       name => 'AlgorithmInstance',
+			      },
+       ),
+
+       # base for instances that need an appropriate context
+
+       (
+	context_worker_instance => {
+				    allows => {
+					       'get_context' => 'context_worker_instance',
+					      },
+				    description => 'an algorithm whose operation is context dependent',
+				    isa => 'algorithm_instance',
+				    name => 'AIContextWorker',
+				   },
+       ),
+
+       # base for instances that work on a connections
+
+       (
+	connection_worker_instance => {
+				       allows => {
+						  'get_parameter_context' => 'connection_worker_instance',
+						 },
+				       description => 'an algorithm that modifies or examines connections',
+				       isa => 'context_worker_instance',
+				       name => 'AIConnectionWorker',
+				      },
+       ),
+
+       # instances that need an appropriate context
+
+       (
+	grid3d => {
+		   allows => {
+			      'print_info' => 'grid3_d_instance',
+			      'symbol_handler' => 'grid3_d_instance',
+			     },
+		   description => 'an algorithm that generates components in a spatial grid layout',
+		   isa => 'context_worker_instance',
+		   name => 'Grid3D',
+		   parameters => {
+				  PROTOTYPE => 'reference to the biological component to layout in a grid',
+				  X_COUNT => 'number of instances to create in the X direction',
+				  X_DISTANCE => 'separation between two instances in the X direction',
+				  Y_COUNT => 'number of instances to create in the Y direction',
+				  Y_DISTANCE => 'separation between two instances in the Y direction',
+				  Z_COUNT => 'number of instances to create in the Z direction',
+				  Z_DISTANCE => 'separation between two instances in the Z direction',
+				 },
+		  },
+	inserter => {
+		     allows => {
+				'print_info' => 'inserter_instance',
+				'symbol_handler' => 'inserter_instance',
+			       },
+		     description => 'an algorithm that inserts new components, given a filename with options',
+		     isa => 'context_worker_instance',
+		     name => 'Inserter',
+		     parameters => {
+				    HEIGHTS_PARAMETER_FILENAME => 'filename with distances to base and prototype references',
+				    INSERTION_FREQUENCY => 'probability of insertion',
+				    NAME_SELECTOR => 'name matcher, selects segment candidates for receiving additional components by name',
+				   },
+		  },
+	randomize => {
+		      allows => {
+				 'print_info' => 'randomize_instance',
+				 'symbol_handler' => 'randomize_instance',
+				},
+		      description => 'an algorithm that randomizes a parameter value',
+		      isa => 'context_worker_instance',
+		      name => 'Randomize',
+		      parameters => {
+				     LOWER_BOUND => 'lower bound for the randomized parameter values',
+				     PARAMETER_NAME => 'parameter to randomize',
+				     RANDOMSEED => 'randomization seed',
+				     SYMBOL_NAME => 'component to randomize a parameter for',
+				     TARGET_NAME => 'name of prototype target to randomize',
+				     UPPER_BOUND => 'upper bound for the randomized parameter values',
+				    },
+		     },
+	replacer => {
+		     allows => {
+				'print_info' => 'replacer_instance',
+				'symbol_handler' => 'replacer_instance',
+			       },
+		     description => 'an algorithm that replaces selected components with new components',
+		     isa => 'context_worker_instance',
+		     name => 'Replacer',
+		     parameters => {
+				    NAME_SELECTOR => 'name matcher, selects segment candidates for replacement by name',
+				    PROTOTYPE => 'reference to the biological component to layout in a grid',
+				   },
+		    },
+	spines => {
+		   allows => {
+			      'print_info' => 'spines_instance',
+			      'symbol_handler' => 'spines_instance',
+			     },
+		   description => 'an algorithm that attaches spines to a morphology and does spine surface correction',
+		   isa => 'context_worker_instance',
+		   name => 'Spines',
+		   parameters => {
+				  DIA_MAX => 'random spines maximal dendritic diameter for segment',
+				  DIA_MIN => 'random spines minimal dendritic diameter for segment',
+				  NAME_SELECTOR => 'name matcher, selects segment candidates for receiving spines, if not given all segments match',
+				  PROTOTYPE => 'reference to the spine definition',
+				  SPINE_DENSITY => 'spine density, in spines per um',
+				  SPINE_FREQUENCY => 'spine insertion probability',
+				 },
+		  },
+       ),
+
+       # instances that work on connections
+
+       (
+	connectionchecker => {
+			      allows => {
+					 'print_info' => 'connection_checker_instance',
+					 'symbol_handler' => 'connection_checker_instance',
+					},
+			      description => 'an algorithm that computes simple statistics on a set of connections',
+			      isa => 'connection_worker_instance',
+			      name => 'ConnectionChecker',
+			      parameters => {
+					     PROJECTION_NAME => 'name of projection to check',
+					    },
+			     },
+	projectionrandomized => {
+				 allows => {
+					    'print_info' => 'projection_randomized_instance',
+					    'symbol_handler' => 'projection_randomized_instance',
+					   },
+				 description => 'an algorithm that computes random connections between components',
+				 isa => 'connection_worker_instance',
+				 name => 'ProjectionRandomized',
+				 parameters => {
+						POST => 'post synaptic name selector',
+						PRE => 'pre synaptic name selector',
+						PROBABILITY => 'connection probability',
+						PROJECTION_NAME => 'name of projection to check',
+						RANDOMSEED => 'randomization seed',
+					       },
+				},
+	projectionvolume => {
+			     allows => {
+					'print_info' => 'projection_volume_instance',
+					'symbol_handler' => 'projection_volume_instance',
+				       },
+			     description => 'an algorithm that computes connections between components, depending on their spatial locations',
+			     isa => 'connection_worker_instance',
+			     name => 'ProjectionVolume',
+			     parameters => {
+					    DELAY_TYPE => 'delay type: fixed delay (FIXED_DELAY) or radial (VELOCITY)',
+					    DESTINATION_TYPE => 'destination type: "box" or "ellipse"',
+					    DESTINATION_X1 => 'destination box, coordinate boundary bottom left front',
+					    DESTINATION_X2 => 'destination box, coordinate boundary top right back',
+					    DESTINATION_Y1 => 'destination box, coordinate boundary bottom left front',
+					    DESTINATION_Y2 => 'destination box, coordinate boundary top right back',
+					    DESTINATION_Z1 => 'destination box, coordinate boundary bottom left front',
+					    DESTINATION_Z2 => 'destination box, coordinate boundary top right back',
+					    FIXED_DELAY => 'fixed delay',
+					    POST => 'post synaptic name selector',
+					    PRE => 'pre synaptic name selector',
+					    PROBABILITY => 'connection probability',
+					    PROJECTION_NAME => 'name of projection to check',
+					    RANDOMSEED => 'randomization seed',
+					    SOURCE_TYPE => 'source type: "box" or "ellipse"',
+					    SOURCE_X1 => 'source box, coordinate boundary bottom left front',
+					    SOURCE_X2 => 'source box, coordinate boundary top right back',
+					    SOURCE_Y1 => 'source box, coordinate boundary bottom left front',
+					    SOURCE_Y2 => 'source box, coordinate boundary top right back',
+					    SOURCE_Z1 => 'source box, coordinate boundary bottom left front',
+					    SOURCE_Z2 => 'source box, coordinate boundary top right back',
+					    VELOCITY => 'action propagation velocity',
+					    WEIGHT => 'fixed weight',
+					   },
+			    },
+       ),
+      };
+
+
+my $object_methods
+    = {
+       'get_context' => 2,
+       'get_parameter_context' => 3,
+       'parse_parameters' => 4,
+       'print_info' => 5,
+       'symbol_handler' => 6,
+      };
+
+
+my $object_methods_return_types
+    = {
+       'get_context' => {
+			 type => 'struct PidinStack *',
+			 selector => '.uSelector.ppistFunc',
+			},
+       'get_parameter_context' => {
+				   type => 'struct PidinStack *',
+				   selector => '.uSelector.ppistFunc',
+				  },
+       'parse_parameters' => {
+			      type => 'int',
+			      selector => '.uSelector.iFunc',
+			     },
+       'print_info' => {
+			type => 'int',
+			selector => '.uSelector.iFunc',
+		       },
+       'symbol_handler' => {
+			    type => 'int',
+			    selector => '.uSelector.iFunc',
+			   },
+      };
+
+
+my $definitions
+    = {
+       class_hierarchy => $class_hierarchy,
+       name => 'algorithm_instances',
+       object_methods => $object_methods,
+       object_methods_return_types => $object_methods_return_types,
+      };
+
+
+return $definitions;
+
+

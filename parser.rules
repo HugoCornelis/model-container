@@ -1,0 +1,5600 @@
+/* -*- C -*- */
+
+%union {
+    char *pcIdentifier;
+    double dNumber;
+    int iCompOptions;
+/*     int iInteger; */
+    struct symtab_Attachment *patta;
+    struct symtab_AxonHillock *paxhi;
+    struct symtab_BioComponent *pbio;
+    struct symtab_Cell *pcell;
+    struct symtab_Channel *pchan;
+    struct symtab_ConcentrationGateKinetic *pcgatk;
+    struct symtab_HHGate *pgathh;
+    struct symtab_Connection *pconn;
+    struct symtab_ConnectionSymbol *pconsy;
+    struct symtab_ContourPoint *pcpnt;
+    struct symtab_EMContour *pemc;
+    struct symtab_Equation *peq;
+    struct symtab_Fiber *pfibr;
+    struct symtab_Function *pfun;
+    struct symtab_GateKinetic *pgatk;
+    struct symtab_Group *pgrup;
+    struct symtab_HSolveListElement *phsle;
+    struct symtab_IOContainer *pioc;
+    struct symtab_IdentifierIndex *pidin;
+    struct symtab_InputOutput *pio;
+    struct symtab_Network *pnetw;
+    struct symtab_Parameters *ppar;
+    struct symtab_Pool * ppool;
+    struct symtab_Population *ppopu;
+    struct symtab_Projection *pproj;
+    struct symtab_Randomvalue *pranv;
+    struct symtab_Segment *psegment;
+    struct symtab_String *pstring;
+    struct symtab_VConnectionSymbol *pvconsy;
+    struct symtab_VContour *pvcont;
+    struct symtab_VSegment *pvsegm;
+}
+
+%{
+//
+// Neurospaces: a library which implements a global typed symbol table to
+// be used in neurobiological model maintenance and simulation.
+//
+// $Id: parser.rules 1.242 Sat, 10 Nov 2007 17:28:42 -0600 hugo $
+//
+
+//////////////////////////////////////////////////////////////////////////////
+//'
+//' Neurospaces : testbed C implementation that integrates with genesis
+//'
+//' Copyright (C) 1999-2007 Hugo Cornelis
+//'
+//' functional ideas ..	Hugo Cornelis, hugo.cornelis@gmail.com
+//'
+//' coding ............	Hugo Cornelis, hugo.cornelis@gmail.com
+//'
+//////////////////////////////////////////////////////////////////////////////
+
+//#include "lexsupport.h"
+int yylex(YYSTYPE *lvalp,void *pacParserContext);
+%}
+
+%pure_parser
+
+%start FullModelDescription
+
+%type <phsle> EMContourSymbol
+%type <pemc> EMContourSection
+%type <pidin> EMContourSectionFront
+%type <pemc> EMContourDescription
+%type <phsle> EMContourComponent
+
+%type <phsle> ContourGroupSymbol
+%type <pvcont> ContourGroupSection
+%type <pidin> ContourGroupSectionFront
+%type <pvcont> ContourGroupDescription
+%type <phsle> ContourGroupComponent
+
+%type <phsle> ContourPointSymbol
+%type <pcpnt> ContourPointSection
+%type <pidin> ContourPointSectionFront
+%type <pcpnt> ContourPointDescription
+
+%type <phsle> GateKineticComponent
+%type <pidin> GateKineticPartSectionFront
+
+%type <pcgatk> ConcentrationGateKineticDescription
+%type <pidin> ConcentrationGateKineticSectionFront
+%type <pcgatk> ConcentrationGateKineticSection
+
+%type <phsle> HHGateSymbol
+%type <pgathh> HHGateSection
+%type <pidin> HHGateSectionFront
+%type <pgathh> HHGateDescription
+%type <phsle> HHGateComponent
+%type <phsle> ConcentrationGateKineticSymbol
+%type <phsle> GateKineticBackwardSymbol
+%type <phsle> GateKineticForwardSymbol
+%type <phsle> GateKineticPartSymbol
+%type <pgatk> GateKineticBackwardSection
+%type <pidin> GateKineticBackwardSectionFront
+%type <pgatk> GateKineticForwardSection
+%type <pidin> GateKineticForwardSectionFront
+%type <pgatk> GateKineticPartSection
+%type <pgatk> GateKineticDescription
+
+%type <phsle> AxonHillockComponent
+%type <phsle> FiberModelSymbol
+%type <pfibr> FiberModelSection
+%type <pidin> FiberModelSectionFront
+%type <pfibr> FiberModelDescription
+%type <phsle> GroupedModelSymbol
+%type <pgrup> GroupedModelSection
+%type <pidin> GroupedModelSectionFront
+%type <pgrup> GroupedModelDescription
+%type <phsle> ChannelComponent
+%type <phsle> SegmentComponent
+%type <phsle> SegmentGroupComponent
+%type <phsle> CellComponent
+%type <phsle> RandomvalueComponent
+%type <phsle> PopulationComponent
+%type <phsle> ConnectionGroupComponent
+%type <phsle> NetworkComponent
+%type <phsle> ProjectionComponent
+%type <phsle> AnySymbol
+%type <phsle> AttachmentPointSymbol
+%type <phsle> EquationSymbol
+%type <phsle> PoolSymbol
+%type <phsle> AxonHillockSymbol
+%type <phsle> ChannelSymbol
+%type <phsle> SegmentSymbol
+%type <phsle> SegmentGroupSymbol
+%type <phsle> CellSymbol
+%type <phsle> RandomvalueSymbol
+%type <phsle> PopulationSymbol
+%type <phsle> ProjectionSymbol
+%type <phsle> NetworkSymbol
+%type <phsle> ConnectionGroupSymbol
+%type <phsle> ConnectionSymbol
+%type <patta> AttachmentPointSection
+%type <pidin> AttachmentPointSectionFront
+%type <patta> AttachmentPointDescription
+%type <ppar> AttachmentPointData
+%type <ppar> AttachmentPointAttributes
+%type <pcIdentifier> AttachmentPointIncoming
+%type <pcIdentifier> AttachmentPointOutgoing
+%type <ppool> PoolSection
+%type <pidin> PoolSectionFront
+%type <ppool> PoolDescription
+%type <pchan> ChannelSection
+%type <pidin> ChannelSectionFront
+%type <pchan> ChannelDescription
+%type <paxhi> AxonHillockSection
+%type <pidin> AxonHillockSectionFront
+%type <paxhi> AxonHillockDescription
+%type <peq> EquationAlphaOrExp2
+%type <peq> EquationExp2Section
+%type <pidin> EquationExp2SectionFront
+%type <ppar> EquationExp2SectionParameters
+%type <psegment> SegmentSection
+%type <pidin> SegmentSectionFront
+%type <psegment> SegmentDescription
+%type <pvsegm> SegmentGroupSection
+%type <pvsegm> SegmentGroupDescription
+%type <pidin> SegmentGroupSectionFront
+%type <iCompOptions> SegmentInstanceOptions
+%type <pcell> CellSection
+%type <pidin> CellSectionFront
+%type <pcell> CellDescription
+%type <pranv> RandomvalueSection
+%type <pidin> RandomvalueSectionFront
+%type <pranv> RandomvalueDescription
+%type <ppopu> PopulationSection
+%type <pidin> PopulationSectionFront
+%type <ppopu> PopulationDescription
+%type <pconsy> ConnectionSection
+%type <pconsy> ConnectionDescription
+%type <pidin> ConnectionSectionFront
+%type <pvconsy> ConnectionGroupSection
+%type <pvconsy> ConnectionGroupSectionFront
+%type <pproj> ProjectionSection
+%type <pidin> ProjectionSectionFront
+%type <pproj> ProjectionDescription
+%type <pnetw> NetworkSection
+%type <pidin> NetworkSectionFront
+%type <pnetw> NetworkDescription
+%type <phsle> ChildSectionFront
+%type <phsle> ChildSectionOptionalInputOptionalParameters
+%type <phsle> OptionalChildSectionOptionalInputOptionalParameters
+%type <pio> FixedItemInputRelations
+%type <pio> OptionalItemInputRelations
+%type <pio> ItemInputRelations
+%type <ppar> OptionalItemParameters
+%type <ppar> ItemParameters
+%type <ppar> Attributes
+%type <ppar> Parameters
+%type <ppar> ParametersEnumerated
+%type <ppar> Parameter
+%type <pfun> FunctionSpecification
+%type <pcIdentifier> FunctionIdentifier
+%type <ppar> FunctionParameters
+/* %type <ppar> FunctionParameter */
+/* %type <pcIdentifier> FunctionParameterName */
+/* %type <pioc> OptionalInputOutputRelations */
+%type <pioc> InputOutputRelations
+%type <pio> InputRelations
+%type <pio> OutputRelations
+%type <pidin> FieldOrIOOptionalHierarchical
+%type <pidin> FieldOrIOHierarchical
+%type <pidin> FieldOrIO
+%type <pidin> Field
+%type <pidin> IO
+%type <pidin> IdentifierOptionIndex
+/* %type <pidin> OptionalIdentifierOptionIndexPushedPidin */
+/* %type <pidin> OptionalIdentifierOptionIndex */
+%type <pidin> IdentifierOptionIndexPushedPidin
+%type <pidin> IdentifierHierarchicalNameSpaceRooted
+%type <pidin> IdentifierHierarchicalRooted
+%type <pidin> IdentifierHierarchicalOptionalRooted
+%type <pidin> IdentifierHierarchical
+/* %type <pcIdentifier> OptionalIdentifier */
+%type <pcIdentifier> Identifier
+/* %type <iInteger> Integer */
+
+
+%%
+
+
+/*
+**
+** keyword conventions in regex syntax
+**
+**
+** FullModelDescription : grammatical start symbol (root of derivation tree)
+**
+** .*Contents : grammatical entity that is reduced to a file contents
+**		Every file level used to have its own symbol, actually obsoleted now.
+**
+** .*Component : grammatical entity that is reduced from .*Symbol and has
+**			an associated struct symtab_HSolveListElement * 
+**			semantic value.
+**			It defines the .*Symbols allowed for the given 
+**			component and thus defines the 'physiological'
+**			hierarchy.
+**
+**	e.g. :	equation -> channel -> segment -> cell -> network
+**		connection -> network
+**
+**		segment -> cell -> population -> network
+**		connection -> projection -> network
+**
+** .*Symbol : grammatical entity that is reduced from .*Section and has
+**		an associated struct symtab_HSolveListElement * 
+**		semantic value.
+**
+** .*Section : grammatical entity surrounded with delimiting keywords
+**		The beginning delimiting keyword is coded within a front 
+**		section that normally also registers the current working 
+**		element.
+**		The ending delimiting keyword is coded within a ending section.
+**		This section normally unregisters the working element.
+**
+**	e.g.	PoolSection : PoolSectionFront More_keywords PoolSectionEnd ;
+**		PoolSectionEnd : END POOL ;
+**		PoolSectionFront : POOL Identifier ;
+**
+**
+** .*Description : grammatical entity inside a section, giving attributes for
+**			one instance
+**
+**	e.g.	PoolSection : PoolSectionFront More_keywords PoolSectionEnd ;
+**		PoolSectionFront : POOL Identifier ;
+**		PoolSectionEnd : END POOL ;
+**		PoolDescription : Keywords_giving_attributes_for_any_pool
+**
+**
+*/
+
+FullModelDescription
+	:
+		FullModelHeader
+		FullModelContents
+		FullModelTail
+	;
+
+FullModelHeader
+	:
+		/* ok if no interpreter sequence	*/
+	|
+		'#'
+		'!'
+		FullModelHeaderExecutable
+		{
+#line
+		    ParserStart();
+		}
+	;
+
+FullModelHeaderExecutable
+	:
+		/* ok if no interpreter sequence	*/
+	|
+		TOKEN_HIERARCHICALSEPERATOR FullModelHeaderExecutable
+	|
+		'-' FullModelHeaderExecutable
+	|
+		TOKEN_IDENTIFIER FullModelHeaderExecutable
+	|
+		TOKEN_NUMBER FullModelHeaderExecutable
+	;
+
+FullModelContents		/* no type	*/
+	:
+		ParseStateHeader
+
+		FullModelHeaderSection
+
+		ParseStateDependencies
+
+		DependenciesSection
+
+		ParseStatePrivateModels
+
+		PrivateModelsSection
+
+		ParseStatePublicModels
+
+		PublicModelsSection
+
+		ParseStateDone
+	;
+
+FullModelTail
+	:
+		{
+#line
+		    ParserFinish();
+		}
+	;
+
+/*
+** tokens to register parser states (to avoid shift/reduce conflicts)
+*/
+
+ParseStateHeader
+	:
+		{
+#line
+		    //- register parsing-header state
+
+		    ((PARSERCONTEXT *)pacParserContext)->iState
+			= ((((PARSERCONTEXT *)pacParserContext)->iState
+			     & ~PARSER_MASK_STATES)
+			    | PARSER_STATE_HEADER);
+		}
+	;
+
+ParseStateDependencies
+	:
+		{
+#line
+		    //- register parsing-dependencies state
+
+		    ((PARSERCONTEXT *)pacParserContext)->iState
+			= ((((PARSERCONTEXT *)pacParserContext)->iState
+			     & ~PARSER_MASK_STATES)
+			    | PARSER_STATE_DEPENDENCIES);
+		}
+	;
+
+ParseStatePrivateModels
+	:
+		{
+#line
+		    //- register parsing-private-models state
+
+		    ((PARSERCONTEXT *)pacParserContext)->iState
+			= ((((PARSERCONTEXT *)pacParserContext)->iState
+			     & ~PARSER_MASK_STATES)
+			    | PARSER_STATE_PRIVATEMODELS);
+		}
+	;
+
+ParseStatePublicModels
+	:
+		{
+#line
+		    //- register parsing-public-models state
+
+		    ((PARSERCONTEXT *)pacParserContext)->iState
+			= ((((PARSERCONTEXT *)pacParserContext)->iState
+			     & ~PARSER_MASK_STATES)
+			    | PARSER_STATE_PUBLICMODELS);
+		}
+	;
+
+ParseStateDone
+	:
+		{
+#line
+		    //- unregister parsing state
+
+		    ((PARSERCONTEXT *)pacParserContext)->iState
+			= ((((PARSERCONTEXT *)pacParserContext)->iState
+			     & ~PARSER_MASK_STATES)
+			    | 0);
+		}
+	;
+
+FullModelHeaderSection
+	:
+		TOKEN_NEUROSPACES
+		ModelLevelIdentification
+		{
+#line
+		    //t register/check type of file
+		}
+	;
+
+ModelLevelIdentification
+	:
+		TOKEN_NDF
+	;
+
+DependenciesSection
+	:
+	|
+		DependenciesSectionFront
+			DependenciesEnumerated
+		DependenciesSectionEnd
+		{
+#line
+		}
+	;
+
+DependenciesSectionFront
+	:
+		TOKEN_IMPORT
+	;
+
+DependenciesSectionEnd
+	:
+		TOKEN_END TOKEN_IMPORT
+		{
+#line
+		    //- give diagnostics : activation of dependencies
+
+		    ParserMessage
+			((PARSERCONTEXT *)pacParserContext,
+			 LEVEL_GLOBALMSG_SYMBOLREPORT,
+			 "DependenciesSectionEnd",
+			 "Activating %s's dependencies"
+			 "(dependency list not yet)",
+			 ParserContextGetFilename
+			 ((PARSERCONTEXT *)pacParserContext));
+		}
+	;
+
+
+DependenciesEnumerated
+	:
+		{
+#line
+		    //! give msg : starting import of dependencies ?
+		}
+	|
+		DependenciesEnumerated
+		TOKEN_FILE
+		Identifier
+		TOKEN_STRING
+		FileOptions
+		{
+#line
+		    int bFail;
+		    char *pc = NULL;
+
+		    //- remove ending '"'
+
+		    $4->pcString[$4->iLength - 1] = '\0';
+		    pc = &$4->pcString[1];
+
+		    //- qualify file name
+
+		    pc
+			= ParserContextQualifyFilename
+			  ((PARSERCONTEXT *)pacParserContext,pc);
+
+		    if (pc)
+		    {
+			//- if importing files is not disabled by the options
+
+			if (!(((PARSERCONTEXT *)pacParserContext)
+			      ->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_IMPORTING))
+			{
+			    //- parse cell file
+
+			    //t pass description file specific options as parameter
+
+			    bFail
+				= ParserImport
+				  ((PARSERCONTEXT *)pacParserContext,
+				   pc,
+				   $3);
+			}
+		    }
+		    else
+		    {
+			NeurospacesError
+			    ((PARSERCONTEXT *)pacParserContext,
+			     "DependenciesEnumerated",
+			     "Could not qualify '%s' (file not found ?)\n",
+			     &$4->pcString[1]);
+		    }
+
+		    //! memory leak : $4
+		}
+	;
+
+FileOptions
+	:
+		{
+#line
+		    //t pass options to stack
+		}
+	;
+
+PrivateModelsSection
+	:
+	|
+		PrivateModelsSectionFront
+			PrivateModelsEnumerated
+		PrivateModelsSectionEnd
+		{
+#line
+		    //- give diagnostics : activation of private models
+
+		    ParserMessage
+			((PARSERCONTEXT *)pacParserContext,
+			 LEVEL_GLOBALMSG_SYMBOLREPORT,
+			 "PrivateModelsSection",
+			 "Activating %s's private models"
+			 "(private models list not yet)",
+			 ParserContextGetFilename
+			 ((PARSERCONTEXT *)pacParserContext));
+		}
+	;
+
+PrivateModelsSectionFront
+	:
+		TOKEN_PRIVATE_MODELS
+		{
+#line
+		}
+	;
+
+PrivateModelsSectionEnd
+	:
+		TOKEN_END TOKEN_PRIVATE_MODELS
+		{
+#line
+		    //- give diagnostics : activation of private models
+
+		    ParserMessage
+			((PARSERCONTEXT *)pacParserContext,
+			 LEVEL_GLOBALMSG_SYMBOLREPORT,
+			 "PrivateModelsSectionEnd",
+			 "Activating %s's private models"
+			 "(private models list not yet)",
+			 ParserContextGetFilename
+			 ((PARSERCONTEXT *)pacParserContext));
+		}
+	;
+
+/*
+** enumeration of private models
+**
+*/
+
+PrivateModelsEnumerated
+	:
+		{
+#line
+		}
+	|
+		PrivateModelsEnumerated
+
+		/* export regular private model	 		*/
+
+		AnySymbol
+		{
+#line
+		    //- if private model description available
+
+		    if ($2)
+		    {
+			//- add private model
+
+			ParserAddPrivateModel
+			    ((PARSERCONTEXT *)pacParserContext,$2);
+		    }
+
+		    //- else
+
+		    else
+		    {
+			//- give diagnostics : empty private model
+
+			//t warning instead of error
+
+			NeurospacesError
+			    ((PARSERCONTEXT *)pacParserContext,
+			     "PrivateModelsEnumerated",
+			     "Empty private model");
+		    }
+		}
+	|
+		PrivateModelsEnumerated
+
+		/* export private model from dependencies	*/
+
+		TOKEN_ALIAS
+			IdentifierHierarchicalNameSpaceRooted
+			Identifier
+			OptionalItemParameters
+			OptionalChildSectionOptionalInputOptionalParameters
+		TOKEN_END TOKEN_ALIAS
+		{
+#line
+		    //v alias target
+
+		    struct symtab_HSolveListElement *phsleProto = NULL;
+
+		    //- if model dependency lookup not disabled by the options
+
+		    if (!(((PARSERCONTEXT *)pacParserContext)
+			  ->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_DEPCY_LOOKUP))
+		    {
+			//- lookup refereed model in dependencies
+
+			phsleProto
+			    = ParserLookupDependencyModel
+			      ((PARSERCONTEXT *)pacParserContext, $3);
+
+			//- if symbol found
+
+			if (phsleProto)
+			{
+			    struct symtab_HSolveListElement *phsle
+				= SymbolCreateAlias(phsleProto, IdinNewFromChars($4));
+
+			    //- set parameters
+
+			    SymbolAssignParameters(phsle, $5);
+
+			    //- link children
+
+			    if ($6)
+			    {
+				SymbolAddChild(phsle, $6);
+
+				//- reset actual symbol
+
+				ParserContextSetActual
+				    ((PARSERCONTEXT *)pacParserContext, phsle);
+			    }
+
+			    //- add private model
+
+			    ParserAddPrivateModel
+				((PARSERCONTEXT *)pacParserContext, phsle);
+			}
+
+			//- else
+
+			else
+			{
+			    //- give error msg
+
+			    NeurospacesError
+				((PARSERCONTEXT *)pacParserContext,
+				 "PrivateModelsEnumerated",
+				 "Dependency Symbol(%s::%s) not found.",
+				 $3->pcIdentifier
+				 ? $3->pcIdentifier
+				 : "NULL",
+				 $3->pidinNext
+				 && $3->pidinNext->pcIdentifier
+				 ? $3->pidinNext->pcIdentifier
+				 : "NULL");
+			}
+		    }
+		}
+	|
+		PrivateModelsEnumerated
+
+		/* export private model from dependencies	*/
+
+		TOKEN_ALIAS
+			Identifier
+			Identifier
+			OptionalItemParameters
+			OptionalChildSectionOptionalInputOptionalParameters
+		TOKEN_END TOKEN_ALIAS
+		{
+#line
+		    //v alias target
+
+		    struct symtab_HSolveListElement *phsleProto = NULL;
+
+		    //- if model dependency lookup not disabled by the options
+
+		    if (!(((PARSERCONTEXT *)pacParserContext)
+			  ->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_DEPCY_LOOKUP))
+		    {
+			//- lookup private model, set as alias target
+
+			phsleProto
+			    = ParserLookupPrivateModel
+			      (/*(PARSERCONTEXT *)pacParserContext,*/$3);
+
+			//- if symbol found
+
+			if (phsleProto)
+			{
+			    struct symtab_HSolveListElement *phsle
+				= SymbolCreateAlias(phsleProto, IdinNewFromChars($4));
+
+			    //- set parameters
+
+			    SymbolAssignParameters(phsle, $5);
+
+			    //- link children
+
+			    if ($6)
+			    {
+				SymbolAddChild(phsle, $6);
+
+				//- reset actual symbol
+
+				ParserContextSetActual
+				    ((PARSERCONTEXT *)pacParserContext, phsle);
+			    }
+
+			    //- add private model
+
+			    ParserAddPrivateModel
+				((PARSERCONTEXT *)pacParserContext, phsle);
+			}
+
+			//- else
+
+			else
+			{
+			    //- give error msg
+
+			    NeurospacesError
+				((PARSERCONTEXT *)pacParserContext,
+				 "PrivateModelsEnumerated",
+				 "PrivateModel Symbol(%s) not found.",
+				 $3 ? $3 : "NULL");
+			}
+		    }
+		}
+	;
+
+PublicModelsSection
+	:
+	|
+		PublicModelsSectionFront
+			PublicModelsEnumerated
+		PublicModelsSectionEnd
+		{
+#line
+		}
+	;
+
+PublicModelsSectionFront
+	:
+		TOKEN_PUBLIC_MODELS
+		{
+#line
+		    //- clear current element stack
+
+		    ParserCurrentElementPopAll
+			((PARSERCONTEXT *)pacParserContext);
+		}
+	;
+
+PublicModelsSectionEnd
+	:
+		TOKEN_END TOKEN_PUBLIC_MODELS
+		{
+#line
+		    //! makes private models invisible
+		}
+	;
+
+PublicModelsEnumerated
+	:
+	|
+		PublicModelsEnumerated
+		TOKEN_ORIGIN TOKEN_NUMBER ',' TOKEN_NUMBER ',' TOKEN_NUMBER
+	|
+		PublicModelsEnumerated
+		TOKEN_RELATIVE
+/* 	| */
+/* 		PublicModelsEnumerated */
+/* 		TOKEN_ALGORITHM */
+/* 		Identifier */
+/* 		TOKEN_ALGORITHMPARAMETERS */
+/* 		{ */
+/* #line */
+/* 		    //- import & init algorithm */
+
+/* 		    //! because TOKEN_ALGORITHMPARAMETERS returns a string, */
+/* 		    //! we loose some bytes here */
+/* 		    //! perhaps they are on the stack, still needs a check */
+
+/* 		    ParserAlgorithmImport */
+/* 			((PARSERCONTEXT *)pacParserContext, */
+/* 			 $3, */
+/* 			 $4->pcString); */
+
+/* 		    //t algorithm must be event based */
+/* 		    //t register interested events from algorithm */
+/* 		    //t install algorithm callback */
+/* 		} */
+/* 		TOKEN_END TOKEN_ALGORITHMPARAMETERS */
+	|
+		PublicModelsEnumerated
+		AnySymbol
+		{
+#line
+		    //- add symbol to models
+
+		    ParserAddPublicModel
+			((PARSERCONTEXT *)pacParserContext,
+			 $2);
+		}
+	|
+		PublicModelsEnumerated
+
+		/* export model from private models	*/
+
+		TOKEN_ALIAS
+			Identifier
+			Identifier
+			OptionalItemParameters
+			OptionalChildSectionOptionalInputOptionalParameters
+		TOKEN_END TOKEN_ALIAS
+		{
+#line
+		    //v alias target
+
+		    struct symtab_HSolveListElement *phsleProto = NULL;
+
+		    //- if private model lookup not disabled by the options
+
+		    if (!(((PARSERCONTEXT *)pacParserContext)
+			  ->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_PRIVATE_LOOKUP))
+		    {
+			//- lookup private model, set as alias target
+
+			phsleProto
+			    = ParserLookupPrivateModel
+			      (/*(PARSERCONTEXT *)pacParserContext,*/$3);
+
+			//- if symbol found
+
+			if (phsleProto)
+			{
+			    struct symtab_HSolveListElement *phsle
+				= SymbolCreateAlias(phsleProto, IdinNewFromChars($4));
+
+			    //- set parameters
+
+			    SymbolAssignParameters(phsle, $5);
+
+			    //- link children
+
+			    if ($6)
+			    {
+				SymbolAddChild(phsle, $6);
+
+				//- reset actual symbol
+
+				ParserContextSetActual
+				    ((PARSERCONTEXT *)pacParserContext, phsle);
+			    }
+
+			    //- add model
+
+			    ParserAddPublicModel
+				((PARSERCONTEXT *)pacParserContext, phsle);
+			}
+
+			//- else
+
+			else
+			{
+			    //- give error msg
+
+			    NeurospacesError
+				((PARSERCONTEXT *)pacParserContext,
+				 "PublicModelsEnumerated",
+				 "PrivateModel Symbol(%s) not found.",
+				 $3 ? $3 : "NULL");
+			}
+		    }
+		}
+	;
+
+/*
+** Note : Symbol propagation with default semantic rule
+**
+** this applies to .*Symbol and to .*Component
+*/
+
+AnySymbol	/* <phsle> */
+	:
+		AttachmentPointSymbol
+	|
+		AxonHillockSymbol
+	|
+		ConcentrationGateKineticSymbol
+	|
+		HHGateSymbol
+	|
+		EquationSymbol
+	|
+		GateKineticBackwardSymbol
+	|
+		GateKineticForwardSymbol
+	|
+		GateKineticPartSymbol
+	|
+		PoolSymbol
+	|
+		ChannelSymbol
+	|
+		SegmentSymbol
+	|
+		SegmentGroupSymbol
+	|
+		CellSymbol
+	|
+		RandomvalueSymbol
+	|
+		PopulationSymbol
+	|
+		ConnectionGroupSymbol
+	|
+		ConnectionSymbol
+	|
+		ProjectionSymbol
+	|
+		NetworkSymbol
+	|
+		GroupedModelSymbol
+	|
+		FiberModelSymbol
+	|
+		EMContourSymbol
+	|
+		ContourGroupSymbol
+	|
+		ContourPointSymbol
+	;
+
+AxonHillockComponent
+	:
+		SegmentSymbol
+	|
+		SegmentGroupSymbol
+	;
+
+HHGateComponent
+	:
+		ConcentrationGateKineticSymbol
+	|
+		GateKineticBackwardSymbol
+	|
+		GateKineticForwardSymbol
+	|
+		GateKineticPartSymbol
+	;
+
+ContourGroupComponent
+	:
+		EMContourSymbol
+	;
+
+EMContourComponent
+	:
+		ContourPointSymbol
+	;
+
+GateKineticComponent
+	:
+		GateKineticPartSymbol
+	;
+
+ChannelComponent
+	:
+		AttachmentPointSymbol
+	|
+		EquationSymbol
+	|
+		HHGateSymbol
+	;
+
+SegmentComponent
+	:
+		AttachmentPointSymbol
+	|
+		PoolSymbol
+	|
+		ChannelSymbol
+	;
+
+SegmentGroupComponent
+	:
+		SegmentSymbol
+	|
+		SegmentGroupSymbol
+	;
+
+CellComponent
+	:
+		AxonHillockSymbol
+	|
+		SegmentSymbol
+	|
+		SegmentGroupSymbol
+	;
+
+RandomvalueComponent
+	:
+		AttachmentPointSymbol
+	;
+
+PopulationComponent
+	:
+		CellSymbol
+	|
+		RandomvalueSymbol
+	;
+
+ConnectionGroupComponent
+	:
+		ConnectionSymbol
+	;
+
+ProjectionComponent
+	:
+		ConnectionGroupSymbol
+	|
+		ProjectionSymbol
+	;
+
+NetworkComponent
+	:
+		CellSymbol
+	|
+		PopulationSymbol
+	|
+		ProjectionSymbol
+	|
+		NetworkSymbol
+	;
+
+ConcentrationGateKineticSymbol
+	:
+		ConcentrationGateKineticSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+HHGateSymbol
+	:
+		HHGateSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+GateKineticBackwardSymbol
+	:
+		GateKineticBackwardSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+GateKineticForwardSymbol
+	:
+		GateKineticForwardSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+GateKineticPartSymbol
+	:
+		GateKineticPartSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+FiberModelSymbol
+	:
+		FiberModelSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+EMContourSymbol
+	:
+		EMContourSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+ContourGroupSymbol
+	:
+		ContourGroupSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+ContourPointSymbol
+	:
+		ContourPointSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+GroupedModelSymbol
+	:
+		GroupedModelSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+AttachmentPointSymbol
+	:
+		AttachmentPointSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+PoolSymbol
+	:
+		PoolSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+EquationSymbol
+	:
+		EquationAlphaOrExp2
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+ChannelSymbol
+	:
+		ChannelSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+AxonHillockSymbol
+	:
+		AxonHillockSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+SegmentSymbol
+	:
+		SegmentSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+SegmentGroupSymbol
+	:
+		SegmentGroupSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+CellSymbol
+	:
+		CellSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+RandomvalueSymbol
+	:
+		RandomvalueSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+PopulationSymbol
+	:
+		PopulationSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+ProjectionSymbol
+	:
+		ProjectionSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+NetworkSymbol
+	:
+		NetworkSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+ConnectionGroupSymbol
+	:
+		ConnectionGroupSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+ConnectionSymbol
+	:
+		ConnectionSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+ConcentrationGateKineticSection	/* <pcgatk> */
+	:
+		ConcentrationGateKineticSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			ConcentrationGateKineticDescription
+		ConcentrationGateKineticSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put concentration gate kinetic info on stack
+
+		    $$ = $4;
+		}
+	;
+
+ConcentrationGateKineticSectionFront	/* <pidin> */
+	:
+		TOKEN_CONCENTRATION_GATE_KINETIC
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+ConcentrationGateKineticSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_CONCENTRATION_GATE_KINETIC
+		{
+#line
+		}
+	;
+
+ConcentrationGateKineticDescription	/* <pcgatk> */
+	:
+		{
+#line
+		    //- allocate gate concept
+
+		    $$ = ConcentrationGateKineticCalloc();
+
+		    //- set actual symbol
+
+		    //! note : will not work, should use EndPushedPidin
+		    //! and related here
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		ConcentrationGateKineticDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put concentration gate kinetic on stack
+
+		    $$ = $1;
+		}
+	|
+		ConcentrationGateKineticDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle,$2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+HHGateSection	/* <pgathh> */
+	:
+		HHGateSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			HHGateDescription
+		HHGateSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put info on stack
+
+		    $$ = $4;
+		}
+	;
+
+HHGateSectionFront	/* <pidin> */
+	:
+		TOKEN_HH_GATE
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+HHGateSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_HH_GATE
+		{
+#line
+		}
+	;
+
+HHGateDescription	/* <pgathh> */
+	:
+		{
+#line
+		    //- allocate gate concept
+
+		    $$ = HHGateCalloc();
+
+		    //- set actual symbol
+
+		    //! note : will not work, should use EndPushedPidin
+		    //! and related here
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		HHGateDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put info on stack
+
+		    $$ = $1;
+		}
+	|
+		HHGateDescription
+		HHGateComponent
+		{
+#line
+		    //- add component to section list
+
+		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push description on stack
+
+		    $$ = $1;
+		}
+	|
+		HHGateDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle,$2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+GateKineticBackwardSection	/* <pgatk> */
+	:
+		GateKineticBackwardSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			GateKineticDescription
+		GateKineticBackwardSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put gate kinetic info on stack
+
+		    $$ = $4;
+		}
+	;
+
+GateKineticBackwardSectionFront	/* <pidin> */
+	:
+		TOKEN_GATE_KINETIC_BACKWARD
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+GateKineticBackwardSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_GATE_KINETIC_BACKWARD
+		{
+#line
+		}
+	;
+
+GateKineticForwardSection	/* <pgatk> */
+	:
+		GateKineticForwardSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			GateKineticDescription
+		GateKineticForwardSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put gate kinetic info on stack
+
+		    $$ = $4;
+		}
+	;
+
+GateKineticForwardSectionFront	/* <pidin> */
+	:
+		TOKEN_GATE_KINETIC_FORWARD
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+GateKineticForwardSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_GATE_KINETIC_FORWARD
+		{
+#line
+		}
+	;
+
+GateKineticDescription	/* <pgatk> */
+	:
+		{
+#line
+		    //- allocate gate kinetic
+
+		    $$ = GateKineticCalloc();
+
+		    //- set actual symbol
+
+		    //! note : will not work, should use EndPushedPidin
+		    //! and related here
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		GateKineticDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put gate kinetic on stack
+
+		    $$ = $1;
+		}
+	|
+		GateKineticDescription
+		GateKineticComponent
+		{
+#line
+		    //- add component to section list
+
+		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push description on stack
+
+		    $$ = $1;
+		}
+
+	|
+		GateKineticDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle,$2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+/* a fast hack */
+
+GateKineticPartSection	/* <pgatk> */
+	:
+		GateKineticPartSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			GateKineticDescription
+		GateKineticPartSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put gate kinetic info on stack
+
+		    $$ = $4;
+		}
+	;
+
+GateKineticPartSectionFront	/* <pidin> */
+	:
+		TOKEN_GATE_KINETIC_PART
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+GateKineticPartSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_GATE_KINETIC_PART
+		{
+#line
+		}
+	;
+
+FiberModelSection	/* <pfibr> */
+	:
+		FiberModelSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			FiberModelDescription
+		FiberModelSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->segr.bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->segr.bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->segr.bio.ioh.iol.hsle, $3);
+
+		    //- put fiber info on stack
+
+		    $$ = $4;
+		}
+	;
+
+FiberModelSectionFront	/* <pidin> */
+	:
+		TOKEN_FIBER
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+FiberModelSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_FIBER
+		{
+#line
+		}
+	;
+
+FiberModelDescription	/* <pfibr> */
+	:
+		{
+#line
+		    //- allocate fiber
+
+		    $$ = FiberCalloc();
+
+		    //- set actual symbol
+
+		    //! note : will not work, should use EndPushedPidin
+		    //! and related here
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->segr.bio.ioh.iol.hsle);
+		}
+	|
+		FiberModelDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- put fiber on stack
+
+		    $$ = $1;
+		}
+	|
+		FiberModelDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolAssignParameters(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+EMContourSection	/* <pemc> */
+	:
+		EMContourSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			EMContourDescription
+		EMContourSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put em contour info on stack
+
+		    $$ = $4;
+		}
+	;
+
+EMContourSectionFront	/* <pidin> */
+	:
+		TOKEN_EM_CONTOUR
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+EMContourSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_EM_CONTOUR
+		{
+#line
+		}
+	;
+
+EMContourDescription	/* <pemc> */
+	:
+		{
+#line
+		    //- allocate symbol
+
+		    $$ = EMContourCalloc();
+
+		    //- set actual symbol
+
+		    //! note : will not work, should use EndPushedPidin
+		    //! and related here
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		EMContourDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	|
+		EMContourDescription
+		EMContourComponent
+		{
+#line
+		    //- add component to section list
+
+		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push description on stack
+
+		    $$ = $1;
+		}
+	|
+		EMContourDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle,$2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+ContourGroupSection	/* <pvcont> */
+	:
+		ContourGroupSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			ContourGroupDescription
+		ContourGroupSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->vect.bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->vect.bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->vect.bio.ioh.iol.hsle, $3);
+
+		    //- put symbol on stack
+
+		    $$ = $4;
+		}
+	;
+
+ContourGroupSectionFront	/* <pidin> */
+	:
+		TOKEN_CONTOUR_GROUP
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+ContourGroupSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_CONTOUR_GROUP
+		{
+#line
+		}
+	;
+
+ContourGroupDescription	/* <pvcont> */
+	:
+		{
+#line
+		    //- allocate symbol
+
+		    $$ = VContourCalloc();
+
+		    //- set actual symbol
+
+		    //! note : will not work, should use EndPushedPidin
+		    //! and related here
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->vect.bio.ioh.iol.hsle);
+		}
+	|
+		ContourGroupDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	|
+		ContourGroupDescription
+		ContourGroupComponent
+		{
+#line
+		    //- add component to section list
+
+		    SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- push description on stack
+
+		    $$ = $1;
+		}
+
+	|
+		ContourGroupDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolAssignParameters(&$1->vect.bio.ioh.iol.hsle,$2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+ContourPointSection	/* <pcpnt> */
+	:
+		ContourPointSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			ContourPointDescription
+		ContourPointSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put symbol on stack
+
+		    $$ = $4;
+		}
+	;
+
+ContourPointSectionFront	/* <pidin> */
+	:
+		TOKEN_CONTOUR_POINT
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+ContourPointSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_CONTOUR_POINT
+		{
+#line
+		}
+	;
+
+ContourPointDescription	/* <pcpnt> */
+	:
+		{
+#line
+		    //- allocate symbol
+
+		    $$ = ContourPointCalloc();
+
+		    //- set actual symbol
+
+		    //! note : will not work, should use EndPushedPidin
+		    //! and related here
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		ContourPointDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	|
+		ContourPointDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle,$2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+GroupedModelSection	/* <pgrup> */
+	:
+		GroupedModelSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			GroupedModelDescription
+		GroupedModelSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put group info on stack
+
+		    $$ = $4;
+		}
+	;
+
+GroupedModelSectionFront	/* <pidin> */
+	:
+		TOKEN_GROUP
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+GroupedModelSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_GROUP
+		{
+#line
+		}
+	;
+
+GroupedModelDescription	/* <pgrup> */
+	:
+		{
+#line
+		    //- allocate extension
+
+		    $$ = GroupCalloc();
+
+		    //- set actual symbol
+
+		    //! note : will not work, should use EndPushedPidin
+		    //! and related here
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		GroupedModelDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put extension on stack
+
+		    $$ = $1;
+		}
+	|
+		GroupedModelDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle,$2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put extension on stack
+
+		    $$ = $1;
+		}
+	;
+
+AttachmentPointSection	/* <patta> */
+	:
+		AttachmentPointSectionFront
+			InputOutputRelations
+			AttachmentPointDescription
+		AttachmentPointSectionEnd
+		{
+#line
+		    //- link name
+
+		    SymbolSetName(&$3->bio.ioh.iol.hsle,$1);
+
+		    //- set type of attachment
+
+		    if (strcasecmp(IdinName($1),"spikegen") == 0)
+		    {
+			AttachmentSetType($3,TYPE_ATTACHMENT_OUTGOING);
+		    }
+		    else if (strcasecmp(IdinName($1),"synapse") == 0)
+		    {
+			AttachmentSetType($3,TYPE_ATTACHMENT_INCOMING);
+		    }
+		    else
+		    {
+			//- give diagnostics : unrecognized attachment type
+
+			NeurospacesError
+			    ((PARSERCONTEXT *)pacParserContext,
+			     "AttachmentPointSection",
+			     "Unrecognized attachment type(%s).",
+			     IdinName($1)
+			     ? IdinName($1)
+			     : "No type");
+		    }
+
+		    //- link I/O relations
+
+		    SymbolAssignBindableIO(&$3->bio.ioh.iol.hsle, $2);
+
+		    //- put attachment point description on stack
+
+		    $$ = $3;
+		}
+	;
+
+AttachmentPointSectionFront	/* <pidin> */
+	:
+		TOKEN_ATTACHMENT_POINT
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+AttachmentPointSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_ATTACHMENT_POINT
+		{
+#line
+		}
+	;
+
+AttachmentPointDescription	/* <patta> */
+	:
+		AttachmentPointData
+		{
+#line
+		    //- allocate attachment point on stack
+
+		    $$ = AttachmentCalloc();
+
+/* 		    //- set type : outgoing */
+
+/* 		    AttachmentSetType($$,TYPE_ATTACHMENT_OUTGOING); */
+
+		    //- assign attributes
+
+		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle,$1);
+
+		    //- set datatype
+
+		    AttachmentSetDataType($$,"null data");
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		AttachmentPointIncoming
+		AttachmentPointData
+		{
+#line
+		    //- allocate attachment point on stack
+
+		    $$ = AttachmentCalloc();
+
+		    //- set type : incoming
+
+		    AttachmentSetType($$,TYPE_ATTACHMENT_INCOMING);
+
+		    //- assign attributes
+
+		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle,$2);
+
+		    //- set datatype
+
+		    AttachmentSetDataType($$,$1);
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		AttachmentPointOutgoing
+		AttachmentPointData
+		{
+#line
+		    //- allocate attachment point on stack
+
+		    $$ = AttachmentCalloc();
+
+		    //- set type : outgoing
+
+		    AttachmentSetType($$,TYPE_ATTACHMENT_OUTGOING);
+
+		    //- assign attributes
+
+		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle,$2);
+
+		    //- set datatype
+
+		    AttachmentSetDataType($$,$1);
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	;
+
+AttachmentPointData	/* <ppar> */
+	:
+		{
+#line
+		    //- put NULL attributes on stack
+
+		    $$ = NULL;
+		}
+	|
+		AttachmentPointAttributes
+		{
+#line
+		    //- put attributes on stack
+
+		    $$ = $1;
+		}
+	;
+
+AttachmentPointAttributes	/* <ppar> */
+	:
+		TOKEN_ATTRIBUTES
+			Attributes
+		TOKEN_END TOKEN_ATTRIBUTES
+		{
+#line
+		    //- put attributes on stack
+
+		    $$ = $2->pparFirst;
+		}
+	;
+
+
+AttachmentPointIncoming	/* <pcIdentifier> */
+	:
+		TOKEN_RECEIVES TOKEN_EVENTS '(' Identifier ')'
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $4;
+		}
+	;
+
+AttachmentPointOutgoing	/* <pcIdentifier> */
+	:
+		TOKEN_GENERATES TOKEN_EVENTS '(' Identifier ')'
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $4;
+		}
+	;
+
+PoolSection	/* <ppool> */
+	:
+		PoolSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			PoolDescription
+		PoolSectionEnd
+		{
+#line
+		    //- set pool name
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle,$1);
+
+		    //- set outside bindable fields
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- pass pool description to stack
+
+		    $$ = $4;
+		}
+	;
+
+PoolSectionFront	/* <pidin> */
+	:
+		TOKEN_POOL
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put name on stack
+
+		    $$ = $2;
+		}
+	;
+
+PoolSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_POOL
+		{
+#line
+		}
+	;
+
+PoolDescription	/* <ppool> */
+	:
+		Parameters
+		{
+#line
+		    //- allocate pool description on stack
+
+		    $$ = PoolCalloc();
+
+		    $$->depool.iType = TYPE_POOL_PARAMETERS;
+
+		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle,$1);
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	;
+
+ChannelSection	/* <pchan> */
+	:
+		ChannelSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			ChannelDescription
+		ChannelSectionEnd
+		{
+#line
+		    //- set channel name
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle,$1);
+
+		    //- set outside bindable fields
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- pass channel description to stack
+
+		    $$ = $4;
+
+		    //- initialize channel specifics
+
+		    ChannelSetup($$,(PARSERCONTEXT *)pacParserContext);
+		}
+	;
+
+ChannelSectionFront	/* <pidin> */
+	:
+		TOKEN_CHANNEL
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put name on stack
+
+		    $$ = $2;
+		}
+	;
+
+ChannelSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_CHANNEL
+		{
+#line
+		}
+	;
+
+ChannelDescription	/* <pchan> */
+	:
+		{
+#line
+		    //- allocate channel description on stack
+
+		    $$ = ChannelCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		ChannelDescription
+		Parameters
+		{
+#line
+		    //- link parameters at end of parameter list
+
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push channel description on stack
+
+		    $$ = $1;
+		}
+	|
+		ChannelDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link has section with channel description
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push channel description on stack
+
+		    $$ = $1;
+		}
+	|
+		ChannelDescription
+		ChannelComponent
+		{
+#line
+		    //- get actual context
+
+		    struct PidinStack *ppist
+			= ParserContextGetPidinContext
+			  ((PARSERCONTEXT *)pacParserContext);
+
+		    //- if component is equation
+
+		    if (instanceof_equation($2))
+		    {
+			//- if channel has already equation assigned
+
+			if (SymbolHasEquation(&$1->bio.ioh.iol.hsle, ppist))
+			{
+			    //- give diagnostics : not allowed
+
+			    NeurospacesError
+				((PARSERCONTEXT *)pacParserContext,
+				 "ChannelDescription",
+				 "Multiple equations for channel(%s).",
+				 SymbolName(&$1->bio.ioh.iol.hsle)
+				 ? SymbolName(&$1->bio.ioh.iol.hsle)
+				 : "Unnamed");
+			}
+
+			//- else
+
+			else
+			{
+			    //- add channel component to section list
+
+			    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+			}
+		    }
+
+		    //- else if component is attachment point
+
+		    else if (instanceof_attachment($2))
+		    {
+			//- if channel has already connection assigned
+
+			if (ChannelReceivesSpikes($1, ppist))
+			{
+			    //- give diagnostics : not allowed
+
+			    NeurospacesError
+				((PARSERCONTEXT *)pacParserContext,
+				 "ChannelDescription",
+				 "Multiple attachment points"
+				 " for channel(%s).",
+				 SymbolName(&$1->bio.ioh.iol.hsle)
+				 ? SymbolName(&$1->bio.ioh.iol.hsle)
+				 : "Unnamed");
+			}
+
+			//- else
+
+			else
+			{
+			    //- add channel component to section list
+
+			    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+			}
+		    }
+
+		    //- else if component is a HH gate
+
+		    else if (instanceof_h_h_gate($2))
+		    {
+			//- add channel component to section list
+
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+		    else
+		    {
+			//- give diagnostics : not allowed
+
+			NeurospacesError
+			    ((PARSERCONTEXT *)pacParserContext,
+			     "ChannelDescription",
+			     "Unknown channel component %s"
+			     " for channel(%s).",
+			     SymbolName($2)
+			     ? SymbolName($2)
+			     : "Unnamed",
+			     SymbolName(&$1->bio.ioh.iol.hsle)
+			     ? SymbolName(&$1->bio.ioh.iol.hsle)
+			     : "Unnamed");
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put channel data on stack
+
+		    $$ = $1;
+		}
+	|
+		TOKEN_TABLEFILE
+		TOKEN_STRING
+		{
+#line
+		    //- remove ending '"' from string
+
+		    $2->pcString[$2->iLength - 1] = '\0';
+
+		    //- put channel description on stack
+
+		    $$ = ChannelCalloc();
+
+		    //- fill in table parameters
+
+		    ChannelSetTableParameters
+			($$,
+			 (PARSERCONTEXT *)pacParserContext,
+			 &$2->pcString[1]);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+
+		    //! memory leak : $2
+		}
+	;
+
+EquationAlphaOrExp2	/* <peq> */
+	:
+		EquationAlphaSection
+		{
+#line
+		    // remember equation on stack
+
+		    $$ = NULL; //$1;
+		}
+	|
+		EquationExp2Section
+		{
+#line
+		    //- remember equation on stack
+
+		    $$ = $1;
+		}
+	;
+
+EquationAlphaSection	/* <peq> */
+	:
+		EquationAlphaSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+
+			/* requires tau parameter */
+
+			TOKEN_PARAMETERS
+				IdentifierOptionIndex
+				'='
+				TOKEN_NUMBER
+			TOKEN_END TOKEN_PARAMETERS
+		EquationAlphaSectionEnd
+		{
+#line
+		}
+	;
+
+EquationAlphaSectionFront
+	:
+		TOKEN_ALPHA_EQUATION
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		}
+	;
+
+EquationAlphaSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_ALPHA_EQUATION
+	;
+
+EquationExp2Section	/* <peq> */
+	:
+		EquationExp2SectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			EquationExp2SectionParameters
+		EquationExp2SectionEnd
+		{
+#line
+		    //- put parametered equation type on stack
+
+		    $$ = EquationCalloc();
+
+		    SymbolSetType(&$$->bio.ioh.iol.hsle, TYPE_EQUATION_EXP2);
+
+		    //- set name
+
+		    SymbolSetName(&$$->bio.ioh.iol.hsle,$1);
+
+		    //- link outside world I/O relations
+
+		    SymbolAssignBindableIO(&$$->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$$->bio.ioh.iol.hsle, $3);
+
+		    //- assign parameters
+
+		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle,$4);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	;
+
+EquationExp2SectionFront	/* <pidin> */
+	:
+		TOKEN_EXP2_EQUATION
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- pass id on stack
+
+		    $$ = $2;
+		}
+	;
+
+EquationExp2SectionEnd
+	:
+		EndPushedPidin
+		TOKEN_EXP2_EQUATION
+		{
+#line
+		}
+	;
+
+EquationExp2SectionParameters	/* <ppar> */
+	:
+		Parameters
+		{
+#line
+		    //- put paramters on stack
+
+		    //t requires tau[12] parameters
+		    //t check parameters
+
+		    $$ = $1;
+		}
+	;
+
+SegmentSection	/* <psegment> */
+	:
+		SegmentSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			SegmentDescription
+		SegmentSectionEnd
+		{
+#line
+		    //- link name with segment
+
+		    SymbolSetName(&$4->segr.bio.ioh.iol.hsle, $1);
+
+		    //- set outside bindable fields
+
+		    SymbolAssignBindableIO(&$4->segr.bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->segr.bio.ioh.iol.hsle, $3);
+
+		    //- put segment items on stack
+
+		    $$ = $4;
+		}
+	;
+
+SegmentSectionFront	/* <pidin> */
+	:
+		TOKEN_SEGMENT
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put name on stack
+
+		    $$ = $2;
+		}
+	;
+
+SegmentSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_SEGMENT
+		{
+#line
+		}
+	;
+
+SegmentDescription	/* <psegment> */
+	:
+		{
+#line
+		    //- put empty segment description on stack
+
+		    $$ = SegmentCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->segr.bio.ioh.iol.hsle);
+		}
+	|
+		SegmentDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push segment description on stack
+
+		    $$ = $1;
+		}
+	|
+		SegmentDescription
+		Parameters
+		{
+#line
+		    //- link parameters at end of parameter list
+
+		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- put segment description on stack
+
+		    $$ = $1;
+		}
+	|
+		SegmentDescription
+		TOKEN_OPTIONS
+		SegmentInstanceOptions
+		{
+#line
+		    //- set segment options
+
+		    SymbolSetOptions(&$1->segr.bio.ioh.iol.hsle, $3);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push segment description on stack
+
+		    $$ = $1;
+		}
+	|
+		SegmentDescription
+		SegmentComponent
+		{
+#line
+		    //- add segment component to section list
+
+		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push segment description on stack
+
+		    $$ = $1;
+		}
+	;
+
+SegmentGroupSection	/* <pvsegm> */
+	:
+		SegmentGroupSectionFront
+/* 			InputOutputRelations */
+			OptionalItemInputRelations
+			SegmentGroupDescription
+		{
+		    //- get current context
+
+		    struct PidinStack *ppist
+			= ParserContextGetPidinContext
+			  ((PARSERCONTEXT *)pacParserContext);
+
+		    //- recompute relative coordinates to absolute coordinates
+
+		    VSegmentRelative2Absolute($3, ppist);
+		}
+		SegmentGroupSectionEnd
+		{
+#line
+		    //- assign identifier to cell struct
+
+		    SymbolSetName(&$3->vect.bio.ioh.iol.hsle, $1);
+
+/* 		    //- set outside bindable fields */
+
+/* 		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2); */
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$3->vect.bio.ioh.iol.hsle, $2);
+
+		    //- put cell struct on stack
+
+		    $$ = $3;
+		}
+	;
+
+SegmentGroupSectionFront	/* <pidin> */
+	:
+		TOKEN_SEGMENT_GROUP
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put pidin on stack
+
+		    $$ = $2;
+		}
+	;
+
+SegmentGroupSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_SEGMENT_GROUP
+		{
+#line
+/* 		    //- pop segment container from container stack */
+
+/* 		    ParserContextPopContainer(); */
+		}
+	;
+
+SegmentGroupDescription	/* <pvsegm> */
+	:
+		{
+#line
+		    //- put container on stack
+
+		    $$ = VSegmentCalloc();
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->vect.bio.ioh.iol.hsle);
+		}
+	|
+		SegmentGroupDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- push description on stack
+
+		    $$ = $1;
+		}
+	|
+		SegmentGroupDescription
+		SegmentGroupComponent
+		{
+#line
+		    //- add component to section list of cell
+
+		    SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- push description on stack
+
+		    $$ = $1;
+		}
+	|
+		SegmentGroupDescription
+		Parameters
+		{
+#line
+		    //- link parameters at end of parameter list
+
+		    SymbolParameterLinkAtEnd(&$1->vect.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- push description on stack
+
+		    $$ = $1;
+		}
+	;
+
+SegmentInstanceOptions	/* <iCompOptions> */
+	:
+		{
+#line
+		    //- erase int on stack
+
+		    $$ = 0;
+		}
+	|
+		SegmentInstanceOptions
+		TOKEN_SPHERICAL
+		{
+#line
+		    //- remember spherical option
+
+		    $$ |= FLAG_SEGMENTER_SPHERICAL;
+		}
+	|
+		SegmentInstanceOptions
+		TOKEN_CYLINDRICAL
+		{
+#line
+		    //- remember cylindrical option (erases spherical option)
+
+		    $$ &= ~(FLAG_SEGMENTER_SPHERICAL);
+		}
+	;
+
+CellSection	/* <pcell> */
+	:
+		CellSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			CellDescription
+		CellSectionEnd
+		{
+#line
+		    //- assign identifier to cell struct
+
+		    SymbolSetName(&$4->segr.bio.ioh.iol.hsle, $1);
+
+		    //- set outside bindable fields
+
+		    SymbolAssignBindableIO(&$4->segr.bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->segr.bio.ioh.iol.hsle, $3);
+
+		    //- put cell struct on stack
+
+		    $$ = $4;
+		}
+	;
+
+CellSectionFront	/* <pidin> */
+	:
+		TOKEN_CELL
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put pidin on stack
+
+		    $$ = $2;
+		}
+	;
+
+CellSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_CELL
+		{
+#line
+		}
+	;
+
+CellDescription	/* <pcell> */
+	:
+		{
+#line
+		    //- prepare cell struct for symbol table
+
+		    $$ = CellCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->segr.bio.ioh.iol.hsle);
+		}
+	|
+		CellDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link has section with cell description
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push cell description on stack
+
+		    $$ = $1;
+		}
+	|
+		CellDescription
+		CellComponent
+		{
+#line
+		    //- add cell component to section list of cell
+
+		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push cell description on stack
+
+		    $$ = $1;
+		}
+	|
+		CellDescription
+		Parameters
+		{
+#line
+		    //- link parameters at end of parameter list
+
+		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push cell description on stack
+
+		    $$ = $1;
+		}
+	;
+
+AxonHillockSection	/* <paxhi> */
+	:
+		AxonHillockSectionFront
+			AxonHillockDescription
+		AxonHillockSectionEnd
+		{
+#line
+		    //- assign identifier to cell struct
+
+		    SymbolSetName(&$2->segr.bio.ioh.iol.hsle,$1);
+
+		    //- put cell struct on stack
+
+		    $$ = $2;
+		}
+	;
+
+AxonHillockSectionFront	/* <pidin> */
+	:
+		TOKEN_AXON_HILLOCK
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put pidin on stack
+
+		    $$ = $2;
+		}
+	;
+
+AxonHillockSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_AXON_HILLOCK
+		{
+#line
+		}
+	;
+
+AxonHillockDescription	/* <paxhi> */
+	:
+		{
+#line
+		    //- prepare axon hillock struct for symbol table
+
+		    $$ = AxonHillockCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->segr.bio.ioh.iol.hsle);
+		}
+	|
+		AxonHillockDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link has section with axon hillock description
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push axon hillock description on stack
+
+		    $$ = $1;
+		}
+	|
+		AxonHillockDescription
+		AxonHillockComponent
+		{
+#line
+		    //- add axon hillock component to section list of axon hillock
+
+		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push axon hillock description on stack
+
+		    $$ = $1;
+		}
+	|
+		AxonHillockDescription
+		Parameters
+		{
+#line
+		    //- link parameters at end of parameter list
+
+		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push axon hillock description on stack
+
+		    $$ = $1;
+		}
+	;
+
+RandomvalueSection	/* <pranv> */
+	:
+		RandomvalueSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			RandomvalueDescription
+		RandomvalueSectionEnd
+		{
+#line
+		    //- set pool name
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle,$1);
+
+		    //- set outside bindable fields
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- pass randomvalue description to stack
+
+		    $$ = $4;
+		}
+	;
+
+RandomvalueSectionFront	/* <pidin> */
+	:
+		TOKEN_RANDOMVALUE
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put name on stack
+
+		    $$ = $2;
+		}
+	;
+
+RandomvalueSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_RANDOMVALUE
+		{
+#line
+		}
+	;
+
+RandomvalueDescription	/* <pranv> */
+	:
+		{
+#line
+		    //- allocate randomvalue description on stack
+
+		    $$ = RandomvalueCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		RandomvalueDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle,$2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push description on stack
+
+		    $$ = $1;
+		}
+	|
+		RandomvalueDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link has section with description
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push description on stack
+
+		    $$ = $1;
+		}
+	|
+		RandomvalueDescription
+		RandomvalueComponent
+		{
+#line
+		    //- if component is attachment
+
+		    if (instanceof_attachment($2))
+		    {
+/* 			//- if channel has already connection assigned */
+
+/* 			if (!HSolveListIsEmpty(&$1->dechan.hslAttachments)) */
+/* 			{ */
+/* 			    //- give diagnostics : not allowed */
+
+/* 			    NeurospacesError */
+/* 				((PARSERCONTEXT *)pacParserContext, */
+/* 				 "RandomvalueDescription", */
+/* 				 "Multiple attachment points for channel(%s).", */
+/* 				 ChannelName($1) */
+/* 				 ? ChannelName($1) */
+/* 				 : "Unnamed"); */
+/* 			} */
+
+/* 			//- else */
+
+/* 			else */
+/* 			{ */
+/* 			    //- link equation to channel */
+
+/* 			    SymbolAddChild */
+/* 				(&$1->dechan.hslAttachments, $2); */
+/* 			} */
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put data on stack
+
+		    $$ = $1;
+		}
+	;
+
+PopulationSection	/* <ppopu> */
+	:
+		PopulationSectionFront
+			PopulationDescription
+		PopulationSectionEnd
+		{
+#line
+		    //- assign identifier to population struct
+
+		    SymbolSetName(&$2->segr.bio.ioh.iol.hsle, $1);
+
+		    //- put population struct on stack
+
+		    $$ = $2;
+		}
+	;
+
+PopulationSectionFront	/* <pidin> */
+	:
+		TOKEN_POPULATION
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put pidin on stack
+
+		    $$ = $2;
+		}
+	;
+
+PopulationSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_POPULATION
+		{
+#line
+		}
+	;
+
+PopulationDescription	/* <ppopu> */
+	:
+		{
+#line
+		    //- prepare population struct for symbol table
+
+		    $$ = PopulationCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->segr.bio.ioh.iol.hsle);
+		}
+	|
+		PopulationDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link has section with population description
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push population description on stack
+
+		    $$ = $1;
+		}
+	|
+		PopulationDescription
+		PopulationComponent
+		{
+#line
+		    //- add population component to sections of population
+
+		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push population description on stack
+
+		    $$ = $1;
+		}
+/*
+	|
+		PopulationDescription
+		MultipleCellSection
+		{
+#line
+		    //- allocate symbol table list element
+
+		    struct symtab_HSolveListElement * phsle
+			= VCellCalloc();
+
+		    //- link multiple cells to list element
+
+		    phsle->iType = TYPE_HSLE_MULTIPLECELLS;
+		    phsle->uSymbol.pcell = $2;
+
+		    //- add multiple cells to section list of population
+
+		    SymbolAddChild(&$1->hslSections, phsle);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push population description on stack
+
+		    $$ = $1;
+		}
+*/	|
+		PopulationDescription
+		Parameters
+		{
+#line
+		    //- link parameters at end of parameter list
+
+		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push population description on stack
+
+		    $$ = $1;
+		}
+	;
+
+ConnectionSection	/* <pconsy> */
+	:
+		ConnectionSectionFront
+			ConnectionDescription
+		ConnectionSectionEnd
+		{
+#line
+		    //- assign identifier to connection struct
+
+		    SymbolSetName(&$2->bio.ioh.iol.hsle,$1);
+
+		    //- put connection struct on stack
+
+		    $$ = $2;
+		}
+	;
+
+ConnectionSectionFront	/* <pidin> */
+	:
+		TOKEN_CONNECTION
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put pidin on stack
+
+		    $$ = $2;
+		}
+	;
+
+ConnectionSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_CONNECTION
+		{
+#line
+		}
+	;
+
+ConnectionDescription	/* <pconsy> */
+	:
+		{
+#line
+		    //- prepare connection struct for symbol table
+
+		    $$ = ConnectionSymbolCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		ConnectionDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link has section with connection description
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //! this interferes with the things below, so dump a core
+		    //! to prevent this
+
+		    *(int *)0 = 0;
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push connection description on stack
+
+		    $$ = $1;
+		}
+/* 	| */
+/* 		ConnectionDescription */
+/* 		ConnectionComponent */
+/* 		{ */
+/* #line */
+/* 		    //- add connection component */
+
+/* 		    if ($2) */
+/* 		    { */
+/* 			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2); */
+/* 		    } */
+
+/* 		    //- reset actual symbol */
+
+/* 		    ParserContextSetActual */
+/* 			((PARSERCONTEXT *)pacParserContext, */
+/* 			 &$1->bio.ioh.iol.hsle); */
+
+/* 		    //- push connection description on stack */
+
+/* 		    $$ = $1; */
+/* 		} */
+	|
+		ConnectionDescription
+		Parameters
+		{
+#line
+		    //- link parameters at end of parameter list
+
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push description on stack
+
+		    $$ = $1;
+		}
+	;
+
+ConnectionGroupSection	/* <pvconsy> */
+	:
+		ConnectionGroupSectionFront
+			ConnectionGroupsEnumerated
+		ConnectionGroupSectionEnd
+		{
+#line
+		    //- put enumerated connections struct on stack
+
+		    $$ = $1;
+		}
+	;
+
+/*
+** shift & reduce identifier with index
+**
+** allocate vector to contain elements, push it on container stack
+*/ 
+
+ConnectionGroupSectionFront	/* <pvconsy> */
+	:
+		TOKEN_CONNECTION_GROUP
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- get actual container name
+
+		    struct symtab_IdentifierIndex *pidin
+			= ParserContextActualState();
+
+		    //- put container on stack
+
+		    $$ = VConnectionSymbolCalloc();
+
+		    //- set name of group
+
+		    SymbolSetName(&$$->vect.bio.ioh.iol.hsle,pidin);
+
+		    //- push container on container stack
+
+		    ParserContextPushContainer(&$$->vect);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->vect.bio.ioh.iol.hsle);
+
+		}
+	;
+
+/*
+** shift & reduce END
+**
+** pop associated container
+*/
+
+ConnectionGroupSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_CONNECTION_GROUP
+		{
+#line
+		    //- pop segment container from container stack
+
+		    ParserContextPopContainer();
+		}
+	;
+
+ConnectionGroupsEnumerated
+	:
+		{
+#line
+		}
+	|
+		ConnectionGroupsEnumerated
+		ConnectionGroupComponent
+		{
+#line
+		    //- get pointer to actual container
+
+		    struct symtab_HSolveListElement *phsle
+			= (struct symtab_HSolveListElement *)
+			  ParserContextActualContainer();
+
+		    if (!instanceof_v_connection_symbol(phsle))
+		    {
+			//- give diagnostics : prototype not found
+
+			NeurospacesError
+			    ((PARSERCONTEXT *)pacParserContext,
+			     "ConnectionGroupsEnumerated",
+			     "No group allocated.",
+			     $2);
+		    }
+		    else
+		    {
+			//- get pointer to actual container
+
+			struct symtab_VConnectionSymbol *pvconsy
+			    = (struct symtab_VConnectionSymbol *)
+			      ParserContextActualContainer();
+
+			//- add connection component to container
+
+			SymbolAddChild(&pvconsy->vect.bio.ioh.iol.hsle, $2);
+
+			//- reset actual symbol
+
+			ParserContextSetActual
+			    ((PARSERCONTEXT *)pacParserContext,
+			     &pvconsy->vect.bio.ioh.iol.hsle);
+		    }
+		}
+	;
+
+ProjectionSection	/* <pproj> */
+	:
+		ProjectionSectionFront
+			ProjectionDescription
+		ProjectionSectionEnd
+		{
+#line
+		    //- assign identifier to projection struct
+
+		    SymbolSetName(&$2->bio.ioh.iol.hsle,$1);
+
+		    //- put projection struct on stack
+
+		    $$ = $2;
+		}
+	;
+
+ProjectionSectionFront	/* <pidin> */
+	:
+		TOKEN_PROJECTION
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put pidin on stack
+
+		    $$ = $2;
+		}
+	;
+
+ProjectionSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_PROJECTION
+		{
+#line
+		}
+	;
+
+ProjectionDescription	/* <pproj> */
+	:
+		{
+#line
+		    //- prepare projection struct for symbol table
+
+		    $$ = ProjectionCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		ProjectionDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link has section with projection description
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //! this interferes with the things below, so dump a core
+		    //! to prevent this
+
+		    *(int *)0 = 0;
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push projection description on stack
+
+		    $$ = $1;
+		}
+	|
+		ProjectionDescription
+		ProjectionComponent
+		{
+#line
+		    //- add projection component
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push projection description on stack
+
+		    $$ = $1;
+		}
+	|
+		ProjectionDescription
+		Parameters
+		{
+#line
+		    //- link parameters at end of parameter list
+
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push description on stack
+
+		    $$ = $1;
+		}
+	;
+
+NetworkSection	/* <pnetw> */
+	:
+		NetworkSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			NetworkDescription
+		NetworkSectionEnd
+		{
+#line
+		    //- assign identifier to network struct
+
+		    SymbolSetName(&$4->segr.bio.ioh.iol.hsle,$1);
+
+		    //- set outside bindable fields
+
+		    SymbolAssignBindableIO(&$4->segr.bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->segr.bio.ioh.iol.hsle, $3);
+
+		    //- put network struct on stack
+
+		    $$ = $4;
+		}
+	;
+
+NetworkSectionFront	/* <pidin> */
+	:
+		TOKEN_NETWORK
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put pidin on stack
+
+		    $$ = $2;
+		}
+	;
+
+NetworkSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_NETWORK
+		{
+#line
+		}
+	;
+
+NetworkDescription	/* <pnetw> */
+	:
+		{
+#line
+		    //- prepare network struct for symbol table
+
+		    $$ = NetworkCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->segr.bio.ioh.iol.hsle);
+		}
+	|
+		NetworkDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link has section with network description
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push network description on stack
+
+		    $$ = $1;
+		}
+	|
+		NetworkDescription
+		NetworkComponent
+		{
+#line
+		    //- link component into section list of network
+
+		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push network description on stack
+
+		    $$ = $1;
+		}
+	|
+		NetworkDescription
+		Parameters
+		{
+#line
+		    //- link parameters at end of parameter list
+
+		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push description on stack
+
+		    $$ = $1;
+		}
+	;
+
+ChildSectionFront	/* <phsle> */
+	:
+		TOKEN_CHILD
+		Identifier
+		IdentifierOptionIndex
+		{
+#line
+		    //v prototype symbol
+
+		    struct symtab_HSolveListElement *phslePrototype = NULL;
+
+		    //- if public model lookup not disabled by the options
+
+		    if (!(((PARSERCONTEXT *)pacParserContext)
+			  ->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_PUBLIC_LOOKUP))
+		    {
+			//- if lookup prototype
+
+			phslePrototype = ParserLookupPrivateModel($2);
+
+			if (!phslePrototype)
+			{
+			    NeurospacesError
+				((PARSERCONTEXT *)pacParserContext,
+				 "ChildSectionFront",
+				 "Private Model (%s) not found.",
+				 $2);
+
+			    $$ = NULL;
+			}
+			else if (!instanceof_bio_comp(phslePrototype))
+			{
+			    NeurospacesError
+				((PARSERCONTEXT *)pacParserContext,
+				 "ChildSectionFront",
+				 "Private Model (%s) is not a bio component.",
+				 $2);
+
+			    $$ = NULL;
+			}
+			else
+			{
+			    //- allocate id for new symbol
+
+			    struct symtab_IdentifierIndex *pidin = IdinCalloc();
+
+			    IdinSetName(pidin, $2);
+
+			    //- new symbol is alias for prototype
+
+			    $$ = SymbolCreateAlias(phslePrototype, $3);
+			}
+		    }
+		    else
+		    {
+			//! so for this particular case, NULL does not
+			//! signal an error, could become complicated in
+			//! the future, perhaps another solution is
+			//! needed with dummy symbols or something ?
+
+			$$ = NULL;
+		    }
+		}
+	;
+
+ChildSectionEnd
+	:
+		TOKEN_END TOKEN_CHILD
+		{
+#line
+		}
+	;
+
+OptionalChildSectionOptionalInputOptionalParameters	/* <phsle> */
+	:
+		{
+#line
+		    //- put no symbol on stack
+
+		    $$ = NULL;
+		}
+	|
+		ChildSectionOptionalInputOptionalParameters
+	;
+
+ChildSectionOptionalInputOptionalParameters	/* <phsle> */
+	:
+		ChildSectionFront
+			FixedItemInputRelations
+			ItemParameters
+		ChildSectionEnd
+		{
+#line
+		    //- fill in values of bio component
+
+		    if ($1)
+		    {
+			SymbolAssignInputs($1, $2 ? $2->pioFirst : NULL);
+
+			SymbolAssignParameters($1, $3);
+		    }
+
+		    //- put bio component on stack
+
+		    $$ = $1;
+		}
+	|
+		ChildSectionFront
+			ItemParameters
+		ChildSectionEnd
+		{
+#line
+		    //- fill in values of bio component
+
+		    if ($1)
+		    {
+			SymbolAssignParameters($1, $2);
+
+		    }
+
+		    //- put bio component on stack
+
+		    $$ = $1;
+		}
+	|
+		ChildSectionFront
+			FixedItemInputRelations
+		ChildSectionEnd
+		{
+#line
+		    //- fill in values of bio component
+
+		    if ($1)
+		    {
+			SymbolAssignInputs($1, $2 ? $2->pioFirst : NULL);
+		    }
+
+		    //- put bio component on stack
+
+		    $$ = $1;
+		}
+	|
+		ChildSectionFront
+		ChildSectionEnd
+		{
+#line
+		    //- put bio component on stack
+
+		    $$ = $1;
+		}
+	;
+
+OptionalItemInputRelations	/* <pio> */
+	:
+		{
+#line
+		    $$ = NULL;
+		}
+	|
+		FixedItemInputRelations
+	;
+
+FixedItemInputRelations	/* <pio> */
+	:
+		TOKEN_BINDINGS
+		TOKEN_END TOKEN_BINDINGS
+		{
+#line
+		    $$ = NULL;
+		}
+	|
+		TOKEN_BINDINGS
+			ItemInputRelations
+		TOKEN_END TOKEN_BINDINGS
+		{
+#line
+		    $$ = $2;
+		}
+	|
+		TOKEN_BINDINGS
+			ItemInputRelations
+			','
+		TOKEN_END TOKEN_BINDINGS
+		{
+#line
+		    $$ = $2;
+		}
+	;
+
+ItemInputRelations	/* <pio> */
+	:
+		TOKEN_INPUT
+		FieldOrIOHierarchical
+		{
+#line
+		    //- allocate I/O relation
+
+		    struct symtab_InputOutput
+			*pio = InputOutputNewForType(INPUT_TYPE_INPUT);
+
+		    //- store idin
+
+		    pio->pidinField = $2;
+
+		    //- set TOKEN_INPUT flag for root idin $2
+
+		    IdinSetFlags($2,FLAG_IDENTINDEX_INPUTROOT);
+
+		    //- put io list on stack
+
+		    $$ = pio;
+		}
+	|
+		ItemInputRelations
+		','
+		TOKEN_INPUT
+		FieldOrIOHierarchical
+		{
+#line
+		    //- allocate I/O relation
+
+		    struct symtab_InputOutput *pio
+			= InputOutputNewForType(INPUT_TYPE_INPUT);
+
+		    //- set TOKEN_INPUT flag for root idin $4
+
+		    IdinSetFlags($4,FLAG_IDENTINDEX_INPUTROOT);
+
+		    //- store idin
+
+		    pio->pidinField = $4;
+
+		    //- link input relations into list
+
+		    pio->pioFirst = $1->pioFirst;
+		    $1->pioNext = pio;
+
+		    //- put io list on stack
+
+		    $$ = pio;
+		}
+	;
+
+OptionalItemParameters	/* <ppar> */
+	:
+		{
+#line
+		    //- put empty parameter list onto top of stack
+
+		    $$ = NULL;
+		}
+	|
+		ItemParameters
+		{
+#line
+		    //- put parameters onto top of stack
+
+		    $$ = $1;
+		}
+	;
+
+ItemParameters	/* <ppar> */
+	:
+		Parameters
+		{
+#line
+		    //- put parameters onto top of stack
+
+		    $$ = $1;
+		}
+	;
+
+Attributes	/* <ppar> */
+	:
+		Identifier
+		{
+#line
+		    //- allocate parameters on stack
+
+		    $$ = ParameterCalloc();
+
+		    $$->pparFirst = $$;
+
+		    //- fill in name and type
+
+		    ParameterSetAttribute($$);
+
+		    ParameterSetName($$,$1);
+		}
+	|
+		Attributes
+		','
+		Identifier
+		{
+#line
+		    //- allocate parameters
+
+		    struct symtab_Parameters *ppar = ParameterCalloc();
+
+		    //- fill in name and type
+
+		    ParameterSetAttribute(ppar);
+
+		    ParameterSetName(ppar,$3);
+
+		    //- link new parameter in list
+
+		    $1->pparNext = ppar;
+		    ppar->pparFirst = $1->pparFirst;
+
+		    //- push last parameter on stack
+
+		    $$ = $1;
+		}
+	;
+
+Parameters	/* <ppar> */
+	:
+		TOKEN_PARAMETERS
+			ParametersEnumerated
+		TOKEN_END TOKEN_PARAMETERS
+		{
+#line
+		    //- put parameters onto top of stack
+
+		    if ($2)
+		    {
+			$$ = $2->pparFirst;
+		    }
+		    else
+		    {
+			$$ = NULL;
+		    }
+		}
+	;
+
+ParametersEnumerated	/* <ppar> */
+	:
+		ParametersEnumerated
+		','
+		Parameter
+		{
+#line
+		    //- allocate room for symbolic parameter
+
+		    $1->pparNext = $3;
+		    $3->pparFirst = $1->pparFirst;
+
+		    //- put last parameter onto stack
+
+		    $$ = $3;
+		}
+	|
+		ParametersEnumerated
+		','
+		{
+#line
+		    //- allocate room for symbolic parameter
+
+		    $1->pparNext = NULL;
+
+		    //- put last parameter onto stack
+
+		    $$ = $1;
+		}
+	|
+		Parameter
+		{
+#line
+		    //- put last parameter onto stack
+
+		    $$ = $1;
+		}
+	|
+		{
+#line
+		    //- put no parameters onto stack
+
+		    $$ = NULL;
+		}
+	;
+
+Parameter	/* <ppar> */
+	:
+		TOKEN_PARAMETER
+		'('
+		Identifier
+		'='
+		IdentifierHierarchicalOptionalRooted
+		')'
+		{
+#line
+		    //- allocate room for symbolic parameter
+
+		    $$ = ParameterCalloc();
+
+		    //- fill up structure
+
+		    ParameterSetName($$, $3);
+
+		    ParameterSetSymbolName($$, $5->pidinRoot);
+
+		    $$->pparFirst = $$;
+		}
+	|
+		TOKEN_PARAMETER
+		'('
+		Identifier
+		'='
+		FieldOrIOHierarchical
+		')'
+		{
+#line
+		    //- allocate room for symbolic parameter
+
+		    $$ = ParameterCalloc();
+
+		    //- fill up structure
+
+		    ParameterSetName($$, $3);
+
+		    ParameterSetFieldName($$, $5);
+
+		    $$->pparFirst = $$;
+		}
+	|
+		TOKEN_PARAMETER
+		'('
+		Identifier
+		'='
+		TOKEN_STRING
+		')'
+		{
+#line
+		    //- allocate room for string parameter
+
+		    $$ = ParameterCalloc();
+
+		    //- fill up structure
+
+		    ParameterSetName($$, $3);
+
+		    //- remove ending '"'
+
+		    $5->pcString[$5->iLength - 1] = '\0';
+
+		    //! allocates to much
+
+		    char *pc = calloc(sizeof(char), $5->iLength);
+
+		    strcpy(pc, &$5->pcString[1]);
+
+		    ParameterSetString($$, pc);
+
+		    $$->pparFirst = $$;
+		}
+	|
+		TOKEN_PARAMETER
+		'('
+		Identifier
+		'='
+		TOKEN_NUMBER
+		')'
+		{
+#line
+		    //- allocate room for number parameter
+
+		    $$ = ParameterCalloc();
+
+		    //- fill up structure
+
+		    ParameterSetName($$,$3);
+
+		    ParameterSetNumber($$, $5);
+
+		    $$->pparFirst = $$;
+		}
+	|
+		TOKEN_PARAMETER
+		'('
+		Identifier
+		'='
+		FunctionSpecification
+		')'
+		{
+#line
+		    //- allocate room for function parameter
+
+		    $$ = ParameterCalloc();
+
+		    //- fill up structure
+
+		    ParameterSetName($$,$3);
+
+		    ParameterSetFunction($$, $5);
+
+		    $$->pparFirst = $$;
+		}
+	;
+
+OptionalComma
+	:
+		','
+	|
+	;
+
+FunctionSpecification	/* <pfun> */
+	:
+		FunctionIdentifier
+			'('
+			FunctionParameters
+			')'
+			OptionalComma
+		{
+#line
+		    //- put function with name on stack
+
+		    $$ = FunctionCalloc();
+
+		    FunctionSetName($$,$1);
+
+		    //- remember function has parameters
+
+		    FunctionAssignParameters($$, $3);
+		}
+	;
+
+FunctionIdentifier	/* <pcIdentifier> */
+	:
+		Identifier
+		{
+#line
+		    //- put function identifier on stack
+
+		    $$ = $1;
+		}
+	;
+
+FunctionParameters	/* <ppar> */
+	:
+		ParametersEnumerated
+		{
+#line
+		    //- put parameters on stack
+
+		    if ($1)
+		    {
+			$$ = $1->pparFirst;
+		    }
+		    else
+		    {
+			$$ = NULL;
+		    }
+		}
+	;
+
+InputOutputRelations	/* <pioc> */
+	:
+		{
+#line
+		    //- remember relations in container on stack
+
+		    $$ = IOContainerNewFromIO(NULL);
+		}
+	|
+		TOKEN_BINDABLES
+			InputRelations
+		TOKEN_END TOKEN_BINDABLES
+		{
+#line
+		    //- remember relations in container on stack
+
+		    $$ = IOContainerNewFromIO($2->pioFirst);
+		}
+	|
+		TOKEN_BINDABLES
+			OutputRelations
+		TOKEN_END TOKEN_BINDABLES
+		{
+#line
+		    //- remember relations in container on stack
+
+		    $$ = IOContainerNewFromIO($2->pioFirst);
+		}
+	|
+		TOKEN_BINDABLES
+			InputRelations
+			','
+			OutputRelations
+		TOKEN_END TOKEN_BINDABLES
+		{
+#line
+		    //- link relations together
+
+		    $2->pioNext = $4;
+
+		    //t loop over output relations and set ->pioFirst ?
+
+		    //- remember relations in container on stack
+
+		    $$ = IOContainerNewFromIO($2->pioFirst);
+		}
+	;
+
+InputRelations	/* <pio> */
+	:
+		InputRelations
+		','
+		TOKEN_INPUT
+		FieldOrIO
+		{
+#line
+		    //- allocate new input specification
+
+		    struct symtab_InputOutput *pio
+			= InputOutputNewForType(INPUT_TYPE_INPUT);
+
+		    pio->pidinField = $4;
+
+		    //- link input list
+
+		    $1->pioNext = pio;
+		    pio->pioFirst = $1->pioFirst;
+
+		    //- put new item on top of stack
+
+		    $$ = pio;
+		}
+	|
+		TOKEN_INPUT
+		FieldOrIO
+		{
+#line
+		    //- allocate input specification on stack
+
+		    $$ = InputOutputNewForType(INPUT_TYPE_INPUT);
+
+		    $$->pidinField = $2;
+		}
+	;
+
+OutputRelations	/* <pio> */
+	:
+		OutputRelations
+		','
+		TOKEN_OUTPUT
+		FieldOrIOOptionalHierarchical
+		{
+#line
+		    //- allocate new input specification
+
+		    struct symtab_InputOutput *pio
+			= InputOutputNewForType(INPUT_TYPE_OUTPUT);
+
+		    pio->pidinField = $4;
+
+		    //- link input list
+
+		    $1->pioNext = pio;
+		    pio->pioFirst = $1->pioFirst;
+
+		    //- put new item on top of stack
+
+		    $$ = pio;
+		}
+	|
+		TOKEN_OUTPUT
+		FieldOrIOOptionalHierarchical
+		{
+#line
+		    //- allocate input specification on stack
+
+		    $$ = InputOutputNewForType(INPUT_TYPE_OUTPUT);
+
+		    $$->pidinField = $2;
+		}
+	;
+
+FieldOrIOOptionalHierarchical	/* <pidin> */
+	:
+		FieldOrIO
+		{
+#line
+		    //- remember field idin on stack
+
+		    $$ = $1;
+		}
+	|
+		FieldOrIOHierarchical
+		{
+#line
+		    //- remember field idin on stack
+
+		    $$ = $1;
+		}
+	;
+
+FieldOrIOHierarchical	/* <pidin> */
+	:
+		IdentifierHierarchical
+		TOKEN_DEREFERENCE
+		Field
+		{
+#line
+		    //- assign root for field
+
+		    $3->pidinRoot = $1->pidinRoot;
+
+		    //- link structures in list
+
+		    $1->pidinNext = $3;
+
+		    //- remember root idin on stack
+
+		    //t we could set a flag here that says pidin is field
+
+		    $$ = $3->pidinRoot;
+		}
+	|
+		IdentifierHierarchical
+		TOKEN_IOSELECT
+		IO
+		{
+#line
+		    //- assign root for field
+
+		    $3->pidinRoot = $1->pidinRoot;
+
+		    //- link structures in list
+
+		    $1->pidinNext = $3;
+
+		    //- remember root idin on stack
+
+		    //t we could set a flag here that says pidin is field
+
+		    $$ = $3->pidinRoot;
+		}
+	;
+
+FieldOrIO	/* <pidin> */
+	:
+		Field
+		{
+#line
+		    //- put field idin on stack
+
+		    $$ = $1;
+		}
+	|
+		IO
+		{
+#line
+		    //- put IO idin on stack
+
+		    $$ = $1;
+		}
+	;
+
+Field	/* <pidin> */
+	:
+		Identifier
+		{
+#line
+		    //- put field idin on stack
+
+		    $$ = IdinCalloc();
+
+		    IdinSetFlags($$,FLAG_IDENTINDEX_FIELD);
+
+		    $$->pcIdentifier = $1;
+		}
+	;
+
+IO	/* <pidin> */
+	:
+		Identifier
+		';'
+		{
+#line
+		    //- put field idin on stack
+
+		    $$ = IdinCalloc();
+
+		    IdinSetFlags($$,FLAG_IDENTINDEX_IO);
+
+		    $$->pcIdentifier = $1;
+		}
+	;
+
+IdentifierHierarchicalNameSpaceRooted	/* <pidin> */
+	:
+		Identifier
+		TOKEN_NAMESPACESEPERATOR
+		TOKEN_HIERARCHICALSEPERATOR
+		IdentifierOptionIndex
+		{
+#line
+		    //- remember id and range
+
+		    $$ = IdinCalloc();
+
+		    $$->pcIdentifier = $1;
+
+		    //- remember idin is namespaced
+
+		    IdinSetNamespaced($$);
+
+		    //- remember idin is rooted
+
+		    IdinSetRooted($4);
+
+		    //- link with rooted idins
+
+		    $$->pidinNext = $4;
+		    $4->pidinRoot = $$;
+		}
+/*
+** path more than one deep
+**
+** selects subitems in namespace
+**
+	|
+		Identifier
+		TOKEN_NAMESPACESEPERATOR
+		IdentifierHierarchicalRooted
+*/
+	;
+
+IdentifierHierarchicalRooted	/* <pidin> */
+	:
+		TOKEN_HIERARCHICALSEPERATOR
+		IdentifierHierarchical
+		{
+#line
+		    //- remember idin list is rooted
+
+		    IdinSetRooted($2->pidinRoot);
+
+		    //- pass idin onto stack
+
+		    $$ = $2;
+		}
+	;
+
+IdentifierHierarchicalOptionalRooted	/* <pidin> */
+	:
+		IdentifierHierarchical
+	|
+		IdentifierHierarchicalRooted
+	;
+
+/*
+** top : last parsed idin
+*/
+
+IdentifierHierarchical	/* <pidin> */
+	:
+		IdentifierOptionIndex
+		{
+#line
+		    //- assign root of identifier list
+
+		    $1->pidinRoot = $1;
+
+		    //- remember idin on stack
+
+		    $$ = $1;
+		}
+	|
+		IdentifierHierarchical
+		TOKEN_HIERARCHICALSEPERATOR
+		IdentifierOptionIndex
+		{
+#line
+		    //- assign root for last identifier
+
+		    $3->pidinRoot = $1->pidinRoot;
+
+		    //- link structures in list
+
+		    $1->pidinNext = $3;
+
+		    //- remember last idin on stack
+
+		    $$ = $3;
+		}
+	;
+
+IdentifierOptionIndex	/* <pidin> */
+	:
+		TOKEN_PARENT_SYMBOL
+		{
+#line
+		    //- set flags with parent indicator
+
+		    $$ = IdinCalloc();
+
+		    IdinSetFlags($$, FLAG_IDENTINDEX_PARENT);
+		}
+	|
+		TOKEN_CURRENT_SYMBOL
+		{
+#line
+		    //- set flags with current indicator
+
+		    $$ = IdinCalloc();
+
+		    IdinSetFlags($$, FLAG_IDENTINDEX_CURRENT);
+		}
+	|
+		Identifier
+		{
+#line
+		    //- set flags : no index, remember id
+
+		    $$ = IdinCalloc();
+
+		    IdinSetFlags($$, FLAG_IDENTINDEX_NOINDEX);
+
+		    $$->pcIdentifier = $1;
+		}
+/* 	| */
+/* 		Identifier */
+/* 		'[' */
+/* 		Integer */
+/* 		']' */
+/* 		{ */
+/* #line */
+/* 		    //- remember id and index */
+
+/* 		    $$ = IdinCalloc(); */
+
+/* 		    $$->pcIdentifier = $1; */
+
+/* 		    $$->iIndex = $3; */
+/* 		} */
+	;
+
+/*
+** shift & reduce algorithm list
+**
+** Algorithm info is pushed on parsercontext state stack
+*/
+
+AlgorithmListPush
+	:
+		{
+#line
+		    //- push start of algorithmlist marker
+
+		    ParserContextPushAlgorithmState(PARSERSTATE_START_ALGORITHMS);
+		}
+	|
+		AlgorithmListPush
+		TOKEN_ALGORITHM
+			Identifier
+			Identifier
+			OptionalItemParameters
+		TOKEN_END TOKEN_ALGORITHM
+		{
+#line
+		    //- if algorithm handlers are not disabled by the options
+
+		    if (!(((PARSERCONTEXT *)pacParserContext)
+			  ->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_ALGORITHM_HANDLING))
+
+		    {
+			//- import & init algorithm
+
+			//! because TOKEN_ALGORITHMPARAMETERS returns a string,
+			//! we loose some bytes here
+			//! perhaps they are on the stack, still needs a check
+
+			//t error checking
+
+			struct symtab_AlgorithmSymbol *palgs
+			    = AlgorithmSymbolCalloc();
+
+			AlgorithmSymbolAssignParameters(palgs, $5);
+
+			struct AlgorithmInstance *palgi
+			    = ParserAlgorithmImport
+			      ((PARSERCONTEXT *)pacParserContext,
+			       $3,
+			       $4,
+			       NULL,
+			       $5,
+			       palgs);
+
+			AlgorithmSymbolSetAlgorithmInstance(palgs, palgi);
+
+			ParserContextPushAlgorithmState(palgs);
+			ParserContextPushAlgorithmState(palgi);
+			ParserContextPushAlgorithmState($3);
+			ParserContextPushAlgorithmState($4);
+			ParserContextPushAlgorithmState(NULL);
+
+			ParserContextPushAlgorithmState(PARSERSTATE_ALGORITHM);
+		    }
+		}
+	;
+
+/*
+** pop a algorithm list
+*/
+
+AlgorithmListPop
+	:
+		{
+#line
+		    void *pvState;
+
+		    //- while algorithms on context stack
+
+		    while ((pvState = ParserContextPopAlgorithmState())
+			   != PARSERSTATE_START_ALGORITHMS)
+		    {
+			//- pop algorithm info
+
+			char *pcInit = (char *)ParserContextPopAlgorithmState();
+			char *pcInstance = (char *)ParserContextPopAlgorithmState();
+			char *pcName = (char *)ParserContextPopAlgorithmState();
+			struct AlgorithmInstance *palgi
+			    = (struct AlgorithmInstance *)
+			      ParserContextPopAlgorithmState();
+
+			struct symtab_AlgorithmSymbol *palgs
+			    = (struct symtab_AlgorithmSymbol *)
+			      ParserContextPopAlgorithmState();
+
+			//- if algorithm handlers are not disabled by the options
+
+			if (!(((PARSERCONTEXT *)pacParserContext)
+			      ->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_ALGORITHM_HANDLING))
+			{
+			    //- call algorithm on current symbol
+
+			    ParserAlgorithmHandle
+				((PARSERCONTEXT *)pacParserContext,
+				 ParserContextGetActual
+				 ((PARSERCONTEXT *)pacParserContext),
+				 palgi,
+				 pcName,
+				 pcInstance,
+				 pcInit);
+			}
+
+			//t I could free pcName, pcInstance and pcInit here ?
+
+			//- insert algorithm instance in the symbol table
+
+			//t I prefer to move this code to the
+			//t AlgorithmListPush non-terminal, but that
+			//t does not work because
+			//t ParserContextGetActual() sometimes returns
+			//t NULL overthere, don't know why.
+
+			SymbolAddChild
+			    (ParserContextGetActual((PARSERCONTEXT *)pacParserContext), &palgs->hsle);
+
+/* 			int iResult = ParserAddModel((PARSERCONTEXT *)pacParserContext, &palgs->hsle); */
+
+/* 			if (!iResult) */
+/* 			{ */
+/* 			    NeurospacesError */
+/* 				((PARSERCONTEXT *)pacParserContext, */
+/* 				 "AlgorithmListPush", */
+/* 				 "Error inserting algorithm instance (%s) in symbol table (class %s).", */
+/* 				 $3, */
+/* 				 $5); */
+/* 			} */
+
+			//- disable the algorithm
+
+			ParserAlgorithmDisable
+			    ((PARSERCONTEXT *)pacParserContext,
+			     palgi,
+			     pcName,
+			     pcInstance,
+			     pcInit);
+		    }
+
+		    //- sanity check : 
+		    //- pvState should be PARSERSTATE_START_ALGORITHMS here
+
+		    if (pvState != PARSERSTATE_START_ALGORITHMS)
+		    {
+			NeurospacesError
+			    ((PARSERCONTEXT *)pacParserContext,
+			     "AlgorithmListPop",
+			     " Internal error :"
+			     " non-terminal AlgorithmListPop encounters"
+			     " messed up algorithm stack\n"
+			     " Internal error : Expecting"
+			     " PARSERSTATE_START_ALGORITHMS (== %i),"
+			     " encountered %i\n\n",
+			     PARSERSTATE_START_ALGORITHMS,
+
+			     //t gives a warning on 64bit machines.
+
+			     (int)pvState);
+
+			//- dump core 
+			//- (should contain interesting info to be examined)
+
+			*(int *)NULL = 0xdeadbeaf;
+		    }
+		}
+	;
+
+/* /* */
+/* ** shift & reduce identifier with index */
+/* ** */
+/* ** push state (if identifier, push as current element) */
+/* ** */
+/* ** push idin on current element stack */
+/* ** */
+/* ** optionally attach algorithms to the symbol via AlgorithmListPush non-terminal */
+/* *  */
+
+/* OptionalIdentifierOptionIndexPushedPidin	/* <pidin> * */
+/* 	: */
+/* 		OptionalIdentifierOptionIndex */
+/* 		AlgorithmListPush */
+/* 		{ */
+/* #line */
+/* 		    //- if an identifier is given */
+
+/* 		    if ($1) */
+/* 		    { */
+/* 			//- set current working element name */
+
+/* 			ParserCurrentElementPush */
+/* 			    ((PARSERCONTEXT *)pacParserContext, */
+/* 			     $1); */
+/* 		    } */
+
+/* 		    //- remember current context state */
+
+/* 		    ParserContextPushState((void *)$1); */
+/* 		} */
+/* 	; */
+
+/*
+** shift & reduce identifier with index
+**
+** push state (if identifier, push as current element)
+**
+** push idin on current element stack
+**
+** optionally attach algorithms to the symbol via AlgorithmListPush non-terminal
+*/ 
+
+IdentifierOptionIndexPushedPidin	/* <pidin> */
+	:
+		IdentifierOptionIndex
+		AlgorithmListPush
+		{
+#line
+		    //- if an identifier is given
+
+		    if ($1)
+		    {
+			//- set current working element name
+
+			ParserCurrentElementPush
+			    ((PARSERCONTEXT *)pacParserContext,
+			     $1);
+		    }
+
+		    //- remember current context state
+
+		    ParserContextPushState((void *)$1);
+		}
+	;
+
+/*
+** shift & reduce END
+**
+** pop state, if state pop pidin
+**
+** pop associated pidin from current element stack
+*/
+
+EndPushedPidin
+	:
+		TOKEN_END
+		AlgorithmListPop
+		{
+#line
+		    struct symtab_IdentifierIndex * pidin = NULL;
+
+		    //- while algorithm on context stack
+
+		    pidin
+			= (struct symtab_IdentifierIndex *)
+			  ParserContextPopState();
+
+		    //- if identifier has been pushed
+
+		    if (pidin)
+		    {
+			//- pop current working element name
+
+			ParserCurrentElementPop
+			    ((PARSERCONTEXT *)pacParserContext);
+		    }
+		}
+	;
+
+/* OptionalIdentifierOptionIndex	/* <pidin> * */
+/* 	: */
+/* 		{ */
+/* #line */
+/* 		    //- remember : no identifier given */
+
+/* 		    $$ = NULL; */
+/* 		} */
+
+/* 	| */
+/* 		IdentifierOptionIndex */
+/* 		{ */
+/* #line */
+/* 		    //- remember idin struct */
+
+/* 		    $$ = $1; */
+/* 		} */
+/* 	; */
+
+Identifier	/* <pcIdentifier> */
+	:
+		TOKEN_IDENTIFIER
+		{
+#line
+		    //- get id name from lexical scanner
+
+		    //fprintf(stderr,"TOKEN_IDENTIFIER(%s)\n",$1);
+		    $$ = $1;
+		}
+	;
+
+/* Integer	/* <iInteger> * */
+/* 	: */
+/* 		TOKEN_INTEGER */
+/* 		{ */
+/* #line */
+/* 		    //- set integer on the stack */
+
+/* 		    $$ = $1; */
+/* 		} */
+/* 	; */
+
+%%
+
+

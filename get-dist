@@ -1,0 +1,75 @@
+#!/usr/bin/perl -w
+#
+#
+# Get the current distribution from sourceforge and check its
+# validity.
+#
+
+use strict;
+
+system 'mkdir --parents "/tmp/neurospaces"';
+
+chdir '/tmp/neurospaces' || die "Cannot cd to /tmp/neurospaces";
+
+
+{
+    # $Format: "system 'wget \"http://superb-west.dl.sourceforge.net/sourceforge/neurospaces/neurospacesread-$ProjectVersion$.tar.gz\"'";$
+system 'wget "http://superb-west.dl.sourceforge.net/sourceforge/neurospaces/neurospacesread-0.1675.tar.gz"'
+}
+
+if ($?)
+{
+    die "wget failed";
+}
+
+
+{
+    # $Format: "system 'tar vxfz \"neurospacesread-$ProjectVersion$.tar.gz\"'";$
+system 'tar vxfz "neurospacesread-0.1675.tar.gz"'
+}
+
+if ($?)
+{
+    die "tar failed";
+}
+
+
+{
+    # $Format: "chdir 'neurospacesread-$ProjectVersion$'" || die "chdir failed";$
+chdir 'neurospacesread-0.1675'
+}
+
+
+{
+    # $Format: "system './configure'";$
+system './configure'
+}
+
+if ($?)
+{
+    die "./configure failed";
+}
+
+
+{
+    # $Format: "system 'make'";$
+system 'make'
+}
+
+if ($?)
+{
+    die "make failed";
+}
+
+
+{
+    # $Format: "system 'make check'";$
+system 'make check'
+}
+
+if ($?)
+{
+    die "make check failed";
+}
+
+

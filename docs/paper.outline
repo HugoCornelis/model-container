@@ -1,0 +1,202 @@
+-*- outline -*-
+
+* outline
+
+** Problem statement
+
+A model is a miniature designed description to show a real object's
+function and structure.
+
+A computational model in the neurosciences, is an artefactual
+description of a part of the brain, that can range from a macroscopic
+level, over an intermediate level to microscopic levels.
+
+Examples of macroscopic models are structural equation models of fMRI
+data (Laird et al.).  An example of intermediate level model is the
+DIVA model, used for clinical studies related to speech disorders.
+
+All these models have started as a map of concepts and their
+relationships.  Often the concepts are associated with semantics,
+while the relationships represent assertions.  Specific for a
+biological model is that none of these models capture the fact that
+some things are known to be unknown.
+
+For computational modeling, the conceptual model, sometimes simply a
+set of drawings, is translated step by step into a mathematical model,
+which is a rigorous and unambigous representation of the model, that
+covers all the essential aspects.  Then the mathematical model must be
+prepared, using existing software, before the model can be simulated.
+
+This step by step sequence of model transformations is a laborious
+work of information gathering activity and decision taking on good
+judgement.
+
+In this paper, we integrate the work of previously published papers
+with a number of complementary ideas to define a framework that allows
+to link a computational model with the data used to derive the model.
+
+Frigg, Roman and Hartmann, Stephan (2006), Models in Science, in:
+Stanford Encyclopedia of Philosophy, 2006,
+(http://plato.stanford.edu/entries/models-science/).
+
+** Introduction
+
+*** science processes diagramma
+
+** Actions on a model
+
+Basically: model part refinement and model part elimination.
+
+*** Thesis state space snippets
+
+** Fundaments
+
+*** framework: from conceptual model to simulation
+Diagramma
+
+** Implementation
+
+*** Data model
+
+**** From treespaces paper
+**** From state-space framework
+
+**** Perhaps say something about IDs ?
+
+*** Data model implementation
+Instead of OO model, neurospaces uses a template-instantiation
+pattern.
+
+*** Code
+Show some configuration parts ?
+Show changes in configuration parts ?
+
+*** Algorithms
+
+** Extracting properties
+
+Explain relevance of consistency.  Show example of color coding of
+morphologies, using arbitrary derived variables.
+
+*** direct properties
+
+*** connections
+
+*** agregated and indirect properties
+
+** proof of concept
+
+*** embedding in Genesis 2
+
+*** connected with other software components
+SSP/Heccer, core computational core for Genesis 3.
+
+
+** conclusion
+
+*** decouples the biological representation from the mathematical representation.
+
+
+* software development process
+The Neurospaces project not only concerns the development of
+components that are part of a simulator, as the end software product.
+It also concerns the development of tools to accelerate the software
+management.  This includes the development of automated test cases,
+including a test framework to maintain, run and convert the tests.
+The tests are mostly based on models that have been published
+(edsjb1994, rmeds1997), and that have a proven scientific track.  The
+encoding of the test cases also helps new users how to use the
+software system.  For the developers, the test cases document the
+proven functionality of the software, and the html convertor produces
+low-level documentation of the test specifications, such that it acts
+as a communication medium for future development.
+
+* source code
+
+In software engineering, concerns that propagate throughout the code
+and affects the implementation of many functions are called
+'cross-cutting concerns'.  Typical examples are logging and debugging
+statements.  Software engineering techniques to implement
+cross-cutting concerns range from hardcoded solutions to highly
+engineered wizard-like assistants, text based or using a GUI.
+Nevertheless, none of these solutions has proven to be reliable and
+robust to long-term change management.
+
+In biology everything is tightly coupled.  As a result, a biological
+model container must be able to describe systems that are tightly
+coupled.
+
+In Neurospaces, there are many cross-cutting concerns.
+
+* modeling language
+** two types of reuse
+*** at same level, e.g. alias with overwriting one parameter.
+*** at different bio level, importing for reuse
+
+* difference between conceptual representation and expanded representation
+** tell story about pf and stells in the PC model
+show graphical data flow, ako modeling to simulation data flow
+** show example of setting endogenous frequencies in genesis, and in neurospaces
+
+* explain carefully the data categorization
+** between modeling and simulation.
+*** differences in characteristics
+between managing data and biological data
+*** differences in 'structural' and 'biological' elements in ndf files.
+between storage data and other
+*** differences in 'visibility' and 'biological' elements in ndf files.
+** simplifying the data model
+*** in the abstract sense: nodes and edges, vs the XML data model.
+*** concrete: yaml vs xml, scripts vs strongly type languages
+*** example: yaml document vs xml document and the conversion between the two
+
+** Show examples of
+*** self-contained core parameters vs derived parameters
+VSegmentRelative2Absolute() converts core parameters to derived
+parameters.
+Population EXTENT_[XYZ]
+
+* explain relation between symbolic parameters and model modularization
+** e.g. the use of segment reference in symbolic form
+allows to split the purkinje cell model from the em data.
+** same for calcium pools
+
+* show examples
+** of a string parameter
+e.g. an algorithm parameter with a filename
+** of a number parameter
+e.g. DIA
+*** with indirection
+e.g. pool DIA
+
+* explain web services
+** databases of morphology files
+** the neuroml validator
+** simulator servers
+
+* stress a couple of times that neurospaces can express multiscale model easily.
+
+* stress that neurospaces can express multi-modals intuitively
+discrete event vs continuous time.
+
+* the data in neurospaces is more dynamic than the data in the description format or in neuroml
+The data in a model is more dynamic than the data in its specification.
+e.g. symbolic parameter specification, with functions etc.
+In the description format, the values are implicit, or sometimes not even defined.
+
+This feature allows, as an example, to distribute the morphology of
+one neuron model over several files, where one file can contain more
+detail of the morphology, e.g. based on a reconstruction of
+electromagnetic microscopy, while a different file of the same model,
+contains the overal layout of the neuron's morphology, based on
+optical microscopy.
+
+* a model description is
+a set of algorithms operating on a set of data
+
+* unit of computation
+** there is no single common unit of computation
+a dendritic segment is not present in biochemical model of reaction
+pathways.  Space is not present in some network models.
+** so the structure of a model description language must accommodate
+extension.

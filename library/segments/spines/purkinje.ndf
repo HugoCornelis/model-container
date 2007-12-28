@@ -1,0 +1,252 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+// Morphology file for Purkinje cell
+// Based on Erik De Schutter's 1994 Purkinje cell model.
+// Original data provided by Rapp, Yarom and Segev, Hebrew University Jerusalem
+// Active membrane model with 1 spine on every spiny segment
+// References: Rapp, M., Segev, I., and Yarom, Y. (1994) Physiology,
+//   morphology and detailed passive models of cerebellar Purkinje cells.
+//   J.  Physiol. (London), 471: 87-99.
+//             De Schutter, E. and Bower, J. M. (1994) An active membrane
+//   model of the cerebellar Purkinje cell: I. Simulation of current
+//   clamps in slice. J. Neurophysiol., 71: 375-400.
+//   http://www.bbf.uia.ac.be/TNB/TNB_pub8.html
+//             De Schutter, E. and Bower, J. M. (1994) An active membrane
+//   model of the cerebellar Purkinje cell: II. Simulation of synaptic
+//   responses. J. Neurophysiol., 71: 401-419.
+//   http://www.bbf.uia.ac.be/TNB/TNB_pub7.html
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE NMDA
+		"channels/nmda.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS NMDA::/NMDA NMDA END ALIAS
+
+
+	SEGMENT spine_head2
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+			INPUT par->Ik
+		END BINDINGS
+
+{*
+** Version as in the original model.
+**
+** This will not work, because the model uses the old Genesis 
+** scaling method to calculate actual Ra (in Purk_cicomp.g, the 8 factor)
+**
+** 
+		OPTIONS SPHERICAL
+
+		PARAMETERS
+/* //			DIA = FIXED(5.399999736e-07), */
+/* 			DIA = 0.54e-6, */
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 3.0 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+*}
+
+{*
+** An equivalent version that scales correctly, because it's cylindrical.
+**
+** I'v recalculated DIA and LENGTH to get the same actual Ra and surface.
+** This gives
+**
+** DIA_new = DIA_old / 2^(1/3) == 4.2860e-7
+** LENGTH_new = 2^(1/3) * DIA_old == 6.8036e-7
+*}
+
+		PARAMETERS
+			PARAMETER ( LENGTH = 6.8036e-7 ),
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 3.0 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+		// parallel fiber NMDA channel
+
+	END SEGMENT
+
+	ALIAS spine_head2 spine_head
+
+		// parallel fiber NMDA channel
+
+		CHILD NMDA par
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( GMAX = 750.0 ),
+				PARAMETER ( Ek = 0.0 ),
+				PARAMETER ( FREQUENCY = 0.0 )
+			END PARAMETERS
+		END CHILD
+
+	END ALIAS
+
+	SEGMENT spine_neck
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS END BINDINGS
+
+		PARAMETERS
+/* //			DIA = FIXED(2.000000023e-07), */
+/* 			DIA = 0.20e-6, */
+			PARAMETER ( LENGTH = 0.66e-6 ),
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 3.0 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+	END SEGMENT
+
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	SEGMENT_GROUP Purk_spine
+
+		CHILD spine_neck neck
+			PARAMETERS
+				PARAMETER ( PARENT = ../.. ),
+				PARAMETER ( rel_X = 0.000e-6 ),
+				PARAMETER ( rel_Y = 0.000e-6 ),
+				PARAMETER ( rel_Z = 0.66e-6 ),
+				PARAMETER ( DIA = 0.2e-6 )
+			END PARAMETERS
+		END CHILD
+
+		// remember : head has become cylindrical, length
+		// given by adding positions in z coordinate,
+		// 6.6e-7 + 6.8036e-7 = 13.4036-7
+
+		CHILD spine_head head
+			PARAMETERS
+				PARAMETER ( PARENT = ../neck ),
+				PARAMETER ( rel_X = 0.000e-6 ),
+				PARAMETER ( rel_Y = 0.000e-6 ),
+				PARAMETER ( rel_Z = 1.34036e-6 ),
+				PARAMETER ( DIA = 0.42860e-6 )
+			END PARAMETERS
+		END CHILD
+
+	END SEGMENT_GROUP
+
+	SEGMENT_GROUP Purk_spine2
+
+		CHILD spine_neck neck
+			PARAMETERS
+				PARAMETER ( PARENT = ../.. ),
+				PARAMETER ( rel_X = 0.000e-6 ),
+				PARAMETER ( rel_Y = 0.000e-6 ),
+				PARAMETER ( rel_Z = 0.66e-6 ),
+				PARAMETER ( DIA = 0.2e-6 )
+			END PARAMETERS
+		END CHILD
+
+		// remember : head has become cylindrical, length
+		// given by adding positions in z coordinate,
+		// 6.6e-7 + 6.8036e-7 = 13.4036-7
+
+		CHILD spine_head2 head
+			PARAMETERS
+				PARAMETER ( PARENT = ../neck ),
+				PARAMETER ( rel_X = 0.000e-6 ),
+				PARAMETER ( rel_Y = 0.000e-6 ),
+				PARAMETER ( rel_Z = 1.34036e-6 ),
+				PARAMETER ( DIA = 0.42860e-6 )
+			END PARAMETERS
+		END CHILD
+
+	END SEGMENT_GROUP
+
+/*
+
+	//
+	// SEGMENT_GROUP
+	//
+	// instantiate multiple segments from a existent prototype,
+	// given only the coordinates, length and perhaps additional options
+	// for the instantiated segments
+	//
+
+	TEMPLATE SEGMENT_GROUP
+
+		INPUTS
+		(
+			protoname
+			LIST
+			(name parent x y z length)
+		)
+
+		OUTPUTS
+		(
+			LIST
+			(
+				AS $protoname $name,
+					PARAMETERS
+						PARENT = $parent,
+						rel_X = $x,
+						rel_Y = $y,
+						rel_Z = $z,
+						LENGTH = $length
+					END PARAMETERS
+			)
+		)
+
+	END TEMPLATE
+
+	//
+	// CELL_LAYER_1D
+	//
+	// instantiate cells along one axis, given a prototype, 
+	// beginning coordinates of the beam, an interval and a count
+	//
+
+	TEMPLATE CELL_LAYER_1D
+
+		INPUTS
+		(
+			protoname name x y z count dx options
+		)
+
+		OUTPUTS
+		(
+			AS $protoname $name[INSTANCE count]
+				PARAMETERS
+					rel_X = x + count * dx,
+					rel_Y = y,
+					rel_Z = z
+				END PARAMETERS
+		)
+
+	END TEMPLATE
+*/
+
+END PUBLIC_MODELS
+
+

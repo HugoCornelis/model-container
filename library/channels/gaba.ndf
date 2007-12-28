@@ -1,0 +1,65 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+// Equations for Pukeinje cell GABA synapse.
+// Based on Miles R: . J Physiol 1990
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE mapper "mappers/spikereceiver.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS mapper::/Synapse Synapse END ALIAS
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CHANNEL Purk_GABA
+		BINDABLES
+			INPUT Vm,OUTPUT exp2->Gk,OUTPUT Ik
+		END BINDABLES
+
+		// We have a number of predefined equations:
+		//	ALPHA_EQUATION, EXP2_EQUATION, HH_EQUATION
+		// Otherwise we need to implement a MODL-like equation lexicon
+
+		// I still have to see how this fits into the whole design,
+		// see also Golgi.ncd for use of EXP2_EQUATION
+
+		PARAMETERS 
+			PARAMETER ( GMAX = 1.077 ),
+			PARAMETER ( Ek = -0.080 )
+		END PARAMETERS
+
+		CHILD Synapse synapse
+		END CHILD
+
+		EXP2_EQUATION exp2
+			BINDABLES
+				INPUT activation,OUTPUT Gk
+			END BINDABLES
+			BINDINGS
+	               		INPUT ../synapse->activation
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( TAU1 = 0.93e-3 ),
+				PARAMETER ( TAU2 = 26.50e-3 )
+			END PARAMETERS
+
+		END EXP2_EQUATION
+
+	END CHANNEL
+
+END PUBLIC_MODELS
+
+

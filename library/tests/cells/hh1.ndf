@@ -1,0 +1,33 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+
+	FILE hh "segments/hodgkin_huxley.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS hh::/hh_segment hh END ALIAS
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CELL hh1
+
+		SEGMENT_GROUP segments
+
+			CHILD hh soma
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

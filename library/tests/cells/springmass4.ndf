@@ -1,0 +1,125 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+
+	FILE mapper "mappers/spikereceiver.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS mapper::/Synapse Synapse END ALIAS
+
+	CHANNEL synchan
+		BINDABLES
+			INPUT Vm,OUTPUT exp2->Gk,OUTPUT Ik
+		END BINDABLES
+
+		CHILD Synapse synapse
+
+			PARAMETERS
+				PARAMETER ( EVENT_FILENAME = "event_data/events.yml" ),
+			END PARAMETERS
+
+		END CHILD
+
+		PARAMETERS
+			PARAMETER ( GMAX = FIXED ( PARAMETER ( value = 6.87071723162637e-10 ), PARAMETER ( scale = 1.0 ), ), ),
+			PARAMETER ( Ek = 0.0 ),
+		END PARAMETERS
+
+		EXP2_EQUATION exp2
+			BINDABLES
+				INPUT activation,OUTPUT Gk
+			END BINDABLES
+			BINDINGS
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( TAU1 = 0.50e-3 ),
+				PARAMETER ( TAU2 = 1.20e-3 )
+			END PARAMETERS
+
+		END EXP2_EQUATION
+
+	END CHANNEL
+
+	SEGMENT soma
+
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+		END BINDINGS
+
+		OPTIONS SPHERICAL
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.080 ),
+			PARAMETER ( RM = 1.000 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+	END SEGMENT
+
+	SEGMENT maind
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+		END BINDINGS
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.080 ),
+			PARAMETER ( RM = 3.0 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+		CHILD synchan s
+		END CHILD
+
+	END SEGMENT
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CELL springmass4
+
+		SEGMENT_GROUP segments
+
+			CHILD soma c1
+				PARAMETERS
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 29.80e-6 )
+				END PARAMETERS
+			END CHILD
+
+			CHILD maind c2
+				PARAMETERS
+					PARAMETER ( PARENT = ^/c1 ),
+					PARAMETER ( rel_X = 5.557e-6 ),
+					PARAMETER ( rel_Y = 9.447e-6 ),
+					PARAMETER ( rel_Z = 9.447e-6 ),
+					PARAMETER ( DIA = 7.72e-6 )
+				END PARAMETERS
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

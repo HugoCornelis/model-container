@@ -1,0 +1,134 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+IMPORT
+
+	FILE ca_pool "pools/purkinje_ca.ndf"
+	FILE gate1 "gates/cap_activation.ndf"
+	FILE gate2 "gates/cap_inactivation.ndf"
+	FILE gate3 "gates/cat_activation.ndf"
+	FILE gate4 "gates/cat_inactivation.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS ca_pool::/Ca_concen ca_pool END ALIAS
+	ALIAS gate1::/cap_activation cap_gate_activation END ALIAS
+	ALIAS gate2::/cap_inactivation cap_gate_inactivation END ALIAS
+	ALIAS gate3::/cat_activation cat_gate_activation END ALIAS
+	ALIAS gate4::/cat_inactivation cat_gate_inactivation END ALIAS
+
+	CHANNEL cap
+		BINDABLES
+			INPUT Vm,OUTPUT Gk,OUTPUT Ik
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
+		END PARAMETERS
+
+		CHILD cap_gate_activation cap_gate_activation
+		END CHILD
+
+		CHILD cap_gate_inactivation cap_gate_inactivation
+		END CHILD
+
+	END CHANNEL
+
+	CHANNEL cat
+		BINDABLES
+			INPUT Vm,OUTPUT Gk,OUTPUT Ik
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
+		END PARAMETERS
+
+		CHILD cat_gate_activation cat_gate_activation
+		END CHILD
+
+		CHILD cat_gate_inactivation cat_gate_inactivation
+		END CHILD
+
+	END CHANNEL
+
+	SEGMENT maind
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+			INPUT cap->Ik,
+			INPUT cat->Ik,
+		END BINDINGS
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 3.0 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 ),
+
+			PARAMETER ( rel_X = 5.557e-6 ),
+			PARAMETER ( rel_Y = 9.447e-6 ),
+			PARAMETER ( rel_Z = 9.447e-6 ),
+			PARAMETER ( DIA = 7.72e-6 ),
+		END PARAMETERS
+
+		CHILD cat
+			cat
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
+				PARAMETER ( GMAX = 5.0 ),
+				PARAMETER ( Ek = 0.14702148735523224 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD cap
+			cap
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
+				PARAMETER ( GMAX = 45.0 ),
+				PARAMETER ( Ek = 0.14702148735523224 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD ca_pool
+			ca_pool
+			BINDINGS
+				INPUT ^/cat->Ik,
+				INPUT ^/cap->Ik,
+			END BINDINGS
+		END CHILD
+
+	END SEGMENT
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CELL pool1_contributors2
+
+		SEGMENT_GROUP segments
+
+			CHILD maind main[0]
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

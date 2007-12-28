@@ -1,0 +1,99 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+
+	FILE soma "tests/segments/soma.ndf"
+
+	FILE gate1 "gates/naf_activation.ndf"
+
+	FILE gate2 "gates/naf_inactivation.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+// 	ALIAS soma::/soma soma END ALIAS
+
+	ALIAS gate1::/naf_activation naf_gate_activation END ALIAS
+
+	ALIAS gate2::/naf_inactivation naf_gate_inactivation END ALIAS
+
+	CHANNEL naf
+		BINDABLES
+			INPUT Vm,OUTPUT Gk,OUTPUT Ik
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
+		END PARAMETERS
+
+		CHILD naf_gate_activation naf_gate_activation
+		END CHILD
+
+		CHILD naf_gate_inactivation naf_gate_inactivation
+		END CHILD
+
+		PARAMETERS
+			PARAMETER ( GMAX = 75000.0 ),
+			PARAMETER ( Ek = 0.045 )
+		END PARAMETERS
+	END CHANNEL
+
+	SEGMENT soma2
+
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+			INPUT naf->Ik
+		END BINDINGS
+
+		OPTIONS SPHERICAL
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.0280 ),
+			PARAMETER ( RM = 1.000 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+		CHILD naf
+			naf
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+	END SEGMENT
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	ALIAS naf naf END ALIAS
+
+	CELL singlea_naf
+
+		SEGMENT_GROUP segments
+
+			CHILD soma2 soma
+				PARAMETERS
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 29.80e-6 )
+				END PARAMETERS
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

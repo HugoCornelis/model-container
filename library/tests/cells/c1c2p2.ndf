@@ -1,0 +1,54 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+IMPORT
+
+	FILE soma "tests/segments/soma.ndf"
+
+	FILE maind "tests/segments/maind.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS soma::/soma soma END ALIAS
+	ALIAS maind::/maind maind END ALIAS
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CELL c1c2p2
+
+		SEGMENT_GROUP segments
+
+			CHILD soma soma
+				PARAMETERS
+					PARAMETER ( INJECT = 1e-8 ),
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 29.80e-6 )
+				END PARAMETERS
+			END CHILD
+
+			CHILD maind main[0]
+				PARAMETERS
+					PARAMETER ( PARENT = ^/soma ),
+					PARAMETER ( rel_X = 5.557e-6 ),
+					PARAMETER ( rel_Y = 9.447e-6 ),
+					PARAMETER ( rel_Z = 9.447e-6 ),
+					PARAMETER ( DIA = 7.72e-6 )
+				END PARAMETERS
+			END CHILD
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

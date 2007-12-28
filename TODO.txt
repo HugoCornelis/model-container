@@ -1,0 +1,603 @@
+-*- outline -*-
+
+* delete operation
+The delete operation calls SymbolRecalcAllSerials().
+SymbolRecalcAllSerials() should set a flag that the symbol serial has
+been affected (including descendants).  SegmenterLinearize() (oa) can
+pick up this flag, and decide to recalculate indices.  Use
+FLAGS_HSLE_AFFECTED or so.
+
+* p20 of dendritica is an example of multiple compartments in the soma
+adapt morphology2ndf accordingly, group all these compartments in a
+segment group with name soma.
+
+* swigi_coordinates_2_array()
+Make TRAVERSAL_INFO_NAMES optional, depending on options given by the
+caller.
+
+* when converting swc files, soma case
+The dimensions of the soma are not correctly converted, no clue how
+that is supposed to be done.
+
+* perl glue & morphology2ndf
+add a way to include the morphology2ndf configuration directly from
+the perl interface.  Then this propagates automatically to the SSP
+config.
+
+* replace the SPHERICAL option for segments
+with a regular flag like parameter, then activate the alternate hh
+models that are supposedly the same as the one used now.
+
+* remove all parameter caching
+Using SymbolSetParameter{Context,Double,String}() because it
+introduces inconsistencies at this moment.
+** SymbolSetParameter.*() use
+allocates if necessary the parameter, caches it and returns it.  So we
+must allocate it in order to return it, so if it does not get cached,
+we have a memory leak.
+
+* tests specifications
+** Should have two levels for disabled:
+*** one says the test cannot work for a fundamental reason
+*** the other says the test cannot work in this configuration
+but it should work in different configuration (eg. routing table not
+good).
+** tests_2_html uses this information correctly.
+
+* tests_2_html
+produces tables that always have <pre> entries, even for 'comment',
+'disabled', etc.
+
+* SymbolSerialRecalcPostProcessor():
+** needs TstrGetActualParentType() implementation.
+uses iType from child to do alien typing on the parent symbol.
+This is a clear and serious bug.
+
+* morphology2ndf
+See if Tree::Parser can be used to read neurolucida files.
+
+* list of global variables
+** pnscGlobal
+** pifRootImport
+** pneuroGlobal
+
+* fibers
+allow to map (climbing) fibers from the neuromorpho database using the
+swc tag value, if that makes sense.
+
+* Remove from symboltable.h
+#define InstanceOfMovable(phsle)
+#define InstanceOfMechanism(phsle)
+
+* ship & install NDF emacs mode.
+
+* Move the channels with CHANTABLEFILE
+to a 'library/legacy' directory or so.
+** Need following:
+*** library/legacy
+*** library/tutorials
+*** library/models
+*** library/testing
+
+* Add support for Rall's geometric ratio
+GR = \sum[d]{ \frac{ r ^ \frac{3}{2}_d }{ r ^ \frac{3}{2}_p }
+
+* Add support for AP propagation efficacy
+
+* instrumentor
+Use regexes to scan selected sources for function definitions.  Use a
+table that defines the instrumentation relationships.  Combine both to
+automate the generation of the Symbol.*() functions further than now.
+
+* consolidate parameter settings:
+ParameterNewFromPidinQueue() calls ParameterSetString(), should not be
+calling this low-level function.  More support for PidinQueues needed.
+
+* test runner
+Add a mechanism to obtain information from stdout and incorporate it
+into the error report.  Good test candidates are the timings of the
+coordinate caches and connection caches related queries.
+
+* test runner
+Should report the package name and version number, always.  And of
+some important packages (swig), and hardware profile.
+
+* implement tests for ParameterResolveToPidinStack()
+** for cases that work
+See in12_1.ndf and related.
+** for cases that do not work
+in errors.t.
+
+* add a test that maps serial to context and back to serial
+and check if these are the same.
+
+* rename contour_point to em_contour_point
+
+* tests_2_html
+Parse the arguments passed to the command, and hand them to
+source_2_html.
+
+* The config.log file must be installed always
+Such that other packages can use it for their own testing /
+compilation / installation.  Especially the installation prefix is
+important.  Probably it is best to make these variables available
+using an executable that reports them.
+
+* write a performance analysis framework
+Gives an idea of performance optimizations.
+** figures out how many cached connections / second can be calculated
+** figures out how many memory / cached connection
+** figures out how many cached coordinates / second can be calculated
+** figures out how many memory / cached coordinate
+One possible way to do this is to implement a file, a bit like the
+querymachine, that loads a model, does querymachine alike queries,
+reports the raw results, and compares the raw results using reported
+ratio differences.  So should be done in perl using the swig glue ?
+
+* allow annotations for the coordinate cache
+e.g. membrane potentials for color coding for the line segments etc.
+
+* documentation
+** ssp
+give two extended examples
+*** network
+*** single cell
+** ssp
+*** add an overview diagram of how ssp interacts with neurospaces and heccer
+
+* biolevel traversals
+** See TraversalInfoCollectorProcessor() developer TODOs.
+*** The exclusive traversal traverses segments, and not spines.
+*** The exclusive traversal traverses contours, but not em_contours
+The em_contours are supposed to translated to undef coordinates that
+mark the end of a segment.  Perhaps I should be using a inclusive
+traversal starting from molecular level ?
+
+** Get rid of the CHILDREN_TRAVERSAL_FIXED_RETURN flag
+
+* bojum installation problems
+** install the model library
+/usr/share/neurospaces/models
+** take care of proper ssp testing
+*** each test has NEUROSPACES_MODELS hardcoded.
+*** tests have references to heccer string tests.
+** move the neurospaces studio to the studio package
+** move build of /tmp/hierarchy/symbols
+Also needs install, studio depends on it
+
+* morphology2ndf
+** support to morphology2ndf to read ndf files.
+Rename to morphology2morphology in that case.
+** output geomview OFF files.
+** project configuration
+Should be possible to have a local configuration, per project.  The
+project browser gives all tools a local configuration file in an
+option.  This removes the need for a global library of configuration
+options for morphology2ndf (although it is still good to have it, the
+global library should actually consist of defaults in /etc as now, and
+globals that are looked up automatically in all the project
+directories).
+
+
+* Rationalize algorithm parameters
+See what needs to be done for contextworkerinstance and
+connectionworkerinstance.
+** connectionworkerinstance
+Following parameters can be set in connectionworkerinstance:
+*** ppistNetwork, phsleNetwork
+*** ppistProjection, phsleProjection
+*** ppistSource, phsleSource
+*** ppistTarget, phsleTarget
+*** the instanceof checks
+*** setting of random seed
+*** Then also:
+the calling sequence should be hidden, such that only
+ConnectionCheckerConnectionProcessor remains.
+
+* rename projectionquery to projectionindex
+
+* add a parameter library object
+fi contains extracellular ca concentration.
+
+* algorithms/event/Makefile.am
+* algorithms/symbol/Makefile.am
+See developer TODOs.
+
+* 64bit machines
+** idin.h
+See developer TODOs.
+** neurospaces.h
+See developer TODOs.
+
+* v_segment should be a segmenter
+But need true instrumentation for that.  See developer TODO in
+symbols/hierarhcy.
+
+* tests_2_html
+** Htmlify the used description files
+and link them through the executed command lines, such that the tests
+and the model used for the test are linked.
+** give an enumeration of the tests that are disabled
+and link it through the index site.
+
+* implement algorithms in perl.
+
+* library/pools/purkinje_ca.ndf
+The maximum is required for very thin dendrites probably, it would be
+better to make thickness dependent on the diameter
+
+* Allow to set a prototype as a conceptual parameter
+Not sure, but is likely to introduce consistency problems.  Perhaps
+this can be done using a delete and subsequent add operation.  The
+purkinje cell comparison uses this pattern a couple of times.
+
+* Try to build a neurospaces amalgation
+See http://www.sqlite.org/cvstrac/wiki?p=TheAmalgamation
+
+* the SwiggableNeurospaces.so object
+** should not depend on readline
+because of the BC symbol in readline on rhel4 (and probably others
+too).
+
+* put the functionality of morphology2ndf in a module.
+
+* The segment relocator relocates segment with one segment off.
+The purkinje cell test specs can be used as a starting point.
+
+* population and network
+Are derived from segmenter, but the .*GetParameter() implementation
+uses Biocomponent as superclass.  Need a good way for superclasses and
+respects the instrumentation.
+
+* To build a shared object, need to remove global variables
+** parsersupport.c
+probably also others, like pifRoot etc.
+
+* configure
+** flex and bison are absolute requirements, need a check.
+
+* Could it be that parameter caches do not work together with phyro symbols ?
+Seems not, not sure.  There are no tests for it.
+Is important for ssp.
+
+* write a I/O checker
+** can optionally be called during initialization
+** check query machine command 'childreninfo'
+
+* purkinje Kdr
+** rename conceptual_gate token to something that makes more sense.
+*** steady_state
+input is Vm, output is steady_state
+*** tua
+input is Vm, output is tua
+
+* print out of all time constants of a model
+** Takes highest membrane potential or lowest membrane potential for gate time constants
+to obtain the fasted time constant
+
+* Have parts of the grammar being generated
+** AnySymbol
+*** Generated to be any symbol.
+*** Annotation is phsle
+** .*Component
+*** Generated to be allowed symbols for that component
+*** Annotation is phsle
+*** Empty components must not be generated
+** .*Symbol
+*** Literal from .*Section
+*** Annotation is phsle, needs address of dereference
+Simple cast as now overrides compiler type checking.
+** .*Section
+*** 5 items
+**** TOKEN_<component-name>
+**** needs identifier
+**** I/O, bindables
+**** .*Description
+**** END
+*** Annotation is component-type, no cast
+** .*Description
+*** 3 or 4 rules
+**** empty: allocates empty component-type
+**** child: add new child
+**** optional subcomponent: add child
+**** parameters: add parameters
+*** Annotation is component-type, no cast
+
+* Introduce superclass method calls
+** SegmentGetParameter()
+** PoolGetParameter()
+
+* pool needs a valency parameter
+See end of PoolParameterScaleValue().
+
+* Allow to nest a segment inside a segment_group
+For integration testing, see library/tests/cells/singlea_naf.ndf
+
+* returns for:
+must return a serial or context instead of a symbol.  Has immediate
+consequences for Heccer.  I guess I need to do comparable things for
+** ParameterResolveFunctionalInput()
+** ParameterResolveSymbol()
+
+* Remove querymachine command 'resolvechildposition'.
+See -r 883.
+
+* neurospaces as a static library & swig
+http://www.swig.org/Doc1.3/Modules.html#Modules_nn4
+
+* Figure out a way to not include installed files.
+See version log of -r 0.853.  Important, can introduce very subtle
+bugs.  Can be done by somehow automating a 'make uninstall'.
+
+* segment parameter_scale_value
+should be moved to segmenter.
+** look for 
+//t but the cast should not be here, there is a mismatch in the
+//t derivation hierarchy here.
+in segment.c
+
+The C structs do not reflect the fact that segment is derived from segmenter.
+** The availability of SegmentCountMechanisms() is in contradiction with the SegmenterIsSpherical() in pool.c
+
+* symbol hierarchy instrumentor
+** Make sure that concurrent builds are possible
+*** Use tempname() or so
+** revise 'fixed' methods
+e.g. traverse_{wildcard,bio_levels}
+*** are those methods that will not be overriden (java 'final')
+*** the 'fixed' should be mapped to a piece of code that gets inserted into the function body.
+*** object_methods_return_types should be (partially ?) removed for these methods
+*** object_methods_signatures only needs 'prototype', but not 'calling'
+
+* Separate source files into
+** symbol tree core
+** algorithm library
+** components, according to the derivation hierarchy
+base type, abstract types on the biological path, biological
+components, enumeration types (homogeneous), enumeration types
+(heterogeneous), purely mathematical types, discrete & combinatorial
+types, data model related.
+** function library
+** parser
+** algorithm activator
+** glue
+
+* Add code consistency checker for SymbolCalloc() calls
+See above, is important because it initializes iTotalAllocatedSymbols.
+
+* Add garbage collection
+
+* See if we can have a 'somatofugal' segment parameter
+that returns a list of results.
+
+* Derive from hsle and assign to subspaces
+** symtab_Function
+** symtab_Parameters
+** symtab_AlgorithmSymbol
+
+* Create virtual functions for
+** .*SetParent()
+** .*IsSpherical()
+** .*IsCylindrical()
+** .*IsIncoming()
+** .*IsOutgoing()
+** .*SetDataType()
+Perhaps others too.
+Perhaps also use double indirection to avoid the pointer bloat.
+
+* initial values
+** consolidation
+*** Vm_init
+*** concen_init
+*** state_init
+** functionality
+compute when not present
+using default values when appropriate:
+*** compartment
+default value: constant
+*** concen_init
+default value: probably dependent on other values
+*** activation_init
+dependent on forward and backward steady state values
+** documentation
+Start writing some documentation about the initial values stream.
+
+* add q10 somewhere
+Is comparable to conductance scaling
+'printparameteratq10 <symbol> <parameter>'
+Q10 = rate at (T + 10 °C)/rate at T
+Q10 = (rate1 / rate2) ^ (10 / (T2 - T1))
+tau(T) = (tau(T1) / q10_factor) ^ ((T - T1)/10)
+See http://en.wikipedia.org/wiki/Q10_%28temperature_coefficient%29
+
+* units
+NaF in paper 7500 mS/cm2
+NaF in SI 7500 (S/1000) / (10000/m2)
+NaF in model 75000
+Neurospaces uses SI units internally, should be documented.
+
+* Overview generator
+Add configurator, that allows to extract tables like TABLE1 and
+TABLE2 in EDS 1994a.
+Should also allow to extract table 1, 2, 3 and 4 of Rapp 1994.
+
+* Tag parameters
+** anatomy and morphology axis
+dia, length, positions
+** physical and mathematical axis
+resistance, electrotonic length
+** derived axis ?  compound axis ?
+volume, surface, see below
+
+* Implement volume and surface
+** segment_group
+Need true instrumentation for that, see hierarchy/symbols todo comment.
+If done, enable the appropriate tests in purkinje.t.
+
+* Implement tests for axon hillock
+
+* write better tests for IO relations between symbols
+
+* Add functions and parameters to main treespace
+** evaluate overhead
+** evaluate consistency benefit
+** fundamental observations
+*** connections become symbols with children (parameters)
+*** two essentially different types: symbols with and without children
+*** functions have regular children
+*** all other have regular children
+
+* General data model implementation
+Categorize all elements in
+** Component Structure Axis
+Simple grouping, public vs private models, connections, structured
+connections.
+** Application Axis
+This one has been defined in biolevel.[ch].  It is also related to
+parser.rules, .*Component non-terminals.
+*** Mathematical
+*** Mechanical
+*** Magnetical
+*** Biological
+*** Neurological
+*** Anatomical
+** Algorithmic Axis
+First the algorithm derivation must be finished, I guess ?
+
+* Parmeter caching and algorithms
+Implement an algorithm accessible from the library that just sets a
+number of parameter caches.
+
+* Allow to define relationships between algorithms
+Basically a data flow chart, where the nodes are the algorithms.
+
+
+* Coordinate transformations
+** Reimplement coordinate transformations as virtual calls.
+** Add coordinate transformations for foliums
+
+* Rolf kotter database connection
+** get database format
+** define protocol / interface
+** linkup, implement
+
+* MCell related intermediary model representation
+** meshing algorithms
+Stress difference between conceptual representation and expanded
+representation.
+
+* Look into methods for automated annotation
+** meshes generated for mcell
+** related to transition between modeling and simulation
+*** specific resistivity -> cont maths
+*** actual / scaled resistivity -> disc maths
+same applies to conductances
+*** segment length / dia -> cont maths
+*** other channel parameters -> ?
+*** time constants -> cont maths
+because they are related to discretization accuracy
+*** segment connectivity -> anatomy
+anatomy is at same step as physics & chemistry
+*** coordinates -> anatomy
+
+* algorithms that use parameter caches
+
+* implement invisible serial mapping
+
+* implement algorithm activator
+Accessible after the whole model has been read
+
+* variable attributes for attachment points
+ATTACHMENT_POINT Synapse(OUTPUT activation)
+	RECEIVES EVENTS(spike)
+	HAS weight = 1.0, delay = DistanceTime(&->PRE,&->POST,3 /* m/s */)
+END ATTACHMENT_POINT
+
+& means instantiation, in this case connection attached to (physical) synapse.
+
+
+
+* prototypes for groups
+** parameters specifications
+*** non hierarchical
+*** hierarchical
+
+
+
+* I/O relations
+** grouped components
+
+
+
+* check how nernst valency can be made same as pool valency
+** list of ions could solve this
+** make dependent on new parameter : pool valency
+pool valency can in itself be dependent on list of ions
+
+
+
+* write out description of model
+** option : single file, modular file set
+*** single file
+Export() for symbol
+calls utility functions to do write of header section.
+calls utility functions to do write of dependency section.
+calls utility functions to do write of start of private model section.
+traverse sub-symbols
+	processor calls traverse of sub-symbols
+	finalizer writes output to file.
+		private model start
+			sub-symbol (problem with naming ?)
+		private model end
+calls utility functions to do write of end of private model section.
+calls utility functions to do write of start of public model section.
+writes alias for symbol.
+calls utility functions to do write of end of public model section.
+
+
+*** modular file set for single symbol
+Get ref to defsym
+	loop over tagged public models
+		loop over tagged private models
+			loop over tagged dependency files
+
+
+*** modular file set for library
+Get ref to defsym
+	loop over dependency files
+		recurse
+	loop over private models
+	loop over public models
+
+
+** Neurospaces description files
+** Neurospaces XML files
+
+
+
+* parsing to pidinstacks
+check following :
+** namespace parsing
+** being rooted
+** field references
+
+
+
+* add operators
+
+Take a look at the perl regex operators before choosing one, avoid conflicts.
+** support needed in pidin.[ch]
+** .*Lookup() functions need revision to support functionality
+
+** Needed operators :
+*** add operator to address I/O relations (remember I/O lives in same space as
+*** parameters and that is a good thing because it makes it possible to make
+*** all parameters computable.
+'@','=>' are viable candidates
+*** add operator to address private models
+could be done with namespace operator :: in some special namespace, relate this
+to addressing of hypothetical root of private model tree.
+'!','&','~', are viable candidates
+*** add operator to address dependency file list
+'#' like in XPointer paths
+

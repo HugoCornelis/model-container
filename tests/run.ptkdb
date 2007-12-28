@@ -1,0 +1,29 @@
+$files = {
+           '_<tests/run' => [
+                              {
+                                'expr' => undef,
+                                'value' => '1',
+                                'text' => '		my $differences
+',
+                                'fname' => 'tests/run',
+                                'type' => 'user',
+                                'line' => '323'
+                              }
+                            ]
+         };
+$expr_list = [
+               {
+                 'expr' => '$path',
+                 'depth' => -1
+               },
+               {
+                 'expr' => '$context->{path}',
+                 'depth' => -1
+               },
+               {
+                 'expr' => '$context->{array}->[1]->{content}->{name}',
+                 'depth' => -1
+               }
+             ];
+$eval_saved_text = undef;
+$main_win_geometry = '1272x941+297+45';

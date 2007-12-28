@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Technologies</title>
+  </head>
+
+  <body>
+    <h1>Technologies</h1>
+
+    <p>
+
+      Some software engineers have expressed interest in what
+      methodology I use to do Neurospaces development.  Right now, I
+      only reuse many common patterns, present in various frameworks
+      (e.g. <a
+      href="http://en.wikipedia.org/wiki/Spring_framework">Spring</a>
+      and <a
+      href="http://en.wikipedia.org/wiki/Aspect-oriented_programming">aspect
+      oriented programming</a>).  For the rest I don't use a fancy
+      framework, because computational neuroscience simulator
+      technology is not yet ready for it.  The Neurospaces project is
+      a search for such a framework.
+
+    <p>
+
+      Comparing for a moment to the aforementioned Spring framework,
+      the following tools are present, in one form or another, in the
+      current incarnation of the Neurospaces project:
+
+    <ul>
+
+      <li> Inversion of Control container: the <em><a
+	    href="#section-ssp">Simple Scheduler in Perl</a></em> does a
+	couple of things for dependency injection, much work remains
+	to be done, if it is ever needed.
+
+      <li> For low-level code, I have written a C code generator that
+      allows for inheritance and highly-granular method
+      instrumentation, a first step towards AOP.  Aspect-oriented
+      programming framework: aspect oriented programming is supported
+      natively by scripting languages as perl.
+
+      <li> Data access framework: the <a
+	  href="#section-simulation-browser">project browser</a> relies
+	on Sesa, and can, in principle, be bound to external data
+	access frameworks.  Again, if this is ever going to be
+	necessary remains to be seen (for web-collaboration sessions
+	?).
+
+      <li> Transaction management framework: not present (for
+	simulations, this not needed in the short term either).
+
+      <li> Model-view-controller framework: the split of the simulator
+      in <a href="#section-neurospaces">middle-ware</a> for the data
+      container, the <a href="#section-heccer">solver</a>s, and the <a
+      href="#section-ssp">scheduler</a>, is partially based on the
+      model-view-controller paradigm.
+
+      <li> Remote Access framework: not present, although needed, in
+	principle, that is.
+
+      <li> Authentication and authorization framework: the Sesa
+	framework provides this, in a 'primitive and premature'
+	fashion.
+
+      <li> Remote Management framework: not present, unsure if that
+	is needed.
+
+      <li> Messaging framework: not present, way to early to even
+	think about it.
+
+      <li> Testing framework: the tools in the neurospaces project
+	use a sophisticated tester, that implements a clear-cut
+	separation between test specification (application behaviour)
+	and test implementation.  Changing the implementation allows
+	to convert the test specifications to HTML, or to extract certain
+	data from the specification (e.g. show me a test that uses
+	command 'X').
+
+    </ul>
+
+    <p>
+
+      For component integration, I use:
+
+    <ul>
+      <li>
+	<a href="http://www.swig.org">Swig</a> to expose low level
+	functionality of components, fi. Heccer or Neurospaces, to
+	higher level programming languages and scripting languages.
+
+      <li>
+	the <a href="http://www.perl.org/">Perl</a> programming
+	language, because (1) I am very familiar with the internals of
+	Perl, and (2) there is a very broad library of Perl modules
+	available from <a href="http://www.cpan.org/">CPAN</a>.  Some
+	people tell me that I should be using Python, for easy
+	interfacing with <a
+	href="http://www.neuralensemble.org/">PyNN</a> (and they are
+	right about it, but I don't know much Python).
+
+    </ul>
+
+    <p>
+
+
+
+    <hr>
+    <address><a href="mailto:hugo@localhost">Hugo Cornelis</a></address>
+<!-- Created: Mon Jul 30 11:54:08 CDT 2007 -->
+<!-- hhmts start -->
+Last modified: Tue Aug  7 14:50:52 CDT 2007
+<!-- hhmts end -->
+  </body>
+</html>

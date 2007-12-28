@@ -1,0 +1,79 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+
+	FILE ca_pool "pools/purkinje_ca.ndf"
+	FILE cat "tests/channels/cat.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS ca_pool::/Ca_concen ca_pool END ALIAS
+	ALIAS cat::/cat cat END ALIAS
+
+	SEGMENT maind
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+			INPUT cat->Ik,
+		END BINDINGS
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 3.0 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 ),
+
+			PARAMETER ( rel_X = 5.557e-6 ),
+			PARAMETER ( rel_Y = 9.447e-6 ),
+			PARAMETER ( rel_Z = 9.447e-6 ),
+			PARAMETER ( DIA = 7.72e-6 ),
+		END PARAMETERS
+
+		CHILD cat
+			cat
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+		CHILD ca_pool
+			ca_pool
+			BINDINGS
+				INPUT ^/cat->Ik,
+			END BINDINGS
+		END CHILD
+
+	END SEGMENT
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CELL channel1_nernst1
+
+		SEGMENT_GROUP segments
+
+			CHILD maind main[0]
+
+				PARAMETERS
+
+					PARAMETER ( INJECT = 1e-9 ),
+
+				END PARAMETERS
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

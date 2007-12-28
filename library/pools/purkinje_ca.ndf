@@ -1,0 +1,50 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+PRIVATE_MODELS
+
+	POOL Ca_concen
+		BINDABLES
+			INPUT Ik,OUTPUT concen
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( concen_init = 0.000040 ),
+			PARAMETER ( BASE = 0.000040 ),
+			PARAMETER ( TAU = 0.00010 ),
+			PARAMETER ( VAL = 2.0 ),
+
+			// the maximum is required for very thin dendrites
+			// probably, it would be better to make thickness dependent on the diameter
+
+			PARAMETER ( DIA = MAXIMUM( PARAMETER( value1 = ..->DIA), PARAMETER( value2 = 0.2e-6 ), ), ),
+
+			PARAMETER ( LENGTH =  ..->LENGTH ),
+// 			PARAMETER ( THICK = 0.20e-6 )
+			PARAMETER ( THICK = HIGHER( PARAMETER( value = ..->DIA), PARAMETER ( comparator = 0.4e-6 ), PARAMETER ( result1 = 0.20e-6 ), PARAMETER ( result2 = 0.20e-7 ), ), ),
+		END PARAMETERS
+
+	END POOL
+
+END PRIVATE_MODELS
+
+
+PUBLIC_MODELS
+
+	ALIAS Ca_concen Ca_concen END ALIAS
+
+	ALIAS Ca_concen 
+		Ca_concen_standalone
+		PARAMETERS
+			PARAMETER ( LENGTH = 1.2e-5 ),
+			PARAMETER ( DIA = 1.2e-6 )
+		END PARAMETERS
+	END ALIAS
+
+END PUBLIC_MODELS
+
+

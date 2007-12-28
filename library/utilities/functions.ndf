@@ -1,0 +1,38 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+PUBLIC_MODELS
+
+	SEGMENT segm
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+		END BINDINGS
+
+		PARAMETERS
+			PARAMETER ( A = SERIAL() ),
+
+			PARAMETER ( B = MINIMUM(PARAMETER (value1 = 0.0 ), PARAMETER (value2 = 1.0 ), ) ),
+			PARAMETER ( C = MAXIMUM(PARAMETER (value1 = 0.0 ), PARAMETER (value2 = 1.0 ), ) ),
+			PARAMETER ( D1 = LOWER(PARAMETER( value = 0.0), PARAMETER ( comparator = 1.0 ), PARAMETER ( result1 = 5.0 ), PARAMETER ( result2 = 6.0 ), ), ),
+			PARAMETER ( D2 = LOWER(PARAMETER( value = 1.0), PARAMETER ( comparator = 0.0 ), PARAMETER ( result1 = 5.0 ), PARAMETER ( result2 = 6.0 ), ), ),
+			PARAMETER ( E1 = HIGHER(PARAMETER( value = 0.0), PARAMETER ( comparator = 1.0 ), PARAMETER ( result1 = 5.0 ), PARAMETER ( result2 = 6.0 ), ), ),
+			PARAMETER ( E2 = HIGHER(PARAMETER( value = 1.0), PARAMETER ( comparator = 0.0 ), PARAMETER ( result1 = 5.0 ), PARAMETER ( result2 = 6.0 ), ), ),
+
+			PARAMETER ( F = MINUS(PARAMETER (value1 = 3.0 ), PARAMETER (value2 = 1.0 ), ) ),
+			PARAMETER ( G = NEGATE(PARAMETER (value = 1.0 ), ) ),
+			PARAMETER ( H = DIVIDE(PARAMETER (DIVIDEND = 2.0 ), PARAMETER (DIVISOR = 5.0 ), ) ),
+			PARAMETER ( I1 = STEP(PARAMETER (value = 2.0 ), PARAMETER (start = 5.0 ), PARAMETER (stop = 7.0 ), ) ),
+			PARAMETER ( I2 = STEP(PARAMETER (value = 5.1 ), PARAMETER (start = 5.0 ), PARAMETER (stop = 7.0 ), ) ),
+			PARAMETER ( I3 = STEP(PARAMETER (value = 9.0 ), PARAMETER (start = 5.0 ), PARAMETER (stop = 7.0 ), ) ),
+		END PARAMETERS
+
+	END SEGMENT
+
+END PUBLIC_MODELS

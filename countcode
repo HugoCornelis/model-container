@@ -1,0 +1,1 @@
+wc 2>/dev/null `prcs 2>/dev/null execute --not "--match directory" --all | grep -v "README" | grep -v "\.tab" | grep -v "\.txt" | grep -v "\.xml$" | grep -v "\.ndf$" | grep -v "\.n[emcn]d$" | grep -v "\.old$" | grep -v "\.p$" | grep -v "\.log$" | grep -v "^html/" | grep -v "\.png" | grep -v "\.jpg" | grep -v '\.t$' | grep -v library/ | less` | less

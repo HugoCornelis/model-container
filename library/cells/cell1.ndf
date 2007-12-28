@@ -1,0 +1,369 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+/*
+** Multi line comments that may not be nested
+**
+*/
+
+{*
+{* 
+** Multi line comments that may be nested
+*}
+*}
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE Purk_soma "segments/purkinje_soma.ndf"
+
+	FILE Purk_maind "segments/purkinje_maind.ndf"
+
+	FILE Purk_thickd "segments/purkinje_thickd.ndf"
+
+	FILE Purk_spinyd "segments/purkinje_spinyd.ndf"
+
+	FILE Purk_spine "segments/spines/purkinje.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS Purk_soma::/Purk_soma Purk_soma END ALIAS
+	ALIAS Purk_maind::/Purk_maind Purk_maind END ALIAS
+	ALIAS Purk_thickd::/Purk_thickd Purk_thickd END ALIAS
+	ALIAS Purk_spinyd::/Purk_spinyd Purk_spinyd END ALIAS
+	ALIAS Purk_spine::/Purk_spine Purk_spine END ALIAS
+	//ALIAS Purk_spine::/Purk_spine2 Purk_spine2 END ALIAS
+
+	// these are defines for passive Purkinje cell model
+
+	{*
+
+	ALIAS Purk_soma::/Purk_soma_passive Purk_soma END ALIAS
+	ALIAS Purk_maind::/Purk_maind_passive Purk_maind END ALIAS
+	ALIAS Purk_thickd::/Purk_thickd_passive Purk_thickd END ALIAS
+	ALIAS Purk_spinyd::/Purk_spinyd_passive Purk_spinyd END ALIAS
+	ALIAS Purk_spine::/Purk_spine_passive Purk_spine END ALIAS
+	ALIAS Purk_spine::/Purk_spine2_passive Purk_spine2 END ALIAS
+
+	*}
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CELL Purkinje
+
+// 		ALGORITHM Spines
+// 			ALGORITHM_INSTANCE SpinesNormal
+// 			{ Purk_spine 0.00 3.17 13 1}
+// 		END ALGORITHM
+
+		ALGORITHM Spines
+			SpinesNormal_13_1
+			PARAMETERS
+				PARAMETER ( PROTOTYPE = "Purkinje_spine" ),
+				PARAMETER ( DIA_MIN = 0.0 ),
+				PARAMETER ( DIA_MAX = 3.18 ),
+				PARAMETER ( SPINE_DENSITY = 13.0 ),
+				PARAMETER ( SPINE_FREQUENCY = 1.0 ),
+			END PARAMETERS
+		END ALGORITHM
+
+		SEGMENT_GROUP Purkinje_Cell
+
+			CHILD Purk_soma soma
+				PARAMETERS
+// 					PARAMETER ( PARENT = none ),
+					PARAMETER ( X = 0.000e-6 ),
+					PARAMETER ( Y = 0.000e-6 ),
+					PARAMETER ( Z = 0.000e-6 ),
+					PARAMETER ( DIA = 29.80e-6 )
+				END PARAMETERS
+			END CHILD
+
+			CHILD Purk_maind main[0]
+				PARAMETERS
+					PARAMETER ( PARENT = soma ),
+					PARAMETER ( X = 5.557e-6 ),
+					PARAMETER ( Y = 9.447e-6 ),
+					PARAMETER ( Z = 9.447e-6 ),
+					PARAMETER ( DIA = 7.72e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_maind main[1]
+				PARAMETERS
+					PARAMETER ( PARENT = main[0] ),
+					PARAMETER ( X = 8.426e-6 ),
+					PARAMETER ( Y = 1.124e-6 ),
+					PARAMETER ( Z = 21.909e-6 ),
+					PARAMETER ( DIA = 8.22e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_maind main[2]
+				PARAMETERS
+					PARAMETER ( PARENT = main[1] ),
+					PARAMETER ( X = 1.666e-6 ),
+					PARAMETER ( Y = 1.111e-6 ),
+					PARAMETER ( Z = 6.666e-6 ),
+					PARAMETER ( DIA = 8.50e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_maind main[3]
+				PARAMETERS
+					PARAMETER ( PARENT = main[2] ),
+					PARAMETER ( X = -2.779e-6 ),
+					PARAMETER ( Y = 2.223e-6 ),
+					PARAMETER ( Z = 1.667e-6 ),
+					PARAMETER ( DIA = 9.22e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_maind main[4]
+				PARAMETERS
+					PARAMETER ( PARENT = main[3] ),
+					PARAMETER ( X = -1.111e-6 ),
+					PARAMETER ( Y = 6.109e-6 ),
+					PARAMETER ( Z = 5.553e-6 ),
+					PARAMETER ( DIA = 8.89e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_maind main[5]
+				PARAMETERS
+					PARAMETER ( PARENT = main[4] ),
+					PARAMETER ( X = -1.111e-6 ),
+					PARAMETER ( Y = -0.555e-6 ),
+					PARAMETER ( Z = 4.998e-6 ),
+					PARAMETER ( DIA = 8.44e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_maind main[6]
+				PARAMETERS
+					PARAMETER ( PARENT = main[5] ),
+					PARAMETER ( X = -1.749e-6 ),
+					PARAMETER ( Y = 0.583e-6 ),
+					PARAMETER ( Z = 3.498e-6 ),
+					PARAMETER ( DIA = 8.61e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_maind main[7]
+				PARAMETERS
+					PARAMETER ( PARENT = main[6] ),
+					PARAMETER ( X = -3.890e-6 ),
+					PARAMETER ( Y = 3.334e-6 ),
+					PARAMETER ( Z = 6.669e-6 ),
+					PARAMETER ( DIA = 7.78e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_maind main[8]
+				PARAMETERS
+					PARAMETER ( PARENT = main[7] ),
+					PARAMETER ( X = -6.665e-6 ),
+					PARAMETER ( Y = -1.111e-6 ),
+					PARAMETER ( Z = 9.441e-6 ),
+					PARAMETER ( DIA = 8.44e-6 )
+				END PARAMETERS
+			END CHILD
+
+			CHILD Purk_thickd br1[0]
+				PARAMETERS
+					PARAMETER ( PARENT = main[8] ),
+					PARAMETER ( X = -4.443e-6 ),
+					PARAMETER ( Y = 1.111e-6 ),
+					PARAMETER ( Z = 0.000e-6 ),
+					PARAMETER ( DIA = 7.94e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[1]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[0] ),
+					PARAMETER ( X = -4.440e-6 ),
+					PARAMETER ( Y = -0.555e-6 ),
+					PARAMETER ( Z = 1.110e-6 ),
+					PARAMETER ( DIA = 5.39e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[2]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[1] ),
+					PARAMETER ( X = -13.334e-6 ),
+					PARAMETER ( Y = 0.000e-6 ),
+					PARAMETER ( Z = 1.111e-6 ),
+					PARAMETER ( DIA = 5.06e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[3]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[2] ),
+					PARAMETER ( X = -3.330e-6 ),
+					PARAMETER ( Y = 0.555e-6 ),
+					PARAMETER ( Z = 2.775e-6 ),
+					PARAMETER ( DIA = 4.83e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[4]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[3] ),
+					PARAMETER ( X = -6.114e-6 ),
+					PARAMETER ( Y = 3.335e-6 ),
+					PARAMETER ( Z = 5.558e-6 ),
+					PARAMETER ( DIA = 4.22e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[5]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[4] ),
+					PARAMETER ( X = -8.330e-6 ),
+					PARAMETER ( Y = 1.111e-6 ),
+					PARAMETER ( Z = 3.332e-6 ),
+					PARAMETER ( DIA = 4.22e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[6]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[5] ),
+					PARAMETER ( X = -3.888e-6 ),
+					PARAMETER ( Y = 0.000e-6 ),
+					PARAMETER ( Z = 5.554e-6 ),
+					PARAMETER ( DIA = 4.00e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[7]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[6] ),
+					PARAMETER ( X = -4.444e-6 ),
+					PARAMETER ( Y = 0.000e-6 ),
+					PARAMETER ( Z = 2.777e-6 ),
+					PARAMETER ( DIA = 5.00e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[8]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[7] ),
+					PARAMETER ( X = -1.666e-6 ),
+					PARAMETER ( Y = -2.777e-6 ),
+					PARAMETER ( Z = 5.555e-6 ),
+					PARAMETER ( DIA = 6.06e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[9]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[8] ),
+					PARAMETER ( X = 0.000e-6 ),
+					PARAMETER ( Y = 3.888e-6 ),
+					PARAMETER ( Z = 7.220e-6 ),
+					PARAMETER ( DIA = 5.17e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[10]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[9] ),
+					PARAMETER ( X = -1.110e-6 ),
+					PARAMETER ( Y = 1.665e-6 ),
+					PARAMETER ( Z = 4.440e-6 ),
+					PARAMETER ( DIA = 4.44e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[11]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[10] ),
+					PARAMETER ( X = -6.668e-6 ),
+					PARAMETER ( Y = 0.000e-6 ),
+					PARAMETER ( Z = 13.336e-6 ),
+					PARAMETER ( DIA = 4.33e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[12]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[11] ),
+					PARAMETER ( X = -3.889e-6 ),
+					PARAMETER ( Y = 0.000e-6 ),
+					PARAMETER ( Z = 13.334e-6 ),
+					PARAMETER ( DIA = 5.00e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[13]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[12] ),
+					PARAMETER ( X = 1.113e-6 ),
+					PARAMETER ( Y = 1.113e-6 ),
+					PARAMETER ( Z = 3.338e-6 ),
+					PARAMETER ( DIA = 5.78e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[14]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[13] ),
+					PARAMETER ( X = 0.000e-6 ),
+					PARAMETER ( Y = 0.000e-6 ),
+					PARAMETER ( Z = 2.220e-6 ),
+					PARAMETER ( DIA = 5.44e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[15]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[14] ),
+					PARAMETER ( X = -0.556e-6 ),
+					PARAMETER ( Y = 0.556e-6 ),
+					PARAMETER ( Z = 13.888e-6 ),
+					PARAMETER ( DIA = 4.33e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[16]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[15] ),
+					PARAMETER ( X = 0.555e-6 ),
+					PARAMETER ( Y = -0.555e-6 ),
+					PARAMETER ( Z = 3.329e-6 ),
+					PARAMETER ( DIA = 3.56e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[17]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[16] ),
+					PARAMETER ( X = 2.222e-6 ),
+					PARAMETER ( Y = -0.556e-6 ),
+					PARAMETER ( Z = 8.890e-6 ),
+					PARAMETER ( DIA = 3.83e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[18]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[17] ),
+					PARAMETER ( X = -0.555e-6 ),
+					PARAMETER ( Y = 1.666e-6 ),
+					PARAMETER ( Z = 7.219e-6 ),
+					PARAMETER ( DIA = 4.17e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[19]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[18] ),
+					PARAMETER ( X = -1.110e-6 ),
+					PARAMETER ( Y = 0.000e-6 ),
+					PARAMETER ( Z = 3.885e-6 ),
+					PARAMETER ( DIA = 4.78e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purk_thickd br1[20]
+				PARAMETERS
+					PARAMETER ( PARENT = br1[19] ),
+					PARAMETER ( X = -6.111e-6 ),
+					PARAMETER ( Y = -1.667e-6 ),
+					PARAMETER ( Z = 1.667e-6 ),
+					PARAMETER ( DIA = 4.17e-6 )
+				END PARAMETERS
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

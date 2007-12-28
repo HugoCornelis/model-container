@@ -1,0 +1,309 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+PRIVATE_MODELS
+
+	HH_GATE na_gate_activation
+		BINDABLES
+			INPUT Vm,OUTPUT activation
+		END BINDABLES
+
+		BINDINGS
+			INPUT ..->Vm
+		END BINDINGS
+
+		GATE_KINETIC_FORWARD forward
+
+			BINDABLES
+				INPUT Vm, OUTPUT rate
+			END BINDABLES
+
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			PARAMETERS
+
+				//m 1: multiplier
+
+				PARAMETER ( Multiplier = -4500.0 ),
+
+				//m 2: multiplier membrane dependence, 0.0 for no dependence
+
+				PARAMETER ( MembraneDependence = 0.1e6 ),
+
+				//m 3: choose between nominator or denominator, 1 means nominator, -1
+				//m means denominator
+
+				PARAMETER ( Nominator = -1.0 ),
+
+				//m 4: nominator or denominator offset
+
+				PARAMETER ( DeNominatorOffset = -1.0 ),
+
+				//m 5: membrane offset
+
+				PARAMETER ( MembraneOffset = 0.045 ),
+
+				//m 6: denormalized time constant
+
+				PARAMETER ( TauDenormalizer = -0.01 ),
+
+			END PARAMETERS
+
+		END GATE_KINETIC_FORWARD
+
+		GATE_KINETIC_BACKWARD backward
+
+			BINDABLES
+				INPUT Vm, OUTPUT rate
+			END BINDABLES
+
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			PARAMETERS
+
+				//m 1: multiplier
+
+				PARAMETER ( Multiplier = 4e3 ),
+
+				//m 2: multiplier membrane dependence, 0.0 for no dependence
+
+				PARAMETER ( MembraneDependence = 0.0 ),
+
+				//m 3: choose between nominator or denominator, 1 means nominator, -1
+				//m means denominator
+
+				PARAMETER ( Nominator = -1.0 ),
+
+				//m 4: nominator or denominator offset
+
+				PARAMETER ( DeNominatorOffset = 0.0 ),
+
+				//m 5: membrane offset
+
+				PARAMETER ( MembraneOffset = 0.07 ),
+
+				//m 6: denormalized time constant
+
+				PARAMETER ( TauDenormalizer = 18e-3 ),
+
+			END PARAMETERS
+
+		END GATE_KINETIC_BACKWARD
+
+		PARAMETERS
+
+			//m initial value, commonly forward over backward steady states
+
+			PARAMETER ( state_init = 0.05293248736 ),
+			PARAMETER ( POWER = 3.0 ),
+		END PARAMETERS
+
+	END HH_GATE
+
+	HH_GATE na_gate_inactivation
+		BINDABLES
+			INPUT Vm,OUTPUT activation
+		END BINDABLES
+
+		BINDINGS
+			INPUT ..->Vm
+		END BINDINGS
+
+		GATE_KINETIC_FORWARD forward
+
+			BINDABLES
+				INPUT Vm, OUTPUT rate
+			END BINDABLES
+
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			PARAMETERS
+
+				//m 1: multiplier
+
+				PARAMETER ( Multiplier = 70.0 ),
+
+				//m 2: multiplier membrane dependence, 0.0 for no dependence
+
+				PARAMETER ( MembraneDependence = 0.0 ),
+
+				//m 3: choose between nominator or denominator, 1 means nominator, -1
+				//m means denominator
+
+				PARAMETER ( Nominator = -1.0 ),
+
+				//m 4: nominator or denominator offset
+
+				PARAMETER ( DeNominatorOffset = 0.0 ),
+
+				//m 5: membrane offset
+
+				PARAMETER ( MembraneOffset = 0.07 ),
+
+				//m 6: denormalized time constant
+
+				PARAMETER ( TauDenormalizer = 0.02 ),
+
+			END PARAMETERS
+
+		END GATE_KINETIC_FORWARD
+
+		GATE_KINETIC_BACKWARD backward
+
+			BINDABLES
+				INPUT Vm, OUTPUT rate
+			END BINDABLES
+
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			PARAMETERS
+
+				//m 1: multiplier
+
+				PARAMETER ( Multiplier = 1.0e3 ),
+
+				//m 2: multiplier membrane dependence, 0.0 for no dependence
+
+				PARAMETER ( MembraneDependence = 0.0 ),
+
+				//m 3: choose between nominator or denominator, 1 means nominator, -1
+				//m means denominator
+
+				PARAMETER ( Nominator = -1.0 ),
+
+				//m 4: nominator or denominator offset
+
+				PARAMETER ( DeNominatorOffset = 1.0 ),
+
+				//m 5: membrane offset
+
+				PARAMETER ( MembraneOffset = 0.04 ),
+
+				//m 6: denormalized time constant
+
+				PARAMETER ( TauDenormalizer = -10.0e-3 ),
+
+			END PARAMETERS
+
+		END GATE_KINETIC_BACKWARD
+
+		PARAMETERS
+
+			//m initial value, commonly forward over backward steady states
+
+			PARAMETER ( state_init = 0.5961207962 ),
+			PARAMETER ( POWER = 1.0 ),
+		END PARAMETERS
+
+	END HH_GATE
+
+	CHANNEL na
+		BINDABLES
+			INPUT Vm,OUTPUT Gk,OUTPUT Ik
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
+		END PARAMETERS
+
+		CHILD na_gate_activation na_gate_activation
+		END CHILD
+
+		CHILD na_gate_inactivation na_gate_inactivation
+		END CHILD
+
+		PARAMETERS
+			PARAMETER ( GMAX = 1.2e3 ),
+			PARAMETER ( Ek = 0.045 ),
+		END PARAMETERS
+	END CHANNEL
+
+	SEGMENT soma2
+
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+			INPUT na->Ik,
+		END BINDINGS
+
+		OPTIONS SPHERICAL
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.07 ),
+			PARAMETER ( RM = 0.33333 ),
+			PARAMETER ( RA = 0.3 ),
+			PARAMETER ( CM = 0.01 ),
+			PARAMETER ( ELEAK = -0.0594 ),
+		END PARAMETERS
+
+		CHILD na
+			na
+			BINDINGS
+				INPUT ^->Vm,
+			END BINDINGS
+		END CHILD
+
+	END SEGMENT
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	// the sodium channel for import from other models
+
+	ALIAS na na END ALIAS
+
+	// a soma only test neuron with only this channel
+
+	CELL cell_na
+
+		SEGMENT_GROUP segments
+
+			CHILD soma2 soma
+				PARAMETERS
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 30e-6 ),
+				END PARAMETERS
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+	// the same neuron, yet cylindrical
+
+	CELL cell_na
+
+		SEGMENT_GROUP segments
+
+			CHILD soma2 soma
+				PARAMETERS
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 30e-6 ),
+					PARAMETER ( LENGTH = 30e-6 ),
+				END PARAMETERS
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

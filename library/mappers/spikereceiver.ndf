@@ -1,0 +1,29 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+PUBLIC_MODELS
+
+	ATTACHMENT_POINT Synapse
+		BINDABLES
+			INPUT spike,
+			OUTPUT activation
+		END BINDABLES
+
+		// obsoleted, spike is implicitly discrete 
+		// event at the moment.
+
+		// RECEIVES EVENTS(spike)
+
+		ATTRIBUTES weight, delay END ATTRIBUTES
+
+	END ATTACHMENT_POINT
+
+END PUBLIC_MODELS
+
+

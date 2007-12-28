@@ -1,0 +1,44 @@
+#!/bin/sh
+cd algorithms/event
+aclocal
+autoheader
+automake --foreign
+autoconf
+cd ../symbol/
+aclocal
+autoheader
+automake --foreign
+autoconf
+cd ../
+aclocal
+autoheader
+automake --foreign
+autoconf
+cd ../convertors/
+aclocal
+# autoheader
+automake --foreign
+autoconf
+cd ../
+aclocal
+autoheader
+automake --foreign --add-missing
+autoconf
+
+# taken from the monotone-dev list :
+# $ aclocal -I .
+# $ automake -a
+# $ autoheader
+# $ autoconf
+# $ ./configure
+# $ make
+#
+# from syck
+#
+# 1 	#! /bin/sh
+# 2 	
+# 3 	set -x
+# 4 	aclocal
+# 5 	autoheader
+# 6 	automake --foreign --add-missing --copy
+# 7 	autoconf

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>The history of Neurospaces</title>
+  </head>
+
+  <body>
+    <h1>The history of Neurospaces</h1>
+
+    It is well known among enterprise software engineers that a
+    serious software project cannot be undertaken by starting with the
+    implementation of the middle-tier.  Mostly, serious software is
+    started by configuring the backends, and, this is, perhaps,
+    complemented by implementation of prototype user interfaces.
+
+    The reason I added a paragraph about the history of Neurospaces to
+    the website, is to answer this question: how risky is the
+    undertaking of the neurospaces project, given it first started
+    with the implementation of a middle-tier software component,
+    namely Neurospaces ?
+
+    <p>
+
+      Somewhere in the late nineties, the Neosim project was started:
+      a project that takes ideas from distributed discrete event
+      simulations in telecommunications, and tries to apply these
+      ideas to computational neuroscience.  For reasons of efficiency,
+      the Neosim people were very interested in using hsolve, the fast
+      compartmental solver of Genesis 2.  After a severe analysis,
+      interfacing to hsolve proved problematic.  hsolve was (and is)
+      unsuccessful in hiding the low-level details of a typical
+      solver.  It is difficult to use for implementing complicated
+      neuronal models, and for implementing models of experimental
+      protocols that must interface to such complicated models.
+      (Again, I do not intend to be negative about Genesis or hsolve,
+      just trying to explain lessons learned).
+
+    <p>
+
+      Neurospaces started as a namespace for complicated neuronal
+      models, as a front end of hsolve, thus dealing with the first
+      aforementioned problem.  So, the first software component of the
+      neurospaces project, was actually not neurospaces, but hsolve,
+      an existing backend.  When I was working in Antwerp, the
+      software implementing this namespace, grew to a serious
+      scientific project, with branches of neuroinformatics, XML
+      databasing and computer science.  The technology of the software
+      was put under non-disclosure for some time.
+
+    <p>
+
+      When I started to work in San Antonio, I did a careful analysis
+      of the current status of the software project.  Hsolve was
+      tightly coupled to Genesis 2, and could hamper further
+      developements and it would be difficult to continue the
+      Neurospaces project, without a good stand-alone solver.  I was
+      in the need of a solver that is not rooted in a full-blown
+      simulation monolith.  This was the reason to start implementing
+      the Heccer compartmental solver.  Heccer is now as fast as
+      hsolve, but does not implement any tricks for interfacing.  As a
+      consequence, Heccer really relies on an external environment, to
+      specify a model to be simulated.  This model can be defined
+      using Neurospaces or from perl (or other scripting languages).
+
+    <p>
+
+      SSP is a simple scheduler, that controls the whole system.  At
+      the technical level its main purpose is much more to delegate
+      than to 'control'.
+
+      These three software components, Neurospaces, Heccer and SSP,
+      can be used as a simple simulator.  It is easy to use (easier
+      than Genesis e.g.), and is as performant.  This completes a
+      first round in the Neurospaces project.
+
+    <p>
+
+      In the near future, I will probably also concentrate on higher
+      level functionality like user interfaces.  This should not be
+      difficult, since the current system is driven by declarative
+      files.  These files can easily be interpreted, read and written
+      by a configuration management framework, like <a
+      href="http://www.sourceforge.net/projects/sesa">Sesa</a>.
+
+    <hr>
+    <address><a href="mailto:hugo@localhost">Hugo Cornelis</a></address>
+<!-- Created: Sat Mar 17 11:15:58 CDT 2007 -->
+<!-- hhmts start -->
+Last modified: Mon Mar 26 10:55:39 CDT 2007
+<!-- hhmts end -->
+  </body>
+</html>

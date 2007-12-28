@@ -1,0 +1,1614 @@
+#!/usr/bin/perl -w
+#!/usr/bin/perl -d:ptkdb
+#
+# $ProjectVersion: 0.1675 $
+#
+
+use strict;
+
+
+use Getopt::Long;
+
+use IO::File;
+
+
+my $option_classes;
+my $option_help;
+my $option_null_checks;
+my $option_output;
+my $option_static_inline;
+my $option_verbose;
+
+
+sub assign_type_numbers
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+
+    # loop over all types
+
+    my $count = 1;
+
+    foreach my $type (sort keys %$class_hierarchy)
+    {
+	# assign type number
+
+	my $class = $class_hierarchy->{$type};
+
+	$class->{number} = $count;
+
+	# increment type count
+
+	$count++;
+    }
+}
+
+
+sub build_forward_derivation_lists
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+
+    # loop over all types
+
+    foreach my $type (keys %$class_hierarchy)
+    {
+	# loop over all types
+
+	my $forward_derivation_list = {};
+
+	foreach my $subtype (keys %$class_hierarchy)
+	{
+	    # if this type is derived from the original
+
+	    if (defined $class_hierarchy->{$subtype}->{isa}
+		&& $class_hierarchy->{$subtype}->{isa} eq $type)
+	    {
+		# register the reverse (forward) relationship
+
+		$forward_derivation_list->{$subtype}->{$type} = $subtype;
+	    }
+	}
+
+	$class_hierarchy->{$type}->{forward_derivation_list} = $forward_derivation_list;
+    }
+}
+
+
+sub build_indices
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+
+    build_forward_derivation_lists($definitions);
+
+    build_isas($definitions);
+
+    build_object_methods_reversed($definitions);
+
+    dump_annotated_class_hierarchy($definitions);
+}
+
+
+sub build_isas
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+
+    # loop over all types
+
+    foreach my $type (keys %$class_hierarchy)
+    {
+	my $count = 1;
+
+	my $isas = { $type => $count++, };
+
+	my $isa = $class_hierarchy->{$type}->{isa};
+
+	while (defined $isa)
+	{
+	    if (exists $isas->{$isa})
+	    {
+		die "$0: in hierarchy $definitions->{name}: found a circular isa relationship for $type";
+	    }
+
+	    $isas->{$isa} = $count++;
+
+	    # go to next class
+
+	    if (!exists $class_hierarchy->{$isa})
+	    {
+		die "$0: in hierarchy $definitions->{name}: found a isa relationship for class $isa, but this class is not defined";
+	    }
+
+	    $isa = $class_hierarchy->{$isa}->{isa};
+	}
+
+	$class_hierarchy->{$type}->{isas} = $isas;
+    }
+}
+
+
+sub build_object_methods_reversed
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+
+    my $object_methods_reversed = { reverse %$object_methods, };
+
+    $definitions->{object_methods_reversed} = $object_methods_reversed;
+}
+
+
+sub dump_annotated_class_hierarchy
+{
+    my $definitions = shift;
+
+    use Data::Dumper;
+
+    my $file = IO::File->new(">$option_output/$definitions->{name}/dump_annotated_class_hierarchy");
+
+    print $file Dumper($definitions);
+
+    $file->close();
+}
+
+
+sub generate_annotations
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+
+    # loop over all annotions
+
+    my $annotations = $definitions->{annotations};
+
+    foreach my $annotation_name (sort keys %$annotations)
+    {
+	my $annotation = $annotations->{$annotation_name};
+
+	my $output_type = $annotation->{type};
+
+	if ($output_type ne 'plain')
+	{
+	    die "$0: unknown annotation type $output_type";
+	}
+
+	my $order = $annotation->{order};
+
+	if ($order ne 'type_number')
+	{
+	    die "$0: unknown order type $order";
+	}
+
+	# determine filename
+
+	my $filename = "annotations/$annotation_name";
+
+	# open file, write header
+
+	my $file = IO::File->new(">$option_output/$definitions->{name}/$filename");
+
+	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+	    = gmtime(time());
+
+	my $date = gmtime();
+
+	print $file "//
+// $filename
+// automatically generated by $0 at $date
+//
+// $0 is a type hierarchy generator that allows to build derivation
+// hierarchies in C that are faster than equivalent hierarchies built in
+// C++.
+//
+
+";
+
+	# construct output for the zero type
+
+	my $output_value = $annotation->{default};
+
+	my $type_number = 0;
+
+	print $file "$output_value, // none, $type_number\n";
+
+	# loop over all types
+
+	foreach my $type (
+			  # sorted by number
+
+			  sort
+			  {
+			      $class_hierarchy->{$a}->{number} <=> $class_hierarchy->{$b}->{number}
+			  }
+
+			  # but not abstract classes
+
+			  grep
+			  {
+			      exists $class_hierarchy->{$_}->{number}
+				  && $class_hierarchy->{$_}->{number} ne -1
+			      }
+			  keys %$class_hierarchy
+			 )
+	{
+	    # get annotator specific for this type
+
+	    my $annotator = $class_hierarchy->{$type}->{annotations}->{$annotation_name};
+
+	    # get output, apply default if necessary
+
+	    my $output_value = defined $annotator ? $annotator : $annotation->{default};
+
+	    my $type_number = $class_hierarchy->{$type}->{number} || -1;
+
+	    print $file "$output_value, // $type, $type_number\n";
+	}
+    }
+}
+
+
+sub generate_callees
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+
+    # if required to generate callees
+
+    if ($definitions->{object_methods_custom_code})
+    {
+	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+	    = gmtime(time());
+
+	my $date = gmtime();
+
+	my $object_methods_custom_code = $definitions->{object_methods_custom_code};
+
+	# loop over all callees that should be generated
+
+	foreach my $callee (keys %$object_methods_custom_code)
+	{
+	    # determine filename
+
+	    my $filebase = "callee_$callee";
+
+	    $filebase = "$option_output/$definitions->{name}/$filebase";
+
+	    my $all_callees_implementations = $definitions->{output}->{all_callees_implementations} || [];
+
+	    $definitions->{output}->{all_callees_implementations} = $all_callees_implementations;
+
+	    push @$all_callees_implementations, $filebase;
+
+	    # open implementation file, write header
+
+	    my $file = IO::File->new(">$filebase.c");
+
+	    print $file "//
+// callee code for $callee
+// automatically generated by $0 at $date
+//
+// $0 is a type hierarchy generator that allows to build derivation
+// hierarchies in C that are faster than equivalent hierarchies built in
+// C++.
+//
+
+#include \"$filebase.h\"
+
+#include \"$option_output/$definitions->{name}/long_descriptions.h\"
+
+";
+
+ 	    my $static_inline = $option_static_inline ? "static inline" : "";
+
+	    my $null_check = $option_null_checks ? "func" : "1";
+
+	    my $return_type = $object_methods_return_types->{$callee}->{type};
+
+	    my $return_default = $object_methods_return_types->{$callee}->{default};
+
+	    my $selector = $object_methods_return_types->{$callee}->{selector};
+
+	    my $typer = $definitions->{typing}->{typer};
+
+	    my $typer_member = $object_methods_signatures->{$callee}->{typer}->{member} || $typer->{member};
+
+	    my $typer_name = $object_methods_signatures->{$callee}->{typer}->{name} || $typer->{name};
+
+	    my $typer_type = $object_methods_signatures->{$callee}->{typer}->{type} || $typer->{type};
+
+	    my $typer_getter = "($typer_name)" . "->" . "$typer_member";
+
+	    #t should try to get rid of object_methods_prefix, needs a
+	    #t bunch of distributed changes
+
+	    my $callee_prefix = $definitions->{object_methods_prefix} || $definitions->{name};
+
+	    my $callee_name = $callee_prefix . "_" . $callee;
+
+	    my $prototype = $object_methods_signatures->{$callee}->{prototype};
+
+	    if (!defined $prototype)
+	    {
+		die "$0: no prototype signature found for $callee";
+	    }
+
+	    my $prototype_alien = $prototype;
+
+	    $prototype_alien =~ s/\)$/, VTable_$definitions->{name} * _vtable\)/;
+
+	    my $calling = $object_methods_signatures->{$callee}->{calling};
+
+	    if (!$prototype || !$calling)
+	    {
+		die "$0: $callee does not contain a full definition for an object_method_signature";
+	    }
+
+	    my $pre = $object_methods_custom_code->{$callee}->{pre} || '';
+	    my $post = $object_methods_custom_code->{$callee}->{post} || '';
+
+	    #t duplicate code
+
+	my $entry = $callee;
+
+	$entry =~ s/$callee/\U$callee\E/;
+
+	    #t typer_getter is not working for alien typing, because
+	    #t the type information is not available from the object,
+	    #t while the typer_getter assumes it is.  To be solved.
+
+	    my $vt_call_logic
+		= generate_call_logic
+		    (
+		     {
+		      callee_name => $callee_name,
+		      calling => $calling,
+		      entry => $entry,
+		      null_check => $null_check,
+		      return_type => $return_type,
+		      selector => $selector,
+		      typer_getter => $typer_getter,
+		     },
+		    );
+
+	    $callee_name = identifier_perl_to_xml($callee_name);
+
+	    {
+		# callee implementation for internal type derivation, attached to the objects
+
+		my $template
+		    = "
+$static_inline
+$return_type
+$callee_name
+$prototype
+{
+    //- set default result
+
+    $return_type result = $return_default;
+
+$pre
+
+    //- get pointer to ttable
+
+    struct _typeinfo_$definitions->{name} *_tptr = typeinfo_$definitions->{name}($typer_name);
+
+    //- get pointer to vtable
+
+    VTable_$definitions->{name} * _vtable = _tptr->_vptr;
+
+$vt_call_logic
+$post
+
+    //- return result
+
+    return(result);
+}
+
+
+";
+
+		print $file $template;
+	    }
+
+	    {
+		# callee implementation for external type derivation, defined by alien objects
+
+		my $template
+		    = "
+$static_inline
+$return_type
+${callee_name}_alien
+$prototype_alien
+{
+    //- set default result
+
+    $return_type result = $return_default;
+
+$pre
+
+    //! pointer to vtable given as argument
+
+$vt_call_logic
+$post
+
+    //- return result
+
+    return(result);
+}
+
+
+";
+
+		print $file $template;
+	    }
+
+	    $file->close();
+
+	    # open header file
+
+            {
+	        my $all_callees_headers = $definitions->{output}->{all_callees_headers} || [];
+
+		$definitions->{output}->{all_callees_headers} = $all_callees_headers;
+
+# 	        my $filename = "callee_$callee";
+
+#                 $filename = "$option_output/$definitions->{name}/$filename.h";
+
+	        push @$all_callees_headers, $filebase;
+
+	        $file = IO::File->new(">$filebase.h");
+
+	        print $file "//
+// callee signature for $callee
+// automatically generated by $0 at $date
+//
+// $0 is a type hierarchy generator that allows to build derivation
+// hierarchies in C that are faster than equivalent hierarchies built in
+// C++.
+//
+
+$static_inline
+$return_type
+$callee_name
+$prototype
+;
+
+$static_inline
+$return_type
+${callee_name}_alien
+$prototype_alien
+;
+
+";
+
+	        $file->close();
+            }
+	}
+
+	{
+	    # write out the implementation with all callees
+
+	    my $filename = "$option_output/$definitions->{name}/all_callees_implementations.c";
+
+	    my $file = IO::File->new(">$filename");
+
+	    print $file "//
+// all_callees_implementations.c
+// automatically generated by $0 at $date
+//
+// $0 is a type hierarchy generator that allows to build derivation
+// hierarchies in C that are faster than equivalent hierarchies built in
+// C++.
+//
+
+";
+
+	    my $all_callees_implementations = $definitions->{output}->{all_callees_implementations};
+
+	    foreach my $callee_implementation (sort @$all_callees_implementations)
+	    {
+		my $filename = $callee_implementation . ".c";
+
+		$filename =~ s/.*\///;
+
+		print $file "#include \"$filename\"\n";
+	    }
+
+	    print $file "\n\n";
+
+	    $file->close();
+	}
+	{
+	    # write out the header with all callees
+
+	    my $filename = "$option_output/$definitions->{name}/all_callees_headers.h";
+
+	    my $file = IO::File->new(">$filename");
+
+	    print $file "//
+// all_callees_headers.h
+// automatically generated by $0 at $date
+//
+// $0 is a type hierarchy generator that allows to build derivation
+// hierarchies in C that are faster than equivalent hierarchies built in
+// C++.
+//
+
+";
+
+	    my $all_callees_headers = $definitions->{output}->{all_callees_headers};
+
+	    foreach my $callee_header (sort @$all_callees_headers)
+	    {
+		my $filename = $callee_header . ".h";
+
+		$filename =~ s/.*\///;
+
+		print $file "#include \"$filename\"\n";
+	    }
+
+	    print $file "\n\n";
+
+	    $file->close();
+	}
+	{
+	    # write out the header with all callees, for swig
+
+	    my $filename = "$option_output/$definitions->{name}/all_callees_headers.i";
+
+	    my $file = IO::File->new(">$filename");
+
+	    print $file "//
+// all_callees_headers.i
+// automatically generated by $0 at $date
+//
+// $0 is a type hierarchy generator that allows to build derivation
+// hierarchies in C that are faster than equivalent hierarchies built in
+// C++.
+//
+
+%module SwiggableNeurospaces
+
+%{
+
+";
+
+	    my $all_callees_headers = $definitions->{output}->{all_callees_headers};
+
+	    foreach my $callee_header (sort @$all_callees_headers)
+	    {
+		my $filename = $callee_header . ".h";
+
+		$filename =~ s/.*\///;
+
+		print $file "#include \"$filename\"\n";
+	    }
+
+	    print $file "\n\n";
+
+	    print $file "
+%}
+
+";
+
+# 	    my $all_callees_headers = $definitions->{output}->{all_callees_headers};
+
+	    foreach my $callee_header (sort @$all_callees_headers)
+	    {
+		my $filename = $callee_header . ".h";
+
+		$filename =~ s/.*\///;
+
+		print $file "%include \"$filename\"\n";
+	    }
+
+	    print $file "\n\n";
+
+	    $file->close();
+	}
+    }
+}
+
+
+sub generate_call_logic
+{
+    my $arguments = shift;
+
+    my $callee_name = $arguments->{callee_name};
+    my $calling = $arguments->{calling};
+    my $entry = $arguments->{entry};
+    my $null_check = $arguments->{null_check};
+    my $return_type = $arguments->{return_type};
+    my $selector = $arguments->{selector};
+    my $typer_getter = $arguments->{typer_getter};
+
+    my $result
+	= "
+
+    //- if pointer to class function defined
+
+    $return_type (*func)() = _vtable[ENTRY_$entry]$selector;
+
+    if ($null_check)
+    {
+	//- class call
+
+	result = (*func)$calling;
+    }
+
+    //- else
+
+    else
+    {
+	//- not implemented
+
+	fprintf
+	    (stderr,
+	     \"Type (%s) : $callee_name() not implemented\\n\",
+	     ppc_symbols_long_descriptions[$typer_getter]);
+    }
+";
+
+    return $result;
+}
+
+
+sub generate_instanceof_relationships
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+
+    # determine filename
+
+    my $filename = 'instanceof_relationships.h';
+
+    # open file, write header
+
+    my $file = IO::File->new(">$option_output/$definitions->{name}/$filename");
+
+    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+	= gmtime(time());
+
+    my $date = gmtime();
+
+    print $file "//
+// instanceof_relationships
+// automatically generated by $0 at $date
+//
+// $0 is a type hierarchy generator that allows to build derivation
+// hierarchies in C that are faster than equivalent hierarchies built in
+// C++.
+//
+
+";
+
+    # loop over all types
+
+    foreach my $type (keys %$class_hierarchy)
+    {
+	print $file "\n// $type\n\n";
+
+	{
+	    print $file "#define instanceof_$type(p)\\\n(\\\n";
+
+	    # loop over the derivation hierarchy
+
+	    my $forward_derivation_list = $class_hierarchy->{$type}->{forward_derivation_list};
+
+	    my $first = 1;
+
+	    my $type_number = $class_hierarchy->{$type}->{number};
+
+	    if (defined $type_number
+		&& $type_number ne -1)
+	    {
+		print $file " " x 4;
+
+		if (!$first)
+		{
+		    print $file "|| ";
+		}
+		else
+		{
+		    $first = 0;
+		}
+
+		print $file "(p)->iType == HIERARCHY_TYPE_$definitions->{name}_$type /* $type_number */\\\n";
+	    }
+
+	    foreach my $forward_derivation (keys %$forward_derivation_list)
+	    {
+		if (!exists $class_hierarchy->{$forward_derivation})
+		{
+		    die "$0: in hierarchy $definitions->{name}: found a forward_derivation for class $forward_derivation, but this class is not defined";
+		}
+
+		my $forward_derivation_number = $class_hierarchy->{$forward_derivation}->{number};
+
+		if (defined $forward_derivation_number)
+		{
+		    print $file " " x 4;
+
+		    if (!$first)
+		    {
+			print $file "|| ";
+		    }
+		    else
+		    {
+			$first = 0;
+		    }
+
+		    print $file "instanceof_$forward_derivation(p) /* $forward_derivation_number */\\\n";
+		}
+	    }
+
+	    print $file ")\n\n";
+	}
+
+	{
+	    print $file "#define subsetof_$type(i)\\\n(\\\n";
+
+	    # loop over the derivation hierarchy
+
+	    my $forward_derivation_list = $class_hierarchy->{$type}->{forward_derivation_list};
+
+	    my $first = 1;
+
+	    my $type_number = $class_hierarchy->{$type}->{number};
+
+	    if (defined $type_number
+		&& $type_number ne -1)
+	    {
+		print $file " " x 4;
+
+		if (!$first)
+		{
+		    print $file "|| ";
+		}
+		else
+		{
+		    $first = 0;
+		}
+
+		print $file "(i) == HIERARCHY_TYPE_$definitions->{name}_$type /* $type_number */\\\n";
+	    }
+
+	    foreach my $forward_derivation (keys %$forward_derivation_list)
+	    {
+		if (!exists $class_hierarchy->{$forward_derivation})
+		{
+		    die "$0: in hierarchy $definitions->{name}: found a forward_derivation for class $forward_derivation, but this class is not defined";
+		}
+
+		my $forward_derivation_number = $class_hierarchy->{$forward_derivation}->{number};
+
+		if (defined $forward_derivation_number)
+		{
+		    print $file " " x 4;
+
+		    if (!$first)
+		    {
+			print $file "|| ";
+		    }
+		    else
+		    {
+			$first = 0;
+		    }
+
+		    print $file "subsetof_$forward_derivation(i) /* $forward_derivation_number */\\\n";
+		}
+	    }
+
+	    print $file ")\n\n";
+	}
+    }
+
+    $file->close();
+}
+
+
+sub generate_textual_descriptions
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+
+    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+	= gmtime(time());
+
+    my $date = gmtime();
+
+    # determine filenames
+
+    my $filename1 = "long_descriptions";
+    my $filename2 = "short_descriptions";
+
+    my $variable1 = "ppc_" . $definitions->{name} . "_long_descriptions";
+    my $variable2 = "ppc_" . $definitions->{name} . "_short_descriptions";
+
+    {
+	# open file, write header
+
+	my $file1 = IO::File->new(">$option_output/$definitions->{name}/$filename1.h");
+	my $file2 = IO::File->new(">$option_output/$definitions->{name}/$filename2.h");
+
+	print $file1 "//
+// long type descriptions
+// automatically generated by $0 at $date
+//
+// $0 is a type hierarchy generator that allows to build derivation
+// hierarchies in C that are faster than equivalent hierarchies built in
+// C++.
+//
+
+";
+
+	print $file2 "//
+// long type descriptions
+// automatically generated by $0 at $date
+//
+// $0 is a type hierarchy generator that allows to build derivation
+// hierarchies in C that are faster than equivalent hierarchies built in
+// C++.
+//
+
+";
+
+	print $file1 "extern char *${variable1}[];\n";
+	print $file2 "extern char *${variable2}[];\n";
+
+	$file1->close();
+	$file2->close();
+    }
+
+    {
+	# open file, write header
+
+	my $file1 = IO::File->new(">$option_output/$definitions->{name}/$filename1.c");
+	my $file2 = IO::File->new(">$option_output/$definitions->{name}/$filename2.c");
+
+	print $file1 "//
+// long type descriptions
+// automatically generated by $0 at $date
+//
+// $0 is a type hierarchy generator that allows to build derivation
+// hierarchies in C that are faster than equivalent hierarchies built in
+// C++.
+//
+
+";
+
+	print $file2 "//
+// long type descriptions
+// automatically generated by $0 at $date
+//
+// $0 is a type hierarchy generator that allows to build derivation
+// hierarchies in C that are faster than equivalent hierarchies built in
+// C++.
+//
+
+";
+
+	print $file1 "#include \"type_defines.h\"\n\n\n";
+	print $file2 "#include \"type_defines.h\"\n\n\n";
+
+	print $file1 "#include \"$filename1.h\"\n\n\n";
+	print $file2 "#include \"$filename2.h\"\n\n\n";
+
+	print $file1 "char *${variable1}[COUNT_HIERARCHY_TYPE_$definitions->{name} + 2] =\n{\n";
+	print $file2 "char *${variable2}[COUNT_HIERARCHY_TYPE_$definitions->{name} + 2] =\n{\n";
+
+	# loop over all types, get there names
+
+	#! note: fills in gaps automatically
+
+	my $names = [];
+
+	map
+	{
+	    $names->[$class_hierarchy->{$_}->{number}] = $_;
+	}
+	    grep
+	    {
+		exists $class_hierarchy->{$_}->{number}
+		    && $class_hierarchy->{$_}->{number} ne -1
+		}
+		keys %$class_hierarchy;
+
+	# and get there short version names
+
+	my $st = {};
+
+	my $shortnames
+	    = [
+	       map
+	       {
+		   my $string = $_;
+
+		   my $result;
+
+		   if (defined $string)
+		   {
+		       $result = substr $string, 0, 6;
+
+		       my $count = 6;
+
+		       while ($st->{$result})
+		       {
+			   my $try = substr $string, $count, 1;
+
+			   if (!$try)
+			   {
+			       die "Cannot find a suitable short description for the type $_ in $definitions->{name}";
+			   }
+
+			   substr $result, 5, 6, $try;
+
+			   $count++;
+		       }
+
+		       $st->{$result} = 1;
+		   }
+		   else
+		   {
+		       $result = $_;
+		   }
+
+		   defined $result
+		       ? $result . (" " x (6 - length $result))
+			   : undef;
+	       }
+	       @$names,
+	      ];
+
+	# loop over all names
+
+	foreach (0 .. $#$names)
+	{
+	    my $name = $names->[$_];
+
+	    my $shortname = $shortnames->[$_];
+
+	    # if exists
+
+	    if (defined $name)
+	    {
+		# write long description
+
+		my $description1 = "T_" . (substr $definitions->{name}, 0, 3) . "_$name";
+
+		print $file1 "    \"$description1\",\n";
+
+		# write short description
+
+		my $description2 = $shortname;
+
+		print $file2 "    \"$description2\",\n";
+	    }
+	    else
+	    {
+		print $file1 "    NULL,\n";
+		print $file2 "    NULL,\n";
+	    }
+	}
+
+	print $file1 "    NULL\n};\n\n\n";
+	print $file2 "    NULL\n};\n\n\n";
+
+	$file1->close();
+	$file2->close();
+    }
+}
+
+
+sub generate_type_defines
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+
+    # determine filename
+
+    my $filename = "type_defines.h";
+
+    # open file, write header
+
+    my $file = IO::File->new(">$option_output/$definitions->{name}/$filename");
+
+    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+	= gmtime(time());
+
+    my $date = gmtime();
+
+    print $file "//
+// type defines
+// automatically generated by $0 at $date
+//
+// $0 is a type hierarchy generator that allows to build derivation
+// hierarchies in C that are faster than equivalent hierarchies built in
+// C++.
+//
+
+";
+
+    # loop over all types
+
+    #! note: offset of two as a safeguard, probably an options should
+    #! allow to configure this.
+
+    my $count = 2;
+
+    my $done = {};
+
+    my $max = -1;
+
+    foreach my $type (
+		      # sorted by number
+
+		      sort
+		      {
+			  $class_hierarchy->{$a}->{number} <=> $class_hierarchy->{$b}->{number}
+		      }
+
+		      # but not abstract classes
+
+		      grep
+		      {
+			  exists $class_hierarchy->{$_}->{number}
+			      && $class_hierarchy->{$_}->{number} ne -1
+		      }
+		      keys %$class_hierarchy
+		     )
+    {
+	# get type number
+
+	my $type_number = $class_hierarchy->{$type}->{number};
+
+	# sanity: if already done, incorrect type table
+
+	if (exists $done->{$type_number})
+	{
+	    die "multiple types with the same number, violator is $type";
+	}
+
+	# write out the type number
+
+	print $file "#define HIERARCHY_TYPE_$definitions->{name}_$type $type_number\n";
+
+	$count++;
+
+	# register this one as done
+
+	$done->{$type_number} = 1;
+
+	# keep max count
+
+	$max = $max < $type_number ? $type_number : $max;
+    }
+
+    # write out max count
+
+    $count = $max + 1;
+
+    print $file "\n\n#define COUNT_HIERARCHY_TYPE_$definitions->{name} " . ($count - 1) . "\n\n";
+
+    $file->close();
+
+}
+
+
+sub generate_vtables
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+
+    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+	= gmtime(time());
+
+    my $date = gmtime();
+
+    # loop over all types
+
+    foreach my $type (keys %$class_hierarchy)
+    {
+	# determine filename
+
+	my $filename = $type . '_vtable';
+
+	my $all_vtables = $definitions->{output}->{all_vtables} || [];
+
+	$definitions->{output}->{all_vtables} = $all_vtables;
+
+	push @$all_vtables, $type;
+
+	# open file, write header
+
+	my $file = IO::File->new(">$option_output/$definitions->{name}/$filename.c");
+
+	print $file "//
+// vtable for $type
+// automatically generated by $0 at $date
+//
+// $0 is a type hierarchy generator that allows to build derivation
+// hierarchies in C that are faster than equivalent hierarchies built in
+// C++.
+//
+
+";
+
+	#t should probably include all the callee_*.h files ?
+
+	# construct an initial list of methods
+
+	my $methods = { %{$class_hierarchy->{$type}->{allows} || {}}, };
+
+	# loop over the derivation hierarchy, in order of derivation
+
+	my $isas = $class_hierarchy->{$type}->{isas};
+
+	foreach my $isa (sort { $isas->{$a} <=> $isas->{$b} } keys %$isas)
+	{
+	    print $file "// $type is a $isa\n";
+
+	    if (!exists $class_hierarchy->{$isa})
+	    {
+		die "$0: in hierarchy $definitions->{name}: found a isa relationship for class $isa, but this class is not defined";
+	    }
+
+	    # copy derived method names ...
+
+	    my $allows = $class_hierarchy->{$isa}->{allows};
+
+	    map
+	    {
+		# ... that do not exist yet
+
+		$methods->{$_}
+		    = $methods->{$_}
+			? $methods->{$_}
+			    : $allows->{$_};
+	    }
+		keys %$allows;
+	}
+
+	print $file "//\n";
+
+	# rearrange methods according to the predefined order, inserting nulls where necessary
+
+	my $object_methods_reversed = $definitions->{object_methods_reversed};
+
+	my $ordered_methods
+	    = [
+	       map
+	       {
+		   $object_methods_reversed->{$_}
+		       ? $object_methods_reversed->{$_}
+			   : 'NULL';
+	       }
+	       0 .. (scalar keys %$object_methods) + 2,
+	      ];
+
+	my $count = 0;
+
+	# pluck the existing methods for this class
+
+	#! so here you loose non existing methods,
+
+	foreach my $method (@$ordered_methods)
+	{
+	    my $source
+		= $method eq 'NULL'
+		    ? 'NULL'
+			: defined $methods->{$method}
+			    ? $methods->{$method}
+				: 'NULL';
+
+	    print $file "// $count -> $method \t(source is $source)\n";
+
+	    $count++;
+	}
+
+	print $file "//\n\n";
+
+	# write out the vtable
+
+	print $file "#ifndef ENTRIES_$filename\n";
+
+	print $file "static VTable_$definitions->{name} _vtable_${type}[NUMBER_OF_VIRTUAL_FUNCTIONS_$definitions->{name}] =\n";
+
+	print $file "#endif\n";
+
+	print $file "    {\n";
+
+	# pluck the existing methods for this class
+
+	#! so here you loose non existing methods,
+
+	foreach my $method (@$ordered_methods)
+	{
+	    my $methodname
+		= $method eq 'NULL'
+		    ? 'NULL'
+			: defined $methods->{$method}
+			    ? $methods->{$method} . '_' . $method
+				: 'NULL';
+
+	    delete $methods->{$method};
+
+	    my $c_method_name = identifier_perl_to_xml($methodname);
+
+	    print $file "\t{ ";
+
+	    if ($methodname ne 'NULL')
+	    {
+		if (!defined $object_methods_return_types->{$method}->{selector})
+		{
+		    die "$0: $method in interface hierarchy $definitions->{name} does not have a return type selector";
+		}
+
+		print $file $object_methods_return_types->{$method}->{selector} . ' = ';
+	    }
+
+	    print $file $c_method_name;
+
+	    print $file " },\n";
+	}
+
+	print $file "    }\n";
+
+	print $file "#ifndef ENTRIES_$filename\n";
+
+	print $file ";\n";
+
+	print $file "#else // ENTRIES_$filename\n";
+
+	print $file ",\n";
+
+	print $file "#endif\n";
+
+	$file->close();
+
+	# if methods without implementation left over
+
+	if (scalar keys %$methods)
+	{
+	    print "$0: *** Warning: found methods without implementation for type $type\n";
+
+	    my $unimplemented = join "", (map { "$0: *** Warning: found unimplemented method $_()\n" } keys %$methods);
+
+	    print $unimplemented;
+	}
+    }
+
+    {
+	# write out the implementation with all callees
+
+	my $filename = "$option_output/$definitions->{name}/all_vtables.c";
+
+	my $file = IO::File->new(">$filename");
+
+	print $file "//
+// all_vtables.c
+// automatically generated by $0 at $date
+//
+// $0 is a type hierarchy generator that allows to build derivation
+// hierarchies in C that are faster than equivalent hierarchies built in
+// C++.
+//
+
+";
+
+	print $file
+	    "
+#include \"all_callees_headers.h\"
+
+";
+
+	# get maximum type number
+
+	#! hopefully it is not thousand square
+
+	my $max_type
+	    = [
+	       sort
+	       {
+		   $a <=> $b
+	       }
+	       map
+	       {
+		   $class_hierarchy->{$_}->{number} || 0
+	       }
+	       keys %$class_hierarchy,
+	      ];
+
+	$max_type = $max_type->[$#$max_type];
+
+	print $file
+	    "
+VTable_symbols _vtable_all[$max_type][NUMBER_OF_VIRTUAL_FUNCTIONS_$definitions->{name}]
+    = {
+";
+
+	my $all_vtables = $definitions->{output}->{all_vtables};
+
+	foreach my $vtable_implementation (
+					   sort
+					   {
+					       ($class_hierarchy->{$a}->{number} || 0) <=> ($class_hierarchy->{$b}->{number} || 1)
+					   }
+					   @$all_vtables
+					  )
+	{
+	    my $filename = $vtable_implementation . '_vtable';
+
+	    $filename =~ s/.*\///;
+
+	    my $number = $class_hierarchy->{$vtable_implementation}->{number} || -1;
+
+	    print $file "\n// $vtable_implementation: $number\n";
+
+	    print $file "#define ENTRIES_$filename\n";
+	    print $file "#include \"$filename.c\"\n";
+	}
+
+	print $file
+	    "
+
+      };
+";
+
+	print $file "\n\n";
+
+	$file->close();
+    }
+}
+
+
+sub generate_sentinels
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+
+    `touch $option_output/$definitions->{name}/.sentinel`;
+}
+
+
+sub generate_vtable_structure
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+
+    # open file, write header
+
+    my $file = IO::File->new(">$option_output/$definitions->{name}/entries.h");
+
+    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+	= gmtime(time());
+
+    my $date = gmtime();
+
+    print $file "//
+// virtual function entries
+// automatically generated by $0 at $date
+//
+// $0 is a type hierarchy generator that allows to build derivation
+// hierarchies in C that are faster than equivalent hierarchies built in
+// C++.
+//
+
+";
+
+    # write maximal size, add 10 to give the user some playground.
+
+    #t 10 should be configurable
+
+    my $count = (scalar keys %$object_methods) + 10;
+
+    print $file "#define NUMBER_OF_VIRTUAL_FUNCTIONS_$definitions->{name} $count\n\n\n";
+
+    foreach my $method (
+			sort { $object_methods->{$a} <=> $object_methods->{$b} }
+			keys %$object_methods
+		       )
+    {
+	my $entry = $method;
+
+	$entry =~ s/$method/\U$method\E/;
+
+	print $file "#define ENTRY_$entry $object_methods->{$method}\n";
+    }
+
+    $file->close();
+}
+
+
+sub identifier_xml_to_perl
+{
+    my $identifier = shift;
+
+    my $result = $identifier;
+
+    $result =~ s/([A-Z]{2,})([A-Z])/_\L$1\E$2/g;
+
+    $result =~ s/([A-Z])(?![A-Z])/_\l$1/g;
+
+    return $result;
+}
+
+
+sub identifier_perl_to_xml
+{
+    my $identifier = shift;
+
+    my $result = $identifier;
+
+    $result =~ s/^([a-z])/\u$1/;
+
+    $result =~ s/_([a-z0-9])/\u$1/g;
+
+    return $result;
+}
+
+
+sub main
+{
+    my $result
+	= GetOptions
+	    (
+	     "classes!" => \$option_classes,
+	     "help!" => \$option_help,
+	     "null-checks!" => \$option_null_checks,
+	     "output=s" => \$option_output,
+	     "static-inline!" => \$option_static_inline,
+	     "v|verbose+" => \$option_verbose,
+	    );
+
+    if ($option_help)
+    {
+	print
+	    "
+$0: generate C code that implements virtual methods and method instrumentation.
+
+options :
+    classes              generate class structure information.
+    help                 print usage information.
+    null-checks          generate null pointer checks.
+    output               name of output directory, (default /tmp/hierarchy).
+    static-inline        generate static inline functions.
+    v|verbose            tell what is being done, specify multiple times to get
+                         more feedback.
+";
+
+	exit 1;
+    }
+
+    if ($option_classes)
+    {
+	die "option_classes is not supported";
+    }
+
+    # read type definitions and relations
+
+    my $definitions = do $ARGV[0];
+
+    # create the output target directory
+
+    if (!defined $option_output)
+    {
+	$option_output = "/tmp/hierarchy";
+    }
+
+    my $target_directory = [ split '/', "$option_output/$definitions->{name}", ];
+
+    foreach my $directory_index (0 .. $#$target_directory)
+    {
+	my $directory = join '/', (@$target_directory)[0 .. $directory_index];
+
+	print "Creating directory $directory\n";
+
+	`mkdir 2>/dev/null "$directory"`;
+    }
+
+    print "Creating directory $option_output/$definitions->{name}/annotations\n";
+
+    `mkdir 2>/dev/null "$option_output/$definitions->{name}/annotations"`;
+
+    # assign type numbers
+
+    assign_type_numbers($definitions);
+
+    # build indices to speedup processing
+
+    build_indices($definitions);
+
+    # generate vtable for each class.
+
+    generate_vtables($definitions);
+
+    # generate vtable definition (ENTRY_.*).
+
+    generate_vtable_structure($definitions);
+
+    # generate Symbol.* callees.
+
+    generate_callees($definitions);
+
+    # generate the type defines
+
+    generate_type_defines($definitions);
+
+    # generate the instanceof() relationships
+
+    generate_instanceof_relationships($definitions);
+
+    # generate the type descriptions
+
+    generate_textual_descriptions($definitions);
+
+    # generate the annotations
+
+    generate_annotations($definitions);
+
+    # generate the sentinel file for make
+
+    generate_sentinels($definitions);
+
+}
+
+
+main();
+
+

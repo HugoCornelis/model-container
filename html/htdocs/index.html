@@ -1,0 +1,1117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Neurospaces Home Page</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  </head>
+
+  <body>
+    <center>
+      <img src="logos/ns-main-logo-dark2.jpg" alt="Main Neurospaces logo">
+
+<!--       <h1>Neurospaces Home Page</h1> -->
+
+    </center>
+
+    <p align="right">
+      <font size="1">The logos are courtesy of Amanda Pasquali (thanks,  Amanda !)</font>
+    </p>
+
+    <center>
+      <p>
+
+	Welcome to the home of the Neurospaces project.
+
+      <p>
+<!--       $Format: "This web page reflects the status as for project version $ProjectVersion$ of the Neurospaces project." $ -->
+This web page reflects the status as for project version 0.1675 of the Neurospaces project.
+
+    </center>
+
+    </p><h2><a name="section-introduction">Introduction</a></h2>
+    <p>
+      The <a href="http://www.genesis-sim.org/GENESIS/">GEneral NEural
+      SImulation System</a>, GENESIS for short, started as a very
+      advanced software package in the late eighties, for biologically
+      accurate neuronal modeling.  Besides being used as a neuronal
+      simulator, it was also applied to various domains outside
+      computational neuroscience.  Right now, the package contains
+      ill-structured and duplicate code, inconsistencies prevent
+      automatic testing and there is currently a general, yet logical,
+      lack of engagement in the neuroscience community to further
+      contribute to the package (who wants to contribute if nobody
+      else can tell what is and what is not correct and respects the
+      fundamental design philosophy of the code ?).  One of the core
+      problems responsible for this situation, is that GENESIS is a
+      monolithic software system, implementing many different
+      user-visible functions.
+
+    <p>
+      The <em>Neurospaces project</em> is a departure from the
+      monolithic software system design.  It is a development center
+      for software components of computational neuroscience
+      simulators.  There are many advantages of developing independent
+      software components:
+
+    <ul>
+	<li>
+
+	  Interfacing to an individual component is obviously more
+	  simple than interfacing to a do-all monolithic system.  The
+	  compartmental solver developed for the Neurospaces project (<a
+	    href="#section-heccer">Heccer<a>) can be connected to Matlab
+	      fi.
+
+	<li>
+
+	  It simplifies the individual components and encourages other
+	  developers to get involved.
+
+	<li>
+
+	  It allows for separate testing of the components.
+
+	<li>
+
+	  Integrating different component, gives different flavours of
+	  the same simulator, and enhances the user experienced
+	  consistency when doing multilevel simulations.
+
+	<li>
+
+	  A component based software system avoids vendor-lockin.  Its
+	  life-cycle is more smooth than that of a monolithic system,
+	  because software components can be upgraded one at a time.
+
+      </ul>
+
+      <p>
+
+	The Neurospaces project embodies several software components,
+	that all have been developed in full isolation.  Some of the
+	components are still in a fluid state of development, for
+	others the core is finished.  The current development focus is
+	on component integration.
+
+      <p>
+
+	This is a list of software components that have been developed
+	or are under construction:
+
+      <ul>
+
+	<li>
+
+	  <a href="#section-heccer">Heccer</a>: a fast compartmental
+	  solver, a backend.
+
+	<li>
+
+	  <a href="#section-neurospaces">Neurospaces Model
+	  Container</a>.
+
+	<li>
+
+	  <a href="#section-des">Discrete event system</a>: consists
+	  of a discrete event distributor and queuer.  This is used
+	  for abstract modeling of an action potential as a 'discrete
+	  event'.
+
+	<li>
+
+	  <a href="#section-ssp">SSP</a>: a flexible scheduler written
+	  in perl, to run simulations with Neurospaces and Heccer.
+
+	<li>
+
+	  The <a href="#section-studio">Neurospaces Studio</a>: some
+	  tools for graphical browsing and command line usage.
+
+	<li>
+
+	  The <a href="#section-genesis-sli">Genesis Script Layer</a>:
+	  a scripting layer that reads <a
+	  href="http://www.genesis-sim.org">Genesis</a> scripts and
+	  feeds them to Neurospaces.
+
+	<li>
+
+	  The <a href="#section-geometry">Geometry Library</a> is a
+	  general purpose geometry library, with some essential
+	  geometrical operators, not commonly found in other
+	  geometrical libraries.
+
+	<li>
+
+	  Using the Geometry Library, a <a
+	  href="#section-reconstruct">Reconstruct Interface</a> has
+	  been written.  This interface supports the conversion of
+	  contours exported by the <a
+	  href="http://synapses.bu.edu/tools/index.htm">Reconstruct
+	  software</a> to the Neurospaces declarative NDF format.
+
+	<li>
+
+	  The <a href="#section-simulation-browser">Neurospaces
+	  project browser</a> for browsing projects and inspecting
+	  simulation results.
+
+	<li>
+
+	  The <a href="#section-developer-tools">Developer package</a>
+	  assembles developer tools that have emerged from developing
+	  Neurospaces software components.
+
+      </ul>
+
+      Together, these tools give an alternative core for the upcoming
+      <a href="http://www.genesis-sim.org/GENESIS/G3/">GENESIS 3
+      GUI</a>.  Another alternative core for the GENESIS 3 GUI is <a
+      href="http://moose-g3.sourceforge.net/">Moose</a>, developed in
+      India by the group of Upi Bhalla.
+
+      <p>
+
+	Some software engineers have expressed interest in what
+	methodology and technology I use for Neurospaces development.
+	You can find more information <a
+	href="technologies.html">here</a>.
+
+      <p>
+
+    </p><h2><a name="section-download">Download:</a></h2>
+
+    <p>
+
+      Neurospaces, Heccer, SSP and the Studio can be downloaded
+      <a href="http://sourceforge.net/project/showfiles.php?group_id=162899">
+        here</a>.  If you find the Neurospaces project interesting or
+        useful, you can always let me know (I reply to all my email).
+
+      <p>
+
+	Other packages will be available for download in a couple of
+	months.
+
+
+    </p><h2><a name="section-neurospaces">Neurospaces Model
+    Container</a></h2>
+
+      The <em>Neurospaces Model Container</em> is used as an
+      abstraction layer on top of a simulator and deals with
+      biological entities and end-user concepts instead of
+      mathematical equations.  This allows to optimize the numerical
+      core separately from the modeling package.
+
+    </p><p>
+
+      The Neurospaces model container API abstracts away all the
+      mathematical and computational details of the simulator.
+      Optimized to store large models in little memory -- it stores
+      neuronal models in a fraction of the memory that would be used
+      by conventional simulators -- it allows for automatic
+      partitioning of the model such that simulations can be run in
+      parallel.  From the modeler's side, Neurospaces will be able to
+      import and export NeuroML files, facilitating exchange of models
+      and ideas, and fostering computational neuroscience.
+
+
+    </p><h3><a name="section-features-neurospaces">Features:</a></h3>
+
+    <p>
+
+    <ul>
+      <li>
+
+	Covers from the network level down to the mechanism level.
+	The perl interface converts and reads in GENESIS .p and SWC
+	morphology files.  It converts such models to active models
+	when needed (e.g. it can reproduce an exact match with the
+	Purkinje cell model, see <a
+	href="http://www.tnb.ua.ac.be/publications/pub008/DeSchutterJNeuroPhys94a.pdf">purkinje
+	cell model </a>).
+
+      <li>
+
+	Defines models in a purely declarative, extensible language.
+
+      <li>
+
+	Keeps and maintains a conceptual 'algorithmic' representation
+	of the model, as well as an expanded representation of the
+	model.
+
+      <li>
+
+	Knows about biological entities like cells, populations and
+	projections (note that for simulators such entities are
+	sometimes commands instead of biological entities).
+
+      <li>
+
+	Annotates the structures and concepts of the model with
+	biological, physics and mathematical quantities.
+
+      <li>
+
+	Supports setup of the most complicated mathematical solvers.
+	In principle, supports transparant setup of multiscale models
+	and simulations (this is work in progress, see also the
+	references at the bottom of the page).
+
+      <li>
+
+	Gives different views on the same network model.  These views
+	are visualized in the GUI.  Take a look at the <a
+	href="http://sourceforge.net/project/screenshots.php?group_id=162899">screenshots</a>.
+
+      <li>
+
+	Knows about specific parameters vs actual parameters,
+	e.g. specific membrane capacitance vs scaled membrane
+	capacitance.  Put more generally, the biological objects in
+	neurospaces rely on their parent, children and siblings to
+	infer a number of their own properties.
+
+      <li>
+
+	Allows for arbitrary nesting of network models, including
+	nesting of projections and populations.
+
+      <li>
+
+	Allows to inspect the connectivity of a network model in an
+	intuitive way.
+
+      <li>
+
+	Stores huge models in little memory, needed for full model
+	inspection and automated validation (the more complicated the
+	model the more efficient the compression scheme (from the
+	theoretical perspective the compressed image scales
+	logarithmically with the original)).
+
+      <li>
+
+	Can save and reload connections between components.  Costly
+	computation of connections has to be done only once.
+
+    </ul>
+
+      <p>
+
+	The <a href="CNS2006-workshop/index.html"> presentation given
+	at the CNS2006 meeting</a> gives a good view and feeling of
+	the functionality of Neurospaces.
+
+      <p>
+
+	Notes:
+
+      <ol>
+	<li>
+
+	  This presentation was given before Heccer existed.  Replace
+	  Hsolve with Heccer and the global picture looks the same
+	  (the reason Hsolve was replaced with Heccer is explained in
+	  a brief section about <a href="history.html">history of
+	  Neurospaces</a>.
+
+	<li>
+
+	  Just recently the memory performance of neurospaces was
+	  proven to be more than 1000 times more efficient than that
+	  of GENESIS when storing a Purkinje cell population.  This
+	  additional efficiency is in agreement with predictions based
+	  on the data structures that are used by Neurospaces.
+
+      </ol>
+
+      <p>
+
+	A word about the <a href="history.html">history of
+	Neurospaces</a>.
+
+      <p>
+
+	Neurospaces is constantly undergoing regression tests.  You
+	can see the output of these tests <a
+	href="neurospaces_project/neurospaces/tests/html/index.html">here</a>.
+
+      <p>
+
+	These tests give an idea of the detailed functionality of
+	Neurospaces as a data container.
+
+    </p><h2><a name="section-heccer">Heccer</a></h2>
+
+    The optimization of a neuronal solver consists of ultimate
+    accuracy and performance.  Transforming complex biological
+    parameters into precomputed tables and optimizing for a high CPU
+    cache hit ratio are the most important features for a good solver,
+    and gives the solver a performance boost of about a factor four to
+    six (the Neuron simulator has recently taken the same approach).
+
+    </p><p>
+
+    <em>Heccer</em> is a fast compartmental solver, that is based on
+    <a
+    href="http://www.genesis-sim.org/GENESIS/Hyperdoc/Manual-26.html#ss26.34"><em>hsolve</em></a>
+    of the <a href="http://www.genesis-sim.org/GENESIS/">GENESIS
+    simulator</a>.
+
+    The numerical principles implemented in Heccer are described <a
+    href="http://www.genesis-sim.org/GENESIS/gum-tutorials/cornelis/doc/html/node3.html">here</a>.
+    Why Heccer is much more efficient that many other compartmental
+    solvers currently available is explained <a
+    href="http://www.genesis-sim.org/GENESIS/gum-tutorials/cornelis/doc/html/node53.html">here</a>.
+
+    </p><p>
+
+      Heccer can be instantiated from C, or from Perl (or other
+      scripting languages).  It is also possible to link Heccer
+      directly to Matlab.  Heccer comes with <a
+      href="http://www.swig.org">Swig</a> interface definitions, such
+      that linking Heccer to any other technologies should be easy.
+
+    </p><p>
+
+	Adding new channel types to Heccer can be done using callouts.
+	The callout mechanism allows for general user extensions that
+	contribute a current or conductance at a particular time in a
+	simulation.  Heccer automatically integrates this contribution
+	into the membrane potential.
+
+    </p><p>
+
+      The source code of Heccer contains inline developer
+      documentation.  There is no stable API yet, but the <a
+      href="http://www.swig.org">Swig</a> interfaces for Heccer are
+      not expected to change much.  If you are interested in this,
+      look at <a
+      href="neurospaces_project/heccer/tests/html/glue/swig/perl/fork4p1.source.html#line51">a
+      simple example for driving Heccer from perl</a>, and <a
+      href="neurospaces_project/heccer/tests/html/glue/swig/perl/pool1-feedback1.source.html#line51">another
+      example with active channels and a calcium pool</a>.  Heccer is
+      currently capable of simulating purkinje cells (see <a
+      href="http://www.tnb.ua.ac.be/publications/pub008/DeSchutterJNeuroPhys94a.pdf">purkinje
+      cell model </a>), and, at first evaluation, runs slightly faster
+      than hsolve (It is difficult to assess why exactly: while the
+      hsolve implementation is much more optimized than Heccer's, the
+      Heccer design is slightly better optimized than Hsolve's.).
+
+    <p>
+
+      Based on the mentioned sets of documentation, more extended
+      documentation will be assembled when the time is ripe.
+
+    </p><h3><a name="section-features-heccer">Features:</a></h3>
+
+    <p>
+
+    <ul>
+      <li>
+
+	Computes the behaviour of single neurons.
+
+      <li>
+
+	Integrates Hodgkin-Huxley alike channels.
+
+      <li>
+
+	Integrates exponentially decaying calcium concentrations and
+	nernst potentials.  Interfaces will be provided for more
+	elaborate calcium models.
+
+      <li>
+
+	Can operate in a 'passive-only' mode, what means that all
+	channels in a model are ignored with exception of the synaptic
+	channels.
+
+      <li>
+
+	Tables to speed up computations, are generated and optimized
+	on the fly.
+
+      <li>
+
+	All parts of the model with the same kinetics share tables
+	automatically.
+
+      <li>
+
+	In the near future, can compute the contribution of one
+	channel type to the overall dendritic current.
+
+      <li>
+
+	Can serialize the current neuron state to an external stream
+	for later resuming the simulation (or for multiple use).
+
+      <li>
+
+	In combination with the previous point, can be initialized
+	from external sources.
+
+      <li>
+
+	Can be used with or without Neurospaces.  To use Heccer
+	without neurospaces, configure the package with the command
+	line './configure --without-neurospaces'.  To use Heccer with
+	Neurospaces, Neurospaces must be installed before Heccer is
+	compiled.
+
+    </ul>
+
+    <p>
+
+	Heccer has been validated with a purkinje cell model and
+	produces an exact match with hsolve (see <a
+	href="http://www.tnb.ua.ac.be/publications/pub008/DeSchutterJNeuroPhys94a.pdf">purkinje
+	cell model </a> and the purkinje cell tutorial in the <a
+	href="http://www.genesis-sim.org/GENESIS/">GENESIS</a>
+	simulator distribution).  Heccer is constantly undergoing
+	regression tests.  You can see the output of these tests <a
+	href="neurospaces_project/heccer/tests/html/index.html">here</a>.
+
+      <p>
+
+	These tests give an idea of the functionality of Heccer as a
+	compartmental solver.
+
+    <p>
+	Besides being open source, Heccer is also hypersource.  The
+	Heccer source code can be browsed <a
+	href="neurospaces_project/heccer/html_source/heccer/source/c/snapshots/0/index.html">here</a>.
+	An example test file with points of entry into Heccer, can be
+	found <a
+	href="http://neurospaces.sourceforge.net/neurospaces_project/heccer/html_source/neurospaces_project/heccer/source/c/snapshots/0/tests/code/main.c.html#:63">here</a>.
+
+    </p><h2><a name="section-des">DES: the discrete event
+    system</a></h2>
+
+      The <em>D</em>iscrete <em>E</em>vent <em>S</em>ystem is used for
+      abstract modeling of action potentials.  This functionality is
+      needed for running network simulations.  Action potentials
+      generated at the soma of one neuron, are translated to a
+      discrete event, that is delivered at a synaptic target of a
+      connected neuron.  The DES component borrows ideas from previous
+      research in discrete event simulation.
+
+      <p>
+
+	From a software architecture viewpoint, DES is a separate
+	solver: it simulates action potential propagation in an
+	efficient way.  Splitting this functionality from the rest of
+	the simulator, facilitates customization for modeling of
+	sophisticated learning rules, especially related to STDP,
+	diffusion and spillover.
+
+      <p>
+
+	Internally, the discrete event system contains two
+	subcomponents, one component for event distribution that
+	contains a connectivity matrix, a second component for event
+	queuing.
+
+      </p><h3><a name="section-features-des">Features:</a></h3>
+
+      <p>
+
+      <ul>
+	<li>
+
+	  delivers a single event to many targets.
+
+	<li>
+
+	  queues the event whenever applicable.
+
+	<li>
+
+	  allows for easy customization, e.g. to associate 'secondary'
+	  data with a connection, like weight, delay and other data
+	  specific for the model.
+
+      </ul>
+
+      <p>
+
+	Note: at the time of writing this component is distributed as
+	part of the Heccer package.  This is likely to change in the
+	near future.
+
+    </p><h2><a name="section-ssp">SSP</a></h2>
+
+      Neurospaces, Heccer and DES are stand-alone components.  They
+      need to be glued together before they are useful.  Besides that,
+      they also need to be activated correctly, such that they can
+      work together on a single simulation.  This is exactly what the
+      <em>SSP</em> scheduler does.
+
+      The <em>S</em>imple <em>S</em>cheduler in <em>P</em>erl,
+      activates other software components according to a configurable
+      schedule.  Because the SSP scheduler does not have any
+      computational load, its implementation is very simple, and
+      configurable.  It is actually the configuration that connects
+      SSP to Neurospaces and Heccer.  Other configurations will
+      connect SSP to other modeling services or solvers.  SSP achieves
+      this by loading on the fly, the integration modules that are
+      referenced in its configuration.  Other modules are not loaded.
+
+      <p>
+
+	Below is a typical configuration file for SSP.  It first
+	configures SSP to use Neurospaces as the modeling service.
+	Then, it instructs SSP to load a model called
+	'cells/tensizesp.ndf', and to instantiate a solver called
+	'Heccer' for a part of the model (namely '/tensizesp').
+
+	The simulation of the model is run using the 'apply' entry in
+	the configuration file (note that the order in the
+	configuration file is alphabetical, not chronological.  A user
+	may specify the entries in any order that he chooses.).
+
+      <pre>
+--- !!perl/hash:SSP
+apply:
+  simulation:
+    - arguments:
+        - 10
+        - 1
+      method: steps
+    - arguments:
+        - 0.1
+      method: advance
+models:
+  - modelname: /tensizesp
+    solverclass: heccer
+name: tensizesp
+services:
+  neurospaces:
+    initializers:
+      - arguments:
+          -
+            - ./example
+            - -P
+            - tests/cells/tensizesp.ndf
+        method: read
+    module_name: Neurospaces
+solverclasses:
+  heccer:
+    module_name: Heccer
+    service_name: neurospaces
+      </pre>
+
+      Below is a slightly enhanced SSP configuration file.
+      Additionally, this file also shows how to pass specific options
+      to Heccer: Heccer will give a small report after every time step
+      in the simulation, and the time step is set to new value.
+
+      This configuraton file also specifies the output classes and
+      actual outputs of the simulation.  The specified outputs are
+      written to a file in the file system (in this case using a
+      default filename).
+
+      <pre>
+--- !!perl/hash:SSP
+apply:
+  simulation:
+    - arguments:
+        - 1000
+        - 1
+      method: steps
+    - arguments:
+        - 0.1
+      method: advance
+models:
+  - modelname: /pool1_feedback1
+    solverclass: heccer
+name: pool1_feedback1
+outputclasses:
+  double_2_ascii:
+    constructor: Heccer::Output
+    module_name: Heccer
+outputs:
+  - component_name: '/pool1_feedback1/segments/main[0]'
+    field: Vm
+    outputclass: double_2_ascii
+  - component_name: '/pool1_feedback1/segments/main[0]/Ca_pool'
+    field: Ca
+    outputclass: double_2_ascii
+services:
+  neurospaces:
+    initializers:
+      - arguments:
+          -
+            - ./tests/perl/pool1-feedback1
+            - -P
+            - tests/cells/pool1_feedback1.ndf
+        method: read
+    module_name: Neurospaces
+solverclasses:
+  heccer:
+    constructor_settings:
+      configuration:
+        reporting:
+          granularity: 100
+          tested_things: 6225920
+      dStep: 1e-06
+    module_name: Heccer
+    service_name: neurospaces
+      </pre>
+
+    </p><h3><a name="section-features-ssp">Features:</a></h3>
+
+    <p>
+
+    <ul>
+      <li>
+
+	Uses declarative configuration files, and can be driven from
+	scripts.
+
+      <li>
+
+	Integrates other components into a consistent API for user
+	interfaces.  SSP is not Neurospaces or Heccer aware, but loads
+	the external libraries on the fly, when needed.
+
+      <li>
+
+	Allows to set options for the backends (e.g. the time step of
+	integration for Heccer).
+
+      <li>
+
+	Has hooks for setting model parameters before the model is
+	run.  This can be used for parameter searches (e.g. see <a
+	href="http://sourceforge.net/projects/neurofitter">neurofitter</a>).
+
+      </ul>
+
+      <p>
+
+	SSP is constantly undergoing regression tests.  You can see
+	the output of these tests <a
+	href="neurospaces_project/ssp/tests/html/index.html">here</a>.
+
+      <p>
+
+	These tests are SSP stand-alone tests, and integration tests
+	with Neurospaces and Heccer.
+
+    </p><h2><a name="section-studio">Neurospaces Studio</a></h2>
+
+      The <em>Neurospaces studio</em> is a front-end to the
+      Neurospaces model container.  It allows browsing and
+      visualization of the model contained in Neurospaces.  Note that
+      the Neurospaces studio is not a graphical editor or construction
+      kit.  I prefer to rely on external applications for this type of
+      functionality, a good example is <a
+      href="http://www.neuroconstruct.org/">neuroConstruct</a>.
+
+    </p><p>
+
+	Additionally, the Neurospaces studio comes with a shell
+	command that uses the Neurospaces <a
+	href="http://www.swig.org">Swig</a> bindings to get access to
+	the model stored by Neurospaces.
+
+      </p><h3><a name="section-features-studio">Features:</a></h3>
+
+      <p>
+
+      <ul>
+	<li>
+
+	  Visualizes models stored by Neurospaces.
+
+	<li>
+
+	  Allows to query a model from a shell command line.
+
+	<li>
+
+	  Is being used for a Purkinje cell comparison study, yet
+	  still under construction.
+
+      </ul>
+
+      <p>
+
+	The studio is a necessary part of the project browser.  It is
+	being used at this moment for a purkinje cell comparison
+	study.
+
+	Below is an example of the command line tool to inspect the
+	delayed rectifier conductance after conversion of a passive
+	purkinje cell morphology to an active model.  Also note how
+	neurospaces does shrinkage correction on the fly.
+
+      <pre>
+$ neurospaces morphologies/genesis/gp_pc1.p --shrinkage 1.111111 --traversal-symbol / --reporting-field GMAX --condition '$d->{context} =~ /kdr/i'
+calling morphology2ndf  --shrinkage 1.111111 morphologies/genesis/gp_pc1.p >/tmp/i0a37qeDQl
+neurospaces: No errors for /tmp/i0a37qeDQl.
+/gp_pc1/segments/soma/kdr->GMAX = 6000
+/gp_pc1/segments/p0b1[0]/kdr->GMAX = 600
+/gp_pc1/segments/p0b1[1]/kdr->GMAX = 600
+/gp_pc1/segments/p0b1[2]/kdr->GMAX = 600
+/gp_pc1/segments/p0b1[3]/kdr->GMAX = 600
+/gp_pc1/segments/p0b1b2[0]/kdr->GMAX = 600
+/gp_pc1/segments/p0b1b2b2[0]/kdr->GMAX = 600
+/gp_pc1/segments/p0b1b2b2[1]/kdr->GMAX = 600
+/gp_pc1/segments/p0b1b2b2[2]/kdr->GMAX = 600
+/gp_pc1/segments/p0b1b2b2b2[0]/kdr->GMAX = 600
+Traversal ok
+      </pre>
+
+      <p>
+
+	A second example, showing how many spines get attached to the
+	morphology:
+
+      <pre>
+$ neurospaces morphologies/genesis/gp_pc1.p --spine Purk_spine --algo Spines
+calling morphology2ndf  --spine-prototypes Purk_spine --shrinkage 1 morphologies/genesis/gp_pc1.p >/tmp/3YWitXpVmH
+neurospaces: No errors for /tmp/3YWitXpVmH.
+
+
+SpinesInstance          Spines__0__Purk_spine :
+-----------------------------------------------
+        Number of added/virtual spines : 1984/131729.077346
+        Number of tries (adding spines) : 1984
+        Number of failures (adding spines) : 0
+        SpinesInstance prototype : Purk_spine
+        SpinesInstance surface : 1.33079e-12
+      </pre>
+
+      <p></p>
+
+      And now again, but with shrinkage correction:
+
+      <pre>
+$ neurospaces morphologies/genesis/gp_pc1.p --shrinkage 1.111111 --spine Purk_spine --algo Spines
+calling morphology2ndf  --spine-prototypes Purk_spine --shrinkage 1.111111 morphologies/genesis/gp_pc1.p >/tmp/mCz74N5CvO
+neurospaces: No errors for /tmp/mCz74N5CvO.
+
+
+SpinesInstance          Spines__0__Purk_spine :
+-----------------------------------------------
+        Number of added/virtual spines : 1969/145163.160838
+        Number of tries (adding spines) : 1969
+        Number of failures (adding spines) : 0
+        SpinesInstance prototype : Purk_spine
+        SpinesInstance surface : 1.33079e-12
+      </pre>
+
+      So when applying shrinkage correction, you get fewer spiny
+      dendrites that get fewer physical spines.  Nevertheless the
+      compartments are longer, such that more surface correction for
+      the spiny dendrites has been done.  Read the documentation of <a
+      href="http://www.genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.131">the
+      GENESIS cell reader</a> (specifically the section on spines) for
+      more information on how exactly the spines get attached to a
+      morphology and how dendritic surface scaling works.
+
+    <p></p>
+
+      It is also possible to calculate total dendritic surface, or
+      total dendritic spine surface:
+
+      <pre>
+$ neurospaces morphologies/genesis/gp_pc1.p --shrinkage 1.111111 --spine Purk_spine --traversal / --type '^T_sym_segment$' --reporting-field SURFACE --cumulate
+$ neurospaces morphologies/genesis/gp_pc1.p --shrinkage 1.111111 --spine Purk_spine --traversal / --type '^T_sym_segment$' --reporting-field SURFACE --condition '$d->{context} =~ /Purk_spine/i' --cumulate 
+      </pre>
+
+      Now you can easily compare the total dendritic surface area, and
+      compare it with the total spines area, and see if your model
+      makes sense.
+
+      <p></p>
+
+      Here is the command line I use when looking for segments with a
+      particular combination of diameter and length.  As you can see I
+      am not interested in segments from spines:
+
+      <pre>
+$ neurospaces tests/cells/purkinje/edsjb1994.ndf --traversal-symbol / --reporting-field LENGTH --reporting-field DIA --type 'segment' --condition '$d->{context} !~ /spine/i' | less
+      </pre>
+
+      Instead of using 'less' or 'more' to browse the results, you can
+      obviously also do a 'grep' or feed everything to a file and then
+      open the file in a editor.  This tool obviously supports many
+      other use cases.
+
+      <p>
+
+	The Neurospaces studio is constantly undergoing regression
+	tests.  You can see the output of these tests <a
+	href="neurospaces_project/studio/tests/html/index.html">here</a>.
+
+      <p>
+
+	These tests give an idea of the functionality of the
+	Neurospaces studio for examining complicated neuronal models.
+
+      <p>
+
+	PS: most (but not all) of this front-end used to be
+	distributed with the Neurospaces model container, for legacy
+	reasons.  This introduced ambiguity in the packaging system,
+	and a number of installation problems.  Factoring out the
+	studio solves those problems.
+
+    </p><h2><a name="section-genesis-sli">Genesis Script Layer</a></h2>
+
+      The <em>Genesis Script Layer</em> is a scripting interface that
+      reads <a href="http://www.genesis-sim.org">Genesis</a> scripts
+      and feeds them to Neurospaces software components.  The Genesis
+      scripts that create a model and run a simulation in Genesis,
+      will also create a model and run a simulation in Neurospaces.
+
+      <p>
+
+	In principle, this component is a specific version of the
+	Genesis simulator that binds to Neurospaces components, and
+	delegates all model construction statements to the <a
+	href="#section-neurospaces">Neurospaces model container</a>,
+	delegates simulation management statements to <a
+	href="#section-ssp">SSP</a>, and delegates statements related
+	to temporal accuracy to <a href="#section-heccer">Heccer</a>.
+
+      <p>
+
+	GUI and XODUS related statements are under consideration for
+	support to.
+
+      <p>
+
+	This component is currently under construction.
+
+    </p><h2><a name="section-geometry">Geometry Library</a></h2>
+
+      The <em>Geometry Library</em> is a general purpose geometry
+      library, with some essential geometrical operators, not commonly
+      found in other geometrical libraries.  It gives a low-level data
+      representation of 3D and 2D lines, and defines operations on
+      them like volume, surface and intersection calculations.  This
+      library is meant to be a gateway for more complex operations too
+      (like dendritic surface reconstruction from a stack of EM
+      images).
+
+<!--       <p> -->
+
+<!-- 	The geometry library is constantly undergoing regression -->
+<!-- 	tests.  You can see the output of these tests <a -->
+<!-- 	href="neurospaces_project/geometry/tests/html/index.html">here</a>. -->
+
+<!--       <p> -->
+
+<!-- 	These tests give an idea of the functionality of geometry -->
+<!-- 	library. -->
+
+      </p><h2><a name="section-reconstruct">Reconstruct Interface</a></h2>
+
+      The Reconstruct Interface reads XML files written by the <a
+      href="http://synapses.bu.edu/tools/index.htm">Reconstruct
+      software</a>, and writes it out to Neurospaces declarative NDF
+      format.  This involves geometrical operations, so this interface
+      relies on the Geometry Library.  The interface allows to
+      separate out contours with different tags.
+
+    </p><h2><a name="section-simulation-browser">Neurospaces Project Browser</a></h2>
+
+      The <em>Neurospaces project browser</em> is a set of modules for
+      the <a href="http://www.webmin.com/usermin.html">Usermin web
+      server</a>.  This allows you to browse projects, inspect, and
+      compare simulation results or other data over a web interface.
+
+      <p>
+
+	The specific aims of the project browser are introduced in <a
+	href="CNS2007-workshop/index.html">the presentation given at
+	the model sharing workshop at the CNS*2007 meeting in
+	Toronto</a>.
+
+      <p>
+
+	The project browser uses distributed version control
+	mechanisms to physically distribute your project.  The
+	coupling to a web server allows to inspect your simulations
+	and compare results, regardless of location.
+
+	You can take a look at the <a
+	href="http://sourceforge.net/project/screenshots.php?group_id=162899">screenshots</a>.
+
+      <p></p>
+
+    </p><h2><a name="section-developer-tools">Developer Tools
+    Package</a></h2>
+
+      The <em>Developer Package</em> assembles developer tools that
+      have emerged from developing Neurospaces software components.
+      This package has a number of generally useful utilities and is
+      currently (December 2007) growing quickly.  For the moment it is
+      available on request.
+
+    </p><h2><a name="section-developer">Additional background information</a></h2>
+
+      <ul>
+
+	<li>
+
+	  The Neurospaces project develops software components that
+	  match with the <a href="./cbi.png">CBI simulator
+	  architecture</a>, which is also used in GENESIS 3 as a
+	  common framework.  Despite the apparant size of this
+	  project, already many components have been developed and
+	  integrated into a working simulator (more information to
+	  follow).
+
+	<li>
+
+	  The Neurospaces project encompasses an increasing number of
+	  projects.  So correct and consistent deployment becomes more
+	  important.  The <a
+	  href="http://www.gnu.org/software/autoconf/">autotools</a>
+	  do a lot of things automatically.  I try to develop tools
+	  that are compliant with the <a
+	  href="http://www.pathname.com/fhs/">Filesystem Hierarchy
+	  Standard</a>.
+
+	<li>
+
+	  Neurospaces uses a mixture of XML indexing and node
+	  identification techniques.  I should give a pointer here to
+	  relevant background information.
+
+	<li>
+
+	  At the data modeling level, none of the lower-level tools
+	  presented here make a difference between data and meta-data,
+	  because it is in the end the application that must make this
+	  difference.  As a result, all data formats developed for the
+	  Neurospaces project allow easy information extraction from
+	  the application data as well as the application 'meta-data'.
+	  If such statements are more like English Chinese to you, and
+	  you think it is important to understand these subtle
+	  differences, see e.g. <a
+	  href="http://en.wikipedia.org/wiki/Metadata">this entry in
+	  wikipedia</a>.  In neuroscience modeling, these differences
+	  are extremely important, simply because any model has
+	  numerous builtin assumptions about its immediate
+	  environment.  So there is no explicit separation possible
+	  between the different dimensions of the data.
+
+      </ul>
+
+    </p><h2><a name="section-publications">Publications:</a></h2>
+
+      <ul>
+
+	<li>
+
+	  H. Cornelis and E. De Schutter, Neurospaces: Separating modeling
+	  and simulation, Neurocomputing 52-54: 227-231 (2003) <br>
+	  <a href="http://www.tnb.ua.ac.be/publications/pub065/Cornelis_NeuComp_03.pdf">
+	    http://www.tnb.ua.ac.be/publications/pub065/Cornelis_NeuComp_03.pdf</a>
+
+	  <br>
+
+	  Explains the Neurospaces design goals.
+
+	<li>
+
+	  H. Cornelis and E. De Schutter, Neurospaces parameter handling,
+	  Neurocomputing 58-60: 1079-1084 (2004)<br>
+	  <a href="http://www.tnb.ua.ac.be/publications/pub081/CornelisNC04.pdf">
+	    http://www.tnb.ua.ac.be/publications/pub081/CornelisNC04.pdf</a>
+
+	  <br>
+
+	  Explains algorithms that allow (1) to access models in an
+	  intuitive way, and (2) to optimize the memory use of
+	  Neurospaces.  The latter is actually a preparation of
+	  partitioning algorithms for large models, see below.
+
+	<li>
+
+	  H. Cornelis, Examining Neuronal models with Neurospaces studio
+	  (poster presentation at Wam-bamm 2006).
+
+	<li>
+
+	  H. Cornelis and E. De Schutter, Neurospaces: towards
+	  automated model partitioning for parallel computers
+	  (Neurocomputing Volume 70, Issues 10-12, June 2007, Pages
+	  2117-2121, <a
+	  href="http://www.sciencedirect.com/science/article/B6V10-4MC12J2-6/2/809ad2a06d0761296cff8133b96272b5">http://www.sciencedirect.com/science/article/B6V10-4MC12J2-6/2/809ad2a06d0761296cff8133b96272b5</a>).
+
+	  <br>
+
+	  Explains a partitioning algorithm to enable transparant
+	  parallelization of large heterogeneous simulations.
+
+	<li>
+
+	  Hugo Cornelis, Huo Lu, Angelica Esquivel and James M. Bower,
+	  Modeling a single dendritic compartment using Neurospaces
+	  and GENESIS-3 (poster presentation, CNS 2007).
+
+	  <br>
+
+	  Reports about a multiple scale computational neuroscience
+	  project, using tools of the Neurospaces project.
+
+	<li>
+
+	  Hugo Cornelis, Huo Lu, Julia S. Georgi and James M. Bower,
+	  Comparative computational study of cerebellar Purkinje cell
+	  form and function (poster presentation, Society for
+	  Neuroscience Meeting, 2007).
+
+	  <br>
+
+	  Reports about a project that compares the passive electrical
+	  properties of Purkinje cells of 5 different species.  In
+	  total 120,000 simulations were run in about four weeks of
+	  time.  The Neurospaces project browser was crucial to run
+	  and manage the simulations, analyze the results, and
+	  visualize color-coded representations of the morphologies.
+
+      </ul>
+
+      <hr>
+<!--       &copy; -->
+      &#169; 1999-2007 -- All material on this website, including
+      figures and presentation, is copyrighted 1999-2007 by Hugo
+      Cornelis unless otherwise noted.  Please contact the author for
+      more information.
+      <hr>
+
+      <center>
+	<iframe 
+	  src="info.html" align="bottom" frameborder="0" scrolling="no" height="130" width="200">
+	</iframe>
+      </center>
+
+      <iframe 
+	src="http://neurospaces.sourceforge.net/cgi-bin/c.cgi" align="bottom" frameborder="0" scrolling="no" height="1" width="1">
+      </iframe>
+
+<!--       <iframe src="info.html" align="bottom" frameborder="0" scrolling="no" height="1" width="1"> -->
+<!-- 	<h2><a name="section-information set">Information Set</a></h2> -->
+<!--       </iframe> -->
+
+      <address><a href="mailto:hugo.cornelis@gmail.com"></a></address>
+<!-- Created: Thu Apr  6 11:31:32 CDT 2006 -->
+<!-- hhmts start -->
+Last modified: Wed Dec 26 11:20:50 CST 2007
+<!-- hhmts end -->
+  </body>
+</html>
+

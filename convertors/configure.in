@@ -1,0 +1,46 @@
+dnl
+dnl Neurospaces: a library which implements a global typed symbol table to
+dnl be used in neurobiological model maintenance and simulation.
+dnl
+dnl $Id: configure.in 1.4 Sun, 18 Feb 2007 15:53:33 -0600 hugo $
+dnl
+
+dnl //////////////////////////////////////////////////////////////////////////
+dnl
+dnl Neurospaces : testbed C implementation that integrates with genesis
+dnl
+dnl Copyright (C) 1999-2007 Hugo Cornelis
+dnl
+dnl functional ideas ..	Hugo Cornelis, hugo.cornelis@gmail.com
+dnl
+dnl coding ............	Hugo Cornelis, hugo.cornelis@gmail.com
+dnl
+dnl //////////////////////////////////////////////////////////////////////////
+
+dnl Process this file with autoconf to produce a configure script.
+AC_REVISION($ProjectHeader: neurospaces 0.1675 Thu, 27 Dec 2007 15:58:18 -0600 hugo $)
+AC_REVISION($Id: configure.in 1.4 Sun, 18 Feb 2007 15:53:33 -0600 hugo $)
+AC_INIT(des2xml.c)
+
+dnl $Format: "AM_INIT_AUTOMAKE(convertors,$ProjectVersion$)" $
+AM_INIT_AUTOMAKE(convertors,0.1675)
+
+dnl Checks for programs.
+AC_PROG_CC
+AM_PROG_LEX
+
+dnl Checks for libraries.
+dnl Replace `main' with a function in -lfl:
+AC_CHECK_LIB(fl, main)
+
+dnl Checks for header files.
+AC_HEADER_STDC
+AC_CHECK_HEADERS(unistd.h)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+
+dnl Checks for library functions.
+
+
+AC_OUTPUT(Makefile)
+

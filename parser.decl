@@ -1,0 +1,93 @@
+
+%{
+#line 4 "./parser.decl"
+//
+// Neurospaces: a library which implements a global typed symbol table to
+// be used in neurobiological model maintenance and simulation.
+//
+// $Id: parser.decl 1.60 Fri, 24 Aug 2007 12:25:50 -0500 hugo $
+//
+
+//////////////////////////////////////////////////////////////////////////////
+//'
+//' Neurospaces : testbed C implementation that integrates with genesis
+//'
+//' Copyright (C) 1999-2007 Hugo Cornelis
+//'
+//' functional ideas ..	Hugo Cornelis, hugo.cornelis@gmail.com
+//'
+//' coding ............	Hugo Cornelis, hugo.cornelis@gmail.com
+//'
+//////////////////////////////////////////////////////////////////////////////
+
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "neurospaces/algorithmsymbol.h"
+#include "neurospaces/attachment.h"
+#include "neurospaces/axonhillock.h"
+#include "neurospaces/cell.h"
+#include "neurospaces/channel.h"
+#include "neurospaces/segment.h"
+#include "neurospaces/concentrationgatekinetic.h"
+#include "neurospaces/connection.h"
+#include "neurospaces/connectionsymbol.h"
+#include "neurospaces/contourpoint.h"
+#include "neurospaces/equation.h"
+#include "neurospaces/emcontour.h"
+#include "neurospaces/function.h"
+#include "neurospaces/gatekinetic.h"
+#include "neurospaces/neurospaces.h"
+#include "neurospaces/fiber.h"
+#include "neurospaces/group.h"
+#include "neurospaces/hhgate.h"
+#include "neurospaces/idin.h"
+#include "neurospaces/inputoutput.h"
+#include "neurospaces/iocontainer.h"
+//#include "neurospaces/lexsupport.h"
+//int yylex(YYSTYPE *lvalp,void *pacParserContext);
+int yylex();
+#include "neurospaces/algorithminstance.h"
+#include "neurospaces/network.h"
+#include "neurospaces/parameters.h"
+#include "neurospaces/parsersupport.h"
+#include "neurospaces/pool.h"
+#include "neurospaces/population.h"
+#include "neurospaces/positionD3.h"
+#include "neurospaces/projection.h"
+#include "neurospaces/randomvalue.h"
+#include "neurospaces/symbols.h"
+#include "neurospaces/symboltable.h"
+#include "neurospaces/vector.h"
+#include "neurospaces/vectorconnectionsymbol.h"
+#include "neurospaces/vectorcontour.h"
+#include "neurospaces/vectorsegment.h"
+
+#include "neurospaces/symbolvirtual_protos.h"
+
+
+#define DEBUGPARSER
+#ifdef DEBUGPARSER
+#define YYDEBUG 1
+#define YYERROR_VERBOSE
+#endif
+
+
+int parsererror(PARSERCONTEXT *pacParserContext,char *pcError);
+
+//! redefining the error function should be considered a hack, is never
+//! documented
+//!
+//! this gives :
+//! yyerror(char *)
+//!	-> parsererror(char *)
+//!	-> parsererror(PARSERCONTEXT *, char *)
+
+#define parsererror(pcMsg) parsererror((PARSERCONTEXT *)pacParserContext,pcMsg)
+
+
+%}
+
+

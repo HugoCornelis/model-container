@@ -1,0 +1,34 @@
+$files = {
+           '_<convertors/morphology2ndf' => [
+                                              {
+                                                'expr' => undef,
+                                                'value' => '1',
+                                                'text' => 'main();
+',
+                                                'fname' => 'convertors/morphology2ndf',
+                                                'type' => 'user',
+                                                'line' => '1827'
+                                              },
+                                              {
+                                                'expr' => undef,
+                                                'value' => '1',
+                                                'text' => '	    $line =~ s(#.*)();
+',
+                                                'fname' => 'convertors/morphology2ndf',
+                                                'type' => 'user',
+                                                'line' => '658'
+                                              }
+                                            ]
+         };
+$expr_list = [
+               {
+                 'expr' => '$line',
+                 'depth' => -1
+               },
+               {
+                 'expr' => '$variables',
+                 'depth' => -1
+               }
+             ];
+$eval_saved_text = undef;
+$main_win_geometry = '1272x941+236+54';

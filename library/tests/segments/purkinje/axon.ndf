@@ -1,0 +1,88 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+
+	FILE cat "tests/channels/cat.ndf"
+	FILE kdr "tests/channels/kdr.ndf"
+	FILE naf "tests/channels/naf.ndf"
+	FILE nap "tests/channels/nap.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS cat::/cat cat END ALIAS
+	ALIAS kdr::/kdr kdr END ALIAS
+	ALIAS naf::/naf naf END ALIAS
+	ALIAS nap::/nap nap END ALIAS
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	SEGMENT axon
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+			INPUT cat->Ik,
+			INPUT naf->Ik,
+			INPUT nap->Ik,
+			INPUT kdr->Ik,
+		END BINDINGS
+
+		OPTIONS SPHERICAL
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 1.000 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+		CHILD cat
+			cat
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( Ek = 0.1375262439),
+			END PARAMETERS
+		END CHILD
+
+		CHILD kdr
+			kdr
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+
+// 			PARAMETERS
+// 				PARAMETER ( GMAX = 5500.0 ),
+// 			END PARAMETERS
+		END CHILD
+
+		CHILD nap
+			nap
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+		CHILD naf
+			naf
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+	END SEGMENT
+
+END PUBLIC_MODELS
+
+

@@ -1,0 +1,185 @@
+#!/usr/bin/perl -w
+#
+
+use strict;
+
+
+# BEGIN
+# {
+#     # run from this directory
+
+#     push @INC, "../perl";
+
+#     # run from the core directory, e.g. using the makefile
+
+#     push @INC, "./perl";
+# }
+
+
+use Data::Comparator qw(data_comparator);
+use Data::Transformator;
+
+use Getopt::Long;
+
+use HTML::Table;
+
+
+my $option_help;
+my $option_level;
+my $option_verbose;
+
+
+sub html_table_code
+{
+    my $name = shift;
+
+    my $source = shift;
+
+    my $result = '';
+
+    my $table
+	= HTML::Table->new
+	    (
+	     -border => 2,
+	     -spacing => 2,
+	     -padding => 5,
+	    );
+
+    $result .= "<a name=\"$name\"></a>";
+
+    my $interesting_keys = [ sort keys %$source, ];
+
+    $table->addCol(@$interesting_keys, );
+
+    $table->addCol
+	(
+	 map
+	 { (!defined) ? '' : $_ }
+	 @$source{ @$interesting_keys, },
+	);
+
+    $table->setColFormat(2, "<pre>\n", "</pre>\n", );
+
+    $table->setColVAlign(1, "TOP");
+    $table->setColVAlign(2, "TOP");
+
+    $result .= $table->getTable();
+
+    return $result;
+}
+
+
+sub identifier_xml_to_perl
+{
+    my $identifier = shift;
+
+    my $result = $identifier;
+
+    $result =~ s/([A-Z]{2,})([A-Z])/_\L$1\E$2/g;
+
+    $result =~ s/([A-Z])(?![A-Z])/_\l$1/g;
+
+    return $result;
+}
+
+
+sub identifier_perl_to_xml
+{
+    my $identifier = shift;
+
+    my $result = $identifier;
+
+    $result =~ s/^([a-z])/\u$1/;
+
+    $result =~ s/_([a-z0-9])/\u$1/g;
+
+    return $result;
+}
+
+
+sub main
+{
+    my $result
+	= GetOptions
+	    (
+	     "help!" => \$option_help,
+	     "level" => \$option_level,
+	     "v|verbose+" => \$option_verbose,
+	    );
+
+    if ($option_help)
+    {
+	print
+	    "
+$0: generate C code that implements virtual functions.
+
+options :
+    help                 print usage information.
+    level                description level to be generated.
+    v|verbose            tell what is being done, specify multiple times to get
+                         more feedback.
+";
+
+	exit 1;
+    }
+
+    # read type definitions and relations
+
+    my $definitions = do $ARGV[0];
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+
+    # loop over all types
+
+    foreach my $type (sort keys %$class_hierarchy)
+    {
+	my $output = '';
+
+	# if there are parameters for this type
+
+	my $type_definition = $class_hierarchy->{$type};
+
+	my $parameters = $type_definition->{parameters};
+
+	if ($parameters && %$parameters)
+	{
+	    # create a html table with the parameters
+
+	    $output .= html_table_code($type, $parameters);
+	}
+
+	# if we have to generate output
+
+	if ($output)
+	{
+	    # prefix header with description of this type
+
+	    my $description = $type_definition->{description} || '';
+
+	    # generate the type descriptors
+
+	    my $type_descriptor = identifier_perl_to_xml($type);
+
+	    $output = "<h2>$type_descriptor ($type)</h2>
+$description
+<br>
+<h4><b>Variables and Parameters:</b></h4>
+$output
+<hr>
+";
+	}
+
+	# output the result
+
+	print "$output\n";
+    }
+
+}
+
+
+main();
+
+

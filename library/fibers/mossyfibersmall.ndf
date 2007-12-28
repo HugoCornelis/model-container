@@ -1,0 +1,136 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+// Morphology file for Mossy fiber, implemented with a randomspike
+//   http://www.bbf.uia.ac.be/
+
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE mapper "mappers/spikegenerator.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS mapper::/SpikeGen SpikeGen END ALIAS
+
+	RANDOMVALUE RandomPotential
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( LENGTH = 1e-5 ),
+			PARAMETER ( MINIMUM = 0.0 ),
+			PARAMETER ( MAXIMUM = 100.0 )
+		END PARAMETERS
+
+	END RANDOMVALUE
+
+	FIBER MossyFiber
+
+		// The BINDABLES here does two things :
+		// Declare a bindable of domain discrete event.
+		// Bind the bindable to the spikegen's output.
+		//
+		// Probably I should split this into two sections.
+
+		BINDABLES
+			OUTPUT spikegen->spike
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( RATE = 40.0 ),
+			PARAMETER ( REFRACTORY = 0.005 )
+		END PARAMETERS
+
+		CHILD RandomPotential
+			value
+		END CHILD
+
+		CHILD SpikeGen
+			spikegen
+			BINDINGS
+                		INPUT ^/value->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( THRESHOLD = ^->RATE ),
+				PARAMETER ( REFRACTORY = ^->REFRACTORY )
+			END PARAMETERS
+		END CHILD
+
+	END FIBER
+
+	POPULATION MossyFiberArray
+
+//			proto		#x	dx	#y	dy	#z	dz
+
+// 		ALGORITHM Grid3D
+// 			ALGORITHM_INSTANCE MossyGrid
+// 			{ MossyFiber	2	0.00036	2	0.0003	1	0.9}
+// 		END ALGORITHM
+
+		ALGORITHM Grid3D
+			MossyGrid
+			PARAMETERS
+				PARAMETER ( PROTOTYPE = "MossyFiber" ),
+				PARAMETER ( X_COUNT = 2.0 ),
+				PARAMETER ( X_DISTANCE = 0.00036 ),
+				PARAMETER ( Y_COUNT = 2.0 ),
+				PARAMETER ( Y_DISTANCE = 0.0003 ),
+				PARAMETER ( Z_COUNT = 1.0 ),
+				PARAMETER ( Z_DISTANCE = 0.9 ),
+			END PARAMETERS
+		END ALGORITHM
+
+/* 		CHILD MossyFiber */
+/* 			fiber[0] */
+/* 			PARAMETERS */
+/* 				PARAMETER ( X = 0.0 ), */
+/* 				PARAMETER ( Y = 0.0 ), */
+/* 				PARAMETER ( Z = 0.0 ), */
+/* 				PARAMETER ( dX = 0.00015 ), */
+/* 				PARAMETER ( dY = 0.00015 ), */
+/* 				PARAMETER ( dZ = 0.0 ), */
+/* 				PARAMETER */
+/* 				( RATE = randomize */
+/* 					(PARAMETER ( min = 35.0 ), */
+/* 						PARAMETER ( max = 45.0)  )) */
+/* 			END PARAMETERS */
+/* 		END CHILD */
+
+/* 		CHILD MossyFiber */
+/* 			fiber[1] */
+/* 			PARAMETERS */
+/* 				PARAMETER ( X = 0.00015 ), */
+/* 				PARAMETER ( Y = 0.0 ), */
+/* 				PARAMETER ( Z = 0.0 ), */
+/* 				PARAMETER ( dX = 0.00015 ), */
+/* 				PARAMETER ( dY = 0.00015 ), */
+/* 				PARAMETER ( dZ = 0.0 ), */
+/* 				PARAMETER */
+/* 				( RATE = randomize */
+/* 					(PARAMETER ( min = 35.0 ), */
+/* 						PARAMETER ( max = 45.0)  )) */
+/* 			END PARAMETERS */
+/* 		END CHILD */
+
+	END POPULATION
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	ALIAS MossyFiber MossyFiber END ALIAS
+
+	ALIAS MossyFiberArray MossyFiberArray END ALIAS
+
+END PUBLIC_MODELS
+
+

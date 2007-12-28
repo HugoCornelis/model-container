@@ -1,0 +1,573 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+// Cut morphology file for Purkinje cell
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE soma "segments/purkinje_soma.ndf"
+
+	FILE maind "segments/purkinje_maind.ndf"
+
+	FILE thickd "segments/purkinje_thickd.ndf"
+
+	FILE spinyd "segments/purkinje_spinyd.ndf"
+
+	FILE spine "segments/spines/purkinje.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS soma::/Purk_soma Purkinje_soma END ALIAS
+	ALIAS maind::/Purk_maind Purkinje_maind END ALIAS
+	ALIAS thickd::/Purk_thickd Purkinje_thickd END ALIAS
+	ALIAS spinyd::/Purk_spinyd Purkinje_spinyd END ALIAS
+	ALIAS spine::/Purk_spine Purkinje_spine END ALIAS
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CELL Purkinje
+
+// 		ALGORITHM Spines
+// 			ALGORITHM_INSTANCE SpinesNormal_13_1
+// 			{ Purkinje_spine 0.00 3.18 13 1}
+// 		END ALGORITHM
+
+		ALGORITHM Spines
+			SpinesNormal_13_1
+			PARAMETERS
+				PARAMETER ( PROTOTYPE = "Purkinje_spine" ),
+				PARAMETER ( DIA_MIN = 0.0 ),
+				PARAMETER ( DIA_MAX = 3.18 ),
+				PARAMETER ( SPINE_DENSITY = 13.0 ),
+				PARAMETER ( SPINE_FREQUENCY = 1.0 ),
+			END PARAMETERS
+		END ALGORITHM
+
+		SEGMENT_GROUP segments
+
+PARAMETERS
+			PARAMETER ( ROTATE_ANGLE = 1.570796326794895004727943 ),
+			PARAMETER ( ROTATE_CENTER_X = 0.0 ),
+			PARAMETER ( ROTATE_CENTER_Y = 0.0 ),
+			PARAMETER ( ROTATE_CENTER_Z = 0.0 ),
+			PARAMETER ( ROTATE_AXIS_X = 0.0 ),
+			PARAMETER ( ROTATE_AXIS_Y = 0.0 ),
+			PARAMETER ( ROTATE_AXIS_Z = 0.1 )
+END PARAMETERS
+			CHILD Purkinje_soma soma
+				PARAMETERS
+// 					PARAMETER ( PARENT = none ),
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 29.80e-6 )
+				END PARAMETERS
+			END CHILD
+
+{* check if different from normal main[] layout *}
+
+			CHILD Purkinje_maind main[0]
+				PARAMETERS
+					PARAMETER ( PARENT = ../soma ),
+					PARAMETER ( rel_X = 5.557e-6 ),
+					PARAMETER ( rel_Y = 9.447e-6 ),
+					PARAMETER ( rel_Z = 9.447e-6 ),
+					PARAMETER ( DIA = 7.72e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_maind main[1]
+				PARAMETERS
+					PARAMETER ( PARENT = ../main[0] ),
+					PARAMETER ( rel_X = 8.426e-6 ),
+					PARAMETER ( rel_Y = 1.124e-6 ),
+					PARAMETER ( rel_Z = 21.909e-6 ),
+					PARAMETER ( DIA = 8.22e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_maind main[2]
+				PARAMETERS
+					PARAMETER ( PARENT = ../main[1] ),
+					PARAMETER ( rel_X = 1.666e-6 ),
+					PARAMETER ( rel_Y = 1.111e-6 ),
+					PARAMETER ( rel_Z = 6.666e-6 ),
+					PARAMETER ( DIA = 8.50e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_maind main[3]
+				PARAMETERS
+					PARAMETER ( PARENT = ../main[2] ),
+					PARAMETER ( rel_X = -2.779e-6 ),
+					PARAMETER ( rel_Y = 2.223e-6 ),
+					PARAMETER ( rel_Z = 1.667e-6 ),
+					PARAMETER ( DIA = 9.22e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_maind main[4]
+				PARAMETERS
+					PARAMETER ( PARENT = ../main[3] ),
+					PARAMETER ( rel_X = -1.111e-6 ),
+					PARAMETER ( rel_Y = 6.109e-6 ),
+					PARAMETER ( rel_Z = 5.553e-6 ),
+					PARAMETER ( DIA = 8.89e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_maind main[5]
+				PARAMETERS
+					PARAMETER ( PARENT = ../main[4] ),
+					PARAMETER ( rel_X = -1.111e-6 ),
+					PARAMETER ( rel_Y = -0.555e-6 ),
+					PARAMETER ( rel_Z = 4.998e-6 ),
+					PARAMETER ( DIA = 8.44e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_maind main[6]
+				PARAMETERS
+					PARAMETER ( PARENT = ../main[5] ),
+					PARAMETER ( rel_X = -1.749e-6 ),
+					PARAMETER ( rel_Y = 0.583e-6 ),
+					PARAMETER ( rel_Z = 3.498e-6 ),
+					PARAMETER ( DIA = 8.61e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_maind main[7]
+				PARAMETERS
+					PARAMETER ( PARENT = ../main[6] ),
+					PARAMETER ( rel_X = -3.890e-6 ),
+					PARAMETER ( rel_Y = 3.334e-6 ),
+					PARAMETER ( rel_Z = 6.669e-6 ),
+					PARAMETER ( DIA = 7.78e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_maind main[8]
+				PARAMETERS
+					PARAMETER ( PARENT = ../main[7] ),
+					PARAMETER ( rel_X = -6.665e-6 ),
+					PARAMETER ( rel_Y = -1.111e-6 ),
+					PARAMETER ( rel_Z = 9.441e-6 ),
+					PARAMETER ( DIA = 8.44e-6 )
+				END PARAMETERS
+			END CHILD
+
+			CHILD Purkinje_thickd b0s01[0]
+				PARAMETERS
+					PARAMETER ( PARENT = ../main[1] ),
+					PARAMETER ( rel_X = 6.110e-6 ),
+					PARAMETER ( rel_Y = 0.555e-6 ),
+					PARAMETER ( rel_Z = -0.555e-6 ),
+					PARAMETER ( DIA = 5.28e-6 )
+				END PARAMETERS
+			END CHILD
+
+			CHILD Purkinje_spinyd b0s01[1]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[0] ),
+					PARAMETER ( rel_X = 2.220e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 2.28e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[2]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[1] ),
+					PARAMETER ( rel_X = 3.892e-6 ),
+					PARAMETER ( rel_Y = -1.668e-6 ),
+					PARAMETER ( rel_Z = -3.336e-6 ),
+					PARAMETER ( DIA = 1.83e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[3]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[2] ),
+					PARAMETER ( rel_X = 1.151e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -10.356e-6 ),
+					PARAMETER ( DIA = 1.44e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[4]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[3] ),
+					PARAMETER ( rel_X = -1.667e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -2.778e-6 ),
+					PARAMETER ( DIA = 1.44e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[5]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[4] ),
+					PARAMETER ( rel_X = -2.432e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -1.824e-6 ),
+					PARAMETER ( DIA = 1.44e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[6]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[5] ),
+					PARAMETER ( rel_X = -9.438e-6 ),
+					PARAMETER ( rel_Y = 1.180e-6 ),
+					PARAMETER ( rel_Z = 0.590e-6 ),
+					PARAMETER ( DIA = 1.44e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[7]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[5] ),
+					PARAMETER ( rel_X = 0.907e-6 ),
+					PARAMETER ( rel_Y = 0.907e-6 ),
+					PARAMETER ( rel_Z = -3.630e-6 ),
+					PARAMETER ( DIA = 1.44e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[8]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[7] ),
+					PARAMETER ( rel_X = -2.778e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -1.667e-6 ),
+					PARAMETER ( DIA = 1.44e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[9]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[7] ),
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -4.050e-6 ),
+					PARAMETER ( DIA = 1.44e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[10]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[9] ),
+					PARAMETER ( rel_X = -16.009e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -9.606e-6 ),
+					PARAMETER ( DIA = 1.44e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[11]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[9] ),
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = -1.109e-6 ),
+					PARAMETER ( rel_Z = -1.664e-6 ),
+					PARAMETER ( DIA = 1.28e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[12]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[11] ),
+					PARAMETER ( rel_X = -2.226e-6 ),
+					PARAMETER ( rel_Y = 0.556e-6 ),
+					PARAMETER ( rel_Z = -1.113e-6 ),
+					PARAMETER ( DIA = 1.11e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[13]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[12] ),
+					PARAMETER ( rel_X = -1.109e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 1.664e-6 ),
+					PARAMETER ( DIA = 1.00e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[14]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[12] ),
+					PARAMETER ( rel_X = -3.336e-6 ),
+					PARAMETER ( rel_Y = 0.556e-6 ),
+					PARAMETER ( rel_Z = -1.112e-6 ),
+					PARAMETER ( DIA = 1.00e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[15]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[14] ),
+					PARAMETER ( rel_X = -0.555e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -1.109e-6 ),
+					PARAMETER ( DIA = 0.89e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[16]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[15] ),
+					PARAMETER ( rel_X = -8.055e-6 ),
+					PARAMETER ( rel_Y = -1.151e-6 ),
+					PARAMETER ( rel_Z = -8.055e-6 ),
+					PARAMETER ( DIA = 0.89e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[17]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[15] ),
+					PARAMETER ( rel_X = 3.890e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 0.89e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[18]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[17] ),
+					PARAMETER ( rel_X = 2.218e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -1.109e-6 ),
+					PARAMETER ( DIA = 0.94e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[19]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[18] ),
+					PARAMETER ( rel_X = 0.680e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -4.762e-6 ),
+					PARAMETER ( DIA = 1.00e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[20]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[11] ),
+					PARAMETER ( rel_X = 1.664e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -1.109e-6 ),
+					PARAMETER ( DIA = 1.06e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[21]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[20] ),
+					PARAMETER ( rel_X = 1.112e-6 ),
+					PARAMETER ( rel_Y = 0.556e-6 ),
+					PARAMETER ( rel_Z = -3.336e-6 ),
+					PARAMETER ( DIA = 1.11e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[22]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[21] ),
+					PARAMETER ( rel_X = 1.111e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -8.336e-6 ),
+					PARAMETER ( DIA = 1.22e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[23]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[4] ),
+					PARAMETER ( rel_X = -1.664e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 1.109e-6 ),
+					PARAMETER ( DIA = 1.33e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[24]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[23] ),
+					PARAMETER ( rel_X = -3.334e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.556e-6 ),
+					PARAMETER ( DIA = 1.22e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[25]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[24] ),
+					PARAMETER ( rel_X = -2.780e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 1.06e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[26]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[25] ),
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -1.670e-6 ),
+					PARAMETER ( DIA = 0.83e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[27]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[26] ),
+					PARAMETER ( rel_X = -3.888e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -1.666e-6 ),
+					PARAMETER ( DIA = 0.78e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[28]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[25] ),
+					PARAMETER ( rel_X = -2.220e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 0.83e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[29]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[28] ),
+					PARAMETER ( rel_X = -3.887e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -3.332e-6 ),
+					PARAMETER ( DIA = 0.83e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[30]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[29] ),
+					PARAMETER ( rel_X = -2.777e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -4.444e-6 ),
+					PARAMETER ( DIA = 0.83e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[31]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[3] ),
+					PARAMETER ( rel_X = 1.109e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -1.664e-6 ),
+					PARAMETER ( DIA = 1.22e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[32]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[31] ),
+					PARAMETER ( rel_X = 6.271e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -6.841e-6 ),
+					PARAMETER ( DIA = 1.00e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[33]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[32] ),
+					PARAMETER ( rel_X = -6.155e-6 ),
+					PARAMETER ( rel_Y = -0.560e-6 ),
+					PARAMETER ( rel_Z = -22.382e-6 ),
+					PARAMETER ( DIA = 1.00e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[34]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[32] ),
+					PARAMETER ( rel_X = 4.443e-6 ),
+					PARAMETER ( rel_Y = -1.111e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 1.00e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[35]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[34] ),
+					PARAMETER ( rel_X = 3.336e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -1.668e-6 ),
+					PARAMETER ( DIA = 1.11e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[36]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[35] ),
+					PARAMETER ( rel_X = 2.776e-6 ),
+					PARAMETER ( rel_Y = 1.110e-6 ),
+					PARAMETER ( rel_Z = -2.776e-6 ),
+					PARAMETER ( DIA = 1.28e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[37]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[36] ),
+					PARAMETER ( rel_X = 2.224e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -3.337e-6 ),
+					PARAMETER ( DIA = 1.50e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[38]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[37] ),
+					PARAMETER ( rel_X = 4.443e-6 ),
+					PARAMETER ( rel_Y = -0.555e-6 ),
+					PARAMETER ( rel_Z = -4.998e-6 ),
+					PARAMETER ( DIA = 1.67e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[39]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[31] ),
+					PARAMETER ( rel_X = 2.778e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -1.667e-6 ),
+					PARAMETER ( DIA = 1.17e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[40]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[39] ),
+					PARAMETER ( rel_X = 2.775e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -0.555e-6 ),
+					PARAMETER ( DIA = 1.33e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[41]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[40] ),
+					PARAMETER ( rel_X = 4.999e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -2.222e-6 ),
+					PARAMETER ( DIA = 1.22e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[42]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[41] ),
+					PARAMETER ( rel_X = 4.445e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -0.556e-6 ),
+					PARAMETER ( DIA = 1.06e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[43]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[42] ),
+					PARAMETER ( rel_X = 1.669e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -1.669e-6 ),
+					PARAMETER ( DIA = 1.00e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD Purkinje_spinyd b0s01[44]
+				PARAMETERS
+					PARAMETER ( PARENT = ../b0s01[43] ),
+					PARAMETER ( rel_X = 2.224e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -2.780e-6 ),
+					PARAMETER ( DIA = 1.22e-6 )
+				END PARAMETERS
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

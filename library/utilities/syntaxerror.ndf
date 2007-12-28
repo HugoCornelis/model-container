@@ -1,0 +1,30 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+PUBLIC_MODELS
+
+	SEGMENT segm
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+		END BINDINGS
+
+		PARAMETERS
+			//t should check how the parser reduces this parameter value
+
+			PARAMETER ( Vm_init = lkjflkjfds ),
+			PARAMETER ( RM = .->RM ),
+			PARAMETER ( RA = NERNST(PARAMETER (RA = .->RA ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+	END SEGMENT
+
+END PUBLIC_MODELS

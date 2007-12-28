@@ -1,0 +1,40 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+// Morphology file for Golgi cell
+//   http://www.bbf.uia.ac.be/
+
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+PUBLIC_MODELS
+
+	/* non-inactivating BK-type Ca-dependent K current */
+
+	CHANNEL Moczyd_KC
+		BINDABLES
+			INPUT Vm,INPUT concen,OUTPUT Gk,OUTPUT Ik
+		END BINDABLES
+
+		CHANTABLEFILE "Golgi_kca37.tab"
+
+		/*
+		** VOLT_C1_INDEX attaches concen input to tab2channel
+		** see C code on how this is done, should still change
+		*/
+
+		PARAMETERS
+			PARAMETER ( Xindex = -1.0 ), // VOLT_C1_INDEX,
+			PARAMETER ( Xpower = 1.0 ),
+			PARAMETER ( Ypower = 0.0 ),
+			PARAMETER ( Zpower = 0.0 )
+		END PARAMETERS
+
+	END CHANNEL
+
+END PUBLIC_MODELS
+
+

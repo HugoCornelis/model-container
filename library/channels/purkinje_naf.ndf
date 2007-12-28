@@ -1,0 +1,52 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+// Morphology file for Purkinje cell
+// Based on Erik De Schutter's 1994 Purkinje cell model.
+// Original data provided by Rapp, Yarom and Segev, Hebrew University Jerusalem
+// Active membrane model with 1 spine on every spiny segment
+// References: Rapp, M., Segev, I., and Yarom, Y. (1994) Physiology,
+//   morphology and detailed passive models of cerebellar Purkinje cells.
+//   J.  Physiol. (London), 471: 87-99.
+//             De Schutter, E. and Bower, J. M. (1994) An active membrane
+//   model of the cerebellar Purkinje cell: I. Simulation of current
+//   clamps in slice. J. Neurophysiol., 71: 375-400.
+//   http://www.bbf.uia.ac.be/TNB/TNB_pub8.html
+//             De Schutter, E. and Bower, J. M. (1994) An active membrane
+//   model of the cerebellar Purkinje cell: II. Simulation of synaptic
+//   responses. J. Neurophysiol., 71: 401-419.
+//   http://www.bbf.uia.ac.be/TNB/TNB_pub7.html
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+END IMPORT
+
+PRIVATE_MODELS
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CHANNEL NaF
+		BINDABLES
+			INPUT Vm,OUTPUT Gk,OUTPUT Ik
+		END BINDABLES
+
+		CHANTABLEFILE "Purkinje_naf.tab"
+
+		PARAMETERS
+			PARAMETER ( Xpower = 3.0 ),
+			PARAMETER ( Ypower = 1.0 ),
+			PARAMETER ( Zpower = 0.0 )
+		END PARAMETERS
+
+	END CHANNEL
+
+END PUBLIC_MODELS
+
+

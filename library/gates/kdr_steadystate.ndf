@@ -1,0 +1,261 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+PUBLIC_MODELS
+
+	HH_GATE kdr_steadystate
+		BINDABLES
+			INPUT Vm,OUTPUT activation
+		END BINDABLES
+
+		BINDINGS
+			INPUT ..->Vm
+		END BINDINGS
+
+		GATE_KINETIC_FORWARD forward
+
+			BINDABLES
+				INPUT Vm, OUTPUT rate
+			END BINDABLES
+
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			GATE_KINETIC_PART a
+
+				BINDABLES
+					INPUT Vm, OUTPUT a
+				END BINDABLES
+
+				BINDINGS
+					INPUT ..->Vm
+				END BINDINGS
+
+				PARAMETERS
+
+					//m 1: multiplier
+	
+					PARAMETER ( Multiplier = -23.5e3 ),
+	
+					//m 2: multiplier membrane dependence, 0.0 for no dependence
+	
+					PARAMETER ( MembraneDependence = 1.0 ),
+	
+					//m 2: multiplier membrane dependence offset, 0.0 for no offset
+	
+					PARAMETER ( MembraneDependenceOffset = 0.012 ),
+	
+					//m 3: choose between nominator or denominator, 1 means nominator, -1
+					//m means denominator
+	
+					PARAMETER ( Nominator = -1.0 ),
+	
+					//m 4: nominator or denominator offset
+	
+					PARAMETER ( DeNominatorOffset = -1.0 ),
+	
+					//m 5: membrane offset
+	
+					PARAMETER ( MembraneOffset = 0.012 ),
+	
+					//m 6: denormalized time constant
+	
+					PARAMETER ( TauDenormalizer = -12e-3 ),
+
+				END PARAMETERS
+
+			END GATE_KINETIC_PART
+
+			GATE_KINETIC_PART b
+
+				BINDABLES
+					INPUT Vm, OUTPUT b
+				END BINDABLES
+
+				BINDINGS
+					INPUT ..->Vm
+				END BINDINGS
+
+				PARAMETERS
+
+// 	    float VKTAU_OFFSET = 0.000
+// 	    float VKMINF_OFFSET = 0.020
+// 	    for (i = 0; i <= ({tab_xdivs}); i = i + 1)
+// 		    a = -23.5e3*(x + 0.012 - VKTAU_OFFSET)/({exp {(x + 0.012 - VKTAU_OFFSET)/-0.012}} - 1.0)
+// 		    b = 5.0e3*{exp {-(x + 0.147 - VKTAU_OFFSET)/0.030}}
+// 		    setfield Purk_Kdr X_A->table[{i}] {1.0/(a + b)}
+
+// 		    a = -23.5e3*(x + 0.012 - VKMINF_OFFSET)/({exp {(x + 0.012 - VKMINF_OFFSET)/-0.012}} - 1.0)
+// 		    b = 5.0e3*{exp {-(x + 0.147 - VKMINF_OFFSET)/0.030}}
+// 		    setfield Purk_Kdr X_B->table[{i}] {a/(a + b)}
+// 		    x = x + dx
+// 	    end
+
+// -23.5e3
+// 0.012
+// 0.012
+// -0.012
+// -1.0
+
+// 5.0e3
+// 0.147
+// 0.030
+
+					//m 1: multiplier
+
+					PARAMETER ( Multiplier = 5e3 ),
+
+					//m 2: multiplier membrane dependence, 0.0 for no dependence
+
+					PARAMETER ( TauDenormalizer = 0.030 ),
+
+					//m 2: multiplier membrane dependence offset, 0.0 for no offset
+	
+					PARAMETER ( MembraneDependenceOffset = 0.147 ),
+	
+					//m 3: choose between nominator or denominator, 1 means nominator, -1
+					//m means denominator, 0 means none
+
+					PARAMETER ( Nominator = 0.0 ),
+
+				END PARAMETERS
+
+			END GATE_KINETIC_PART
+
+		END GATE_KINETIC_FORWARD
+
+		GATE_KINETIC_BACKWARD backward
+
+			BINDABLES
+				INPUT Vm, OUTPUT rate
+			END BINDABLES
+
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			GATE_KINETIC_PART a
+
+				BINDABLES
+					INPUT Vm, OUTPUT a
+				END BINDABLES
+
+				BINDINGS
+					INPUT ..->Vm
+				END BINDINGS
+
+				PARAMETERS
+
+					//m 1: multiplier
+	
+					PARAMETER ( Multiplier = -23.5e3 ),
+	
+					//m 2: multiplier membrane dependence, 0.0 for no dependence
+	
+					PARAMETER ( MembraneDependence = 1.0 ),
+	
+					//m 2: multiplier membrane dependence offset, 0.0 for no offset
+	
+					PARAMETER ( MembraneDependenceOffset = -0.008 ),
+	
+					//m 3: choose between nominator or denominator, 1 means nominator, -1
+					//m means denominator
+	
+					PARAMETER ( Nominator = -1.0 ),
+	
+					//m 4: nominator or denominator offset
+	
+					PARAMETER ( DeNominatorOffset = -1.0 ),
+	
+					//m 5: membrane offset
+	
+					PARAMETER ( MembraneOffset = -0.008 ),
+	
+					//m 6: denormalized time constant
+	
+					PARAMETER ( TauDenormalizer = -12e-3 ),
+
+				END PARAMETERS
+
+			END GATE_KINETIC_PART
+
+			GATE_KINETIC_PART b
+
+				BINDABLES
+					INPUT Vm, OUTPUT b
+				END BINDABLES
+
+				BINDINGS
+					INPUT ..->Vm
+				END BINDINGS
+
+				PARAMETERS
+
+// 	    float VKTAU_OFFSET = 0.000
+// 	    float VKMINF_OFFSET = 0.020
+// 	    for (i = 0; i <= ({tab_xdivs}); i = i + 1)
+// 		    a = -23.5e3*(x + 0.012 - VKTAU_OFFSET)/({exp {(x + 0.012 - VKTAU_OFFSET)/-0.012}} - 1.0)
+// 		    b = 5.0e3*{exp {-(x + 0.147 - VKTAU_OFFSET)/0.030}}
+// 		    setfield Purk_Kdr X_A->table[{i}] {1.0/(a + b)}
+
+// 		    a = -23.5e3*(x + 0.012 - VKMINF_OFFSET)/({exp {(x + 0.012 - VKMINF_OFFSET)/-0.012}} - 1.0)
+// 		    b = 5.0e3*{exp {-(x + 0.147 - VKMINF_OFFSET)/0.030}}
+// 		    setfield Purk_Kdr X_B->table[{i}] {a/(a + b)}
+// 		    x = x + dx
+// 	    end
+
+// -23.5e3
+// 0.012
+// 0.012
+// -0.012
+// -1.0
+
+// 5.0e3
+// 0.147
+// 0.030
+
+					//m 1: multiplier
+
+					PARAMETER ( Multiplier = 5e3 ),
+
+					//m 2: multiplier membrane dependence, 0.0 for no dependence
+
+					PARAMETER ( TauDenormalizer = 0.030 ),
+
+					//m 2: multiplier membrane dependence offset, 0.0 for no offset
+	
+					PARAMETER ( MembraneDependenceOffset = 0.127 ),
+	
+					//m 3: choose between nominator or denominator, 1 means nominator, -1
+					//m means denominator, 0 means none
+
+					PARAMETER ( Nominator = 0.0 ),
+
+				END PARAMETERS
+
+			END GATE_KINETIC_PART
+
+		END GATE_KINETIC_BACKWARD
+
+		PARAMETERS
+
+			//m initial value, commonly forward over backward steady states
+
+			PARAMETER ( state_init = 0.0045016011008226975 ),
+			PARAMETER ( POWER = 2.0 ),
+
+			//m values have been specified using steady state and time constant
+
+			PARAMETER ( STEADY_STATE_format = 1.0 ),
+
+		END PARAMETERS
+
+	END HH_GATE
+
+END PUBLIC_MODELS
+
+

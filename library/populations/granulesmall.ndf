@@ -1,0 +1,68 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.4
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE G "cells/granule.ndf"
+
+END IMPORT
+
+
+PRIVATE_MODELS
+
+	ALIAS G::/Granule Granule_cell END ALIAS
+
+END PRIVATE_MODELS
+
+
+PUBLIC_MODELS
+
+	POPULATION GranulePopulation
+
+//			proto		#x	dx	#y	dy	#z	dz
+
+// 		ALGORITHM Grid3D
+// 			ALGORITHM_INSTANCE GranuleGrid
+// 			{ Granule_cell	3	5e-05	2	3.75e-05	1	0.9}
+// 		END ALGORITHM
+
+		ALGORITHM Grid3D
+			GranuleGrid
+			PARAMETERS
+				PARAMETER ( PROTOTYPE = "Granule_cell" ),
+				PARAMETER ( X_COUNT = 3.0 ),
+				PARAMETER ( X_DISTANCE = 5e-05 ),
+				PARAMETER ( Y_COUNT = 2.0 ),
+				PARAMETER ( Y_DISTANCE = 3.75e-05 ),
+				PARAMETER ( Z_COUNT = 1.0 ),
+				PARAMETER ( Z_DISTANCE = 0.9 ),
+			END PARAMETERS
+		END ALGORITHM
+
+/* 		PARAMETERS */
+/* 			PARAMETER ( ROTATE_ANGLE = 1.570796326794895004727943 ), */
+/* 			PARAMETER ( ROTATE_CENTER_X = 0.0 ), */
+/* 			PARAMETER ( ROTATE_CENTER_Y = 0.0 ), */
+/* 			PARAMETER ( ROTATE_CENTER_Z = 0.0 ), */
+/* 			PARAMETER ( ROTATE_AXIS_X = 0.0 ), */
+/* 			PARAMETER ( ROTATE_AXIS_Y = 0.0 ), */
+/* 			PARAMETER ( ROTATE_AXIS_Z = 0.1 ) */
+/* 		END PARAMETERS */
+
+		PARAMETERS
+			PARAMETER ( X = 0.0 ),
+			PARAMETER ( Y = 0.0 ),
+			PARAMETER ( Z = 0.0001 )
+		END PARAMETERS
+
+	END POPULATION
+
+END PUBLIC_MODELS
+
+

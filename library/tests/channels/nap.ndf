@@ -1,0 +1,42 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+
+	FILE gate1 "gates/nap_activation.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS gate1::/nap_activation nap_gate END ALIAS
+
+	CHANNEL nap
+		BINDABLES
+			INPUT Vm,OUTPUT Gk,OUTPUT Ik
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( CHANNEL_TYPE = "ChannelAct" ),
+		END PARAMETERS
+
+		CHILD nap_gate nap
+		END CHILD
+
+		PARAMETERS
+			PARAMETER ( GMAX = 10.0 ),
+			PARAMETER ( Ek = 0.045 )
+		END PARAMETERS
+	END CHANNEL
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	ALIAS nap nap END ALIAS
+
+END PUBLIC_MODELS
+
+

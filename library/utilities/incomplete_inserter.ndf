@@ -1,0 +1,118 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+// Neurospaces medial axis transformed to cylinders
+// converted by /usr/local/bin/mat_2_ndf, Wed Jun 20 19:11:25 2007
+//
+
+NEUROSPACES NDF
+
+IMPORT
+
+	FILE a "channels/gaba.ndf"
+	FILE b "segments/spines/purkinje.ndf"
+	FILE c "tests/segments/purkinje/spinyd.ndf"
+
+END IMPORT
+
+
+PRIVATE_MODELS
+
+	ALIAS a::/Purk_GABA Purk_GABA END ALIAS
+	ALIAS b::/Purk_spine Purk_spine END ALIAS
+	ALIAS b::/Purk_spine2 Purk_spine2 END ALIAS
+	ALIAS c::/spinyd spinyd END ALIAS
+
+END PRIVATE_MODELS
+
+
+PUBLIC_MODELS
+
+	SEGMENT_GROUP in12_1
+
+		ALGORITHM Inserter
+			excitation
+			PARAMETERS
+				PARAMETER ( HEIGHTS_PARAMETER_FILENAME = "algorithm_data/inserter_excitation.heights" ),
+				PARAMETER ( INSERTION_FREQUENCY = 1.0 ),
+			END PARAMETERS
+		END ALGORITHM
+
+		ALGORITHM Inserter
+			inhibition
+			PARAMETERS
+				PARAMETER ( HEIGHTS_PARAMETER_FILENAME = "algorithm_data/inserter_inhibition.heights" ),
+				PARAMETER ( INSERTION_FREQUENCY = 1.0 ),
+			END PARAMETERS
+		END ALGORITHM
+
+		ALGORITHM Inserter
+			spines
+			PARAMETERS
+				PARAMETER ( HEIGHTS_PARAMETER_FILENAME = "algorithm_data/inserter_spines.heights" ),
+				PARAMETER ( INSERTION_FREQUENCY = 1.0 ),
+			END PARAMETERS
+		END ALGORITHM
+
+		CHILD spinyd mat_1
+			PARAMETERS
+				PARAMETER ( rel_X = -0.0745668613453292e-7 ),
+				PARAMETER ( rel_Y = 0.0816039610833101e-7 ),
+				PARAMETER ( rel_Z = 0.28e-7 ),
+				PARAMETER ( DIA = 0.213651407527894e-7 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD spinyd mat_2
+			PARAMETERS
+				PARAMETER ( PARENT = ../mat_1 ),
+				PARAMETER ( rel_X = -0.137080574358e-7 ),
+				PARAMETER ( rel_Y = 0.0519130465537199e-7 ),
+				PARAMETER ( rel_Z = 0.28e-7 ),
+				PARAMETER ( DIA = 0.219551650282972e-7 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD spinyd mat_3
+			PARAMETERS
+				PARAMETER ( PARENT = ../mat_2 ),
+				PARAMETER ( rel_X = -0.20818707162151e-7 ),
+				PARAMETER ( rel_Y = 0.0965483784679897e-7 ),
+				PARAMETER ( rel_Z = 0.28e-7 ),
+				PARAMETER ( DIA = 0.240847619937823e-7 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD spinyd mat_4
+			PARAMETERS
+				PARAMETER ( PARENT = ../mat_3 ),
+				PARAMETER ( rel_X = 0.0477306851034704e-7 ),
+				PARAMETER ( rel_Y = 0.0188749281401606e-7 ),
+				PARAMETER ( rel_Z = 0.385e-7 ),
+				PARAMETER ( DIA = 0.309131830990734e-7 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD spinyd mat_5
+			PARAMETERS
+				PARAMETER ( PARENT = ../mat_4 ),
+				PARAMETER ( rel_X = -0.24059871325246e-7 ),
+				PARAMETER ( rel_Y = 0.130630786690969e-7 ),
+				PARAMETER ( rel_Z = 0.35e-7 ),
+				PARAMETER ( DIA = 0.38748240047656e-7 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD spinyd mat_6
+			PARAMETERS
+				PARAMETER ( PARENT = ../mat_5 ),
+				PARAMETER ( rel_X = -0.0581400410918098e-7 ),
+				PARAMETER ( rel_Y = 0.0126969972461799e-7 ),
+				PARAMETER ( rel_Z = 0.315e-7 ),
+				PARAMETER ( DIA = 0.418041157108424e-7 )
+			END PARAMETERS
+		END CHILD
+
+	END SEGMENT_GROUP
+
+END PUBLIC_MODELS
+

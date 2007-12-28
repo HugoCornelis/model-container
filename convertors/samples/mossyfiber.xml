@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<!-- -*- NEUROSPACES-XML -*- -->
+<neurospaces-xml version="0.2" >
+
+<import>
+
+	<file
+		namespace="mapper"
+		directory="mappers/"
+		filename="spikegenerator"
+		extension="ndf" />
+
+</import>
+
+<private-models>
+
+	<alias 
+		namespace="mapper"
+		source="/SpikeGen"
+		private-model="SpikeGen" />
+
+	<randomvalue name="RandomPotential">
+		<bindables>
+			<output name="value" />
+		</bindables>
+
+		<parameter-set>
+			<symbol-parameter name="MINIMUM" value="0.0" />
+			<symbol-parameter name="MAXIMUM" value="100.0" />
+		</parameter-set>
+
+	</randomvalue>
+
+	<group name="MossyFiber" >
+		<bindables>
+			<output
+				source="spikegen"
+				field="spike" />
+		</bindables>
+
+		<parameter-set>
+			<symbol-parameter name="RATE" value="40.0" />
+			<symbol-parameter name="REFRACTORY" value="0.005" />
+		</parameter-set>
+
+		<insert-child
+			source="RandomPotential"
+			name="value" />
+
+		<insert-child
+			source="SpikeGen"
+			name="spikegen" >
+
+			<bindings>
+				<input 
+					source="value"
+					field="value" />
+			</bindings>
+
+			<parameter-set>
+				<reference-parameter
+					name="THRESHOLD"
+					source="^"
+					field="RATE" />
+				<reference-parameter
+					name="REFRACTORY"
+					source="^"
+					field="REFRACTORY" />
+			</parameter-set>
+		</insert-child>
+
+	</group>
+
+	<population name="MossyFiberArray">
+
+<!-- //			proto		#x	dx	#y	dy	#z	dz -->
+
+		<algorithm
+			class="Grid3D"
+			instance-name="MossyGrid" >
+			<parameter-set>
+				<description-algorithm-parameter value="{ MossyFiber	10	0.00036	3	0.0003	1	0.9}" />
+			</parameter-set>
+		</algorithm>
+
+<!-- /* 		CHILD MossyFiber */ -->
+<!-- /* 			fiber[0], */ -->
+<!-- /* 			X = 0.0, */ -->
+<!-- /* 			Y = 0.0, */ -->
+<!-- /* 			Z = 0.0, */ -->
+<!-- /* 			dX = 0.00015, */ -->
+<!-- /* 			dY = 0.00015, */ -->
+<!-- /* 			dZ = 0.0, */ -->
+<!-- /* 			RATE = randomize(min = 35.0,max = 45.0) */ -->
+<!-- /* 		END CHILD */ -->
+
+<!-- /* 		CHILD MossyFiber */ -->
+<!-- /* 			fiber[1], */ -->
+<!-- /* 			X = 0.00015, */ -->
+<!-- /* 			Y = 0.0, */ -->
+<!-- /* 			Z = 0.0, */ -->
+<!-- /* 			dX = 0.00015, */ -->
+<!-- /* 			dY = 0.00015, */ -->
+<!-- /* 			dZ = 0.0, */ -->
+<!-- /* 			RATE = randomize(min = 35.0,max = 45.0) */ -->
+<!-- /* 		END CHILD */ -->
+
+	</population>
+
+</private-models>
+
+<public-models>
+
+	<alias
+		source="MossyFiber"
+		name="MossyFiber" />
+
+	<alias
+		source="MossyFiberArray"
+		name="MossyFiberArray" />
+
+</public-models>
+
+</neurospaces-xml>
+
+

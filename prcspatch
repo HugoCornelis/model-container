@@ -1,0 +1,4 @@
+#!/bin/sh
+projects=`ls -l *.prj | wc -l`
+[ `ls -l *.prj | wc -l` -ne 1 ] && echo 2>&1 "expecting exactly one project descriptor in this directory `pwd`" && exit 1
+prcs diff *.prj `prcs 2>/dev/null execute --not :project-file ` -- --unified

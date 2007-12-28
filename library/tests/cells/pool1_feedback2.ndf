@@ -1,0 +1,146 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+IMPORT
+
+	FILE gate1 "gates/cat_activation.ndf"
+
+	FILE gate2 "gates/cat_inactivation.ndf"
+
+	FILE gate3 "gates/kc_activation.ndf"
+
+	FILE gate4 "gates/kc_concentration.ndf"
+
+	FILE ca_pool "pools/purkinje_ca.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS gate1::/cat_activation cat_gate_activation END ALIAS
+
+	ALIAS gate2::/cat_inactivation cat_gate_inactivation END ALIAS
+
+	ALIAS gate3::/kc_activation kc_gate_activation END ALIAS
+
+	ALIAS gate4::/kc_concentration kc_gate_concentration END ALIAS
+
+	ALIAS ca_pool::/Ca_concen ca_pool END ALIAS
+
+	CHANNEL cat
+		BINDABLES
+			INPUT Vm,OUTPUT Gk,OUTPUT Ik
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
+		END PARAMETERS
+
+		CHILD cat_gate_activation cat_gate_activation
+			PARAMETERS
+				PARAMETER ( state_init = 0.03891870645 ),
+			END PARAMETERS
+		END CHILD
+
+		CHILD cat_gate_inactivation cat_gate_inactivation
+			PARAMETERS
+				PARAMETER ( state_init = 0.08260212813 ),
+			END PARAMETERS
+		END CHILD
+
+	END CHANNEL
+
+	SEGMENT maind
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+			INPUT cat->Ik,
+			INPUT kc->Ik,
+		END BINDINGS
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 3.0 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 ),
+
+			PARAMETER ( rel_X = 5.557e-6 ),
+			PARAMETER ( rel_Y = 9.447e-6 ),
+			PARAMETER ( rel_Z = 9.447e-6 ),
+			PARAMETER ( DIA = 7.72e-6 ),
+		END PARAMETERS
+
+		CHILD cat
+			cat
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
+				PARAMETER ( GMAX = 5.0 ),
+				PARAMETER ( Ek = 0.14702148735523224 )
+			END PARAMETERS
+		END CHILD
+
+		CHILD ca_pool
+			ca_pool
+			BINDINGS
+				INPUT ^/cat->Ik
+			END BINDINGS
+		END CHILD
+
+		CHANNEL KC
+			BINDINGS
+				INPUT ^->Vm,
+				INPUT ^/ca_pool->concen
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( CHANNEL_TYPE = "ChannelActConc" ),
+			END PARAMETERS
+
+			CHILD kc_gate_activation kc_gate_activation
+				PARAMETERS
+					PARAMETER ( state_init = 0.063531859768213905 ),
+				END PARAMETERS
+			END CHILD
+	
+			CHILD kc_gate_concentration kc_gate_concentration
+				PARAMETERS
+					PARAMETER ( state_init = 0.0099009900989999993 ),
+				END PARAMETERS
+			END CHILD
+
+			PARAMETERS
+				PARAMETER ( GMAX = 800.0 ),
+				PARAMETER ( Ek = 85.0 )
+			END PARAMETERS
+		END CHANNEL
+
+	END SEGMENT
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CELL pool1_feedback2
+
+		SEGMENT_GROUP segments
+
+			CHILD maind main[0]
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

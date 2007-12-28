@@ -1,0 +1,52 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+IMPORT
+
+	FILE gate1 "gates/ka_activation.ndf"
+
+	FILE gate2 "gates/ka_inactivation.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS gate1::/ka_activation ka_gate_activation END ALIAS
+
+	ALIAS gate2::/ka_inactivation ka_gate_inactivation END ALIAS
+
+	CHANNEL ka
+		BINDABLES
+			INPUT Vm,OUTPUT Gk,OUTPUT Ik
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
+		END PARAMETERS
+
+		CHILD ka_gate_activation ka_gate_activation
+		END CHILD
+
+		CHILD ka_gate_inactivation ka_gate_inactivation
+		END CHILD
+
+	END CHANNEL
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	ALIAS ka ka
+		PARAMETERS
+			PARAMETER ( GMAX = 150.0 ),
+			PARAMETER ( Ek = -0.085 ),
+		END PARAMETERS
+	END ALIAS
+
+END PUBLIC_MODELS
+
+

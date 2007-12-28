@@ -1,0 +1,93 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.4
+
+// UNITS seconds meters voltage siemens
+
+IMPORT
+
+	FILE G "cells/golgi.ndf"
+
+END IMPORT
+
+
+PRIVATE_MODELS
+
+	ALIAS G::/Golgi Golgi_cell END ALIAS
+
+END PRIVATE_MODELS
+
+
+PUBLIC_MODELS
+
+	POPULATION GolgiPopulation
+
+		ALGORITHM Randomize
+			GolgiLeak
+			PARAMETERS
+				PARAMETER ( SYMBOL_NAME = "Golgi_cell" ),
+				PARAMETER ( PARAMETER_NAME = "ELEAK" ),
+				PARAMETER ( TARGET_NAME = "Golgi_soma" ),
+				PARAMETER ( RANDOMSEED = 213.0 ),
+				PARAMETER ( LOWER_BOUND = -0.06 ),
+				PARAMETER ( UPPER_BOUND = -0.05 ),
+			END PARAMETERS
+// 			{ -addto Golgi_cell -parameter ELEAK -target Golgi_soma -randseed 213 -lower -0.06 -upper -0.05}
+		END ALGORITHM
+
+		ALGORITHM Randomize
+			Golgi_CaHVA
+			PARAMETERS
+				PARAMETER ( SYMBOL_NAME = "Golgi_cell" ),
+				PARAMETER ( PARAMETER_NAME = "GMAX" ),
+				PARAMETER ( TARGET_NAME = "Golgi_soma/CaHVA" ),
+				PARAMETER ( RANDOMSEED = 213.0 ),
+				PARAMETER ( LOWER_BOUND = 8.317569 ),
+				PARAMETER ( UPPER_BOUND = 9.317569 ),
+			END PARAMETERS
+// 			{ -addto Golgi_cell -parameter GMAX -target Golgi_soma/CaHVA -randseed 213 -lower 8.317569 -upper 9.317569}
+		END ALGORITHM
+
+// 		ALGORITHM Grid3D
+// 			ALGORITHM_INSTANCE GolgiGrid
+// 			{ Golgi_cell	10	0.0003	2	0.0003	1	0.00004}
+// 		END ALGORITHM
+
+		ALGORITHM Grid3D
+			GolgiGrid
+			PARAMETERS
+				PARAMETER ( PROTOTYPE = "Golgi_cell" ),
+				PARAMETER ( X_COUNT = 10.0 ),
+				PARAMETER ( X_DISTANCE = 0.0003 ),
+				PARAMETER ( Y_COUNT = 2.0 ),
+				PARAMETER ( Y_DISTANCE = 0.0003 ),
+				PARAMETER ( Z_COUNT = 1.0 ),
+				PARAMETER ( Z_DISTANCE = 0.00004 ),
+			END PARAMETERS
+		END ALGORITHM
+
+
+/* 		PARAMETERS */
+/* 			PARAMETER ( ROTATE_ANGLE = 1.570796326794895004727943 ), */
+/* 			PARAMETER ( ROTATE_CENTER_X = 0.0 ), */
+/* 			PARAMETER ( ROTATE_CENTER_Y = 0.0 ), */
+/* 			PARAMETER ( ROTATE_CENTER_Z = 0.0 ), */
+/* 			PARAMETER ( ROTATE_AXIS_X = 0.0 ), */
+/* 			PARAMETER ( ROTATE_AXIS_Y = 0.0 ), */
+/* 			PARAMETER ( ROTATE_AXIS_Z = 0.1 ) */
+/* 		END PARAMETERS */
+
+		PARAMETERS
+			PARAMETER ( X = 0.0 ),
+			PARAMETER ( Y = 0.0 ),
+			PARAMETER ( Z = 0.0 )
+		END PARAMETERS
+
+	END POPULATION
+
+END PUBLIC_MODELS
+
+

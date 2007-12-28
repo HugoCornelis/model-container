@@ -1,0 +1,51 @@
+---
+options:
+  histology:
+    shrinkage: 1
+  relocation:
+    soma_offset: 1
+prototypes:
+  aliasses:
+    - segments/spines/purkinje.ndf::Purk_spine
+    - tests/segments/purkinje/maind.ndf::maind
+    - tests/segments/purkinje/soma.ndf::soma
+    - tests/segments/purkinje/spinyd.ndf::spinyd
+    - tests/segments/purkinje/thickd.ndf::thickd
+  name_2_prototype:
+    - name: 'br1[0]'
+      prototype: thickd
+    - name: 'br2[0]'
+      prototype: thickd
+    - name: 'b1s06[1]'
+      prototype: thickd
+    - name: 'b1s06[2]'
+      prototype: thickd
+    - name: 'b1s10[23]'
+      prototype: spinyd
+    - name: 'b2s30[10]'
+      prototype: spinyd
+    - name: 'b3s37[18]'
+      prototype: spinyd
+    - name: 'b3s44[26]'
+      prototype: spinyd
+    - name: 'b3s45[4]'
+      prototype: spinyd
+    - name: 'b3s45[12]'
+      prototype: spinyd
+    - name: 'b3s45[20]'
+      prototype: spinyd
+  parameter_2_prototype:
+    - dia: 3.18e-06
+      prototype: spinyd
+    - dia: 7.71e-06
+      prototype: thickd
+    - dia: 2.8e-05
+      prototype: maind
+    - dia: 1
+      prototype: soma
+  spine_prototypes: []
+variables:
+  origin:
+    x: 0
+    y: 0
+    z: 0

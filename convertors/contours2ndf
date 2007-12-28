@@ -1,0 +1,431 @@
+#!/usr/bin/perl -w
+#!/usr/bin/perl -d:ptkdb
+#
+
+
+use strict;
+
+
+BEGIN
+{
+    if ($ENV{srcdir})
+    {
+	print "Found ENV{srcdir} ($ENV{srcdir}), using it for finding perl modules\n";
+
+	push @INC, "$ENV{srcdir}";
+
+    }
+
+    push @INC, '.';
+
+    push @INC, '/usr/local/glue/swig/perl';
+}
+
+
+$SIG{__DIE__}
+    = sub {
+	use Carp;
+
+	confess @_;
+    };
+
+
+$SIG{__WARN__}
+    = sub {
+	use Carp;
+
+	Carp::cluck @_;
+    };
+
+
+# use Data::Dumper;
+
+use Getopt::Long;
+
+use XML::Simple;
+
+use YAML::Syck;
+
+
+my $loaded_geometry = eval "require Geometry;";
+
+
+my $option_files;
+my $option_help;
+my $option_offset;
+my $option_reconstruct_directory;
+my $option_thickness_fixed;
+my $option_thickness_implied;
+my $option_verbose;
+
+
+sub read_files
+{
+    my $directory = shift;
+
+    if ($directory !~ m(/$))
+    {
+	$directory .= "/";
+    }
+
+    my $files = defined $option_files ? $option_files : '.*[0-9]$';
+
+    my $filenames = [ split '\n', `find "$directory" -regex '$files'`, ];
+
+    $filenames
+	= [
+	   sort
+	   {
+	       $a =~ /([0-9]*)$/;
+
+	       my $a_number = $1;
+
+	       $b =~ /([0-9]*)$/;
+
+	       my $b_number = $1;
+
+	       $a_number <=> $b_number;
+	   }
+	   @$filenames,
+	  ];
+
+    my $annotated_series
+	= [
+	   map
+	   {
+	       XMLin($_, );	# ParserOpts => [ NoExpand => 0, ], );
+	   }
+	   @$filenames,
+	  ];
+
+    return $annotated_series;
+}
+
+
+sub main
+{
+    read_cmd_line();
+
+    # read the input contours
+
+    my $contours = read_input();
+
+    # loop over all the input contours, convert hash to array
+
+    my $contours_array = [];
+
+    if (ref $contours eq 'HASH')
+    {
+	my $contours_count = 0;
+
+	foreach my $contour_name (sort
+				  {
+				      $a =~ /([0-9]+)/;
+
+				      my $a_number = $1;
+
+				      $b =~ /([0-9]+)/;
+
+				      my $b_number = $1;
+
+				      $a_number <=> $b_number;
+				  }
+				  keys %$contours)
+	{
+	    my $contour = $contours->{$contour_name};
+
+	    my $count = 0;
+
+	    foreach my $entry (@$contour)
+	    {
+		if ($count ne 0)
+		{
+		    die "$0: *** Error: multiple entries in contour $contour_name";
+		}
+
+		$contours_array->[$contours_count] = $entry;
+
+		$count++;
+	    }
+
+	    $contours_count++;
+	}
+    }
+    else
+    {
+	$contours_array = $contours;
+    }
+
+    # compute offset to apply
+
+    my $offset = [ 0, 0, 0, ];
+
+    if ($option_offset)
+    {
+	my $offsetpoint = $contours_array->[0]->[0];
+
+	$offset = [ @$offsetpoint, ];
+    }
+
+    my $reconstruct_data;
+
+    if ($option_reconstruct_directory)
+    {
+	# read reconstruct data
+
+	$reconstruct_data = read_files($option_reconstruct_directory);
+    }
+
+    # initially all results are empty
+
+    my $output = "";
+
+    # loop over all the input contours
+
+    foreach my $contour_index (0 .. $#$contours_array)
+    {
+	my $contour = $contours_array->[$contour_index];
+
+	$output
+	    .= "
+		EM_CONTOUR e$contour_index
+";
+
+	my $thickness;
+
+	# for fixed thickness
+
+	if (defined $option_thickness_fixed)
+	{
+	    # the thickness is fixed
+
+	    $thickness = $option_thickness_fixed;
+	}
+
+	# for reconstruct data
+
+	elsif ($option_reconstruct_directory)
+	{
+	    # set thickness from reconstruct data
+
+	    $thickness = $reconstruct_data->[$contour_index]->{thickness};
+	}
+
+	# for implied thickness
+
+	elsif ($option_thickness_implied)
+	{
+	    # if the geometry library is loaded
+
+	    if ($loaded_geometry)
+	    {
+		# define thickness:
+
+		# get plane equation for this contour
+
+		my $polygon = Geometry::D3Line->new($contour);
+
+		my $closed = 1;
+
+		my $plane = Geometry::TGNORMALPLANEEQ->new();
+
+		$polygon->{D3Line}->GEOGetD3LinePlaneEquation($plane->{TGNORMALPLANEEQ});
+
+		# for almost all contours
+
+		if ($contour_index eq $#$contours_array)
+		{
+		    # compute the distance between the next contour and the plane
+
+		    my $previous_point = $contours_array->[$contour_index - 1]->[0];
+
+		    $thickness = $plane->{TGNORMALPLANEEQ}->GEODistPntPlane(Geometry::D3Point->new(@$previous_point)->{D3Point});
+		}
+
+		# but for the last contour
+
+		else
+		{
+		    # compute the distance between the previous contour and the plane
+
+		    my $next_point = $contours_array->[$contour_index + 1]->[0];
+
+		    $thickness = $plane->{TGNORMALPLANEEQ}->GEODistPntPlane(Geometry::D3Point->new(@$next_point)->{D3Point});
+		}
+	    }
+	    else
+	    {
+		die "$0: cannot load the geometry library";
+	    }
+	}
+
+	# if a thickness has been defined
+
+	if (defined $thickness)
+	{
+# 	    # round
+
+# 	    use POSIX;
+
+# 	    $thickness = POSIX::ceil($thickness * 1024 - .5 ) / 1024;
+
+	    # absolute value
+
+	    #! thickness will be negative for the last section if the
+	    #! geometry library is used to compute thicknesses.
+
+	    $thickness = abs($thickness);
+
+	    # scale
+
+	    $thickness = $thickness . "e-06";
+
+	    $output
+		.= "
+			PARAMETERS
+				PARAMETER ( THICKNESS = $thickness ),
+			END PARAMETERS
+";
+	}
+
+	map
+	{
+	    my $point_index = $_;
+
+	    my $point = $contour->[$point_index];
+
+	    $output
+		.= "
+			CONTOUR_POINT e${contour_index}_$point_index
+				PARAMETERS
+";
+
+	    my ($x, $y, $z) = @$point;
+
+	    $x -= $offset->[0];
+	    $y -= $offset->[1];
+	    $z -= $offset->[2];
+
+	    if ($x !~ /\./)
+	    {
+		$x .= '.0';
+	    }
+
+	    if ($y !~ /\./)
+	    {
+		$y .= '.0';
+	    }
+
+	    if ($z !~ /\./)
+	    {
+		$z .= '.0';
+	    }
+
+	    $x .= 'e-7';
+	    $y .= 'e-7';
+	    $z .= 'e-7';
+
+	    $output
+		.= "
+					PARAMETER ( X = $x ),
+					PARAMETER ( Y = $y ),
+					PARAMETER ( Z = $z ),
+";
+
+	    $output
+		.= "
+				END PARAMETERS
+			END CONTOUR_POINT
+";
+	}
+	    0 .. $#$contour;
+
+	$output
+	    .= "
+		END EM_CONTOUR
+";
+    }
+
+    my $name = 'noname';
+
+    my $date = gmtime();
+
+    my $preamble
+	    = "#!neurospacesparse
+// -*- NEUROSPACES -*-
+// Neurospaces contour file for an EM stack of contours
+// converted by $0, $date
+//
+
+NEUROSPACES NDF
+
+PUBLIC_MODELS
+
+	CONTOUR_GROUP $name
+";
+
+    my $postamble
+	= "	END CONTOUR_GROUP
+
+END PUBLIC_MODELS
+
+";
+
+    my $final_output = $preamble . $output . $postamble;
+
+    print $final_output;
+
+}
+
+
+sub read_cmd_line
+{
+    my $result
+	= GetOptions
+	    (
+	     "files=s" => \$option_files,
+	     "help!" => \$option_help,
+	     "offset!" => \$option_offset,
+	     "reconstruct-directory=s" => \$option_reconstruct_directory,
+	     "thickness-fixed=s" => \$option_thickness_fixed,
+	     "thickness-implied!" => \$option_thickness_implied,
+	     "v|verbose+" => \$option_verbose,
+	    );
+
+    if ($option_help)
+    {
+	print
+	    "
+$0: convert point data from an EM stack to ndf format.
+
+reads from stdin, writes to stdout
+
+options :
+    help                   print usage information.
+    offset                 offset all points such that the artefact starts at the origin.
+    reconstruct-directory  reconstruct directory with tracings, to get the thickness of the slices.
+    thickness-fixed        thickness parameter to apply to all sections.
+    thickness-implied      imply the thickness of the sections by calculating the distances between them.
+                           The last section has a thickness the same as the previous.
+    v|verbose              tell what is being done, specify multiple times to get
+                           more feedback.
+";
+
+	exit 1;
+    }
+}
+
+
+sub read_input
+{
+    local $/;
+
+    my $contours = <>;
+
+    return Load($contours);
+}
+
+
+main();
+
+

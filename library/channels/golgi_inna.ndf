@@ -1,0 +1,34 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+// Morphology file for Golgi cell
+//   http://www.bbf.uia.ac.be/
+
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+// UNITS seconds meters voltage siemens
+
+PUBLIC_MODELS
+
+	/* Inactivating Na current */
+
+	CHANNEL InNa
+		BINDABLES
+			INPUT Vm,OUTPUT Gk,OUTPUT Ik
+		END BINDABLES
+
+		CHANTABLEFILE "Golgi_inna37.tab"
+
+		PARAMETERS
+			PARAMETER ( Xpower = 3.0 ),
+			PARAMETER ( Ypower = 1.0 ),
+			PARAMETER ( Zpower = 0.0 )
+		END PARAMETERS
+
+	END CHANNEL
+
+END PUBLIC_MODELS
+
+

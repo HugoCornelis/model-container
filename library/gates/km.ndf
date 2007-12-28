@@ -1,0 +1,107 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+PUBLIC_MODELS
+
+	HH_GATE km
+		BINDABLES
+			INPUT Vm,OUTPUT activation
+		END BINDABLES
+
+		BINDINGS
+			INPUT ..->Vm
+		END BINDINGS
+
+		GATE_KINETIC_PART a
+
+			BINDABLES
+				INPUT Vm, OUTPUT a
+			END BINDABLES
+
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			PARAMETERS
+
+				//m 1: nominator
+
+				PARAMETER ( dNominator = 0.2 ),
+
+				//m 2: denominator multiplier 1
+
+				PARAMETER ( dMultiplier1 = 3.3 ),
+
+				//m 5: membrane offset 1
+
+				PARAMETER ( dMembraneOffset1 = 0.035 ),
+
+				//m 6: denormalized time constant 1
+
+				PARAMETER ( dTauDenormalizer1 = 0.02 ),
+
+				//m 2: denominator multiplier 2
+
+				PARAMETER ( dMultiplier2 = 1.0 ),
+
+				//m 5: membrane offset 2
+
+				PARAMETER ( dMembraneOffset2 = 0.035 ),
+
+				//m 6: denormalized time constant 2
+
+				PARAMETER ( dTauDenormalizer2 = -0.02 ),
+
+			END PARAMETERS
+
+		END GATE_KINETIC_PART
+
+		GATE_KINETIC_PART b
+
+			BINDABLES
+				INPUT Vm, OUTPUT b
+			END BINDABLES
+
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			PARAMETERS
+
+				//m 1: nominator
+
+				PARAMETER ( dNominator = 1.0 ),
+
+				//m 2: denominator offset
+
+				PARAMETER ( dDeNominatorOffset = 1.0 ),
+
+				//m 5: membrane offset 1
+
+				PARAMETER ( dMembraneOffset = 0.035 ),
+
+				//m 6: denormalized time constant 1
+
+				PARAMETER ( dTauDenormalizer = -0.01 ),
+
+			END PARAMETERS
+
+		END GATE_KINETIC_PART
+
+		PARAMETERS
+
+			//m initial value, commonly forward over backward steady states
+
+			PARAMETER ( state_init = 0.03540844397 ),
+			PARAMETER ( POWER = 1.0 ),
+
+		END PARAMETERS
+
+	END HH_GATE
+
+END PUBLIC_MODELS
+
+
