@@ -20,9 +20,9 @@ my $test
 						   write => undef,
 						  },
 						  {
-						   # $Format: "description => \"Does the version information match with $ProjectVersion$ ?\","$
+						   # $Format: "description => \"Does the version information match with ${package}-${label}-${email} ?\","$
 description => "Does the version information match with 0.1675 ?",
-						   # $Format: "read => \"$ProjectVersion$\","$
+						   # $Format: "read => \"${package}-${label}-${email}\","$
 read => "0.1675",
 						   write => "version",
 						  },

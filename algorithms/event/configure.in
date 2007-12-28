@@ -22,7 +22,7 @@ AC_INIT(serialsegment.c)
 
 AM_CONFIG_HEADER(config.h)
 
-dnl $Format: "AM_INIT_AUTOMAKE(neurospaces/algorithms/event,$ProjectVersion$)" $
+# $Format: "AC_INIT(${package}, ${label}, ${email})"$
 AM_INIT_AUTOMAKE(neurospaces/algorithms/event,0.1675)
 
 # determine linker flags for perl embedding

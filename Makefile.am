@@ -149,7 +149,7 @@ dist-hook:
 	cp -a $(srcdir)/hierarchy $(distdir)
 	rm -fr $(distdir)/hierarchy/output
 	cd $(srcdir) && prcs diff -k neurospaces.prj `prcs 2>/dev/null execute --not ".*\(directory\|symlink\)" neurospaces.prj | grep -v "neurospaces\.prj" | grep -v "purkinjespine" `
-# $Format: "	( cd $(distdir)/tests && chmod -R u+w . && ./tests_2_html --header '<img src=\"ns-main-logo-dark2-notext-32x32.jpg\" alt=\"Main Neurospaces logo\"> $ProjectHeader$<hr>' --introduction introduction.html )" $
+# $Format: "	( cd $(distdir)/tests && chmod -R u+w . && ./tests_2_html --header '<img src=\"ns-main-logo-dark2-notext-32x32.jpg\" alt=\"Main Neurospaces logo\"> ${package}, ${label}, ${email} <hr>' --introduction introduction.html )" $
 	( cd $(distdir)/tests && chmod -R u+w . && ./tests_2_html --header '<img src="ns-main-logo-dark2-notext-32x32.jpg" alt="Main Neurospaces logo"> neurospaces 0.1675 Thu, 27 Dec 2007 15:58:18 -0600 hugo<hr>' --introduction introduction.html )
 
 #! this one breaks the distcheck, because automake makes dist dirs read-only
@@ -319,7 +319,7 @@ test: check
 html-upload-prepare:
 	rm -fr html/htdocs/neurospaces_project/neurospaces
 	mkdir --parents html/htdocs/neurospaces_project/neurospaces
-# $Format: "	( cd tests && ./tests_2_html --header '<img src=\"ns-main-logo-dark2-notext-32x32.jpg\" alt=\"Main Neurospaces logo\"> $ProjectHeader$<hr>' --introduction introduction.html )" $
+# $Format: "	( cd tests && ./tests_2_html --header '<img src=\"ns-main-logo-dark2-notext-32x32.jpg\" alt=\"Main Neurospaces logo\"> ${package}, ${label}, ${email} <hr>' --introduction introduction.html )" $
 	( cd tests && ./tests_2_html --header '<img src="ns-main-logo-dark2-notext-32x32.jpg" alt="Main Neurospaces logo"> neurospaces 0.1675 Thu, 27 Dec 2007 15:58:18 -0600 hugo<hr>' --introduction introduction.html )
 	tar cfh - tests/html | ( cd html/htdocs/neurospaces_project/neurospaces && tar vxf - )
 	hierarchy/types_2_html >html/htdocs/neurospaces_project/neurospaces/algorithminstances.html hierarchy/algorithminstances
@@ -329,7 +329,7 @@ html-upload: html-upload-prepare
 	scp -pr html/htdocs/* hcornelis@shell.sourceforge.net:/home/groups/n/ne/neurospaces/htdocs/
 
 internal-library:
-# $Format: "	tar cfz library-$ProjectVersion$.tar.gz library/" $
+# $Format: "	tar cfz library-${package}-${label}.tar.gz library/" $
 	tar cfz library-0.1675.tar.gz library/
 
 libneurospacesread.so: libneurospacesread.a

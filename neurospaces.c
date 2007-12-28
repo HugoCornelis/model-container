@@ -1,4 +1,4 @@
-static char *pcVersionTime="(07/10/13) Saturday, October 13, 2007 20:51:28 hugo";
+static char *pcVersionTime="(07/12/28) Friday, December 28, 2007 16:55:54 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -1711,7 +1711,7 @@ static int NeurospacesStartTimingReport(void)
 
 char * NeurospacesGetVersion(void)
 {
-    // $Format: "    static char *pcVersion=\"$ProjectVersion$\";"$
+    // $Format: "    static char *pcVersion=\"${package}-${label}-${email}\";"$
     static char *pcVersion="0.1675";
 
     return(pcVersion);

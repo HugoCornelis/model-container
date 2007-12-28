@@ -10,7 +10,7 @@ use strict;
 
 
 {
-    # $Format: "system 'mkdir --parents \"/tmp/neurospaces/$ProjectVersion$\"'";$
+    # $Format: "system 'mkdir --parents \"/tmp/neurospaces/${package}-${label}\"'";$
 system 'mkdir --parents "/tmp/neurospaces/0.1675"'
 }
 
@@ -21,7 +21,7 @@ if ($?)
 
 
 {
-    # $Format: "system \"cp '/local_home/local_home/hugo/neurospaces_project/neurospaces/source/c/snapshots/0/neurospacesread-$ProjectVersion$.tar.gz' '/tmp/neurospaces/$ProjectVersion$'\"";$
+    # $Format: "system \"cp '/local_home/local_home/hugo/neurospaces_project/neurospaces/source/c/snapshots/0/${package}-${label}.tar.gz' '/tmp/neurospaces/${package}-${label}'\"";$
 system "cp '/local_home/local_home/hugo/neurospaces_project/neurospaces/source/c/snapshots/0/neurospacesread-0.1675.tar.gz' '/tmp/neurospaces/0.1675'"
 }
 
@@ -32,7 +32,7 @@ if ($?)
 
 
 {
-    # $Format: "chdir \"/tmp/neurospaces/$ProjectVersion$\"";$
+    # $Format: "chdir \"/tmp/neurospaces/${package}-${label}\"";$
 chdir "/tmp/neurospaces/0.1675"
 }
 
@@ -43,7 +43,7 @@ if ($?)
 
 
 {
-    # $Format: "system \"tar xfz 'neurospacesread-$ProjectVersion$.tar.gz'\"";$
+    # $Format: "system \"tar xfz '${package}-${label}.tar.gz'\"";$
 system "tar xfz 'neurospacesread-0.1675.tar.gz'"
 }
 
@@ -54,7 +54,7 @@ if ($?)
 
 
 {
-    # $Format: "chdir \"neurospacesread-$ProjectVersion$\"";$
+    # $Format: "chdir \"${package}-${label}\"";$
 chdir "neurospacesread-0.1675"
 }
 
