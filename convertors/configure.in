@@ -18,11 +18,12 @@ dnl
 dnl //////////////////////////////////////////////////////////////////////////
 
 dnl Process this file with autoconf to produce a configure script.
+# $Format: "AC_REVISION(${package}-convertors, ${label}, ${email})"$
 AC_REVISION($ProjectHeader: neurospaces 0.1675 Thu, 27 Dec 2007 15:58:18 -0600 hugo $)
-AC_REVISION($Id: configure.in 1.4 Sun, 18 Feb 2007 15:53:33 -0600 hugo $)
+dnl AC_REVISION($Id: configure.in 1.4 Sun, 18 Feb 2007 15:53:33 -0600 hugo $)
 AC_INIT(des2xml.c)
 
-# $Format: "AC_INIT(${package}, ${label}, ${email})"$
+# $Format: "AM_INIT_AUTOMAKE(convertors, ${label}, ${email})"$
 AM_INIT_AUTOMAKE(convertors,0.1675)
 
 dnl Checks for programs.

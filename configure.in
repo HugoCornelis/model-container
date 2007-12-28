@@ -93,7 +93,7 @@ dnl all subdirs
 
 AC_CONFIG_SUBDIRS(algorithms convertors glue/swig)
 
-# $Format: "AC_INIT(${package}, ${label}, ${email})"$
+# $Format: "AM_INIT_AUTOMAKE(${package}, ${label}, ${email})"$
 AM_INIT_AUTOMAKE(neurospacesread,0.1675)
 
 dnl Checks for programs.
