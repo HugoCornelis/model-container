@@ -20,10 +20,10 @@ my $test
 						   write => undef,
 						  },
 						  {
-						   # $Format: "description => \"Does the version information match with ${package}-${label}-${email} ?\","$
-description => "Does the version information match with neurospacesread-0.1675-hugo.cornelis@gmail.com ?",
-						   # $Format: "read => \"${package}-${label}-${email}\","$
-read => "neurospacesread-0.1675-hugo.cornelis@gmail.com",
+						   # $Format: "description => \"Does the version information match with ${package}-${label} ?\","$
+description => "Does the version information match with neurospacesread-0.1675 ?",
+						   # $Format: "read => \"${package}-${label}\","$
+read => "neurospacesread-0.1675",
 						   write => "version",
 						  },
 						 ],
