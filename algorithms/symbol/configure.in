@@ -22,8 +22,8 @@ AC_INIT(spines.c)
 
 AM_CONFIG_HEADER(config.h)
 
-# $Format: "AM_INIT_AUTOMAKE(${package}, ${label}, ${email})"$
-AM_INIT_AUTOMAKE(neurospaces/algorithms/symbol,0.1675)
+# $Format: "AM_INIT_AUTOMAKE(neurospaces/algorithms/symbol, ${label}, ${email})"$
+AM_INIT_AUTOMAKE(neurospaces/algorithms/symbol, 0.1675, hugo.cornelis@gmail.com)
 
 # determine linker flags for perl embedding
 

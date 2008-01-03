@@ -21,9 +21,9 @@ my $test
 						  },
 						  {
 						   # $Format: "description => \"Does the version information match with ${package}-${label}-${email} ?\","$
-description => "Does the version information match with 0.1675 ?",
+description => "Does the version information match with neurospacesread-0.1675-hugo.cornelis@gmail.com ?",
 						   # $Format: "read => \"${package}-${label}-${email}\","$
-read => "0.1675",
+read => "neurospacesread-0.1675-hugo.cornelis@gmail.com",
 						   write => "version",
 						  },
 						 ],

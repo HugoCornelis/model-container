@@ -10,8 +10,8 @@ use strict;
 
 
 {
-    # $Format: "system 'mkdir --parents \"/tmp/neurospaces/${package}-${label}\"'";$
-system 'mkdir --parents "/tmp/neurospaces/0.1675"'
+    # $Format: "system 'mkdir --parents \"/tmp/neurospaces/${package}-${label}\"';"$
+system 'mkdir --parents "/tmp/neurospaces/neurospacesread-0.1675"';
 }
 
 if ($?)
@@ -21,8 +21,8 @@ if ($?)
 
 
 {
-    # $Format: "system \"cp '/local_home/local_home/hugo/neurospaces_project/neurospaces/source/c/snapshots/0/${package}-${label}.tar.gz' '/tmp/neurospaces/${package}-${label}'\"";$
-system "cp '/local_home/local_home/hugo/neurospaces_project/neurospaces/source/c/snapshots/0/neurospacesread-0.1675.tar.gz' '/tmp/neurospaces/0.1675'"
+    # $Format: "system \"cp '/local_home/local_home/hugo/neurospaces_project/neurospaces/source/c/snapshots/0/${package}-${label}.tar.gz' '/tmp/neurospaces/${package}-${label}'\";"$
+system "cp '/local_home/local_home/hugo/neurospaces_project/neurospaces/source/c/snapshots/0/neurospacesread-0.1675.tar.gz' '/tmp/neurospaces/neurospacesread-0.1675'";
 }
 
 if ($?)
@@ -32,8 +32,8 @@ if ($?)
 
 
 {
-    # $Format: "chdir \"/tmp/neurospaces/${package}-${label}\"";$
-chdir "/tmp/neurospaces/0.1675"
+    # $Format: "chdir \"/tmp/neurospaces/${package}-${label}\";"$
+chdir "/tmp/neurospaces/neurospacesread-0.1675";
 }
 
 if ($?)
@@ -43,8 +43,8 @@ if ($?)
 
 
 {
-    # $Format: "system \"tar xfz '${package}-${label}.tar.gz'\"";$
-system "tar xfz 'neurospacesread-0.1675.tar.gz'"
+    # $Format: "system \"tar xfz '${package}-${label}.tar.gz'\";"$
+system "tar xfz 'neurospacesread-0.1675.tar.gz'";
 }
 
 if ($?)
@@ -54,8 +54,8 @@ if ($?)
 
 
 {
-    # $Format: "chdir \"${package}-${label}\"";$
-chdir "neurospacesread-0.1675"
+    # $Format: "chdir \"${package}-${label}\";"$
+chdir "neurospacesread-0.1675";
 }
 
 if ($?)
@@ -65,8 +65,8 @@ if ($?)
 
 
 {
-    # $Format: "system \"./configure\"";$
-system "./configure"
+    # $Format: "system \"./configure\";"$
+system "./configure";
 }
 
 if ($?)
@@ -76,8 +76,8 @@ if ($?)
 
 
 {
-    # $Format: "system 'make'";$
-system 'make'
+    # $Format: "system 'make';"$
+system 'make';
 }
 
 if ($?)
@@ -87,8 +87,8 @@ if ($?)
 
 
 {
-    # $Format: "system 'make test'";$
-system 'make test'
+    # $Format: "system 'make test';"$
+system 'make test';
 }
 
 if ($?)

@@ -13,8 +13,8 @@ chdir '/tmp/neurospaces' || die "Cannot cd to /tmp/neurospaces";
 
 
 {
-    # $Format: "system 'wget \"http://superb-west.dl.sourceforge.net/sourceforge/neurospaces/${package}-${label}.tar.gz\"'";$
-system 'wget "http://superb-west.dl.sourceforge.net/sourceforge/neurospaces/neurospacesread-0.1675.tar.gz"'
+    # $Format: "system 'wget \"http://superb-west.dl.sourceforge.net/sourceforge/neurospaces/${package}-${label}.tar.gz\"';"$
+system 'wget "http://superb-west.dl.sourceforge.net/sourceforge/neurospaces/neurospacesread-0.1675.tar.gz"';
 }
 
 if ($?)
@@ -24,8 +24,8 @@ if ($?)
 
 
 {
-    # $Format: "system 'tar vxfz \"${package}-${label}.tar.gz\"'";$
-system 'tar vxfz "neurospacesread-0.1675.tar.gz"'
+    # $Format: "system 'tar vxfz \"${package}-${label}.tar.gz\"';"$
+system 'tar vxfz "neurospacesread-0.1675.tar.gz"';
 }
 
 if ($?)
@@ -35,14 +35,14 @@ if ($?)
 
 
 {
-    # $Format: "chdir '${package}-${label}'" || die "chdir failed";$
-chdir 'neurospacesread-0.1675'
+    # $Format: "chdir '${package}-${label}' || die 'chdir failed';"$
+chdir 'neurospacesread-0.1675' || die 'chdir failed';
 }
 
 
 {
-    # $Format: "system './configure'";$
-system './configure'
+    # $Format: "system './configure';"$
+system './configure';
 }
 
 if ($?)
@@ -52,8 +52,8 @@ if ($?)
 
 
 {
-    # $Format: "system 'make'";$
-system 'make'
+    # $Format: "system 'make';"$
+system 'make';
 }
 
 if ($?)
@@ -63,8 +63,8 @@ if ($?)
 
 
 {
-    # $Format: "system 'make check'";$
-system 'make check'
+    # $Format: "system 'make check';"$
+system 'make check';
 }
 
 if ($?)

@@ -26,8 +26,8 @@ dnl all subdirs
 
 AC_CONFIG_SUBDIRS(event symbol)
 
-# $Format: "AM_INIT_AUTOMAKE(${package}, ${label}, ${email})"$
-AM_INIT_AUTOMAKE(neurospaces_algorithms,0.1675)
+# $Format: "AM_INIT_AUTOMAKE(${package}_algorithms, ${label}, ${email})"$
+AM_INIT_AUTOMAKE(neurospacesread_algorithms, 0.1675, hugo.cornelis@gmail.com)
 
 dnl Checks for programs.
 AC_PROG_AWK
