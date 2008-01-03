@@ -24,6 +24,17 @@ aclocal
 autoheader
 automake --foreign --add-missing
 autoconf
+cd glue/swig
+aclocal
+autoheader
+automake --foreign --add-missing
+autoconf
+cd perl
+aclocal
+autoheader
+automake --foreign --add-missing
+autoconf
+cd ../../..
 
 # taken from the monotone-dev list :
 # $ aclocal -I .
