@@ -25,7 +25,7 @@ PUBLIC_MODELS
 
 	CHANNEL NMDA
 		BINDABLES
-			INPUT Vm,OUTPUT exp2->Gk,OUTPUT Ik
+			INPUT Vm,OUTPUT exp2->G,OUTPUT Ik
 		END BINDABLES
 
 		CHILD Synapse synapse
@@ -33,7 +33,7 @@ PUBLIC_MODELS
 
 		EXP2_EQUATION exp2
 			BINDABLES
-				INPUT activation,OUTPUT Gk
+				INPUT activation,OUTPUT G
 			END BINDABLES
 			BINDINGS
 	               		INPUT ../synapse->activation

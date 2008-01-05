@@ -414,7 +414,7 @@ int ChannelHasEquation
 
 /// **************************************************************************
 ///
-/// SHORT: ChannelHasMGBlockGk()
+/// SHORT: ChannelHasMGBlockedGMAX()
 ///
 /// ARGS.:
 ///
@@ -423,36 +423,37 @@ int ChannelHasEquation
 ///
 /// RTN..: int : TRUE if channel MG block dependent
 ///
-/// DESCR: Check if channel Gk MG block dependent
+/// DESCR: Check if channel conductance is blocked by magnesium.
 ///
 /// **************************************************************************
 
-int ChannelHasMGBlockGk
+int
+ChannelHasMGBlockGMAX
 (struct symtab_Channel *pchan, struct PidinStack *ppist)
 {
     //- set default result : false
 
     int bResult = FALSE;
 
-    //- if Gk present
+    //- if GMAX present
 
-    struct symtab_Parameters *pparGk
-	= SymbolFindParameter(&(pchan->bio.ioh.iol.hsle),"GMAX",ppist);
+    struct symtab_Parameters *pparGMAX
+	= SymbolFindParameter(&(pchan->bio.ioh.iol.hsle), "GMAX", ppist);
 
-    if (pparGk)
+    if (pparGMAX)
     {
-	//- if Gk is function
+	//- if GMAX is function
 
-	if (ParameterIsFunction(pparGk))
+	if (ParameterIsFunction(pparGMAX))
 	{
 	    //- get function
 
-	    struct symtab_Function *pfunGk
-		= ParameterGetFunction(pparGk);
+	    struct symtab_Function *pfunGMAX
+		= ParameterGetFunction(pparGMAX);
 
 	    //- if function name is MGBLOCK
 
-	    if (strcmp(FunctionGetName(pfunGk),"MGBLOCK") == 0)
+	    if (strcmp(FunctionGetName(pfunGMAX), "MGBLOCK") == 0)
 	    {
 		//- set result : ok
 

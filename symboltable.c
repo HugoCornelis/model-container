@@ -3237,7 +3237,7 @@ SymbolTraverseWildcard
 
 /// **************************************************************************
 ///
-/// SHORT: SymbolHasMGBlockGk()
+/// SHORT: SymbolHasMGBlockGMAX()
 ///
 /// ARGS.:
 ///
@@ -3245,7 +3245,7 @@ SymbolTraverseWildcard
 ///
 /// RTN..: int : TRUE if symbol has MG blocking
 ///
-/// DESCR: Check if symbol Gk MG blocking dependent
+/// DESCR: Check if symbol G is MG blocked.
 ///
 /// **************************************************************************
 

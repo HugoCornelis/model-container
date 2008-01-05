@@ -26,7 +26,7 @@ PUBLIC_MODELS
 
 	CHANNEL GABAA
 		BINDABLES
-			INPUT Vm,OUTPUT exp2->Gk,OUTPUT Ik
+			INPUT Vm,OUTPUT exp2->G,OUTPUT Ik
 		END BINDABLES
 
 		PARAMETERS
@@ -45,7 +45,7 @@ PUBLIC_MODELS
 
 		EXP2_EQUATION exp2
 			BINDABLES
-				INPUT activation,OUTPUT Gk
+				INPUT activation,OUTPUT G
 			END BINDABLES
 			BINDINGS
                 		INPUT ../synapse->activation

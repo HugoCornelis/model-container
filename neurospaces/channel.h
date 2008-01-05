@@ -63,7 +63,8 @@ ChannelGetIncomingVirtual
 int ChannelHasEquation
 (struct symtab_Channel *pchan, struct PidinStack *ppist);
 
-int ChannelHasMGBlockGk
+int
+ChannelHasMGBlockGMAX
 (struct symtab_Channel *pchan, struct PidinStack *ppist);
 
 int ChannelHasNernstEk

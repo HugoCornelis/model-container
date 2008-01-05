@@ -37,9 +37,9 @@
 	<unit name="surface" units="meters^2" short="m^2" />
 	<unit name="volume" units="meters^3" short="m^3" />
 	<unit name="potential" units="volt" short="Vm" />
-	<unit name="conductance" units="siemens" short="Gk" />
+	<unit name="conductance" units="siemens" short="S" />
 
-<!-- 	<conductance-density units="siemens / surface" short="Gk / m^2" /> -->
+<!-- 	<conductance-density units="siemens / surface" short="S / m^2" /> -->
 
 <!-- or alternative with dependencies on other unit declarations -->
 
@@ -104,7 +104,7 @@
 	<channel name="Purk-GABA" >
 		<bindables>
 			<input name="Vm" />
-			<output name="Gk" />
+			<output name="G" />
 		</bindables>
 
 <!-- We have a number of predefined equations: -->
@@ -124,7 +124,7 @@
 <!-- elements. -->
 
 		<parameter-set>
-			<symbol-parameter name="GMAX" unit="Gk" value="1.077" />
+			<symbol-parameter name="GMAX" unit="S / m^2" value="1.077" />
 			<symbol-parameter name="Ek" unit="Vm" value="0.0" />
 		</parameter-set>
 
@@ -133,7 +133,7 @@
 		<exp2-equation name="exp2" >
 			<bindables>
 				<input name="activation" />
-				<output name="Gk" />
+				<output name="G" />
 			</bindables>
 
 			<parameter-set>>

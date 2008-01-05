@@ -21,7 +21,7 @@ PUBLIC_MODELS
 
 	CHANNEL Purk_non_NMDA
 		BINDABLES
-			INPUT Vm,OUTPUT exp2->Gk,OUTPUT Ik
+			INPUT Vm,OUTPUT exp2->G,OUTPUT Ik
 		END BINDABLES
 
 		PARAMETERS
@@ -34,7 +34,7 @@ PUBLIC_MODELS
 
 		EXP2_EQUATION exp2
 			BINDABLES
-				INPUT activation,OUTPUT Gk
+				INPUT activation,OUTPUT G
 			END BINDABLES
 			BINDINGS
 	               		INPUT ../synapse->activation

@@ -172,7 +172,7 @@ my $class_hierarchy
 				    CHANNEL_TYPE => 'defines the channel type (ChannelActInact: channel with activation and inactivation gates, ChannelAct: channel with activation gate, ChannelActConc: channel with activation and concentration gates)',
 				    Ek => 'channel reversal potential',
 				    GMAX => 'maximal conductance density when all channels are in the open state',
-				    Gk => 'actual channel conductance, normally a solved variable',
+				    G => 'actual channel conductance, normally a solved variable',
 				    Ik => 'actual channel current, normally a solved variable',
 				   },
 		    },
