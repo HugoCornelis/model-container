@@ -158,7 +158,7 @@ my $class_hierarchy
 		     allows => {
 				'create_alias' => 'channel',
 				'has_equation' => 'channel',
-				'has_m_g_block_gk' => 'channel',
+				'has_m_g_block_g' => 'channel',
 				'has_nernst_ek' => 'channel',
 				'parameter_scale_value' => 'channel',
 			       },
@@ -796,7 +796,7 @@ my $object_methods
 	'get_weight',
 	'has_bindable_i_o',
 	'has_equation',
-	'has_m_g_block_gk',
+	'has_m_g_block_g',
 	'has_nernst_ek',
 	'linearize',
 	'lookup_hierarchical',
@@ -932,9 +932,9 @@ my $object_methods_custom_code
        'has_equation' => {
 			  simple => 1,
 			 },
-       'has_m_g_block_gk' => {
-			      simple => 1,
-			     },
+       'has_m_g_block_g' => {
+			     simple => 1,
+			    },
        'has_nernst_ek' => {
 			   simple => 1,
 			  },
@@ -1237,10 +1237,10 @@ my $object_methods_return_types
 			  selector => '.uSelector.iFunc',
 			  type => 'int',
 			 },
-       'has_m_g_block_gk' => {
-			      default => '-1',
-			      selector => '.uSelector.iFunc',
-			      type => 'int',
+       'has_m_g_block_g' => {
+			     default => '-1',
+			     selector => '.uSelector.iFunc',
+			     type => 'int',
 			     },
        'has_nernst_ek' => {
 			   default => '-1',
@@ -1600,10 +1600,10 @@ my $object_methods_signatures
 			  calling => '(phsle, ppist)',
 			  prototype => '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)',
 			 },
-       'has_m_g_block_gk' => {
-			      calling => '(phsle, ppist)',
-			      prototype => '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)',
-			     },
+       'has_m_g_block_g' => {
+			     calling => '(phsle, ppist)',
+			     prototype => '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)',
+			    },
        'has_nernst_ek' => {
 			   calling => '(phsle, ppist)',
 			   prototype => '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)',
