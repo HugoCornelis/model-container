@@ -37,13 +37,13 @@ PUBLIC_MODELS
 		END BINDABLES
 
 		BINDINGS
-			INPUT cat->Ik,
-			INPUT kh->Ik,
-			INPUT naf->Ik,
-			INPUT nap->Ik,
-			INPUT ka->Ik,
-			INPUT kdr->Ik,
-			INPUT km->Ik,
+			INPUT cat->I,
+			INPUT kh->I,
+			INPUT naf->I,
+			INPUT nap->I,
+			INPUT ka->I,
+			INPUT kdr->I,
+			INPUT km->I,
 		END BINDINGS
 
 		OPTIONS SPHERICAL
@@ -108,7 +108,7 @@ PUBLIC_MODELS
 		CHILD ca_pool
 			ca_pool
 			BINDINGS
-				INPUT ^/cat->Ik
+				INPUT ^/cat->I
 			END BINDINGS
 		END CHILD
 

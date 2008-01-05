@@ -71,7 +71,7 @@ PRIVATE_MODELS
 
 	GROUP CalciumComplex 
 		BINDABLES
-			INPUT Vm,OUTPUT CaHVA->G,OUTPUT CaHVA->Ik
+			INPUT Vm,OUTPUT CaHVA->G,OUTPUT CaHVA->I
 		END BINDABLES
 
 		PARAMETERS
@@ -82,7 +82,7 @@ PRIVATE_MODELS
 		CHILD Ca_concen
 			Ca_pool
 			BINDINGS
-                		INPUT CaHVA->Ik
+                		INPUT CaHVA->I
 			END BINDINGS
 		END CHILD
 
@@ -180,14 +180,14 @@ PUBLIC_MODELS
 			END BINDABLES
 
 			BINDINGS
-                		INPUT CaHVA->Ik,
-                		INPUT H->Ik,
-                		INPUT InNa->Ik,
-                		INPUT KA->Ik,
-                		INPUT KDr->Ik,
-//                 		INPUT stellate->Ik,
-                		INPUT mf_AMPA->Ik,
-                		INPUT pf_AMPA->Ik
+                		INPUT CaHVA->I,
+                		INPUT H->I,
+                		INPUT InNa->I,
+                		INPUT KA->I,
+                		INPUT KDr->I,
+//                 		INPUT stellate->I,
+                		INPUT mf_AMPA->I,
+                		INPUT pf_AMPA->I
 			END BINDINGS
 
 			OPTIONS SPHERICAL
@@ -215,7 +215,7 @@ PUBLIC_MODELS
 			CHILD Ca_concen
 				Ca_pool
 				BINDINGS
-                			INPUT ^/CaHVA->Ik
+                			INPUT ^/CaHVA->I
 				END BINDINGS
 			END CHILD
 

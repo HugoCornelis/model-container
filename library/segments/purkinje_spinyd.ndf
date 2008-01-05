@@ -91,12 +91,12 @@ PUBLIC_MODELS
 		END BINDABLES
 
 		BINDINGS
-                	INPUT CaP->Ik,
-                	INPUT CaT->Ik,
-                	INPUT K2->Ik,
-                	INPUT KC->Ik,
-                	INPUT KM->Ik,
-                	INPUT stellate->Ik
+                	INPUT CaP->I,
+                	INPUT CaT->I,
+                	INPUT K2->I,
+                	INPUT KC->I,
+                	INPUT KM->I,
+                	INPUT stellate->I
 		END BINDINGS
 
 		OPTIONS CYLINDRICAL
@@ -179,8 +179,8 @@ PUBLIC_MODELS
 		CHILD Ca_pool
 			Ca_pool
 			BINDINGS
-                		INPUT ^/CaT->Ik,
-                		INPUT ^/CaP->Ik
+                		INPUT ^/CaT->I,
+                		INPUT ^/CaP->I
 			END BINDINGS
 		END CHILD
 

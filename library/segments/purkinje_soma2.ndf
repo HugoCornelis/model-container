@@ -96,7 +96,7 @@ PRIVATE_MODELS
 
 	GROUP CalciumDynamicsSystem
 		BINDABLES
-			INPUT Vm,OUTPUT CaT->G,OUTPUT CaT->Ik
+			INPUT Vm,OUTPUT CaT->G,OUTPUT CaT->I
 		END BINDABLES
 
 		PARAMETERS
@@ -118,7 +118,7 @@ PRIVATE_MODELS
 		CHILD Ca_pool
 			Ca_pool
 			BINDINGS
-                		INPUT ^/CaT->Ik
+                		INPUT ^/CaT->I
 			END BINDINGS
 		END CHILD
 
@@ -137,15 +137,15 @@ PUBLIC_MODELS
 		END BINDABLES
 
 		BINDINGS
-                	INPUT CaT->Ik,
-                	INPUT h1->Ik,
-                	INPUT h2->Ik,
-                	INPUT NaF->Ik,
-                	INPUT NaP->Ik,
-                	INPUT KA->Ik,
-                	INPUT Kdr->Ik,
-                	INPUT KM->Ik,
-                	INPUT basket->Ik
+                	INPUT CaT->I,
+                	INPUT h1->I,
+                	INPUT h2->I,
+                	INPUT NaF->I,
+                	INPUT NaP->I,
+                	INPUT KA->I,
+                	INPUT Kdr->I,
+                	INPUT KM->I,
+                	INPUT basket->I
                	END BINDINGS
 
 		OPTIONS SPHERICAL
@@ -161,7 +161,7 @@ PUBLIC_MODELS
 // 		CHILD Ca_pool
 // 			Ca_pool
 // 			BINDINGS
-//                 		INPUT ^/CaT->Ik
+//                 		INPUT ^/CaT->I
 // 			END BINDINGS
 // 		END CHILD
 
@@ -279,7 +279,7 @@ PUBLIC_MODELS
 
 	GROUP CalciumDynamicsSystem
 		BINDABLES
-			INPUT Vm,OUTPUT CaT->G,OUTPUT CaT->Ik
+			INPUT Vm,OUTPUT CaT->G,OUTPUT CaT->I
 		END BINDABLES
 
 		PARAMETERS
@@ -301,7 +301,7 @@ PUBLIC_MODELS
 		CHILD Ca_pool
 			Ca_pool
 			BINDINGS
-                		INPUT ^/CaT->Ik
+                		INPUT ^/CaT->I
 			END BINDINGS
 		END CHILD
 

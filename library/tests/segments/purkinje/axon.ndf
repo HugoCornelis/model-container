@@ -29,10 +29,10 @@ PUBLIC_MODELS
 		END BINDABLES
 
 		BINDINGS
-			INPUT cat->Ik,
-			INPUT naf->Ik,
-			INPUT nap->Ik,
-			INPUT kdr->Ik,
+			INPUT cat->I,
+			INPUT naf->I,
+			INPUT nap->I,
+			INPUT kdr->I,
 		END BINDINGS
 
 		OPTIONS SPHERICAL

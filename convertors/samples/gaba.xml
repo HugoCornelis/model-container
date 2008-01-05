@@ -49,7 +49,7 @@
 <!--		<element name="surface" /> -->
 <!--	</conductance-density> -->
 
-	<unit name="current" units="milliampere" short="Ik" />
+	<unit name="current" units="ampere" short="A" />
 	<unit name="concentration" units="molaire" short="concen" />
 
 	<unit name="discrete-events" units="events" />

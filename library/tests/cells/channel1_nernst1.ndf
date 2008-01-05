@@ -21,7 +21,7 @@ PRIVATE_MODELS
 		END BINDABLES
 
 		BINDINGS
-			INPUT cat->Ik,
+			INPUT cat->I,
 		END BINDINGS
 
 		PARAMETERS
@@ -47,7 +47,7 @@ PRIVATE_MODELS
 		CHILD ca_pool
 			ca_pool
 			BINDINGS
-				INPUT ^/cat->Ik,
+				INPUT ^/cat->I,
 			END BINDINGS
 		END CHILD
 

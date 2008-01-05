@@ -88,16 +88,16 @@ PUBLIC_MODELS
 		END BINDABLES
 
 		BINDINGS
-			INPUT CaP->Ik,
-			INPUT CaT->Ik,
-			INPUT K2->Ik,
-			INPUT KA->Ik,
-			INPUT KC->Ik,
-			INPUT Kdr->Ik,
-			INPUT KM->Ik,
-			INPUT basket->Ik,
-			INPUT climb->Ik /*,
-			INPUT mossy->Ik*/
+			INPUT CaP->I,
+			INPUT CaT->I,
+			INPUT K2->I,
+			INPUT KA->I,
+			INPUT KC->I,
+			INPUT Kdr->I,
+			INPUT KM->I,
+			INPUT basket->I,
+			INPUT climb->I /*,
+			INPUT mossy->I*/
 		END BINDINGS
 
 		OPTIONS CYLINDRICAL
@@ -202,8 +202,8 @@ PUBLIC_MODELS
 		CHILD Ca_pool
 			Ca_pool
 			BINDINGS
-				INPUT ^/CaT->Ik,
-				INPUT ^/CaP->Ik
+				INPUT ^/CaT->I,
+				INPUT ^/CaP->I
 			END BINDINGS
 		END CHILD
 

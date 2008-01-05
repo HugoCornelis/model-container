@@ -40,11 +40,11 @@ PUBLIC_MODELS
 		END BINDABLES
 
 		BINDINGS
-                	INPUT cap->Ik,
-                	INPUT cat->Ik,
-                	INPUT k2->Ik,
-                	INPUT kc->Ik,
-                	INPUT km->Ik,
+                	INPUT cap->I,
+                	INPUT cat->I,
+                	INPUT k2->I,
+                	INPUT kc->I,
+                	INPUT km->I,
 		END BINDINGS
 
 		PARAMETERS
@@ -105,8 +105,8 @@ PUBLIC_MODELS
 		CHILD ca_pool
 			ca_pool
 			BINDINGS
-                		INPUT ^/cat->Ik,
-                		INPUT ^/cap->Ik
+                		INPUT ^/cat->I,
+                		INPUT ^/cap->I
 			END BINDINGS
 		END CHILD
 

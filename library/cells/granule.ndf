@@ -125,15 +125,15 @@ PUBLIC_MODELS
 			END BINDABLES
 
 			BINDINGS
-                		INPUT CaHVA->Ik,
-                		INPUT H->Ik,
-                		INPUT InNa->Ik,
-                		INPUT KA->Ik,
-                		INPUT KDr->Ik,
-                		INPUT mf_NMDA->Ik,
-                		INPUT mf_AMPA->Ik,
-                		INPUT GABAA->Ik,
-                		INPUT GABAB->Ik
+                		INPUT CaHVA->I,
+                		INPUT H->I,
+                		INPUT InNa->I,
+                		INPUT KA->I,
+                		INPUT KDr->I,
+                		INPUT mf_NMDA->I,
+                		INPUT mf_AMPA->I,
+                		INPUT GABAA->I,
+                		INPUT GABAB->I
 			END BINDINGS
 
 			OPTIONS SPHERICAL
@@ -176,7 +176,7 @@ PUBLIC_MODELS
 			CHILD Ca_concen
 				Ca_pool
 				BINDINGS
-                			INPUT ^/CaHVA->Ik
+                			INPUT ^/CaHVA->I
 				END BINDINGS
 			END CHILD
 

@@ -36,15 +36,15 @@ Child 9 : mf_NMDA,T_sym_channel
 Child 10 : GABAA,T_sym_channel
 Child 11 : GABAB,T_sym_channel
 inputs (if any) :
-Input 0 : CaHVA/Ik,T_sym_channel
-Input 1 : H/Ik,T_sym_channel
-Input 2 : InNa/Ik,T_sym_channel
-Input 3 : KA/Ik,T_sym_channel
-Input 4 : KDr/Ik,T_sym_channel
-Input 5 : mf_NMDA/Ik,T_sym_channel
-Input 6 : mf_AMPA/Ik,T_sym_channel
-Input 7 : GABAA/Ik,T_sym_channel
-Input 8 : GABAB/Ik,T_sym_channel
+Input 0 : CaHVA/I,T_sym_channel
+Input 1 : H/I,T_sym_channel
+Input 2 : InNa/I,T_sym_channel
+Input 3 : KA/I,T_sym_channel
+Input 4 : KDr/I,T_sym_channel
+Input 5 : mf_NMDA/I,T_sym_channel
+Input 6 : mf_AMPA/I,T_sym_channel
+Input 7 : GABAA/I,T_sym_channel
+Input 8 : GABAB/I,T_sym_channel
 ",
 						   write => "childreninfo /CerebellarCortex/Granules/0/Granule_soma",
 						  },

@@ -25,7 +25,7 @@ PUBLIC_MODELS
 
 	CHANNEL Purk_GABA
 		BINDABLES
-			INPUT Vm,OUTPUT exp2->G,OUTPUT Ik
+			INPUT Vm,OUTPUT exp2->G,OUTPUT I
 		END BINDABLES
 
 		// We have a number of predefined equations:
