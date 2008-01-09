@@ -159,7 +159,7 @@ my $class_hierarchy
 				'create_alias' => 'channel',
 				'has_equation' => 'channel',
 				'has_m_g_block_g_m_a_x' => 'channel',
-				'has_nernst_ek' => 'channel',
+				'has_nernst_erev' => 'channel',
 				'parameter_scale_value' => 'channel',
 			       },
 		     annotations => {
@@ -170,7 +170,7 @@ my $class_hierarchy
 		     name => 'symtab_Channel',
 		     parameters => {
 				    CHANNEL_TYPE => 'defines the channel type (ChannelActInact: channel with activation and inactivation gates, ChannelAct: channel with activation gate, ChannelActConc: channel with activation and concentration gates)',
-				    Ek => 'channel reversal potential',
+				    Erev => 'channel reversal potential',
 				    GMAX => 'maximal conductance density when all channels are in the open state',
 				    G => 'actual channel conductance, normally a solved variable',
 				    I => 'actual channel current, normally a solved variable',
@@ -797,7 +797,7 @@ my $object_methods
 	'has_bindable_i_o',
 	'has_equation',
 	'has_m_g_block_g_m_a_x',
-	'has_nernst_ek',
+	'has_nernst_erev',
 	'linearize',
 	'lookup_hierarchical',
 	'lookup_serial_i_d',
@@ -935,9 +935,9 @@ my $object_methods_custom_code
        'has_m_g_block_g_m_a_x' => {
 				   simple => 1,
 				  },
-       'has_nernst_ek' => {
-			   simple => 1,
-			  },
+       'has_nernst_erev' => {
+			     simple => 1,
+			    },
        'linearize' => {
 		       simple => 1,
 		      },
@@ -1242,11 +1242,11 @@ my $object_methods_return_types
 				   selector => '.uSelector.iFunc',
 				   type => 'int',
 				  },
-       'has_nernst_ek' => {
-			   default => '-1',
-			   selector => '.uSelector.iFunc',
-			   type => 'int',
-			  },
+       'has_nernst_erev' => {
+			     default => '-1',
+			     selector => '.uSelector.iFunc',
+			     type => 'int',
+			    },
        'linearize' => {
 		       default => '0',
 		       selector => '.uSelector.iFunc',
@@ -1604,10 +1604,10 @@ my $object_methods_signatures
 				   calling => '(phsle, ppist)',
 				   prototype => '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)',
 				  },
-       'has_nernst_ek' => {
-			   calling => '(phsle, ppist)',
-			   prototype => '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)',
-			  },
+       'has_nernst_erev' => {
+			     calling => '(phsle, ppist)',
+			     prototype => '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)',
+			    },
        'linearize' => {
 		       calling => '(phsle, ppist)',
 		       prototype => '(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)',

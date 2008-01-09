@@ -31,7 +31,7 @@ PUBLIC_MODELS
 
 		PARAMETERS
 			PARAMETER ( GMAX = 1.0 ),
-			PARAMETER ( Ek = -0.09 )
+			PARAMETER ( Erev = -0.09 )
 		END PARAMETERS
 
 		CHILD Synapse synapse

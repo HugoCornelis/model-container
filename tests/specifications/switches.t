@@ -229,7 +229,7 @@ Parse Method : \(no info\)
             channeName, index \(GABAA,-1\)
                 PARA  Name \(GMAX\)
                 PARA  Type \(TYPE_PARA_NUMBER\), Value\(1.000000e\+00\)
-                PARA  Name \(Ek\)
+                PARA  Name \(Erev\)
                 PARA  Type \(TYPE_PARA_NUMBER\), Value\(-7.000000e-02\)
             channe\{-- begin HIER sections ---
                 Name, index \(synapse,-1\)

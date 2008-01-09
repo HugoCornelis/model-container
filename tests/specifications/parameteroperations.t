@@ -17,16 +17,16 @@ my $test
 				command_tests => [
 						  {
 						   description => "Can we find all the reversal potentials of the soma ?",
-						   read => '/CerebellarCortex/Golgis/0/Golgi_soma/CaHVA->Ek = 0.138533
-/CerebellarCortex/Golgis/0/Golgi_soma/H->Ek = -0.042
-/CerebellarCortex/Golgis/0/Golgi_soma/InNa->Ek = 0.055
-/CerebellarCortex/Golgis/0/Golgi_soma/KA->Ek = -0.09
-/CerebellarCortex/Golgis/0/Golgi_soma/KDr->Ek = -0.09
-/CerebellarCortex/Golgis/0/Golgi_soma/Moczyd_KC->Ek = -0.09
-/CerebellarCortex/Golgis/0/Golgi_soma/mf_AMPA->Ek = 0
-/CerebellarCortex/Golgis/0/Golgi_soma/pf_AMPA->Ek = 0
+						   read => '/CerebellarCortex/Golgis/0/Golgi_soma/CaHVA->Erev = 0.138533
+/CerebellarCortex/Golgis/0/Golgi_soma/H->Erev = -0.042
+/CerebellarCortex/Golgis/0/Golgi_soma/InNa->Erev = 0.055
+/CerebellarCortex/Golgis/0/Golgi_soma/KA->Erev = -0.09
+/CerebellarCortex/Golgis/0/Golgi_soma/KDr->Erev = -0.09
+/CerebellarCortex/Golgis/0/Golgi_soma/Moczyd_KC->Erev = -0.09
+/CerebellarCortex/Golgis/0/Golgi_soma/mf_AMPA->Erev = 0
+/CerebellarCortex/Golgis/0/Golgi_soma/pf_AMPA->Erev = 0
 ',
-						   write => "printparameter /CerebellarCortex/Golgis/0/Golgi_soma/** Ek",
+						   write => "printparameter /CerebellarCortex/Golgis/0/Golgi_soma/** Erev",
 						  },
 						  {
 						   comment => 'this requires a full implementation of alien types, see developer TODOs',
@@ -173,8 +173,8 @@ Parameter (dSecondSteadyState)
 Parameter (dTauDenormalizer)
 Parameter (dTauDenormalizer1)
 Parameter (dTauDenormalizer2)
-Parameter (Ek)
 Parameter (ELEAK)
+Parameter (Erev)
 Parameter (FREQUENCY)
 Parameter (GMAX)
 Parameter (HighTarget)
@@ -234,8 +234,8 @@ Parameter (CM)
 Parameter (concen_init)
 Parameter (delay)
 Parameter (DIA)
-Parameter (Ek)
 Parameter (ELEAK)
+Parameter (Erev)
 Parameter (GMAX)
 Parameter (LENGTH)
 Parameter (MAXIMUM)

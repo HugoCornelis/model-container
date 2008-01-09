@@ -182,7 +182,7 @@ my $test
 						  {
 						   description => "Can we find the input to a nernst function ?",
 						   read => 'value = Ca_pool',
-						   write => "printparameterinput /Purkinje/segments/main[0]/CaT Ek Cin",
+						   write => "printparameterinput /Purkinje/segments/main[0]/CaT Erev Cin",
 						  },
 						 ],
 				description => "parameter function correctness",
@@ -367,7 +367,7 @@ my $test
 						   {
 						    description => "Can we find the input to a nernst function ?",
 						    read => 'value = ca_pool',
-						    write => "printparameterinput /Purkinje/segments/main[0]/cat Ek Cin",
+						    write => "printparameterinput /Purkinje/segments/main[0]/cat Erev Cin",
 						   },
 						  ],
 				 description => "parameter function correctness",
@@ -383,16 +383,16 @@ my $test
 				command_tests => [
 						  {
 						   description => "Can we find all the reversal potentials ?",
-						   read => '/Golgi/Golgi_soma/CaHVA->Ek = 0.138533
-/Golgi/Golgi_soma/H->Ek = -0.042
-/Golgi/Golgi_soma/InNa->Ek = 0.055
-/Golgi/Golgi_soma/KA->Ek = -0.09
-/Golgi/Golgi_soma/KDr->Ek = -0.09
-/Golgi/Golgi_soma/Moczyd_KC->Ek = -0.09
-/Golgi/Golgi_soma/mf_AMPA->Ek = 0
-/Golgi/Golgi_soma/pf_AMPA->Ek = 0
+						   read => '/Golgi/Golgi_soma/CaHVA->Erev = 0.138533
+/Golgi/Golgi_soma/H->Erev = -0.042
+/Golgi/Golgi_soma/InNa->Erev = 0.055
+/Golgi/Golgi_soma/KA->Erev = -0.09
+/Golgi/Golgi_soma/KDr->Erev = -0.09
+/Golgi/Golgi_soma/Moczyd_KC->Erev = -0.09
+/Golgi/Golgi_soma/mf_AMPA->Erev = 0
+/Golgi/Golgi_soma/pf_AMPA->Erev = 0
 ',
-						   write => "printparameter /** Ek",
+						   write => "printparameter /** Erev",
 						  },
 						 ],
 				comment => 'this test is superseded by the same type of test in parameteroperations.t',

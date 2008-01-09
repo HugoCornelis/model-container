@@ -16,7 +16,7 @@ printparameter /CerebellarCortex/Golgis/0/Golgi_soma/KDr Ypower
 printparameter /CerebellarCortex/Golgis/0/Golgi_soma/KDr Zpower
 printparameterscaled /CerebellarCortex/Golgis/0/Golgi_soma/KDr GMAX
 printparameter /CerebellarCortex/Golgis/0/Golgi_soma/KDr GMAX
-printparameter /CerebellarCortex/Golgis/0/Golgi_soma/KDr Ek
+printparameter /CerebellarCortex/Golgis/0/Golgi_soma/KDr Erev
 printparameter /CerebellarCortex/Golgis/0/Golgi_soma/KDr Emax
 printparameter /CerebellarCortex/Golgis/0/Golgi_soma DIA
 connectioncount /CerebellarCortex/ForwardProjection
@@ -222,7 +222,7 @@ pqcount c /CerebellarCortex/Golgis/0/Golgi_soma/pf_AMPA/synapse
 //            CHAN   Prototype(Undefined)
 //                PARA  Name (GMAX)
 //                PARA  Type (TYPE_PARA_NUMBER), Value(3.577338e-01)
-//                PARA  Name (Ek)
+//                PARA  Name (Erev)
 //                PARA  Type (TYPE_PARA_NUMBER), Value(0.000000e+00)
 //            CHAN   --- begin HIER sections ---
 //                Name, index (synapse,-1)

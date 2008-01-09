@@ -18,7 +18,7 @@ my $test
 						  {
 						   description => "Is the nernst function calculated correctly ?",
 						   read => "= 0.147021",
-						   write => "printparameter /Purk_maind/CaT Ek"
+						   write => "printparameter /Purk_maind/CaT Erev"
 						  },
 						 ],
 				description => "nernst function",

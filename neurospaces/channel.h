@@ -67,7 +67,7 @@ int
 ChannelHasMGBlockGMAX
 (struct symtab_Channel *pchan, struct PidinStack *ppist);
 
-int ChannelHasNernstEk
+int ChannelHasNernstErev
 (struct symtab_Channel *pchan, struct PidinStack *ppist);
 
 void ChannelInit(struct symtab_Channel *pchan);

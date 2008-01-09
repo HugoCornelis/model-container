@@ -67,7 +67,7 @@ PRIVATE_MODELS
 			END BINDINGS
 			PARAMETERS
 				PARAMETER ( GMAX = 5.0 ),
-				PARAMETER ( Ek = 0.1375262439 )
+				PARAMETER ( Erev = 0.1375262439 )
 			END PARAMETERS
 		END CHILD
 
@@ -88,7 +88,7 @@ PUBLIC_MODELS
 		PARAMETERS
 			PARAMETER ( GMAX = 5.0 ),
 			PARAMETER
-			( Ek = NERNST
+			( Erev = NERNST
 				(PARAMETER ( Cin = ^/ca_pool->concen ),
 					PARAMETER ( Cout = 2.4 ),
 					PARAMETER ( valency = ^/ca_pool->VAL) ,/* 2.0, */

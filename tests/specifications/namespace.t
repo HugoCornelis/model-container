@@ -105,7 +105,7 @@ my $test
             PARA  Type (TYPE_PARA_FIELD), Value : ../..->GMAX
             PARA  Name (GMAX)
             PARA  Type (TYPE_PARA_NUMBER), Value(8.317569e+00)
-            PARA  Name (Ek)
+            PARA  Name (Erev)
             PARA  Type (TYPE_PARA_FUNCTION), Value(NERNST)
                 FUNC  Name (NERNST)
                     PARA  Name (Cin)
@@ -135,7 +135,7 @@ my $test
         channeName, index (H,-1)
             PARA  Name (GMAX)
             PARA  Type (TYPE_PARA_NUMBER), Value(1.714963e+00)
-            PARA  Name (Ek)
+            PARA  Name (Erev)
             PARA  Type (TYPE_PARA_NUMBER), Value(-4.200000e-02)
         channe{-- begin HIER sections ---
         channe}--  end  HIER sections ---
@@ -156,7 +156,7 @@ my $test
         channeName, index (InNa,-1)
             PARA  Name (GMAX)
             PARA  Type (TYPE_PARA_NUMBER), Value(4.001580e+02)
-            PARA  Name (Ek)
+            PARA  Name (Erev)
             PARA  Type (TYPE_PARA_NUMBER), Value(5.500000e-02)
         channe{-- begin HIER sections ---
         channe}--  end  HIER sections ---
@@ -177,7 +177,7 @@ my $test
         channeName, index (KA,-1)
             PARA  Name (GMAX)
             PARA  Type (TYPE_PARA_NUMBER), Value(5.244928e+00)
-            PARA  Name (Ek)
+            PARA  Name (Erev)
             PARA  Type (TYPE_PARA_NUMBER), Value(-9.000000e-02)
         channe{-- begin HIER sections ---
         channe}--  end  HIER sections ---
@@ -198,7 +198,7 @@ my $test
         channeName, index (KDr,-1)
             PARA  Name (GMAX)
             PARA  Type (TYPE_PARA_NUMBER), Value(6.788394e+01)
-            PARA  Name (Ek)
+            PARA  Name (Erev)
             PARA  Type (TYPE_PARA_NUMBER), Value(-9.000000e-02)
         channe{-- begin HIER sections ---
         channe}--  end  HIER sections ---
@@ -219,7 +219,7 @@ my $test
         channeName, index (Moczyd_KC,-1)
             PARA  Name (GMAX)
             PARA  Type (TYPE_PARA_NUMBER), Value(5.716543e+00)
-            PARA  Name (Ek)
+            PARA  Name (Erev)
             PARA  Type (TYPE_PARA_NUMBER), Value(-9.000000e-02)
         channe{-- begin HIER sections ---
         channe}--  end  HIER sections ---
@@ -242,7 +242,7 @@ my $test
         channeName, index (mf_AMPA,-1)
             PARA  Name (GMAX)
             PARA  Type (TYPE_PARA_NUMBER), Value(3.577338e-01)
-            PARA  Name (Ek)
+            PARA  Name (Erev)
             PARA  Type (TYPE_PARA_NUMBER), Value(0.000000e+00)
             PARA  Name (NORMALIZE)
             PARA  Type (TYPE_PARA_FUNCTION), Value(SUM)
@@ -257,7 +257,7 @@ my $test
                 channeName, index (AMPA,-1)
                     PARA  Name (GMAX)
                     PARA  Type (TYPE_PARA_NUMBER), Value(3.577338e-01)
-                    PARA  Name (Ek)
+                    PARA  Name (Erev)
                     PARA  Type (TYPE_PARA_NUMBER), Value(0.000000e+00)
                 channe{-- begin HIER sections ---
                     Name, index (synapse,-1)
@@ -290,7 +290,7 @@ my $test
         channeName, index (pf_AMPA,-1)
             PARA  Name (GMAX)
             PARA  Type (TYPE_PARA_NUMBER), Value(3.577338e-01)
-            PARA  Name (Ek)
+            PARA  Name (Erev)
             PARA  Type (TYPE_PARA_NUMBER), Value(0.000000e+00)
             PARA  Name (NORMALIZE)
             PARA  Type (TYPE_PARA_FUNCTION), Value(SUM)
@@ -305,7 +305,7 @@ my $test
                 channeName, index (AMPA,-1)
                     PARA  Name (GMAX)
                     PARA  Type (TYPE_PARA_NUMBER), Value(3.577338e-01)
-                    PARA  Name (Ek)
+                    PARA  Name (Erev)
                     PARA  Type (TYPE_PARA_NUMBER), Value(0.000000e+00)
                 channe{-- begin HIER sections ---
                     Name, index (synapse,-1)

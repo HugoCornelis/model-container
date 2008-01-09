@@ -3252,7 +3252,7 @@ SymbolTraverseWildcard
 
 /// **************************************************************************
 ///
-/// SHORT: SymbolHasNernstEk()
+/// SHORT: SymbolHasNernstErev()
 ///
 /// ARGS.:
 ///
@@ -3260,7 +3260,7 @@ SymbolTraverseWildcard
 ///
 /// RTN..: int : TRUE if symbol has nernst
 ///
-/// DESCR: Check if symbol Ek nernst-equation controlled
+/// DESCR: Check if symbol Erev nernst-equation controlled
 ///
 /// **************************************************************************
 

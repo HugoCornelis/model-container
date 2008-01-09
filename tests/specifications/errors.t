@@ -208,17 +208,17 @@ value = 3.40282e+38",
 						   #t would be better if said 'parameter not found'
 
 						   read => "input not found",
-						   write => "printparameterinput /Purkinje/segments/main[0]/CaT a Ek",
+						   write => "printparameterinput /Purkinje/segments/main[0]/CaT a Erev",
 						  },
 						  {
 						   description => "Has neurospaces reported that the input cannot be found ?",
 						   read => "input not found",
-						   write => "printparameterinput /Purkinje/segments/main[0]/CaT Ek a",
+						   write => "printparameterinput /Purkinje/segments/main[0]/CaT Erev a",
 						  },
 						  {
 						   description => "Has neurospaces reported that the input cannot be found ?",
 						   read => "input not found",
-						   write => "printparameterinput /Purkinje/segments/main[0]/CaT Ek concen",
+						   write => "printparameterinput /Purkinje/segments/main[0]/CaT Erev concen",
 						  },
 						 ],
 				description => "function parameters",

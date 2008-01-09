@@ -117,7 +117,7 @@ PUBLIC_MODELS
 			PARAMETERS
 				PARAMETER ( GMAX = 5.0 ),
 				PARAMETER
-				( Ek = NERNST
+				( Erev = NERNST
 					(PARAMETER ( Cin = ^/Ca_pool->concen ),
 						PARAMETER ( Cout = 2.4 ),
 						PARAMETER ( valency = ^/Ca_pool->VAL) ,/* 2.0, */
@@ -133,7 +133,7 @@ PUBLIC_MODELS
 			PARAMETERS
 				PARAMETER ( GMAX = 45.0 ),
 				PARAMETER
-				( Ek = NERNST
+				( Erev = NERNST
 					(PARAMETER ( Cin = ^/Ca_pool->concen ),
 						PARAMETER ( Cout = 2.4 ),
 						PARAMETER ( valency = ^/Ca_pool->VAL), /* 2.0, */
@@ -148,7 +148,7 @@ PUBLIC_MODELS
 			END BINDINGS
 			PARAMETERS
 				PARAMETER ( GMAX = 0.130 ),
-				PARAMETER ( Ek = -0.085 )
+				PARAMETER ( Erev = -0.085 )
 			END PARAMETERS
 		END CHILD
 
@@ -160,7 +160,7 @@ PUBLIC_MODELS
 			END BINDINGS
 			PARAMETERS
 				PARAMETER ( GMAX = 800.0 ),
-				PARAMETER ( Ek = -0.085 )
+				PARAMETER ( Erev = -0.085 )
 			END PARAMETERS
 		END CHILD
 
@@ -172,7 +172,7 @@ PUBLIC_MODELS
 			END BINDINGS
 			PARAMETERS
 				PARAMETER ( GMAX = 3.90 ),
-				PARAMETER ( Ek = -0.085 )
+				PARAMETER ( Erev = -0.085 )
 			END PARAMETERS
 		END CHILD
 
@@ -193,7 +193,7 @@ PUBLIC_MODELS
 			END BINDINGS
 			PARAMETERS
 				PARAMETER ( GMAX = 70.0 ),
-				PARAMETER ( Ek = -0.080 ),
+				PARAMETER ( Erev = -0.080 ),
 				PARAMETER ( FREQUENCY = 0.0 )
 			END PARAMETERS
 		END CHILD

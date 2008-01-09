@@ -54,7 +54,7 @@ my $test
 						   description => "What is the reversal potential of the delayed rectifier channel in the first Golgi cell ?",
 						   read => "value = -0.09
 ",
-						   write => "printparameter /CerebellarCortex/Golgis/0/Golgi_soma/KDr Ek",
+						   write => "printparameter /CerebellarCortex/Golgis/0/Golgi_soma/KDr Erev",
 						  },
 						  {
 						   description => "How does neurospaces react if we try to access parameters that are not defined ?",

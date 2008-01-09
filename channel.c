@@ -470,7 +470,7 @@ ChannelHasMGBlockGMAX
 
 /// **************************************************************************
 ///
-/// SHORT: ChannelHasNernstEk()
+/// SHORT: ChannelHasNernstErev()
 ///
 /// ARGS.:
 ///
@@ -479,35 +479,36 @@ ChannelHasMGBlockGMAX
 ///
 /// RTN..: int : TRUE if channel has nernst
 ///
-/// DESCR: Check if channel Ek nernst-equation controlled
+/// DESCR: Check if channel Erev nernst-equation controlled
 ///
 /// **************************************************************************
 
-int ChannelHasNernstEk
+int ChannelHasNernstErev
 (struct symtab_Channel *pchan, struct PidinStack *ppist)
 {
     //- set default result : false
 
     int bResult = FALSE;
 
-    //- if Ek present
+    //- if Erev present
 
-    struct symtab_Parameters *pparEk = SymbolFindParameter(&(pchan->bio.ioh.iol.hsle),"Ek",ppist);
+    struct symtab_Parameters *pparErev
+	= SymbolFindParameter(&(pchan->bio.ioh.iol.hsle), "Erev", ppist);
 
-    if (pparEk)
+    if (pparErev)
     {
-	//- if Ek is function
+	//- if Erev is function
 
-	if (ParameterIsFunction(pparEk))
+	if (ParameterIsFunction(pparErev))
 	{
 	    //- get function
 
-	    struct symtab_Function *pfunEk
-		= ParameterGetFunction(pparEk);
+	    struct symtab_Function *pfunErev
+		= ParameterGetFunction(pparErev);
 
 	    //- if function name is NERNST
 
-	    if (strcmp(FunctionGetName(pfunEk),"NERNST") == 0)
+	    if (strcmp(FunctionGetName(pfunErev), "NERNST") == 0)
 	    {
 		//- set result : ok
 
