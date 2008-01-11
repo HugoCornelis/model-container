@@ -1,11 +1,11 @@
 $files = {
-           '_</local_home/local_home/hugo/neurospaces_project/neurospaces/source/c/snapshots/0/convertors/contours2ndf' => [
+           '_</local_home/local_home/hugo/neurospaces_project/model_container/source/c/snapshots/0/convertors/contours2ndf' => [
                                                                                                                              {
                                                                                                                                'expr' => undef,
                                                                                                                                'value' => '1',
                                                                                                                                'text' => '    foreach my $contour_index (0 .. $#$contours_array)
 ',
-                                                                                                                               'fname' => '/local_home/local_home/hugo/neurospaces_project/neurospaces/source/c/snapshots/0/convertors/contours2ndf',
+                                                                                                                               'fname' => '/local_home/local_home/hugo/neurospaces_project/model_container/source/c/snapshots/0/convertors/contours2ndf',
                                                                                                                                'type' => 'user',
                                                                                                                                'line' => '154'
                                                                                                                              },
@@ -14,7 +14,7 @@ $files = {
                                                                                                                                'value' => '1',
                                                                                                                                'text' => '    return $annotated_series;
 ',
-                                                                                                                               'fname' => '/local_home/local_home/hugo/neurospaces_project/neurospaces/source/c/snapshots/0/convertors/contours2ndf',
+                                                                                                                               'fname' => '/local_home/local_home/hugo/neurospaces_project/model_container/source/c/snapshots/0/convertors/contours2ndf',
                                                                                                                                'type' => 'user',
                                                                                                                                'line' => '70'
                                                                                                                              }

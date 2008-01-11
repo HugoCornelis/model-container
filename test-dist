@@ -21,8 +21,8 @@ if ($?)
 
 
 {
-    # $Format: "system \"cp '/local_home/local_home/hugo/neurospaces_project/neurospaces/source/c/snapshots/0/${package}-${label}.tar.gz' '/tmp/neurospaces/${package}-${label}'\";"$
-system "cp '/local_home/local_home/hugo/neurospaces_project/neurospaces/source/c/snapshots/0/neurospacesread-des-8.tar.gz' '/tmp/neurospaces/neurospacesread-des-8'";
+    # $Format: "system \"cp '/local_home/local_home/hugo/neurospaces_project/model_container/source/c/snapshots/0/${package}-${label}.tar.gz' '/tmp/neurospaces/${package}-${label}'\";"$
+system "cp '/local_home/local_home/hugo/neurospaces_project/model_container/source/c/snapshots/0/neurospacesread-des-8.tar.gz' '/tmp/neurospaces/neurospacesread-des-8'";
 }
 
 if ($?)
