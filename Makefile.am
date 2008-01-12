@@ -114,6 +114,12 @@ nobase_dist_neurospacesmodel_DATA=@MODEL_DESCRIPTION_FILES@ @MODEL_SWC_MORPHOLOG
 neurospacestestdir=$(prefix)/neurospaces
 nobase_dist_neurospacestest_DATA=@TEST_SPECIFICATION_FILES@
 
+dist_lisp_DATA = \
+	emacs/neurospaces-mode/neurospaces-mode.el \
+	emacs/neurospaces-mode/neurospaces-langs.el \
+	emacs/neurospaces-mode/neurospaces-files.el \
+	emacs/neurospaces-mode/neurospaces-vars.el
+
 # The file lexsupport.c is compiled as part of analyzer.l, but not as
 # a plain source file.  It is needed in the distribution.
 # Also the tests are copied overhere.

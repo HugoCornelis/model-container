@@ -7,6 +7,8 @@ Makefile.in$
 ^docs/various.txt$
 ^doxy$
 ^doxygen/docs/
+^elc-temp$
+^elisp-comp$
 ^glue/swig/perl/SwiggableNeurospaces.pm$
 ^glue/swig/perl/swiggable_neurospaces_wrap.c$
 ^hierarchy/output

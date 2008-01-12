@@ -146,6 +146,10 @@ WARNED=yes
 
 )
 
+# search lisp dir for installing the emacs major mode
+
+AM_PATH_LISPDIR
+
 if test -n "${CXXFLAGS}"; then
   user_set_cxxflags=yes
 fi

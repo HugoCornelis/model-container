@@ -26,8 +26,21 @@ perl -MCPAN -e 'install Expect::Simple'
 perl -MCPAN -e 'install YAML'
 perl -MCPAN -e 'install File::Find::Rule'
 perl -MCPAN -e 'install Digest::SHA'
+perl -MCPAN -e 'install Data::Utilities'
 
-For the neurospaces studio:
+** For the neurospaces emacs mode:
+
+Add to your emacs file (if needed):
+
+;; neurospaces mode
+
+(load-file "/share/emacs/site-lisp/neurospaces-mode/neurospaces-vars.el")
+(load-file "/share/emacs/site-lisp/neurospaces-mode/neurospaces-langs.el")
+(load-file "/share/emacs/site-lisp/neurospaces-mode/neurospaces-mode.el")
+
+(load-file "/share/emacs/site-lisp/neurospaces-mode/neurospaces-files.el")
+
+** What are the dependencies for the neurospaces studio:
 
 *** Binary Libraries
 **** Graphviz
