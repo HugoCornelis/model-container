@@ -123,7 +123,7 @@ AC_CHECK_LIB(readline, main)
 dnl Checks for header files.
 AC_HEADER_STDC
 AC_HEADER_STDBOOL
-AC_CHECK_HEADERS(limits.h malloc.h sys/time.h unistd.h float.h stddef.h)
+AC_CHECK_HEADERS([limits.h malloc.h sys/time.h unistd.h float.h stddef.h libintl.h])
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -137,7 +137,7 @@ AC_FUNC_REALLOC
 AC_FUNC_STRTOD
 AC_FUNC_STRFTIME
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(getrusage gettimeofday strcspn strspn strtod strtol memset sqrt strcasecmp strpbrk strrchr)
+AC_CHECK_FUNCS([floor getrusage gettimeofday strcspn strspn strtod strtol memset memmove sqrt strcasecmp strpbrk strrchr])
 AC_CHECK_FUNCS(getcwd strtol,
 ,
 echo "Could not find needed functions : getcwd or strtol"

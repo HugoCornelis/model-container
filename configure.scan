@@ -3,17 +3,15 @@
 
 AC_PREREQ(2.59)
 AC_INIT(FULL-PACKAGE-NAME, VERSION, BUG-REPORT-ADDRESS)
-AC_CONFIG_SRCDIR([biocomp.h])
+AC_CONFIG_SRCDIR([acconfig.h])
 AC_CONFIG_HEADER([config.h])
 
 # Checks for programs.
 AC_PROG_CC
-AC_PROG_INSTALL
-AC_PROG_RANLIB
 
 # Checks for libraries.
-# FIXME: Replace `main' with a function in `-levent_modules':
-AC_CHECK_LIB([event_modules], [main])
+# FIXME: Replace `main' with a function in `-levent_algorithms':
+AC_CHECK_LIB([event_algorithms], [main])
 # FIXME: Replace `main' with a function in `-lhistory':
 AC_CHECK_LIB([history], [main])
 # FIXME: Replace `main' with a function in `-lm':
@@ -22,16 +20,16 @@ AC_CHECK_LIB([m], [main])
 AC_CHECK_LIB([neurospacesread], [main])
 # FIXME: Replace `main' with a function in `-lreadline':
 AC_CHECK_LIB([readline], [main])
-# FIXME: Replace `main' with a function in `-lsymbol_modules':
-AC_CHECK_LIB([symbol_modules], [main])
+# FIXME: Replace `main' with a function in `-lsymbol_algorithms':
+AC_CHECK_LIB([symbol_algorithms], [main])
 
 # Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS([float.h limits.h malloc.h stddef.h stdlib.h string.h sys/time.h unistd.h])
+AC_CHECK_HEADERS([float.h inttypes.h libintl.h limits.h malloc.h stddef.h stdlib.h string.h strings.h sys/time.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
-AC_C_CONST
 AC_HEADER_STDBOOL
+AC_C_CONST
 AC_C_INLINE
 AC_TYPE_SIZE_T
 AC_HEADER_TIME
@@ -42,13 +40,13 @@ AC_FUNC_REALLOC
 AC_FUNC_STRFTIME
 AC_FUNC_STRTOD
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS([gettimeofday memset sqrt strcasecmp strcspn strpbrk strrchr strspn strtol])
+AC_CHECK_FUNCS([floor gettimeofday memmove memset sqrt strcasecmp strcspn strpbrk strrchr strspn strtol])
 
 AC_CONFIG_FILES([Makefile
-                 _Inline/build/Neurospaces_1256/Makefile
-                 _Inline/build/Neurospaces_56f0/Makefile
+                 algorithms/Makefile
+                 algorithms/event/Makefile
+                 algorithms/symbol/Makefile
                  convertors/Makefile
-                 modules/Makefile
-                 modules/event/Makefile
-                 modules/symbol/Makefile])
+                 glue/swig/Makefile
+                 glue/swig/perl/Makefile])
 AC_OUTPUT
