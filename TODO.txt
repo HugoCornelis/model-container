@@ -69,8 +69,6 @@ swc tag value, if that makes sense.
 #define InstanceOfMovable(phsle)
 #define InstanceOfMechanism(phsle)
 
-* ship & install NDF emacs mode.
-
 * Move the channels with CHANTABLEFILE
 to a 'library/legacy' directory or so.
 ** Need following:
