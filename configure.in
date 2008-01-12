@@ -21,9 +21,10 @@ dnl Process this file with autoconf to produce a configure script.
 # $Format: "AC_REVISION(${package}, ${label}, ${email})"$
 AC_REVISION(neurospacesread, des-8, hugo.cornelis@gmail.com)
 dnl AC_REVISION($Id: configure.in 1.40 Wed, 10 Oct 2007 16:57:00 -0500 hugo $)
-AC_INIT(neurospaces.c)
+AC_INIT
+AC_CONFIG_SRCDIR([neurospaces.c])
 
-AM_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADERS([config.h])
 
 dnl Determine whether symbols in prototypes have serial ID's lower or higher than in instances / references. 1 means lower (prototype symbols come first in regular traversals)
 
@@ -270,9 +271,11 @@ TEST_SPECIFICATION_FILES=`echo -n "tests/introduction.html " && find tests/speci
 AC_SUBST(TEST_SPECIFICATION_FILES)
 
 
-dnl AC_OUTPUT(Makefile config.h)
+dnl AC_CONFIG_FILES([Makefile config.h])
+dnl AC_OUTPUT
 
-AC_OUTPUT(Makefile)
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT
 
 if test "$WARNED" = "yes"; then
 
