@@ -120,14 +120,16 @@ dist_lisp_DATA = \
 	emacs/neurospaces-mode/neurospaces-files.el \
 	emacs/neurospaces-mode/neurospaces-vars.el
 
+dist-keywords:
+	release-expand neurospacesread des 9 0 des-9 hugo.cornelis@gmail.com --verbose
+
 # The file lexsupport.c is compiled as part of analyzer.l, but not as
 # a plain source file.  It is needed in the distribution.
 # Also the tests are copied overhere.
 #
 # The variable EXTRA_DIST could also be used here.
 
-dist-hook:
-	release-expand neurospacesread des 8 0 des-8 hugo.cornelis@gmail.com --verbose
+dist-hook: dist-keywords
 	cd $(srcdir) && if test -n "`mtn ls changed `" ; then false ; else true ; fi
 	find $(distdir) -name _Inline -exec chmod -R u+w \{\} \;
 	$(RM) -fr `find $(distdir) -name _Inline`
