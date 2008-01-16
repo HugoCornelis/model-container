@@ -339,8 +339,8 @@ html-upload: html-upload-prepare
 	scp -pr html/htdocs/* hcornelis@shell.sourceforge.net:/home/groups/n/ne/neurospaces/htdocs/
 
 internal-library:
-# $Format: "	tar cfz library-${package}-${label}.tar.gz library/" $
-	tar cfz library-0.1675.tar.gz library/
+# $Format: "	tar cfz library-${package}-${label}.tar.gz library/"$
+	tar cfz library-neurospacesread-des-9.tar.gz library/
 
 libneurospacesread.so: libneurospacesread.a
 	$(CC) \
