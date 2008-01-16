@@ -24,18 +24,6 @@
 #include "neurospaces/neurospaces.h"
 
 
-//t copy these to some other neurospaces specific file.
-//t check genesis -r modelreader for this to.
-
-/* static NeuroSpacesSetupSymbol neurospacessetup_cellsolver; */
-
-/* static NeuroSpacesSetupSymbol neurospacessetup_populationsolver; */
-
-/* static NeuroSpacesSetupSymbol neurospacessetup_projection; */
-
-/* static NeuroSpacesSetupSymbol neurospacessetup_randomspike; */
-
-
 /// **************************************************************************
 ///
 /// SHORT: main()
