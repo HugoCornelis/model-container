@@ -139,6 +139,8 @@ sub apply_conceptual_parameters
 	#t do fancy things for symbolic parameters
 	#t backend needs explicit support for this
 
+	#t also the value can possibly be structured, e.g. a function.
+
 	# set the parameter
 
 	if ($value =~ /^[+-]?[0-9]*\.?[0-9]*(e[+-]?[0-9]+)?$/
