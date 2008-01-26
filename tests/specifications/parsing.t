@@ -382,18 +382,18 @@ my $test
 					      '-p',
 					      '-q',
 					      '-R',
-					      'cells/purk2m9s.ndf',
+					      'legacy/cells/purk2m9s.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
-						   description => "Is neurospaces startup successful (cells/purk2m9s.ndf) ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/purk2m9s.ndf.', ],
+						   description => "Is neurospaces startup successful (legacy/cells/purk2m9s.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/cells/purk2m9s.ndf.', ],
 						   timeout => 5,
 						   write => undef,
 						  },
 						 ],
-				description => "syntax of cells/purk2m9s.ndf",
+				description => "syntax of legacy/cells/purk2m9s.ndf",
 			       },
 			       {
 				arguments => [
@@ -472,36 +472,36 @@ my $test
 					      '-p',
 					      '-q',
 					      '-R',
-					      'networks/network-test.ndf',
+					      'legacy/networks/network-test.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
-						   description => "Is neurospaces startup successful (networks/network-test.ndf) ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/networks/network-test.ndf.', ],
+						   description => "Is neurospaces startup successful (legacy/networks/network-test.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/network-test.ndf.', ],
 						   timeout => 5,
 						   write => undef,
 						  },
 						 ],
-				description => "syntax test of networks/network-test.ndf",
+				description => "syntax test of legacy/networks/network-test.ndf",
 			       },
 			       {
 				arguments => [
 					      '-p',
 					      '-q',
 					      '-R',
-					      'networks/supernetwork.ndf',
+					      'legacy/networks/supernetwork.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
-						   description => "Is neurospaces startup successful (networks/supernetwork.ndf) ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/networks/supernetwork.ndf.', ],
+						   description => "Is neurospaces startup successful (legacy/networks/supernetwork.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/supernetwork.ndf.', ],
 						   timeout => 5,
 						   write => undef,
 						  },
 						 ],
-				description => "syntax of networks/supernetwork.ndf",
+				description => "syntax of legacy/networks/supernetwork.ndf",
 			       },
 			       {
 				arguments => [
@@ -526,36 +526,36 @@ my $test
 					      '-p',
 					      '-q',
 					      '-R',
-					      'networks/network.ndf',
+					      'legacy/networks/network.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
-						   description => "Is neurospaces startup successful (networks/network.ndf) ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/networks/network.ndf.', ],
+						   description => "Is neurospaces startup successful (legacy/networks/network.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/network.ndf.', ],
 						   timeout => 5,
 						   write => undef,
 						  },
 						 ],
-				description => "syntax of networks/network.ndf",
+				description => "syntax of legacy/networks/network.ndf",
 			       },
 			       {
 				arguments => [
 					      '-p',
 					      '-q',
 					      '-R',
-					      'networks/supernetworksmall.ndf',
+					      'legacy/networks/supernetworksmall.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
-						   description => "Is neurospaces startup successful (networks/supernetworksmall.ndf) ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/networks/supernetworksmall.ndf.', ],
+						   description => "Is neurospaces startup successful (legacy/networks/supernetworksmall.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/supernetworksmall.ndf.', ],
 						   timeout => 5,
 						   write => undef,
 						  },
 						 ],
-				description => "syntax of networks/supernetworksmall.ndf",
+				description => "syntax of legacy/networks/supernetworksmall.ndf",
 			       },
 			       {
 				arguments => [

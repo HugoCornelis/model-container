@@ -10,19 +10,19 @@ my $test
 			       {
 				arguments => [
 					      '-q',
-					      'networks/supernetwork.ndf',
+					      'legacy/networks/supernetwork.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
 						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/networks/supernetwork.ndf.', ],
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/supernetwork.ndf.', ],
 						   timeout => 100,
 						   write => undef,
 						  },
 						  {
 						   description => "What is the root namespace ?",
-						   read => 'File (/tmp/neurospaces/test/models/networks/network.ndf) --> Namespace (Network_base::)
+						   read => 'File (/tmp/neurospaces/test/models/legacy/networks/network.ndf) --> Namespace (Network_base::)
 ',
 						   write => "namespaces",
 						  },

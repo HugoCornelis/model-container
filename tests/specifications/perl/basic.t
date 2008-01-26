@@ -16,7 +16,7 @@ my $test
 						   description => "Can we run a simple application that binds to the perl interface ?",
 						   read => [
 							    "-re",
-							    "No errors for .*/cells/purk2m9s.ndf.",
+							    "No errors for .*/legacy/cells/purk2m9s.ndf.",
 							   ],
 						  },
 						 ],

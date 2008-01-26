@@ -10,13 +10,13 @@ my $test
 			       {
 				arguments => [
 					      '-q',
-					      'networks/network-test.ndf',
+					      'legacy/networks/network-test.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
 						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/networks/network-test.ndf.', ],
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/network-test.ndf.', ],
 						   timeout => 100,
 						   write => undef,
 						  },
@@ -91,13 +91,13 @@ my $test
 			       {
 				arguments => [
 					      '-q',
-					      'networks/network-test.ndf',
+					      'legacy/networks/network-test.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
 						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/networks/network-test.ndf.', ],
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/network-test.ndf.', ],
 						   timeout => 100,
 						   write => undef,
 						  },
@@ -172,13 +172,13 @@ my $test
 			       {
 				arguments => [
 					      '-q',
-					      'networks/network-test.ndf',
+					      'legacy/networks/network-test.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
 						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/networks/network-test.ndf.', ],
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/network-test.ndf.', ],
 						   timeout => 100,
 						   write => undef,
 						  },
@@ -218,13 +218,13 @@ my $test
 			       {
 				arguments => [
 					      '-q',
-					      'networks/network-test.ndf',
+					      'legacy/networks/network-test.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
 						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/networks/network-test.ndf.', ],
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/network-test.ndf.', ],
 						   timeout => 100,
 						   write => undef,
 						  },
@@ -264,13 +264,13 @@ my $test
 			       {
 				arguments => [
 					      '-q',
-					      'networks/network-test.ndf',
+					      'legacy/networks/network-test.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
 						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/networks/network-test.ndf.', ],
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/network-test.ndf.', ],
 						   timeout => 100,
 						   write => undef,
 						  },
@@ -360,13 +360,13 @@ my $test
 			       {
 				arguments => [
 					      '-q',
-					      'networks/network-test.ndf',
+					      'legacy/networks/network-test.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
 						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/networks/network-test.ndf.', ],
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/network-test.ndf.', ],
 						   timeout => 100,
 						   write => undef,
 						  },

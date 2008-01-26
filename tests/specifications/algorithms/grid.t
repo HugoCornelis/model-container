@@ -10,7 +10,7 @@ my $test
 			       {
 				arguments => [
 					      '-q',
-					      'populations/granule.ndf',
+					      'legacy/populations/granule.ndf',
 					     ],
 				command => './neurospacesparse',
 				description => "force a reload of the network",
@@ -18,13 +18,13 @@ my $test
 			       {
 				arguments => [
 					      '-q',
-					      'populations/granule.ndf',
+					      'legacy/populations/granule.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
 						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/populations/granule.ndf.', ],
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/populations/granule.ndf.', ],
 						   timeout => 5,
 						   write => undef,
 						  },
@@ -87,12 +87,12 @@ report:
 						preparer =>
 						sub
 						{
-						    `perl -pi -e "s/X_COUNT = 120.0/X_COUNT = 160.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/X_DISTANCE = 2.5e-05/X_DISTANCE = 5e-05/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Y_COUNT = 26.0/Y_COUNT = 18.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Y_DISTANCE = 1.875e-05/Y_DISTANCE = 3.75e-05/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Z_COUNT = 2.0/Z_COUNT = 5.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Z_DISTANCE = 2e-5/Z_DISTANCE = 0.9/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
+						    `perl -pi -e "s/X_COUNT = 120.0/X_COUNT = 160.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/X_DISTANCE = 2.5e-05/X_DISTANCE = 5e-05/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Y_COUNT = 26.0/Y_COUNT = 18.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Y_DISTANCE = 1.875e-05/Y_DISTANCE = 3.75e-05/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Z_COUNT = 2.0/Z_COUNT = 5.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Z_DISTANCE = 2e-5/Z_DISTANCE = 0.9/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
 						},
 					       },
 				reparation => {
@@ -100,12 +100,12 @@ report:
 					       reparer =>
 					       sub
 					       {
-						    `perl -pi -e "s/X_COUNT = 160.0/X_COUNT = 120.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/X_DISTANCE = 5e-05/X_DISTANCE = 2.5e-05/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Y_COUNT = 18.0/Y_COUNT = 26.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Y_DISTANCE = 3.75e-05/Y_DISTANCE = 1.875e-05/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Z_COUNT = 5.0/Z_COUNT = 2.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Z_DISTANCE = 0.9/Z_DISTANCE = 2e-5/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
+						    `perl -pi -e "s/X_COUNT = 160.0/X_COUNT = 120.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/X_DISTANCE = 5e-05/X_DISTANCE = 2.5e-05/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Y_COUNT = 18.0/Y_COUNT = 26.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Y_DISTANCE = 3.75e-05/Y_DISTANCE = 1.875e-05/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Z_COUNT = 5.0/Z_COUNT = 2.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Z_DISTANCE = 0.9/Z_DISTANCE = 2e-5/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
 					       },
 					      },
 				side_effects => 1,
@@ -113,13 +113,13 @@ report:
 			       {
 				arguments => [
 					      '-q',
-					      'populations/granule.ndf',
+					      'legacy/populations/granule.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
 						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/populations/granule.ndf.', ],
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/populations/granule.ndf.', ],
 						   timeout => 5,
 						   write => undef,
 						  },
@@ -183,12 +183,12 @@ report:
 						preparer =>
 						sub
 						{
-						    `perl -pi -e "s/X_COUNT = 120.0/X_COUNT = 1.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/X_DISTANCE = 2.5e-05/X_DISTANCE = 5e-05/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Y_COUNT = 26.0/Y_COUNT = 1.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Y_DISTANCE = 1.875e-05/Y_DISTANCE = 3.75e-05/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Z_COUNT = 2.0/Z_COUNT = 1.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Z_DISTANCE = 2e-5/Z_DISTANCE = 0.9/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
+						    `perl -pi -e "s/X_COUNT = 120.0/X_COUNT = 1.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/X_DISTANCE = 2.5e-05/X_DISTANCE = 5e-05/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Y_COUNT = 26.0/Y_COUNT = 1.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Y_DISTANCE = 1.875e-05/Y_DISTANCE = 3.75e-05/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Z_COUNT = 2.0/Z_COUNT = 1.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Z_DISTANCE = 2e-5/Z_DISTANCE = 0.9/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
 						},
 					       },
 				reparation => {
@@ -196,12 +196,12 @@ report:
 					       reparer =>
 					       sub
 					       {
-						    `perl -pi -e "s/X_COUNT = 1.0/X_COUNT = 120.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/X_DISTANCE = 5e-05/X_DISTANCE = 2.5e-05/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Y_COUNT = 1.0/Y_COUNT = 26.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Y_DISTANCE = 3.75e-05/Y_DISTANCE = 1.875e-05/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Z_COUNT = 1.0/Z_COUNT = 2.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Z_DISTANCE = 0.9/Z_DISTANCE = 2e-5/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
+						    `perl -pi -e "s/X_COUNT = 1.0/X_COUNT = 120.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/X_DISTANCE = 5e-05/X_DISTANCE = 2.5e-05/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Y_COUNT = 1.0/Y_COUNT = 26.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Y_DISTANCE = 3.75e-05/Y_DISTANCE = 1.875e-05/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Z_COUNT = 1.0/Z_COUNT = 2.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Z_DISTANCE = 0.9/Z_DISTANCE = 2e-5/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
 					       },
 					      },
 				side_effects => 1,
@@ -209,13 +209,13 @@ report:
 			       {
 				arguments => [
 					      '-q',
-					      'populations/granule.ndf',
+					      'legacy/populations/granule.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
 						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/populations/granule.ndf.', ],
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/populations/granule.ndf.', ],
 						   timeout => 5,
 						   write => undef,
 						  },
@@ -278,12 +278,12 @@ report:
 						preparer =>
 						sub
 						{
-						    `perl -pi -e "s/X_COUNT = 120.0/X_COUNT = 0.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/X_DISTANCE = 2.5e-05/X_DISTANCE = 5e-05/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Y_COUNT = 26.0/Y_COUNT = 8.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Y_DISTANCE = 1.875e-05/Y_DISTANCE = 3.75e-05/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Z_COUNT = 2.0/Z_COUNT = 1.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Z_DISTANCE = 2e-5/Z_DISTANCE = 0.9/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
+						    `perl -pi -e "s/X_COUNT = 120.0/X_COUNT = 0.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/X_DISTANCE = 2.5e-05/X_DISTANCE = 5e-05/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Y_COUNT = 26.0/Y_COUNT = 8.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Y_DISTANCE = 1.875e-05/Y_DISTANCE = 3.75e-05/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Z_COUNT = 2.0/Z_COUNT = 1.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Z_DISTANCE = 2e-5/Z_DISTANCE = 0.9/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
 						},
 					       },
 				reparation => {
@@ -291,12 +291,12 @@ report:
 					       reparer =>
 					       sub
 					       {
-						    `perl -pi -e "s/X_COUNT = 0.0/X_COUNT = 120.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/X_DISTANCE = 5e-05/X_DISTANCE = 2.5e-05/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Y_COUNT = 8.0/Y_COUNT = 26.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Y_DISTANCE = 3.75e-05/Y_DISTANCE = 1.875e-05/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Z_COUNT = 1.0/Z_COUNT = 2.0/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
-						    `perl -pi -e "s/Z_DISTANCE = 0.9/Z_DISTANCE = 2e-5/;" /tmp/neurospaces/test/models/populations/granule.ndf `;
+						    `perl -pi -e "s/X_COUNT = 0.0/X_COUNT = 120.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/X_DISTANCE = 5e-05/X_DISTANCE = 2.5e-05/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Y_COUNT = 8.0/Y_COUNT = 26.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Y_DISTANCE = 3.75e-05/Y_DISTANCE = 1.875e-05/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Z_COUNT = 1.0/Z_COUNT = 2.0/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
+						    `perl -pi -e "s/Z_DISTANCE = 0.9/Z_DISTANCE = 2e-5/;" /tmp/neurospaces/test/models/legacy/populations/granule.ndf `;
 					       },
 					      },
 				side_effects => 1,

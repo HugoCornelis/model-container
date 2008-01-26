@@ -9,9 +9,9 @@ NEUROSPACES NDF
 
 IMPORT
 
-	FILE Golgi "populations/golgi.ndf"
+	FILE Golgi "legacy/populations/golgi.ndf"
 
-	FILE Granule "populations/granule.ndf"
+	FILE Granule "legacy/populations/granule.ndf"
 
 END IMPORT
 

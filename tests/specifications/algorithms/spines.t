@@ -10,7 +10,7 @@ my $test
 			       {
 				arguments => [
 					      '-q',
-					      'cells/purk2m9s.ndf',
+					      'legacy/cells/purk2m9s.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -1562,7 +1562,7 @@ report:
 			       {
 				arguments => [
 					      '-q',
-					      'cells/purk2m9s.ndf',
+					      'legacy/cells/purk2m9s.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -1640,7 +1640,7 @@ report:
 						preparer =>
 						sub
 						{
-						    `perl -pi -e "s/SPINE_FREQUENCY = 1.0/SPINE_FREQUENCY = 0.0/;" /tmp/neurospaces/test/models/cells/purk2m9s.ndf `;
+						    `perl -pi -e "s/SPINE_FREQUENCY = 1.0/SPINE_FREQUENCY = 0.0/;" /tmp/neurospaces/test/models/legacy/cells/purk2m9s.ndf `;
 						},
 					       },
 				reparation => {
@@ -1648,7 +1648,7 @@ report:
 					       reparer =>
 					       sub
 					       {
-						    `perl -pi -e "s/SPINE_FREQUENCY = 0.0/SPINE_FREQUENCY = 1.0/;" /tmp/neurospaces/test/models/cells/purk2m9s.ndf `;
+						    `perl -pi -e "s/SPINE_FREQUENCY = 0.0/SPINE_FREQUENCY = 1.0/;" /tmp/neurospaces/test/models/legacy/cells/purk2m9s.ndf `;
 					       },
 					      },
 				side_effects => 1,
@@ -1656,7 +1656,7 @@ report:
 			       {
 				arguments => [
 					      '-q',
-					      'cells/purk2m9s.ndf',
+					      'legacy/cells/purk2m9s.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -2454,7 +2454,7 @@ report:
 						preparer =>
 						sub
 						{
-						    `perl -pi -e "s/SPINE_FREQUENCY = 1.0/SPINE_FREQUENCY = 0.5/;" /tmp/neurospaces/test/models/cells/purk2m9s.ndf `;
+						    `perl -pi -e "s/SPINE_FREQUENCY = 1.0/SPINE_FREQUENCY = 0.5/;" /tmp/neurospaces/test/models/legacy/cells/purk2m9s.ndf `;
 						},
 					       },
 				reparation => {
@@ -2462,7 +2462,7 @@ report:
 					       reparer =>
 					       sub
 					       {
-						    `perl -pi -e "s/SPINE_FREQUENCY = 0.5/SPINE_FREQUENCY = 1.0/;" /tmp/neurospaces/test/models/cells/purk2m9s.ndf `;
+						    `perl -pi -e "s/SPINE_FREQUENCY = 0.5/SPINE_FREQUENCY = 1.0/;" /tmp/neurospaces/test/models/legacy/cells/purk2m9s.ndf `;
 					       },
 					      },
 				side_effects => 1,
@@ -2470,7 +2470,7 @@ report:
 			       {
 				arguments => [
 					      '-q',
-					      'cells/purk2m9s.ndf',
+					      'legacy/cells/purk2m9s.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -4743,7 +4743,7 @@ report:
 						preparer =>
 						sub
 						{
-						    `perl -pi -e "s/SPINE_FREQUENCY = 1.0/SPINE_FREQUENCY = 1.5/;" /tmp/neurospaces/test/models/cells/purk2m9s.ndf `;
+						    `perl -pi -e "s/SPINE_FREQUENCY = 1.0/SPINE_FREQUENCY = 1.5/;" /tmp/neurospaces/test/models/legacy/cells/purk2m9s.ndf `;
 						},
 					       },
 				reparation => {
@@ -4751,7 +4751,7 @@ report:
 					       reparer =>
 					       sub
 					       {
-						    `perl -pi -e "s/SPINE_FREQUENCY = 1.5/SPINE_FREQUENCY = 1.0/;" /tmp/neurospaces/test/models/cells/purk2m9s.ndf `;
+						    `perl -pi -e "s/SPINE_FREQUENCY = 1.5/SPINE_FREQUENCY = 1.0/;" /tmp/neurospaces/test/models/legacy/cells/purk2m9s.ndf `;
 					       },
 					      },
 				side_effects => 1,
@@ -4760,7 +4760,7 @@ report:
 			       {
 				arguments => [
 					      '-q',
-					      'cells/purk2m9s.ndf',
+					      'legacy/cells/purk2m9s.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -4884,7 +4884,7 @@ report:
 						preparer =>
 						sub
 						{
-						    `perl -pi -e "s/SPINE_FREQUENCY = 1.0 \\),/SPINE_FREQUENCY = 1.0 ), PARAMETER ( NAME_SELECTOR = \\"b0s01\\" ), /;" /tmp/neurospaces/test/models/cells/purk2m9s.ndf `;
+						    `perl -pi -e "s/SPINE_FREQUENCY = 1.0 \\),/SPINE_FREQUENCY = 1.0 ), PARAMETER ( NAME_SELECTOR = \\"b0s01\\" ), /;" /tmp/neurospaces/test/models/legacy/cells/purk2m9s.ndf `;
 						},
 					       },
 				reparation => {
@@ -4892,7 +4892,7 @@ report:
 					       reparer =>
 					       sub
 					       {
-						    `perl -pi -e "s/SPINE_FREQUENCY = 1.0 \\), PARAMETER \\( NAME_SELECTOR = \\"b0s01\\" \\), /SPINE_FREQUENCY = 1.0 ),/;" /tmp/neurospaces/test/models/cells/purk2m9s.ndf `;
+						    `perl -pi -e "s/SPINE_FREQUENCY = 1.0 \\), PARAMETER \\( NAME_SELECTOR = \\"b0s01\\" \\), /SPINE_FREQUENCY = 1.0 ),/;" /tmp/neurospaces/test/models/legacy/cells/purk2m9s.ndf `;
 					       },
 					      },
 				side_effects => 1,

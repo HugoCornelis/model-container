@@ -1,10 +1,7 @@
 #!neurospacesparse
 // -*- NEUROSPACES -*-
-//A comment: 
-// This is version 0.2 of the neurospaces netdef file definition 
 
 NEUROSPACES NDF
-	// neurospaces netdef file
 
 // VERSION 0.4
 
@@ -14,11 +11,11 @@ IMPORT
 
 	FILE Fibers "fibers/mossyfiber.ndf"
 
-	FILE Golgi "populations/golgi.ndf"
+	FILE Golgi "legacy/populations/golgi.ndf"
 
-	FILE Granule "populations/granule.ndf"
+	FILE Granule "legacy/populations/granule.ndf"
 
-	FILE Purkinje "populations/purkinje.ndf"
+	FILE Purkinje "legacy/populations/purkinje.ndf"
 
 END IMPORT
 
@@ -343,8 +340,8 @@ PUBLIC_MODELS
 			END PARAMETERS
 		END CHILD
 
-		CHILD PurkinjePopulation Purkinjes
-		END CHILD
+ 		CHILD PurkinjePopulation Purkinjes
+ 		END CHILD
 
 		PROJECTION MossyFiberProjection
 			PROJECTION GranuleComponent

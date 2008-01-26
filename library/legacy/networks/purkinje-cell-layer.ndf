@@ -9,7 +9,7 @@ NEUROSPACES NDF
 
 IMPORT
 
-	FILE Purkinje "populations/purkinje.ndf"
+	FILE Purkinje "legacy/populations/purkinje.ndf"
 
 END IMPORT
 

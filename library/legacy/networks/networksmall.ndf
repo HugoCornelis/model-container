@@ -11,11 +11,11 @@ IMPORT
 
 	FILE Fibers "fibers/mossyfibersmall.ndf"
 
-	FILE Golgi "populations/golgismall.ndf"
+	FILE Golgi "legacy/populations/golgismall.ndf"
 
-	FILE Granule "populations/granulesmall.ndf"
+	FILE Granule "legacy/populations/granulesmall.ndf"
 
-	FILE Purkinje "populations/purkinjesmall.ndf"
+	FILE Purkinje "legacy/populations/purkinjesmall.ndf"
 
 END IMPORT
 

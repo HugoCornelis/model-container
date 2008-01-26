@@ -11,9 +11,9 @@ IMPORT
 
 	FILE Fibers "fibers/mossyfiberlarge.ndf"
 
-	FILE Golgi "populations/golgilarge.ndf"
+	FILE Golgi "legacy/populations/golgilarge.ndf"
 
-	FILE Granule "populations/granulelarge.ndf"
+	FILE Granule "legacy/populations/granulelarge.ndf"
 
 END IMPORT
 

@@ -9,39 +9,39 @@ NEUROSPACES NDF
 
 IMPORT
 
-	FILE G "cells/granule.ndf"
+	FILE G "legacy/cells/golgi.ndf"
 
 END IMPORT
 
 
 PRIVATE_MODELS
 
-	ALIAS G::/Granule Granule_cell END ALIAS
+	ALIAS G::/Golgi Golgi_cell END ALIAS
 
 END PRIVATE_MODELS
 
 
 PUBLIC_MODELS
 
-	POPULATION GranulePopulation
+	POPULATION GolgiPopulation
 
 //			proto		#x	dx	#y	dy	#z	dz
 
 // 		ALGORITHM Grid3D
-// 			ALGORITHM_INSTANCE GranuleGrid
-// 			{ Granule_cell	120	2.5e-05	26	1.875e-05	2	2e-5}
+// 			ALGORITHM_INSTANCE GolgiGrid
+// 			{ Golgi_cell	2	0.0003	1	0.0003	1	0.9}
 // 		END ALGORITHM
 
 		ALGORITHM Grid3D
-			GranuleGrid
+			GolgiGrid
 			PARAMETERS
-				PARAMETER ( PROTOTYPE = "Granule_cell" ),
-				PARAMETER ( X_COUNT = 120.0 ),
-				PARAMETER ( X_DISTANCE = 2.5e-05 ),
-				PARAMETER ( Y_COUNT = 26.0 ),
-				PARAMETER ( Y_DISTANCE = 1.875e-05 ),
-				PARAMETER ( Z_COUNT = 2.0 ),
-				PARAMETER ( Z_DISTANCE = 2e-5 ),
+				PARAMETER ( PROTOTYPE = "Golgi_cell" ),
+				PARAMETER ( X_COUNT = 2.0 ),
+				PARAMETER ( X_DISTANCE = 0.0003 ),
+				PARAMETER ( Y_COUNT = 1.0 ),
+				PARAMETER ( Y_DISTANCE = 0.0003 ),
+				PARAMETER ( Z_COUNT = 1.0 ),
+				PARAMETER ( Z_DISTANCE = 0.9 ),
 			END PARAMETERS
 		END ALGORITHM
 
@@ -58,22 +58,8 @@ PUBLIC_MODELS
 		PARAMETERS
 			PARAMETER ( X = 0.0 ),
 			PARAMETER ( Y = 0.0 ),
-			PARAMETER ( Z = 0.0 )
+			PARAMETER ( Z = 0.00001 )
 		END PARAMETERS
-
-/* 		CHILD Granule_cell */
-/* 			Granule_hardcoded, */
-/* 			X = 1.0, */
-/* 			Y = 0.0, */
-/* 			Z = 0.0, */
-/* 			dX = 0.00015, */
-/* 			dY = 0.00015, */
-/* 			dZ = 0.0, */
-/* 			Em = randomize(min = -0.06,max = -0.05), */
-/* 			Vm_init = gaussrandomize */
-/* 					(relmin = -0.09, */
-/* 						relmax = -0.05) */
-/* 		END CHILD */
 
 	END POPULATION
 

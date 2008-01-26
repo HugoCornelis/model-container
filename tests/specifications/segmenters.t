@@ -11,7 +11,7 @@ my $test
 				arguments => [
 					      '-q',
 					      '-R',
-					      'networks/network-test.ndf',
+					      'legacy/networks/network-test.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -145,7 +145,7 @@ Number of segment tips: 1',
 					      '-q',
 					      '-A',
 					      '-R',
-					      'cells/purk2m9s.ndf',
+					      'legacy/cells/purk2m9s.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -1119,7 +1119,7 @@ Number of segment tips: 1',
 					      '-q',
 					      '-R',
 					      '-A',
-					      'cells/purk2m9s.ndf',
+					      'legacy/cells/purk2m9s.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -4059,7 +4059,7 @@ tips:
 					      '-q',
 					      '-R',
 					      '-A',
-					      'cells/purk2m9s.ndf',
+					      'legacy/cells/purk2m9s.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [

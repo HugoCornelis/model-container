@@ -9,7 +9,7 @@ NEUROSPACES NDF
 
 IMPORT
 
-	FILE G "cells/golgi.ndf"
+	FILE G "legacy/cells/golgi.ndf"
 
 END IMPORT
 

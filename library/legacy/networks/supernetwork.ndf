@@ -9,7 +9,7 @@ NEUROSPACES NDF
 
 IMPORT
 
-	FILE Network_base "networks/networksmall.ndf"
+	FILE Network_base "legacy/networks/network.ndf"
 
 END IMPORT
 
@@ -72,16 +72,16 @@ PUBLIC_MODELS
 
 // 		ALGORITHM Grid3D
 // 			ALGORITHM_INSTANCE NetworkGrid
-// 			{ CerebellarCortexPart	60	5e-05	8	3.75e-05	1	0.9}
+// 			{ CerebellarCortexPart	3	5e-05	3	3.75e-05	1	0.9}
 // 		END ALGORITHM
 
 		ALGORITHM Grid3D
 			NetworkGrid
 			PARAMETERS
 				PARAMETER ( PROTOTYPE = "CerebellarCortexPart" ),
-				PARAMETER ( X_COUNT = 60.0 ),
+				PARAMETER ( X_COUNT = 3.0 ),
 				PARAMETER ( X_DISTANCE = 5e-05 ),
-				PARAMETER ( Y_COUNT = 8.0 ),
+				PARAMETER ( Y_COUNT = 3.0 ),
 				PARAMETER ( Y_DISTANCE = 3.75e-05 ),
 				PARAMETER ( Z_COUNT = 1.0 ),
 				PARAMETER ( Z_DISTANCE = 0.9 ),
@@ -93,7 +93,7 @@ PUBLIC_MODELS
 		PARAMETERS
 			PARAMETER ( X = 0.0 ),
 			PARAMETER ( Y = 0.0 ),
-			PARAMETER ( Z = 1.0 )
+			PARAMETER ( Z = 0.0001 )
 		END PARAMETERS
 
 /* 		PARAMETERS */
@@ -107,33 +107,33 @@ PUBLIC_MODELS
 /* 		END PARAMETERS */
 
 
-		PROJECTION MossyFiberProjection
-			PARAMETERS
-				PARAMETER ( SOURCE = ^/MossyFibers ),
-				PARAMETER ( TARGET = ^/Granules )
-			END PARAMETERS
-		END PROJECTION
+// 		PROJECTION MossyFiberProjection
+// 			PARAMETERS
+// 				PARAMETER ( SOURCE = ^/MossyFibers ),
+// 				PARAMETER ( TARGET = ^/Granules )
+// 			END PARAMETERS
+// 		END PROJECTION
 
-		PROJECTION ForwardProjection
-			PARAMETERS
-				PARAMETER ( SOURCE = ^/Granules ),
-				PARAMETER ( TARGET = ^/Golgis )
-			END PARAMETERS
-		END PROJECTION
+// 		PROJECTION ForwardProjection
+// 			PARAMETERS
+// 				PARAMETER ( SOURCE = ^/Granules ),
+// 				PARAMETER ( TARGET = ^/Golgis )
+// 			END PARAMETERS
+// 		END PROJECTION
 
-		PROJECTION BackwardProjection
-			PARAMETERS
-				PARAMETER ( SOURCE = ^/Golgis ),
-				PARAMETER ( TARGET = ^/Granules )
-			END PARAMETERS
-		END PROJECTION
+// 		PROJECTION BackwardProjection
+// 			PARAMETERS
+// 				PARAMETER ( SOURCE = ^/Golgis ),
+// 				PARAMETER ( TARGET = ^/Granules )
+// 			END PARAMETERS
+// 		END PROJECTION
 
-		PROJECTION ParallelFiberProjection
-			PARAMETERS
-				PARAMETER ( SOURCE = ^/Granules ),
-				PARAMETER ( TARGET = ^/Purkinjes )
-			END PARAMETERS
-		END PROJECTION
+// 		PROJECTION ParallelFiberProjection
+// 			PARAMETERS
+// 				PARAMETER ( SOURCE = ^/Granules ),
+// 				PARAMETER ( TARGET = ^/Purkinjes )
+// 			END PARAMETERS
+// 		END PROJECTION
 
 	END NETWORK
 

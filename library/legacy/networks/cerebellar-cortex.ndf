@@ -11,11 +11,11 @@ IMPORT
 
 	FILE WhiteMatter "networks/white-matter.ndf"
 
-	FILE GranularLayer "networks/granular-layer.ndf"
+	FILE GranularLayer "legacy/networks/granular-layer.ndf"
 
-	FILE PurkinjeCellLayer "networks/purkinje-cell-layer.ndf"
+	FILE PurkinjeCellLayer "legacy/networks/purkinje-cell-layer.ndf"
 
-// 	FILE PurkinjeCellLayer "populations/purkinje.ndf"
+// 	FILE PurkinjeCellLayer "legacy/populations/purkinje.ndf"
 
 END IMPORT
 

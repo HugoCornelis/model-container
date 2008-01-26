@@ -127,13 +127,13 @@ my $test
 				arguments => [
 					      '-q',
 					      '-R',
-					      'cells/purk2m9s.ndf',
+					      'legacy/cells/purk2m9s.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
 						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/purk2m9s.ndf.', ],
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/cells/purk2m9s.ndf.', ],
 						   timeout => 3,
 						   write => undef,
 						  },

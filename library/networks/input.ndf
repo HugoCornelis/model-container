@@ -12,7 +12,7 @@ IMPORT
 
 	FILE Fibers "fibers/mossyfiber.ndf"
 
-	FILE Granule "cells/granule.ndf"
+	FILE Granule "legacy/cells/granule.ndf"
 
 END IMPORT
 

@@ -9,7 +9,7 @@ NEUROSPACES NDF
 
 IMPORT
 
-	FILE G "cells/granule.ndf"
+	FILE G "legacy/cells/granule.ndf"
 
 END IMPORT
 
@@ -29,17 +29,17 @@ PUBLIC_MODELS
 
 // 		ALGORITHM Grid3D
 // 			ALGORITHM_INSTANCE GranuleGrid
-// 			{ Granule_cell	3	5e-05	2	3.75e-05	1	0.9}
+// 			{ Granule_cell	600	4.5e-05	50	1.8e-05	1	0.9}
 // 		END ALGORITHM
 
 		ALGORITHM Grid3D
 			GranuleGrid
 			PARAMETERS
 				PARAMETER ( PROTOTYPE = "Granule_cell" ),
-				PARAMETER ( X_COUNT = 3.0 ),
-				PARAMETER ( X_DISTANCE = 5e-05 ),
-				PARAMETER ( Y_COUNT = 2.0 ),
-				PARAMETER ( Y_DISTANCE = 3.75e-05 ),
+				PARAMETER ( X_COUNT = 600.0 ),
+				PARAMETER ( X_DISTANCE = 4.5e-05 ),
+				PARAMETER ( Y_COUNT = 50.0 ),
+				PARAMETER ( Y_DISTANCE = 1.8e-05 ),
 				PARAMETER ( Z_COUNT = 1.0 ),
 				PARAMETER ( Z_DISTANCE = 0.9 ),
 			END PARAMETERS
@@ -58,8 +58,22 @@ PUBLIC_MODELS
 		PARAMETERS
 			PARAMETER ( X = 0.0 ),
 			PARAMETER ( Y = 0.0 ),
-			PARAMETER ( Z = 0.0001 )
+			PARAMETER ( Z = 0.0 )
 		END PARAMETERS
+
+/* 		CHILD Granule_cell */
+/* 			Granule_hardcoded, */
+/* 			X = 1.0, */
+/* 			Y = 0.0, */
+/* 			Z = 0.0, */
+/* 			dX = 0.00015, */
+/* 			dY = 0.00015, */
+/* 			dZ = 0.0, */
+/* 			Em = randomize(min = -0.06,max = -0.05), */
+/* 			Vm_init = gaussrandomize */
+/* 					(relmin = -0.09, */
+/* 						relmax = -0.05) */
+/* 		END CHILD */
 
 	END POPULATION
 

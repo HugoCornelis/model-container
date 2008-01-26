@@ -290,7 +290,7 @@ Parse Method : \(no info\)
 			       {
 				arguments => [
 					      '-M',
-					      'cells/purk2m9s.ndf',
+					      'legacy/cells/purk2m9s.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -713,7 +713,7 @@ number_of_algorithm_instances: 0
 					      '-q',
 					      '-R',
 					      '-A',
-					      'networks/network-test.ndf',
+					      'legacy/networks/network-test.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [

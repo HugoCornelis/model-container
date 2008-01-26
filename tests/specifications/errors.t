@@ -198,7 +198,7 @@ value = 3.40282e+38",
 				arguments => [
 					      '-q',
 					      '-R',
-					      'cells/purk2m9s.ndf',
+					      'legacy/cells/purk2m9s.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
