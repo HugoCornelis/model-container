@@ -31,25 +31,25 @@ IMPORT
 		"channels/non_nmda.ndf"
 
 	FILE CaP
-		"channels/purkinje_cap.ndf"
+		"legacy/channels/purkinje_cap.ndf"
 
 	FILE CaT
-		"channels/purkinje_cat.ndf"
+		"legacy/channels/purkinje_cat.ndf"
 
 	FILE K2
-		"channels/purkinje_k2.ndf"
+		"legacy/channels/purkinje_k2.ndf"
 
 	FILE KA
-		"channels/purkinje_ka.ndf"
+		"legacy/channels/purkinje_ka.ndf"
 
 	FILE KC
-		"channels/purkinje_kc.ndf"
+		"legacy/channels/purkinje_kc.ndf"
 
 	FILE Kdr
-		"channels/purkinje_kdr.ndf"
+		"legacy/channels/purkinje_kdr.ndf"
 
 	FILE KM
-		"channels/purkinje_km.ndf"
+		"legacy/channels/purkinje_km.ndf"
 
 END IMPORT
 

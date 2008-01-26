@@ -14,17 +14,17 @@ IMPORT
 
 	FILE mapper "mappers/spikegenerator.ndf"
 
-	FILE inna "channels/granule_inna.ndf"
+	FILE inna "legacy/channels/granule_inna.ndf"
 
-	FILE kdr "channels/granule_kdr.ndf"
+	FILE kdr "legacy/channels/granule_kdr.ndf"
 
-	FILE ka "channels/granule_ka.ndf"
+	FILE ka "legacy/channels/granule_ka.ndf"
 
-	FILE cahva "channels/granule_cahva.ndf"
+	FILE cahva "legacy/channels/granule_cahva.ndf"
 
-	FILE h "channels/granule_h.ndf"
+	FILE h "legacy/channels/granule_h.ndf"
 
-	FILE kc "channels/granule_kc.ndf"
+	FILE kc "legacy/channels/granule_kc.ndf"
 
 	FILE nmda "channels/granule_nmda.ndf"
 

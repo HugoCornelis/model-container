@@ -14,17 +14,17 @@ IMPORT
 
 	FILE mapper "mappers/spikegenerator.ndf"
 
-	FILE inna "channels/golgi_inna.ndf"
+	FILE inna "legacy/channels/golgi_inna.ndf"
 
-	FILE kdr "channels/golgi_kdr.ndf"
+	FILE kdr "legacy/channels/golgi_kdr.ndf"
 
-	FILE ka "channels/golgi_ka.ndf"
+	FILE ka "legacy/channels/golgi_ka.ndf"
 
-	FILE cahva "channels/golgi_cahva.ndf"
+	FILE cahva "legacy/channels/golgi_cahva.ndf"
 
-	FILE h "channels/golgi_h.ndf"
+	FILE h "legacy/channels/golgi_h.ndf"
 
-	FILE kc "channels/golgi_kc.ndf"
+	FILE kc "legacy/channels/golgi_kc.ndf"
 
 	FILE nmda "channels/golgi_nmda.ndf"
 
