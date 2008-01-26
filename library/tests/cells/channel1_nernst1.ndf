@@ -6,7 +6,7 @@ NEUROSPACES NDF
 IMPORT
 
 	FILE ca_pool "pools/purkinje_ca.ndf"
-	FILE cat "tests/channels/cat.ndf"
+	FILE cat "channels/purkinje/cat.ndf"
 
 END IMPORT
 

@@ -6,13 +6,13 @@ NEUROSPACES NDF
 IMPORT
 
 	FILE ca_pool "pools/purkinje_ca.ndf"
-	FILE cap "tests/channels/cap.ndf"
-	FILE cat "tests/channels/cat.ndf"
+	FILE cap "channels/purkinje/cap.ndf"
+	FILE cat "channels/purkinje/cat.ndf"
 	FILE gaba "channels/gaba.ndf"
-	FILE k2 "tests/channels/k2.ndf"
-// 	FILE ka "tests/channels/ka.ndf"
-	FILE kc "tests/channels/kc.ndf"
-	FILE km "tests/channels/km.ndf"
+	FILE k2 "channels/purkinje/k2.ndf"
+// 	FILE ka "channels/purkinje/ka.ndf"
+	FILE kc "channels/purkinje/kc.ndf"
+	FILE km "channels/purkinje/km.ndf"
 	FILE non_nmda "channels/non_nmda.ndf"
 
 END IMPORT

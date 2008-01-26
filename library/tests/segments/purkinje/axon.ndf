@@ -5,10 +5,10 @@ NEUROSPACES NDF
 
 IMPORT
 
-	FILE cat "tests/channels/cat.ndf"
-	FILE kdr "tests/channels/kdr.ndf"
-	FILE naf "tests/channels/naf.ndf"
-	FILE nap "tests/channels/nap.ndf"
+	FILE cat "channels/purkinje/cat.ndf"
+	FILE kdr "channels/purkinje/kdr.ndf"
+	FILE naf "channels/purkinje/naf.ndf"
+	FILE nap "channels/purkinje/nap.ndf"
 
 END IMPORT
 
