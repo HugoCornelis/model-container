@@ -42,7 +42,7 @@ sub main
 {
     my $neurospaces = Neurospaces->new();
 
-    my $args = [ "$0", "-P", "-A", "cells/purk2m9s.ndf" ];
+    my $args = [ "$0", "-P", "-A", "legacy/cells/purk2m9s.ndf" ];
 
     my $success = $neurospaces->read($args);
 
