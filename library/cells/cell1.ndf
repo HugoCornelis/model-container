@@ -20,13 +20,13 @@ NEUROSPACES NDF
 
 IMPORT
 
-	FILE Purk_soma "segments/purkinje_soma.ndf"
+	FILE Purk_soma "legacy/segments/purkinje_soma.ndf"
 
-	FILE Purk_maind "segments/purkinje_maind.ndf"
+	FILE Purk_maind "legacy/segments/purkinje_maind.ndf"
 
-	FILE Purk_thickd "segments/purkinje_thickd.ndf"
+	FILE Purk_thickd "legacy/segments/purkinje_thickd.ndf"
 
-	FILE Purk_spinyd "segments/purkinje_spinyd.ndf"
+	FILE Purk_spinyd "legacy/segments/purkinje_spinyd.ndf"
 
 	FILE Purk_spine "segments/spines/purkinje.ndf"
 
