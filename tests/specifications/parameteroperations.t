@@ -11,7 +11,7 @@ my $test
 				arguments => [
 					      '-q',
 					      '-R',
-					      'networks/networksmall.ndf',
+					      'legacy/networks/networksmall.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -222,7 +222,7 @@ Parameter (Z)
 				arguments => [
 					      '-q',
 					      '-R',
-					      'networks/networksmall.ndf',
+					      'legacy/networks/networksmall.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [

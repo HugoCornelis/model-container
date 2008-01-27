@@ -10,7 +10,7 @@ my $test
 			       {
 				arguments => [
 					      '-q',
-					      'networks/networksmall.ndf',
+					      'legacy/networks/networksmall.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -79,18 +79,18 @@ my $test
 				description => "simple parameter caches",
 				side_effects => 1,
 			       },
+# 			       {
+# 				arguments => [
+# 					      '-q',
+# 					      'legacy/networks/networksmall.ndf',
+# 					     ],
+# 				command => './neurospacesparse',
+# 				description => "coordinate parameter caches : erasing caches",
+# 			       },
 			       {
 				arguments => [
 					      '-q',
-					      'networks/networksmall.ndf',
-					     ],
-				command => './neurospacesparse',
-				description => "coordinate parameter caches : erasing caches",
-			       },
-			       {
-				arguments => [
-					      '-q',
-					      'networks/networksmall.ndf',
+					      'legacy/networks/networksmall.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -289,14 +289,14 @@ coordinate z = 0.0001
 				description => "coordinate parameter caches",
 				side_effects => 1,
 			       },
-			       {
-				arguments => [
-					      '-q',
-					      'networks/networksmall.ndf',
-					     ],
-				command => './neurospacesparse',
-				description => "coordinate parameter caches : erasing caches",
-			       },
+# 			       {
+# 				arguments => [
+# 					      '-q',
+# 					      'networks/networksmall.ndf',
+# 					     ],
+# 				command => './neurospacesparse',
+# 				description => "coordinate parameter caches : erasing caches",
+# 			       },
 			      ],
        description => "parameter caches",
        name => 'parametercaching.t',

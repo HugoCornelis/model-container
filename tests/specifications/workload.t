@@ -10,7 +10,7 @@ my $test
 			       {
 				arguments => [
 					      '-q',
-					      'networks/networksmall.ndf',
+					      'legacy/networks/networksmall.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -183,7 +183,7 @@ workload ok
 			       {
 				arguments => [
 					      '-q',
-					      'populations/granulelarge.ndf',
+					      'legacy/populations/granulelarge.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [

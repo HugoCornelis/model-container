@@ -11,7 +11,7 @@ my $test
 				arguments => [
 					      '-q',
 					      '-R',
-					      'segments/purkinje_maind.ndf',
+					      'legacy/segments/purkinje_maind.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -27,7 +27,7 @@ my $test
 				arguments => [
 					      '-q',
 					      '-R',
-					      'cells/granule.ndf',
+					      'legacy/cells/granule.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [

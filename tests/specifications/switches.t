@@ -351,7 +351,7 @@ report:
 				arguments => [
 					      '-V',
 					      '-10',
-					      'cells/golgi.ndf',
+					      'legacy/cells/golgi.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -401,7 +401,7 @@ report:
 				arguments => [
 					      '-V',
 					      '-20',
-					      'networks/networksmall.ndf',
+					      'legacy/networks/networksmall.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -455,7 +455,7 @@ report:
 				arguments => [
 					      '-V',
 					      '-30',
-					      'cells/golgi.ndf',
+					      'legacy/cells/golgi.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -493,7 +493,7 @@ report:
 				arguments => [
 					      '-V',
 					      '-40',
-					      'cells/granule.ndf',
+					      'legacy/cells/granule.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -543,7 +543,7 @@ report:
 				arguments => [
 					      '-V',
 					      '-50',
-					      'cells/golgi.ndf',
+					      'legacy/cells/golgi.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -560,7 +560,7 @@ report:
 				arguments => [
 					      '-v',
 					      '-50',
-					      'cells/golgi.ndf',
+					      'legacy/cells/golgi.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -761,7 +761,7 @@ number_of_algorithm_instances: 0
 					      '-Q',
 					      'expand /*',
 					      '-R',
-					      'cells/golgi.ndf',
+					      'legacy/cells/golgi.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -783,7 +783,7 @@ number_of_algorithm_instances: 0
 					      '-Q',
 					      'expand /*',
 					      '-R',
-					      'cells/golgi.ndf',
+					      'legacy/cells/golgi.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -812,7 +812,7 @@ query: \'expand /*\'
 					       1 .. 10
 					      ),
 					      '-R',
-					      'cells/golgi.ndf',
+					      'legacy/cells/golgi.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -826,7 +826,17 @@ query: \'expand /*\'
 						 ],
 				description => "processing of multiple query machine commands using a command line option (3)",
 			       },
-			       #t to lazy to test timings.
+			       {
+				arguments => [
+					      '-R',
+					      'legacy/networks/network-test.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						 ],
+				description => "timings when loading the test network",
+				disabled => 'my laziness',
+			       },
 			      ],
        description => "command line switches",
        name => 'switches.t',

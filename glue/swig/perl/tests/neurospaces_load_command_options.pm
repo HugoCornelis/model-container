@@ -46,7 +46,7 @@ sub main
 			   'expand /**',
 			   'echo end',
 			  ],
-	      filename => 'cells/golgi.ndf',
+	      filename => 'legacy/cells/golgi.ndf',
 	     },
 	     [ $0, ],
 	    );

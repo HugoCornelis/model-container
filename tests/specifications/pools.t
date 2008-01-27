@@ -48,7 +48,7 @@ my $test
 				arguments => [
 					      '-q',
 					      '-R',
-					      'cells/golgi.ndf',
+					      'legacy/cells/golgi.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [

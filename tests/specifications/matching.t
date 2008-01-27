@@ -80,13 +80,13 @@ my $test
 			       {
 				arguments => [
 					      '-q',
-					      'networks/networksmall.ndf',
+					      'legacy/networks/networksmall.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
 						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/networks/networksmall.ndf.', ],
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/networksmall.ndf.', ],
 						   timeout => 3,
 						   write => undef,
 						  },

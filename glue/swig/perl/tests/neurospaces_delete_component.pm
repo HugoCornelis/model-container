@@ -42,7 +42,7 @@ sub main
 {
     my $neurospaces = Neurospaces->new();
 
-    my $args = [ "$0", "-A", "cells/golgi.ndf" ];
+    my $args = [ "$0", "-A", "legacy/cells/golgi.ndf" ];
 
     my $success = $neurospaces->read($args);
 

@@ -28,9 +28,9 @@ my $test
 						  },
 						  {
 						   description => "What are the nested namespaces ?",
-						   read => 'File (/tmp/neurospaces/test/models/populations/purkinje.ndf) --> Namespace (Purkinje::)
-File (/tmp/neurospaces/test/models/populations/granule.ndf) --> Namespace (Granule::)
-File (/tmp/neurospaces/test/models/populations/golgi.ndf) --> Namespace (Golgi::)
+						   read => 'File (/tmp/neurospaces/test/models/legacy/populations/purkinje.ndf) --> Namespace (Purkinje::)
+File (/tmp/neurospaces/test/models/legacy/populations/granule.ndf) --> Namespace (Granule::)
+File (/tmp/neurospaces/test/models/legacy/populations/golgi.ndf) --> Namespace (Golgi::)
 File (/tmp/neurospaces/test/models/fibers/mossyfiber.ndf) --> Namespace (Fibers::)
 ',
 						   write => "namespaces Network_base::",

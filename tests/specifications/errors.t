@@ -166,7 +166,7 @@ value = 3.40282e+38",
 				arguments => [
 					      '-q',
 					      '-R',
-					      'tests/channels/cap.ndf',
+					      'channels/cap.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
