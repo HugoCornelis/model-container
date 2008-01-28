@@ -43,8 +43,8 @@ options:
     soma_offset: 1
 prototypes:
   aliasses:
-    - tests/segments/purkinje/soma.ndf::soma
-    - tests/segments/purkinje/spinyd.ndf::spinyd
+    - segments/purkinje/soma.ndf::soma
+    - segments/purkinje/spinyd.ndf::spinyd
   parameter_2_prototype:
     - dia: 3.18e-06
       prototype: spinyd

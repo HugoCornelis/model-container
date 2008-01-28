@@ -13,10 +13,10 @@ options:
 prototypes:
   aliasses:
  - segments/spines/purkinje.ndf::Purk_spine
-  - tests/segments/purkinje/maind.ndf::maind
-   - tests/segments/purkinje/soma.ndf::soma
-    - tests/segments/purkinje/spinyd.ndf::spinyd
-    - tests/segments/purkinje/thickd.ndf::thickd
+  - segments/purkinje/maind.ndf::maind
+   - segments/purkinje/soma.ndf::soma
+    - segments/purkinje/spinyd.ndf::spinyd
+    - segments/purkinje/thickd.ndf::thickd
   parameter_2_prototype:
     - dia: 3.18e-06
       prototype: spinyd

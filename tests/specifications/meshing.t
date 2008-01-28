@@ -1536,7 +1536,7 @@ my $test
 				 arguments => [
 					       '-q',
 					       '-R',
-					       'tests/cells/purkinje/edsjb1994.ndf',
+					       'cells/purkinje/edsjb1994.ndf',
 					      ],
 				 command => './neurospacesparse',
 				 command_tests => [

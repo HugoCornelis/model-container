@@ -187,13 +187,13 @@ Solver serial context for 1138 =
 			       {
 				arguments => [
 					      '-q',
-					      'tests/cells/purkinje/edsjb1994.ndf',
+					      'cells/purkinje/edsjb1994.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
 						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/purkinje/edsjb1994.ndf.', ],
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/purkinje/edsjb1994.ndf.', ],
 						   timeout => 3,
 						   write => undef,
 						  },

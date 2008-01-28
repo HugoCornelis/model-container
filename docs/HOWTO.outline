@@ -194,8 +194,8 @@ path).  For a bash something like
 'export NEUROSPACES_MODELS=/home/hugo/neurospaces/library'
 
 is needed.  The library that comes with Neurospaces, contains many
-working models.  The file 'cells/purk2m9s.ndf' and
-'tests/cells/purkinje/edsjb1994.ndf' are two versions of Erik De
+working models.  The file 'legacy/cells/purk2m9s.ndf' and
+'cells/purkinje/edsjb1994.ndf' are two versions of Erik De
 Schutter's and James Bower's full featured Purkinje cell model.
 
 ** How to make sure that Neurospaces works well on my machine ?

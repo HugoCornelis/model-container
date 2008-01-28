@@ -8,7 +8,7 @@ NEUROSPACES NDF
 
 // IMPORT
 
-// 	FILE c "tests/segments/purkinje/spinyd.ndf"
+// 	FILE c "segments/purkinje/spinyd.ndf"
 
 // END IMPORT
 

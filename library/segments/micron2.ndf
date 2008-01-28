@@ -10,7 +10,7 @@ IMPORT
 
 	FILE a "channels/gaba.ndf"
 	FILE b "segments/spines/purkinje.ndf"
-	FILE c "tests/segments/purkinje/spinyd.ndf"
+	FILE c "segments/purkinje/spinyd.ndf"
 
 END IMPORT
 

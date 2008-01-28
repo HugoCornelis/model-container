@@ -6,11 +6,11 @@ NEUROSPACES NDF
 IMPORT
 
 	FILE axon "tests/segments/purkinje/axon.ndf"
-	FILE maind "tests/segments/purkinje/maind.ndf"
-	FILE soma "tests/segments/purkinje/soma.ndf"
+	FILE maind "segments/purkinje/maind.ndf"
+	FILE soma "segments/purkinje/soma.ndf"
 	FILE spine "segments/spines/purkinje.ndf"
 // 	FILE spinyd "segments/purkinje/spinyd.ndf"
-	FILE thickd "tests/segments/purkinje/thickd.ndf"
+	FILE thickd "segments/purkinje/thickd.ndf"
 
 END IMPORT
 

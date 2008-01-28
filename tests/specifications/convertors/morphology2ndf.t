@@ -52,18 +52,19 @@ options :
 				command_tests => [
 						  {
 						   comment => ('When using regexes, gives a SEGV, aha.  Presumably related to Expect and regexes.  Solution: check manually from time to time, or replace the regexes with something else.  '
-							       . "When using regexes, regex backtracking makes this test runs really slow.  "
-							       . "Right now, the test only checks for a part of the output, without using regexes."),
+							       . "When using regexes, regex backtracking makes this test run really slow.  "
+							       . "Right now, the test only checks for a part of the output, without using regexes."
+							       . "Question: does this test use the morphology2ndf.yml library installed on my laptop, seems so, but shouldn't."),
 						   description => "Can the Purkinje cell morphology file, taken from the Genesis Purkinje cell tutorial, be converted and activated ?",
 						   read => 'NEUROSPACES NDF
 
 IMPORT
 
 	FILE a "segments/spines/purkinje.ndf"
-	FILE b "tests/segments/purkinje/maind.ndf"
-	FILE c "tests/segments/purkinje/soma.ndf"
-	FILE d "tests/segments/purkinje/spinyd.ndf"
-	FILE e "tests/segments/purkinje/thickd.ndf"
+	FILE b "segments/purkinje/maind.ndf"
+	FILE c "segments/purkinje/soma.ndf"
+	FILE d "segments/purkinje/spinyd.ndf"
+	FILE e "segments/purkinje/thickd.ndf"
 
 END IMPORT
 
@@ -29243,8 +29244,8 @@ options:
 prototypes:
   aliasses:
     - segments/spines/purkinje.ndf::Purk_spine
-    - tests/segments/purkinje/soma.ndf::soma
-    - tests/segments/purkinje/spinyd.ndf::spinyd
+    - segments/purkinje/soma.ndf::soma
+    - segments/purkinje/spinyd.ndf::spinyd
   parameter_2_prototype:
     - dia: 3.18e-06
       prototype: spinyd
@@ -29331,10 +29332,10 @@ variables:
 prototypes:
   aliasses:
     - segments/spines/purkinje.ndf::Purk_spine
-    - tests/segments/purkinje/maind.ndf::maind
-    - tests/segments/purkinje/soma.ndf::soma
-    - tests/segments/purkinje/spinyd.ndf::spinyd
-    - tests/segments/purkinje/thickd.ndf::thickd
+    - segments/purkinje/maind.ndf::maind
+    - segments/purkinje/soma.ndf::soma
+    - segments/purkinje/spinyd.ndf::spinyd
+    - segments/purkinje/thickd.ndf::thickd
   parameter_2_prototype:
     - dia: 3.18e-06
       prototype: spinyd

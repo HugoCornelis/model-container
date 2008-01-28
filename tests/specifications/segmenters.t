@@ -2101,7 +2101,7 @@ tips:
 					      '-q',
 					      '-A',
 					      '-R',
-					      'tests/cells/purkinje/edsjb1994.ndf',
+					      'cells/purkinje/edsjb1994.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -3076,7 +3076,7 @@ tips:
 					      '-q',
 					      '-R',
 					      '-A',
-					      'tests/cells/purkinje/edsjb1994.ndf',
+					      'cells/purkinje/edsjb1994.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
@@ -4318,7 +4318,7 @@ tips:
 					      '-q',
 					      '-R',
 					      '-A',
-					      'tests/cells/purkinje/edsjb1994.ndf',
+					      'cells/purkinje/edsjb1994.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
