@@ -502,7 +502,7 @@ my $test
     
     ------------------------------------------------------------------------------
     Imported file : \\(.+?/legacy/networks/network-test.ndf\\)
-.    Imported file : \\(                                            network-test.ndf\\)
+    Imported file : \\(                                            network-test.ndf\\)
     ------------------------------------------------------------------------------
     Flags : \\(00000001\\)
 	Root imported file
