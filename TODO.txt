@@ -69,14 +69,6 @@ swc tag value, if that makes sense.
 #define InstanceOfMovable(phsle)
 #define InstanceOfMechanism(phsle)
 
-* Move the channels with CHANTABLEFILE
-to a 'library/legacy' directory or so.
-** Need following:
-*** library/legacy
-*** library/tutorials
-*** library/models
-*** library/testing
-
 * Add support for Rall's geometric ratio
 GR = \sum[d]{ \frac{ r ^ \frac{3}{2}_d }{ r ^ \frac{3}{2}_p }
 
