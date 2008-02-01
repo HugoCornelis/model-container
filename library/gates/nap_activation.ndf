@@ -27,32 +27,12 @@ PUBLIC_MODELS
 			END BINDINGS
 
 			PARAMETERS
-
-				//m 1: multiplier
-
-				PARAMETER ( Multiplier = 200.0e3 ),
-
-				//m 2: multiplier membrane dependence, 0.0 for no dependence
-
-				PARAMETER ( MembraneDependence = 0.0 ),
-
-				//m 3: choose between nominator or denominator, 1 means nominator, -1
-				//m means denominator
-
-				PARAMETER ( Nominator = -1.0 ),
-
-				//m 4: nominator or denominator offset
-
-				PARAMETER ( DeNominatorOffset = 1.0 ),
-
-				//m 5: membrane offset
-
-				PARAMETER ( MembraneOffset = -18.0e-3 ),
-
-				//m 6: denormalized time constant
-
-				PARAMETER ( TauDenormalizer = -16.0e-3 ),
-
+				PARAMETER ( HH_Scale = 200.0e3 ),
+				PARAMETER ( HH_Mult = 0.0 ),
+				PARAMETER ( HH_Factor_Flag = -1.0 ),
+				PARAMETER ( HH_Add = 1.0 ),
+				PARAMETER ( HH_Offset2 = -18.0e-3 ),
+				PARAMETER ( HH_Tau = -16.0e-3 ),
 			END PARAMETERS
 
 		END GATE_KINETIC_FORWARD
@@ -68,32 +48,12 @@ PUBLIC_MODELS
 			END BINDINGS
 
 			PARAMETERS
-
-				//m 1: multiplier
-
-				PARAMETER ( Multiplier = 25.0e3 ),
-
-				//m 2: multiplier membrane dependence, 0.0 for no dependence
-
-				PARAMETER ( MembraneDependence = 0.0 ),
-
-				//m 3: choose between nominator or denominator, 1 means nominator, -1
-				//m means denominator
-
-				PARAMETER ( Nominator = -1.0 ),
-
-				//m 4: nominator or denominator offset
-
-				PARAMETER ( DeNominatorOffset = 1.0 ),
-
-				//m 5: membrane offset
-
-				PARAMETER ( MembraneOffset = 58.0e-3 ),
-
-				//m 6: denormalized time constant
-
-				PARAMETER ( TauDenormalizer = 8.0e-3 ),
-
+				PARAMETER ( HH_Scale = 25.0e3 ),
+				PARAMETER ( HH_Mult = 0.0 ),
+				PARAMETER ( HH_Factor_Flag = -1.0 ),
+				PARAMETER ( HH_Add = 1.0 ),
+				PARAMETER ( HH_Offset2 = 58.0e-3 ),
+				PARAMETER ( HH_Tau = 8.0e-3 ),
 			END PARAMETERS
 
 		END GATE_KINETIC_BACKWARD
