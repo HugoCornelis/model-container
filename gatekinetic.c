@@ -28,6 +28,14 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
+//f static functions
+
+static
+double
+GateKineticGetHHOffset
+(struct symtab_GateKinetic *pgatk, struct PidinStack *ppist);
+
+
 /// **************************************************************************
 ///
 /// SHORT: GateKineticCalloc()
@@ -104,6 +112,101 @@ GateKineticCreateAlias
     //- return result
 
     return(&pgatkResult->bio.ioh.iol.hsle);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: GateKineticGetParameter()
+///
+/// ARGS.:
+///
+///	pgatk..: symbol to get parameter for
+///	pcName....: name of parameter
+///	ppist.....: context of segment.
+///
+/// RTN..: struct symtab_Parameters *
+///
+///	Parameter structure, NULL for failure.
+///
+/// DESCR: Get specific parameter of symbol.
+///
+/// **************************************************************************
+
+struct symtab_Parameters * 
+GateKineticGetParameter
+(struct symtab_GateKinetic *pgatk,
+ char *pcName,
+ struct PidinStack *ppist)
+{
+    //- set default result : failure
+
+    struct symtab_Parameters *  pparResult = NULL;
+
+    //- get parameter from bio component
+
+    pparResult = BioComponentGetParameter(&pgatk->bio, pcName, ppist);
+
+    //- if not found
+
+    if (!pparResult)
+    {
+	//- if somatopetal distance
+
+	if (0 == strcmp(pcName, "HH_Offset"))
+	{
+	    //- get distance
+
+	    double dHHOffset = GateKineticGetHHOffset(pgatk, ppist);
+
+	    //- set distance of segment
+
+	    pparResult
+		= SymbolSetParameterDouble
+		  (&pgatk->bio.ioh.iol.hsle, "HH_Offset", dHHOffset);
+	}
+
+    }
+
+    //- return result
+
+    return(pparResult);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: GateKineticGetHHOffset()
+///
+/// ARGS.:
+///
+///	pgatk.: gate kinetic symbol.
+///	ppist.: context of gate kinetic symbol.
+///
+/// RTN..: double : HH_Offset, FLT_MAX for failure.
+///
+/// DESCR: Get HH_Offset of gate kinetic.
+///
+///	If the HH_Offset parameter is not present, it is taken to be
+///	the same as the HH_Offset2 parameter.  Existence of the
+///	HH_Offset is not done in this function, must be done
+///	elsewhere.
+///
+/// **************************************************************************
+
+static
+double
+GateKineticGetHHOffset
+(struct symtab_GateKinetic *pgatk, struct PidinStack *ppist)
+{
+    //- set default result : failure
+
+    double dResult
+	= SymbolParameterResolveValue(&pgatk->bio.ioh.iol.hsle, "HH_Offset2", ppist);
+
+    //- return result
+
+    return(dResult);
 }
 
 

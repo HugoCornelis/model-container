@@ -194,6 +194,7 @@ my $class_hierarchy
 	 gate_kinetic => {
 			  allows => {
 				     'create_alias' => 'gate_kinetic',
+				     'get_parameter' => 'gate_kinetic',
 				    },
 			  annotations => {
 					  'piSymbolType2Biolevel' => 'BIOLEVEL_MECHANISM',
@@ -202,12 +203,13 @@ my $class_hierarchy
 			  isa => 'bio_comp',
 			  name => 'symtab_GateKinetic',
 			  parameters => {
-					 Multiplier => '1: multiplier',
-					 MembraneDependence => '2: multiplier membrane dependence, 0.0 for no dependence',
-					 Nominator => '3: choose between nominator or denominator, 1 means nominator, -1',
-					 DeNominatorOffset => '4: nominator or denominator offset',
-					 MembraneOffset => '5: membrane offset',
-					 TauDenormalizer => '6: denormalized time constant',
+					 HH_Scale => '1: multiplier',
+					 HH_Mult => '2: multiplier membrane dependence, 0.0 for no dependence',
+					 HH_Factor_Flag => '3: choose between nominator or denominator, 1 means nominator, -1',
+					 HH_Offset => '4: nominator or denominator offset',
+					 HH_Offset1 => '4: nominator or denominator offset',
+					 HH_Offset2 => '5: membrane offset',
+					 HH_Tau => '6: denormalized time constant',
 					},
 			 },
 	 h_h_gate => {

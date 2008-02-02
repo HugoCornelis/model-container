@@ -31,7 +31,7 @@ struct descr_GateKinetic;
 struct symtab_GateKinetic;
 
 
-#include "idin.h"
+#include "pidinstack.h"
 
 
 //f exported functions
@@ -42,6 +42,12 @@ struct symtab_HSolveListElement *
 GateKineticCreateAlias
 (struct symtab_GateKinetic *pgatk,
  struct symtab_IdentifierIndex *pidin);
+
+struct symtab_Parameters * 
+GateKineticGetParameter
+(struct symtab_GateKinetic *pgatk,
+ char *pcName,
+ struct PidinStack *ppist);
 
 void GateKineticInit(struct symtab_GateKinetic *pgatk);
 

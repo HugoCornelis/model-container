@@ -16,6 +16,8 @@ my $test
 				command => './neurospacesparse',
 				command_tests => [
 						  (
+						   # standard parameters
+
 						   {
 						    description => "Is neurospaces startup successful ?",
 						    read => [ '-re', './neurospacesparse: No errors for .+?/gates/naf_activation.ndf.', ],
@@ -56,6 +58,15 @@ my $test
 						    description => "Do we find the HH_Tau parameter with a correct value in the forward gate kinetic ?",
 						    read => '= -0.01',
 						    write => 'printparameter /naf_activation/forward HH_Tau',
+						   },
+						  ),
+						  (
+						   # additional tests
+
+						   {
+						    description => "Do we find the HH_Offset parameter with the same values as HH_Offset2 in the forward gate kinetic ?",
+						    read => '0.005',
+						    write => 'printparameter /naf_activation/forward HH_Offset',
 						   },
 						  ),
 						  (
