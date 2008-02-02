@@ -70,6 +70,8 @@ my $test
 						   },
 						  ),
 						  (
+						   # standard parameters
+
 						   {
 						    description => "Do we find the HH_Scale parameter with a correct value in the backward gate kinetic ?",
 						    read => '7000',
@@ -99,6 +101,15 @@ my $test
 						    description => "Do we find the HH_Tau parameter with a correct value in the backward gate kinetic ?",
 						    read => '0.02',
 						    write => 'printparameter /naf_activation/backward HH_Tau',
+						   },
+						  ),
+						  (
+						   # additional tests
+
+						   {
+						    description => "Do we find the HH_Offset parameter with the same values as HH_Offset2 in the forward gate kinetic ?",
+						    read => '0.065',
+						    write => 'printparameter /naf_activation/backward HH_Offset',
 						   },
 						  ),
 						 ],
