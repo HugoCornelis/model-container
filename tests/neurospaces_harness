@@ -111,7 +111,7 @@ use YAML;
 
 my $option_flattenout;
 my $option_help;
-my $option_numerical_compare = 0;
+my $option_numerical_compare = $config->{numerical_compare} || 0;
 my $option_random_order;
 my $option_regex_selector = ".*";
 my $option_timeout_multiplier = 1;
@@ -150,6 +150,7 @@ my $test_report
 		       package => $config->{package},
 		      },
        global => {
+		  config => $config,
 		  error_count => $error_count,
 		  status => 'initializing',
 		  test_count => 0,
@@ -937,15 +938,39 @@ sub numerical_compare
 
     # and can be overwritten by the next tests
 
-    if (scalar @$numbers1 ne scalar @$numbers2)
+    # line up the numbers expected
+
+    while (scalar @$numbers1 > scalar @$numbers2)
     {
-	return 'numerical_compare(): different number count, aborting with error';
+	shift @$numbers1;
+
+# 	return 'numerical_compare(): different number count, aborting with error';
     }
 
-    if (scalar @$texts1 ne scalar @$texts2)
+    while (scalar @$numbers1 < scalar @$numbers2)
     {
-	return 'numerical_compare(): different text count, aborting with error';
+	shift @$numbers2;
+
+# 	return 'numerical_compare(): different number count, aborting with error';
     }
+
+    # we also line up the texts expected
+
+    while (scalar @$texts1 > scalar @$texts2)
+    {
+	shift @$texts1;
+
+# 	return 'numerical_compare(): different text count, aborting with error';
+    }
+
+    while (scalar @$texts1 < scalar @$texts2)
+    {
+	shift @$texts2;
+
+# 	return 'numerical_compare(): different text count, aborting with error';
+    }
+
+    # compare the texts between the numbers
 
     foreach my $index (0 .. $#$texts1)
     {
@@ -955,13 +980,17 @@ sub numerical_compare
 	}
     }
 
+    # numerical compare of numbers
+
     foreach my $index (0 .. $#$numbers1)
     {
 	if ($numbers1->[$index] != $numbers2->[$index])
 	{
 	    my $diff = $numbers1->[$index] - $numbers2->[$index];
 
-	    if ($diff > $numbers1->[$index] / 10000)
+	    #t the 1000 is a bit arbitrary, quite large differences allowed ...
+
+	    if (abs($diff) > abs($numbers1->[$index] / 1000))
 	    {
 		return 'numerical_compare(): numbers differ above accuracy ($numbers1->[$index] != $numbers2->[$index]), aborting with error';
 	    }
