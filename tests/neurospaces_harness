@@ -812,7 +812,7 @@ sub report_exit
 
     # yaml out the test report
 
-    print Dump($test_report);
+    print "\n" . Dump($test_report);
 
     # if there were errors
 
