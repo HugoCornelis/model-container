@@ -342,7 +342,35 @@ sub main
 
     foreach my $module_definition (@$test_modules)
     {
+	if (!defined $module_definition->{name})
+	{
+	    $module_definition->{name} = 'unnamed';
+
+	    report_error_add
+		(
+		 {
+		  description => 'unnamed module',
+		  error => 'unnamed module',
+		  module_name => 'unnamed module',
+		 },
+		);
+	}
+
 	my $module_name = $module_definition->{name};
+
+	if (!defined $module_definition->{description})
+	{
+	    $module_definition->{description} = $module_definition->{name};
+
+	    report_error_add
+		(
+		 {
+		  description => 'no module description',
+		  error => 'no module description',
+		  module_name => $module_name,
+		 },
+		);
+	}
 
 	if ($module_definition->{disabled})
 	{
