@@ -4736,15 +4736,8 @@ Parameter	/* <ppar> */
 #line
 		    //- allocate room for symbolic parameter
 
-		    $$ = ParameterCalloc();
+		    $$ = ParameterNewFromPidinQueue($3, $5->pidinRoot, TYPE_PARA_SYMBOLIC);
 
-		    //- fill up structure
-
-		    ParameterSetName($$, $3);
-
-		    ParameterSetSymbolName($$, $5->pidinRoot);
-
-		    $$->pparFirst = $$;
 		}
 	|
 		TOKEN_PARAMETER
@@ -4757,15 +4750,8 @@ Parameter	/* <ppar> */
 #line
 		    //- allocate room for symbolic parameter
 
-		    $$ = ParameterCalloc();
+		    $$ = ParameterNewFromPidinQueue($3, $5, TYPE_PARA_FIELD);
 
-		    //- fill up structure
-
-		    ParameterSetName($$, $3);
-
-		    ParameterSetFieldName($$, $5);
-
-		    $$->pparFirst = $$;
 		}
 	|
 		TOKEN_PARAMETER
@@ -4778,12 +4764,6 @@ Parameter	/* <ppar> */
 #line
 		    //- allocate room for string parameter
 
-		    $$ = ParameterCalloc();
-
-		    //- fill up structure
-
-		    ParameterSetName($$, $3);
-
 		    //- remove ending '"'
 
 		    $5->pcString[$5->iLength - 1] = '\0';
@@ -4794,9 +4774,8 @@ Parameter	/* <ppar> */
 
 		    strcpy(pc, &$5->pcString[1]);
 
-		    ParameterSetString($$, pc);
+		    $$ = ParameterNewFromString($3, pc);
 
-		    $$->pparFirst = $$;
 		}
 	|
 		TOKEN_PARAMETER
@@ -4809,15 +4788,8 @@ Parameter	/* <ppar> */
 #line
 		    //- allocate room for number parameter
 
-		    $$ = ParameterCalloc();
+		    $$ = ParameterNewFromNumber($3, $5);
 
-		    //- fill up structure
-
-		    ParameterSetName($$,$3);
-
-		    ParameterSetNumber($$, $5);
-
-		    $$->pparFirst = $$;
 		}
 	|
 		TOKEN_PARAMETER
@@ -4830,15 +4802,8 @@ Parameter	/* <ppar> */
 #line
 		    //- allocate room for function parameter
 
-		    $$ = ParameterCalloc();
+		    $$ = ParameterNewFromFunction($3, $5);
 
-		    //- fill up structure
-
-		    ParameterSetName($$,$3);
-
-		    ParameterSetFunction($$, $5);
-
-		    $$->pparFirst = $$;
 		}
 	;
 
