@@ -306,12 +306,63 @@ struct symtab_Parameters * ParameterLookup
 
 /// **************************************************************************
 ///
+/// SHORT: ParameterNewFromFunction()
+///
+/// ARGS.:
+///
+///	pcName..: name of parameter, will be copied.
+///	pfun....: function that generates the parameter value.
+///
+/// RTN..: struct symtab_Parameters *
+///
+///	New parameter, NULL for failure.
+///
+/// DESCR: Allocate parameter that depends on the given function.
+///
+/// **************************************************************************
+
+struct symtab_Parameters *
+ParameterNewFromFunction
+(char *pcName, struct symtab_Function *pfun)
+{
+    //- set default result : failure
+
+    struct symtab_Parameters *pparResult = NULL;
+
+    char *pc = NULL;
+
+    //- allocate parameter
+
+    pparResult = ParameterCalloc();
+
+    //- prepare name
+
+    pc = (char *)calloc(1 + strlen(pcName), sizeof(char));
+
+    strcpy(pc, pcName);
+
+    //- fill up structure
+
+    ParameterSetName(pparResult, pc);
+
+    ParameterSetFunction(pparResult, pfun);
+
+    pparResult->pparFirst = pparResult;
+
+    //- return result
+
+    return(pparResult);
+}
+
+
+/// **************************************************************************
+///
 /// SHORT: ParameterNewFromNumber()
 ///
 /// ARGS.:
 ///
 ///	pcName..: name of parameter, will be copied.
-///	dNumber.: value
+///	dNumber.: value.
 ///
 /// RTN..: struct symtab_Parameters *
 ///

@@ -575,6 +575,10 @@ char * ParameterGetString(struct symtab_Parameters *ppar);
 struct symtab_Parameters * ParameterLookup
 (struct symtab_Parameters * ppar, char *pcName);
 
+struct symtab_Parameters *
+ParameterNewFromFunction
+(char *pcName, struct symtab_Function *pfun);
+
 struct symtab_Parameters * 
 ParameterNewFromNumber
 (char *pcName, double dNumber);
