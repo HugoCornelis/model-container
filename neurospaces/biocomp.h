@@ -310,9 +310,16 @@ BioComponentAssignParameters
 ///	pbio...: symbol to get parameter for.
 ///	ppar...: new parameter.
 ///
-/// RTN..: struct symtab_Parameters * : new parameter.
+/// RTN..: struct symtab_Parameters * : new parameter, NULL for failure.
 ///
 /// DESCR: Set parameter with given name.
+///
+/// NOTE.:
+///
+///	After calling this function, you must use the return value for
+///	the new parameter.  What can happen internally, is that an
+///	existing parameter structure gets changed, and is returned as
+///	result, while the ppar argument is freed.
 ///
 /// **************************************************************************
 
@@ -329,7 +336,7 @@ BioComponentChangeParameter
 
     //- insert new parameter
 
-    ParContainerInsert(pbio->pparc,pparResult);
+    ParContainerInsert(pbio->pparc, pparResult);
 
     //- return result
 
