@@ -39,6 +39,7 @@ sub main
     my $success
 	= $neurospaces->load
 	    (
+	     undef,
 	     {
 	      commands => [
 			   'delete /Golgi/Golgi_soma',

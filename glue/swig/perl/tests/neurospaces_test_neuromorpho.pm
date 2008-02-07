@@ -45,6 +45,7 @@ sub main
     my $success
 	= $neurospaces->load
 	    (
+	     undef,
 	     {
 	      filename => "http://neuromorpho.org/neuroMorpho/dableFiles/dendritica/CNG%20version/v_e_purk3.CNG.swc",
 	     },

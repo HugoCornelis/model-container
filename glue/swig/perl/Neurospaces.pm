@@ -103,6 +103,8 @@ sub apply_conceptual_parameters
 {
     my $self = shift;
 
+    my $scheduler = shift;
+
     my $options = shift;
 
     my $backend = $self->backend();
@@ -173,6 +175,8 @@ sub apply_conceptual_parameters
 sub apply_granular_parameters
 {
     my $self = shift;
+
+    my $scheduler = shift;
 
     my $options = shift;
 
@@ -388,6 +392,8 @@ sub load
 {
     my $self = shift;
 
+    my $scheduler = shift;
+
     my $options = shift;
 
     my $argv = shift;
@@ -546,7 +552,7 @@ sub load
 
     push @$argv, $ndf;
 
-    my $result = $self->read($argv, @_);
+    my $result = $self->read($scheduler, $argv, @_);
 
     return $result;
 }
@@ -648,6 +654,8 @@ sub querymachine
 sub read
 {
     my $self = shift;
+
+    my $scheduler = shift;
 
     my $argv = shift;
 

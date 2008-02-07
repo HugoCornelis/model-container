@@ -70,6 +70,7 @@ variables:
     my $success
 	= $neurospaces->load
 	    (
+	     undef,
 	     {
 	      commands => [
 			   'expand /C170897A_P3_CNG/segments/soma/**',

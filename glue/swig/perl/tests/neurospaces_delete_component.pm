@@ -44,7 +44,7 @@ sub main
 
     my $args = [ "$0", "-A", "legacy/cells/golgi.ndf" ];
 
-    my $success = $neurospaces->read($args);
+    my $success = $neurospaces->read(undef, $args);
 
     $neurospaces->querymachine("echo 1");
 
