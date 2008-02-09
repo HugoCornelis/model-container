@@ -1,5 +1,4 @@
 Makefile$
-Makefile.in$
 ^analyzer.c$
 ^convertors/des2xml$
 ^convertors/des2xml_comment$
@@ -8,7 +7,6 @@ Makefile.in$
 ^doxy$
 ^doxygen/docs/
 ^elc-temp$
-^elisp-comp$
 ^glue/swig/perl/SwiggableNeurospaces.pm$
 ^glue/swig/perl/swiggable_neurospaces_wrap.c$
 ^hierarchy/output
@@ -26,17 +24,10 @@ Makefile.in$
 ^tests/html/
 ^xs_initialize.c$
 _Inline
-aclocal.m4$
 autoscan.log$
 config.h$
-config.h.in$
 config.log$
 config.status$
-configure$
-configure.scan$
-depcomp$
-install-sh$
-missing$
 semantic.cache
 stamp-h1$
 tar.gz$
