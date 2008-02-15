@@ -258,7 +258,7 @@ $SIG{'__DIE__'}
 
 	  print STDERR Carp::longmess(@_);
 
-	  $test_report->{global}->{status} = 'Died';
+	  $test_report->{global}->{status} = 'Died: ' . join " ", @_;
 
 	  report_exit(3, @_);
       };
@@ -807,6 +807,11 @@ sub read_cmd_line
 	     "timeout-multiplier=s" => \$option_timeout_multiplier,
 	     "v|verbose+" => \$option_verbose,
 	    );
+
+    if (!$result)
+    {
+	die "$0: Error in option processing";
+    }
 
     $test_report->{options}
 	= {
