@@ -3088,6 +3088,14 @@ SV * symbol_parameter_value(void *phsle, char *pc, void *ppist)
 	return(NULL);
     }
 
+    //t from the Time::HiRes manpage, I conclude that this is close to
+    //t the correct way of passing pointers around, including the casting:
+
+    //t myNVtime = INT2PTR(double(*)(), SvIV(*svp));
+
+    //t and the casts below, are a bit hacky, but probably mostly
+    //t equivalent.
+
     phsle = (void *)SvIV(SvRV((SV *)phsle));
 
     ppist = (void *)SvIV(SvRV((SV *)ppist));
@@ -3122,6 +3130,8 @@ double symbol_parameter_resolve_value(void *phsle, char *pc, void *ppist)
 	return(FLT_MAX);
     }
 
+    //t see above on pointer casting
+
     phsle = (void *)SvIV(SvRV((SV *)phsle));
 
     ppist = (void *)SvIV(SvRV((SV *)ppist));
@@ -3145,6 +3155,8 @@ double symbol_parameter_resolve_scaled_value(void *phsle, char *pc, void *ppist)
 
 	return(FLT_MAX);
     }
+
+    //t see above on pointer casting
 
     phsle = (void *)SvIV(SvRV((SV *)phsle));
 
