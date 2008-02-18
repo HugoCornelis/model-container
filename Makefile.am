@@ -121,7 +121,7 @@ dist_lisp_DATA = \
 	emacs/neurospaces-mode/neurospaces-vars.el
 
 dist-keywords:
-	release-expand neurospacesread des 9 0 des-9 hugo.cornelis@gmail.com --verbose
+	release-expand neurospacesread des 10 0 des-10 hugo.cornelis@gmail.com --verbose
 
 # The file lexsupport.c is compiled as part of analyzer.l, but not as
 # a plain source file.  It is needed in the distribution.

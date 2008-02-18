@@ -1605,7 +1605,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=neurospacesread-convertors
- VERSION=des-9
+ VERSION=des-10
 
 
 # Some tools Automake needs.
