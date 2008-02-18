@@ -19,7 +19,7 @@ dnl //////////////////////////////////////////////////////////////////////////
 
 dnl Process this file with autoconf to produce a configure script.
 # $Format: "AC_REVISION(${package}, ${label}, ${email})"$
-AC_REVISION(neurospacesread, des-9, hugo.cornelis@gmail.com)
+AC_REVISION(neurospacesread, des-10, hugo.cornelis@gmail.com)
 dnl AC_REVISION($Id: configure.in 1.40 Wed, 10 Oct 2007 16:57:00 -0500 hugo $)
 AC_INIT
 AC_CONFIG_SRCDIR([neurospaces.c])
@@ -95,7 +95,7 @@ dnl all subdirs
 AC_CONFIG_SUBDIRS(algorithms convertors glue/swig)
 
 # $Format: "AM_INIT_AUTOMAKE(${package}, ${label}, ${email})"$
-AM_INIT_AUTOMAKE(neurospacesread, des-9, hugo.cornelis@gmail.com)
+AM_INIT_AUTOMAKE(neurospacesread, des-10, hugo.cornelis@gmail.com)
 
 dnl Checks for programs.
 AC_PROG_AWK
