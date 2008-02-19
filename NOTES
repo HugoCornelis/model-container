@@ -1,25 +1,18 @@
-- Further work on flexible connections and connection indexing.
-- Bugfixes for release management and deployment, consolidation of TODOs.
 - Website updates.
-- Instrumentation improvements.
-- Typo and developer comment fixes.
-- Test framework improvements.
-- Morphology importer improvements.
-- Added meshing framework, disabled for the moment.
-- Various small cleanups, consistency improvements and refactorings.
-- Added code to load morphologies from URL, works, test disabled for the moment.
-- Improved perl bindings and tests.
-- Bugfixes in the model library.
-- Added several utilities and HH segments to the model library.
-- Several small bug fixes.
-- Added structural analysis and parameters for morphologies.
-- Improvements to the querymachine interface.
-- Allowed to disable algorithm activation when importing models.
-- Added delete operation, use './configure --with-delete-operation'.
-- Small update to the installation instructions.
-- Added several interface functions to the perl glue:
-  - add_component()
-  - delete_component()
-  - import_qualified_filename()
-  - input_2_solverinfo()
-- Bugfixes for rooted contexts.
+- Moved repository from prcs to monotone, build related changes.
+- Start using Data::Utilities from CPAN where applicable.
+- Small fixes in the test specifications.
+- Parameter renamings: Gk -> G, Ik -> I, Ek -> Erev.
+- Added files for emacs major mode.
+- Added Neuron morphology files.
+- Misc cleanup.
+- Added a version of the Purkinje NMDA channel with a fixed preset
+  maximal conductance.
+- Restructured the model library: legacy, test and 'normal' models.
+- Small updates to the test framework.
+- Renamed the HH parameters, lined up with the user manual, first
+  phase.
+- Small maintenance work and refactoring in the parser.
+- Updates for SSP front-end object interfacing.
+- Added autotool generated files to the repository for test and
+  release automatization.
