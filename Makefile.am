@@ -120,8 +120,16 @@ dist_lisp_DATA = \
 	emacs/neurospaces-mode/neurospaces-files.el \
 	emacs/neurospaces-mode/neurospaces-vars.el
 
+RELEASE_MAJOR=`release-extract --major`
+RELEASE_MINOR=`release-extract --minor`
+RELEASE_MICRO=`release-extract --micro`
+
+show-release-labels:
+	echo "Release information (major-minor-micro): $(RELEASE_MAJOR)-$(RELEASE_MINOR)-$(RELEASE_MICRO)"
+
 dist-keywords:
-	release-expand neurospacesread des 10 0 des-10 hugo.cornelis@gmail.com --verbose
+	release-expand neurospacesread $(RELEASE_MAJOR) $(RELEASE_MINOR) $(RELEASE_MICRO) $(RELEASE_MAJOR)-$(RELEASE_MINOR) hugo.cornelis@gmail.com --verbose
+#	release-expand neurospacesread des 10 0 des-10 hugo.cornelis@gmail.com --verbose
 
 # The file lexsupport.c is compiled as part of analyzer.l, but not as
 # a plain source file.  It is needed in the distribution.
