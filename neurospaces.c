@@ -1,4 +1,4 @@
-static char *pcVersionTime="(08/02/21) Thursday, February 21, 2008 12:20:50 hugo";
+static char *pcVersionTime="(08/02/21) Thursday, February 21, 2008 12:21:32 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -1358,7 +1358,7 @@ NeurospacesSetProjectionQuery
 
 int
 NeurospacesSetSolverMapper
-(struct Neurospaces *pneuro,struct SolverMapper *psm)
+(struct Neurospaces *pneuro, struct SolverMapper *psm)
 {
     //- set default result : ok
 
