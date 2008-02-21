@@ -1,4 +1,4 @@
-static char *pcVersionTime="(08/01/03) Thursday, January 3, 2008 15:59:01 hugo";
+static char *pcVersionTime="(08/02/21) Thursday, February 21, 2008 12:20:50 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -1184,7 +1184,7 @@ char *NeurospacesQualifyToConfiguration(struct Neurospaces *pneuro, char *pc)
 
 /// **************************************************************************
 ///
-/// SHORT: NeurospacesRemoveProjectionQuery()
+/// SHORT: NeurospacesRead()
 ///
 /// ARGS.:
 ///
