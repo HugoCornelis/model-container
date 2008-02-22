@@ -250,9 +250,9 @@ my $test_report
        target => {
 		  OS => $^O,
 		  packages => {
-			       gcc => `gcc 2>&1 -v`,
-			       perl => `perl 2>&1 -V`,
-			       swig => `swig 2>&1 -version`,
+			       gcc => (join '', `gcc 2>&1 -v`),
+			       perl => (join '', `perl 2>&1 -V`),
+			       swig => (join '', `swig 2>&1 -version`),
 			      },
 		 },
       };
