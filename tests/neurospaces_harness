@@ -115,7 +115,9 @@ my $option_numerical_compare = $config->{numerical_compare} || 0;
 my $option_random_order;
 my $option_regex_selector = ".*";
 my $option_timeout_multiplier = 1;
+my $option_timings;
 my $option_verbose;
+
 
 print "Executable is $0,\n";
 print "core_directory is $core_directory\n";
@@ -247,6 +249,11 @@ my $test_report
 		 },
        target => {
 		  OS => $^O,
+		  packages => {
+			       gcc => `gcc 2>&1 -v`,
+			       perl => `perl 2>&1 -V`,
+			       swig => `swig 2>&1 -version`,
+			      },
 		 },
       };
 
@@ -258,7 +265,7 @@ $SIG{'__DIE__'}
 
 	  print STDERR Carp::longmess(@_);
 
-	  $test_report->{global}->{status} = 'Died: ' . join " ", @_;
+	  $test_report->{global}->{status} = 'Died';
 
 	  report_exit(3, @_);
       };
@@ -562,6 +569,8 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 		    $before_match,
 		    $after_match);
 
+		my $time_elapsed;
+
 		if (ref $command eq 'CODE')
 		{
 		    $error
@@ -604,7 +613,11 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 				    ? 4 * $option_timeout_multiplier
 					: 2 * $option_timeout_multiplier;
 
+		    use Time::HiRes qw(gettimeofday tv_interval);
+
 		    # write
+
+		    my $time_start = [ gettimeofday(), ];
 
 		    if (defined $write)
 		    {
@@ -629,6 +642,8 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 			     $before_match,
 			     $after_match)
 				= $exp->expect($timeout, $read, );
+
+			    $time_elapsed = tv_interval($time_start);
 			}
 
 			#! only array supported for now.
@@ -641,6 +656,15 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 			     $before_match,
 			     $after_match)
 				= $exp->expect($timeout, @$read, );
+
+			    $time_elapsed = tv_interval($time_start);
+			}
+
+			# fill in the elapsed time in the report
+
+			if ($option_timings)
+			{
+			    $test_report->{timings}->{$module_name}->{$description} = $time_elapsed;
 			}
 
 			# if things don't match
@@ -805,6 +829,7 @@ sub read_cmd_line
 	     "randomize-order=s" => \$option_random_order,
 	     "regex-selector=s" => \$option_regex_selector,
 	     "timeout-multiplier=s" => \$option_timeout_multiplier,
+	     "timings!" => \$option_timings,
 	     "v|verbose+" => \$option_verbose,
 	    );
 
@@ -821,6 +846,7 @@ sub read_cmd_line
 	   random_order => $option_random_order,
 	   regex_selector => $option_regex_selector,
 	   timeout_multiplier => $option_timeout_multiplier,
+	   timings => $option_timings,
 	   verbose => $option_verbose,
 	  };
 
@@ -839,6 +865,7 @@ options :
     randomize-order    randomize the order of the tests before executing them (require List::Util to be installed).
     regex-selector     defines a regex to run specific tests.
     timeout-multiplier multiply all timeout values with this constant.
+    timings            add timing information about the tests to the report.
     verbose            set verbosity level.
 ";
 
@@ -870,14 +897,14 @@ sub report_error_add
 
     if ($subdescription)
     {
-	$test_report->{modules}->{$module_name}->{$error_count}->{$subdescription}->{description} = $description;
+	$test_report->{errors}->{modules}->{$module_name}->{$error_count}->{$subdescription}->{description} = $description;
     }
     else
     {
-	$test_report->{modules}->{$module_name}->{$error_count}->{description} = $description;
+	$test_report->{errors}->{modules}->{$module_name}->{$error_count}->{description} = $description;
     }
 
-    $test_report->{modules}->{$module_name}->{$error_count}->{error} = $error;
+    $test_report->{errors}->{modules}->{$module_name}->{$error_count}->{error} = $error;
 
     if (defined $message)
     {
@@ -886,7 +913,7 @@ sub report_error_add
 	#! running in verbose mode seems, allows to track regex
 	#! problems ... I think.
 
-	$test_report->{modules}->{$module_name}->{$error_count}->{$subdescription}->{report} = $message;
+	$test_report->{errors}->{modules}->{$module_name}->{$error_count}->{$subdescription}->{report} = $message;
     }
 
     if (defined $expected
