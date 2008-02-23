@@ -70,7 +70,7 @@ report:
 						 ],
 				comment => 'this test is disabled if no "default" route to the internet can be found, the "route" command must output a line with the text "default"',
 				description => "morphology loading from the neuromorpho database using a URL",
-				disabled => (`route` =~ /default/ ? '' : 'no default route to the internet found'),
+				disabled => (`/sbin/route` =~ /default/ ? '' : 'no default route to the internet found'),
 			       },
 			       {
 				arguments => [
