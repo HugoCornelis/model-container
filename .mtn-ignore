@@ -1,3 +1,6 @@
+tests/convertors
+tests/glue
+
 Makefile$
 ^analyzer.c$
 ^convertors/des2xml$
