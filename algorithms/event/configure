@@ -1607,7 +1607,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=neurospaces/algorithms/event
- VERSION=des-10
+ VERSION=build-1
 
 
 # Some tools Automake needs.

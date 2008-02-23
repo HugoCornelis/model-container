@@ -21,9 +21,9 @@ my $test
 						  },
 						  {
 						   # $Format: "description => \"Does the version information match with ${package}-${label} ?\","$
-description => "Does the version information match with neurospacesread-des-10 ?",
+description => "Does the version information match with model-container-build-1 ?",
 						   # $Format: "read => \"${package}-${label}\","$
-read => "neurospacesread-des-10",
+read => "model-container-build-1",
 						   write => "version",
 						  },
 						 ],
