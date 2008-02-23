@@ -1003,7 +1003,7 @@ sub report_exit
 			= Mail::Sender->new
 			    (
 			     {
-			      smtp => 'googlemail.l.google.com',
+# 			      smtp => 'googlemail.l.google.com',
 			      smtp => 'mta1.uthscsa.edu',
 			      from => 'hugo.cornelis@gmail.com',
 			     },
@@ -1084,7 +1084,6 @@ Email was not sent.
 	    "No email sent.
 ";
     }
-
 
     # if there were errors
 
