@@ -46,7 +46,7 @@ PRIVATE_MODELS
 					PARAMETER ( HH_Mult = -10000.0 ),
 					PARAMETER ( HH_Factor_Flag = -1.0 ),
 					PARAMETER ( HH_Add = -1.0 ),
-					PARAMETER ( HH_Offset2 = 0.055 ),
+					PARAMETER ( HH_OffsetE = 0.055 ),
 					PARAMETER ( HH_Tau = -0.01 ),	
 				END PARAMETERS
 	
@@ -67,7 +67,7 @@ PRIVATE_MODELS
 					PARAMETER ( HH_Mult = 0.0 ),
 					PARAMETER ( HH_Factor_Flag = -1.0 ),
 					PARAMETER ( HH_Add = 0.0 ),
-					PARAMETER ( HH_Offset2 = 0.065 ),
+					PARAMETER ( HH_OffsetE = 0.065 ),
 					PARAMETER ( HH_Tau = 0.08 ),	
 				END PARAMETERS
 	
@@ -134,7 +134,7 @@ PRIVATE_MODELS
 					PARAMETER ( HH_Mult = 0.0 ),
 					PARAMETER ( HH_Factor_Flag = -1.0 ),
 					PARAMETER ( HH_Add = 0.0 ),
-					PARAMETER ( HH_Offset2 = 5.0e-3 ),
+					PARAMETER ( HH_OffsetE = 5.0e-3 ),
 					PARAMETER ( HH_Tau = -10.0e-3 ),	
 				END PARAMETERS
 	
@@ -155,7 +155,7 @@ PRIVATE_MODELS
 					PARAMETER ( HH_Mult = 0.0 ),
 					PARAMETER ( HH_Factor_Flag = -1.0 ),
 					PARAMETER ( HH_Add = 0.0 ),
-					PARAMETER ( HH_Offset2 = 65.0e-3 ),
+					PARAMETER ( HH_OffsetE = 65.0e-3 ),
 					PARAMETER ( HH_Tau = 20.0e-3 ),	
 				END PARAMETERS
 	
@@ -206,7 +206,7 @@ PRIVATE_MODELS
 					PARAMETER ( HH_Mult = 0.0 ),
 					PARAMETER ( HH_Factor_Flag = -1.0 ),
 					PARAMETER ( HH_Add = 1.0 ),
-					PARAMETER ( HH_Offset2 = 80.0e-3 ),
+					PARAMETER ( HH_OffsetE = 80.0e-3 ),
 					PARAMETER ( HH_Tau = 10.0e-3 ),	
 				END PARAMETERS
 	
@@ -227,7 +227,7 @@ PRIVATE_MODELS
 					PARAMETER ( HH_Mult = 0.0 ),
 					PARAMETER ( HH_Factor_Flag = -1.0 ),
 					PARAMETER ( HH_Add = 0.0 ),
-					PARAMETER ( HH_Offset2 = -3.0e-3 ),
+					PARAMETER ( HH_OffsetE = -3.0e-3 ),
 					PARAMETER ( HH_Tau = -18.0e-3 ),	
 				END PARAMETERS
 	

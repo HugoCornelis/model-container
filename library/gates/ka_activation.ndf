@@ -30,7 +30,7 @@ PUBLIC_MODELS
 				PARAMETER ( HH_Mult = 0.0 ),
 				PARAMETER ( HH_Factor_Flag = -1.0 ),
 				PARAMETER ( HH_Add = 1.0 ),
-				PARAMETER ( HH_Offset2 = 0.027 ),
+				PARAMETER ( HH_OffsetE = 0.027 ),
 				PARAMETER ( HH_Tau = -12e-3 ),
 			END PARAMETERS
 
@@ -51,7 +51,7 @@ PUBLIC_MODELS
 				PARAMETER ( HH_Mult = 0.0 ),
 				PARAMETER ( HH_Factor_Flag = -1.0 ),
 				PARAMETER ( HH_Add = 1.0 ),
-				PARAMETER ( HH_Offset2 = 0.03 ),
+				PARAMETER ( HH_OffsetE = 0.03 ),
 				PARAMETER ( HH_Tau = 4e-3 ),
 			END PARAMETERS
 

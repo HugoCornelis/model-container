@@ -29,7 +29,7 @@ PRIVATE_MODELS
 				PARAMETER ( HH_Mult = 10000 ),
 				PARAMETER ( HH_Factor_Flag = -1.0 ),
 				PARAMETER ( HH_Add = -1.0 ),
-				PARAMETER ( HH_Offset2 = 60e-3 ),
+				PARAMETER ( HH_OffsetE = 60e-3 ),
 				PARAMETER ( HH_Tau = -10.0e-3 ),
 			END PARAMETERS
 
@@ -50,7 +50,7 @@ PRIVATE_MODELS
 				PARAMETER ( HH_Mult = 0.0 ),
 				PARAMETER ( HH_Factor_Flag = -1.0 ),
 				PARAMETER ( HH_Add = 0.0 ),
-				PARAMETER ( HH_Offset2 = 70e-3 ),
+				PARAMETER ( HH_OffsetE = 70e-3 ),
 				PARAMETER ( HH_Tau = 80e-3 ),
 			END PARAMETERS
 

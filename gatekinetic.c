@@ -202,7 +202,7 @@ GateKineticGetHHOffset
     //- set default result : failure
 
     double dResult
-	= SymbolParameterResolveValue(&pgatk->bio.ioh.iol.hsle, "HH_Offset2", ppist);
+	= SymbolParameterResolveValue(&pgatk->bio.ioh.iol.hsle, "HH_OffsetE", ppist);
 
     //- return result
 
