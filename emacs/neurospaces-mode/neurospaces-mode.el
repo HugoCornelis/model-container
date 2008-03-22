@@ -143,8 +143,8 @@ Key bindings:
 		 "\\|alpha"
 		 "\\|exp2_equation"
 		 "\\|hh_gate"
-		 "\\|gate_kinetic_backward"
-		 "\\|gate_kinetic_forward"
+		 "\\|gate_kinetic_b"
+		 "\\|gate_kinetic_a"
 		 "\\|gate_kinetic_part"
 		 "\\|concentration_gate_kinetic"
 
@@ -167,8 +167,8 @@ Key bindings:
 		 "\\|ALPHA"
 		 "\\|EXP2_EQUATION"
 		 "\\|HH_GATE"
-		 "\\|GATE_KINETIC_BACKWARD"
-		 "\\|GATE_KINETIC_FORWARD"
+		 "\\|GATE_KINETIC_B"
+		 "\\|GATE_KINETIC_A"
 		 "\\|GATE_KINETIC_PART"
 		 "\\|CONCENTRATION_GATE_KINETIC"
 

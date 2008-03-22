@@ -255,8 +255,8 @@ attributes		{	return(TOKEN_ATTRIBUTES);	}
 parameter		{	return(TOKEN_PARAMETER);	}
 parameters		{	return(TOKEN_PARAMETERS);	}
 projection		{	return(TOKEN_PROJECTION);	}
-gate_kinetic_backward	{	return(TOKEN_GATE_KINETIC_BACKWARD);	}
-gate_kinetic_forward	{	return(TOKEN_GATE_KINETIC_FORWARD);	}
+gate_kinetic_b		{	return(TOKEN_GATE_KINETIC_B);	}
+gate_kinetic_a		{	return(TOKEN_GATE_KINETIC_A);	}
 gate_kinetic_part	{	return(TOKEN_GATE_KINETIC_PART);	}
 em_contour		{	return(TOKEN_EM_CONTOUR);	}
 concentration_gate_kinetic	{	return(TOKEN_CONCENTRATION_GATE_KINETIC);	}

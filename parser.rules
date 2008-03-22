@@ -1599,7 +1599,7 @@ GateKineticBackwardSection	/* <pgatk> */
 
 GateKineticBackwardSectionFront	/* <pidin> */
 	:
-		TOKEN_GATE_KINETIC_BACKWARD
+		TOKEN_GATE_KINETIC_B
 		IdentifierOptionIndexPushedPidin
 		{
 #line
@@ -1612,7 +1612,7 @@ GateKineticBackwardSectionFront	/* <pidin> */
 GateKineticBackwardSectionEnd
 	:
 		EndPushedPidin
-		TOKEN_GATE_KINETIC_BACKWARD
+		TOKEN_GATE_KINETIC_B
 		{
 #line
 		}
@@ -1647,7 +1647,7 @@ GateKineticForwardSection	/* <pgatk> */
 
 GateKineticForwardSectionFront	/* <pidin> */
 	:
-		TOKEN_GATE_KINETIC_FORWARD
+		TOKEN_GATE_KINETIC_A
 		IdentifierOptionIndexPushedPidin
 		{
 #line
@@ -1660,7 +1660,7 @@ GateKineticForwardSectionFront	/* <pidin> */
 GateKineticForwardSectionEnd
 	:
 		EndPushedPidin
-		TOKEN_GATE_KINETIC_FORWARD
+		TOKEN_GATE_KINETIC_A
 		{
 #line
 		}
