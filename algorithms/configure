@@ -1571,7 +1571,7 @@ fi
 
 
 # Define the identity of the package.
- PACKAGE=model-container_algorithms
+ PACKAGE=model_container_algorithms
  VERSION=build-9
 
 
