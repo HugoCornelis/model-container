@@ -1737,7 +1737,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=model-container
- VERSION=build-11
+ VERSION=build-12
 
 
 # Some tools Automake needs.
@@ -6794,7 +6794,7 @@ fi
 
 #! it seems to be impossible to specify this using regex ranges
 
-MODEL_DESCRIPTION_FILES=`find library -iname "*.ndf" -printf "%p " | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
+MODEL_DESCRIPTION_FILES=`find library -iname "*.ndf" -printf "%p "'`
 
 
 MODEL_XML_FILES=`find library -iname "*.xml" -printf "%p " | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
