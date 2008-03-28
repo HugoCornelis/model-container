@@ -237,7 +237,8 @@ dnl fi
 #! it seems to be impossible to specify this using regex ranges
 
 dnl MODEL_DESCRIPTION_FILES=`find library -iname "*.ndf" -printf "%p " | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
-MODEL_DESCRIPTION_FILES=`find library -iname "*.ndf" -printf "%p " | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
+dnl MODEL_DESCRIPTION_FILES=`find library -iname "*.ndf" -printf "%p " | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
+MODEL_DESCRIPTION_FILES=`find library -iname "*.ndf" -printf "%p "'`
 AC_SUBST(MODEL_DESCRIPTION_FILES)
 
 MODEL_XML_FILES=`find library -iname "*.xml" -printf "%p " | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
