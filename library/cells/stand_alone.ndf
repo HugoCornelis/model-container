@@ -1,0 +1,292 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+PRIVATE_MODELS
+
+	HH_GATE naf_gate_activation
+		BINDABLES
+			INPUT Vm,OUTPUT activation
+		END BINDABLES
+
+		BINDINGS
+			INPUT ..->Vm
+		END BINDINGS
+
+		GATE_KINETIC_A forward
+
+			BINDABLES
+				INPUT Vm, OUTPUT rate
+			END BINDABLES
+
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( HH_Scale = 35.0e3 ),
+				PARAMETER ( HH_Mult = 0.0 ),
+				PARAMETER ( HH_Factor_Flag = -1.0 ),
+				PARAMETER ( HH_Add = 0.0 ),
+				PARAMETER ( HH_OffsetE = 5.0e-3 ),
+				PARAMETER ( HH_Tau = -10.0e-3 ),
+			END PARAMETERS
+
+		END GATE_KINETIC_A
+
+		GATE_KINETIC_B backward
+
+			BINDABLES
+				INPUT Vm, OUTPUT rate
+			END BINDABLES
+
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( HH_Scale = 7.0e3 ),
+				PARAMETER ( HH_Mult = 0.0 ),
+				PARAMETER ( HH_Factor_Flag = -1.0 ),
+				PARAMETER ( HH_Add = 0.0 ),
+				PARAMETER ( HH_OffsetE = 65.0e-3 ),
+				PARAMETER ( HH_Tau = 20.0e-3 ),
+			END PARAMETERS
+
+		END GATE_KINETIC_B
+
+		PARAMETERS
+
+			//m initial value, commonly forward over backward steady states
+
+			PARAMETER ( state_init = 0.0078406449371415214 ),
+			PARAMETER ( POWER = 3.0 ),
+		END PARAMETERS
+
+	END HH_GATE
+
+	HH_GATE naf_gate_inactivation
+		BINDABLES
+			INPUT Vm,OUTPUT activation
+		END BINDABLES
+
+		BINDINGS
+			INPUT ..->Vm
+		END BINDINGS
+
+		GATE_KINETIC_A forward
+
+			BINDABLES
+				INPUT Vm, OUTPUT rate
+			END BINDABLES
+
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( HH_Scale = 0.225e3 ),
+				PARAMETER ( HH_Mult = 0.0 ),
+				PARAMETER ( HH_Factor_Flag = -1.0 ),
+				PARAMETER ( HH_Add = 1.0 ),
+				PARAMETER ( HH_OffsetE = 80.0e-3 ),
+				PARAMETER ( HH_Tau = 10.0e-3 ),
+			END PARAMETERS
+
+		END GATE_KINETIC_A
+
+		GATE_KINETIC_B backward
+
+			BINDABLES
+				INPUT Vm, OUTPUT rate
+			END BINDABLES
+
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( HH_Scale = 7.5e3 ),
+				PARAMETER ( HH_Mult = 0.0 ),
+				PARAMETER ( HH_Factor_Flag = -1.0 ),
+				PARAMETER ( HH_Add = 0.0 ),
+				PARAMETER ( HH_OffsetE = -3.0e-3 ),
+				PARAMETER ( HH_Tau = -18.0e-3 ),
+			END PARAMETERS
+
+		END GATE_KINETIC_B
+
+		PARAMETERS
+
+			//m initial value, commonly forward over backward steady states
+
+			PARAMETER ( state_init = 0.26397776926502026 ),
+			PARAMETER ( POWER = 1.0 ),
+		END PARAMETERS
+
+	END HH_GATE
+
+	CHANNEL NaF
+		BINDABLES
+			INPUT Vm,OUTPUT G,OUTPUT I
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
+		END PARAMETERS
+
+		CHILD naf_gate_activation naf_gate_activation
+		END CHILD
+
+		CHILD naf_gate_inactivation naf_gate_inactivation
+		END CHILD
+
+		PARAMETERS
+			PARAMETER ( GMAX = 1.2e3 ),
+			PARAMETER ( Erev = 0.045 ),
+		END PARAMETERS
+	END CHANNEL
+
+	HH_GATE k_gate_activation
+		BINDABLES
+			INPUT Vm,OUTPUT activation
+		END BINDABLES
+
+		BINDINGS
+			INPUT ..->Vm
+		END BINDINGS
+
+		GATE_KINETIC_A forward
+
+			BINDABLES
+				INPUT Vm, OUTPUT rate
+			END BINDABLES
+
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( HH_Scale = -600.0 ),
+				PARAMETER ( HH_Mult = 10000 ),
+				PARAMETER ( HH_Factor_Flag = -1.0 ),
+				PARAMETER ( HH_Add = -1.0 ),
+				PARAMETER ( HH_OffsetE = 60e-3 ),
+				PARAMETER ( HH_Tau = -10.0e-3 ),
+			END PARAMETERS
+
+		END GATE_KINETIC_A
+
+		GATE_KINETIC_B backward
+
+			BINDABLES
+				INPUT Vm, OUTPUT rate
+			END BINDABLES
+
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( HH_Scale = 125.0 ),
+				PARAMETER ( HH_Mult = 0.0 ),
+				PARAMETER ( HH_Factor_Flag = -1.0 ),
+				PARAMETER ( HH_Add = 0.0 ),
+				PARAMETER ( HH_OffsetE = 70e-3 ),
+				PARAMETER ( HH_Tau = 80e-3 ),
+			END PARAMETERS
+
+		END GATE_KINETIC_B
+
+		PARAMETERS
+
+			//m initial value, commonly forward over backward steady states
+
+			PARAMETER ( state_init = 0.3176769097 ),
+			PARAMETER ( POWER = 4.0 ),
+		END PARAMETERS
+
+	END HH_GATE
+
+	CHANNEL K
+		BINDABLES
+			INPUT Vm,OUTPUT G,OUTPUT I
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( CHANNEL_TYPE = "ChannelAct" ),
+		END PARAMETERS
+
+		CHILD k_gate_activation k_gate_activation
+		END CHILD
+
+		PARAMETERS
+			PARAMETER ( GMAX = 360.0 ),
+			PARAMETER ( Erev = -0.082 ),
+		END PARAMETERS
+	END CHANNEL
+
+	SEGMENT soma2
+
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+			INPUT k->I,
+			INPUT NaF->I,
+		END BINDINGS
+
+		OPTIONS SPHERICAL
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.07 ),
+			PARAMETER ( RM = 0.33333 ),
+			PARAMETER ( RA = 0.3 ),
+			PARAMETER ( CM = 0.01 ),
+			PARAMETER ( ELEAK = -0.0594 )
+		END PARAMETERS
+
+		CHILD K
+			K
+			BINDINGS
+				INPUT ^->Vm,
+			END BINDINGS
+		END CHILD
+
+		CHILD NaF
+			NaF
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+	END SEGMENT
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CELL stand_alone
+
+		SEGMENT_GROUP segments
+
+			CHILD soma2 soma
+				PARAMETERS
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 30e-6 )
+				END PARAMETERS
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+

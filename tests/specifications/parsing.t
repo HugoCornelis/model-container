@@ -2694,6 +2694,23 @@ my $test
 						 ],
 				description => "syntax of segments/hodgkin_huxley.ndf",
 			       },
+			       {
+				arguments => [
+					      '-p',
+					      '-R',
+					      'cells/stand_alone.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (cells/stand_alone.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/stand_alone.ndf.', ],
+						   timeout => 5,
+						   write => undef,
+						  },
+						 ],
+				description => "syntax of cells/stand_alone.ndf",
+			       },
 		      ],
        description => "general syntax of library files",
        name => 'parsing.t',
