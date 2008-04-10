@@ -31,7 +31,7 @@ PUBLIC_MODELS
 				PARAMETER ( HH_AB_Mult = 0.0 ),
 				PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
 				PARAMETER ( HH_AB_Add = 0.0 ),
-				PARAMETER ( HH_AB_OffsetE = 0.0 ),
+				PARAMETER ( HH_AB_Offset_E = 0.0 ),
 				PARAMETER ( HH_AB_Tau = 1e12 ),
 			END PARAMETERS
 
@@ -52,7 +52,7 @@ PUBLIC_MODELS
 				PARAMETER ( HH_AB_Mult = 0.0 ),
 				PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
 				PARAMETER ( HH_AB_Add = 0.0 ),
-				PARAMETER ( HH_AB_OffsetE = -0.035 ),
+				PARAMETER ( HH_AB_Offset_E = -0.035 ),
 				PARAMETER ( HH_AB_Tau = 14.9e-3 ),
 			END PARAMETERS
 

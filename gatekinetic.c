@@ -188,7 +188,7 @@ GateKineticGetParameter
 /// DESCR: Get HH_AB_Offset of gate kinetic.
 ///
 ///	If the HH_AB_Offset parameter is not present, it is taken to
-///	be the same as the HH_AB_Offset2 parameter.  Existence of the
+///	be the same as the HH_AB_Offset_E parameter.  Existence of the
 ///	HH_AB_Offset is not done in this function, must be done
 ///	elsewhere.
 ///
@@ -202,7 +202,7 @@ GateKineticGetHHOffset
     //- set default result : failure
 
     double dResult
-	= SymbolParameterResolveValue(&pgatk->bio.ioh.iol.hsle, "HH_AB_OffsetE", ppist);
+	= SymbolParameterResolveValue(&pgatk->bio.ioh.iol.hsle, "HH_AB_Offset_E", ppist);
 
     //- return result
 

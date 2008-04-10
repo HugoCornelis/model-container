@@ -29,7 +29,7 @@ PRIVATE_MODELS
 				PARAMETER ( HH_AB_Mult = 10000 ),
 				PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
 				PARAMETER ( HH_AB_Add = -1.0 ),
-				PARAMETER ( HH_AB_OffsetE = 60e-3 ),
+				PARAMETER ( HH_AB_Offset_E = 60e-3 ),
 				PARAMETER ( HH_AB_Tau = -10.0e-3 ),
 			END PARAMETERS
 
@@ -50,7 +50,7 @@ PRIVATE_MODELS
 				PARAMETER ( HH_AB_Mult = 0.0 ),
 				PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
 				PARAMETER ( HH_AB_Add = 0.0 ),
-				PARAMETER ( HH_AB_OffsetE = 70e-3 ),
+				PARAMETER ( HH_AB_Offset_E = 70e-3 ),
 				PARAMETER ( HH_AB_Tau = 80e-3 ),
 			END PARAMETERS
 
