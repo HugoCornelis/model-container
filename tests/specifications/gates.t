@@ -30,86 +30,86 @@ my $test
 						    write => "printparameter /naf_activation POWER",
 						   },
 						   {
-						    description => "Do we find the HH_Scale parameter with a correct value in the forward gate kinetic ?",
+						    description => "Do we find the HH_AB_Scale parameter with a correct value in the forward gate kinetic ?",
 						    read => '35000',
-						    write => 'printparameter /naf_activation/forward HH_Scale',
+						    write => 'printparameter /naf_activation/forward HH_AB_Scale',
 						   },
 						   {
-						    description => "Do we find the HH_Mult parameter with a correct value in the forward gate kinetic ?",
+						    description => "Do we find the HH_AB_Mult parameter with a correct value in the forward gate kinetic ?",
 						    read => '= 0',
-						    write => 'printparameter /naf_activation/forward HH_Mult',
+						    write => 'printparameter /naf_activation/forward HH_AB_Mult',
 						   },
 						   {
-						    description => "Do we find the HH_Factor_Flag parameter with a correct value in the forward gate kinetic ?",
+						    description => "Do we find the HH_AB_Factor_Flag parameter with a correct value in the forward gate kinetic ?",
 						    read => '= -1',
-						    write => 'printparameter /naf_activation/forward HH_Factor_Flag',
+						    write => 'printparameter /naf_activation/forward HH_AB_Factor_Flag',
 						   },
 						   {
-						    description => "Do we find the HH_Add parameter with a correct value in the forward gate kinetic ?",
+						    description => "Do we find the HH_AB_Add parameter with a correct value in the forward gate kinetic ?",
 						    read => '= 0',
-						    write => 'printparameter /naf_activation/forward HH_Add',
+						    write => 'printparameter /naf_activation/forward HH_AB_Add',
 						   },
 						   {
-						    description => "Do we find the HH_OffsetE parameter with a correct value in the forward gate kinetic ?",
+						    description => "Do we find the HH_AB_OffsetE parameter with a correct value in the forward gate kinetic ?",
 						    read => '0.005',
-						    write => 'printparameter /naf_activation/forward HH_OffsetE',
+						    write => 'printparameter /naf_activation/forward HH_AB_OffsetE',
 						   },
 						   {
-						    description => "Do we find the HH_Tau parameter with a correct value in the forward gate kinetic ?",
+						    description => "Do we find the HH_AB_Tau parameter with a correct value in the forward gate kinetic ?",
 						    read => '= -0.01',
-						    write => 'printparameter /naf_activation/forward HH_Tau',
+						    write => 'printparameter /naf_activation/forward HH_AB_Tau',
 						   },
 						  ),
 						  (
 						   # additional tests
 
 						   {
-						    description => "Do we find the HH_Offset parameter with the same values as HH_OffsetE in the forward gate kinetic ?",
+						    description => "Do we find the HH_AB_Offset parameter with the same values as HH_OffsetE in the forward gate kinetic ?",
 						    read => '0.005',
-						    write => 'printparameter /naf_activation/forward HH_Offset',
+						    write => 'printparameter /naf_activation/forward HH_AB_Offset',
 						   },
 						  ),
 						  (
 						   # standard parameters
 
 						   {
-						    description => "Do we find the HH_Scale parameter with a correct value in the backward gate kinetic ?",
+						    description => "Do we find the HH_AB_Scale parameter with a correct value in the backward gate kinetic ?",
 						    read => '7000',
-						    write => 'printparameter /naf_activation/backward HH_Scale',
+						    write => 'printparameter /naf_activation/backward HH_AB_Scale',
 						   },
 						   {
-						    description => "Do we find the HH_Mult parameter with a correct value in the backward gate kinetic ?",
+						    description => "Do we find the HH_AB_Mult parameter with a correct value in the backward gate kinetic ?",
 						    read => '= 0',
-						    write => 'printparameter /naf_activation/backward HH_Mult',
+						    write => 'printparameter /naf_activation/backward HH_AB_Mult',
 						   },
 						   {
-						    description => "Do we find the HH_Factor_Flag parameter with a correct value in the backward gate kinetic ?",
+						    description => "Do we find the HH_AB_Factor_Flag parameter with a correct value in the backward gate kinetic ?",
 						    read => '= -1',
-						    write => 'printparameter /naf_activation/backward HH_Factor_Flag',
+						    write => 'printparameter /naf_activation/backward HH_AB_Factor_Flag',
 						   },
 						   {
-						    description => "Do we find the HH_Add parameter with a correct value in the backward gate kinetic ?",
+						    description => "Do we find the HH_AB_Add parameter with a correct value in the backward gate kinetic ?",
 						    read => '= 0',
-						    write => 'printparameter /naf_activation/backward HH_Add',
+						    write => 'printparameter /naf_activation/backward HH_AB_Add',
 						   },
 						   {
-						    description => "Do we find the HH_OffsetE parameter with a correct value in the backward gate kinetic ?",
+						    description => "Do we find the HH_AB_OffsetE parameter with a correct value in the backward gate kinetic ?",
 						    read => '0.065',
-						    write => 'printparameter /naf_activation/backward HH_OffsetE',
+						    write => 'printparameter /naf_activation/backward HH_AB_OffsetE',
 						   },
 						   {
-						    description => "Do we find the HH_Tau parameter with a correct value in the backward gate kinetic ?",
+						    description => "Do we find the HH_AB_Tau parameter with a correct value in the backward gate kinetic ?",
 						    read => '0.02',
-						    write => 'printparameter /naf_activation/backward HH_Tau',
+						    write => 'printparameter /naf_activation/backward HH_AB_Tau',
 						   },
 						  ),
 						  (
 						   # additional tests
 
 						   {
-						    description => "Do we find the HH_Offset parameter with the same values as HH_OffsetE in the forward gate kinetic ?",
+						    description => "Do we find the HH_AB_Offset parameter with the same values as HH_OffsetE in the forward gate kinetic ?",
 						    read => '0.065',
-						    write => 'printparameter /naf_activation/backward HH_Offset',
+						    write => 'printparameter /naf_activation/backward HH_AB_Offset',
 						   },
 						  ),
 						 ],

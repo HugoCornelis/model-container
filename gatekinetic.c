@@ -153,7 +153,7 @@ GateKineticGetParameter
     {
 	//- if somatopetal distance
 
-	if (0 == strcmp(pcName, "HH_Offset"))
+	if (0 == strcmp(pcName, "HH_AB_Offset"))
 	{
 	    //- get distance
 
@@ -163,7 +163,7 @@ GateKineticGetParameter
 
 	    pparResult
 		= SymbolSetParameterDouble
-		  (&pgatk->bio.ioh.iol.hsle, "HH_Offset", dHHOffset);
+		  (&pgatk->bio.ioh.iol.hsle, "HH_AB_Offset", dHHOffset);
 	}
 
     }
@@ -183,13 +183,13 @@ GateKineticGetParameter
 ///	pgatk.: gate kinetic symbol.
 ///	ppist.: context of gate kinetic symbol.
 ///
-/// RTN..: double : HH_Offset, FLT_MAX for failure.
+/// RTN..: double : HH_AB_Offset, FLT_MAX for failure.
 ///
-/// DESCR: Get HH_Offset of gate kinetic.
+/// DESCR: Get HH_AB_Offset of gate kinetic.
 ///
-///	If the HH_Offset parameter is not present, it is taken to be
-///	the same as the HH_Offset2 parameter.  Existence of the
-///	HH_Offset is not done in this function, must be done
+///	If the HH_AB_Offset parameter is not present, it is taken to
+///	be the same as the HH_AB_Offset2 parameter.  Existence of the
+///	HH_AB_Offset is not done in this function, must be done
 ///	elsewhere.
 ///
 /// **************************************************************************
@@ -202,7 +202,7 @@ GateKineticGetHHOffset
     //- set default result : failure
 
     double dResult
-	= SymbolParameterResolveValue(&pgatk->bio.ioh.iol.hsle, "HH_OffsetE", ppist);
+	= SymbolParameterResolveValue(&pgatk->bio.ioh.iol.hsle, "HH_AB_OffsetE", ppist);
 
     //- return result
 
