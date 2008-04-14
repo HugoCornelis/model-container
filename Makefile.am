@@ -137,8 +137,10 @@ dist-keywords:
 #
 # The variable EXTRA_DIST could also be used here.
 
+am__tar = ${AMTAR} chf - --format=posix "$$tardir"
+
 dist-hook: dist-keywords
-	cd $(srcdir) && if test -n "`mtn ls changed `" ; then false ; else true ; fi
+	if test -n "$$NEUROSPACES_RELEASE" ; then cd $(srcdir) && if test -n "`mtn ls changed `" ; then false ; else true ; fi ; else true ; fi
 	find $(distdir) -name _Inline -exec chmod -R u+w \{\} \;
 	$(RM) -fr `find $(distdir) -name _Inline`
 	$(RM) -fr hierarchy/output

@@ -81,7 +81,7 @@ variables:
 
 	      #t this will probably need a prefix during distcheck, not sure yet.
 
-	      executable => 'convertors/morphology2ndf',
+	      executable => (defined $ENV{srcdir} ? $ENV{srcdir} . '/' : './') . 'convertors/morphology2ndf',
 	      filename => 'morphologies/C170897A-P3.CNG.swc',
 	     },
 	     [ $0, ],

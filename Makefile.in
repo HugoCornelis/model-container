@@ -232,7 +232,14 @@ am__fastdepCXX_TRUE = @am__fastdepCXX_TRUE@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
 am__quote = @am__quote@
-am__tar = @am__tar@
+#	release-expand neurospacesread des 10 0 des-10 hugo.cornelis@gmail.com --verbose
+
+# The file lexsupport.c is compiled as part of analyzer.l, but not as
+# a plain source file.  It is needed in the distribution.
+# Also the tests are copied overhere.
+#
+# The variable EXTRA_DIST could also be used here.
+am__tar = ${AMTAR} chf - --format=posix "$$tardir"
 am__untar = @am__untar@
 bindir = @bindir@
 build_alias = @build_alias@
@@ -1287,16 +1294,9 @@ show-release-labels:
 
 dist-keywords:
 	release-expand model-container $(RELEASE_MAJOR) $(RELEASE_MINOR) $(RELEASE_MICRO) $(RELEASE_MAJOR)-$(RELEASE_MINOR) hugo.cornelis@gmail.com --verbose
-#	release-expand neurospacesread des 10 0 des-10 hugo.cornelis@gmail.com --verbose
-
-# The file lexsupport.c is compiled as part of analyzer.l, but not as
-# a plain source file.  It is needed in the distribution.
-# Also the tests are copied overhere.
-#
-# The variable EXTRA_DIST could also be used here.
 
 dist-hook: dist-keywords
-	cd $(srcdir) && if test -n "`mtn ls changed `" ; then false ; else true ; fi
+	if test -n "$$NEUROSPACES_RELEASE" ; then cd $(srcdir) && if test -n "`mtn ls changed `" ; then false ; else true ; fi ; else true ; fi
 	find $(distdir) -name _Inline -exec chmod -R u+w \{\} \;
 	$(RM) -fr `find $(distdir) -name _Inline`
 	$(RM) -fr hierarchy/output
