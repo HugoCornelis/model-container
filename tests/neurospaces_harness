@@ -51,11 +51,10 @@ BEGIN
     }
     else
     {
-# 	$core_directory = "$ENV{srcdir}/$config->{core_directory}";
+	$core_directory = "$ENV{srcdir}/$config->{core_directory}";
 
-# 	#t breaks for distcheck: runs './../tests/run' in _build
+	$core_directory = $config->{core_directory};
 
- 	$core_directory = $config->{core_directory};
     }
 
     # remove parent and current directories
