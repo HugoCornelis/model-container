@@ -46,8 +46,9 @@ DIST_COMMON = $(am__configure_deps) $(dist_lisp_DATA) \
 	$(nobase_dist_neurospacesmodel_DATA) \
 	$(nobase_dist_neurospacestest_DATA) $(nobase_include_HEADERS) \
 	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
-	$(srcdir)/config.h.in $(top_srcdir)/configure acconfig.h \
-	analyzer.c depcomp elisp-comp install-sh missing parser.c
+	$(srcdir)/config.h.in $(top_srcdir)/configure COPYING INSTALL \
+	acconfig.h analyzer.c depcomp elisp-comp install-sh missing \
+	parser.c
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.in
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -1374,7 +1375,7 @@ html-upload: html-upload-prepare
 
 internal-library:
 # $Format: "	tar cfz library-${package}-${label}.tar.gz library/"$
-	tar cfz library-model_container-build-23.tar.gz library/
+	tar cfz library-model-container-build-23.tar.gz library/
 
 libneurospacesread.so: libneurospacesread.a
 	$(CC) \
