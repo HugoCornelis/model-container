@@ -1571,8 +1571,8 @@ fi
 
 
 # Define the identity of the package.
- PACKAGE=model-container_algorithms
- VERSION=build-22
+ PACKAGE=model_container_algorithms
+ VERSION=build-23
 
 
 # Some tools Automake needs.
