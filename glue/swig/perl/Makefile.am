@@ -48,7 +48,7 @@ swiggable_neurospaces_wrap.o: swiggable_neurospaces_wrap.c
 #t this line needs -f PIC for some architectures, and -lncurses for some architectures
 
 SwiggableNeurospaces.so: swiggable_neurospaces_wrap.o
-	gcc -g -shared swiggable_neurospaces_wrap.o -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lhistory -lreadline -fPIC -o SwiggableNeurospaces.so
+	gcc -g -shared swiggable_neurospaces_wrap.o -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -lhistory -lreadline -fPIC -o SwiggableNeurospaces.so
 
 all: SwiggableNeurospaces.so
 
