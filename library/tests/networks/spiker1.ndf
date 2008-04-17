@@ -1,0 +1,449 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+
+	FILE mapper "mappers/spikegenerator.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS mapper::/SpikeGen SpikeGen END ALIAS
+
+	CHANNEL kdr
+		BINDABLES
+			INPUT Vm,OUTPUT G,OUTPUT I
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( CHANNEL_TYPE = "ChannelAct" ),
+		END PARAMETERS
+
+		HH_GATE kdr_activation
+			BINDABLES
+				INPUT Vm,OUTPUT activation
+			END BINDABLES
+	
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+	
+			GATE_KINETIC_A forward
+	
+				BINDABLES
+					INPUT Vm, OUTPUT rate
+				END BINDABLES
+	
+				BINDINGS
+					INPUT ..->Vm
+				END BINDINGS
+	
+				PARAMETERS
+					PARAMETER ( HH_AB_Scale = -550.0 ),
+					PARAMETER ( HH_AB_Mult = -10000.0 ),
+					PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
+					PARAMETER ( HH_AB_Add = -1.0 ),
+					PARAMETER ( HH_AB_Offset_E = 0.055 ),
+					PARAMETER ( HH_AB_Tau = -0.01 ),	
+				END PARAMETERS
+	
+			END GATE_KINETIC_A
+	
+			GATE_KINETIC_B backward
+	
+				BINDABLES
+					INPUT Vm, OUTPUT rate
+				END BINDABLES
+	
+				BINDINGS
+					INPUT ..->Vm
+				END BINDINGS
+	
+				PARAMETERS
+					PARAMETER ( HH_AB_Scale = 125.0 ),
+					PARAMETER ( HH_AB_Mult = 0.0 ),
+					PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
+					PARAMETER ( HH_AB_Add = 0.0 ),
+					PARAMETER ( HH_AB_Offset_E = 0.065 ),
+					PARAMETER ( HH_AB_Tau = 0.08 ),	
+				END PARAMETERS
+	
+			END GATE_KINETIC_B
+	
+			PARAMETERS
+	
+				//m initial value, commonly forward over backward steady states
+	
+				//t neurospaces should compute it automatically when it is not present.
+				//t the same should be done for initial membrane potential.
+				//t
+				//t not sure how that should go:
+				//t (1) the steady state is commonly regarded as a sensible initial value,
+				//t (2) the steady state is dependent on the membrane potential
+				//t (3) the initial membrane potential is not local to this file
+				//t
+				//t conclusion: we do not have the necessary information overhere.
+				//t
+	
+				PARAMETER ( state_init = 0.3176769506 ),
+				PARAMETER ( POWER = 4.0 ),
+			END PARAMETERS
+	
+		END HH_GATE
+
+		PARAMETERS
+			PARAMETER ( GMAX = 360.0 ),
+			PARAMETER ( Erev = -0.085 )
+		END PARAMETERS
+
+	END CHANNEL
+
+	CHANNEL naf
+		BINDABLES
+			INPUT Vm,OUTPUT G,OUTPUT I
+		END BINDABLES
+
+		PARAMETERS
+			PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
+		END PARAMETERS
+
+		HH_GATE naf_activation
+			BINDABLES
+				INPUT Vm,OUTPUT activation
+			END BINDABLES
+	
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+	
+			GATE_KINETIC_A forward
+	
+				BINDABLES
+					INPUT Vm, OUTPUT rate
+				END BINDABLES
+	
+				BINDINGS
+					INPUT ..->Vm
+				END BINDINGS
+	
+				PARAMETERS
+					PARAMETER ( HH_AB_Scale = 35.0e3 ),
+					PARAMETER ( HH_AB_Mult = 0.0 ),
+					PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
+					PARAMETER ( HH_AB_Add = 0.0 ),
+					PARAMETER ( HH_AB_Offset_E = 5.0e-3 ),
+					PARAMETER ( HH_AB_Tau = -10.0e-3 ),	
+				END PARAMETERS
+	
+			END GATE_KINETIC_A
+	
+			GATE_KINETIC_B backward
+	
+				BINDABLES
+					INPUT Vm, OUTPUT rate
+				END BINDABLES
+	
+				BINDINGS
+					INPUT ..->Vm
+				END BINDINGS
+	
+				PARAMETERS
+					PARAMETER ( HH_AB_Scale = 7.0e3 ),
+					PARAMETER ( HH_AB_Mult = 0.0 ),
+					PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
+					PARAMETER ( HH_AB_Add = 0.0 ),
+					PARAMETER ( HH_AB_Offset_E = 65.0e-3 ),
+					PARAMETER ( HH_AB_Tau = 20.0e-3 ),	
+				END PARAMETERS
+	
+			END GATE_KINETIC_B
+	
+			PARAMETERS
+	
+				//m initial value, commonly forward over backward steady states
+	
+				//t neurospaces should compute it automatically when it is not present.
+				//t the same should be done for initial membrane potential.
+				//t
+				//t not sure how that should go:
+				//t (1) the steady state is commonly regarded as a sensible initial value,
+				//t (2) the steady state is dependent on the membrane potential
+				//t (3) the initial membrane potential is not local to this file
+				//t
+				//t conclusion: we do not have the necessary information overhere.
+				//t
+	
+				PARAMETER ( state_init = 0.01224204035 ),
+				PARAMETER ( POWER = 3.0 ),
+			END PARAMETERS
+	
+		END HH_GATE
+
+		HH_GATE naf_inactivation
+			BINDABLES
+				INPUT Vm,OUTPUT activation
+			END BINDABLES
+	
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+	
+			GATE_KINETIC_A forward
+	
+				BINDABLES
+					INPUT Vm, OUTPUT rate
+				END BINDABLES
+	
+				BINDINGS
+					INPUT ..->Vm
+				END BINDINGS
+	
+				PARAMETERS
+					PARAMETER ( HH_AB_Scale = 0.225e3 ),
+					PARAMETER ( HH_AB_Mult = 0.0 ),
+					PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
+					PARAMETER ( HH_AB_Add = 1.0 ),
+					PARAMETER ( HH_AB_Offset_E = 80.0e-3 ),
+					PARAMETER ( HH_AB_Tau = 10.0e-3 ),	
+				END PARAMETERS
+	
+			END GATE_KINETIC_A
+	
+			GATE_KINETIC_B backward
+	
+				BINDABLES
+					INPUT Vm, OUTPUT rate
+				END BINDABLES
+	
+				BINDINGS
+					INPUT ..->Vm
+				END BINDINGS
+	
+				PARAMETERS
+					PARAMETER ( HH_AB_Scale = 7.5e3 ),
+					PARAMETER ( HH_AB_Mult = 0.0 ),
+					PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
+					PARAMETER ( HH_AB_Add = 0.0 ),
+					PARAMETER ( HH_AB_Offset_E = -3.0e-3 ),
+					PARAMETER ( HH_AB_Tau = -18.0e-3 ),	
+				END PARAMETERS
+	
+			END GATE_KINETIC_B
+	
+			PARAMETERS
+	
+				//m initial value, commonly forward over backward steady states
+	
+				//t neurospaces should compute it automatically when it is not present.
+				//t the same should be done for initial membrane potential.
+				//t
+				//t not sure how that should go:
+				//t (1) the steady state is commonly regarded as a sensible initial value,
+				//t (2) the steady state is dependent on the membrane potential
+				//t (3) the initial membrane potential is not local to this file
+				//t
+				//t conclusion: we do not have the necessary information overhere.
+				//t
+	
+				PARAMETER ( state_init = 0.1930685015 ),
+				PARAMETER ( POWER = 1.0 ),
+			END PARAMETERS
+	
+		END HH_GATE
+
+		PARAMETERS
+
+			//! I am interested to know where I got this value
+
+			PARAMETER ( GMAX = 3584.40933047825 ),
+			PARAMETER ( Erev = 0.045 ),
+		END PARAMETERS
+
+	END CHANNEL
+
+	SEGMENT source_soma
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+               		INPUT kdr->I,
+               		INPUT naf->I,
+		END BINDINGS
+
+		OPTIONS SPHERICAL
+
+		CHILD SpikeGen
+			spikegen
+			BINDINGS
+        			INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( THRESHOLD = 0.02 ),
+				PARAMETER ( REFRACTORY = 0.002 )
+			END PARAMETERS
+		END CHILD
+
+		PARAMETERS
+
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 1.000 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 ),
+
+			PARAMETER ( rel_X = 0.000e-6 ),
+			PARAMETER ( rel_Y = 0.000e-6 ),
+			PARAMETER ( rel_Z = 0.000e-6 ),
+			PARAMETER ( DIA = 29.80e-6 ),
+
+		END PARAMETERS
+
+		CHILD kdr
+			kdr
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+		CHILD naf
+			naf
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+		END CHILD
+
+	END SEGMENT
+
+	CELL source
+
+		CHILD source_soma
+			soma
+		END CHILD
+
+	END CELL
+
+// 	CHANNEL synchan
+// 		BINDABLES
+// 			INPUT Vm,OUTPUT exp2->G,OUTPUT I
+// 		END BINDABLES
+
+// 		PARAMETERS
+// 			PARAMETER ( GMAX = FIXED ( PARAMETER ( value = 6.87071723162637e-10 ), PARAMETER ( scale = 1.0 ), ), ),
+// 			PARAMETER ( Erev = 0.0 ),
+// 		END PARAMETERS
+
+// 		EXP2_EQUATION exp2
+// 			BINDABLES
+// 				INPUT activation,OUTPUT G
+// 			END BINDABLES
+// 			BINDINGS
+// 			END BINDINGS
+
+// 			PARAMETERS
+// 				PARAMETER ( TAU1 = 0.50e-3 ),
+// 				PARAMETER ( TAU2 = 1.20e-3 )
+// 			END PARAMETERS
+
+// 		END EXP2_EQUATION
+
+// 	END CHANNEL
+
+// 	SEGMENT target_soma
+
+// 		BINDABLES
+// 			OUTPUT Vm
+// 		END BINDABLES
+
+// 		BINDINGS
+//                		INPUT s->I,
+// 		END BINDINGS
+
+// 		OPTIONS SPHERICAL
+
+// 		PARAMETERS
+// 			PARAMETER ( Vm_init = -0.080 ),
+// 			PARAMETER ( RM = 1.000 ),
+// 			PARAMETER ( RA = 2.50 ),
+// 			PARAMETER ( CM = 0.0164 ),
+// 			PARAMETER ( ELEAK = -0.0800 ),
+
+// 			PARAMETER ( rel_X = 0.000e-6 ),
+// 			PARAMETER ( rel_Y = 0.000e-6 ),
+// 			PARAMETER ( rel_Z = 0.000e-6 ),
+// 			PARAMETER ( DIA = 29.80e-6 ),
+
+// 		END PARAMETERS
+
+// 		CHILD synchan s
+// 		END CHILD
+
+// 	END SEGMENT
+
+// 	CELL target
+
+// 		CHILD target_soma
+// 			soma
+// 		END CHILD
+
+// 	END CELL
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	NETWORK spiker3
+
+		CHILD source source END CHILD
+
+// 		CHILD target target1 END CHILD
+
+// 		CHILD target target2 END CHILD
+
+// 		PROJECTION projection1
+
+// 			PARAMETERS
+// 				PARAMETER ( SOURCE = /spiker3 ),
+// 				PARAMETER ( TARGET = /spiker3 )
+// 			END PARAMETERS
+
+// 			CONNECTION_GROUP connections
+
+// 				CONNECTION c1
+
+// 					PARAMETERS
+
+// 						PARAMETER ( PRE = source/soma/spikegen ),
+// 						PARAMETER ( POST = target1/soma/s/synapse ),
+// 						PARAMETER ( WEIGHT = 1.0 ),
+// 						PARAMETER ( DELAY = 1.0 ),
+
+// 					END PARAMETERS
+
+// 				END CONNECTION
+
+// 				CONNECTION c2
+
+// 					PARAMETERS
+
+// 						PARAMETER ( PRE = source/soma/spikegen ),
+// 						PARAMETER ( POST = target2/soma/s/synapse ),
+// 						PARAMETER ( WEIGHT = 2.0 ),
+// 						PARAMETER ( DELAY = 2.0 ),
+
+// 					END PARAMETERS
+
+// 				END CONNECTION
+
+// 			END CONNECTION_GROUP
+
+// 		END PROJECTION
+
+	END NETWORK
+
+END PUBLIC_MODELS
+
+
