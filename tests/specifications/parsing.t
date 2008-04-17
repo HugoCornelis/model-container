@@ -2711,6 +2711,23 @@ my $test
 						 ],
 				description => "syntax of cells/stand_alone.ndf",
 			       },
+			       {
+				arguments => [
+					      '-p',
+					      '-R',
+					      'tests/networks/spiker1.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (tests/networks/spiker1.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/networks/spiker1.ndf', ],
+						   timeout => 5,
+						   write => undef,
+						  },
+						 ],
+				description => "syntax of tests/networks/spiker1.ndf",
+			       },
 		      ],
        description => "general syntax of library files",
        name => 'parsing.t',
