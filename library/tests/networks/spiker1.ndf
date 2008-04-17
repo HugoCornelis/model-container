@@ -395,7 +395,7 @@ END PRIVATE_MODELS
 
 PUBLIC_MODELS
 
-	NETWORK spiker3
+	NETWORK spiker1
 
 		CHILD source source END CHILD
 
