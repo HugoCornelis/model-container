@@ -93,7 +93,7 @@ report:
         channe{-- begin HIER sections ---
         channe}--  end  HIER sections ---
             channeName, index (Purk_GABA,-1)
-                PARA  Name (GMAX)
+                PARA  Name (G_MAX)
                 PARA  Type (TYPE_PARA_NUMBER), Value(1.077000e+00)
                 PARA  Name (Erev)
                 PARA  Type (TYPE_PARA_NUMBER), Value(-8.000000e-02)

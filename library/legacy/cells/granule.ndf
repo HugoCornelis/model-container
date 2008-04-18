@@ -168,7 +168,7 @@ PUBLIC_MODELS
                 			INPUT ^->Vm
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 546.3016789 ),
+					PARAMETER ( G_MAX = 546.3016789 ),
 					PARAMETER ( Erev = 0.055 )
 				END PARAMETERS
 			END CHILD
@@ -186,7 +186,7 @@ PUBLIC_MODELS
                 			INPUT ^->Vm
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 9.084216489 ),
+					PARAMETER ( G_MAX = 9.084216489 ),
 					PARAMETER ( Erev = 0.080 )
 				END PARAMETERS
 			END CHILD
@@ -197,7 +197,7 @@ PUBLIC_MODELS
                 			INPUT ^->Vm
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 0.309050664 ),
+					PARAMETER ( G_MAX = 0.309050664 ),
 					PARAMETER ( Erev = -0.042 )
 				END PARAMETERS
 			END CHILD
@@ -208,7 +208,7 @@ PUBLIC_MODELS
                 			INPUT ^->Vm
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 11.45672664 ),
+					PARAMETER ( G_MAX = 11.45672664 ),
 					PARAMETER ( Erev = -0.090 )
 				END PARAMETERS
 			END CHILD
@@ -219,7 +219,7 @@ PUBLIC_MODELS
                 			INPUT ^->Vm
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 88.96913056 ),
+					PARAMETER ( G_MAX = 88.96913056 ),
 					PARAMETER ( Erev = -0.090 )
 				END PARAMETERS
 			END CHILD
@@ -231,7 +231,7 @@ PUBLIC_MODELS
                 			INPUT ^/Ca_pool->concen
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 179.8112954 ),
+					PARAMETER ( G_MAX = 179.8112954 ),
 					PARAMETER ( Erev = -0.090 )
 				END PARAMETERS
 			END CHILD
@@ -259,7 +259,7 @@ PUBLIC_MODELS
                 			INPUT ^->Vm
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 0.3577337567 ),
+					PARAMETER ( G_MAX = 0.3577337567 ),
 						/* 720.0e-12 / 2012.67e-12 */
 					PARAMETER ( Erev = 0.0 ),
 					PARAMETER ( NORMALIZE = SUM(PARAMETER (COUNT = synapse)) )
@@ -273,12 +273,12 @@ PUBLIC_MODELS
 				END BINDINGS
 
 				/* TODO : check parameters of MGBLOCK() */
-				/* Vm and GMAX should be removed ? */
+				/* Vm and G_MAX should be removed ? */
 
 				PARAMETERS
 					PARAMETER
-					( GMAX = MGBLOCK
-						(PARAMETER ( GMAX = 0.59622292775268682 ),
+					( G_MAX = MGBLOCK
+						(PARAMETER ( G_MAX = 0.59622292775268682 ),
 							/* 1200.0e-12 / 2012.67e-12 */
 							PARAMETER ( CMg = 1.2 ),
 							PARAMETER ( KMg_A = 1.92 ),
@@ -295,7 +295,7 @@ PUBLIC_MODELS
                 			INPUT ^->Vm
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 1.0 ),
+					PARAMETER ( G_MAX = 1.0 ),
 					PARAMETER ( Erev = -0.070 ),
 					PARAMETER ( NORMALIZE = SUM(PARAMETER (COUNT = synapse)) )
 				END PARAMETERS
@@ -307,7 +307,7 @@ PUBLIC_MODELS
                 			INPUT ^->Vm
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 1.0 ),
+					PARAMETER ( G_MAX = 1.0 ),
 					PARAMETER ( Erev = -0.070 ),
 					PARAMETER ( NORMALIZE = SUM(PARAMETER (COUNT = synapse)) )
 				END PARAMETERS

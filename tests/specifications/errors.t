@@ -173,7 +173,7 @@ value = 3.40282e+38",
 						  {
 						   description => "Has neurospaces reported that the conductance cannot be resolved ?",
 						   read => "scaled value = 3.40282e+38",
-						   write => "printparameterscaled /cap GMAX",
+						   write => "printparameterscaled /cap G_MAX",
 						  },
 						 ],
 				description => "resolving the conductance of an isolated channel",

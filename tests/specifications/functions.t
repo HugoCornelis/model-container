@@ -34,7 +34,7 @@ my $test
 						  {
 						   description => "Is the conductance with magnesium blocking calculated correctly ?",
 						   read => "= 0.0164909",
-						   write => "printparameter /Granule/Granule_soma/mf_NMDA GMAX"
+						   write => "printparameter /Granule/Granule_soma/mf_NMDA G_MAX"
 						  },
 						 ],
 				description => "magnesium blocking function",

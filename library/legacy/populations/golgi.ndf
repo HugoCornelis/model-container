@@ -42,13 +42,13 @@ PUBLIC_MODELS
 			Golgi_CaHVA
 			PARAMETERS
 				PARAMETER ( SYMBOL_NAME = "Golgi_cell" ),
-				PARAMETER ( PARAMETER_NAME = "GMAX" ),
+				PARAMETER ( PARAMETER_NAME = "G_MAX" ),
 				PARAMETER ( TARGET_NAME = "Golgi_soma/CaHVA" ),
 				PARAMETER ( RANDOMSEED = 213.0 ),
 				PARAMETER ( LOWER_BOUND = 8.317569 ),
 				PARAMETER ( UPPER_BOUND = 9.317569 ),
 			END PARAMETERS
-// 			{ -addto Golgi_cell -parameter GMAX -target Golgi_soma/CaHVA -randseed 213 -lower 8.317569 -upper 9.317569}
+// 			{ -addto Golgi_cell -parameter G_MAX -target Golgi_soma/CaHVA -randseed 213 -lower 8.317569 -upper 9.317569}
 		END ALGORITHM
 
 // 		ALGORITHM Grid3D

@@ -44,12 +44,12 @@ my $test
 						  {
 						   description => "Does the soma of the purkinje cell have a well-defined delayed rectifier potassium conductance ?",
 						   read => '= 6000',
-						   write => "printparameter /Purkinje/segments/soma/Kdr GMAX",
+						   write => "printparameter /Purkinje/segments/soma/Kdr G_MAX",
 						  },
 						  {
 						   description => "Has the conductance been scaled according to the surface ?",
 						   read => '= 1.67392e-05',
-						   write => "printparameterscaled /Purkinje/segments/soma/Kdr GMAX",
+						   write => "printparameterscaled /Purkinje/segments/soma/Kdr G_MAX",
 						  },
 						  {
 						   description => "What is the diameter of one of the spiny dendrites ?",
@@ -69,12 +69,12 @@ my $test
 						  {
 						   description => "Does the main dendrite of the purkinje cell have a well-defined calcium dependent potassium conductance ?",
 						   read => '= 800',
-						   write => "printparameter /Purkinje/segments/b0s01[1]/KC GMAX",
+						   write => "printparameter /Purkinje/segments/b0s01[1]/KC G_MAX",
 						  },
 						  {
 						   description => "Is conductance scaling done correctly ?",
 						   read => '= 1.27212e-08',
-						   write => "printparameterscaled /Purkinje/segments/b0s01[1]/KC GMAX",
+						   write => "printparameterscaled /Purkinje/segments/b0s01[1]/KC G_MAX",
 						  },
 						 ],
 				description => "parameter calculations on dendrites of the standard Purkinje cell model",
@@ -227,12 +227,12 @@ my $test
 						    description => "Does the soma of the purkinje cell have a well-defined delayed rectifier potassium conductance ?",
 						    read => '= 6000
 ',
-						    write => "printparameter /Purkinje/segments/soma/kdr GMAX",
+						    write => "printparameter /Purkinje/segments/soma/kdr G_MAX",
 						   },
 						   {
 						    description => "Has the conductance been scaled according to the surface ?",
 						    read => '= 1.67392e-05',
-						    write => "printparameterscaled /Purkinje/segments/soma/kdr GMAX",
+						    write => "printparameterscaled /Purkinje/segments/soma/kdr G_MAX",
 						   },
 						   {
 						    description => "What is the diameter of one of the spiny dendrites ?",
@@ -252,12 +252,12 @@ my $test
 						   {
 						    description => "Does the main dendrite of the purkinje cell have a well-defined calcium dependent potassium conductance ?",
 						    read => '= 800',
-						    write => "printparameter /Purkinje/segments/b0s01[1]/kc GMAX",
+						    write => "printparameter /Purkinje/segments/b0s01[1]/kc G_MAX",
 						   },
 						   {
 						    description => "Is conductance scaling done correctly ?",
 						    read => '= 1.27212e-08',
-						    write => "printparameterscaled /Purkinje/segments/b0s01[1]/kc GMAX",
+						    write => "printparameterscaled /Purkinje/segments/b0s01[1]/kc G_MAX",
 						   },
 						  ],
 				 description => "parameter calculations on dendrites of the standard Purkinje cell model",

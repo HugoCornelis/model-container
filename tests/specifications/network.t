@@ -42,13 +42,13 @@ my $test
 						   description => "What is the scaled conductance of the delayed rectifier channel in the first Golgi cell ?",
 						   read => "scaled value = 1.91937e-07
 ",
-						   write => "printparameterscaled /CerebellarCortex/Golgis/0/Golgi_soma/KDr GMAX",
+						   write => "printparameterscaled /CerebellarCortex/Golgis/0/Golgi_soma/KDr G_MAX",
 						  },
 						  {
 						   description => "What is the unscaled conductance of the delayed rectifier channel in the first Golgi cell ?",
 						   read => "value = 67.8839
 ",
-						   write => "printparameter /CerebellarCortex/Golgis/0/Golgi_soma/KDr GMAX",
+						   write => "printparameter /CerebellarCortex/Golgis/0/Golgi_soma/KDr G_MAX",
 						  },
 						  {
 						   description => "What is the reversal potential of the delayed rectifier channel in the first Golgi cell ?",

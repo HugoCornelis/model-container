@@ -127,7 +127,7 @@ PUBLIC_MODELS
                 		INPUT ^->Vm
 			END BINDINGS
 			PARAMETERS
-				PARAMETER ( GMAX = 5.0 ),
+				PARAMETER ( G_MAX = 5.0 ),
 				PARAMETER
 				( Erev = NERNST
 					(PARAMETER ( Cin = ^/Ca_pool->concen ),
@@ -143,7 +143,7 @@ PUBLIC_MODELS
                 		INPUT ^->Vm
 			END BINDINGS
 			PARAMETERS
-				PARAMETER ( GMAX = 45.0 ),
+				PARAMETER ( G_MAX = 45.0 ),
 				PARAMETER
 				( Erev = NERNST
 					(PARAMETER ( Cin = ^/Ca_pool->concen ),
@@ -162,7 +162,7 @@ PUBLIC_MODELS
                 		INPUT ^/Ca_pool->concen
 			END BINDINGS
 			PARAMETERS
-				PARAMETER ( GMAX = 800.0 ),
+				PARAMETER ( G_MAX = 800.0 ),
 				PARAMETER ( Erev = -0.085 )
 			END PARAMETERS
 		END CHILD
@@ -174,7 +174,7 @@ PUBLIC_MODELS
                 		INPUT ^/Ca_pool->concen
 			END BINDINGS
 			PARAMETERS
-				PARAMETER ( GMAX = 3.90 ),
+				PARAMETER ( G_MAX = 3.90 ),
 				PARAMETER ( Erev = -0.085 )
 			END PARAMETERS
 		END CHILD
@@ -187,7 +187,7 @@ PUBLIC_MODELS
                 		INPUT ^->Vm
 			END BINDINGS
 			PARAMETERS
-				PARAMETER ( GMAX = 0.130 ),
+				PARAMETER ( G_MAX = 0.130 ),
 				PARAMETER ( Erev = -0.085 )
 			END PARAMETERS
 		END CHILD
@@ -200,7 +200,7 @@ PUBLIC_MODELS
                 		INPUT ^->Vm
 			END BINDINGS
 			PARAMETERS
-				PARAMETER ( GMAX = 14.0 ), // 70.0 / 5
+				PARAMETER ( G_MAX = 14.0 ), // 70.0 / 5
 				PARAMETER ( Erev = -0.080 ),
 				PARAMETER ( FREQUENCY = 0.0 )
 			END PARAMETERS
@@ -212,7 +212,7 @@ PUBLIC_MODELS
                 		INPUT ^->Vm
 			END BINDINGS
 			PARAMETERS
-				PARAMETER ( GMAX = 14.0 ), // 70.0 / 5
+				PARAMETER ( G_MAX = 14.0 ), // 70.0 / 5
 				PARAMETER ( Erev = -0.080 ),
 				PARAMETER ( FREQUENCY = 0.0 )
 			END PARAMETERS
@@ -224,8 +224,8 @@ PUBLIC_MODELS
                 		INPUT ^->Vm
 			END BINDINGS
 			PARAMETERS
-//				PARAMETER ( GMAX = FIXED(value = 0.0013160042) ),
-				PARAMETER ( GMAX = 150.0 ),
+//				PARAMETER ( G_MAX = FIXED(value = 0.0013160042) ),
+				PARAMETER ( G_MAX = 150.0 ),
 				PARAMETER ( Erev = 0.0 )
 			END PARAMETERS
 		END CHILD

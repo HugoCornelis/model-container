@@ -36,7 +36,7 @@ PUBLIC_MODELS
 		// see also Golgi.ncd for use of EXP2_EQUATION
 
 		PARAMETERS 
-			PARAMETER ( GMAX = 1.077 ),
+			PARAMETER ( G_MAX = 1.077 ),
 			PARAMETER ( Erev = -0.080 )
 		END PARAMETERS
 

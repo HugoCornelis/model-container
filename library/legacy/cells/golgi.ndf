@@ -93,7 +93,7 @@ PRIVATE_MODELS
                 		INPUT ^/Ca_pool->concen
 			END BINDINGS
 			PARAMETERS
-				PARAMETER ( GMAX = 5.0 ),
+				PARAMETER ( G_MAX = 5.0 ),
 	
 				// Cin,Cout,valency,T
 	
@@ -225,7 +225,7 @@ PUBLIC_MODELS
                 			INPUT ^->Vm
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 8.317569479 ),
+					PARAMETER ( G_MAX = 8.317569479 ),
 	
 					// Cin,Cout,valency,T
 	
@@ -244,7 +244,7 @@ PUBLIC_MODELS
                 			INPUT ^->Vm
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 1.714962779 ),
+					PARAMETER ( G_MAX = 1.714962779 ),
 					PARAMETER ( Erev = -0.042 )
 				END PARAMETERS
 			END CHILD
@@ -255,7 +255,7 @@ PUBLIC_MODELS
                 			INPUT ^->Vm
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 400.1579818 ),
+					PARAMETER ( G_MAX = 400.1579818 ),
 					PARAMETER ( Erev = 0.055 )
 				END PARAMETERS
 			END CHILD
@@ -266,7 +266,7 @@ PUBLIC_MODELS
                 			INPUT ^->Vm
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 5.244927833 ),
+					PARAMETER ( G_MAX = 5.244927833 ),
 					PARAMETER ( Erev = -0.090 )
 				END PARAMETERS
 			END CHILD
@@ -277,7 +277,7 @@ PUBLIC_MODELS
                 			INPUT ^->Vm
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 67.88394334 ),
+					PARAMETER ( G_MAX = 67.88394334 ),
 					PARAMETER ( Erev = -0.090 )
 				END PARAMETERS
 			END CHILD
@@ -289,7 +289,7 @@ PUBLIC_MODELS
                 			INPUT ^/Ca_pool->concen
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 5.716542597 ),
+					PARAMETER ( G_MAX = 5.716542597 ),
 					PARAMETER ( Erev = -0.090 )
 				END PARAMETERS
 			END CHILD
@@ -318,7 +318,7 @@ PUBLIC_MODELS
 /* 					INPUT ^->Vm */
 /* 				END BINDINGS */
 /* 				PARAMETERS */
-/* 					PARAMETER ( GMAX = 1.0 ), */
+/* 					PARAMETER ( G_MAX = 1.0 ), */
 /* 					PARAMETER ( Erev = -0.070 ), */
 /* 					PARAMETER ( NORMALIZE = SUM(PARAMETER (COUNT = synapse)) ) */
 /* 				END PARAMETERS */
@@ -330,7 +330,7 @@ PUBLIC_MODELS
 					INPUT ^->Vm
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 0.3577337567 ),
+					PARAMETER ( G_MAX = 0.3577337567 ),
 					PARAMETER ( Erev = 0.0 ),
 					PARAMETER ( NORMALIZE = SUM(PARAMETER (COUNT = synapse)) )
 				END PARAMETERS
@@ -342,7 +342,7 @@ PUBLIC_MODELS
 					INPUT ^->Vm
 				END BINDINGS
 				PARAMETERS
-					PARAMETER ( GMAX = 0.3577337567 ),
+					PARAMETER ( G_MAX = 0.3577337567 ),
 					PARAMETER ( Erev = 0.0 ),
 					PARAMETER ( NORMALIZE = SUM(PARAMETER (COUNT = synapse)) )
 				END PARAMETERS

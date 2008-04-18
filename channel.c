@@ -438,7 +438,7 @@ ChannelHasMGBlockGMAX
     //- if GMAX present
 
     struct symtab_Parameters *pparGMAX
-	= SymbolFindParameter(&(pchan->bio.ioh.iol.hsle), "GMAX", ppist);
+	= SymbolFindParameter(&(pchan->bio.ioh.iol.hsle), "G_MAX", ppist);
 
     if (pparGMAX)
     {
@@ -594,7 +594,7 @@ ChannelParameterScaleValue
 
     //- if conductance
 
-    if (0 == strcmp(pcName,"GMAX"))
+    if (0 == strcmp(pcName,"G_MAX"))
     {
 	//v parent segment
 

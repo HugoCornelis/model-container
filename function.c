@@ -741,15 +741,15 @@ FunctionValue
 	//- get different parameters that apply to MG blocking
 
 	struct symtab_Parameters *pparCMg
-	    = FunctionGetParameter(pfun,"CMg");
+	    = FunctionGetParameter(pfun, "CMg");
 	struct symtab_Parameters *pparKMg_A
-	    = FunctionGetParameter(pfun,"KMg_A");
+	    = FunctionGetParameter(pfun, "KMg_A");
 	struct symtab_Parameters *pparKMg_B
-	    = FunctionGetParameter(pfun,"KMg_B");
+	    = FunctionGetParameter(pfun, "KMg_B");
 	struct symtab_Parameters *pparGMax
-	    = FunctionGetParameter(pfun,"GMAX");
+	    = FunctionGetParameter(pfun, "G_MAX");
 	struct symtab_Parameters *pparVm
-	    = FunctionGetParameter(pfun,"Vm");
+	    = FunctionGetParameter(pfun, "Vm");
 
 	if (pparCMg
 	    && pparKMg_A

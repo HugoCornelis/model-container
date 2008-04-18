@@ -375,7 +375,7 @@ report:
     number_of_non-randomized_components_algorithm_symbols: 1
     number_of_non-randomized_components_unexpected: 0
     RandomizeInstance_prototype: CaHVA
-    RandomizeInstance_options: Golgi_cell->GMAX 213.000000 8.317569 9.317569
+    RandomizeInstance_options: Golgi_cell->G_MAX 213.000000 8.317569 9.317569
 ",
 							   ],
 						   write => "algorithminstance Golgi_CaHVA",
@@ -603,7 +603,7 @@ report:
     number_of_non-randomized_components_algorithm_symbols: 1
     number_of_non-randomized_components_unexpected: 0
     RandomizeInstance_prototype: CaHVA
-    RandomizeInstance_options: Golgi_cell->GMAX 213.000000 8.317569 9.317569
+    RandomizeInstance_options: Golgi_cell->G_MAX 213.000000 8.317569 9.317569
 ---
 name: RandomizeInstance GolgiLeak
 report:

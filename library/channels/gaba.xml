@@ -124,7 +124,7 @@
 <!-- elements. -->
 
 		<parameter-set>
-			<symbol-parameter name="GMAX" unit="S / m^2" value="1.077" />
+			<symbol-parameter name="G_MAX" unit="S / m^2" value="1.077" />
 			<symbol-parameter name="Erev" unit="V" value="0.0" />
 		</parameter-set>
 

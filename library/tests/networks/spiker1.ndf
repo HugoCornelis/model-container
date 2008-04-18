@@ -95,7 +95,7 @@ PRIVATE_MODELS
 		END HH_GATE
 
 		PARAMETERS
-			PARAMETER ( GMAX = 360.0 ),
+			PARAMETER ( G_MAX = 360.0 ),
 			PARAMETER ( Erev = -0.085 )
 		END PARAMETERS
 
@@ -258,7 +258,7 @@ PRIVATE_MODELS
 
 			//! I am interested to know where I got this value
 
-			PARAMETER ( GMAX = 3584.40933047825 ),
+			PARAMETER ( G_MAX = 3584.40933047825 ),
 			PARAMETER ( Erev = 0.045 ),
 		END PARAMETERS
 
@@ -332,7 +332,7 @@ PRIVATE_MODELS
 // 		END BINDABLES
 
 // 		PARAMETERS
-// 			PARAMETER ( GMAX = FIXED ( PARAMETER ( value = 6.87071723162637e-10 ), PARAMETER ( scale = 1.0 ), ), ),
+// 			PARAMETER ( G_MAX = FIXED ( PARAMETER ( value = 6.87071723162637e-10 ), PARAMETER ( scale = 1.0 ), ), ),
 // 			PARAMETER ( Erev = 0.0 ),
 // 		END PARAMETERS
 

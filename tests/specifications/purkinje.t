@@ -132,12 +132,12 @@ my $test
 						  {
 						   description => "Does the main dendrite of the purkinje cell have a well-defined calcium dependent potassium conductance ?",
 						   read => '800',
-						   write => "printparameter /Purkinje/segments/b0s01[1]/KC GMAX",
+						   write => "printparameter /Purkinje/segments/b0s01[1]/KC G_MAX",
 						  },
 						  {
 						   description => "Is conductance scaling done correctly ?",
 						   read => '1.27212e-08',
-						   write => "printparameterscaled /Purkinje/segments/b0s01[1]/KC GMAX",
+						   write => "printparameterscaled /Purkinje/segments/b0s01[1]/KC G_MAX",
 						  },
 						  {
 						   description => "Can we find spines in the model purkinje cell ?",
@@ -309,12 +309,12 @@ Solver serial context for 1138 =
 						  {
 						   description => "Does the main dendrite of the purkinje cell have a well-defined calcium dependent potassium conductance ?",
 						   read => '800',
-						   write => "printparameter /Purkinje/segments/b0s01[1]/kc GMAX",
+						   write => "printparameter /Purkinje/segments/b0s01[1]/kc G_MAX",
 						  },
 						  {
 						   description => "Is conductance scaling done correctly ?",
 						   read => '1.27212e-08',
-						   write => "printparameterscaled /Purkinje/segments/b0s01[1]/kc GMAX",
+						   write => "printparameterscaled /Purkinje/segments/b0s01[1]/kc G_MAX",
 						  },
 						  {
 						   description => "Can we find spines in the model purkinje cell ?",
