@@ -1737,7 +1737,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=model-container
- VERSION=build-27
+ VERSION=build-28
 
 
 # Some tools Automake needs.
