@@ -56,9 +56,10 @@ int FunctionAllowsScaling(struct symtab_Function *pfun)
 
     char *pcName = FunctionGetName(pfun);
 
-    //- if fixed
+    //- if fixed or backward compatibility
 
-    if (0 == strcmp(pcName,"FIXED"))
+    if (0 == strcmp(pcName, "FIXED")
+	|| 0 == strcmp(pcName, "GENESIS2"))
     {
 	//- disallow scaling
 
@@ -118,7 +119,7 @@ struct symtab_Function * FunctionCalloc(void)
 
     pfunResult
 	= (struct symtab_Function *)
-	  calloc(1,sizeof(struct symtab_Function));
+	  calloc(1, sizeof(struct symtab_Function));
 
     //- initialize input
 
@@ -148,7 +149,7 @@ void FunctionInit(struct symtab_Function *pfun)
 {
     //- initialize function
 
-    memset(pfun,0,sizeof(*pfun));
+    memset(pfun, 0, sizeof(*pfun));
 
     //- allocate parameter container
 
@@ -173,7 +174,7 @@ void FunctionInit(struct symtab_Function *pfun)
 ///
 /// **************************************************************************
 
-#define PrintFunctionIndent(iIndent,pfile)				\
+#define PrintFunctionIndent(iIndent, pfile)				\
 do									\
 {									\
     PrintIndent(iIndent,pfile);						\
@@ -182,7 +183,7 @@ do									\
 while (0)								\
 
 int FunctionPrint
-(struct symtab_Function *pfun,int bAll,int iIndent,FILE *pfile)
+(struct symtab_Function *pfun, int bAll, int iIndent, FILE *pfile)
 {
     //- set default result : ok
 
@@ -194,15 +195,15 @@ int FunctionPrint
 
     //- do indent
 
-    PrintFunctionIndent(iIndent,pfile);
+    PrintFunctionIndent(iIndent, pfile);
 
     //- name
 
-    fprintf(pfile,"Name (%s)\n",FunctionGetName(pfun));
+    fprintf(pfile, "Name (%s)\n", FunctionGetName(pfun));
 
     //- parameters
 
-    ParContainerPrint(pfun->pparc,TRUE,iIndent + 4,pfile);
+    ParContainerPrint(pfun->pparc, TRUE, iIndent + 4, pfile);
 
     //- return result
 
@@ -280,7 +281,7 @@ FunctionResolveInput
 
 	//- if names match
 
-	if (pcField && strcmp(pcInput,pcField) == 0)
+	if (pcField && strcmp(pcInput, pcField) == 0)
 	{
 	    //- if any position
 
@@ -321,7 +322,7 @@ FunctionResolveInput
     {
 	//- lookup symbol pointed to by parameter
 
-	phsleResult = ParameterResolveSymbol(ppar,ppist);
+	phsleResult = ParameterResolveSymbol(ppar, ppist);
     }
 
     //- return result
@@ -402,22 +403,22 @@ FunctionValue
 
     //- if serial ID
 
-    if (0 == strcmp(pcName,"SERIAL"))
+    if (0 == strcmp(pcName, "SERIAL"))
     {
 	//- get start
 
 	struct symtab_Parameters *pparStart
-	    = FunctionGetParameter(pfun,"start");
+	    = FunctionGetParameter(pfun, "start");
 
 	double dStart
-	    = pparStart ? ParameterResolveValue(pparStart,ppist) : 0 ;
+	    = pparStart ? ParameterResolveValue(pparStart, ppist) : 0 ;
 
 	//- get stop
 
 	struct symtab_Parameters *pparStop
-	    = FunctionGetParameter(pfun,"stop");
+	    = FunctionGetParameter(pfun, "stop");
 
-	double dStop = pparStop ? ParameterResolveValue(pparStop,ppist) : -1 ;
+	double dStop = pparStop ? ParameterResolveValue(pparStop, ppist) : -1 ;
 
 	//- set result
 
@@ -429,22 +430,22 @@ FunctionValue
 
     //- if minimum
 
-    else if (0 == strcmp(pcName,"MINIMUM"))
+    else if (0 == strcmp(pcName, "MINIMUM"))
     {
 	//- get start
 
 	struct symtab_Parameters *pparValue1
-	    = FunctionGetParameter(pfun,"value1");
+	    = FunctionGetParameter(pfun, "value1");
 
 	double dValue1
-	    = pparValue1 ? ParameterResolveValue(pparValue1,ppist) : FLT_MAX ;
+	    = pparValue1 ? ParameterResolveValue(pparValue1, ppist) : FLT_MAX ;
 
 	//- get stop
 
 	struct symtab_Parameters *pparValue2
-	    = FunctionGetParameter(pfun,"value2");
+	    = FunctionGetParameter(pfun, "value2");
 
-	double dValue2 = pparValue2 ? ParameterResolveValue(pparValue2,ppist) : FLT_MAX ;
+	double dValue2 = pparValue2 ? ParameterResolveValue(pparValue2, ppist) : FLT_MAX ;
 
 	//- set result
 
@@ -453,22 +454,22 @@ FunctionValue
 
     //- if maximum
 
-    else if (0 == strcmp(pcName,"MAXIMUM"))
+    else if (0 == strcmp(pcName, "MAXIMUM"))
     {
 	//- get start
 
 	struct symtab_Parameters *pparValue1
-	    = FunctionGetParameter(pfun,"value1");
+	    = FunctionGetParameter(pfun, "value1");
 
 	double dValue1
-	    = pparValue1 ? ParameterResolveValue(pparValue1,ppist) : FLT_MAX ;
+	    = pparValue1 ? ParameterResolveValue(pparValue1, ppist) : FLT_MAX ;
 
 	//- get stop
 
 	struct symtab_Parameters *pparValue2
-	    = FunctionGetParameter(pfun,"value2");
+	    = FunctionGetParameter(pfun, "value2");
 
-	double dValue2 = pparValue2 ? ParameterResolveValue(pparValue2,ppist) : FLT_MAX ;
+	double dValue2 = pparValue2 ? ParameterResolveValue(pparValue2, ppist) : FLT_MAX ;
 
 	//- set result
 
@@ -553,15 +554,15 @@ FunctionValue
 
     //- if negate
 
-    else if (0 == strcmp(pcName,"NEGATE"))
+    else if (0 == strcmp(pcName, "NEGATE"))
     {
 	//- get argument
 
 	struct symtab_Parameters *pparValue1
-	    = FunctionGetParameter(pfun,"value");
+	    = FunctionGetParameter(pfun, "value");
 
 	double dValue1
-	    = pparValue1 ? ParameterResolveValue(pparValue1,ppist) : 0 ;
+	    = pparValue1 ? ParameterResolveValue(pparValue1, ppist) : 0 ;
 
 	//- set result : negate
 
@@ -570,21 +571,21 @@ FunctionValue
 
     //- if minus
 
-    else if (0 == strcmp(pcName,"MINUS"))
+    else if (0 == strcmp(pcName, "MINUS"))
     {
 	//- get two arguments
 
 	struct symtab_Parameters *pparValue1
-	    = FunctionGetParameter(pfun,"value1");
+	    = FunctionGetParameter(pfun, "value1");
 
 	double dValue1
-	    = pparValue1 ? ParameterResolveValue(pparValue1,ppist) : 0 ;
+	    = pparValue1 ? ParameterResolveValue(pparValue1, ppist) : 0 ;
 
 	struct symtab_Parameters *pparValue2
-	    = FunctionGetParameter(pfun,"value2");
+	    = FunctionGetParameter(pfun, "value2");
 
 	double dValue2
-	    = pparValue2 ? ParameterResolveValue(pparValue2,ppist) : 0 ;
+	    = pparValue2 ? ParameterResolveValue(pparValue2, ppist) : 0 ;
 
 	//- set result : subtract
 
@@ -593,21 +594,21 @@ FunctionValue
 
     //- if divide
 
-    else if (0 == strcmp(pcName,"DIVIDE"))
+    else if (0 == strcmp(pcName, "DIVIDE"))
     {
 	//- get two arguments
 
 	struct symtab_Parameters *pparArg1
-	    = FunctionGetParameter(pfun,"DIVIDEND");
+	    = FunctionGetParameter(pfun, "DIVIDEND");
 
 	double dArg1
-	    = pparArg1 ? ParameterResolveValue(pparArg1,ppist) : 0 ;
+	    = pparArg1 ? ParameterResolveValue(pparArg1, ppist) : 0 ;
 
 	struct symtab_Parameters *pparArg2
-	    = FunctionGetParameter(pfun,"DIVISOR");
+	    = FunctionGetParameter(pfun, "DIVISOR");
 
 	double dArg2
-	    = pparArg2 ? ParameterResolveValue(pparArg2,ppist) : 1 ;
+	    = pparArg2 ? ParameterResolveValue(pparArg2, ppist) : 1 ;
 
 	//- set result : divide
 
@@ -616,7 +617,7 @@ FunctionValue
 
     //- if time
 
-    else if (0 == strcmp(pcName,"TIME"))
+    else if (0 == strcmp(pcName, "TIME"))
     {
 	//- set result : always zero
 
@@ -625,30 +626,30 @@ FunctionValue
 
     //- if step
 
-    else if (0 == strcmp(pcName,"STEP"))
+    else if (0 == strcmp(pcName, "STEP"))
     {
 	//- get value
 
 	struct symtab_Parameters *pparValue
-	    = FunctionGetParameter(pfun,"value");
+	    = FunctionGetParameter(pfun, "value");
 
 	double dValue
-	    = pparValue ? ParameterResolveValue(pparValue,ppist) : 0 ;
+	    = pparValue ? ParameterResolveValue(pparValue, ppist) : 0 ;
 
 	//- get start
 
 	struct symtab_Parameters *pparStart
-	    = FunctionGetParameter(pfun,"start");
+	    = FunctionGetParameter(pfun, "start");
 
 	double dStart
-	    = pparStart ? ParameterResolveValue(pparStart,ppist) : 0 ;
+	    = pparStart ? ParameterResolveValue(pparStart, ppist) : 0 ;
 
 	//- get stop
 
 	struct symtab_Parameters *pparStop
-	    = FunctionGetParameter(pfun,"stop");
+	    = FunctionGetParameter(pfun, "stop");
 
-	double dStop = pparStop ? ParameterResolveValue(pparStop,ppist) : 1 ;
+	double dStop = pparStop ? ParameterResolveValue(pparStop, ppist) : 1 ;
 
 	//- set result to one if start < value <= stop
 
@@ -663,25 +664,26 @@ FunctionValue
 	}
     }
 
-    //- if fixed
+    //- if fixed or backward compatibility
 
-    else if (0 == strcmp(pcName,"FIXED"))
+    else if (0 == strcmp(pcName, "FIXED")
+	     || 0 == strcmp(pcName, "GENESIS2"))
     {
 	//- get scale
 
 	struct symtab_Parameters *pparScale
-	    = FunctionGetParameter(pfun,"scale");
+	    = FunctionGetParameter(pfun, "scale");
 
 	//- get value
 
 	struct symtab_Parameters *pparValue
-	    = FunctionGetParameter(pfun,"value");
+	    = FunctionGetParameter(pfun, "value");
 
 	if (pparScale && pparValue)
 	{
-	    double dScale = ParameterResolveValue(pparScale,ppist);
+	    double dScale = ParameterResolveValue(pparScale, ppist);
 
-	    double dValue = ParameterResolveValue(pparValue,ppist);
+	    double dValue = ParameterResolveValue(pparValue, ppist);
 
 	    //- set result
 
@@ -691,29 +693,29 @@ FunctionValue
 
     //- if randomized
 
-    else if (0 == strcmp(pcName,"randomize"))
+    else if (0 == strcmp(pcName, "randomize"))
     {
 	//- get seed
 
 	struct symtab_Parameters *pparSeed
-	    = FunctionGetParameter(pfun,"seed");
+	    = FunctionGetParameter(pfun, "seed");
 
-	double dSeed = pparSeed ? ParameterResolveValue(pparSeed,ppist) : 0.0 ;
+	double dSeed = pparSeed ? ParameterResolveValue(pparSeed, ppist) : 0.0 ;
 
 	//- get minimum
 
 	struct symtab_Parameters *pparMin
-	    = FunctionGetParameter(pfun,"min");
+	    = FunctionGetParameter(pfun, "min");
 
 	//- get maximum
 
 	struct symtab_Parameters *pparMax
-	    = FunctionGetParameter(pfun,"max");
+	    = FunctionGetParameter(pfun, "max");
 
 	if (pparMin && pparMax)
 	{
-	    double dMin = ParameterResolveValue(pparMin,ppist);
-	    double dMax = ParameterResolveValue(pparMax,ppist);
+	    double dMin = ParameterResolveValue(pparMin, ppist);
+	    double dMax = ParameterResolveValue(pparMax, ppist);
 
 	    double d1;
 	    double d2;
@@ -736,7 +738,7 @@ FunctionValue
 
     //- if magnesium blocking
 
-    else if (0 == strcmp(pcName,"MGBLOCK"))
+    else if (0 == strcmp(pcName, "MGBLOCK"))
     {
 	//- get different parameters that apply to MG blocking
 
@@ -759,11 +761,11 @@ FunctionValue
 	{
 	    //- calculate parameter values
 
-	    double dCMg = ParameterResolveValue(pparCMg,ppist);
-	    double dKMg_A = ParameterResolveValue(pparKMg_A,ppist);
-	    double dKMg_B = ParameterResolveValue(pparKMg_B,ppist);
-	    double dGMax = ParameterResolveValue(pparGMax,ppist);
-	    double dVm = ParameterResolveValue(pparVm,ppist);
+	    double dCMg = ParameterResolveValue(pparCMg, ppist);
+	    double dKMg_A = ParameterResolveValue(pparKMg_A, ppist);
+	    double dKMg_B = ParameterResolveValue(pparKMg_B, ppist);
+	    double dGMax = ParameterResolveValue(pparGMax, ppist);
+	    double dVm = ParameterResolveValue(pparVm, ppist);
 
 	    //- calculate result : blocked conductance density value
 
@@ -774,18 +776,18 @@ FunctionValue
 
     //- if nernst equation
 
-    else if (0 == strcmp(pcName,"NERNST"))
+    else if (0 == strcmp(pcName, "NERNST"))
     {
 	//- get different parameters that apply to nernst equation
 
 	struct symtab_Parameters *pparCIn
-	    = FunctionGetParameter(pfun,"Cin");
+	    = FunctionGetParameter(pfun, "Cin");
 	struct symtab_Parameters *pparCOut
-	    = FunctionGetParameter(pfun,"Cout");
+	    = FunctionGetParameter(pfun, "Cout");
 	struct symtab_Parameters *pparValency
-	    = FunctionGetParameter(pfun,"valency");
+	    = FunctionGetParameter(pfun, "valency");
 	struct symtab_Parameters *pparT
-	    = FunctionGetParameter(pfun,"T");
+	    = FunctionGetParameter(pfun, "T");
 
 	if (pparCIn
 	    && pparCOut
@@ -794,10 +796,10 @@ FunctionValue
 	{
 	    //- calculate parameter values
 
-	    double dCIn = ParameterResolveValue(pparCIn,ppist);
-	    double dCOut = ParameterResolveValue(pparCOut,ppist);
-	    double dValency = ParameterResolveValue(pparValency,ppist);
-	    double dT = ParameterResolveValue(pparT,ppist);
+	    double dCIn = ParameterResolveValue(pparCIn, ppist);
+	    double dCOut = ParameterResolveValue(pparCOut, ppist);
+	    double dValency = ParameterResolveValue(pparValency, ppist);
+	    double dT = ParameterResolveValue(pparT, ppist);
 
 	    //- calculate result : nernst potential
 
@@ -819,7 +821,7 @@ FunctionValue
     {
 	//- give diag's : not yet implemented
 
-	fprintf(stdout,"Function %s not implemented\n",pcName);
+	fprintf(stdout, "Function %s not implemented\n",pcName);
     }
 
     //- return result
