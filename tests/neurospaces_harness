@@ -224,9 +224,15 @@ my $test_report
 		 },
        target => {
 		  OS => $^O,
+		  system => {
+			     libc => (join '', `ls -l /lib/libc-* && ls -l /usr/lib/libc-*`),
+			     uname => (join '', `uname -a`),
+			    },
 		  packages => {
-			       gcc => (join '', `gcc 2>&1 -v`),
-			       perl => (join '', `perl 2>&1 -V`),
+			       bison => (join '', `bison --version`),
+			       flex => (join '', `flex --version`),
+			       gcc => (join '', `gcc 2>&1 --version && gcc 2>&1 -v`),
+			       perl => (join '', `perl 2>&1 -v && perl 2>&1 -V`),
 			       swig => (join '', `swig 2>&1 -version`),
 			      },
 		 },
@@ -984,6 +990,7 @@ sub report_exit
 		    ($option_report_disabled ? (disabled => $test_report->{disabled}) : ()),
 		    errors => $test_report->{errors},
 		    global => $test_report->{global},
+		    ($error_count ? (target => $test_report->{target}) : ()),
 		   },
 		  );
 
