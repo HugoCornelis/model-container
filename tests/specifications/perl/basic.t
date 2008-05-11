@@ -333,6 +333,7 @@ query: 'expand /C170897A_P3_CNG/segments/s_1666/**'
 /C170897A_P3_CNG/segments/s_1666/stellate/synapse
 /C170897A_P3_CNG/segments/s_1666/stellate/exp2
 ",
+						   timeout => 20,
 						  },
 						 ],
 				description => "specifying a loader configuration",

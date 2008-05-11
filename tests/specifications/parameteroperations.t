@@ -218,6 +218,7 @@ Parameter (X)
 Parameter (Y)
 Parameter (Z)
 ',
+						   timeout => 20,
 						   write => "printparameterset /Purkinje/**",
 						  },
 						 ],
