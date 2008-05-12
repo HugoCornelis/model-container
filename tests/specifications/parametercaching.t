@@ -113,6 +113,7 @@ coordinate z = 0.0001
 						  },
 						  {
 						   description => "What is the original coordinate of the second granule cell ?",
+						   numerical_compare => 1,
 						   read => "transformed x = 1e-04
 transformed y = 0
 transformed z = 0.0001

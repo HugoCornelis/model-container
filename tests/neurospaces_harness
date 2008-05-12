@@ -667,8 +667,12 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 			{
 			    # if allowed to compare numerically
 
-			    if (!$command_test->{string_only}
-			        && $option_numerical_compare)
+			    if ((!$command_test->{string_only}
+				 && $option_numerical_compare)
+
+				# or forced to compare numerically
+
+				|| $command_test->{numerical_compare})
 			    {
 				# compare numerically
 
