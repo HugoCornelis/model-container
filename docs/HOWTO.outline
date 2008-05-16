@@ -186,12 +186,12 @@ Go to the source directory (with the file 'main.c') and type
 everything is alright.
 
 ** How to setup the library of models ?
-Set one of the environment variables NEUROSPACES_USER_MODELS
-NEUROSPACES_PROJECT_MODELS, NEUROSPACES_SYSTEM_MODELS or
-NEUROSPACES_MODELS to point to the appropriate directory (absolute
+Set one of the environment variables NEUROSPACES_NMC_USER_MODELS
+NEUROSPACES_NMC_PROJECT_MODELS, NEUROSPACES_NMC_SYSTEM_MODELS or
+NEUROSPACES_NMC_MODELS to point to the appropriate directory (absolute
 path).  For a bash something like
 
-'export NEUROSPACES_MODELS=/home/hugo/neurospaces/library'
+'export NEUROSPACES_NMC_MODELS=/home/hugo/neurospaces/library'
 
 is needed.  The library that comes with Neurospaces, contains many
 working models.  The file 'legacy/cells/purk2m9s.ndf' and

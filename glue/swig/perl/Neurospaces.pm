@@ -511,9 +511,9 @@ sub load
 	#t must be put in a separate ssp service.
 
 	if (!-e $filename
-	    && -e $ENV{NEUROSPACES_MODELS} . "/$filename")
+	    && -e $ENV{NEUROSPACES_NMC_MODELS} . "/$filename")
 	{
-	    $filename = $ENV{NEUROSPACES_MODELS} . "/$filename";
+	    $filename = $ENV{NEUROSPACES_NMC_MODELS} . "/$filename";
 	}
 
 	my $executable = $options->{executable} || "morphology2ndf";

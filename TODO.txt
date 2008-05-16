@@ -153,7 +153,7 @@ traversal starting from molecular level ?
 ** install the model library
 /usr/share/neurospaces/models
 ** take care of proper ssp testing
-*** each test has NEUROSPACES_MODELS hardcoded.
+*** each test has NEUROSPACES_NMC_MODELS hardcoded.
 *** tests have references to heccer string tests.
 ** move the neurospaces studio to the studio package
 ** move build of /tmp/hierarchy/symbols

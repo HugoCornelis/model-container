@@ -100,8 +100,8 @@ my $test
 						  {
 						   description => "Can we set the model library directory ?",
 						   read => [ 'Could not find file (number 0, 0), path name (channels/golgi_gabaa.ndf)
-Set one of the environment variables NEUROSPACES_USER_MODELS,
-NEUROSPACES_PROJECT_MODELS, NEUROSPACES_SYSTEM_MODELS or NEUROSPACES_MODELS
+Set one of the environment variables NEUROSPACES_NMC_USER_MODELS,
+NEUROSPACES_NMC_PROJECT_MODELS, NEUROSPACES_NMC_SYSTEM_MODELS or NEUROSPACES_NMC_MODELS
 to point to a library where the required model is located,
 or use the -m switch to configure where neurospaces looks for models.
 ', ],
@@ -114,15 +114,15 @@ or use the -m switch to configure where neurospaces looks for models.
 						preparer =>
 						sub
 						{
-						    $previous_library = $ENV{NEUROSPACES_MODELS};
+						    $previous_library = $ENV{NEUROSPACES_NMC_MODELS};
 
-						    if (defined $ENV{NEUROSPACES_MODELS})
+						    if (defined $ENV{NEUROSPACES_NMC_MODELS})
 						    {
 # 							use Data::Dumper;
 
-# 							print Dumper($ENV{NEUROSPACES_MODELS});
+# 							print Dumper($ENV{NEUROSPACES_NMC_MODELS});
 
-							undef $ENV{NEUROSPACES_MODELS};
+							undef $ENV{NEUROSPACES_NMC_MODELS};
 						    }
 						},
 					       },
@@ -131,7 +131,7 @@ or use the -m switch to configure where neurospaces looks for models.
 					       reparer =>
 					       sub
 					       {
-						   $ENV{NEUROSPACES_MODELS} = $previous_library;
+						   $ENV{NEUROSPACES_NMC_MODELS} = $previous_library;
 
 						   return undef;
 					       },
@@ -706,7 +706,7 @@ number_of_algorithm_instances: 0
 						  },
 						 ],
 				description => "turning off algorithm processing (1)",
-				disabled => (!-e "$ENV{NEUROSPACES_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [

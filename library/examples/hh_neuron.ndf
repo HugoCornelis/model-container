@@ -1,0 +1,19 @@
+#!/usr/local/bin/neurospacesparse
+// -*- NEUROSPACES -*-
+//
+// Importing and inserting a soma into a cell.
+//
+NEUROSPACES NDF
+IMPORT
+    FILE soma "hh_soma.ndf"
+END IMPORT
+PRIVATE_MODELS
+    ALIAS soma::/hh_segment hh_segment END ALIAS
+END PRIVATE_MODELS
+PUBLIC_MODELS
+    CELL hh_neuron
+	SEGMENT_GROUP segments
+	        CHILD hh_segment soma END CHILD
+	END SEGMENT_GROUP
+    END CELL
+END PUBLIC_MODELS

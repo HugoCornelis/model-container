@@ -1,4 +1,4 @@
-static char *pcVersionTime="(08/02/21) Thursday, February 21, 2008 12:21:32 hugo";
+static char *pcVersionTime="(08/05/15) Thursday, May 15, 2008 11:26:31 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -830,8 +830,8 @@ NeurospacesImport
 
 	    fprintf
 		(stderr,
-		 "Set one of the environment variables NEUROSPACES_USER_MODELS,\n"
-		 "NEUROSPACES_PROJECT_MODELS, NEUROSPACES_SYSTEM_MODELS or NEUROSPACES_MODELS\n"
+		 "Set one of the environment variables NEUROSPACES_NMC_USER_MODELS,\n"
+		 "NEUROSPACES_NMC_PROJECT_MODELS, NEUROSPACES_NMC_SYSTEM_MODELS or NEUROSPACES_NMC_MODELS\n"
 		 "to point to a library where the required model is located,\n"
 		 "or use the -m switch to configure where neurospaces looks for models.\n");
 

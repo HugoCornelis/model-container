@@ -26,7 +26,7 @@ $SIG{__DIE__}
 	confess @_;
     };
 
-# $ENV{NEUROSPACES_MODELS} = '/local_home/local_home/hugo/neurospaces_project/model_container/source/c/snapshots/0/library';
+# $ENV{NEUROSPACES_NMC_MODELS} = '/local_home/local_home/hugo/neurospaces_project/model_container/source/c/snapshots/0/library';
 
 
 require Neurospaces;

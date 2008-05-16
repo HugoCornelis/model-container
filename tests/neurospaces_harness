@@ -194,7 +194,7 @@ foreach my $environment_setting_name (keys %$environment_settings)
 
 #     # tell neurospaces where to find the model library of test models
 
-#     $ENV{NEUROSPACES_MODELS} = $config->{model_library};
+#     $ENV{NEUROSPACES_NMC_MODELS} = $config->{model_library};
 #     $ENV{NEUROSPACES_USER_MODELS} = '';
 #     $ENV{NEUROSPACES_PROJECT_MODELS} = '';
 #     $ENV{NEUROSPACES_SYSTEM_MODELS} = '';
@@ -202,7 +202,7 @@ foreach my $environment_setting_name (keys %$environment_settings)
 
 if (defined ($config->{environment}))
 {
-    print "Your models will be searched for in the directory $ENV{NEUROSPACES_MODELS}\n\n";
+    print "Your models will be searched for in the directory $ENV{NEUROSPACES_NMC_MODELS}\n\n";
 }
 
 
@@ -1516,7 +1516,7 @@ sub model_library_sha
 
     use File::Find::Rule;
 
-    my $files = [ File::Find::Rule->file()->in( $ENV{NEUROSPACES_MODELS} ), ];
+    my $files = [ File::Find::Rule->file()->in( $ENV{NEUROSPACES_NMC_MODELS} ), ];
 
     my $shas
 	= [

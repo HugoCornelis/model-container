@@ -39,8 +39,8 @@ my $test
 						  {
 						   description => "Is neurospaces startup successful ?",
 						   read => [ 'Could not find file (number 0, 0), path name (cannot be found)
-Set one of the environment variables NEUROSPACES_USER_MODELS,
-NEUROSPACES_PROJECT_MODELS, NEUROSPACES_SYSTEM_MODELS or NEUROSPACES_MODELS
+Set one of the environment variables NEUROSPACES_NMC_USER_MODELS,
+NEUROSPACES_NMC_PROJECT_MODELS, NEUROSPACES_NMC_SYSTEM_MODELS or NEUROSPACES_NMC_MODELS
 to point to a library where the required model is located,
 or use the -m switch to configure where neurospaces looks for models.
 ', ],
@@ -237,7 +237,7 @@ value = 3.40282e+38",
 						  },
 						 ],
 				description => "invalid queries over symbol table structure",
-				disabled => (!-e "$ENV{NEUROSPACES_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -273,7 +273,7 @@ Inserter instance excitation
 						  },
 						 ],
 				description => "incomplete parameters for the inserter algorithm",
-				disabled => (!-e "$ENV{NEUROSPACES_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -296,7 +296,7 @@ not found using PidinStackLookupTopSymbol() for /in12_1/mat_3: /in12_1/mat_3/mat
 						  },
 						 ],
 				description => "invalid parent segment parameter specifications",
-				disabled => (!-e "$ENV{NEUROSPACES_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [

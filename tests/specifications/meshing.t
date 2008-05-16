@@ -1560,7 +1560,7 @@ my $test
 						   },
 						  ],
 				 description => "meshing of the purkinje cell morphology",
-				 disabled => (!-e "$ENV{NEUROSPACES_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+				 disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 				},
 			       ),
 			      ],
