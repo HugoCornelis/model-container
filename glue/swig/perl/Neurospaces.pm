@@ -208,8 +208,6 @@ sub apply_granular_parameters
 	return "Cannot find first symbol context (has a model been loaded ?)";
     }
 
-    print $firstcontext->PidinStackTo_stdout();
-
     my $firstsymbol = $firstcontext->PidinStackLookupTopSymbol();
 
     if (!defined $firstsymbol)
