@@ -158,7 +158,7 @@ int yylex(YYSTYPE *lvalp,void *pacParserContext);
 /* %type <peq> EquationAlphaOrExp2 */
 %type <peq> EquationExp2Section
 %type <pidin> EquationExp2SectionFront
-%type <ppar> EquationExp2SectionParameters
+%type <peq> EquationExp2Description
 %type <psegment> SegmentSection
 %type <pidin> SegmentSectionFront
 %type <psegment> SegmentDescription
@@ -2837,6 +2837,8 @@ ChannelDescription	/* <pchan> */
 		    {
 			//- give diagnostics : not allowed
 
+			//t this cores because the name of the channel has not been set yet.
+
 			NeurospacesError
 			    ((PARSERCONTEXT *)pacParserContext,
 			     "ChannelDescription",
@@ -2948,13 +2950,13 @@ EquationExp2Section	/* <peq> */
 		EquationExp2SectionFront
 			InputOutputRelations
 			OptionalItemInputRelations
-			EquationExp2SectionParameters
+			EquationExp2Description
 		EquationExp2SectionEnd
 		{
 #line
 		    //- set name
 
-		    SymbolSetName(&$4->bio.ioh.iol.hsle,$1);
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
 
 		    //- link outside world I/O relations
 
@@ -2969,6 +2971,10 @@ EquationExp2Section	/* <peq> */
 		    ParserContextSetActual
 			((PARSERCONTEXT *)pacParserContext,
 			 &$4->bio.ioh.iol.hsle);
+
+		    //- put equation items on stack
+
+		    $$ = $4;
 		}
 	;
 
@@ -2993,13 +2999,15 @@ EquationExp2SectionEnd
 		}
 	;
 
-EquationDescription	/* <peq> */
+EquationExp2Description	/* <peq> */
 	:
 		{
 #line
-		    //- put empty segment description on stack
+		    //- put empty equation description on stack
 
 		    $$ = EquationCalloc();
+
+		    SymbolSetType(&$$->bio.ioh.iol.hsle, TYPE_EQUATION_EXP2);
 
 		    //- set actual symbol
 
@@ -3008,7 +3016,7 @@ EquationDescription	/* <peq> */
 			 &$$->bio.ioh.iol.hsle);
 		}
 /* 	| */
-/* 		EquationDescription */
+/* 		EquationExp2Description */
 /* 		ChildSectionOptionalInputOptionalParameters */
 /* 		{ */
 /* #line */
@@ -3030,7 +3038,7 @@ EquationDescription	/* <peq> */
 /* 		    $$ = $1; */
 /* 		} */
 	|
-		EquationDescription
+		EquationExp2Description
 		Parameters
 		{
 #line
@@ -3042,26 +3050,26 @@ EquationDescription	/* <peq> */
 
 		    ParserContextSetActual
 			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
+			 &$1->bio.ioh.iol.hsle);
 
 		    //- put equation description on stack
 
 		    $$ = $1;
 		}
 /* 	| */
-/* 		EquationDescription */
+/* 		EquationExp2Description */
 /* 		EquationComponent */
 /* 		{ */
 /* #line */
 /* 		    //- add equation component to section list */
 
-/* 		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2); */
+/* 		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2); */
 
 /* 		    //- reset actual symbol */
 
 /* 		    ParserContextSetActual */
 /* 			((PARSERCONTEXT *)pacParserContext, */
-/* 			 &$1->segr.bio.ioh.iol.hsle); */
+/* 			 &$1->bio.ioh.iol.hsle); */
 
 /* 		    //- push equation description on stack */
 
