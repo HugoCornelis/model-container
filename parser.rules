@@ -155,7 +155,7 @@ int yylex(YYSTYPE *lvalp,void *pacParserContext);
 %type <paxhi> AxonHillockSection
 %type <pidin> AxonHillockSectionFront
 %type <paxhi> AxonHillockDescription
-%type <peq> EquationAlphaOrExp2
+/* %type <peq> EquationAlphaOrExp2 */
 %type <peq> EquationExp2Section
 %type <pidin> EquationExp2SectionFront
 %type <ppar> EquationExp2SectionParameters
@@ -1205,7 +1205,8 @@ PoolSymbol
 
 EquationSymbol
 	:
-		EquationAlphaOrExp2
+		EquationExp2Section
+/* 		EquationAlphaOrExp2 */
 		{
 #line
 		    //- put symbol table element on stack
@@ -2889,58 +2890,58 @@ ChannelDescription	/* <pchan> */
 		}
 	;
 
-EquationAlphaOrExp2	/* <peq> */
-	:
-		EquationAlphaSection
-		{
-#line
-		    // remember equation on stack
+/* EquationAlphaOrExp2	/* <peq> * */
+/* 	: */
+/* 		EquationAlphaSection */
+/* 		{ */
+/* #line */
+/* 		    // remember equation on stack */
 
-		    $$ = NULL; //$1;
-		}
-	|
-		EquationExp2Section
-		{
-#line
-		    //- remember equation on stack
+/* 		    $$ = NULL; //$1; */
+/* 		} */
+/* 	| */
+/* 		EquationExp2Section */
+/* 		{ */
+/* #line */
+/* 		    //- remember equation on stack */
 
-		    $$ = $1;
-		}
-	;
+/* 		    $$ = $1; */
+/* 		} */
+/* 	; */
 
-EquationAlphaSection	/* <peq> */
-	:
-		EquationAlphaSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
+/* EquationAlphaSection	/* <peq> * */
+/* 	: */
+/* 		EquationAlphaSectionFront */
+/* 			InputOutputRelations */
+/* 			OptionalItemInputRelations */
 
-			/* requires tau parameter */
+/* 			/* requires tau parameter * */
 
-			TOKEN_PARAMETERS
-				IdentifierOptionIndex
-				'='
-				TOKEN_NUMBER
-			TOKEN_END TOKEN_PARAMETERS
-		EquationAlphaSectionEnd
-		{
-#line
-		}
-	;
+/* 			TOKEN_PARAMETERS */
+/* 				IdentifierOptionIndex */
+/* 				'=' */
+/* 				TOKEN_NUMBER */
+/* 			TOKEN_END TOKEN_PARAMETERS */
+/* 		EquationAlphaSectionEnd */
+/* 		{ */
+/* #line */
+/* 		} */
+/* 	; */
 
-EquationAlphaSectionFront
-	:
-		TOKEN_ALPHA_EQUATION
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		}
-	;
+/* EquationAlphaSectionFront */
+/* 	: */
+/* 		TOKEN_ALPHA_EQUATION */
+/* 		IdentifierOptionIndexPushedPidin */
+/* 		{ */
+/* #line */
+/* 		} */
+/* 	; */
 
-EquationAlphaSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_ALPHA_EQUATION
-	;
+/* EquationAlphaSectionEnd */
+/* 	: */
+/* 		EndPushedPidin */
+/* 		TOKEN_ALPHA_EQUATION */
+/* 	; */
 
 EquationExp2Section	/* <peq> */
 	:
@@ -2951,33 +2952,23 @@ EquationExp2Section	/* <peq> */
 		EquationExp2SectionEnd
 		{
 #line
-		    //- put parametered equation type on stack
-
-		    $$ = EquationCalloc();
-
-		    SymbolSetType(&$$->bio.ioh.iol.hsle, TYPE_EQUATION_EXP2);
-
 		    //- set name
 
-		    SymbolSetName(&$$->bio.ioh.iol.hsle,$1);
+		    SymbolSetName(&$4->bio.ioh.iol.hsle,$1);
 
 		    //- link outside world I/O relations
 
-		    SymbolAssignBindableIO(&$$->bio.ioh.iol.hsle, $2);
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
 
 		    //- bind I/O relations
 
-		    SymbolAssignInputs(&$$->bio.ioh.iol.hsle, $3);
-
-		    //- assign parameters
-
-		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle,$4);
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
 
 		    //- reset actual symbol
 
 		    ParserContextSetActual
 			((PARSERCONTEXT *)pacParserContext,
-			 &$$->bio.ioh.iol.hsle);
+			 &$4->bio.ioh.iol.hsle);
 		}
 	;
 
@@ -3002,19 +2993,95 @@ EquationExp2SectionEnd
 		}
 	;
 
-EquationExp2SectionParameters	/* <ppar> */
+EquationDescription	/* <peq> */
 	:
+		{
+#line
+		    //- put empty segment description on stack
+
+		    $$ = EquationCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+/* 	| */
+/* 		EquationDescription */
+/* 		ChildSectionOptionalInputOptionalParameters */
+/* 		{ */
+/* #line */
+/* 		    //- link children */
+
+/* 		    if ($2) */
+/* 		    { */
+/* 			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2); */
+/* 		    } */
+
+/* 		    //- reset actual symbol */
+
+/* 		    ParserContextSetActual */
+/* 			((PARSERCONTEXT *)pacParserContext, */
+/* 			 &$1->segr.bio.ioh.iol.hsle); */
+
+/* 		    //- push equation description on stack */
+
+/* 		    $$ = $1; */
+/* 		} */
+	|
+		EquationDescription
 		Parameters
 		{
 #line
-		    //- put paramters on stack
+		    //- link parameters at end of parameter list
 
-		    //t requires tau[12] parameters
-		    //t check parameters
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- put equation description on stack
 
 		    $$ = $1;
 		}
+/* 	| */
+/* 		EquationDescription */
+/* 		EquationComponent */
+/* 		{ */
+/* #line */
+/* 		    //- add equation component to section list */
+
+/* 		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2); */
+
+/* 		    //- reset actual symbol */
+
+/* 		    ParserContextSetActual */
+/* 			((PARSERCONTEXT *)pacParserContext, */
+/* 			 &$1->segr.bio.ioh.iol.hsle); */
+
+/* 		    //- push equation description on stack */
+
+/* 		    $$ = $1; */
+/* 		} */
 	;
+
+/* EquationExp2SectionParameters	/* <ppar> * */
+/* 	: */
+/* 		Parameters */
+/* 		{ */
+/* #line */
+/* 		    //- put paramters on stack */
+
+/* 		    //t requires tau[12] parameters */
+/* 		    //t check parameters */
+
+/* 		    $$ = $1; */
+/* 		} */
+/* 	; */
 
 SegmentSection	/* <psegment> */
 	:
