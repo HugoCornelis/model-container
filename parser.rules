@@ -155,7 +155,6 @@ int yylex(YYSTYPE *lvalp,void *pacParserContext);
 %type <paxhi> AxonHillockSection
 %type <pidin> AxonHillockSectionFront
 %type <paxhi> AxonHillockDescription
-/* %type <peq> EquationAlphaOrExp2 */
 %type <peq> EquationExp2Section
 %type <pidin> EquationExp2SectionFront
 %type <peq> EquationExp2Description
@@ -1206,7 +1205,6 @@ PoolSymbol
 EquationSymbol
 	:
 		EquationExp2Section
-/* 		EquationAlphaOrExp2 */
 		{
 #line
 		    //- put symbol table element on stack
@@ -2892,59 +2890,6 @@ ChannelDescription	/* <pchan> */
 		}
 	;
 
-/* EquationAlphaOrExp2	/* <peq> * */
-/* 	: */
-/* 		EquationAlphaSection */
-/* 		{ */
-/* #line */
-/* 		    // remember equation on stack */
-
-/* 		    $$ = NULL; //$1; */
-/* 		} */
-/* 	| */
-/* 		EquationExp2Section */
-/* 		{ */
-/* #line */
-/* 		    //- remember equation on stack */
-
-/* 		    $$ = $1; */
-/* 		} */
-/* 	; */
-
-/* EquationAlphaSection	/* <peq> * */
-/* 	: */
-/* 		EquationAlphaSectionFront */
-/* 			InputOutputRelations */
-/* 			OptionalItemInputRelations */
-
-/* 			/* requires tau parameter * */
-
-/* 			TOKEN_PARAMETERS */
-/* 				IdentifierOptionIndex */
-/* 				'=' */
-/* 				TOKEN_NUMBER */
-/* 			TOKEN_END TOKEN_PARAMETERS */
-/* 		EquationAlphaSectionEnd */
-/* 		{ */
-/* #line */
-/* 		} */
-/* 	; */
-
-/* EquationAlphaSectionFront */
-/* 	: */
-/* 		TOKEN_ALPHA_EQUATION */
-/* 		IdentifierOptionIndexPushedPidin */
-/* 		{ */
-/* #line */
-/* 		} */
-/* 	; */
-
-/* EquationAlphaSectionEnd */
-/* 	: */
-/* 		EndPushedPidin */
-/* 		TOKEN_ALPHA_EQUATION */
-/* 	; */
-
 EquationExp2Section	/* <peq> */
 	:
 		EquationExp2SectionFront
@@ -3076,20 +3021,6 @@ EquationExp2Description	/* <peq> */
 /* 		    $$ = $1; */
 /* 		} */
 	;
-
-/* EquationExp2SectionParameters	/* <ppar> * */
-/* 	: */
-/* 		Parameters */
-/* 		{ */
-/* #line */
-/* 		    //- put paramters on stack */
-
-/* 		    //t requires tau[12] parameters */
-/* 		    //t check parameters */
-
-/* 		    $$ = $1; */
-/* 		} */
-/* 	; */
 
 SegmentSection	/* <psegment> */
 	:
