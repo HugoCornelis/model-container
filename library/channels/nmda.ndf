@@ -1,6 +1,6 @@
 #!/usr/local/bin/neurospacesparse -h
 // -*- NEUROSPACES -*-
-// Equations for Pukeinje cell non_NMDA synapse.
+// Equations for Purkinje cell non_NMDA synapse.
 // parameters copied from GABA synapse
 
 NEUROSPACES NDF
