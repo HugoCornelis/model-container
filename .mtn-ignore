@@ -17,6 +17,7 @@ html/htdocs/neurospaces_project/neurospaces/tests/html/specifications/
 ^installed$
 ^installed/
 ^neurospacesparse$
+^output
 ^parser.c$
 ^parser.h$
 ^parser.output$
