@@ -239,7 +239,7 @@ Principal serial ID = 2 of 2 Principal successors
 						  },
 						 ],
 				description => "a reconstructed series",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			      ],
        description => "inserter algorithm",

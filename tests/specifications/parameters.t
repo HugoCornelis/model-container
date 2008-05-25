@@ -261,7 +261,7 @@ my $test
 						   },
 						  ],
 				 description => "parameter calculations on dendrites of the standard Purkinje cell model",
-				 disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				 disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 				},
 				{
 				 arguments => [
@@ -355,7 +355,7 @@ my $test
 						   },
 						  ],
 				 description => "parameter calculations on spines of the standard Purkinje cell model",
-				 disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				 disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 				},
 				{
 				 arguments => [
@@ -371,7 +371,7 @@ my $test
 						   },
 						  ],
 				 description => "parameter function correctness",
-				 disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				 disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 				},
 			       ),
 			       {

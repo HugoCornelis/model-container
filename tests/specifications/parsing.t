@@ -264,7 +264,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of gates/kdr_steadystate.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -283,7 +283,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of gates/kdr_tau.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -302,7 +302,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of gates/kh.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -321,7 +321,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of gates/km.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -1672,7 +1672,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of tests/segments/maind.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -1691,7 +1691,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of tests/segments/soma.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -1962,7 +1962,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of tests/cells/purk_test.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -1999,7 +1999,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of segments/purkinje/soma.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -2018,7 +2018,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of segments/purkinje/maind.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -2055,7 +2055,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of channels/purkinje/kh.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -2128,7 +2128,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of channels/purkinje/km.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -2147,7 +2147,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of channels/purkinje/kdr.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -2202,7 +2202,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of segments/purkinje/thickd.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -2221,7 +2221,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of segments/purkinje/spinyd.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -2240,7 +2240,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of cells/purkinje/edsjb1994.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -2259,7 +2259,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of tests/cells/table_kh.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -2296,7 +2296,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of tests/cells/table_kdr.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -2405,7 +2405,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of tests/cells/table_km.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -2442,7 +2442,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of tests/cells/purk_test_soma.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -2461,7 +2461,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of tests/segments/purkinje/axon.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -2480,7 +2480,7 @@ my $test
 						  },
 						 ],
 				description => "syntax of tests/cells/purk_test_axon.ndf",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [

@@ -706,7 +706,7 @@ number_of_algorithm_instances: 0
 						  },
 						 ],
 				description => "turning off algorithm processing (1)",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [

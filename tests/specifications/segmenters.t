@@ -3068,7 +3068,7 @@ tips:
 						  },
 						 ],
 				description => "examination of the purkinje cell morphology",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 				side_effects => 'segment linearization',
 			       },
 			       {
@@ -4050,8 +4050,7 @@ tips:
 						  },
 						 ],
 				description => "examination of the purkinje cell morphology without spines, after modifying the dendritic tree",
-				disabled => ((!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : "")
-					     || (`cat $::config->{core_directory}/config.h` =~ /define DELETE_OPERATION 1/ ? '' : 'neurospaces was not configured to include the delete operation')),
+				disabled => (`cat $::config->{core_directory}/config.h` =~ /define DELETE_OPERATION 1/ ? '' : 'neurospaces was not configured to include the delete operation'),
 				side_effects => 'segment linearization',
 			       },
 			       {
@@ -4570,7 +4569,7 @@ tips:
 # 						  ),
 						 ],
 				description => "examination of branchpoints of the purkinje cell without spines",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 				side_effects => 'segmentersetbase',
 			       },
 			      ],

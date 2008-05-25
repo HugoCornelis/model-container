@@ -337,7 +337,7 @@ query: 'expand /C170897A_P3_CNG/segments/s_1666/**'
 						  },
 						 ],
 				description => "specifying a loader configuration",
-				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			      ],
        description => "various perl bindings tests",
