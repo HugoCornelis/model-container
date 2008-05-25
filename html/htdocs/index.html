@@ -110,6 +110,11 @@ This web page reflects the status as for project version build-37 of the Neurosp
 
 	<li>
 
+	  <a href="#section-dash">Dash</a>: a second compartmental
+	  solver faster than Heccer, for simpler models.
+
+	<li>
+
 	  <a href="#section-neurospaces">Neurospaces Model
 	  Container</a>.
 
@@ -432,6 +437,10 @@ This web page reflects the status as for project version build-37 of the Neurosp
     <ul>
       <li>
 
+	Can be driven from C, Perl, SSP or the model container.
+
+      <li>
+
 	Computes the behaviour of single neurons.
 
       <li>
@@ -477,11 +486,12 @@ This web page reflects the status as for project version build-37 of the Neurosp
 
       <li>
 
-	Can be used with or without Neurospaces.  To use Heccer
-	without neurospaces, configure the package with the command
-	line './configure --without-neurospaces'.  To use Heccer with
-	Neurospaces, Neurospaces must be installed before Heccer is
-	compiled.
+	Can be used with or without the Neurospaces model container.
+	To use Heccer without the Neurospaces model container,
+	configure the package with the command line './configure
+	--without-neurospaces' (currently broken, sorry folks).  To
+	use Heccer with the model container, the model container must
+	be installed before Heccer is compiled.
 
     </ul>
 
@@ -508,6 +518,68 @@ This web page reflects the status as for project version build-37 of the Neurosp
 	An example test file with points of entry into Heccer, can be
 	found <a
 	href="http://neurospaces.sourceforge.net/neurospaces_project/heccer/html_source/neurospaces_project/heccer/source/c/snapshots/0/tests/code/main.c.html#:63">here</a>.
+
+    </p><h2><a name="section-dash">Dash</a></h2>
+
+      An alternative way to run models very fast is by limiting the
+      complexity of the modeled biology.  The Dash compartmental
+      solver is not as sophisticated as <a
+      href="#section-heccer">Heccer<a>, but can easily be used for
+      network simulations.
+
+    </p><h3><a name="section-features-dash">Features:</a></h3>
+
+    <p>
+
+    <ul>
+      <li>
+
+	Can be driven from C, Python, SSP or the model container.
+
+      <li>
+
+	Computes the behaviour of single neurons.
+
+      <li>
+
+	Integrates dual-exponential and alpha equations with the cable
+	equations.
+
+      <li>
+
+	Tables to speed up computations, are generated and optimized
+	on the fly.
+
+      <li>
+
+	Can be used with or without the Neurospaces model container.
+	To use Dash without the Neurospaces model container, configure
+	the package with the command line './configure
+	--without-neurospaces' (currently broken, sorry folks).  To
+	use Dash with the model container, the model container must be
+	installed before Dash is compiled.
+
+    </ul>
+
+    <p>
+
+	Heccer has been validated with a composite and simplified
+	purkinje cell model.  Dash is constantly undergoing regression
+	tests.  You can see the output of these tests <a
+	href="neurospaces_project/dash/tests/html/index.html">here</a>.
+
+      <p>
+
+	These tests give an idea of the functionality of Dash as a
+	compartmental solver.
+
+<!--     <p> -->
+<!-- 	Besides being open source, Heccer is also hypersource.  The -->
+<!-- 	Heccer source code can be browsed <a -->
+<!-- 	href="neurospaces_project/heccer/html_source/heccer/source/c/snapshots/0/index.html">here</a>. -->
+<!-- 	An example test file with points of entry into Heccer, can be -->
+<!-- 	found <a -->
+<!-- 	href="http://neurospaces.sourceforge.net/neurospaces_project/heccer/html_source/neurospaces_project/heccer/source/c/snapshots/0/tests/code/main.c.html#:63">here</a>. -->
 
     </p><h2><a name="section-des">DES: the discrete event
     system</a></h2>
@@ -1141,7 +1213,7 @@ $ neurospaces cells/purkinje/edsjb1994.ndf --traversal-symbol / --reporting-fiel
       <address><a href="mailto:hugo.cornelis@gmail.com"></a></address>
 <!-- Created: Thu Apr  6 11:31:32 CDT 2006 -->
 <!-- hhmts start -->
-Last modified: Fri May  9 18:32:12 CDT 2008
+Last modified: Sat May 24 20:48:42 CDT 2008
 <!-- hhmts end -->
   </body>
 </html>
