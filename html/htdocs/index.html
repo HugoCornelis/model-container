@@ -525,7 +525,10 @@ This web page reflects the status as for project version build-37 of the Neurosp
       complexity of the modeled biology.  The Dash compartmental
       solver is not as sophisticated as <a
       href="#section-heccer">Heccer<a>, but can easily be used for
-      network simulations.
+      network simulations.  This solver was contributed to the
+      Neurospaces project by Allan D. Coop (see <a
+      href="#section-publications">publications</a> for more information).
+
 
     </p><h3><a name="section-features-dash">Features:</a></h3>
 
@@ -561,17 +564,22 @@ This web page reflects the status as for project version build-37 of the Neurosp
 
     </ul>
 
-    <p>
-
-	Heccer has been validated with a composite and simplified
-	purkinje cell model.  Dash is constantly undergoing regression
-	tests.  You can see the output of these tests <a
-	href="neurospaces_project/dash/tests/html/index.html">here</a>.
-
       <p>
 
-	These tests give an idea of the functionality of Dash as a
-	compartmental solver.
+	Dash is currently being integrated with the other Neurospaces
+	software components.
+
+<!--     <p> -->
+
+<!-- 	Dash has been validated with a composite and simplified -->
+<!-- 	purkinje cell model.  Dash is constantly undergoing regression -->
+<!-- 	tests.  You can see the output of these tests <a -->
+<!-- 	href="neurospaces_project/dash/tests/html/index.html">here</a>. -->
+
+<!--       <p> -->
+
+<!-- 	These tests give an idea of the functionality of Dash as a -->
+<!-- 	compartmental solver. -->
 
 <!--     <p> -->
 <!-- 	Besides being open source, Heccer is also hypersource.  The -->
@@ -1118,6 +1126,24 @@ $ neurospaces cells/purkinje/edsjb1994.ndf --traversal-symbol / --reporting-fiel
 
 	<li>
 
+	  Allan D. Coop, George N. Reeke Jr.: The Composite Neuron: A
+	  Realistic One-Compartment Purkinje Cell Model Suitable for
+	  Large-Scale Neuronal Network Simulations. Journal of
+	  Computational Neuroscience 10(2): 173-186 (2001)
+
+	  <br>
+
+	  explains the capabilities of the <a
+	  href="#section-dash">Dash<a> compartmental solver.
+
+	<li>
+
+	  George N. Reeke Jr., Allan D. Coop: Estimating the Temporal
+	  Interval Entropy of Neuronal Discharge. Neural Computation
+	  16(5): 941-970 (2004))
+
+	<li>
+
 	  H. Cornelis and E. De Schutter, Neurospaces: Separating modeling
 	  and simulation, Neurocomputing 52-54: 227-231 (2003) <br>
 	  <a href="http://www.tnb.ua.ac.be/publications/pub065/Cornelis_NeuComp_03.pdf">
@@ -1186,12 +1212,38 @@ $ neurospaces cells/purkinje/edsjb1994.ndf --traversal-symbol / --reporting-fiel
 	  and manage the simulations, analyze the results, and
 	  visualize color-coded representations of the morphologies.
 
+	<li>
+
+	  Hugo Cornelis, Michael Edwards, Allan Coop, James Bower: The
+	  CBI Architecture for Computational Simulation of Realistic
+	  Neurons and Circuits in the GENESIS 3 Software Federation
+	  (poster presentation, Computational Neuroscience Meeting,
+	  July 2008).
+
+	  <br>
+
+	  Establishes the relationships between the CBI architecture,
+	  the GENESIS 3 neuronal simulator, and the Neurospaces
+	  project.
+
+	<li>
+
+	  Hugo Cornelis, Allan Coop, James Bower: The Role of the
+	  Neurospaces Project Browser in the GENESIS 3 Software
+	  Federation: Design and Targets (poster presentation,
+	  Computational Neuroscience Meeting, July 2008).
+
+	  <br>
+
+	  Documents the capabilities of the Neurospaces project
+	  browser, the interfaces, the file distribution mechanisms.
+
       </ul>
 
       <hr>
 <!--       &copy; -->
-      &#169; 1999-2007 -- All material on this website, including
-      figures and presentation, is copyrighted 1999-2007 by Hugo
+      &#169; 1999-2008 -- All material on this website, including
+      figures and presentation, is copyrighted 1999-2008 by Hugo
       Cornelis unless otherwise noted.  Please contact the author for
       more information.
       <hr>
@@ -1213,7 +1265,7 @@ $ neurospaces cells/purkinje/edsjb1994.ndf --traversal-symbol / --reporting-fiel
       <address><a href="mailto:hugo.cornelis@gmail.com"></a></address>
 <!-- Created: Thu Apr  6 11:31:32 CDT 2006 -->
 <!-- hhmts start -->
-Last modified: Sat May 24 20:48:42 CDT 2008
+Last modified: Sat May 24 21:19:26 CDT 2008
 <!-- hhmts end -->
   </body>
 </html>
