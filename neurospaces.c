@@ -1712,7 +1712,7 @@ static int NeurospacesStartTimingReport(void)
 char * NeurospacesGetVersion(void)
 {
     // $Format: "    static char *pcVersion=\"${package}-${label}\";"$
-    static char *pcVersion="model-container-build-38";
+    static char *pcVersion="model-container-build-39";
 
     return(pcVersion);
 }
