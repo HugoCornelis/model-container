@@ -594,6 +594,8 @@ options :
 		    }
 		    else
 		    {
+			my $alternatives = $read->{alternatives};
+
 			$read = '(' . (join '|', map { quotemeta } @$alternatives) . ')';
 		    }
 
