@@ -581,16 +581,23 @@ options :
 			$entries++;
 		    }
 
-		    $source->{"$entries. Expected output "}
-			= (
-			   !ref $command_test->{read}
-			   ? $command_test->{read}
-			   : (
-			      @{$command_test->{read}} == 2
-			      ? $command_test->{read}->[1]
-			      : join '  ', @{$command_test->{read}}
-			     )
-			  );
+		    my $read = $command_test->{read};
+
+		    if (ref $read eq 'ARRAY')
+		    {
+			$read
+			    = (
+			       @$read == 2
+			       ? $read->[1]
+			       : join '  ', @$read
+			      );
+		    }
+		    else
+		    {
+			$read = '(' . (join '|', map { quotemeta } @$alternatives) . ')';
+		    }
+
+		    $source->{"$entries. Expected output "} = $read;
 
 		    $entries++;
 
