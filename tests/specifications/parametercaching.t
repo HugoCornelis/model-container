@@ -114,13 +114,25 @@ coordinate z = 0.0001
 						  {
 						   description => "What is the original coordinate of the second granule cell ?",
 						   numerical_compare => 1,
-						   read => "transformed x = 1e-04
+						   read => {
+							    alternatives => [
+									     "transformed x = 1e-04
 transformed y = 0
 transformed z = 0.0001
 coordinate x = 1e-04
 coordinate y = 0
 coordinate z = 0.0001
 ",
+									     "transformed x = 0.0001
+transformed y = 0
+transformed z = 0.0001
+coordinate x = 0.0001
+coordinate y = 0
+coordinate z = 0.0001
+",
+
+									    ],
+							   },
 						   write => "printcoordinates n /CerebellarCortex /CerebellarCortex/Granules/2",
 						  },
 						  {
