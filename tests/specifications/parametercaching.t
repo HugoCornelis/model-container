@@ -187,13 +187,24 @@ coordinate z = 0.0001
 						  {
 						   description => "Is the second granule cell still at its original location ?",
 						   numerical_compare => 1,
-						   read => "transformed x = 1e-04
+						   read => {
+							    alternatives => [
+									     "transformed x = 1e-04
 transformed y = 0
 transformed z = 0.0001
 coordinate x = 1e-04
 coordinate y = 0
 coordinate z = 0.0001
 ",
+									     "transformed x = 0.0001
+transformed y = 0
+transformed z = 0.0001
+coordinate x = 0.0001
+coordinate y = 0
+coordinate z = 0.0001
+",
+									    ],
+							   },
 						   write => "printcoordinates n /CerebellarCortex /CerebellarCortex/Granules/2",
 						  },
 						  {
@@ -237,13 +248,24 @@ coordinate z = 0.0001
 						  {
 						   description => "Is the second granule cell still at its original location ?",
 						   numerical_compare => 1,
-						   read => "transformed x = 1e-04
+						   read => {
+							    alternatives => [
+									     "transformed x = 1e-04
 transformed y = 0
 transformed z = 0.0001
 coordinate x = 1e-04
 coordinate y = 0
 coordinate z = 0.0001
 ",
+									     "transformed x = 0.0001
+transformed y = 0
+transformed z = 0.0001
+coordinate x = 0.0001
+coordinate y = 0
+coordinate z = 0.0001
+",
+									    ],
+							   },
 						   write => "printcoordinates n /CerebellarCortex /CerebellarCortex/Granules/2",
 						  },
 						  {
@@ -292,13 +314,24 @@ coordinate z = 0.0001
 						  {
 						   description => "Has the second granule cell been rotated in the network ?",
 						   numerical_compare => 1,
-						   read => "transformed x = -1e-04
+						   read => {
+							    alternatives => [
+									     "transformed x = -1e-04
 transformed y = -7.34641e-10
 transformed z = 0.0001
 coordinate x = -1e-04
 coordinate y = -7.34641e-10
 coordinate z = 0.0001
 ",
+									     "transformed x = -0.0001
+transformed y = -7.34641e-10
+transformed z = 0.0001
+coordinate x = -0.0001
+coordinate y = -7.34641e-10
+coordinate z = 0.0001
+",
+									    ],
+							   },
 						   write => "printcoordinates n /CerebellarCortex /CerebellarCortex/Granules/2",
 						  },
 						 ],
