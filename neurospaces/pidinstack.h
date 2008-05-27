@@ -312,6 +312,11 @@ int PidinStackPushCompact
 int PidinStackPushCompactAll
 (struct PidinStack *ppist,struct symtab_IdentifierIndex *pidin);
 
+int PidinStackPushString(struct PidinStack *ppist, char *pc);
+
+struct symtab_HSolveListElement *
+PidinStackPushStringAndLookup(struct PidinStack *ppist, char *pc);
+
 int PidinStackPushSymbol
 (struct PidinStack *ppist,struct symtab_HSolveListElement *phsle);
 

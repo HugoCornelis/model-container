@@ -2006,6 +2006,80 @@ int PidinStackPushCompactAll
 
 /// **************************************************************************
 ///
+/// SHORT: PidinStackPushString()
+///
+/// ARGS.:
+///
+///	ppist.: context.
+///	pc....: name of symbol to push.
+///
+/// RTN..: int
+///
+///	Success of operation.
+///
+/// DESCR: Push the name of a symbol.
+///
+/// **************************************************************************
+
+int PidinStackPushString(struct PidinStack *ppist, char *pc)
+{
+    //- allocate pidin
+
+    struct symtab_IdentifierIndex *pidin = IdinNewFromChars(pc);
+
+    if (!pidin)
+    {
+	return(0);
+    }
+
+    //- push pidin
+
+    PidinStackPush(ppist, pidin);
+
+    return(1);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: PidinStackPushStringAndLookup()
+///
+/// ARGS.:
+///
+///	ppist.: context.
+///	pc....: name of symbol to push and lookup.
+///
+/// RTN..: struct symtab_HSolveListElement *
+///
+///	Symbol found, NULL for failure.
+///
+/// DESCR: Push the name of a symbol on the stack, lookup top symbol.
+///
+/// **************************************************************************
+
+struct symtab_HSolveListElement *
+PidinStackPushStringAndLookup(struct PidinStack *ppist, char *pc)
+{
+    //- push string
+
+    int iCheck = PidinStackPushString(ppist, pc);
+
+    if (!iCheck)
+    {
+	return(NULL);
+    }
+
+    //- lookup top, return result
+
+    struct symtab_HSolveListElement *phsleResult
+	= PidinStackLookupTopSymbol(ppist);
+
+    return(phsleResult);
+}
+
+
+/// **************************************************************************
+///
 /// SHORT: PidinStackPushSymbol()
 ///
 /// ARGS.:
