@@ -596,7 +596,7 @@ options :
 		    {
 			my $alternatives = $read->{alternatives};
 
-			$read = '(' . (join '|', map { quotemeta } @$alternatives) . ')';
+			$read = "----- OR:\n" . join "\n----- OR:\n", @$alternatives;
 		    }
 
 		    $source->{"$entries. Expected output "} = $read;
