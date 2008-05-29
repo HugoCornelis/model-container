@@ -1,7 +1,5 @@
 -*- outline -*-
 
-* Make CHANNEL_TYPE automatically inferred from the rest.
-
 * Allow tables to be specified for channels.
 Simply set parametervalues like PARAMETER (entry[0] = 0.01) etc.
 
