@@ -1,8 +1,5 @@
 -*- outline -*-
 
-* Rename EXP2_EQUATION to EXP_EQUATION.
-Add TAU parameter ?
-
 * Make CHANNEL_TYPE automatically inferred from the rest.
 
 * Allow tables to be specified for channels.
