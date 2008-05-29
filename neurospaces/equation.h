@@ -81,17 +81,17 @@ struct symtab_Equation
 };
 
 
-//d Hodgkin-Huxley type of equation
+/* //d Hodgkin-Huxley type of equation */
 
-#define TYPE_EQUATION_HH		1
+/* #define TYPE_EQUATION_HH		1 */
 
-//d alpha equation
+/* //d alpha equation */
 
-#define TYPE_EQUATION_ALPHA		2
+/* #define TYPE_EQUATION_ALPHA		2 */
 
 //d dual exponential equation
 
-#define TYPE_EQUATION_EXP2		3
+#define TYPE_EQUATION_EXPONENTIAL	3
 
 
 #endif

@@ -107,14 +107,6 @@
 			<output name="G" />
 		</bindables>
 
-<!-- We have a number of predefined equations: -->
-<!--     ALPHA_EQUATION, EXP2_EQUATION, HH_EQUATION -->
-<!-- Otherwise we need to implement a MODL-like equation lexicon -->
-
-<!-- I still have to see how this fits into the whole design, -->
-<!-- see also Golgi.ncd for use of EXP2_EQUATION -->
-
-
 <!-- A <parameter-set> is a set of elements derived from <parameter> or -->
 <!-- <parameter-set>.  <symbol-parameter>, <reference-parameter> and -->
 <!-- <algorithm-parameter> are all derived from parameter.  <parameter-set> -->
@@ -130,7 +122,7 @@
 
 		<insert-child source="Synapse" name="synapse" />
 
-		<exp2-equation name="exp2" >
+		<exponential-equation name="exp2" >
 			<bindables>
 				<input name="activation" />
 				<output name="G" />
@@ -144,7 +136,7 @@
 				<symbol-parameter name="TAU2" value="26.50e-3" />
 			</parameter-set>
 
-		</exp2-equation>
+		</exponential-equation>
 
 	</channel>
 

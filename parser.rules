@@ -155,9 +155,9 @@ int yylex(YYSTYPE *lvalp,void *pacParserContext);
 %type <paxhi> AxonHillockSection
 %type <pidin> AxonHillockSectionFront
 %type <paxhi> AxonHillockDescription
-%type <peq> EquationExp2Section
-%type <pidin> EquationExp2SectionFront
-%type <peq> EquationExp2Description
+%type <peq> EquationExponentialSection
+%type <pidin> EquationExponentialSectionFront
+%type <peq> EquationExponentialDescription
 %type <psegment> SegmentSection
 %type <pidin> SegmentSectionFront
 %type <psegment> SegmentDescription
@@ -1204,7 +1204,7 @@ PoolSymbol
 
 EquationSymbol
 	:
-		EquationExp2Section
+		EquationExponentialSection
 		{
 #line
 		    //- put symbol table element on stack
@@ -2890,13 +2890,13 @@ ChannelDescription	/* <pchan> */
 		}
 	;
 
-EquationExp2Section	/* <peq> */
+EquationExponentialSection	/* <peq> */
 	:
-		EquationExp2SectionFront
+		EquationExponentialSectionFront
 			InputOutputRelations
 			OptionalItemInputRelations
-			EquationExp2Description
-		EquationExp2SectionEnd
+			EquationExponentialDescription
+		EquationExponentialSectionEnd
 		{
 #line
 		    //- set name
@@ -2923,9 +2923,9 @@ EquationExp2Section	/* <peq> */
 		}
 	;
 
-EquationExp2SectionFront	/* <pidin> */
+EquationExponentialSectionFront	/* <pidin> */
 	:
-		TOKEN_EXP2_EQUATION
+		TOKEN_EXPONENTIAL_EQUATION
 		IdentifierOptionIndexPushedPidin
 		{
 #line
@@ -2935,16 +2935,16 @@ EquationExp2SectionFront	/* <pidin> */
 		}
 	;
 
-EquationExp2SectionEnd
+EquationExponentialSectionEnd
 	:
 		EndPushedPidin
-		TOKEN_EXP2_EQUATION
+		TOKEN_EXPONENTIAL_EQUATION
 		{
 #line
 		}
 	;
 
-EquationExp2Description	/* <peq> */
+EquationExponentialDescription	/* <peq> */
 	:
 		{
 #line
@@ -2952,7 +2952,7 @@ EquationExp2Description	/* <peq> */
 
 		    $$ = EquationCalloc();
 
-		    SymbolSetType(&$$->bio.ioh.iol.hsle, TYPE_EQUATION_EXP2);
+		    SymbolSetType(&$$->bio.ioh.iol.hsle, TYPE_EQUATION_EXPONENTIAL);
 
 		    //- set actual symbol
 
@@ -2961,7 +2961,7 @@ EquationExp2Description	/* <peq> */
 			 &$$->bio.ioh.iol.hsle);
 		}
 /* 	| */
-/* 		EquationExp2Description */
+/* 		EquationExponentialDescription */
 /* 		ChildSectionOptionalInputOptionalParameters */
 /* 		{ */
 /* #line */
@@ -2983,7 +2983,7 @@ EquationExp2Description	/* <peq> */
 /* 		    $$ = $1; */
 /* 		} */
 	|
-		EquationExp2Description
+		EquationExponentialDescription
 		Parameters
 		{
 #line
@@ -3002,7 +3002,7 @@ EquationExp2Description	/* <peq> */
 		    $$ = $1;
 		}
 /* 	| */
-/* 		EquationExp2Description */
+/* 		EquationExponentialDescription */
 /* 		EquationComponent */
 /* 		{ */
 /* #line */

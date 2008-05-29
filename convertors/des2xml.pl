@@ -93,8 +93,8 @@ s{child\s+(\S+)\s+(\S+)}{<child source=\"$1\" name=\"$2\">}ig ;
 s{end hh_gate}{</hh-gate>}ig ;
 s{hh_gate\s}{<hh-gate>\n}ig ;
 
-s{end exp2_equation}{</exp2-equation>}ig ;
-s{exp2_equation\s+(\S+)}{<exp2-equation name=\"$1\">}ig ;
+s{end exponential_equation}{</exponential-equation>}ig ;
+s{exponential_equation\s+(\S+)}{<exponential-equation name=\"$1\">}ig ;
 
 s{end fiber}{</fiber>}ig ;
 s{fiber\s}{<fiber>\n}ig ;

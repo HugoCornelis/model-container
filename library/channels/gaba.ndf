@@ -28,13 +28,6 @@ PUBLIC_MODELS
 			INPUT Vm,OUTPUT exp2->G,OUTPUT I
 		END BINDABLES
 
-		// We have a number of predefined equations:
-		//	ALPHA_EQUATION, EXP2_EQUATION, HH_EQUATION
-		// Otherwise we need to implement a MODL-like equation lexicon
-
-		// I still have to see how this fits into the whole design,
-		// see also Golgi.ncd for use of EXP2_EQUATION
-
 		PARAMETERS 
 			PARAMETER ( G_MAX = 1.077 ),
 			PARAMETER ( Erev = -0.080 )
@@ -43,7 +36,7 @@ PUBLIC_MODELS
 		CHILD Synapse synapse
 		END CHILD
 
-		EXP2_EQUATION exp2
+		EXPONENTIAL_EQUATION exp2
 			BINDABLES
 				INPUT activation,OUTPUT G
 			END BINDABLES
@@ -56,7 +49,7 @@ PUBLIC_MODELS
 				PARAMETER ( TAU2 = 26.50e-3 )
 			END PARAMETERS
 
-		END EXP2_EQUATION
+		END EXPONENTIAL_EQUATION
 
 	END CHANNEL
 

@@ -46,13 +46,7 @@ PUBLIC_MODELS
 		CHILD Synapse synapse
 		END CHILD
 
-		// I need input/output relation here
-
-		// I still have to see how this fits into the whole
-		// design,
-		// see also gaba.ndf for use of EXP2_EQUATION
-
-		EXP2_EQUATION exp2
+		EXPONENTIAL_EQUATION exp2
 			BINDABLES
 				INPUT activation,OUTPUT G
 			END BINDABLES
@@ -71,7 +65,7 @@ PUBLIC_MODELS
 
 			END PARAMETERS
 
-		END EXP2_EQUATION
+		END EXPONENTIAL_EQUATION
 
 	END CHANNEL
 

@@ -121,7 +121,7 @@ network level : includes network.nnd
 
 
 SEGMENT : cell level
-ALPHA_EQUATION, EXP2_EQUATION, HH_EQUATION : equation level
+EXPONENTIAL_EQUATION : equation level
 POOL : molecular level
 
 
@@ -205,7 +205,7 @@ UNITS seconds meters voltage siemens
 
 	keywords :
 		RECEIVES EVENTS, GENERATES EVENTS,
-		ALPHA_EQUATION, EXP2_EQUATION, HH_EQUATION,
+		EXPONENTIAL_EQUATION
 		SEGMENTS, SEGMENT, CHANNEL, NETWORK, 
 		HAS, IS, 
 		ORIGIN, RELATIVE,

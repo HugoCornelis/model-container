@@ -275,7 +275,7 @@ segment_group		{	return(TOKEN_SEGMENT_GROUP);	}
 channel			{	return(TOKEN_CHANNEL);		}
 pool			{	return(TOKEN_POOL);		}
 alpha_equation		{	return(TOKEN_ALPHA_EQUATION);	}
-exp2_equation		{	return(TOKEN_EXP2_EQUATION);	}
+exponential_equation	{	return(TOKEN_EXPONENTIAL_EQUATION);	}
 options			{	return(TOKEN_OPTIONS);	}
 spherical		{	return(TOKEN_SPHERICAL);	}
 cylindrical		{	return(TOKEN_CYLINDRICAL);	}
