@@ -50,23 +50,11 @@ static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename);
 
 
 //d
-//d test type(pchannel) == struct symtab_Channel * at compile time
-//d
-
-#define CompileTimeTestChannel(pchan)					\
-do {									\
-    struct symtab_Channel chan;						\
-    (pchan) == &chan;							\
-} while (0)
-
-
-//d
 //d check if genesis style object present
 //d
 
 #define ChannelHasGenesisObject(pchan)					\
 ({									\
-    CompileTimeTestChannel(pchan);					\
     ((pchan)->dechan.genObject.iType != 0);				\
 })
 
