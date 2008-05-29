@@ -60,6 +60,12 @@ struct symtab_HSolveListElement *
 ChannelGetIncomingVirtual
 (struct symtab_Channel *pchan, struct PidinStack *ppist);
 
+struct symtab_Parameters * 
+ChannelGetParameter
+(struct symtab_Channel *pchan,
+ char *pcName,
+ struct PidinStack *ppist);
+
 int ChannelHasEquation
 (struct symtab_Channel *pchan, struct PidinStack *ppist);
 

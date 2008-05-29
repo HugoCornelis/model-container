@@ -157,6 +157,7 @@ my $class_hierarchy
 	 channel => {
 		     allows => {
 				'create_alias' => 'channel',
+				'get_parameter' => 'channel',
 				'has_equation' => 'channel',
 				'has_m_g_block_g_m_a_x' => 'channel',
 				'has_nernst_erev' => 'channel',

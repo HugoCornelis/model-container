@@ -46,6 +46,13 @@
 #endif
 
 
+//f static functions
+
+static
+char *
+ChannelGetChannelType
+(struct symtab_Channel *pchan, struct PidinStack *ppist);
+
 static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename);
 
 
@@ -135,6 +142,200 @@ ChannelCreateAlias
     //- return result
 
     return(&pchanResult->bio.ioh.iol.hsle);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: ChannelGetChannelType()
+///
+/// ARGS.:
+///
+///	psegment.: segment to get length for.
+///	ppist....: context of segment.
+///
+/// RTN..: char *
+///
+///	Textual description of the channel type, NULL for failure.
+///
+/// DESCR: Get branch point flag of this segment.
+///
+/// **************************************************************************
+
+struct channel_children_counts
+{
+    //m number of gates
+
+    int iGates;
+
+    //m number of voltage gate kinetics
+
+    int iGateKineticsVoltage;
+
+    //m number of concentration gate kinetics
+
+    int iGateKineticsConcentration;
+
+    //m number of equations
+
+    int iEquations;
+
+    //m number of event receivers
+
+    int iReceivers;
+
+    //m others
+
+    int iOthers;
+
+};
+
+static
+int 
+ChannelTyper
+(struct TreespaceTraversal *ptstr,
+ void *pvUserdata)
+{
+    //- set default result : ok
+
+    int iResult = TSTR_PROCESSOR_SUCCESS;
+
+    //- get pointer to specific data
+
+    struct channel_children_counts *pccc
+	= (struct channel_children_counts *)pvUserdata;
+
+    //- set actual symbol
+
+    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
+
+    //- count types
+
+    if (instanceof_equation(phsle))
+    {
+	pccc->iEquations++;
+    }
+    else if (instanceof_h_h_gate(phsle))
+    {
+	pccc->iGates++;
+    }
+    else if (instanceof_gate_kinetic(phsle))
+    {
+	pccc->iGateKineticsVoltage++;
+    }
+    else if (instanceof_concentration_gate_kinetic(phsle))
+    {
+	pccc->iGateKineticsConcentration++;
+    }
+    else if (instanceof_attachment(phsle))
+    {
+	pccc->iReceivers++;
+    }
+    else
+    {
+	pccc->iOthers++;
+    }
+
+    //- return result
+
+    return(iResult);
+}
+
+static
+char *
+ChannelGetChannelType
+(struct symtab_Channel *pchan, struct PidinStack *ppist)
+{
+    //- set default result: failure
+
+    char *pcResult = NULL;
+
+    //v number of children according to their type found in the channel
+
+    struct channel_children_counts ccc =
+    {
+	//m number of gates
+
+	0,
+
+	//m number of voltage gate kinetics
+
+	0,
+
+	//m number of concentration gate kinetics
+
+	0,
+
+	//m number of equations
+
+	0,
+
+	//m number of event receivers
+
+	0,
+
+	//m others
+
+	0,
+
+    };
+
+    //- traverse channel symbol, figure out the type
+
+    if (SymbolTraverseSegments
+	(&pchan->bio.ioh.iol.hsle,
+	 ppist,
+	 ChannelTyper,
+	 NULL,
+	 (void *)&ccc)
+	== FALSE)
+    {
+	pcResult = NULL;
+    }
+    else
+    {
+	//- set result according to children found
+
+	if (ccc.iEquations == 1
+	    && ccc.iGateKineticsVoltage == 0
+	    && ccc.iGateKineticsConcentration == 0
+	    && ccc.iGates == 0
+	    && ccc.iOthers == 0)
+	{
+	    pcResult = "ChannelSynchan";
+	}
+	else if (ccc.iEquations == 0
+		 && ccc.iGateKineticsVoltage == 2
+		 && ccc.iGateKineticsConcentration == 0
+		 && ccc.iGates == 1
+		 && ccc.iOthers == 0
+		 && ccc.iReceivers == 0)
+	{
+	    pcResult = "ChannelAct";
+	}
+	else if (ccc.iEquations == 0
+		 && ccc.iGateKineticsConcentration == 4
+		 && ccc.iGateKineticsVoltage == 0
+		 && ccc.iGates == 2
+		 && ccc.iOthers == 0
+		 && ccc.iReceivers == 0)
+	{
+	    pcResult = "ChannelActInact";
+	}
+	else if (ccc.iEquations == 0
+		 && ccc.iGateKineticsConcentration == 1
+		 && ccc.iGateKineticsVoltage == 2
+		 && ccc.iGates == 2
+		 && ccc.iOthers == 0
+		 && ccc.iReceivers == 0)
+	{
+	    pcResult = "ChannelActConc";
+	}
+    }
+
+    //- return result
+
+    return(pcResult);
 }
 
 
@@ -373,6 +574,64 @@ ChannelGetIncomingVirtual
     //- return result
 
     return(phsleResult);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: ChannelGetParameter()
+///
+/// ARGS.:
+///
+///	pchan.....: symbol to get parameter for
+///	pcName....: name of parameter
+///	ppist.....: context of symbol.
+///
+/// RTN..: struct symtab_Parameters *
+///
+///	Parameter structure, NULL for failure.
+///
+/// DESCR: Get specific parameter of symbol.
+///
+/// **************************************************************************
+
+struct symtab_Parameters * 
+ChannelGetParameter
+(struct symtab_Channel *pchan,
+ char *pcName,
+ struct PidinStack *ppist)
+{
+    //- set default result : failure
+
+    struct symtab_Parameters *  pparResult = NULL;
+
+    //- get parameter from bio component
+
+    pparResult = BioComponentGetParameter(&pchan->bio, pcName, ppist);
+
+    //- if not found
+
+    if (!pparResult)
+    {
+	//- if channel type
+
+	if (0 == strcmp(pcName, "CHANNEL_TYPE"))
+	{
+	    //- get channel type
+
+	    char *pc = ChannelGetChannelType(pchan, ppist);
+
+	    //- set channel type
+
+	    pparResult
+		= SymbolSetParameterString
+		  (&pchan->bio.ioh.iol.hsle, "CHANNEL_TYPE", pc);
+	}
+    }
+
+    //- return result
+
+    return(pparResult);
 }
 
 

@@ -36,9 +36,9 @@ PRIVATE_MODELS
 			INPUT Vm,OUTPUT G,OUTPUT I
 		END BINDABLES
 
-		PARAMETERS
-			PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
-		END PARAMETERS
+// 		PARAMETERS
+// 			PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
+// 		END PARAMETERS
 
 		CHILD cat_gate_activation cat_gate_activation
 			PARAMETERS
@@ -60,9 +60,9 @@ PRIVATE_MODELS
 			INPUT ^/ca_pool->concen
 		END BINDINGS
 
-		PARAMETERS
-			PARAMETER ( CHANNEL_TYPE = "ChannelActConc" ),
-		END PARAMETERS
+// 		PARAMETERS
+// 			PARAMETER ( CHANNEL_TYPE = "ChannelActConc" ),
+// 		END PARAMETERS
 
 		CHILD kc_gate_activation kc_gate_activation
 			PARAMETERS

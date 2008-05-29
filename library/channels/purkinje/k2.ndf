@@ -25,9 +25,9 @@ PRIVATE_MODELS
 			INPUT ^/Ca_pool->concen
 		END BINDINGS
 
-		PARAMETERS
-			PARAMETER ( CHANNEL_TYPE = "ChannelActConc" ),
-		END PARAMETERS
+// 		PARAMETERS
+// 			PARAMETER ( CHANNEL_TYPE = "ChannelActConc" ),
+// 		END PARAMETERS
 
 		CHILD k2_gate_activation k2_gate_activation
 			PARAMETERS

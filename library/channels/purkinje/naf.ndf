@@ -26,9 +26,9 @@ PRIVATE_MODELS
 			INPUT Vm,OUTPUT G,OUTPUT I
 		END BINDABLES
 
-		PARAMETERS
-			PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
-		END PARAMETERS
+// 		PARAMETERS
+// 			PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
+// 		END PARAMETERS
 
 		CHILD naf_gate_activation naf_gate_activation
 		END CHILD

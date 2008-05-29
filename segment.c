@@ -340,7 +340,7 @@ SegmentGetLength
 ///
 ///	psegment..: symbol to get parameter for
 ///	pcName....: name of parameter
-///	ppist.....: context of segment.
+///	ppist.....: context of symbol.
 ///
 /// RTN..: struct symtab_Parameters *
 ///
