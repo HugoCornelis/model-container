@@ -2652,15 +2652,73 @@ int SymbolTraverseBioLevels
 
 /// **************************************************************************
 ///
+/// SHORT: SymbolTraverseDescendants()
+///
+/// ARGS.:
+///
+///	phsle........: symbol to traverse wildcard for.
+///	ppist........: context of symbol, symbol assumed to be on top.
+///	pfProcesor...: processor.
+///	pfFinalizer..: finalizer.
+///	pvUserdata...: any user data.
+///
+/// RTN..: int : see TstrGo().
+///
+/// DESCR:
+///
+///	Traverse all symbols using the default selector.
+///
+/// **************************************************************************
+
+int
+SymbolTraverseDescendants
+(struct symtab_HSolveListElement *phsle,
+ struct PidinStack *ppist,
+ TreespaceTraversalProcessor *pfProcesor,
+ TreespaceTraversalProcessor *pfFinalizer,
+ void *pvUserdata)
+{
+    //- set default result : ok
+
+    int iResult = 1;
+
+    //- allocate treespace traversal
+
+    struct TreespaceTraversal *ptstr
+	= TstrNew
+	  (ppist,
+	   NULL,
+	   NULL,
+	   pfProcesor,
+	   pvUserdata,
+	   pfFinalizer,
+	   pvUserdata);
+
+    //- traverse symbols, looking for serial
+
+    iResult = TstrGo(ptstr,phsle);
+
+    //- delete treespace traversal
+
+    TstrDelete(ptstr);
+
+    //- return result
+
+    return(iResult);
+}
+
+
+/// **************************************************************************
+///
 /// SHORT: SymbolTraverseTagged()
 ///
 /// ARGS.:
 ///
-///	phsle.......: symbol to traverse spike generators for
-///	ppist.......: context of symbol, symbol assumed to be on top
-///	pfProcesor..: processor
-///	pfFinalizer.: finalizer
-///	pvUserdata..: any user data
+///	phsle.......: symbol to traverse spike generators for.
+///	ppist.......: context of symbol, symbol assumed to be on top.
+///	pfProcesor..: processor.
+///	pfFinalizer.: finalizer.
+///	pvUserdata..: any user data.
 ///
 /// RTN..: int : see TstrGo().
 ///

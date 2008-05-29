@@ -251,6 +251,14 @@ SymbolTraverseBioLevels
  void *pvUserdata);
 
 int
+SymbolTraverseDescendants
+(struct symtab_HSolveListElement *phsle,
+ struct PidinStack *ppist,
+ TreespaceTraversalProcessor *pfProcesor,
+ TreespaceTraversalProcessor *pfFinalizer,
+ void *pvUserdata);
+
+int
 SymbolTraverseTagged
 (struct symtab_HSolveListElement *phsle,
  struct PidinStack *ppist,

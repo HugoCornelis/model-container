@@ -282,7 +282,7 @@ ChannelGetChannelType
 
     //- traverse channel symbol, figure out the type
 
-    if (SymbolTraverseSegments
+    if (SymbolTraverseDescendants
 	(&pchan->bio.ioh.iol.hsle,
 	 ppist,
 	 ChannelTyper,
@@ -314,8 +314,8 @@ ChannelGetChannelType
 	    pcResult = "ChannelAct";
 	}
 	else if (ccc.iEquations == 0
-		 && ccc.iGateKineticsConcentration == 4
-		 && ccc.iGateKineticsVoltage == 0
+		 && ccc.iGateKineticsConcentration == 0
+		 && ccc.iGateKineticsVoltage == 4
 		 && ccc.iGates == 2
 		 && ccc.iOthers == 0
 		 && ccc.iReceivers == 0)
