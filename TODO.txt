@@ -1,5 +1,15 @@
 -*- outline -*-
 
+* Rename EXP2_EQUATION to EXP_EQUATION.
+Add TAU parameter ?
+
+* Make CHANNEL_TYPE automatically inferred from the rest.
+
+* Allow tables to be specified for channels.
+Simply set parametervalues like PARAMETER (entry[0] = 0.01) etc.
+
+* Implement state_init for default case.
+
 * SwiggableNeurospaces::symbol_parameter_resolve_scaled_value
 Has parameters ( $descendant->{_symbol}, $parameter, $descendant->{_context}, );
 Should be parameters ( $descendant->{_symbol}, $descendant->{_context}, $parameter, );
