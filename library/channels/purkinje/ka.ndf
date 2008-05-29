@@ -24,10 +24,6 @@ PRIVATE_MODELS
 			INPUT Vm,OUTPUT G,OUTPUT I
 		END BINDABLES
 
-// 		PARAMETERS
-// 			PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
-// 		END PARAMETERS
-
 		CHILD ka_gate_activation ka_gate_activation
 		END CHILD
 
