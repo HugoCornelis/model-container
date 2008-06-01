@@ -47,12 +47,12 @@ sub add_component
 
     if (!defined $symbol_source)
     {
-	die "cannot find context $source (does it exist ?)";
+	die "$0: Cannot find context $source (does it exist ?)";
     }
 
     if (!defined $symbol_target)
     {
-	die "cannot find context $target_exists (does it exist ?)";
+	die "$0: Cannot find context $target_exists (does it exist ?)";
     }
 
     # create an alias of the source
@@ -67,14 +67,14 @@ sub add_component
 
     if (!$success)
     {
-	die "backend deleting child failed";
+	die "$0: Backend deleting child failed";
     }
 
     $success = SwiggableNeurospaces::SymbolRecalcAllSerials(undef, undef);
 
     if (!$success)
     {
-	die "backend recalculating serials failed";
+	die "$0: Backend recalculating serials failed";
     }
 
     return 1;
@@ -343,12 +343,12 @@ sub delete_component
 
     if (!defined $symbol_parent)
     {
-	die "cannot find context $parent (does it exist ?)";
+	die "$0: Cannot find context $parent (does it exist ?)";
     }
 
     if (!defined $symbol_child)
     {
-	die "cannot find context $child (does it exist ?)";
+	die "$0: cannot find context $child (does it exist ?)";
     }
 
     # delete the child from the parent
@@ -364,19 +364,19 @@ sub delete_component
 
     if ($@)
     {
-	die "backend deleting child failed (did you 'configure --with-delete-operation' ?)";
+	die "$0: Backend deleting child failed (did you 'configure --with-delete-operation' ?)";
     }
 
     if (!$success)
     {
-	die "backend deleting child failed";
+	die "$0: Backend deleting child failed";
     }
 
     $success = SwiggableNeurospaces::SymbolRecalcAllSerials(undef, undef);
 
     if (!$success)
     {
-	die "backend recalculating serials failed";
+	die "$0: Backend recalculating serials failed";
     }
 
     return 1;
