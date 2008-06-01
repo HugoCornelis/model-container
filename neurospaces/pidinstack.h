@@ -214,17 +214,6 @@ do {									\
 
 
 //d
-//d free given pidin stack
-//d
-
-#define PidinStackFree(ppist)						\
-do {									\
-    free(ppist);							\
-    ppist = NULL;							\
-} while (0)
-
-
-//d
 //d get flag
 //d
 
@@ -350,6 +339,12 @@ static inline
 #endif
 struct symtab_IdentifierIndex *
 PidinStackElementPidin(struct PidinStack *ppist,int i);
+
+#ifndef SWIG
+static inline
+#endif
+int
+PidinStackFree(struct PidinStack *ppist);
 
 #ifndef SWIG
 static inline 
@@ -489,6 +484,22 @@ PidinStackElementPidin(struct PidinStack *ppist,int i)
     }
 
     return(pidinResult);
+}
+
+
+///
+/// free pidin stack
+///
+
+#ifndef SWIG
+static inline 
+#endif
+int
+PidinStackFree(struct PidinStack *ppist)
+{
+    free(ppist);
+
+    return(1);
 }
 
 

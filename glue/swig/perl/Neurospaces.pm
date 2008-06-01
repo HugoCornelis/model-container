@@ -576,6 +576,35 @@ sub new
 }
 
 
+sub component_2_serial
+{
+    my $self = shift;
+
+    my $component_name = shift;
+
+    # get context with caches
+
+    my $context = SwiggableNeurospaces::PidinStackParse($component_name);
+
+    $context->PidinStackLookupTopSymbol();
+
+    # convert to serial
+
+    my $result = $context->PidinStackToSerial();
+
+    $context->PidinStackFree();
+
+    if ($result eq $SwiggableNeurospaces::iINT_MAX)
+    {
+	return undef;
+    }
+
+    # return result
+
+    return $result;
+}
+
+
 sub output_2_solverinfo
 {
     my $self = shift;
@@ -593,22 +622,24 @@ sub output_2_solverinfo
     #!
     #! 2. there is no solver for this part of the model.
 
-    # get context with caches
+    my $serial = $self->component_2_serial($component_name);
 
-    my $context = SwiggableNeurospaces::PidinStackParse($component_name);
-
-    $context->PidinStackLookupTopSymbol();
-
-    my $serial = $context->PidinStackToSerial();
-
-    if ($serial eq $SwiggableNeurospaces::iINT_MAX)
+    if (!defined $serial)
     {
 	return "Output $component_name cannot be found";
     }
 
     # lookup the solver info backend data for the output
 
+    #t the previous call also constructs a context, should recycle
+
+    my $context = SwiggableNeurospaces::PidinStackParse($component_name);
+
+    $context->PidinStackLookupTopSymbol();
+
     my $solverinfo = SwiggableNeurospaces::SolverInfoRegistrationGet(undef, $context);
+
+    $context->PidinStackFree();
 
     if (!defined $solverinfo)
     {
