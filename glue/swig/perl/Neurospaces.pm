@@ -280,6 +280,35 @@ sub backend
 }
 
 
+sub component_2_serial
+{
+    my $self = shift;
+
+    my $component_name = shift;
+
+    # get context with caches
+
+    my $context = SwiggableNeurospaces::PidinStackParse($component_name);
+
+    $context->PidinStackLookupTopSymbol();
+
+    # convert to serial
+
+    my $result = $context->PidinStackToSerial();
+
+    $context->PidinStackFree();
+
+    if ($result eq $SwiggableNeurospaces::iINT_MAX)
+    {
+	return undef;
+    }
+
+    # return result
+
+    return $result;
+}
+
+
 sub delete_component
 {
     my $self = shift;
@@ -576,35 +605,6 @@ sub new
 }
 
 
-sub component_2_serial
-{
-    my $self = shift;
-
-    my $component_name = shift;
-
-    # get context with caches
-
-    my $context = SwiggableNeurospaces::PidinStackParse($component_name);
-
-    $context->PidinStackLookupTopSymbol();
-
-    # convert to serial
-
-    my $result = $context->PidinStackToSerial();
-
-    $context->PidinStackFree();
-
-    if ($result eq $SwiggableNeurospaces::iINT_MAX)
-    {
-	return undef;
-    }
-
-    # return result
-
-    return $result;
-}
-
-
 sub output_2_solverinfo
 {
     my $self = shift;
@@ -631,7 +631,7 @@ sub output_2_solverinfo
 
     # lookup the solver info backend data for the output
 
-    #t the previous call also constructs a context, should recycle
+    #t component_2_serial() also constructs a context, should recycle
 
     my $context = SwiggableNeurospaces::PidinStackParse($component_name);
 
