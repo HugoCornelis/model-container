@@ -14,7 +14,7 @@ chdir '/tmp/neurospaces' || die "Cannot cd to /tmp/neurospaces";
 
 {
     # $Format: "system 'wget \"http://superb-west.dl.sourceforge.net/sourceforge/neurospaces/${package}-${label}.tar.gz\"';"$
-system 'wget "http://superb-west.dl.sourceforge.net/sourceforge/neurospaces/model-container-build-43.tar.gz"';
+system 'wget "http://superb-west.dl.sourceforge.net/sourceforge/neurospaces/model-container-network-1.tar.gz"';
 }
 
 if ($?)
@@ -25,7 +25,7 @@ if ($?)
 
 {
     # $Format: "system 'tar vxfz \"${package}-${label}.tar.gz\"';"$
-system 'tar vxfz "model-container-build-43.tar.gz"';
+system 'tar vxfz "model-container-network-1.tar.gz"';
 }
 
 if ($?)
@@ -36,7 +36,7 @@ if ($?)
 
 {
     # $Format: "chdir '${package}-${label}' || die 'chdir failed';"$
-chdir 'model-container-build-43' || die 'chdir failed';
+chdir 'model-container-network-1' || die 'chdir failed';
 }
 
 
