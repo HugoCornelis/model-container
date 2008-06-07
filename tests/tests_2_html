@@ -78,7 +78,7 @@ BEGIN
 
     unshift @INC, $config->{tests_directory};
 
-    # find the perl modules directory
+#     # find the perl modules directory
 
 #     $perl_modules_directory = $core_directory;
 
@@ -101,7 +101,7 @@ BEGIN
 }
 
 
-$ENV{NEUROSPACES_MODELS} = ${core_directory} . '/library';
+$ENV{NEUROSPACES_NMC_MODELS} = ${core_directory} . '/library';
 
 my $tests_dir = $config->{tests_directory};
 
