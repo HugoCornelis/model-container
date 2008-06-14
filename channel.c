@@ -151,14 +151,14 @@ ChannelCreateAlias
 ///
 /// ARGS.:
 ///
-///	psegment.: segment to get length for.
-///	ppist....: context of segment.
+///	pchan....: channel to get channel type for.
+///	ppist....: context of channel.
 ///
 /// RTN..: char *
 ///
 ///	Textual description of the channel type, NULL for failure.
 ///
-/// DESCR: Get branch point flag of this segment.
+/// DESCR: Get CHANNEL_TYPE parameter for this channel.
 ///
 /// **************************************************************************
 
