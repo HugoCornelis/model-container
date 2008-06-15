@@ -483,9 +483,9 @@ my $test
 						   write => "biogroup /pool1_feedback1/segments/main[0]/kc/kc_gate_activation",
 						  },
 						  {
-						   description => "biogroup and biolevel conversion of /pool1_feedback1/segments/main[0]/kc/kc_gate_activation/forward",
+						   description => "biogroup and biolevel conversion of /pool1_feedback1/segments/main[0]/kc/kc_gate_activation/A",
 						   read => "biogroup BIOLEVELGROUP_MECHANISM has BIOLEVEL_ATOMIC as lowest component",
-						   write => "biogroup /pool1_feedback1/segments/main[0]/kc/kc_gate_activation/forward",
+						   write => "biogroup /pool1_feedback1/segments/main[0]/kc/kc_gate_activation/A",
 						  },
 						  {
 						   description => "biogroup and biolevel conversion of /pool1_feedback1/segments/main[0]/kc/kc_gate_concentration",
