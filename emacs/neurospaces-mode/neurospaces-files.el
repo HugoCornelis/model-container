@@ -1,8 +1,8 @@
 ;;; neurospaces-files.el --- Bind specific file types to the Neurospaces mode.
 
-;; Copyright (C) 2005-2006 Hugo Cornelis
+;; Copyright (C) 2005-2008 Hugo Cornelis
 
-;; Authors:    2005-2006 Hugo Cornelis
+;; Authors:    2005-2008 Hugo Cornelis
 ;; Maintainer: Hugo Cornelis
 
 ;; You should have received a copy of the GNU General Public License

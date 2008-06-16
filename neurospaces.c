@@ -11,7 +11,7 @@ static char *pcVersionTime="(08/06/15) Sunday, June 15, 2008 22:02:17 hugo";
 //'
 //' Neurospaces : testbed C implementation that integrates with genesis
 //'
-//' Copyright (C) 1999-2007 Hugo Cornelis
+//' Copyright (C) 1999-2008 Hugo Cornelis
 //'
 //' functional ideas ..	Hugo Cornelis, hugo.cornelis@gmail.com
 //'

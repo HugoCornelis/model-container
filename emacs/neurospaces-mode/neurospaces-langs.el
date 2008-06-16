@@ -1,8 +1,8 @@
 ;;; neurospaces-langs.el --- specific language support for Neurospaces Mode
 
-;; Copyright (C) 2005-2006 Hugo Cornelis
+;; Copyright (C) 2005-2008 Hugo Cornelis
 
-;; Authors:    2005-2006 Hugo Cornelis
+;; Authors:    2005-2008 Hugo Cornelis
 ;; Maintainer: Hugo Cornelis
 
 ;; You should have received a copy of the GNU General Public License

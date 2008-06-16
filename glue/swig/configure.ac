@@ -7,7 +7,7 @@ dnl //////////////////////////////////////////////////////////////////////////
 dnl
 dnl Heccer : testbed C implementation
 dnl
-dnl Copyright (C) 2006-2007 Hugo Cornelis
+dnl Copyright (C) 2006-2008 Hugo Cornelis
 dnl
 dnl functional ideas .. Hugo Cornelis, hugo.cornelis@gmail.com
 dnl
