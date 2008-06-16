@@ -9,6 +9,8 @@ my $test
        command_definitions => [
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'pools/golgi_ca.ndf',
@@ -46,6 +48,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'legacy/cells/golgi.ndf',
@@ -88,6 +92,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'pools/purkinje_ca.ndf',
@@ -125,6 +131,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'legacy/cells/purk2m9s.ndf',
@@ -164,6 +172,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'cells/purkinje/edsjb1994.ndf',

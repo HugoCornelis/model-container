@@ -9,6 +9,8 @@ my $test
        command_definitions => [
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/networks/networksmall.ndf',
 					     ],
@@ -89,6 +91,8 @@ my $test
 # 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/networks/networksmall.ndf',
 					     ],

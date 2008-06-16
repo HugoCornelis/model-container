@@ -9,6 +9,8 @@ my $test
        command_definitions => [
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'segments/micron2.ndf',
 					     ],

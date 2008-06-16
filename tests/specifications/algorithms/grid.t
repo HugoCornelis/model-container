@@ -17,6 +17,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/populations/granule.ndf',
 					     ],
@@ -112,6 +114,8 @@ report:
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/populations/granule.ndf',
 					     ],
@@ -208,6 +212,8 @@ report:
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/populations/granule.ndf',
 					     ],

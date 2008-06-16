@@ -9,6 +9,8 @@ my $test
        command_definitions => [
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/networks/network-test.ndf',
 					     ],
@@ -90,6 +92,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/networks/network-test.ndf',
 					     ],
@@ -171,6 +175,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/networks/network-test.ndf',
 					     ],
@@ -217,6 +223,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/networks/network-test.ndf',
 					     ],
@@ -263,6 +271,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/networks/network-test.ndf',
 					     ],
@@ -359,6 +369,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/networks/network-test.ndf',
 					     ],
@@ -445,6 +457,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'tests/cells/pool1_feedback1.ndf',

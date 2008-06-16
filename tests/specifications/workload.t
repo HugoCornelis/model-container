@@ -9,6 +9,8 @@ my $test
        command_definitions => [
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/networks/networksmall.ndf',
 					     ],
@@ -81,6 +83,8 @@ workload ok
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/networks/network-test.ndf',
 					     ],
@@ -182,6 +186,8 @@ workload ok
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/populations/granulelarge.ndf',
 					     ],

@@ -9,6 +9,8 @@ my $test
        command_definitions => [
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -27,6 +29,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -45,6 +49,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -63,6 +69,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -81,6 +89,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -100,6 +110,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -119,6 +131,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -138,6 +152,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -157,6 +173,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -176,6 +194,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -195,6 +215,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -213,6 +235,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -231,6 +255,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -249,6 +275,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -268,6 +296,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -287,6 +317,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -306,6 +338,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -325,6 +359,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -343,6 +379,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -361,6 +399,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -379,6 +419,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -397,6 +439,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -415,6 +459,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -433,6 +479,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -451,6 +499,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -469,6 +519,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -487,6 +539,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -505,6 +559,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -523,6 +579,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -541,6 +599,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -559,6 +619,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -577,6 +639,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -595,6 +659,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -613,6 +679,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -631,6 +699,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -649,6 +719,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -667,6 +739,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -685,6 +759,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -703,6 +779,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -721,6 +799,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -739,6 +819,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -757,6 +839,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -775,6 +859,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -793,6 +879,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -811,6 +899,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -829,6 +919,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -847,6 +939,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -865,6 +959,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -883,6 +979,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -901,6 +999,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -919,6 +1019,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -937,6 +1039,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -955,6 +1059,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -973,6 +1079,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -991,6 +1099,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1009,6 +1119,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1027,6 +1139,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1045,6 +1159,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1063,6 +1179,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1081,6 +1199,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1099,6 +1219,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1117,6 +1239,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1135,6 +1259,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1153,6 +1279,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1171,6 +1299,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1189,6 +1319,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1207,6 +1339,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1225,6 +1359,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1243,6 +1379,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1261,6 +1399,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1279,6 +1419,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1297,6 +1439,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1315,6 +1459,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1333,6 +1479,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1351,6 +1499,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1369,6 +1519,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1387,6 +1539,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1405,6 +1559,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1423,6 +1579,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1441,6 +1599,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1459,6 +1619,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1477,6 +1639,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1495,6 +1659,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1513,6 +1679,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1531,6 +1699,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1549,6 +1719,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1567,6 +1739,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1585,6 +1759,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1603,6 +1779,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1621,6 +1799,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1639,6 +1819,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1657,6 +1839,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1676,6 +1860,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1695,6 +1881,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1713,6 +1901,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1731,6 +1921,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1749,6 +1941,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1767,6 +1961,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1785,6 +1981,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1803,6 +2001,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1821,6 +2021,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1839,6 +2041,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1857,6 +2061,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1875,6 +2081,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1893,6 +2101,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1911,6 +2121,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1929,6 +2141,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1947,6 +2161,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1966,6 +2182,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -1984,6 +2202,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2003,6 +2223,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2022,6 +2244,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2040,6 +2264,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2059,6 +2285,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2077,6 +2305,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2095,6 +2325,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2113,6 +2345,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2132,6 +2366,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2151,6 +2387,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2169,6 +2407,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2187,6 +2427,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2206,6 +2448,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2225,6 +2469,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2244,6 +2490,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2263,6 +2511,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2281,6 +2531,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2300,6 +2552,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2318,6 +2572,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2336,6 +2592,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2354,6 +2612,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2372,6 +2632,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2390,6 +2652,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2409,6 +2673,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2427,6 +2693,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2446,6 +2714,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2465,6 +2735,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2484,6 +2756,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2502,6 +2776,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2520,6 +2796,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2538,6 +2816,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2556,6 +2836,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2574,6 +2856,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2592,6 +2876,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2610,6 +2896,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-q',
 					      '-R',
@@ -2628,6 +2916,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-R',
 					      'tests/cells/hh1.ndf',
@@ -2645,6 +2935,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-R',
 					      'channels/hodgkin-huxley/potassium.ndf',
@@ -2662,6 +2954,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-R',
 					      'channels/hodgkin-huxley/sodium.ndf',
@@ -2679,6 +2973,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-R',
 					      'segments/hodgkin_huxley.ndf',
@@ -2696,6 +2992,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-R',
 					      'cells/stand_alone.ndf',
@@ -2713,6 +3011,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-R',
 					      'tests/networks/spiker1.ndf',
@@ -2730,6 +3030,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-R',
 					      'examples/hh_soma.ndf',
@@ -2747,6 +3049,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-p',
 					      '-R',
 					      'examples/hh_neuron.ndf',

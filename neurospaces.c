@@ -1,4 +1,4 @@
-static char *pcVersionTime="(08/05/15) Thursday, May 15, 2008 11:26:31 hugo";
+static char *pcVersionTime="(08/06/15) Sunday, June 15, 2008 22:02:17 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -931,7 +931,10 @@ NeurospacesImport
 	}
 	else
 	{
-	    fprintf(stderr,"%s: No errors for %s.\n", pcAppl, pcInputName);
+	    if (pnsc->nso.iVerbosity)
+	    {
+		fprintf(stderr,"%s: No errors for %s.\n", pcAppl, pcInputName);
+	    }
 	}
 
 	//- go to next file in parse command line args

@@ -9,6 +9,8 @@ my $test
        command_definitions => [
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/networks/network-test.ndf',
 					     ],
@@ -2744,6 +2746,8 @@ Principal serial ID = 1139 of 153157 Principal successors
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'networks/input.ndf',
 					     ],

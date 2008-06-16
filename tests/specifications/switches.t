@@ -349,6 +349,8 @@ report:
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-V',
 					      '-10',
 					      'legacy/cells/golgi.ndf',
@@ -399,6 +401,8 @@ report:
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-V',
 					      '-20',
 					      'legacy/networks/networksmall.ndf',
@@ -453,6 +457,8 @@ report:
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-V',
 					      '-30',
 					      'legacy/cells/golgi.ndf',
@@ -491,6 +497,8 @@ report:
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-V',
 					      '-40',
 					      'legacy/cells/granule.ndf',
@@ -558,6 +566,8 @@ report:
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-v',
 					      '-50',
 					      'legacy/cells/golgi.ndf',

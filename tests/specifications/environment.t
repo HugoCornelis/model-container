@@ -56,6 +56,8 @@ or use the -m switch to configure where neurospaces looks for models.
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      'channels/golgi_gabaa.ndf',
 					     ],
 				command => './neurospacesparse',
@@ -99,6 +101,8 @@ or use the -m switch to configure where neurospaces looks for models.
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      'channels/golgi_gabaa.ndf',
 					     ],
 				command => './neurospacesparse',
@@ -142,6 +146,8 @@ or use the -m switch to configure where neurospaces looks for models.
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      'channels/golgi_gabaa.ndf',
 					     ],
 				command => './neurospacesparse',

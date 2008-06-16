@@ -9,6 +9,8 @@ my $test
        command_definitions => [
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'channels/purkinje/cat.ndf',
@@ -30,6 +32,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'channels/purkinje/nap.ndf',
@@ -51,6 +55,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'channels/purkinje/kh.ndf',
@@ -73,6 +79,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'channels/purkinje/naf.ndf',
@@ -94,6 +102,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'channels/purkinje/k2.ndf',
@@ -115,6 +125,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'channels/purkinje/kc.ndf',
@@ -136,6 +148,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'channels/purkinje/km.ndf',
@@ -158,6 +172,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'channels/purkinje/kdr.ndf',
@@ -180,6 +196,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'channels/purkinje/ka.ndf',
@@ -201,6 +219,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'channels/purkinje/cap.ndf',

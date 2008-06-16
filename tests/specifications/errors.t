@@ -9,6 +9,8 @@ my $test
        command_definitions => [
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'segments/purkinje_maind_passive.ndf',
@@ -56,6 +58,8 @@ or use the -m switch to configure where neurospaces looks for models.
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'segments/purkinje_maind_passive.ndf',
@@ -77,6 +81,8 @@ or use the -m switch to configure where neurospaces looks for models.
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'segments/purkinje_maind_passive.ndf',
@@ -98,6 +104,8 @@ or use the -m switch to configure where neurospaces looks for models.
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      '-R',
 					      'utilities/circle.ndf',

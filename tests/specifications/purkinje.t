@@ -9,6 +9,8 @@ my $test
        command_definitions => [
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/cells/purk2m9s.ndf',
 					     ],
@@ -186,6 +188,8 @@ Solver serial context for 1138 =
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'cells/purkinje/edsjb1994.ndf',
 					     ],

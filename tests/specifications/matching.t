@@ -79,6 +79,8 @@ my $test
 			       },
 			       {
 				arguments => [
+					      '-v',
+					      '1',
 					      '-q',
 					      'legacy/networks/networksmall.ndf',
 					     ],
