@@ -199,7 +199,7 @@ double
 GateKineticGetHHOffset
 (struct symtab_GateKinetic *pgatk, struct PidinStack *ppist)
 {
-    //- set default result : failure
+    //- set result: same as offset_e
 
     double dResult
 	= SymbolParameterResolveValue(&pgatk->bio.ioh.iol.hsle, "HH_AB_Offset_E", ppist);
