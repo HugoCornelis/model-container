@@ -530,7 +530,7 @@ ProjectionVolumeSpikeGeneratorProcessor
 
     //- if name does not match -pre
 
-    if (strcmp(IdinName(SymbolGetPidin(phsle)),ppiac->ppvi->pro.pcPre) != 0)
+    if (strcmp(IdinName(SymbolGetPidin(phsle)), ppiac->ppvi->pro.pcPre) != 0)
     {
 	//- return result : do not process
 
@@ -606,6 +606,8 @@ ProjectionVolumeSpikeGeneratorProcessor
     {
 	//- if position in boundaries
 
+	//t query speed up using index on generators
+
 	if (ppiac->ppvi->pro.D3Source1.dx < ppiac->D3Generator.dx 
 	    && ppiac->D3Generator.dx <= ppiac->ppvi->pro.D3Source2.dx
 	    && ppiac->ppvi->pro.D3Source1.dy < ppiac->D3Generator.dy 
@@ -619,6 +621,8 @@ ProjectionVolumeSpikeGeneratorProcessor
 	    ppiac->ppistGenerator = ptstr->ppist;
 
 	    //- traverse spike receivers for target population
+
+	    //t use the index on the receivers
 
 	    if (SymbolTraverseSpikeReceivers
 		(ppiac->phsleTarget,
@@ -676,13 +680,16 @@ ProjectionVolumeSpikeReceiverProcessor
 
     //- get name of channel
 
+    //t don't use PidinStackElementPidin() here, or at least the -2
+    //t should be an additional parameter.
+
     struct symtab_IdentifierIndex *pidinChannel
 	= PidinStackElementPidin
-	  (ptstr->ppist,PidinStackNumberOfEntries(ptstr->ppist) - 2);
+	  (ptstr->ppist, PidinStackNumberOfEntries(ptstr->ppist) - 2);
 
     //- if name does not match -post
 
-    if (strcmp(IdinName(pidinChannel),ppiac->ppvi->pro.pcPost) != 0)
+    if (strcmp(IdinName(pidinChannel), ppiac->ppvi->pro.pcPost) != 0)
     {
 	//- return result : do not process
 
@@ -742,6 +749,8 @@ ProjectionVolumeSpikeReceiverProcessor
     if (1)
     {
 	//- if diff with presynaptic part in receiving volume
+
+	//t query speed up using index on receivers
 
 	struct D3Position D3Diff;
 
@@ -957,6 +966,8 @@ ProjectionVolumeInstanceAddConnectionGroups
     //- process spike mapping elements and add connections
 
     piac.pvconn = pvconn;
+
+    //t use the index on the generators
 
     if (SymbolTraverseSpikeGenerators
 	(phsleSource,
@@ -1235,7 +1246,14 @@ ProjectionVolumeInstanceSymbolHandler
 
 		    //- build caches
 
+		    //t it would speed up if the selector would only select generators and receivers ?
+
+		    //t ppiac->ppvi->pro.pcPre
+		    //t ppiac->ppvi->pro.pcPost
+
 		    struct CoordinateCache *pcc = CoordinateCacheNewForTraversal(ptstr);
+
+		    //t then from the coordinate cache, build an index
 
 		    if (pcc && CoordinateCacheBuildCaches(pcc))
 		    {
@@ -1401,5 +1419,4 @@ ProjectionVolumeInstanceSymbolHandler
 
     return(iResult);
 }
-
 
