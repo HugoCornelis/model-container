@@ -151,15 +151,15 @@ GateKineticGetParameter
 
     if (!pparResult)
     {
-	//- if somatopetal distance
+	//- if offset
 
 	if (0 == strcmp(pcName, "HH_AB_Offset"))
 	{
-	    //- get distance
+	    //- calculate offset
 
 	    double dHHOffset = GateKineticGetHHOffset(pgatk, ppist);
 
-	    //- set distance of segment
+	    //- cache offset
 
 	    pparResult
 		= SymbolSetParameterDouble
