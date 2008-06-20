@@ -17,20 +17,20 @@ my $test
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/gates/naf_activation.ndf.', ],
+						   timeout => 3,
+						   write => undef,
+						  },
+						  {
+						   description => "Do we find a power for the Hodgkin Huxley gate ?",
+						   read => '3',
+						   write => "printparameter /naf_activation POWER",
+						  },
 						  (
-						   # standard parameters
+						   # standard gate parameters
 
-						   {
-						    description => "Is neurospaces startup successful ?",
-						    read => [ '-re', './neurospacesparse: No errors for .+?/gates/naf_activation.ndf.', ],
-						    timeout => 3,
-						    write => undef,
-						   },
-						   {
-						    description => "Do we find a power for the Hodgkin Huxley gate ?",
-						    read => '3',
-						    write => "printparameter /naf_activation POWER",
-						   },
 						   {
 						    description => "Do we find the HH_AB_Scale parameter with a correct value in the A gate kinetic ?",
 						    read => '35000',
@@ -72,7 +72,7 @@ my $test
 						   },
 						  ),
 						  (
-						   # standard parameters
+						   # standard gate parameters
 
 						   {
 						    description => "Do we find the HH_AB_Scale parameter with a correct value in the B gate kinetic ?",
@@ -115,7 +115,32 @@ my $test
 						   },
 						  ),
 						 ],
-				description => "sodium activation gate",
+				description => "sodium activation gate parameters",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-q',
+					      '-R',
+					      'gates/naf_activation.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/gates/naf_activation.ndf.', ],
+						   timeout => 3,
+						   write => undef,
+						  },
+						  {
+						   description => "Is the tabulation flag set (should not) ?",
+						   read => '= 0
+',
+						   write => "printparameter /naf_activation/A HH_Has_Table",
+						  },
+						 ],
+				description => "tabulation tests",
 			       },
 			      ],
        description => "generic gates, from multiple models",

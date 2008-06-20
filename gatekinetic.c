@@ -35,6 +35,11 @@ double
 GateKineticGetHHOffset
 (struct symtab_GateKinetic *pgatk, struct PidinStack *ppist);
 
+static
+double
+GateKineticGetTabulationFlag
+(struct symtab_GateKinetic *pgatk, struct PidinStack *ppist);
+
 
 /// **************************************************************************
 ///
@@ -166,6 +171,21 @@ GateKineticGetParameter
 		  (&pgatk->bio.ioh.iol.hsle, "HH_AB_Offset", dHHOffset);
 	}
 
+	//- if tabulation flag
+
+	else if (0 == strcmp(pcName, "HH_Has_Table"))
+	{
+	    //- check for table
+
+	    int iTable = GateKineticGetTabulationFlag(pgatk, ppist);
+
+	    //- cache result
+
+	    pparResult
+		= SymbolSetParameterDouble
+		  (&pgatk->bio.ioh.iol.hsle, "HH_Has_Table", iTable);
+	}
+
     }
 
     //- return result
@@ -207,6 +227,77 @@ GateKineticGetHHOffset
     //- return result
 
     return(dResult);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: GateKineticGetTabulationFlag()
+///
+/// ARGS.:
+///
+///	pgatk.: gate kinetic symbol.
+///	ppist.: context of gate kinetic symbol.
+///
+/// RTN..: int : TRUE if this table can be tabulated.
+///
+/// DESCR: Get tabulation flag of gate kinetic.
+///
+///	A gate kinetic can be presented as a table if it contains a
+///	table, or if there is a tabulation service that understands
+///	the parameters defined in the gate kinetic.
+///
+/// **************************************************************************
+
+static
+double
+GateKineticGetTabulationFlag
+(struct symtab_GateKinetic *pgatk, struct PidinStack *ppist)
+{
+    //- set result: no
+
+    int iResult = 0;
+
+    //- is there a first entry in the table ?
+
+    struct symtab_Parameters *pparEntry0
+	= SymbolGetParameter(&pgatk->bio.ioh.iol.hsle, "Entry[0]", ppist);
+
+    if (pparEntry0)
+    {
+	//t should do something for range etc.
+	//t see also TODO comments below.
+
+	//- set result: yes
+
+	iResult = 1;
+    }
+
+    //- else
+
+    else
+    {
+	//t check for a tabulation service
+
+	//t ask the tabulation service to tabulate the gate kinetic
+
+	//t so here we have to link to the tabulation service of heccer
+
+	//t heccer compilation of a model
+	//t should first ask for the tabulation flag
+	//t   if not present
+	//t     bail out
+	//t   else
+	//t     ask for tables, take over tables (stdized table representation).
+	//t
+
+	//t tabulation config should be mirrored as gate parameters ?
+	//t guess not, because is
+    }
+
+    //- return result
+
+    return(iResult);
 }
 
 
