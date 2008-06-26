@@ -433,7 +433,61 @@ Principal serial ID = 265331 of 439542 Principal successors
 						   },
 						  ),
 						 ],
-				description => "parent context parsing",
+				description => "serial and parent context parsing",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-q',
+					      'legacy/networks/network-test.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/network-test.ndf.', ],
+						   timeout => 100,
+						   write => undef,
+						  },
+						  {
+						   description => "Can we get parse info on /CerebellarCortex/Purkinjes ?",
+						   read => '
+- parsed context: /CerebellarCortex/Purkinjes
+- found using SymbolsLookupHierarchical()
+- found using PidinStackLookupTopSymbol()
+',
+						   write => "contextinfo /CerebellarCortex/Purkinjes",
+						  },
+						  {
+						   description => "Can we get parse info on //CerebellarCortex/Purkinjes ?",
+						   read => '
+- parsed context: /CerebellarCortex/Purkinjes
+- found using SymbolsLookupHierarchical()
+- found using PidinStackLookupTopSymbol()
+',
+						   write => "contextinfo //CerebellarCortex/Purkinjes",
+						  },
+						  {
+						   description => "Can we get parse info on /CerebellarCortex//Purkinjes ?",
+						   read => '
+- parsed context: /CerebellarCortex/Purkinjes
+- found using SymbolsLookupHierarchical()
+- found using PidinStackLookupTopSymbol()
+',
+						   write => "contextinfo /CerebellarCortex//Purkinjes",
+						  },
+						  {
+						   description => "Can we get parse info on //CerebellarCortex//Purkinjes ?",
+						   read => '
+- parsed context: /CerebellarCortex/Purkinjes
+- found using SymbolsLookupHierarchical()
+- found using PidinStackLookupTopSymbol()
+',
+						   write => "contextinfo //CerebellarCortex//Purkinjes",
+						  },
+						 ],
+				description => "context parsing",
 			       },
 			      ],
        description => "context and namespace definitions",

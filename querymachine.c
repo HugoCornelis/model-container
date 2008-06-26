@@ -137,126 +137,67 @@ static char *
 QueryMachineSymbolGenerator(char *,int);
 
 
-static QueryHandler QueryHandlerAllocations;
-
-static QueryHandler QueryHandlerBiogroup2Biolevel;
-
-static QueryHandler QueryHandlerBiolevel2Biogroup;
-
-static QueryHandler QueryHandlerCountAliases;
-
-static QueryHandler QueryHandlerCountAllocatedSymbols;
-
-static QueryHandler QueryHandlerDelete;
-
-static QueryHandler QueryHandlerEcho;
-
-static QueryHandler QueryHandlerExpand;
-
-static QueryHandler QueryHandlerHelpCommands;
-
-static QueryHandler QueryHandlerImportedFiles;
-
-static QueryHandler QueryHandlerImportFile;
-
-static QueryHandler QueryHandlerListSymbols;
-
-static QueryHandler QueryHandlerMesh;
-
-static QueryHandler QueryHandlerNameSpaces;
-
 static QueryHandler QueryHandlerAlgorithmClass;
-
 static QueryHandler QueryHandlerAlgorithmInstance;
-
 static QueryHandler QueryHandlerAlgorithmSet;
-
-/* static QueryHandler QueryHandlerParameterOperator; */
-
-static QueryHandler QueryHandlerPartition;
-
-static QueryHandler QueryHandlerPidinStackMatch;
-
+static QueryHandler QueryHandlerAllocations;
+static QueryHandler QueryHandlerBiogroup2Biolevel;
+static QueryHandler QueryHandlerBiolevel2Biogroup;
+static QueryHandler QueryHandlerContextInfo;
+static QueryHandler QueryHandlerCountAliases;
+static QueryHandler QueryHandlerCountAllocatedSymbols;
+static QueryHandler QueryHandlerDelete;
+static QueryHandler QueryHandlerEcho;
+static QueryHandler QueryHandlerExpand;
+static QueryHandler QueryHandlerHelpCommands;
+static QueryHandler QueryHandlerImportFile;
+static QueryHandler QueryHandlerImportedFiles;
+static QueryHandler QueryHandlerListSymbols;
+static QueryHandler QueryHandlerMesh;
+static QueryHandler QueryHandlerNameSpaces;
 static QueryHandler QueryHandlerPQCount;
-
 static QueryHandler QueryHandlerPQGet;
-
 static QueryHandler QueryHandlerPQLoad;
-
 static QueryHandler QueryHandlerPQSave;
-
 static QueryHandler QueryHandlerPQSet;
-
 static QueryHandler QueryHandlerPQSetAll;
-
 static QueryHandler QueryHandlerPQTraverse;
-
+/* static QueryHandler QueryHandlerParameterOperator; */
+static QueryHandler QueryHandlerPartition;
+static QueryHandler QueryHandlerPidinStackMatch;
 static QueryHandler QueryHandlerPrintCellCount;
-
 static QueryHandler QueryHandlerPrintChildren;
-
-static QueryHandler QueryHandlerPrintSegmentCount;
-
 static QueryHandler QueryHandlerPrintConnectionCount;
-
 static QueryHandler QueryHandlerPrintCoordinates;
-
 static QueryHandler QueryHandlerPrintInfo;
-
 static QueryHandler QueryHandlerPrintParameter;
-
 static QueryHandler QueryHandlerPrintParameterInput;
-
 static QueryHandler QueryHandlerPrintParameterScaled;
-
 static QueryHandler QueryHandlerPrintParameterSet;
-
+static QueryHandler QueryHandlerPrintSegmentCount;
 static QueryHandler QueryHandlerPrintSpikeReceiverCount;
-
 static QueryHandler QueryHandlerPrintSpikeReceiverSerialID;
-
 static QueryHandler QueryHandlerPrintSpikeSenderCount;
-
 static QueryHandler QueryHandlerProjectionQuery;
-
 static QueryHandler QueryHandlerProjectionQueryCount;
-
 static QueryHandler QueryHandlerResolveSolverID;
-
 static QueryHandler QueryHandlerSegmenterLinearize;
-
 static QueryHandler QueryHandlerSegmenterParentCount;
-
 static QueryHandler QueryHandlerSegmenterSetBase;
-
 static QueryHandler QueryHandlerSegmenterTips;
-
 static QueryHandler QueryHandlerSerialID;
-
-static QueryHandler QueryHandlerSerializeForestspace;
-
 static QueryHandler QueryHandlerSerialMapping;
-
 static QueryHandler QueryHandlerSerialToContext;
-
+static QueryHandler QueryHandlerSerializeForestspace;
 static QueryHandler QueryHandlerSetParameter;
-
 static QueryHandler QueryHandlerSetParameterConcept;
-
 static QueryHandler QueryHandlerSolverGet;
-
 static QueryHandler QueryHandlerSolverRegistrations;
-
 static QueryHandler QueryHandlerSolverSet;
-
-static QueryHandler QueryHandlerVersion;
-
 static QueryHandler QueryHandlerValidateSegmentGroup;
-
+static QueryHandler QueryHandlerVersion;
 static QueryHandler QueryHandlerWriteLibrary;
-
 static QueryHandler QueryHandlerWriteModular;
-
 static QueryHandler QueryHandlerWriteSymbol;
 
 
@@ -264,6 +205,39 @@ static QueryHandler QueryHandlerWriteSymbol;
 
 static QueryHandlerAssociation pquhasTable[] =
 {
+    //m algorithmclass
+
+    {
+	"algorithmclass",
+	QueryHandlerAlgorithmClass,
+#ifdef USE_READLINE
+	-1,
+	NULL,
+#endif
+    },
+
+    //m algorithminstance
+
+    {
+	"algorithminstance",
+	QueryHandlerAlgorithmInstance,
+#ifdef USE_READLINE
+	-1,
+	NULL,
+#endif
+    },
+
+    //m algorithmset
+
+    {
+	"algorithmset",
+	QueryHandlerAlgorithmSet,
+#ifdef USE_READLINE
+	-1,
+	NULL,
+#endif
+    },
+
     //m allocation statistics
 
     {
@@ -294,6 +268,50 @@ static QueryHandlerAssociation pquhasTable[] =
 #ifdef USE_READLINE
 	-1,
 	NULL,
+#endif
+    },
+
+    //m cell count
+
+    {
+	"cellcount",
+	QueryHandlerPrintCellCount,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    //m children info
+
+    {
+	"childreninfo",
+	QueryHandlerPrintChildren,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    //m connection count
+
+    {
+	"connectioncount",
+	QueryHandlerPrintConnectionCount,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    //m find out information about a context
+
+    {
+	"contextinfo",
+	QueryHandlerContextInfo,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
 #endif
     },
 
@@ -396,6 +414,17 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
+    //m match of pidinstacks
+
+    {
+	"match",
+	QueryHandlerPidinStackMatch,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
     //m mesh a cell
 
     {
@@ -412,39 +441,6 @@ static QueryHandlerAssociation pquhasTable[] =
     {
 	"namespaces",
 	QueryHandlerNameSpaces,
-#ifdef USE_READLINE
-	-1,
-	NULL,
-#endif
-    },
-
-    //m algorithminstance
-
-    {
-	"algorithminstance",
-	QueryHandlerAlgorithmInstance,
-#ifdef USE_READLINE
-	-1,
-	NULL,
-#endif
-    },
-
-    //m algorithmclass
-
-    {
-	"algorithmclass",
-	QueryHandlerAlgorithmClass,
-#ifdef USE_READLINE
-	-1,
-	NULL,
-#endif
-    },
-
-    //m algorithmset
-
-    {
-	"algorithmset",
-	QueryHandlerAlgorithmSet,
 #ifdef USE_READLINE
 	-1,
 	NULL,
@@ -470,17 +466,6 @@ static QueryHandlerAssociation pquhasTable[] =
 #ifdef USE_READLINE
 	-1,
 	NULL,
-#endif
-    },
-
-    //m match of pidinstacks
-
-    {
-	"match",
-	QueryHandlerPidinStackMatch,
-#ifdef USE_READLINE
-	1,
-	QueryMachineSymbolGenerator,
 #endif
     },
 
@@ -561,39 +546,6 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m cell count
-
-    {
-	"cellcount",
-	QueryHandlerPrintCellCount,
-#ifdef USE_READLINE
-	1,
-	QueryMachineSymbolGenerator,
-#endif
-    },
-
-    //m children info
-
-    {
-	"childreninfo",
-	QueryHandlerPrintChildren,
-#ifdef USE_READLINE
-	1,
-	QueryMachineSymbolGenerator,
-#endif
-    },
-
-    //m connection count
-
-    {
-	"connectioncount",
-	QueryHandlerPrintConnectionCount,
-#ifdef USE_READLINE
-	1,
-	QueryMachineSymbolGenerator,
-#endif
-    },
-
     //m get coordinates
 
     {
@@ -660,6 +612,39 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
+    //m query projections
+
+    {
+	"projectionquery",
+	QueryHandlerProjectionQuery,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    //m count connections in projection query
+
+    {
+	"projectionquerycount",
+	QueryHandlerProjectionQueryCount,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    //m print solver for a symbol
+
+    {
+	"resolvesolver",
+	QueryHandlerResolveSolverID,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
     //m segment count
 
     {
@@ -709,72 +694,6 @@ static QueryHandlerAssociation pquhasTable[] =
     {
 	"segmentertips",
 	QueryHandlerSegmenterTips,
-#ifdef USE_READLINE
-	1,
-	QueryMachineSymbolGenerator,
-#endif
-    },
-
-    //m spike receiver count
-
-    {
-	"spikereceivercount",
-	QueryHandlerPrintSpikeReceiverCount,
-#ifdef USE_READLINE
-	1,
-	QueryMachineSymbolGenerator,
-#endif
-    },
-
-    //m spike receiver serial ID
-
-    {
-	"spikereceiverserialID",
-	QueryHandlerPrintSpikeReceiverSerialID,
-#ifdef USE_READLINE
-	1,
-	QueryMachineSymbolGenerator,
-#endif
-    },
-
-    //m spike sender count
-
-    {
-	"spikesendercount",
-	QueryHandlerPrintSpikeSenderCount,
-#ifdef USE_READLINE
-	1,
-	QueryMachineSymbolGenerator,
-#endif
-    },
-
-    //m query projections
-
-    {
-	"projectionquery",
-	QueryHandlerProjectionQuery,
-#ifdef USE_READLINE
-	1,
-	QueryMachineSymbolGenerator,
-#endif
-    },
-
-    //m count connections in projection query
-
-    {
-	"projectionquerycount",
-	QueryHandlerProjectionQueryCount,
-#ifdef USE_READLINE
-	1,
-	QueryMachineSymbolGenerator,
-#endif
-    },
-
-    //m print solver for a symbol
-
-    {
-	"resolvesolver",
-	QueryHandlerResolveSolverID,
 #ifdef USE_READLINE
 	1,
 	QueryMachineSymbolGenerator,
@@ -874,6 +793,39 @@ static QueryHandlerAssociation pquhasTable[] =
     {
 	"solverset",
 	QueryHandlerSolverSet,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    //m spike receiver count
+
+    {
+	"spikereceivercount",
+	QueryHandlerPrintSpikeReceiverCount,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    //m spike receiver serial ID
+
+    {
+	"spikereceiverserialID",
+	QueryHandlerPrintSpikeReceiverSerialID,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    //m spike sender count
+
+    {
+	"spikesendercount",
+	QueryHandlerPrintSpikeSenderCount,
 #ifdef USE_READLINE
 	1,
 	QueryMachineSymbolGenerator,
@@ -1260,6 +1212,71 @@ static int QueryHandlerBiolevel2Biogroup
 	//- diag's
 
 	fprintf(stdout, "Unable to resolve biolevel %i\n",iLevel);
+    }
+
+    //- return result
+
+    return(bResult);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: QueryHandlerContextInfo()
+///
+/// ARGS.:
+///
+///	std. QueryHandler args
+///
+/// RTN..: int : QueryHandler return value
+///
+/// DESCR: Handle context info query.
+///
+/// **************************************************************************
+
+static int QueryHandlerContextInfo
+(char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
+{
+    //- set result : ok
+
+    int bResult = TRUE;
+
+    //- parse command line element
+
+    struct PidinStack *ppist = PidinStackParse(&pcLine[iLength]);
+
+    //- lookup child symbol
+
+    //! allows namespacing, yet incompatible with parameter caches.
+
+    struct symtab_HSolveListElement *phsle1
+	= SymbolsLookupHierarchical(pneuro->psym, ppist);
+
+    struct symtab_HSolveListElement *phsle2
+	= PidinStackLookupTopSymbol(ppist);
+
+    fprintf(stdout, "---\n- parsed context: ");
+
+    PidinStackPrint(ppist, stdout);
+
+    fprintf(stdout, "\n");
+
+    if (phsle1)
+    {
+	fprintf(stdout, "- found using SymbolsLookupHierarchical()\n");
+    }
+    else
+    {
+	fprintf(stdout, "- not found using SymbolsLookupHierarchical()\n");
+    }
+
+    if (phsle2)
+    {
+	fprintf(stdout, "- found using PidinStackLookupTopSymbol()\n");
+    }
+    else
+    {
+	fprintf(stdout, "- not found using PidinStackLookupTopSymbol()\n");
     }
 
     //- return result
@@ -2560,7 +2577,7 @@ static int QueryHandlerPQGet
 	int i;
 
 	fprintf
-	    (stdout, "bCaching(%s)\n",pneuro->ppq->bCaching ? "TRUE" : "FALSE");
+	    (stdout, "bCaching(%s)\n", pneuro->ppq->bCaching ? "TRUE" : "FALSE");
 
 	fprintf
 	    (stdout,
@@ -2582,9 +2599,9 @@ static int QueryHandlerPQGet
 	     "poccPost(%s)\n",
 	     pneuro->ppq->poccPost ? "available" : "not available");
 
-	fprintf(stdout, "iCloned(%i)\n",pneuro->ppq->iCloned);
+	fprintf(stdout, "iCloned(%i)\n", pneuro->ppq->iCloned);
 
-	fprintf(stdout, "iCursor(%i)\n",pneuro->ppq->iCursor);
+	fprintf(stdout, "iCursor(%i)\n", pneuro->ppq->iCursor);
 
 	for (i = 0 ; i < pneuro->ppq->iProjections ; i++)
 	{
@@ -2594,7 +2611,7 @@ static int QueryHandlerPQGet
 		 pneuro->ppq->piSource[i],
 		 pneuro->ppq->piTarget[i]);
 
-	    PidinStackPrint(pneuro->ppq->pppist[i],stdout);
+	    PidinStackPrint(pneuro->ppq->pppist[i], stdout);
 
 	    fprintf(stdout, "\n");
 	}

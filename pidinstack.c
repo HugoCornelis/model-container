@@ -1473,11 +1473,13 @@ struct PidinStack *PidinStackParse(char *pc)
 
     //- skip first white space
 
-    pcArg = strpbrk(pc,pcSeperators);
+    pcArg = strpbrk(pc, pcSeperators);
+
     while (pcArg == pc)
     {
 	pc++;
-	pcArg = strpbrk(pc,pcSeperators);
+
+	pcArg = strpbrk(pc, pcSeperators);
     }
 
     //- skip first namespace operator
@@ -1495,7 +1497,9 @@ struct PidinStack *PidinStackParse(char *pc)
     while (pc[iPos] && NameSpaceIsNameSpaceToken(&pc[iPos]))
     {
 	struct symtab_IdentifierIndex *pidin = NULL;
+
 	char *pcName = NULL;
+
 	int iSize = -1;
 
 	//- allocate idin
@@ -1510,7 +1514,7 @@ struct PidinStack *PidinStackParse(char *pc)
 
 	pcName = (char *)calloc(1 + iSize,sizeof(char));
 
-	strncpy(pcName,&pc[iPos],iSize);
+	strncpy(pcName, &pc[iPos], iSize);
 
 	pcName[iSize] = '\0';
 
@@ -1521,13 +1525,13 @@ struct PidinStack *PidinStackParse(char *pc)
 	    IdinSetFlags(pidin, FLAG_IDENTINDEX_PARENT);
 	}
 
-	IdinSetName(pidin,pcName);
+	IdinSetName(pidin, pcName);
 
 	IdinSetNamespaced(pidin);
 
 	//- push name on stack
 
-	PidinStackPush(ppistResult,pidin);
+	PidinStackPush(ppistResult, pidin);
 
 	//- remember new positions
 
@@ -1536,7 +1540,7 @@ struct PidinStack *PidinStackParse(char *pc)
 
     //- if first char is symbol seperator
 
-    if (strncmp(&pc[iPos],SYMBOL_ROOT,strlen(SYMBOL_ROOT)) == 0)
+    if (strncmp(&pc[iPos], SYMBOL_ROOT, strlen(SYMBOL_ROOT)) == 0)
     {
 	//- flag as rooted
 
@@ -1548,8 +1552,11 @@ struct PidinStack *PidinStackParse(char *pc)
     while (pc[iPos]/*  && NameSpaceIsChildToken(&pc[iPos]) */)
     {
 	struct symtab_IdentifierIndex *pidin = NULL;
+
 	char *pcName = NULL;
+
 	int iSize = -1;
+
 	int iTokenSize = -1;
 
 	//- if first char is symbol seperator
@@ -1608,7 +1615,7 @@ struct PidinStack *PidinStackParse(char *pc)
 	    //- for now we break the loop,
 	    //- this could be wrong.
 
-	    break;
+	    continue;
 	}
 
 	//- set : first id is being parsed
@@ -1623,7 +1630,7 @@ struct PidinStack *PidinStackParse(char *pc)
 
 	pcName = (char *)calloc(1 + iSize,sizeof(char));
 
-	strncpy(pcName,&pc[iPos],iSize);
+	strncpy(pcName, &pc[iPos], iSize);
 
 	pcName[iSize] = '\0';
 
@@ -1634,11 +1641,11 @@ struct PidinStack *PidinStackParse(char *pc)
 	    IdinSetFlags(pidin, FLAG_IDENTINDEX_PARENT);
 	}
 
-	IdinSetName(pidin,pcName);
+	IdinSetName(pidin, pcName);
 
 	//- push name on stack
 
-	PidinStackPush(ppistResult,pidin);
+	PidinStackPush(ppistResult, pidin);
 
 	//- remember new position
 
