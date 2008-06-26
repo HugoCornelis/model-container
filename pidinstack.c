@@ -1612,8 +1612,7 @@ struct PidinStack *PidinStackParse(char *pc)
 
 	if (!iSize)
 	{
-	    //- for now we break the loop,
-	    //- this could be wrong.
+	    //- nothing to do, next loop iteration
 
 	    continue;
 	}
