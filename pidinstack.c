@@ -1549,7 +1549,10 @@ struct PidinStack *PidinStackParse(char *pc)
 
     //- loop over string
 
-    while (pc[iPos]/*  && NameSpaceIsChildToken(&pc[iPos]) */)
+    while (pc[iPos] != '\0'
+	   && pc[iPos] != pcSeperators[0]
+	   && pc[iPos] != pcSeperators[1]
+	   && pc[iPos] != pcSeperators[2])
     {
 	struct symtab_IdentifierIndex *pidin = NULL;
 
