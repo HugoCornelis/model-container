@@ -103,7 +103,7 @@ int PidinStackAppend
 	//- push source pidin onto target
 
 	if (PidinStackPush
-	    (ppistTarget,PidinStackElementPidin(ppistSource,i)) == FALSE)
+	    (ppistTarget, PidinStackElementPidin(ppistSource, i)) == FALSE)
 	{
 	    return(FALSE);
 	}
@@ -180,7 +180,7 @@ PidinStackAppendCompact
 	    //- get current source idin
 
 	    struct symtab_IdentifierIndex *pidin
-		= PidinStackElementPidin(ppistSource,i);
+		= PidinStackElementPidin(ppistSource, i);
 
 	    //- if points to parent
 
@@ -215,7 +215,7 @@ PidinStackAppendCompact
 		//! the dirty solution, see comments above
 
 		struct symtab_HSolveListElement *phsleSource
-		    = PSymbolSerialStackElementSymbol(&ppistSource->symsst,i);
+		    = PSymbolSerialStackElementSymbol(&ppistSource->symsst, i);
 
 		//- if cached
 
@@ -223,7 +223,7 @@ PidinStackAppendCompact
 		{
 		    //- push symbol (and maintain caches)
 
-		    PidinStackPushSymbol(ppistTarget,phsleSource);
+		    PidinStackPushSymbol(ppistTarget, phsleSource);
 		}
 
 		//- else
@@ -232,7 +232,7 @@ PidinStackAppendCompact
 		{
 		    //- push to target
 
-		    if (!PidinStackPush(ppistTarget,pidin))
+		    if (!PidinStackPush(ppistTarget, pidin))
 		    {
 			iResult = 0;
 			break;
@@ -250,7 +250,7 @@ PidinStackAppendCompact
 	    //- get current source idin
 
 	    struct symtab_IdentifierIndex *pidin
-		= PidinStackElementPidin(ppistSource,i);
+		= PidinStackElementPidin(ppistSource, i);
 
 	    //- if points to parent
 
@@ -271,7 +271,7 @@ PidinStackAppendCompact
 	    {
 		//- push to target
 
-		if (!PidinStackPush(ppistTarget,pidin))
+		if (!PidinStackPush(ppistTarget, pidin))
 		{
 		    iResult = 0;
 		    break;
@@ -310,7 +310,7 @@ struct PidinStack * PidinStackCalloc(void)
     //- allocate pidin stack
 
     ppistResult = (struct PidinStack *)
-	  calloc(1,sizeof(struct PidinStack));
+	  calloc(1, sizeof(struct PidinStack));
 
     //- initialize pidin stack
 
@@ -464,14 +464,14 @@ int PidinStackEqual
 	//- get current entries
 
 	struct symtab_IdentifierIndex *pidin1
-	    = PidinStackElementPidin(ppist1,i);
+	    = PidinStackElementPidin(ppist1, i);
 
 	struct symtab_IdentifierIndex *pidin2
-	    = PidinStackElementPidin(ppist2,i);
+	    = PidinStackElementPidin(ppist2, i);
 
 	//- if current idins not equal
 
-	if (!IdinEqual(pidin1,pidin2))
+	if (!IdinEqual(pidin1, pidin2))
 	{
 	    //- set result : not equal
 
@@ -492,14 +492,14 @@ int PidinStackEqual
 	//- get current entries
 
 	struct symtab_IdentifierIndex *pidin1
-	    = PidinStackElementPidin(ppist1,i);
+	    = PidinStackElementPidin(ppist1, i);
 
 	struct symtab_IdentifierIndex *pidin2
-	    = PidinStackElementPidin(ppist2,i);
+	    = PidinStackElementPidin(ppist2, i);
 
 	//- if current idins not equal
 
-	if (!IdinEqual(pidin1,pidin2))
+	if (!IdinEqual(pidin1, pidin2))
 	{
 	    //- set result : not equal
 
@@ -603,7 +603,7 @@ int PidinStackIsWildcard(struct PidinStack *ppist)
 	//- get current source idin
 
 	struct symtab_IdentifierIndex *pidin
-	    = PidinStackElementPidin(ppist,i);
+	    = PidinStackElementPidin(ppist, i);
 
 	//- if is wildcard
 
@@ -656,7 +656,7 @@ PidinStackLookupBaseSymbol(struct PidinStack *ppist)
 	{
 	    //- return root symbol
 
-	    phsleResult = SymbolsLookupHierarchical(NULL,ppist);
+	    phsleResult = SymbolsLookupHierarchical(NULL, ppist);
 
 	    return(phsleResult);
 	}
@@ -677,11 +677,11 @@ PidinStackLookupBaseSymbol(struct PidinStack *ppist)
     {
 	//- do normal lookup
 
-	phsleResult = SymbolsLookupHierarchical(NULL,ppist);
+	phsleResult = SymbolsLookupHierarchical(NULL, ppist);
 
 	//- set first entry for cache
 
-	PSymbolSerialStackPush(&ppist->symsst,phsleResult);
+	PSymbolSerialStackPush(&ppist->symsst, phsleResult);
 
 	//- return result
 
@@ -760,7 +760,7 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 	{
 	    //- return root symbol
 
-	    phsleResult = SymbolsLookupHierarchical(NULL,ppist);
+	    phsleResult = SymbolsLookupHierarchical(NULL, ppist);
 
 	    return(phsleResult);
 	}
@@ -782,7 +782,7 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 	{
 	    //- do normal lookup
 
-	    phsleResult = SymbolsLookupHierarchical(NULL,ppist);
+	    phsleResult = SymbolsLookupHierarchical(NULL, ppist);
 
 	    //- if not found
 
@@ -793,7 +793,7 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
 	    //- set first entry for cache
 
-	    PSymbolSerialStackPush(&ppist->symsst,phsleResult);
+	    PSymbolSerialStackPush(&ppist->symsst, phsleResult);
 
 	    //- return result
 
@@ -850,7 +850,7 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 	    {
 		PSymbolSerialStackPush
 		    (&ppist->symsst,
-		     PSymbolSerialStackElementSymbol(&ppistMinor->symsst,i));
+		     PSymbolSerialStackElementSymbol(&ppistMinor->symsst, i));
 	    }
 	}
 
@@ -881,7 +881,7 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 	    {
 		//- set new entry for cache
 
-		PSymbolSerialStackPush(&ppist->symsst,phsle);
+		PSymbolSerialStackPush(&ppist->symsst, phsle);
 	    }
 	}
 
@@ -934,11 +934,11 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 	{
 	    //- do normal lookup
 
-	    phsleResult = SymbolsLookupHierarchical(NULL,ppist);
+	    phsleResult = SymbolsLookupHierarchical(NULL, ppist);
 
 	    //- set first entry for cache
 
-	    PSymbolStackPush(&ppist->symst,phsleResult);
+	    PSymbolStackPush(&ppist->symst, phsleResult);
 
 	    //- return result
 
@@ -990,7 +990,7 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 	{
 	    PSymbolStackPush
 		(&ppist->symst,
-		 PSymbolStackElementSymbol(&ppistMinor->symst,i));
+		 PSymbolStackElementSymbol(&ppistMinor->symst, i));
 	}
 
 	//- get top of minor, comes from cache
@@ -1005,7 +1005,7 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
 	phsle
 	    = SymbolLookupHierarchical
-	      (phsleMinor,ppistMinor,iEntries - 1,TRUE);
+	      (phsleMinor,ppistMinor,iEntries - 1, TRUE);
 
 	//- free minor context
 
@@ -1013,7 +1013,7 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
 	//- set new entry for cache
 
-	PSymbolStackPush(&ppist->symst,phsle);
+	PSymbolStackPush(&ppist->symst, phsle);
 
 	//- set result
 
@@ -1033,7 +1033,7 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
     //- set result : normal lookup
 
-    phsleResult = SymbolsLookupHierarchical(NULL,ppist);
+    phsleResult = SymbolsLookupHierarchical(NULL, ppist);
 
 #endif
 
@@ -1060,7 +1060,7 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 ///
 /// **************************************************************************
 
-int PidinStackMatch(struct PidinStack *ppist1,struct PidinStack *ppist2)
+int PidinStackMatch(struct PidinStack *ppist1, struct PidinStack *ppist2)
 {
     //- set default result : match
 
@@ -1113,7 +1113,7 @@ int PidinStackMatch(struct PidinStack *ppist1,struct PidinStack *ppist2)
 	    //! this says that /Purkinje matches with /Purkinje/**
 
 	    while (i2 < iTop2
-		   && IdinIsWildCard(PidinStackElementPidin(ppist2,i2), "**"))
+		   && IdinIsWildCard(PidinStackElementPidin(ppist2, i2), "**"))
 	    {
 		i2++;
 	    }
@@ -1133,8 +1133,8 @@ int PidinStackMatch(struct PidinStack *ppist1,struct PidinStack *ppist2)
 	//- if current idins equal
 
 	else if (IdinEqual
-		 (PidinStackElementPidin(ppist1,i1),
-		  PidinStackElementPidin(ppist2,i2)))
+		 (PidinStackElementPidin(ppist1, i1),
+		  PidinStackElementPidin(ppist2, i2)))
 	{
 	    //- increment idin counts
 
@@ -1145,13 +1145,13 @@ int PidinStackMatch(struct PidinStack *ppist1,struct PidinStack *ppist2)
 	//- else if wildcard match
 
 	else if (IdinMatch
-		 (PidinStackElementPidin(ppist1,i1),
-		  PidinStackElementPidin(ppist2,i2)))
+		 (PidinStackElementPidin(ppist1, i1),
+		  PidinStackElementPidin(ppist2, i2)))
 	{
 /* 	    //- if first not at end of stack, but second is at end of stack */
 
-/* 	    if (PidinStackElementPidin(ppist1,i1) */
-/* 		&& !PidinStackElementPidin(ppist2,i2 + 1)) */
+/* 	    if (PidinStackElementPidin(ppist1, i1) */
+/* 		&& !PidinStackElementPidin(ppist2, i2 + 1)) */
 /* 	    { */
 /* 		//- set result : wildcard match */
 
@@ -1164,7 +1164,7 @@ int PidinStackMatch(struct PidinStack *ppist1,struct PidinStack *ppist2)
 
 	    //- if wildcard idin is recursive
 
-	    if (IdinIsRecursive(PidinStackElementPidin(ppist2,i2)))
+	    if (IdinIsRecursive(PidinStackElementPidin(ppist2, i2)))
 	    {
 		//- increment idin count for first stack
 
@@ -1172,8 +1172,8 @@ int PidinStackMatch(struct PidinStack *ppist1,struct PidinStack *ppist2)
 
 		//- if first at end of stack, but second not at end of stack
 
-		if (!PidinStackElementPidin(ppist1,i1)
-		    && PidinStackElementPidin(ppist2,i2 + 1))
+		if (!PidinStackElementPidin(ppist1, i1)
+		    && PidinStackElementPidin(ppist2, i2 + 1))
 		{
 		    //- set result : no match
 
@@ -1186,7 +1186,7 @@ int PidinStackMatch(struct PidinStack *ppist1,struct PidinStack *ppist2)
 
 		//- if second at end of stack
 
-		if (!PidinStackElementPidin(ppist2,i2 + 1))
+		if (!PidinStackElementPidin(ppist2, i2 + 1))
 		{
 		    //- set result : wildcard match
 
@@ -1200,8 +1200,8 @@ int PidinStackMatch(struct PidinStack *ppist1,struct PidinStack *ppist2)
 		//- if next second context matches new entry in first
 
 		if (IdinMatch
-		    (PidinStackElementPidin(ppist1,i1),
-		     PidinStackElementPidin(ppist2,i2 + 1)))
+		    (PidinStackElementPidin(ppist1, i1),
+		     PidinStackElementPidin(ppist2, i2 + 1)))
 		{
 		    //- increment idin count for second stack
 
@@ -1290,7 +1290,7 @@ PidinStackNewFromParameterSymbols(struct symtab_Parameters *ppar)
 	    {
 		//- push pidin on pidinstack
 
-		PidinStackPush(ppistResult,pidin);
+		PidinStackPush(ppistResult, pidin);
 	    }
 
 	    //- go to next pidin
@@ -1338,7 +1338,7 @@ PidinStackNewFromParameterSymbols(struct symtab_Parameters *ppar)
 /* 	{ */
 /* 	    //- push pidin on pidinstack */
 
-/* 	    PidinStackPushCompact(ppistResult,pidin); */
+/* 	    PidinStackPushCompact(ppistResult, pidin); */
 
 /* 	    //- go to next pidin */
 
@@ -1409,7 +1409,7 @@ PidinStackNewFromParameterSymbols(struct symtab_Parameters *ppar)
 /* 	    //- get symbol from symbol stack */
 
 /* 	    struct symtab_HSolveListElement *phsle */
-/* 		= PSymbolStackElementSymbol(psymst,i); */
+/* 		= PSymbolStackElementSymbol(psymst, i); */
 
 /* 	    //- get symbol pidin */
 
@@ -1418,7 +1418,7 @@ PidinStackNewFromParameterSymbols(struct symtab_Parameters *ppar)
 
 /* 	    //- push pidin */
 
-/* 	    PidinStackPush(ppistResult,pidin); */
+/* 	    PidinStackPush(ppistResult, pidin); */
 /* 	} */
 /*     } */
 
@@ -1512,7 +1512,7 @@ struct PidinStack *PidinStackParse(char *pc)
 
 	//- fill in name
 
-	pcName = (char *)calloc(1 + iSize,sizeof(char));
+	pcName = (char *)calloc(1 + iSize, sizeof(char));
 
 	strncpy(pcName, &pc[iPos], iSize);
 
@@ -1627,7 +1627,7 @@ struct PidinStack *PidinStackParse(char *pc)
 
 	//- fill in name
 
-	pcName = (char *)calloc(1 + iSize,sizeof(char));
+	pcName = (char *)calloc(1 + iSize, sizeof(char));
 
 	strncpy(pcName, &pc[iPos], iSize);
 
@@ -1699,7 +1699,7 @@ struct symtab_IdentifierIndex * PidinStackPop(struct PidinStack *ppist)
 
     //- set result : current element name
 
-    pidinResult = PidinStackElementPidin(ppist,ppist->iTop);
+    pidinResult = PidinStackElementPidin(ppist, ppist->iTop);
 
     //- decrement top
 
@@ -1711,9 +1711,9 @@ struct symtab_IdentifierIndex * PidinStackPop(struct PidinStack *ppist)
 	> PidinStackNumberOfEntries(ppist) + 1)
     {
 	fprintf
-	    (stderr,"Warning : symbol cache for pidinstack corrupt\n\t");
+	    (stderr, "Warning : symbol cache for pidinstack corrupt\n\t");
 
-	PidinStackPrint(ppist,stderr);
+	PidinStackPrint(ppist, stderr);
 
 	fprintf(stderr,"\n");
     }
@@ -1737,11 +1737,11 @@ struct symtab_IdentifierIndex * PidinStackPop(struct PidinStack *ppist)
 	> PidinStackNumberOfEntries(ppist) + 1)
     {
 	fprintf
-	    (stderr,"Warning : symbol cache for pidinstack corrupt\n\t");
+	    (stderr, "Warning : symbol cache for pidinstack corrupt\n\t");
 
-	PidinStackPrint(ppist,stderr);
+	PidinStackPrint(ppist, stderr);
 
-	fprintf(stderr,"\n");
+	fprintf(stderr, "\n");
     }
 
     //- if cache has more entries than stack
@@ -1821,7 +1821,7 @@ void PidinStackPrint(struct PidinStack *ppist, FILE *pfile)
 /// **************************************************************************
 
 int PidinStackPush
-(struct PidinStack *ppist,struct symtab_IdentifierIndex *pidin)
+(struct PidinStack *ppist, struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : ok
 
@@ -1870,7 +1870,7 @@ int PidinStackPush
 /// **************************************************************************
 
 int PidinStackPushAll
-(struct PidinStack *ppist,struct symtab_IdentifierIndex *pidin)
+(struct PidinStack *ppist, struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : ok
 
@@ -1882,7 +1882,7 @@ int PidinStackPushAll
     {
 	//- push pidin
 
-	if (!PidinStackPush(ppist,pidin))
+	if (!PidinStackPush(ppist, pidin))
 	{
 	    bResult = FALSE;
 
@@ -1917,7 +1917,7 @@ int PidinStackPushAll
 /// **************************************************************************
 
 int PidinStackPushCompact
-(struct PidinStack *ppist,struct symtab_IdentifierIndex *pidin)
+(struct PidinStack *ppist, struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : ok
 
@@ -1935,7 +1935,7 @@ int PidinStackPushCompact
 	}
 	else
 	{
-	    iResult = PidinStackPush(ppist,pidin);
+	    iResult = PidinStackPush(ppist, pidin);
 	}
     }
 
@@ -1945,7 +1945,7 @@ int PidinStackPushCompact
     {
 	//- push pidin
 
-	iResult = PidinStackPush(ppist,pidin);
+	iResult = PidinStackPush(ppist, pidin);
     }
 
     //- return result
@@ -1970,7 +1970,7 @@ int PidinStackPushCompact
 /// **************************************************************************
 
 int PidinStackPushCompactAll
-(struct PidinStack *ppist,struct symtab_IdentifierIndex *pidin)
+(struct PidinStack *ppist, struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : ok
 
@@ -1991,7 +1991,7 @@ int PidinStackPushCompactAll
     {
 	//- push pidin
 
-	if (!PidinStackPushCompact(ppist,pidin))
+	if (!PidinStackPushCompact(ppist, pidin))
 	{
 	    bResult = FALSE;
 
@@ -2120,7 +2120,7 @@ int PidinStackPushSymbol
     {
 	//- push on symbol stack
 
-	bResult = PSymbolSerialStackPush(&ppist->symsst,phsle);
+	bResult = PSymbolSerialStackPush(&ppist->symsst, phsle);
     }
 
 #else
@@ -2134,7 +2134,7 @@ int PidinStackPushSymbol
     {
 	//- push on symbol stack
 
-	bResult = PSymbolStackPush(&ppist->symst,phsle);
+	bResult = PSymbolStackPush(&ppist->symst, phsle);
     }
 
 #else
@@ -2157,7 +2157,7 @@ int PidinStackPushSymbol
 
     if (bResult)
     {
-	bResult = PidinStackPush(ppist,pidin);
+	bResult = PidinStackPush(ppist, pidin);
     }
 
     //- return result
@@ -2184,7 +2184,7 @@ int PidinStackPushSymbol
 ///
 /// **************************************************************************
 
-int PidinStackString(struct PidinStack *ppist,char *pc,int iSize)
+int PidinStackString(struct PidinStack *ppist, char *pc, int iSize)
 {
     //- set default result : ok
 
@@ -2217,7 +2217,7 @@ int PidinStackString(struct PidinStack *ppist,char *pc,int iSize)
     {
 	//- print root symbol
 
-	iCount = snprintf(&pc[iIndex],iSize,"%s",SYMBOL_ROOT);
+	iCount = snprintf(&pc[iIndex], iSize, "%s", SYMBOL_ROOT);
 	iIndex += iCount;
 	iSize -= iCount;
     }
@@ -2227,7 +2227,7 @@ int PidinStackString(struct PidinStack *ppist,char *pc,int iSize)
 	//- get current entry
 
 	struct symtab_IdentifierIndex *pidin
-	    = PidinStackElementPidin(ppist,i - 1);
+	    = PidinStackElementPidin(ppist, i - 1);
 
 	//- print seperator if necessary
 
@@ -2237,7 +2237,7 @@ int PidinStackString(struct PidinStack *ppist,char *pc,int iSize)
 	    {
 		iCount
 		    = snprintf
-			(&pc[iIndex],iSize,"%s",IDENTIFIER_DEREFERENCE_STRING);
+			(&pc[iIndex], iSize, "%s", IDENTIFIER_DEREFERENCE_STRING);
 		iIndex += iCount;
 		iSize -= iCount;
 	    }
@@ -2245,7 +2245,7 @@ int PidinStackString(struct PidinStack *ppist,char *pc,int iSize)
 	    {
 		iCount
 		    = snprintf
-			(&pc[iIndex],iSize,"%s",IDENTIFIER_CHILD_STRING);
+			(&pc[iIndex], iSize, "%s", IDENTIFIER_CHILD_STRING);
 		iIndex += iCount;
 		iSize -= iCount;
 	    }
@@ -2253,7 +2253,7 @@ int PidinStackString(struct PidinStack *ppist,char *pc,int iSize)
 
 	//- print current entry
 
-	iCount = snprintf(&pc[iIndex],iSize,"%s",IdinName(pidin));
+	iCount = snprintf(&pc[iIndex], iSize, "%s", IdinName(pidin));
 	iIndex += iCount;
 	iSize -= iCount;
 
@@ -2265,7 +2265,7 @@ int PidinStackString(struct PidinStack *ppist,char *pc,int iSize)
 
 	    iCount
 		= snprintf
-		    (&pc[iIndex],iSize,"%s",IDENTIFIER_NAMESPACE_STRING);
+		    (&pc[iIndex], iSize, "%s", IDENTIFIER_NAMESPACE_STRING);
 	    iIndex += iCount;
 	    iSize -= iCount;
 	}
@@ -2280,7 +2280,7 @@ int PidinStackString(struct PidinStack *ppist,char *pc,int iSize)
 	//- get current entry
 
 	struct symtab_IdentifierIndex *pidin
-	    = PidinStackElementPidin(ppist,i - 1);
+	    = PidinStackElementPidin(ppist, i - 1);
 
 	//- print seperator if necessary
 
@@ -2290,7 +2290,7 @@ int PidinStackString(struct PidinStack *ppist,char *pc,int iSize)
 	    {
 		iCount
 		    = snprintf
-			(&pc[iIndex],iSize,"%s",IDENTIFIER_DEREFERENCE_STRING);
+			(&pc[iIndex], iSize, "%s", IDENTIFIER_DEREFERENCE_STRING);
 		iIndex += iCount;
 		iSize -= iCount;
 	    }
@@ -2298,7 +2298,7 @@ int PidinStackString(struct PidinStack *ppist,char *pc,int iSize)
 	    {
 		iCount
 		    = snprintf
-			(&pc[iIndex],iSize,"%s",IDENTIFIER_CHILD_STRING);
+			(&pc[iIndex], iSize, "%s", IDENTIFIER_CHILD_STRING);
 		iIndex += iCount;
 		iSize -= iCount;
 	    }
@@ -2318,7 +2318,7 @@ int PidinStackString(struct PidinStack *ppist,char *pc,int iSize)
 
 	    iCount
 		= snprintf
-		    (&pc[iIndex],iSize,"%s",IDENTIFIER_NAMESPACE_STRING);
+		    (&pc[iIndex], iSize, "%s", IDENTIFIER_NAMESPACE_STRING);
 	    iIndex += iCount;
 	    iSize -= iCount;
 	}
