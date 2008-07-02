@@ -3066,6 +3066,44 @@ my $test
 						 ],
 				description => "syntax of examples/hh_neuron.ndf",
 			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-R',
+					      'tests/cells/singlea_naf2_aggregator.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (tests/cells/singlea_naf2_aggregator.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/singlea_naf2_aggregator.ndf', ],
+						   timeout => 5,
+						   write => undef,
+						  },
+						 ],
+				description => "syntax of tests/cells/singlea_naf2_aggregator.ndf",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-R',
+					      'tests/cells/doublea_aggregator.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (tests/cells/doublea_aggregator.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/doublea_aggregator.ndf', ],
+						   timeout => 5,
+						   write => undef,
+						  },
+						 ],
+				description => "syntax of tests/cells/doublea_aggregator.ndf",
+			       },
 		      ],
        description => "general syntax of library files",
        name => 'parsing.t',
