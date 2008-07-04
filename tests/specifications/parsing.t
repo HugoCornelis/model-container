@@ -3104,6 +3104,25 @@ my $test
 						 ],
 				description => "syntax of tests/cells/doublea_aggregator.ndf",
 			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-R',
+					      'tests/cells/addressing_aggregator1.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (tests/cells/addressing_aggregator1.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/addressing_aggregator1.ndf', ],
+						   timeout => 5,
+						   write => undef,
+						  },
+						 ],
+				description => "syntax of tests/cells/addressing_aggregator1.ndf",
+			       },
 		      ],
        description => "general syntax of library files",
        name => 'parsing.t',

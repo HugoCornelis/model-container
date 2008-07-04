@@ -1,0 +1,116 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+IMPORT
+
+	FILE cat "channels/purkinje/cat.ndf"
+	FILE kdr "channels/purkinje/kdr.ndf"
+	FILE naf "channels/purkinje/naf.ndf"
+	FILE nap "channels/purkinje/nap.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS cat::/cat cat END ALIAS
+	ALIAS kdr::/kdr kdr END ALIAS
+	ALIAS naf::/naf naf END ALIAS
+	ALIAS nap::/nap nap END ALIAS
+
+	SEGMENT something
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+			INPUT cat->I,
+			INPUT naf->I,
+			INPUT nap->I,
+			INPUT kdr->I,
+		END BINDINGS
+
+		OPTIONS SPHERICAL
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 1.000 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+		CHILD cat
+			cat
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( Erev = 0.1375262439),
+				PARAMETER ( MODEL_SOURCE_TYPE = 0 ),
+			END PARAMETERS
+		END CHILD
+
+		CHILD kdr
+			kdr
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( MODEL_SOURCE_TYPE = 1 ),
+			END PARAMETERS
+		END CHILD
+
+		CHILD nap
+			nap
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( MODEL_SOURCE_TYPE = 2 ),
+			END PARAMETERS
+		END CHILD
+
+		CHILD naf
+			naf
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+
+			PARAMETERS
+				PARAMETER ( MODEL_SOURCE_TYPE = 2 ),
+			END PARAMETERS
+		END CHILD
+
+	END SEGMENT
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CELL addressing_aggregator1
+
+		SEGMENT_GROUP segments
+
+			CHILD something c1
+				PARAMETERS
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 29.80e-6 )
+				END PARAMETERS
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+
