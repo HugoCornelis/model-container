@@ -1607,7 +1607,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=neurospaces/algorithms/symbol
- VERSION=network-6
+ VERSION=network-7
 
 
 # Some tools Automake needs.
