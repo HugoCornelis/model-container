@@ -1,3 +1,5 @@
 # an event file
+description1: a test event file
 events:
     - 0.001
+description2: a test event file
