@@ -1605,7 +1605,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=model-container-convertors
- VERSION=network-9
+ VERSION=network-10
 
 
 # Some tools Automake needs.
