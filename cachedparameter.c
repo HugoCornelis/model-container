@@ -127,7 +127,15 @@ CachedParameterNewFromNumber
 /// DESCR:
 ///
 ///	Create a new cached parameter with the given value for the
-///	given context
+///	given context.
+///
+/// NOTE.:
+///
+///	Parameter caches have a notion of independence, so they do
+///	their own memory allocation when appropriate.  For this
+///	function it means that pcValue is duplicated using strdup().
+///	Note again that this is very different from pidinstacks and
+///	regular parameters.
 ///
 /// **************************************************************************
 
@@ -139,7 +147,14 @@ CachedParameterNewFromString
 
     struct CachedParameter * pcacparResult = NULL;
 
-    //- allocate parameter for double
+    //- allocate parameter for string
+
+    pcValue = strdup(pcValue);
+
+    if (!pcValue)
+    {
+	return(NULL);
+    }
 
     struct symtab_Parameters *ppar = ParameterNewFromString(pcName, pcValue);
 
