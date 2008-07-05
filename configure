@@ -1737,7 +1737,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=model-container
- VERSION=network-8
+ VERSION=network-9
 
 
 # Some tools Automake needs.
