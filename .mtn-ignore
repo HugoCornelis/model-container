@@ -13,7 +13,7 @@ Makefile$
 ^glue/swig/perl/SwiggableNeurospaces.pm$
 ^glue/swig/perl/swiggable_neurospaces_wrap.c$
 ^hierarchy/output
-html/htdocs/neurospaces_project/neurospaces/tests/html/specifications/
+^html/htdocs/neurospaces_project/neurospaces/
 ^installed$
 ^installed/
 ^neurospacesparse$
