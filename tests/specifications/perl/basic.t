@@ -125,38 +125,40 @@ query: 'echo end'
 						  {
 						   description => "Can we add a component from the perl interface ?",
 						   read => ' 1
-/Purkinje/segments/soma
-/Purkinje/segments/soma/spikegen
-/Purkinje/segments/soma/NaF
-/Purkinje/segments/soma/NaP
-/Purkinje/segments/soma/CaT
-/Purkinje/segments/soma/KA
-/Purkinje/segments/soma/Kdr
-/Purkinje/segments/soma/KM
-/Purkinje/segments/soma/h1
-/Purkinje/segments/soma/h2
-/Purkinje/segments/soma/Ca_pool
-/Purkinje/segments/soma/basket
-/Purkinje/segments/soma/basket/synapse
-/Purkinje/segments/soma/basket/exp2
+---
+- /Purkinje/segments/soma
+- /Purkinje/segments/soma/spikegen
+- /Purkinje/segments/soma/NaF
+- /Purkinje/segments/soma/NaP
+- /Purkinje/segments/soma/CaT
+- /Purkinje/segments/soma/KA
+- /Purkinje/segments/soma/Kdr
+- /Purkinje/segments/soma/KM
+- /Purkinje/segments/soma/h1
+- /Purkinje/segments/soma/h2
+- /Purkinje/segments/soma/Ca_pool
+- /Purkinje/segments/soma/basket
+- /Purkinje/segments/soma/basket/synapse
+- /Purkinje/segments/soma/basket/exp2
  2
-/Purkinje/segments/soma
-/Purkinje/segments/soma/spikegen
-/Purkinje/segments/soma/NaF
-/Purkinje/segments/soma/NaP
-/Purkinje/segments/soma/CaT
-/Purkinje/segments/soma/KA
-/Purkinje/segments/soma/Kdr
-/Purkinje/segments/soma/KM
-/Purkinje/segments/soma/h1
-/Purkinje/segments/soma/h2
-/Purkinje/segments/soma/Ca_pool
-/Purkinje/segments/soma/basket
-/Purkinje/segments/soma/basket/synapse
-/Purkinje/segments/soma/basket/exp2
-/Purkinje/segments/soma/synchan
-/Purkinje/segments/soma/synchan/synapse
-/Purkinje/segments/soma/synchan/exp2
+---
+- /Purkinje/segments/soma
+- /Purkinje/segments/soma/spikegen
+- /Purkinje/segments/soma/NaF
+- /Purkinje/segments/soma/NaP
+- /Purkinje/segments/soma/CaT
+- /Purkinje/segments/soma/KA
+- /Purkinje/segments/soma/Kdr
+- /Purkinje/segments/soma/KM
+- /Purkinje/segments/soma/h1
+- /Purkinje/segments/soma/h2
+- /Purkinje/segments/soma/Ca_pool
+- /Purkinje/segments/soma/basket
+- /Purkinje/segments/soma/basket/synapse
+- /Purkinje/segments/soma/basket/exp2
+- /Purkinje/segments/soma/synchan
+- /Purkinje/segments/soma/synchan/synapse
+- /Purkinje/segments/soma/synchan/exp2
  3
 ',
 						  },
@@ -171,36 +173,38 @@ query: 'echo end'
 						  {
 						   description => "Can we delete a component from the perl interface ?",
 						   read => ' 1
-/Golgi/Golgi_soma
-/Golgi/Golgi_soma/spikegen
-/Golgi/Golgi_soma/Ca_pool
-/Golgi/Golgi_soma/CaHVA
-/Golgi/Golgi_soma/H
-/Golgi/Golgi_soma/InNa
-/Golgi/Golgi_soma/KA
-/Golgi/Golgi_soma/KDr
-/Golgi/Golgi_soma/Moczyd_KC
-/Golgi/Golgi_soma/mf_AMPA
-/Golgi/Golgi_soma/mf_AMPA/synapse
-/Golgi/Golgi_soma/mf_AMPA/exp2
-/Golgi/Golgi_soma/pf_AMPA
-/Golgi/Golgi_soma/pf_AMPA/synapse
-/Golgi/Golgi_soma/pf_AMPA/exp2
+---
+- /Golgi/Golgi_soma
+- /Golgi/Golgi_soma/spikegen
+- /Golgi/Golgi_soma/Ca_pool
+- /Golgi/Golgi_soma/CaHVA
+- /Golgi/Golgi_soma/H
+- /Golgi/Golgi_soma/InNa
+- /Golgi/Golgi_soma/KA
+- /Golgi/Golgi_soma/KDr
+- /Golgi/Golgi_soma/Moczyd_KC
+- /Golgi/Golgi_soma/mf_AMPA
+- /Golgi/Golgi_soma/mf_AMPA/synapse
+- /Golgi/Golgi_soma/mf_AMPA/exp2
+- /Golgi/Golgi_soma/pf_AMPA
+- /Golgi/Golgi_soma/pf_AMPA/synapse
+- /Golgi/Golgi_soma/pf_AMPA/exp2
  2
-/Golgi/Golgi_soma
-/Golgi/Golgi_soma/Ca_pool
-/Golgi/Golgi_soma/CaHVA
-/Golgi/Golgi_soma/H
-/Golgi/Golgi_soma/InNa
-/Golgi/Golgi_soma/KA
-/Golgi/Golgi_soma/KDr
-/Golgi/Golgi_soma/Moczyd_KC
-/Golgi/Golgi_soma/mf_AMPA
-/Golgi/Golgi_soma/mf_AMPA/synapse
-/Golgi/Golgi_soma/mf_AMPA/exp2
-/Golgi/Golgi_soma/pf_AMPA
-/Golgi/Golgi_soma/pf_AMPA/synapse
-/Golgi/Golgi_soma/pf_AMPA/exp2
+---
+- /Golgi/Golgi_soma
+- /Golgi/Golgi_soma/Ca_pool
+- /Golgi/Golgi_soma/CaHVA
+- /Golgi/Golgi_soma/H
+- /Golgi/Golgi_soma/InNa
+- /Golgi/Golgi_soma/KA
+- /Golgi/Golgi_soma/KDr
+- /Golgi/Golgi_soma/Moczyd_KC
+- /Golgi/Golgi_soma/mf_AMPA
+- /Golgi/Golgi_soma/mf_AMPA/synapse
+- /Golgi/Golgi_soma/mf_AMPA/exp2
+- /Golgi/Golgi_soma/pf_AMPA
+- /Golgi/Golgi_soma/pf_AMPA/synapse
+- /Golgi/Golgi_soma/pf_AMPA/exp2
  3
 ',
 						  },
