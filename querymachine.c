@@ -1533,7 +1533,7 @@ QueryMachineWildcardTraverser
 
     PidinStackString(ptstr->ppist, pc, 1000);
 
-    fprintf(stdout, "%s\n", pc);
+    fprintf(stdout, "- %s\n", pc);
 
     //- return result
 
@@ -1592,6 +1592,10 @@ QueryHandlerExpand
 
     if (phsleRoot)
     {
+	//- start yaml output
+
+	fprintf(stdout, "---\n");
+
 	//- traverse symbols that match with wildcard
 
 	int iResult
@@ -1605,7 +1609,7 @@ QueryHandlerExpand
 
 	if (iResult != 1)
 	{
-	    fprintf(stdout, "SymbolTraverseWildcard() failed (or aborted)\n");
+	    fprintf(stdout, "*** Error: SymbolTraverseWildcard() failed (or aborted)\n");
 	}
     }
     else

@@ -144,11 +144,11 @@ my $test
 						  {
 						   description => "Can we find spines in the model purkinje cell ?",
 						   read => '/Purkinje/segments/b0s01[1]/Purkinje_spine_0
-/Purkinje/segments/b0s01[1]/Purkinje_spine_0/neck
-/Purkinje/segments/b0s01[1]/Purkinje_spine_0/head
-/Purkinje/segments/b0s01[1]/Purkinje_spine_0/head/par
-/Purkinje/segments/b0s01[1]/Purkinje_spine_0/head/par/synapse
-/Purkinje/segments/b0s01[1]/Purkinje_spine_0/head/par/exp2
+- /Purkinje/segments/b0s01[1]/Purkinje_spine_0/neck
+- /Purkinje/segments/b0s01[1]/Purkinje_spine_0/head
+- /Purkinje/segments/b0s01[1]/Purkinje_spine_0/head/par
+- /Purkinje/segments/b0s01[1]/Purkinje_spine_0/head/par/synapse
+- /Purkinje/segments/b0s01[1]/Purkinje_spine_0/head/par/exp2
 ',
 						   write => "expand /Purkinje/segments/b0s01[1]/Purkinje_spine_0/**",
 						  },
@@ -323,11 +323,11 @@ Solver serial context for 1138 =
 						  {
 						   description => "Can we find spines in the model purkinje cell ?",
 						   read => '/Purkinje/segments/b0s01[1]/Purkinje_spine_0
-/Purkinje/segments/b0s01[1]/Purkinje_spine_0/neck
-/Purkinje/segments/b0s01[1]/Purkinje_spine_0/head
-/Purkinje/segments/b0s01[1]/Purkinje_spine_0/head/par
-/Purkinje/segments/b0s01[1]/Purkinje_spine_0/head/par/synapse
-/Purkinje/segments/b0s01[1]/Purkinje_spine_0/head/par/exp2
+- /Purkinje/segments/b0s01[1]/Purkinje_spine_0/neck
+- /Purkinje/segments/b0s01[1]/Purkinje_spine_0/head
+- /Purkinje/segments/b0s01[1]/Purkinje_spine_0/head/par
+- /Purkinje/segments/b0s01[1]/Purkinje_spine_0/head/par/synapse
+- /Purkinje/segments/b0s01[1]/Purkinje_spine_0/head/par/exp2
 ',
 						   write => "expand /Purkinje/segments/b0s01[1]/Purkinje_spine_0/**",
 						  },

@@ -83,7 +83,8 @@ report:
 							    ? "query: 'echo start'
  start
 query: 'expand /**'
-/Golgi
+---
+- /Golgi
 query: 'echo end'
  end
 "
@@ -92,22 +93,23 @@ the delete operation is not enabled by default, before compiling neurospaces, us
 query: 'echo start'
  start
 query: 'expand /**'
-/Golgi
-/Golgi/Golgi_soma
-/Golgi/Golgi_soma/spikegen
-/Golgi/Golgi_soma/Ca_pool
-/Golgi/Golgi_soma/CaHVA
-/Golgi/Golgi_soma/H
-/Golgi/Golgi_soma/InNa
-/Golgi/Golgi_soma/KA
-/Golgi/Golgi_soma/KDr
-/Golgi/Golgi_soma/Moczyd_KC
-/Golgi/Golgi_soma/mf_AMPA
-/Golgi/Golgi_soma/mf_AMPA/synapse
-/Golgi/Golgi_soma/mf_AMPA/exp2
-/Golgi/Golgi_soma/pf_AMPA
-/Golgi/Golgi_soma/pf_AMPA/synapse
-/Golgi/Golgi_soma/pf_AMPA/exp2
+---
+- /Golgi
+- /Golgi/Golgi_soma
+- /Golgi/Golgi_soma/spikegen
+- /Golgi/Golgi_soma/Ca_pool
+- /Golgi/Golgi_soma/CaHVA
+- /Golgi/Golgi_soma/H
+- /Golgi/Golgi_soma/InNa
+- /Golgi/Golgi_soma/KA
+- /Golgi/Golgi_soma/KDr
+- /Golgi/Golgi_soma/Moczyd_KC
+- /Golgi/Golgi_soma/mf_AMPA
+- /Golgi/Golgi_soma/mf_AMPA/synapse
+- /Golgi/Golgi_soma/mf_AMPA/exp2
+- /Golgi/Golgi_soma/pf_AMPA
+- /Golgi/Golgi_soma/pf_AMPA/synapse
+- /Golgi/Golgi_soma/pf_AMPA/exp2
 query: 'echo end'
  end
 " ),
@@ -214,124 +216,127 @@ query: 'echo end'
 						  {
 						   description => "Can we specify a loader configuration ?",
 						   read => "query: 'expand /C170897A_P3_CNG/segments/soma/**'
-/C170897A_P3_CNG/segments/soma
-/C170897A_P3_CNG/segments/soma/km
-/C170897A_P3_CNG/segments/soma/km/km
-/C170897A_P3_CNG/segments/soma/km/km/a
-/C170897A_P3_CNG/segments/soma/km/km/b
-/C170897A_P3_CNG/segments/soma/kdr
-/C170897A_P3_CNG/segments/soma/kdr/kdr_steadystate
-/C170897A_P3_CNG/segments/soma/kdr/kdr_steadystate/A
-/C170897A_P3_CNG/segments/soma/kdr/kdr_steadystate/A/a
-/C170897A_P3_CNG/segments/soma/kdr/kdr_steadystate/A/b
-/C170897A_P3_CNG/segments/soma/kdr/kdr_steadystate/B
-/C170897A_P3_CNG/segments/soma/kdr/kdr_steadystate/B/a
-/C170897A_P3_CNG/segments/soma/kdr/kdr_steadystate/B/b
-/C170897A_P3_CNG/segments/soma/kdr/kdr_tau
-/C170897A_P3_CNG/segments/soma/kdr/kdr_tau/a
-/C170897A_P3_CNG/segments/soma/kdr/kdr_tau/b
-/C170897A_P3_CNG/segments/soma/ka
-/C170897A_P3_CNG/segments/soma/ka/ka_gate_activation
-/C170897A_P3_CNG/segments/soma/ka/ka_gate_activation/A
-/C170897A_P3_CNG/segments/soma/ka/ka_gate_activation/B
-/C170897A_P3_CNG/segments/soma/ka/ka_gate_inactivation
-/C170897A_P3_CNG/segments/soma/ka/ka_gate_inactivation/A
-/C170897A_P3_CNG/segments/soma/ka/ka_gate_inactivation/B
-/C170897A_P3_CNG/segments/soma/kh
-/C170897A_P3_CNG/segments/soma/kh/kh
-/C170897A_P3_CNG/segments/soma/kh/kh/tau1
-/C170897A_P3_CNG/segments/soma/kh/kh/tau2
-/C170897A_P3_CNG/segments/soma/nap
-/C170897A_P3_CNG/segments/soma/nap/nap
-/C170897A_P3_CNG/segments/soma/nap/nap/A
-/C170897A_P3_CNG/segments/soma/nap/nap/B
-/C170897A_P3_CNG/segments/soma/naf
-/C170897A_P3_CNG/segments/soma/naf/naf_gate_activation
-/C170897A_P3_CNG/segments/soma/naf/naf_gate_activation/A
-/C170897A_P3_CNG/segments/soma/naf/naf_gate_activation/B
-/C170897A_P3_CNG/segments/soma/naf/naf_gate_inactivation
-/C170897A_P3_CNG/segments/soma/naf/naf_gate_inactivation/A
-/C170897A_P3_CNG/segments/soma/naf/naf_gate_inactivation/B
-/C170897A_P3_CNG/segments/soma/cat
-/C170897A_P3_CNG/segments/soma/cat/cat_gate_activation
-/C170897A_P3_CNG/segments/soma/cat/cat_gate_activation/A
-/C170897A_P3_CNG/segments/soma/cat/cat_gate_activation/B
-/C170897A_P3_CNG/segments/soma/cat/cat_gate_inactivation
-/C170897A_P3_CNG/segments/soma/cat/cat_gate_inactivation/A
-/C170897A_P3_CNG/segments/soma/cat/cat_gate_inactivation/B
-/C170897A_P3_CNG/segments/soma/ca_pool
+---
+- /C170897A_P3_CNG/segments/soma
+- /C170897A_P3_CNG/segments/soma/km
+- /C170897A_P3_CNG/segments/soma/km/km
+- /C170897A_P3_CNG/segments/soma/km/km/a
+- /C170897A_P3_CNG/segments/soma/km/km/b
+- /C170897A_P3_CNG/segments/soma/kdr
+- /C170897A_P3_CNG/segments/soma/kdr/kdr_steadystate
+- /C170897A_P3_CNG/segments/soma/kdr/kdr_steadystate/A
+- /C170897A_P3_CNG/segments/soma/kdr/kdr_steadystate/A/a
+- /C170897A_P3_CNG/segments/soma/kdr/kdr_steadystate/A/b
+- /C170897A_P3_CNG/segments/soma/kdr/kdr_steadystate/B
+- /C170897A_P3_CNG/segments/soma/kdr/kdr_steadystate/B/a
+- /C170897A_P3_CNG/segments/soma/kdr/kdr_steadystate/B/b
+- /C170897A_P3_CNG/segments/soma/kdr/kdr_tau
+- /C170897A_P3_CNG/segments/soma/kdr/kdr_tau/a
+- /C170897A_P3_CNG/segments/soma/kdr/kdr_tau/b
+- /C170897A_P3_CNG/segments/soma/ka
+- /C170897A_P3_CNG/segments/soma/ka/ka_gate_activation
+- /C170897A_P3_CNG/segments/soma/ka/ka_gate_activation/A
+- /C170897A_P3_CNG/segments/soma/ka/ka_gate_activation/B
+- /C170897A_P3_CNG/segments/soma/ka/ka_gate_inactivation
+- /C170897A_P3_CNG/segments/soma/ka/ka_gate_inactivation/A
+- /C170897A_P3_CNG/segments/soma/ka/ka_gate_inactivation/B
+- /C170897A_P3_CNG/segments/soma/kh
+- /C170897A_P3_CNG/segments/soma/kh/kh
+- /C170897A_P3_CNG/segments/soma/kh/kh/tau1
+- /C170897A_P3_CNG/segments/soma/kh/kh/tau2
+- /C170897A_P3_CNG/segments/soma/nap
+- /C170897A_P3_CNG/segments/soma/nap/nap
+- /C170897A_P3_CNG/segments/soma/nap/nap/A
+- /C170897A_P3_CNG/segments/soma/nap/nap/B
+- /C170897A_P3_CNG/segments/soma/naf
+- /C170897A_P3_CNG/segments/soma/naf/naf_gate_activation
+- /C170897A_P3_CNG/segments/soma/naf/naf_gate_activation/A
+- /C170897A_P3_CNG/segments/soma/naf/naf_gate_activation/B
+- /C170897A_P3_CNG/segments/soma/naf/naf_gate_inactivation
+- /C170897A_P3_CNG/segments/soma/naf/naf_gate_inactivation/A
+- /C170897A_P3_CNG/segments/soma/naf/naf_gate_inactivation/B
+- /C170897A_P3_CNG/segments/soma/cat
+- /C170897A_P3_CNG/segments/soma/cat/cat_gate_activation
+- /C170897A_P3_CNG/segments/soma/cat/cat_gate_activation/A
+- /C170897A_P3_CNG/segments/soma/cat/cat_gate_activation/B
+- /C170897A_P3_CNG/segments/soma/cat/cat_gate_inactivation
+- /C170897A_P3_CNG/segments/soma/cat/cat_gate_inactivation/A
+- /C170897A_P3_CNG/segments/soma/cat/cat_gate_inactivation/B
+- /C170897A_P3_CNG/segments/soma/ca_pool
 query: 'expand /C170897A_P3_CNG/segments/s_2/**'
-/C170897A_P3_CNG/segments/s_2
-/C170897A_P3_CNG/segments/s_2/cat
-/C170897A_P3_CNG/segments/s_2/cat/cat_gate_activation
-/C170897A_P3_CNG/segments/s_2/cat/cat_gate_activation/A
-/C170897A_P3_CNG/segments/s_2/cat/cat_gate_activation/B
-/C170897A_P3_CNG/segments/s_2/cat/cat_gate_inactivation
-/C170897A_P3_CNG/segments/s_2/cat/cat_gate_inactivation/A
-/C170897A_P3_CNG/segments/s_2/cat/cat_gate_inactivation/B
-/C170897A_P3_CNG/segments/s_2/cap
-/C170897A_P3_CNG/segments/s_2/cap/cap_gate_activation
-/C170897A_P3_CNG/segments/s_2/cap/cap_gate_activation/A
-/C170897A_P3_CNG/segments/s_2/cap/cap_gate_activation/B
-/C170897A_P3_CNG/segments/s_2/cap/cap_gate_inactivation
-/C170897A_P3_CNG/segments/s_2/cap/cap_gate_inactivation/A
-/C170897A_P3_CNG/segments/s_2/cap/cap_gate_inactivation/B
-/C170897A_P3_CNG/segments/s_2/kc
-/C170897A_P3_CNG/segments/s_2/kc/kc_gate_activation
-/C170897A_P3_CNG/segments/s_2/kc/kc_gate_activation/A
-/C170897A_P3_CNG/segments/s_2/kc/kc_gate_activation/B
-/C170897A_P3_CNG/segments/s_2/kc/kc_gate_concentration
-/C170897A_P3_CNG/segments/s_2/kc/kc_gate_concentration/concentration_kinetic
-/C170897A_P3_CNG/segments/s_2/k2
-/C170897A_P3_CNG/segments/s_2/k2/k2_gate_activation
-/C170897A_P3_CNG/segments/s_2/k2/k2_gate_activation/A
-/C170897A_P3_CNG/segments/s_2/k2/k2_gate_activation/B
-/C170897A_P3_CNG/segments/s_2/k2/k2_gate_concentration
-/C170897A_P3_CNG/segments/s_2/k2/k2_gate_concentration/concentration_kinetic
-/C170897A_P3_CNG/segments/s_2/km
-/C170897A_P3_CNG/segments/s_2/km/km
-/C170897A_P3_CNG/segments/s_2/km/km/a
-/C170897A_P3_CNG/segments/s_2/km/km/b
-/C170897A_P3_CNG/segments/s_2/ca_pool
-/C170897A_P3_CNG/segments/s_2/stellate
-/C170897A_P3_CNG/segments/s_2/stellate/synapse
-/C170897A_P3_CNG/segments/s_2/stellate/exp2
+---
+- /C170897A_P3_CNG/segments/s_2
+- /C170897A_P3_CNG/segments/s_2/cat
+- /C170897A_P3_CNG/segments/s_2/cat/cat_gate_activation
+- /C170897A_P3_CNG/segments/s_2/cat/cat_gate_activation/A
+- /C170897A_P3_CNG/segments/s_2/cat/cat_gate_activation/B
+- /C170897A_P3_CNG/segments/s_2/cat/cat_gate_inactivation
+- /C170897A_P3_CNG/segments/s_2/cat/cat_gate_inactivation/A
+- /C170897A_P3_CNG/segments/s_2/cat/cat_gate_inactivation/B
+- /C170897A_P3_CNG/segments/s_2/cap
+- /C170897A_P3_CNG/segments/s_2/cap/cap_gate_activation
+- /C170897A_P3_CNG/segments/s_2/cap/cap_gate_activation/A
+- /C170897A_P3_CNG/segments/s_2/cap/cap_gate_activation/B
+- /C170897A_P3_CNG/segments/s_2/cap/cap_gate_inactivation
+- /C170897A_P3_CNG/segments/s_2/cap/cap_gate_inactivation/A
+- /C170897A_P3_CNG/segments/s_2/cap/cap_gate_inactivation/B
+- /C170897A_P3_CNG/segments/s_2/kc
+- /C170897A_P3_CNG/segments/s_2/kc/kc_gate_activation
+- /C170897A_P3_CNG/segments/s_2/kc/kc_gate_activation/A
+- /C170897A_P3_CNG/segments/s_2/kc/kc_gate_activation/B
+- /C170897A_P3_CNG/segments/s_2/kc/kc_gate_concentration
+- /C170897A_P3_CNG/segments/s_2/kc/kc_gate_concentration/concentration_kinetic
+- /C170897A_P3_CNG/segments/s_2/k2
+- /C170897A_P3_CNG/segments/s_2/k2/k2_gate_activation
+- /C170897A_P3_CNG/segments/s_2/k2/k2_gate_activation/A
+- /C170897A_P3_CNG/segments/s_2/k2/k2_gate_activation/B
+- /C170897A_P3_CNG/segments/s_2/k2/k2_gate_concentration
+- /C170897A_P3_CNG/segments/s_2/k2/k2_gate_concentration/concentration_kinetic
+- /C170897A_P3_CNG/segments/s_2/km
+- /C170897A_P3_CNG/segments/s_2/km/km
+- /C170897A_P3_CNG/segments/s_2/km/km/a
+- /C170897A_P3_CNG/segments/s_2/km/km/b
+- /C170897A_P3_CNG/segments/s_2/ca_pool
+- /C170897A_P3_CNG/segments/s_2/stellate
+- /C170897A_P3_CNG/segments/s_2/stellate/synapse
+- /C170897A_P3_CNG/segments/s_2/stellate/exp2
 query: 'expand /C170897A_P3_CNG/segments/s_1666/**'
-/C170897A_P3_CNG/segments/s_1666
-/C170897A_P3_CNG/segments/s_1666/cat
-/C170897A_P3_CNG/segments/s_1666/cat/cat_gate_activation
-/C170897A_P3_CNG/segments/s_1666/cat/cat_gate_activation/A
-/C170897A_P3_CNG/segments/s_1666/cat/cat_gate_activation/B
-/C170897A_P3_CNG/segments/s_1666/cat/cat_gate_inactivation
-/C170897A_P3_CNG/segments/s_1666/cat/cat_gate_inactivation/A
-/C170897A_P3_CNG/segments/s_1666/cat/cat_gate_inactivation/B
-/C170897A_P3_CNG/segments/s_1666/cap
-/C170897A_P3_CNG/segments/s_1666/cap/cap_gate_activation
-/C170897A_P3_CNG/segments/s_1666/cap/cap_gate_activation/A
-/C170897A_P3_CNG/segments/s_1666/cap/cap_gate_activation/B
-/C170897A_P3_CNG/segments/s_1666/cap/cap_gate_inactivation
-/C170897A_P3_CNG/segments/s_1666/cap/cap_gate_inactivation/A
-/C170897A_P3_CNG/segments/s_1666/cap/cap_gate_inactivation/B
-/C170897A_P3_CNG/segments/s_1666/kc
-/C170897A_P3_CNG/segments/s_1666/kc/kc_gate_activation
-/C170897A_P3_CNG/segments/s_1666/kc/kc_gate_activation/A
-/C170897A_P3_CNG/segments/s_1666/kc/kc_gate_activation/B
-/C170897A_P3_CNG/segments/s_1666/kc/kc_gate_concentration
-/C170897A_P3_CNG/segments/s_1666/kc/kc_gate_concentration/concentration_kinetic
-/C170897A_P3_CNG/segments/s_1666/k2
-/C170897A_P3_CNG/segments/s_1666/k2/k2_gate_activation
-/C170897A_P3_CNG/segments/s_1666/k2/k2_gate_activation/A
-/C170897A_P3_CNG/segments/s_1666/k2/k2_gate_activation/B
-/C170897A_P3_CNG/segments/s_1666/k2/k2_gate_concentration
-/C170897A_P3_CNG/segments/s_1666/k2/k2_gate_concentration/concentration_kinetic
-/C170897A_P3_CNG/segments/s_1666/km
-/C170897A_P3_CNG/segments/s_1666/km/km
-/C170897A_P3_CNG/segments/s_1666/km/km/a
-/C170897A_P3_CNG/segments/s_1666/km/km/b
-/C170897A_P3_CNG/segments/s_1666/ca_pool
-/C170897A_P3_CNG/segments/s_1666/stellate
-/C170897A_P3_CNG/segments/s_1666/stellate/synapse
-/C170897A_P3_CNG/segments/s_1666/stellate/exp2
+---
+- /C170897A_P3_CNG/segments/s_1666
+- /C170897A_P3_CNG/segments/s_1666/cat
+- /C170897A_P3_CNG/segments/s_1666/cat/cat_gate_activation
+- /C170897A_P3_CNG/segments/s_1666/cat/cat_gate_activation/A
+- /C170897A_P3_CNG/segments/s_1666/cat/cat_gate_activation/B
+- /C170897A_P3_CNG/segments/s_1666/cat/cat_gate_inactivation
+- /C170897A_P3_CNG/segments/s_1666/cat/cat_gate_inactivation/A
+- /C170897A_P3_CNG/segments/s_1666/cat/cat_gate_inactivation/B
+- /C170897A_P3_CNG/segments/s_1666/cap
+- /C170897A_P3_CNG/segments/s_1666/cap/cap_gate_activation
+- /C170897A_P3_CNG/segments/s_1666/cap/cap_gate_activation/A
+- /C170897A_P3_CNG/segments/s_1666/cap/cap_gate_activation/B
+- /C170897A_P3_CNG/segments/s_1666/cap/cap_gate_inactivation
+- /C170897A_P3_CNG/segments/s_1666/cap/cap_gate_inactivation/A
+- /C170897A_P3_CNG/segments/s_1666/cap/cap_gate_inactivation/B
+- /C170897A_P3_CNG/segments/s_1666/kc
+- /C170897A_P3_CNG/segments/s_1666/kc/kc_gate_activation
+- /C170897A_P3_CNG/segments/s_1666/kc/kc_gate_activation/A
+- /C170897A_P3_CNG/segments/s_1666/kc/kc_gate_activation/B
+- /C170897A_P3_CNG/segments/s_1666/kc/kc_gate_concentration
+- /C170897A_P3_CNG/segments/s_1666/kc/kc_gate_concentration/concentration_kinetic
+- /C170897A_P3_CNG/segments/s_1666/k2
+- /C170897A_P3_CNG/segments/s_1666/k2/k2_gate_activation
+- /C170897A_P3_CNG/segments/s_1666/k2/k2_gate_activation/A
+- /C170897A_P3_CNG/segments/s_1666/k2/k2_gate_activation/B
+- /C170897A_P3_CNG/segments/s_1666/k2/k2_gate_concentration
+- /C170897A_P3_CNG/segments/s_1666/k2/k2_gate_concentration/concentration_kinetic
+- /C170897A_P3_CNG/segments/s_1666/km
+- /C170897A_P3_CNG/segments/s_1666/km/km
+- /C170897A_P3_CNG/segments/s_1666/km/km/a
+- /C170897A_P3_CNG/segments/s_1666/km/km/b
+- /C170897A_P3_CNG/segments/s_1666/ca_pool
+- /C170897A_P3_CNG/segments/s_1666/stellate
+- /C170897A_P3_CNG/segments/s_1666/stellate/synapse
+- /C170897A_P3_CNG/segments/s_1666/stellate/exp2
 ",
 						   timeout => 20,
 						  },

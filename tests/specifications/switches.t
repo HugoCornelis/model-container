@@ -778,7 +778,8 @@ number_of_algorithm_instances: 0
 						  {
 						   description => "Are single query commands using a command line option processed properly ?",
 						   read => 'query: \'expand /*\'
-/Golgi
+---
+- /Golgi
 ',
 						   write => undef,
 						  },
@@ -800,9 +801,11 @@ number_of_algorithm_instances: 0
 						  {
 						   description => "Are multiple query commands using a command line option processed properly (2) ?",
 						   read => 'query: \'expand /*\'
-/Golgi
+---
+- /Golgi
 query: \'expand /*\'
-/Golgi
+---
+- /Golgi
 ',
 						   write => undef,
 						  },
@@ -829,7 +832,8 @@ query: \'expand /*\'
 						  {
 						   description => "Are multiple query commands using a command line option processed properly (3) ?",
 						   read => 'query: \'expand /*\'
-/Golgi
+---
+- /Golgi
 ' x 10,
 						   write => undef,
 						  },

@@ -25,21 +25,21 @@ my $test
 						  {
 						   description => "Do we find all the components in the golgi cell ?",
 						   read => "/Golgi
-/Golgi/Golgi_soma
-/Golgi/Golgi_soma/spikegen
-/Golgi/Golgi_soma/Ca_pool
-/Golgi/Golgi_soma/CaHVA
-/Golgi/Golgi_soma/H
-/Golgi/Golgi_soma/InNa
-/Golgi/Golgi_soma/KA
-/Golgi/Golgi_soma/KDr
-/Golgi/Golgi_soma/Moczyd_KC
-/Golgi/Golgi_soma/mf_AMPA
-/Golgi/Golgi_soma/mf_AMPA/synapse
-/Golgi/Golgi_soma/mf_AMPA/exp2
-/Golgi/Golgi_soma/pf_AMPA
-/Golgi/Golgi_soma/pf_AMPA/synapse
-/Golgi/Golgi_soma/pf_AMPA/exp2
+- /Golgi/Golgi_soma
+- /Golgi/Golgi_soma/spikegen
+- /Golgi/Golgi_soma/Ca_pool
+- /Golgi/Golgi_soma/CaHVA
+- /Golgi/Golgi_soma/H
+- /Golgi/Golgi_soma/InNa
+- /Golgi/Golgi_soma/KA
+- /Golgi/Golgi_soma/KDr
+- /Golgi/Golgi_soma/Moczyd_KC
+- /Golgi/Golgi_soma/mf_AMPA
+- /Golgi/Golgi_soma/mf_AMPA/synapse
+- /Golgi/Golgi_soma/mf_AMPA/exp2
+- /Golgi/Golgi_soma/pf_AMPA
+- /Golgi/Golgi_soma/pf_AMPA/synapse
+- /Golgi/Golgi_soma/pf_AMPA/exp2
 ",
 						   write => "expand /**",
 						  },
@@ -90,20 +90,20 @@ Principal serial ID = 16 of 16 Principal successors
 						  {
 						   description => "Do we find all the remaining components in the golgi cell (1) ?",
 						   read => "/Golgi
-/Golgi/Golgi_soma
-/Golgi/Golgi_soma/spikegen
-/Golgi/Golgi_soma/Ca_pool
-/Golgi/Golgi_soma/CaHVA
-/Golgi/Golgi_soma/InNa
-/Golgi/Golgi_soma/KA
-/Golgi/Golgi_soma/KDr
-/Golgi/Golgi_soma/Moczyd_KC
-/Golgi/Golgi_soma/mf_AMPA
-/Golgi/Golgi_soma/mf_AMPA/synapse
-/Golgi/Golgi_soma/mf_AMPA/exp2
-/Golgi/Golgi_soma/pf_AMPA
-/Golgi/Golgi_soma/pf_AMPA/synapse
-/Golgi/Golgi_soma/pf_AMPA/exp2
+- /Golgi/Golgi_soma
+- /Golgi/Golgi_soma/spikegen
+- /Golgi/Golgi_soma/Ca_pool
+- /Golgi/Golgi_soma/CaHVA
+- /Golgi/Golgi_soma/InNa
+- /Golgi/Golgi_soma/KA
+- /Golgi/Golgi_soma/KDr
+- /Golgi/Golgi_soma/Moczyd_KC
+- /Golgi/Golgi_soma/mf_AMPA
+- /Golgi/Golgi_soma/mf_AMPA/synapse
+- /Golgi/Golgi_soma/mf_AMPA/exp2
+- /Golgi/Golgi_soma/pf_AMPA
+- /Golgi/Golgi_soma/pf_AMPA/synapse
+- /Golgi/Golgi_soma/pf_AMPA/exp2
 ",
 						   write => "expand /**",
 						  },
@@ -156,18 +156,18 @@ Principal serial ID = 15 of 15 Principal successors
 						   comment => 'note that the deletions takes place at forestspace level, not treespace level',
 						   description => "Do we find all the remaining components in the golgi cell (2) ?",
 						   read => "/Golgi
-/Golgi/Golgi_soma
-/Golgi/Golgi_soma/spikegen
-/Golgi/Golgi_soma/Ca_pool
-/Golgi/Golgi_soma/CaHVA
-/Golgi/Golgi_soma/InNa
-/Golgi/Golgi_soma/KA
-/Golgi/Golgi_soma/KDr
-/Golgi/Golgi_soma/Moczyd_KC
-/Golgi/Golgi_soma/mf_AMPA
-/Golgi/Golgi_soma/mf_AMPA/exp2
-/Golgi/Golgi_soma/pf_AMPA
-/Golgi/Golgi_soma/pf_AMPA/exp2
+- /Golgi/Golgi_soma
+- /Golgi/Golgi_soma/spikegen
+- /Golgi/Golgi_soma/Ca_pool
+- /Golgi/Golgi_soma/CaHVA
+- /Golgi/Golgi_soma/InNa
+- /Golgi/Golgi_soma/KA
+- /Golgi/Golgi_soma/KDr
+- /Golgi/Golgi_soma/Moczyd_KC
+- /Golgi/Golgi_soma/mf_AMPA
+- /Golgi/Golgi_soma/mf_AMPA/exp2
+- /Golgi/Golgi_soma/pf_AMPA
+- /Golgi/Golgi_soma/pf_AMPA/exp2
 ",
 						   write => "expand /**",
 						  },
@@ -220,17 +220,17 @@ Principal serial ID = 13 of 13 Principal successors
 						   comment => 'note that the deletions takes place at forestspace level, not treespace level',
 						   description => "Do we find all the remaining components in the golgi cell (3) ?",
 						   read => "/Golgi
-/Golgi/Golgi_soma
-/Golgi/Golgi_soma/spikegen
-/Golgi/Golgi_soma/CaHVA
-/Golgi/Golgi_soma/InNa
-/Golgi/Golgi_soma/KA
-/Golgi/Golgi_soma/KDr
-/Golgi/Golgi_soma/Moczyd_KC
-/Golgi/Golgi_soma/mf_AMPA
-/Golgi/Golgi_soma/mf_AMPA/exp2
-/Golgi/Golgi_soma/pf_AMPA
-/Golgi/Golgi_soma/pf_AMPA/exp2
+- /Golgi/Golgi_soma
+- /Golgi/Golgi_soma/spikegen
+- /Golgi/Golgi_soma/CaHVA
+- /Golgi/Golgi_soma/InNa
+- /Golgi/Golgi_soma/KA
+- /Golgi/Golgi_soma/KDr
+- /Golgi/Golgi_soma/Moczyd_KC
+- /Golgi/Golgi_soma/mf_AMPA
+- /Golgi/Golgi_soma/mf_AMPA/exp2
+- /Golgi/Golgi_soma/pf_AMPA
+- /Golgi/Golgi_soma/pf_AMPA/exp2
 ",
 						   write => "expand /**",
 						  },

@@ -100,89 +100,89 @@ my $test
 						  {
 						   description => "A small population expansion",
 						   read => "/CerebellarCortex/MossyFibers
-/CerebellarCortex/MossyFibers/0
-/CerebellarCortex/MossyFibers/0/value
-/CerebellarCortex/MossyFibers/0/spikegen
-/CerebellarCortex/MossyFibers/1
-/CerebellarCortex/MossyFibers/1/value
-/CerebellarCortex/MossyFibers/1/spikegen
-/CerebellarCortex/MossyFibers/2
-/CerebellarCortex/MossyFibers/2/value
-/CerebellarCortex/MossyFibers/2/spikegen
-/CerebellarCortex/MossyFibers/3
-/CerebellarCortex/MossyFibers/3/value
-/CerebellarCortex/MossyFibers/3/spikegen
+- /CerebellarCortex/MossyFibers/0
+- /CerebellarCortex/MossyFibers/0/value
+- /CerebellarCortex/MossyFibers/0/spikegen
+- /CerebellarCortex/MossyFibers/1
+- /CerebellarCortex/MossyFibers/1/value
+- /CerebellarCortex/MossyFibers/1/spikegen
+- /CerebellarCortex/MossyFibers/2
+- /CerebellarCortex/MossyFibers/2/value
+- /CerebellarCortex/MossyFibers/2/spikegen
+- /CerebellarCortex/MossyFibers/3
+- /CerebellarCortex/MossyFibers/3/value
+- /CerebellarCortex/MossyFibers/3/spikegen
 ",
 						   write => "expand /CerebellarCortex/MossyFibers/**",
 						  },
 						  {
 						   description => "A selective single population expansion on spike receivers",
 						   read => "/CerebellarCortex/Golgis/0/Golgi_soma/mf_AMPA/synapse
-/CerebellarCortex/Golgis/0/Golgi_soma/pf_AMPA/synapse
-/CerebellarCortex/Golgis/1/Golgi_soma/mf_AMPA/synapse
-/CerebellarCortex/Golgis/1/Golgi_soma/pf_AMPA/synapse
+- /CerebellarCortex/Golgis/0/Golgi_soma/pf_AMPA/synapse
+- /CerebellarCortex/Golgis/1/Golgi_soma/mf_AMPA/synapse
+- /CerebellarCortex/Golgis/1/Golgi_soma/pf_AMPA/synapse
 ",
 						   write => "expand /CerebellarCortex/Golgis/**/synapse",
 						  },
 						  {
 						   description => "A selective single population expansion on spike generators",
 						   read => "/CerebellarCortex/Golgis/0/Golgi_soma/spikegen
-/CerebellarCortex/Golgis/1/Golgi_soma/spikegen
+- /CerebellarCortex/Golgis/1/Golgi_soma/spikegen
 ",
 						   write => "expand /CerebellarCortex/Golgis/**/spikegen",
 						  },
 						  {
 						   description => "A selective single population expansion on spike generators, alternate form",
 						   read => "/CerebellarCortex/Golgis/0/Golgi_soma/spikegen
-/CerebellarCortex/Golgis/1/Golgi_soma/spikegen
+- /CerebellarCortex/Golgis/1/Golgi_soma/spikegen
 ",
 						   write => "expand /**/Golgis/**/spikegen",
 						  },
 						  {
 						   description => "A selective multiple population expansion on spike generators",
 						   read => "/CerebellarCortex/MossyFibers/0/spikegen
-/CerebellarCortex/MossyFibers/1/spikegen
-/CerebellarCortex/MossyFibers/2/spikegen
-/CerebellarCortex/MossyFibers/3/spikegen
-/CerebellarCortex/Granules/0/Granule_soma/spikegen
-/CerebellarCortex/Granules/1/Granule_soma/spikegen
-/CerebellarCortex/Granules/2/Granule_soma/spikegen
-/CerebellarCortex/Granules/3/Granule_soma/spikegen
-/CerebellarCortex/Granules/4/Granule_soma/spikegen
-/CerebellarCortex/Granules/5/Granule_soma/spikegen
-/CerebellarCortex/Golgis/0/Golgi_soma/spikegen
-/CerebellarCortex/Golgis/1/Golgi_soma/spikegen
+- /CerebellarCortex/MossyFibers/1/spikegen
+- /CerebellarCortex/MossyFibers/2/spikegen
+- /CerebellarCortex/MossyFibers/3/spikegen
+- /CerebellarCortex/Granules/0/Granule_soma/spikegen
+- /CerebellarCortex/Granules/1/Granule_soma/spikegen
+- /CerebellarCortex/Granules/2/Granule_soma/spikegen
+- /CerebellarCortex/Granules/3/Granule_soma/spikegen
+- /CerebellarCortex/Granules/4/Granule_soma/spikegen
+- /CerebellarCortex/Granules/5/Granule_soma/spikegen
+- /CerebellarCortex/Golgis/0/Golgi_soma/spikegen
+- /CerebellarCortex/Golgis/1/Golgi_soma/spikegen
 ",
 						   write => "expand /CerebellarCortex/**/spikegen",
 						  },
 						  {
 						   description => "A selective single population expansion on spike generators using multiple wildcards",
 						   read => "/CerebellarCortex/Golgis/0/Golgi_soma/spikegen
-/CerebellarCortex/Golgis/1/Golgi_soma/spikegen
+- /CerebellarCortex/Golgis/1/Golgi_soma/spikegen
 ",
 						   write => "expand /**/Golgis/**/spikegen",
 						  },
 						  {
 						   description => "A selective multiple population expansion on spike generators using multiple wildcards",
 						   read => "/CerebellarCortex/MossyFibers/0/spikegen
-/CerebellarCortex/MossyFibers/1/spikegen
-/CerebellarCortex/MossyFibers/2/spikegen
-/CerebellarCortex/MossyFibers/3/spikegen
-/CerebellarCortex/Granules/0/Granule_soma/spikegen
-/CerebellarCortex/Granules/1/Granule_soma/spikegen
-/CerebellarCortex/Granules/2/Granule_soma/spikegen
-/CerebellarCortex/Granules/3/Granule_soma/spikegen
-/CerebellarCortex/Granules/4/Granule_soma/spikegen
-/CerebellarCortex/Granules/5/Granule_soma/spikegen
-/CerebellarCortex/Golgis/0/Golgi_soma/spikegen
-/CerebellarCortex/Golgis/1/Golgi_soma/spikegen
+- /CerebellarCortex/MossyFibers/1/spikegen
+- /CerebellarCortex/MossyFibers/2/spikegen
+- /CerebellarCortex/MossyFibers/3/spikegen
+- /CerebellarCortex/Granules/0/Granule_soma/spikegen
+- /CerebellarCortex/Granules/1/Granule_soma/spikegen
+- /CerebellarCortex/Granules/2/Granule_soma/spikegen
+- /CerebellarCortex/Granules/3/Granule_soma/spikegen
+- /CerebellarCortex/Granules/4/Granule_soma/spikegen
+- /CerebellarCortex/Granules/5/Granule_soma/spikegen
+- /CerebellarCortex/Golgis/0/Golgi_soma/spikegen
+- /CerebellarCortex/Golgis/1/Golgi_soma/spikegen
 ",
 						   write => "expand /**/**/spikegen",
 						  },
 # 						  {
 # 						   description => "A selective single population expansion on spike generators using multiple wildcards, with a intermediate null match",
 # 						   read => "/CerebellarCortex/Golgis/0/Golgi_soma/spikegen
-# /CerebellarCortex/Golgis/1/Golgi_soma/spikegen
+# - /CerebellarCortex/Golgis/1/Golgi_soma/spikegen
 # ",
 # 						   write => "expand /CerebellarCortex/**/Golgis/**/spikegen",
 # 						  },
