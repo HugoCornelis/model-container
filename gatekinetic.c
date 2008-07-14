@@ -261,7 +261,7 @@ GateKineticGetTabulationFlag
     //- is there a first entry in the table ?
 
     struct symtab_Parameters *pparEntry0
-	= SymbolGetParameter(&pgatk->bio.ioh.iol.hsle, "Entry[0]", ppist);
+	= SymbolGetParameter(&pgatk->bio.ioh.iol.hsle, "table[0]", ppist);
 
     if (pparEntry0)
     {

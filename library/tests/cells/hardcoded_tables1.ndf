@@ -1,0 +1,228 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+PRIVATE_MODELS
+
+	CHANNEL kh
+		BINDABLES
+			INPUT Vm,OUTPUT G,OUTPUT I
+		END BINDABLES
+
+		HH_GATE kh
+			BINDABLES
+				INPUT Vm,OUTPUT activation
+			END BINDABLES
+	
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			PARAMETERS
+
+				//m initial value, commonly forward over backward steady states
+
+				PARAMETER ( state_init = 0.03540844397 ),
+				PARAMETER ( POWER = 1.0 ),
+
+
+				PARAMETER ( HH_TABLE_START = 10 ),
+				PARAMETER ( HH_TABLE_END = 20 ),
+				PARAMETER ( HH_TABLE_STEP = 30 ),
+
+				PARAMETER ( HH_NUMBER_OF_TABLE_ENTRIES = 10 ),
+
+			END PARAMETERS
+
+			GATE_KINETIC_PART h1
+
+				BINDABLES
+					INPUT Vm, OUTPUT a
+				END BINDABLES
+
+				BINDINGS
+					INPUT ..->Vm
+				END BINDINGS
+
+				PARAMETERS
+
+					PARAMETER ( table[0] = 10 ),
+					PARAMETER ( table[1] = 11 ),
+					PARAMETER ( table[2] = 12 ),
+					PARAMETER ( table[3] = 13 ),
+					PARAMETER ( table[4] = 14 ),
+					PARAMETER ( table[5] = 15 ),
+					PARAMETER ( table[6] = 16 ),
+					PARAMETER ( table[7] = 17 ),
+					PARAMETER ( table[8] = 18 ),
+					PARAMETER ( table[9] = 19 ),
+
+				END PARAMETERS
+
+			END GATE_KINETIC_PART
+
+			GATE_KINETIC_PART h2
+
+				BINDABLES
+					INPUT Vm, OUTPUT a
+				END BINDABLES
+
+				BINDINGS
+					INPUT ..->Vm
+				END BINDINGS
+
+				PARAMETERS
+
+					PARAMETER ( table[0] = 21 ),
+					PARAMETER ( table[1] = 22 ),
+					PARAMETER ( table[2] = 23 ),
+					PARAMETER ( table[3] = 24 ),
+					PARAMETER ( table[4] = 25 ),
+					PARAMETER ( table[5] = 26 ),
+					PARAMETER ( table[6] = 27 ),
+					PARAMETER ( table[7] = 28 ),
+					PARAMETER ( table[8] = 29 ),
+					PARAMETER ( table[9] = 30 ),
+
+				END PARAMETERS
+
+			END GATE_KINETIC_PART
+
+		END HH_GATE
+
+		HH_GATE kh2
+			BINDABLES
+				INPUT Vm,OUTPUT activation
+			END BINDABLES
+	
+			BINDINGS
+				INPUT ..->Vm
+			END BINDINGS
+
+			PARAMETERS
+
+				//m initial value, commonly forward over backward steady states
+
+				PARAMETER ( state_init = 0.13540844397 ),
+				PARAMETER ( POWER = 2.0 ),
+
+				PARAMETER ( HH_TABLE_START = 70 ),
+				PARAMETER ( HH_TABLE_END = 80 ),
+				PARAMETER ( HH_TABLE_STEP = 90 ),
+
+				PARAMETER ( HH_NUMBER_OF_TABLE_ENTRIES = 8 ),
+
+			END PARAMETERS
+
+			GATE_KINETIC_PART h1
+
+				BINDABLES
+					INPUT Vm, OUTPUT a
+				END BINDABLES
+
+				BINDINGS
+					INPUT ..->Vm
+				END BINDINGS
+
+				PARAMETERS
+
+					PARAMETER ( table[0] = 31 ),
+					PARAMETER ( table[1] = 32 ),
+					PARAMETER ( table[2] = 33 ),
+					PARAMETER ( table[3] = 34 ),
+					PARAMETER ( table[4] = 35 ),
+					PARAMETER ( table[5] = 36 ),
+					PARAMETER ( table[6] = 37 ),
+					PARAMETER ( table[7] = 38 ),
+
+				END PARAMETERS
+
+			END GATE_KINETIC_PART
+
+			GATE_KINETIC_PART h2
+
+				BINDABLES
+					INPUT Vm, OUTPUT a
+				END BINDABLES
+
+				BINDINGS
+					INPUT ..->Vm
+				END BINDINGS
+
+				PARAMETERS
+
+					PARAMETER ( table[0] = 42 ),
+					PARAMETER ( table[1] = 43 ),
+					PARAMETER ( table[2] = 44 ),
+					PARAMETER ( table[3] = 44 ),
+					PARAMETER ( table[4] = 46 ),
+					PARAMETER ( table[5] = 47 ),
+					PARAMETER ( table[6] = 48 ),
+					PARAMETER ( table[7] = 49 ),
+
+				END PARAMETERS
+
+			END GATE_KINETIC_PART
+
+		END HH_GATE
+
+	END CHANNEL
+
+	SEGMENT soma2
+
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
+
+		BINDINGS
+			INPUT kh->I
+		END BINDINGS
+
+		OPTIONS SPHERICAL
+
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.0680 ),
+			PARAMETER ( RM = 1.000 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 )
+		END PARAMETERS
+
+		CHILD kh
+			kh
+			BINDINGS
+				INPUT ^->Vm
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( G_MAX = 3.0 ),
+				PARAMETER ( Erev = -0.030 )
+			END PARAMETERS
+		END CHILD
+
+	END SEGMENT
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CELL hardcoded_tables1
+
+		SEGMENT_GROUP segments
+
+			CHILD soma2 soma
+				PARAMETERS
+					PARAMETER ( rel_X = 0.000e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 29.80e-6 )
+				END PARAMETERS
+			END CHILD
+
+		END SEGMENT_GROUP
+
+	END CELL
+
+END PUBLIC_MODELS
+
+
