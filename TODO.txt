@@ -5,10 +5,6 @@ http://www.geocities.com/foetsch/python/swig_linux.htm
 
 * Implement state_init for default case.
 
-* SwiggableNeurospaces::symbol_parameter_resolve_scaled_value
-Has parameters ( $descendant->{_symbol}, $parameter, $descendant->{_context}, );
-Should be parameters ( $descendant->{_symbol}, $descendant->{_context}, $parameter, );
-
 * delete operation
 The delete operation calls SymbolRecalcAllSerials().
 SymbolRecalcAllSerials() should set a flag that the symbol serial has

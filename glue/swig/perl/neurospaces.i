@@ -3140,7 +3140,7 @@ double symbol_parameter_resolve_value(void *phsle, char *pc, void *ppist)
 }
 
 
-double symbol_parameter_resolve_scaled_value(void *phsle, char *pc, void *ppist)
+double symbol_parameter_resolve_scaled_value(void *phsle, void *ppist, char *pc)
 {
     if (!SvROK((SV *)phsle))
     {
