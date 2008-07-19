@@ -1655,8 +1655,8 @@ my $object_methods_signatures
 				   prototype => '(struct symtab_HSolveListElement *phsle, struct symtab_Parameters *ppar)',
 				  },
        'parameter_resolve_value' => {
-				     calling => '(phsle, pcName, ppist)',
-				     prototype => '(struct symtab_HSolveListElement *phsle, char *pcName, struct PidinStack *ppist)',
+				     calling => '(phsle, ppist, pcName)',
+				     prototype => '(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, char *pcName)',
 				    },
        'parameter_scale_value' => {
 				   calling => '(phsle, ppist, dValue, ppar)',

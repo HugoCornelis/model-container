@@ -532,8 +532,8 @@ ConnectionNewForStandardConnection
 /// ARGS.:
 ///
 ///	pconn.: connection.
-///	pcName: name of parameter.
 ///	ppist.: context of connection.
+///	pcName: name of parameter.
 ///
 /// RTN..: double : parameter value, FLT_MAX for failure.
 ///
@@ -544,8 +544,8 @@ ConnectionNewForStandardConnection
 double
 ConnectionParameterResolveValue
 (struct symtab_Connection *pconn,
- char *pcName,
- struct PidinStack *ppist)
+ struct PidinStack *ppist,
+ char *pcName)
 {
     //- set result : failure
 

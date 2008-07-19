@@ -761,13 +761,13 @@ SymbolParameterResolveCoordinateValue
 	    //- lookup parameters
 
 	    struct symtab_Parameters *pparX
-		= SymbolFindParameter(phsleWorking,"X",ppistWorking);
+		= SymbolFindParameter(phsleWorking, "X", ppistWorking);
 
 	    struct symtab_Parameters *pparY
-		= SymbolFindParameter(phsleWorking,"Y",ppistWorking);
+		= SymbolFindParameter(phsleWorking, "Y", ppistWorking);
 
 	    struct symtab_Parameters *pparZ
-		= SymbolFindParameter(phsleWorking,"Z",ppistWorking);
+		= SymbolFindParameter(phsleWorking, "Z", ppistWorking);
 
 	    if (!pparX
 		|| !pparY
@@ -784,9 +784,9 @@ SymbolParameterResolveCoordinateValue
 
 	    //- resolve values
 
-	    dResolvedX = ParameterResolveValue(pparX,ppistWorking);
-	    dResolvedY = ParameterResolveValue(pparY,ppistWorking);
-	    dResolvedZ = ParameterResolveValue(pparZ,ppistWorking);
+	    dResolvedX = ParameterResolveValue(pparX, ppistWorking);
+	    dResolvedY = ParameterResolveValue(pparY, ppistWorking);
+	    dResolvedZ = ParameterResolveValue(pparZ, ppistWorking);
 
 	    if (dResolvedX == FLT_MAX
 		|| dResolvedY == FLT_MAX
@@ -814,7 +814,7 @@ SymbolParameterResolveCoordinateValue
 	    {
 		bTransformed
 		    = SymbolParameterTransformValue
-		      (phsleWorking,ppistWorking,pparX,pD3Coord);
+		      (phsleWorking, ppistWorking, pparX, pD3Coord);
 	    }
 	    else
 	    {
@@ -951,13 +951,13 @@ SymbolParameterResolveTransformedValue
 	    //- lookup parameters
 
 	    struct symtab_Parameters *pparX
-		= SymbolFindParameter(phsleWorking,"X",ppistWorking);
+		= SymbolFindParameter(phsleWorking, "X", ppistWorking);
 
 	    struct symtab_Parameters *pparY
-		= SymbolFindParameter(phsleWorking,"Y",ppistWorking);
+		= SymbolFindParameter(phsleWorking, "Y", ppistWorking);
 
 	    struct symtab_Parameters *pparZ
-		= SymbolFindParameter(phsleWorking,"Z",ppistWorking);
+		= SymbolFindParameter(phsleWorking, "Z", ppistWorking);
 
 	    if (!pparX || !pparY || !pparZ)
 	    {
@@ -970,9 +970,9 @@ SymbolParameterResolveTransformedValue
 
 	    //- resolve values
 
-	    dResolvedX = ParameterResolveValue(pparX,ppistWorking);
-	    dResolvedY = ParameterResolveValue(pparY,ppistWorking);
-	    dResolvedZ = ParameterResolveValue(pparZ,ppistWorking);
+	    dResolvedX = ParameterResolveValue(pparX, ppistWorking);
+	    dResolvedY = ParameterResolveValue(pparY, ppistWorking);
+	    dResolvedZ = ParameterResolveValue(pparZ, ppistWorking);
 
 	    if (dResolvedX == FLT_MAX
 		|| dResolvedY == FLT_MAX
@@ -995,7 +995,7 @@ SymbolParameterResolveTransformedValue
 
 	    bTransformed
 		= SymbolParameterTransformValue
-		  (phsleWorking,ppistWorking,pparX,&D3Value);
+		  (phsleWorking, ppistWorking, pparX, &D3Value);
 
 	}
 
@@ -1044,8 +1044,8 @@ SymbolParameterResolveTransformedValue
 /// ARGS.:
 ///
 ///	phsle..: symbol to get parameter for
-///	pcName.: name of parameter
 ///	ppist..: context of symbol
+///	pcName.: name of parameter
 ///
 /// RTN..: double : scaled parameter value, FLT_MAX if some error occured
 ///
@@ -1056,8 +1056,8 @@ SymbolParameterResolveTransformedValue
 double
 SymbolParameterResolveScaledValue
 (struct symtab_HSolveListElement *phsle,
- char *pcName,
- struct PidinStack *ppist)
+ struct PidinStack *ppist,
+ char *pcName)
 {
     //- set default result : failure
 
@@ -1065,7 +1065,7 @@ SymbolParameterResolveScaledValue
 
     //- lookup parameter
 
-    struct symtab_Parameters *ppar = SymbolFindParameter(phsle,pcName,ppist);
+    struct symtab_Parameters *ppar = SymbolFindParameter(phsle, pcName, ppist);
 
     //- if found
 
@@ -1073,7 +1073,7 @@ SymbolParameterResolveScaledValue
     {
 	//- resolve value
 
-	dResult = ParameterResolveScaledValue(ppar,ppist);
+	dResult = ParameterResolveScaledValue(ppar, ppist);
     }
 
     //- return result
@@ -1179,61 +1179,61 @@ SymbolParameterTransformValue
 	    //- get rotation parameters
 
 	    struct symtab_Parameters *pparAngle
-		= SymbolFindParameter(phsle,"ROTATE_ANGLE",ppist);
+		= SymbolFindParameter(phsle,"ROTATE_ANGLE", ppist);
 
 	    struct symtab_Parameters *pparCenterX
-		= SymbolFindParameter(phsle,"ROTATE_CENTER_X",ppist);
+		= SymbolFindParameter(phsle,"ROTATE_CENTER_X", ppist);
 
 	    struct symtab_Parameters *pparCenterY
-		= SymbolFindParameter(phsle,"ROTATE_CENTER_Y",ppist);
+		= SymbolFindParameter(phsle,"ROTATE_CENTER_Y", ppist);
 
 	    struct symtab_Parameters *pparCenterZ
-		= SymbolFindParameter(phsle,"ROTATE_CENTER_Z",ppist);
+		= SymbolFindParameter(phsle,"ROTATE_CENTER_Z", ppist);
 
 	    struct symtab_Parameters *pparAxisX
-		= SymbolFindParameter(phsle,"ROTATE_AXIS_X",ppist);
+		= SymbolFindParameter(phsle,"ROTATE_AXIS_X", ppist);
 
 	    struct symtab_Parameters *pparAxisY
-		= SymbolFindParameter(phsle,"ROTATE_AXIS_Y",ppist);
+		= SymbolFindParameter(phsle,"ROTATE_AXIS_Y", ppist);
 
 	    struct symtab_Parameters *pparAxisZ
-		= SymbolFindParameter(phsle,"ROTATE_AXIS_Z",ppist);
+		= SymbolFindParameter(phsle,"ROTATE_AXIS_Z", ppist);
 
 	    //- resolve values for rotation parameters
 
 	    double dAngle
 		= pparAngle
-		  ? ParameterResolveValue(pparAngle,ppist)
+		  ? ParameterResolveValue(pparAngle, ppist)
 		  : 0.0 ;
 
 	    double dCenterX
 		= pparCenterX
-		  ? ParameterResolveValue(pparCenterX,ppist)
+		  ? ParameterResolveValue(pparCenterX, ppist)
 		  : 0.0 ;
 
 	    double dCenterY
 		= pparCenterY
-		  ? ParameterResolveValue(pparCenterY,ppist)
+		  ? ParameterResolveValue(pparCenterY, ppist)
 		  : 0.0 ;
 
 	    double dCenterZ
 		= pparCenterZ
-		  ? ParameterResolveValue(pparCenterZ,ppist)
+		  ? ParameterResolveValue(pparCenterZ, ppist)
 		  : 0.0 ;
 
 	    double dAxisX
 		= pparAxisX
-		  ? ParameterResolveValue(pparAxisX,ppist)
+		  ? ParameterResolveValue(pparAxisX, ppist)
 		  : 0.0 ;
 
 	    double dAxisY
 		= pparAxisY
-		  ? ParameterResolveValue(pparAxisY,ppist)
+		  ? ParameterResolveValue(pparAxisY, ppist)
 		  : 0.0 ;
 
 	    double dAxisZ
 		= pparAxisZ
-		  ? ParameterResolveValue(pparAxisZ,ppist)
+		  ? ParameterResolveValue(pparAxisZ, ppist)
 		  : 0.0 ;
 
 	    /* Normalising the axis vector */

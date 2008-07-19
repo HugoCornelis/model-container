@@ -105,7 +105,7 @@ static inline
 #endif
 double
 AlgorithmSymbolParameterResolveValue
-(struct symtab_AlgorithmSymbol *palgs, char *pcName, struct PidinStack *ppist);
+(struct symtab_AlgorithmSymbol *palgs, struct PidinStack *ppist, char *pcName);
 
 
 //s
@@ -283,7 +283,7 @@ static inline
 #endif
 double
 AlgorithmSymbolParameterResolveValue
-(struct symtab_AlgorithmSymbol *palgs, char *pcName, struct PidinStack *ppist)
+(struct symtab_AlgorithmSymbol *palgs, struct PidinStack *ppist, char *pcName)
 {
     double dResult = FLT_MAX;
 

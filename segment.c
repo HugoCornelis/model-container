@@ -304,11 +304,11 @@ SegmentGetLength
     //- get coordinates
 
     double dX
-	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, "rel_X", ppist);
+	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "rel_X");
     double dY
-	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, "rel_Y", ppist);
+	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "rel_Y");
     double dZ
-	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, "rel_Z", ppist);
+	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "rel_Z");
 
     if (dX != FLT_MAX
 	&& dY != FLT_MAX
@@ -537,7 +537,7 @@ SegmentGetSomatopetalBranchpoints
 
 	//- add branch point flag of this symbol
 
-	double dBranchpoint = SymbolParameterResolveValue(phsle, "BRANCHPOINT", ppistWorking);
+	double dBranchpoint = SymbolParameterResolveValue(phsle, ppistWorking, "BRANCHPOINT");
 
 	if (dBranchpoint == FLT_MAX)
 	{
@@ -575,7 +575,7 @@ SegmentGetSomatopetalBranchpoints
 
 	    //- add number of branch points of the parent
 
-	    double dParentBranchPoints = SymbolParameterResolveValue(phsle, "SOMATOPETAL_BRANCHPOINTS", ppistWorking);
+	    double dParentBranchPoints = SymbolParameterResolveValue(phsle, ppistWorking, "SOMATOPETAL_BRANCHPOINTS");
 
 	    if (dParentBranchPoints != FLT_MAX)
 	    {
@@ -658,7 +658,7 @@ SegmentGetSomatopetalDistance
 
 	//- add length of this symbol
 
-	double dLength = SymbolParameterResolveValue(phsle, "LENGTH", ppistWorking);
+	double dLength = SymbolParameterResolveValue(phsle, ppistWorking, "LENGTH");
 
 	if (dLength == FLT_MAX)
 	{
@@ -702,7 +702,7 @@ SegmentGetSomatopetalDistance
 
 	    //- add somatopetal distance of the parent
 
-	    double dParentDistance = SymbolParameterResolveValue(phsle, "SOMATOPETAL_DISTANCE", ppistWorking);
+	    double dParentDistance = SymbolParameterResolveValue(phsle, ppistWorking, "SOMATOPETAL_DISTANCE");
 
 	    if (dParentDistance != FLT_MAX)
 	    {
@@ -777,7 +777,7 @@ SegmentGetSurface
 
 	dResult
 	    = SymbolParameterResolveValue
-	      (&psegment->segr.bio.ioh.iol.hsle, "DIA", ppist);
+	      (&psegment->segr.bio.ioh.iol.hsle, ppist, "DIA");
 
 	dResult = dResult * dResult * M_PI;
     }
@@ -790,11 +790,11 @@ SegmentGetSurface
 
 	double dDia
 	    = SymbolParameterResolveValue
-	      (&psegment->segr.bio.ioh.iol.hsle, "DIA", ppist);
+	      (&psegment->segr.bio.ioh.iol.hsle, ppist, "DIA");
 
 	double dLength
 	    = SymbolParameterResolveValue
-	      (&psegment->segr.bio.ioh.iol.hsle, "LENGTH", ppist);
+	      (&psegment->segr.bio.ioh.iol.hsle, ppist, "LENGTH");
 
 	if (dDia != FLT_MAX && dLength != FLT_MAX)
 	{
@@ -839,9 +839,9 @@ SegmentGetTau
     //! note that it does not matter if we use specific or actual values
 
     double dCm
-	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, "CM", ppist);
+	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "CM");
     double dRm
-	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, "RM", ppist);
+	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "RM");
 
     if (dCm != FLT_MAX
 	&& dRm != FLT_MAX)
@@ -901,7 +901,7 @@ SegmentGetVolume
 
 	dResult
 	    = SymbolParameterResolveValue
-	      (&psegment->segr.bio.ioh.iol.hsle, "DIA", ppist);
+	      (&psegment->segr.bio.ioh.iol.hsle, ppist, "DIA");
 
 	dResult = dResult * dResult * dResult * M_PI / 6;
     }
@@ -914,11 +914,11 @@ SegmentGetVolume
 
 	double dDia
 	    = SymbolParameterResolveValue
-	      (&psegment->segr.bio.ioh.iol.hsle, "DIA", ppist);
+	      (&psegment->segr.bio.ioh.iol.hsle, ppist, "DIA");
 
 	double dLength
 	    = SymbolParameterResolveValue
-	      (&psegment->segr.bio.ioh.iol.hsle, "LENGTH", ppist);
+	      (&psegment->segr.bio.ioh.iol.hsle, ppist, "LENGTH");
 
 	if (dDia != FLT_MAX && dLength != FLT_MAX)
 	{

@@ -78,8 +78,8 @@ ConnectionNewForStandardConnection
 double
 ConnectionParameterResolveValue
 (struct symtab_Connection *pconn,
- char *pcName,
- struct PidinStack *ppist);
+ struct PidinStack *ppist,
+ char *pcName);
 
 int ConnectionPrint
 (struct symtab_Connection *pconn,int bAll,int iIndent,FILE *pfile);

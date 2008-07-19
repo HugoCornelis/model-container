@@ -519,7 +519,7 @@ static int SpineSegmentCheck
 
     dDia
 	= SymbolParameterResolveValue
-	  (&pD3segm->segment.bio.ioh.iol.hsle,"DIA",ppist);
+	  (&pD3segm->segment.bio.ioh.iol.hsle, ppist, "DIA");
 
     //- if not found
 
@@ -601,7 +601,7 @@ static int SpineDoAdjustments
 
     dLength
 	= SymbolParameterResolveValue
-	  (&pD3segm->segment.bio.ioh.iol.hsle,"LENGTH",ppist);
+	  (&pD3segm->segment.bio.ioh.iol.hsle, ppist, "LENGTH");
 
     //- calculate surface for virtual spines and physical spines
 
@@ -635,7 +635,7 @@ static int SpineDoAdjustments
 
 	double dSegment
 	    = SymbolParameterResolveValue
-	      (&pD3segm->segment.bio.ioh.iol.hsle,"SURFACE",ppist);
+	      (&pD3segm->segment.bio.ioh.iol.hsle, ppist, "SURFACE");
 
 	if (dSegment == -1 || dSegment == FLT_MAX)
 	{
@@ -946,7 +946,7 @@ static int SpineInitAlgorithm
 	    //- add surface of segment to surface of spine
 
 	    svSpineVariables.dSpineSurface
-		+= SymbolParameterResolveValue(phsleSection,"SURFACE",NULL);
+		+= SymbolParameterResolveValue(phsleSection, NULL, "SURFACE");
 
 	    //- go to next section
 

@@ -204,8 +204,8 @@ SymbolParameterResolveCoordinateValue
 double
 SymbolParameterResolveScaledValue
 (struct symtab_HSolveListElement *phsle,
- char *pcName,
- struct PidinStack *ppist);
+ struct PidinStack *ppist,
+ char *pcName);
 
 int
 SymbolParameterTransformValue

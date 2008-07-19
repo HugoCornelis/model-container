@@ -290,8 +290,8 @@ ConnectionTraverser
 
 	//- get pre and post synaptic targets
 
-	double dPre = SymbolParameterResolveValue(phsle, "PRE", NULL);
-	double dPost = SymbolParameterResolveValue(phsle, "POST", NULL);
+	double dPre = SymbolParameterResolveValue(phsle, NULL, "PRE");
+	double dPost = SymbolParameterResolveValue(phsle, NULL, "POST");
 
 	//- compute generator and receiver
 
@@ -300,8 +300,8 @@ ConnectionTraverser
 
 	//- compute attributes (delay, weight)
 
-	double dDelay = SymbolParameterResolveValue(phsle, "DELAY", NULL);
-	double dWeight = SymbolParameterResolveValue(phsle, "WEIGHT", NULL);
+	double dDelay = SymbolParameterResolveValue(phsle, NULL, "DELAY");
+	double dWeight = SymbolParameterResolveValue(phsle, NULL, "WEIGHT");
 
 	//- collect data about the generator
 
@@ -1325,7 +1325,7 @@ swigi_parameters_2_array
 
 	hv_store(phvPre, "Name", 4, psvPreName, 0);
 
-	int iPre = SymbolParameterResolveValue(phsle,"PRE",NULL);
+	int iPre = SymbolParameterResolveValue(phsle, NULL, "PRE");
 
 	SV * psvPreValue = newSViv(iPre);
 
@@ -1338,7 +1338,7 @@ swigi_parameters_2_array
 
 	hv_store(phvPost, "Name", 4, psvPostName, 0);
 
-	int iPost = SymbolParameterResolveValue(phsle,"POST",NULL);
+	int iPost = SymbolParameterResolveValue(phsle, NULL, "POST");
 
 	SV * psvPostValue = newSViv(iPost);
 
@@ -1353,7 +1353,7 @@ swigi_parameters_2_array
 
 	hv_store(phvDelay, "Name", 4, psvDelayName, 0);
 
-	double dDelay = SymbolParameterResolveValue(phsle,"DELAY",NULL);
+	double dDelay = SymbolParameterResolveValue(phsle, NULL, "DELAY");
 
 	SV * psvDelayValue = newSVnv(dDelay);
 
@@ -1366,7 +1366,7 @@ swigi_parameters_2_array
 
 	hv_store(phvWeight, "Name", 4, psvWeightName, 0);
 
-	double dWeight = SymbolParameterResolveValue(phsle,"WEIGHT",NULL);
+	double dWeight = SymbolParameterResolveValue(phsle, NULL, "WEIGHT");
 
 	SV * psvWeightValue = newSVnv(dWeight);
 
@@ -3114,7 +3114,7 @@ SV * symbol_parameter_value(void *phsle, char *pc, void *ppist)
 }
 
 
-double symbol_parameter_resolve_value(void *phsle, char *pc, void *ppist)
+double symbol_parameter_resolve_value(void *phsle, void *ppist, char *pc)
 {
     if (!SvROK((SV *)phsle))
     {
@@ -3136,7 +3136,7 @@ double symbol_parameter_resolve_value(void *phsle, char *pc, void *ppist)
 
     ppist = (void *)SvIV(SvRV((SV *)ppist));
 
-    return SymbolParameterResolveValue(phsle, pc, ppist);
+    return SymbolParameterResolveValue(phsle, ppist, pc);
 }
 
 
@@ -3144,14 +3144,14 @@ double symbol_parameter_resolve_scaled_value(void *phsle, void *ppist, char *pc)
 {
     if (!SvROK((SV *)phsle))
     {
-	printf("In symbol_parameter_resolve_value(): could not dereference phsle\n");
+	printf("In symbol_parameter_resolve_scaled_value(): could not dereference phsle\n");
 
 	return(FLT_MAX);
     }
 
     if (!SvROK((SV *)ppist))
     {
-	printf("In symbol_parameter_resolve_value(): could not dereference ppist\n");
+	printf("In symbol_parameter_resolve_scaled_value(): could not dereference ppist\n");
 
 	return(FLT_MAX);
     }
@@ -3162,7 +3162,7 @@ double symbol_parameter_resolve_scaled_value(void *phsle, void *ppist, char *pc)
 
     ppist = (void *)SvIV(SvRV((SV *)ppist));
 
-    return SymbolParameterResolveScaledValue(phsle, pc, ppist);
+    return SymbolParameterResolveScaledValue(phsle, ppist, pc);
 }
 
 

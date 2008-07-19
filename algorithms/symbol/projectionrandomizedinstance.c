@@ -242,11 +242,11 @@ ProjectionRandomizedInstanceNew
 
 	//- scan random seed
 
-	ppri->pro.dRandomSeed = SymbolParameterResolveValue(&palgs->hsle, "RANDOMSEED", ppist);
+	ppri->pro.dRandomSeed = SymbolParameterResolveValue(&palgs->hsle, ppist, "RANDOMSEED");
 
 	//- scan probability value
 
-	ppri->pro.dProbability = SymbolParameterResolveValue(&palgs->hsle, "PROBABILITY", ppist);
+	ppri->pro.dProbability = SymbolParameterResolveValue(&palgs->hsle, ppist, "PROBABILITY");
 
 	//- scan presynaptic part
 

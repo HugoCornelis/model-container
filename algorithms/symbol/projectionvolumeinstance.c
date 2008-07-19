@@ -301,11 +301,11 @@ ProjectionVolumeInstanceNew
 
 	//- scan random seed
 
-	ppvi->pro.dRandomSeed = SymbolParameterResolveValue(&palgs->hsle, "RANDOMSEED", ppist);
+	ppvi->pro.dRandomSeed = SymbolParameterResolveValue(&palgs->hsle, ppist, "RANDOMSEED");
 
 	//- scan probability value
 
-	ppvi->pro.dProbability = SymbolParameterResolveValue(&palgs->hsle, "PROBABILITY", ppist);
+	ppvi->pro.dProbability = SymbolParameterResolveValue(&palgs->hsle, ppist, "PROBABILITY");
 
 	//- scan presynaptic part
 
@@ -343,13 +343,13 @@ ProjectionVolumeInstanceNew
 
 	//- scan source coordinates, go to next arg
 
-	ppvi->pro.D3Source1.dx = SymbolParameterResolveValue(&palgs->hsle, "SOURCE_X1", ppist);
-	ppvi->pro.D3Source1.dy = SymbolParameterResolveValue(&palgs->hsle, "SOURCE_Y1", ppist);
-	ppvi->pro.D3Source1.dz = SymbolParameterResolveValue(&palgs->hsle, "SOURCE_Z1", ppist);
+	ppvi->pro.D3Source1.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_X1");
+	ppvi->pro.D3Source1.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Y1");
+	ppvi->pro.D3Source1.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Z1");
 
-	ppvi->pro.D3Source2.dx = SymbolParameterResolveValue(&palgs->hsle, "SOURCE_X2", ppist);
-	ppvi->pro.D3Source2.dy = SymbolParameterResolveValue(&palgs->hsle, "SOURCE_Y2", ppist);
-	ppvi->pro.D3Source2.dz = SymbolParameterResolveValue(&palgs->hsle, "SOURCE_Z2", ppist);
+	ppvi->pro.D3Source2.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_X2");
+	ppvi->pro.D3Source2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Y2");
+	ppvi->pro.D3Source2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Z2");
 
 	//- scan destination type
 
@@ -373,17 +373,17 @@ ProjectionVolumeInstanceNew
 
 	//- scan destination coordinates, go to next arg
 
-	ppvi->pro.D3Destination1.dx = SymbolParameterResolveValue(&palgs->hsle, "DESTINATION_X1", ppist);
-	ppvi->pro.D3Destination1.dy = SymbolParameterResolveValue(&palgs->hsle, "DESTINATION_Y1", ppist);
-	ppvi->pro.D3Destination1.dz = SymbolParameterResolveValue(&palgs->hsle, "DESTINATION_Z1", ppist);
+	ppvi->pro.D3Destination1.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_X1");
+	ppvi->pro.D3Destination1.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Y1");
+	ppvi->pro.D3Destination1.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Z1");
 
-	ppvi->pro.D3Destination2.dx = SymbolParameterResolveValue(&palgs->hsle, "DESTINATION_X2", ppist);
-	ppvi->pro.D3Destination2.dy = SymbolParameterResolveValue(&palgs->hsle, "DESTINATION_Y2", ppist);
-	ppvi->pro.D3Destination2.dz = SymbolParameterResolveValue(&palgs->hsle, "DESTINATION_Z2", ppist);
+	ppvi->pro.D3Destination2.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_X2");
+	ppvi->pro.D3Destination2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Y2");
+	ppvi->pro.D3Destination2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Z2");
 
 	//- scan weight
 
-	ppvi->pro.dWeight = SymbolParameterResolveValue(&palgs->hsle, "WEIGHT", ppist);
+	ppvi->pro.dWeight = SymbolParameterResolveValue(&palgs->hsle, ppist, "WEIGHT");
 
 	//- scan delay type
 
@@ -409,11 +409,11 @@ ProjectionVolumeInstanceNew
 
 	if (ppvi->pro.iDelayType == 1)
 	{
-	    ppvi->pro.uDelay.dFixed = SymbolParameterResolveValue(&palgs->hsle, "FIXED_DELAY", ppist);
+	    ppvi->pro.uDelay.dFixed = SymbolParameterResolveValue(&palgs->hsle, ppist, "FIXED_DELAY");
 	}
 	else
 	{
-	    ppvi->pro.uDelay.dVelocity = SymbolParameterResolveValue(&palgs->hsle, "VELOCITY", ppist);
+	    ppvi->pro.uDelay.dVelocity = SymbolParameterResolveValue(&palgs->hsle, ppist, "VELOCITY");
 	}
     }
 

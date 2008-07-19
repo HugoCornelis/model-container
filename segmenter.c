@@ -358,7 +358,7 @@ SegmenterLengthCalculator
 
     //- get length
 
-    double dLength = SymbolParameterResolveValue(phsle, "LENGTH", ptstr->ppist);
+    double dLength = SymbolParameterResolveValue(phsle, ptstr->ppist, "LENGTH");
 
     if (dLength != FLT_MAX)
     {
@@ -433,7 +433,7 @@ SegmenterSurfaceCalculator
 
     //- get surface
 
-    double dSurface = SymbolParameterResolveValue(phsle, "SURFACE", ptstr->ppist);
+    double dSurface = SymbolParameterResolveValue(phsle, ptstr->ppist, "SURFACE");
 
     if (dSurface != FLT_MAX)
     {
@@ -508,7 +508,7 @@ SegmenterVolumeCalculator
 
     //- get volume
 
-    double dVolume = SymbolParameterResolveValue(phsle, "VOLUME", ptstr->ppist);
+    double dVolume = SymbolParameterResolveValue(phsle, ptstr->ppist, "VOLUME");
 
     if (dVolume != FLT_MAX)
     {
@@ -1077,7 +1077,7 @@ SegmenterMesherOnLengthProcessor
 
     //- get segment length
 
-    double dLength = SymbolParameterResolveValue(phsle, "LENGTH", ptstr->ppist);
+    double dLength = SymbolParameterResolveValue(phsle, ptstr->ppist, "LENGTH");
 
     if (dLength == FLT_MAX)
     {
@@ -1086,13 +1086,13 @@ SegmenterMesherOnLengthProcessor
 
     //- get orientations
 
-    double dX = SymbolParameterResolveValue(phsle, "rel_X", ptstr->ppist);
-    double dY = SymbolParameterResolveValue(phsle, "rel_Y", ptstr->ppist);
-    double dZ = SymbolParameterResolveValue(phsle, "rel_Z", ptstr->ppist);
+    double dX = SymbolParameterResolveValue(phsle, ptstr->ppist, "rel_X");
+    double dY = SymbolParameterResolveValue(phsle, ptstr->ppist, "rel_Y");
+    double dZ = SymbolParameterResolveValue(phsle, ptstr->ppist, "rel_Z");
 
     //- get DIA
 
-    double dDia = SymbolParameterResolveValue(phsle, "DIA", ptstr->ppist);
+    double dDia = SymbolParameterResolveValue(phsle, ptstr->ppist, "DIA");
 
     //- get parent DIA
 
@@ -1139,7 +1139,7 @@ SegmenterMesherOnLengthProcessor
     }
 
     double dDiaParent
-	= SymbolParameterResolveValue(phsleParent, "DIA", ppistParent);
+	= SymbolParameterResolveValue(phsleParent, ppistParent, "DIA");
 
     //- if longer than requested maximum
 

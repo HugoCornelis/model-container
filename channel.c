@@ -895,7 +895,7 @@ ChannelParameterScaleValue
 	    //- get segment diameter
 
 	    double dDia
-		= SymbolParameterResolveValue(phsle,"DIA",ppistComp);
+		= SymbolParameterResolveValue(phsle, ppistComp, "DIA");
 
 	    //- if spherical
 
@@ -913,7 +913,7 @@ ChannelParameterScaleValue
 		//- get segment length
 
 		double dLength
-		    = SymbolParameterResolveValue(phsle,"LENGTH",ppistComp);
+		    = SymbolParameterResolveValue(phsle, ppistComp, "LENGTH");
 
 		//- calculate surface
 

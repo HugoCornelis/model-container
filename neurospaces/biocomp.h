@@ -243,14 +243,14 @@ static inline
 #endif
 double
 BioComponentParameterResolveValue
-(struct symtab_BioComponent *pbio, char *pcName, struct PidinStack *ppist);
+(struct symtab_BioComponent *pbio, struct PidinStack *ppist, char *pcName);
 
 #ifndef SWIG
 static inline
 #endif
 int
 BioComponentSetAtXYZ
-(struct symtab_BioComponent *pbio,double dx,double dy,double dz);
+(struct symtab_BioComponent *pbio, double dx, double dy, double dz);
 
 #ifndef SWIG
 static inline
@@ -427,7 +427,7 @@ static inline
 #endif
 double
 BioComponentParameterResolveValue
-(struct symtab_BioComponent *pbio, char *pcName, struct PidinStack *ppist)
+(struct symtab_BioComponent *pbio, struct PidinStack *ppist, char *pcName)
 {
     double dResult = FLT_MAX;
     struct symtab_Parameters *ppar;
@@ -550,7 +550,7 @@ static inline
 #endif
 int
 BioComponentSetAtXYZ
-(struct symtab_BioComponent *pbio,double dx,double dy,double dz)
+(struct symtab_BioComponent *pbio, double dx, double dy, double dz)
 {
     //- set default result : ok
 

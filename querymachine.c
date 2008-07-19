@@ -2899,17 +2899,17 @@ QueryMachineNeuroConnectionStore
 
 	//- get pre and post for connection
 
-	int iPre = SymbolParameterResolveValue((struct symtab_HSolveListElement *)pconn, "PRE", NULL);
+	int iPre = SymbolParameterResolveValue((struct symtab_HSolveListElement *)pconn, NULL, "PRE");
 
-	int iPost = SymbolParameterResolveValue((struct symtab_HSolveListElement *)pconn, "POST", NULL);
+	int iPost = SymbolParameterResolveValue((struct symtab_HSolveListElement *)pconn, NULL, "POST");
 
 	//- get weight and delay
 
 	double dDelay
-	    = SymbolParameterResolveValue((struct symtab_HSolveListElement *)pconn, "DELAY", NULL);
+	    = SymbolParameterResolveValue((struct symtab_HSolveListElement *)pconn, NULL, "DELAY");
 
 	double dWeight
-	    = SymbolParameterResolveValue((struct symtab_HSolveListElement *)pconn, "WEIGHT", NULL);
+	    = SymbolParameterResolveValue((struct symtab_HSolveListElement *)pconn, NULL, "WEIGHT");
 
 	fprintf
 	    (pqtd->pfile,
@@ -4964,7 +4964,7 @@ static int QueryHandlerPrintParameterScaled
 	{
 	    //- resolve value
 
-	    double d = SymbolParameterResolveScaledValue(phsle,pcPar,ppist);
+	    double d = SymbolParameterResolveScaledValue(phsle, ppist, pcPar);
 
 	    //- print result
 

@@ -215,7 +215,7 @@ ContourPointGetThickness
 
     //- get length of contour
 
-    dResult = SymbolParameterResolveValue(phsle, "THICKNESS", ppistWorking);
+    dResult = SymbolParameterResolveValue(phsle, ppistWorking, "THICKNESS");
 
     //- return result
 

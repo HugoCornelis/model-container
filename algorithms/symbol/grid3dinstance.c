@@ -197,27 +197,27 @@ Grid3DInstanceNew
 
 	//- scan x count
 
-	pg3i->g3o.ix = SymbolParameterResolveValue(&palgs->hsle, "X_COUNT", ppist);
+	pg3i->g3o.ix = SymbolParameterResolveValue(&palgs->hsle, ppist, "X_COUNT");
 
 	//- scan x distance
 
-	pg3i->g3o.fx = SymbolParameterResolveValue(&palgs->hsle, "X_DISTANCE", ppist);
+	pg3i->g3o.fx = SymbolParameterResolveValue(&palgs->hsle, ppist, "X_DISTANCE");
 
 	//- scan y count
 
-	pg3i->g3o.iy = SymbolParameterResolveValue(&palgs->hsle, "Y_COUNT", ppist);
+	pg3i->g3o.iy = SymbolParameterResolveValue(&palgs->hsle, ppist, "Y_COUNT");
 
 	//- scan y distance
 
-	pg3i->g3o.fy = SymbolParameterResolveValue(&palgs->hsle, "Y_DISTANCE", ppist);
+	pg3i->g3o.fy = SymbolParameterResolveValue(&palgs->hsle, ppist, "Y_DISTANCE");
 
 	//- scan z count
 
-	pg3i->g3o.iz = SymbolParameterResolveValue(&palgs->hsle, "Z_COUNT", ppist);
+	pg3i->g3o.iz = SymbolParameterResolveValue(&palgs->hsle, ppist, "Z_COUNT");
 
 	//- scan z distance
 
-	pg3i->g3o.fz = SymbolParameterResolveValue(&palgs->hsle, "Z_DISTANCE", ppist);
+	pg3i->g3o.fz = SymbolParameterResolveValue(&palgs->hsle, ppist, "Z_DISTANCE");
 
     }
 

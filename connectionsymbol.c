@@ -297,8 +297,8 @@ int ConnectionSymbolPrint
     fprintf
 	(pfile,
 	 "pre(%f) -> post(%f)\n",
-	 SymbolParameterResolveValue(&pconsy->bio.ioh.iol.hsle, "PRE", NULL),
-	 SymbolParameterResolveValue(&pconsy->bio.ioh.iol.hsle, "POST", NULL));
+	 SymbolParameterResolveValue(&pconsy->bio.ioh.iol.hsle, NULL, "PRE"),
+	 SymbolParameterResolveValue(&pconsy->bio.ioh.iol.hsle, NULL, "POST"));
 
     //- do indent
 
@@ -309,8 +309,8 @@ int ConnectionSymbolPrint
     fprintf
 	(pfile,
 	 "Delay, Weight (%f,%f)\n",
-	 SymbolParameterResolveValue(&pconsy->bio.ioh.iol.hsle, "DELAY", NULL),
-	 SymbolParameterResolveValue(&pconsy->bio.ioh.iol.hsle, "WEIGHT", NULL));
+	 SymbolParameterResolveValue(&pconsy->bio.ioh.iol.hsle, NULL, "DELAY"),
+	 SymbolParameterResolveValue(&pconsy->bio.ioh.iol.hsle, NULL, "WEIGHT"));
 
     //- parameters
 

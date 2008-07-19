@@ -214,7 +214,7 @@ SpinesSurfaceCalculator
 
     //- add surface of segment to surface of spine
 
-    psi->sv.dSpineSurface += SymbolParameterResolveValue(phsle, "SURFACE", NULL);
+    psi->sv.dSpineSurface += SymbolParameterResolveValue(phsle, NULL, "SURFACE");
 
     //- return result
 
@@ -279,19 +279,19 @@ SpinesInstanceNew
 
 	//- scan min dia
 
-	psi->so.fDendrDiaMin = 1e-6 * SymbolParameterResolveValue(&palgs->hsle, "DIA_MIN", ppist);
+	psi->so.fDendrDiaMin = 1e-6 * SymbolParameterResolveValue(&palgs->hsle, ppist, "DIA_MIN");
 
 	//- scan max dia
 
-	psi->so.fDendrDiaMax = 1e-6 * SymbolParameterResolveValue(&palgs->hsle, "DIA_MAX", ppist);
+	psi->so.fDendrDiaMax = 1e-6 * SymbolParameterResolveValue(&palgs->hsle, ppist, "DIA_MAX");
 
 	//- scan density
 
-	psi->so.fSpineDensity = SymbolParameterResolveValue(&palgs->hsle, "SPINE_DENSITY", ppist);
+	psi->so.fSpineDensity = SymbolParameterResolveValue(&palgs->hsle, ppist, "SPINE_DENSITY");
 
 	//- scan frequency
 
-	psi->so.fSpineFrequency = SymbolParameterResolveValue(&palgs->hsle, "SPINE_FREQUENCY", ppist);
+	psi->so.fSpineFrequency = SymbolParameterResolveValue(&palgs->hsle, ppist, "SPINE_FREQUENCY");
 
 	//- scan name selector
 
@@ -686,7 +686,7 @@ static int SpinesSegmentRecorder
     dDia
 	= SymbolParameterResolveValue
 /* 	  (&psegm->bio.ioh.iol.hsle, "DIA", ppist); */
-	  (&psegr->bio.ioh.iol.hsle, "DIA", NULL);
+	  (&psegr->bio.ioh.iol.hsle, NULL, "DIA");
 
     //- if not found
 
@@ -967,7 +967,7 @@ SpinesDoVirtualAdjustments
 
     dLength
 	= SymbolParameterResolveValue
-	  (&psegr->bio.ioh.iol.hsle, "LENGTH", ppist);
+	  (&psegr->bio.ioh.iol.hsle, ppist, "LENGTH");
 
     //- calculate total number of spines for this segment
 
@@ -1000,7 +1000,7 @@ SpinesDoVirtualAdjustments
 
 	dSegment
 	    = SymbolParameterResolveValue
-	      (&psegr->bio.ioh.iol.hsle, "SURFACE", ppist);
+	      (&psegr->bio.ioh.iol.hsle, ppist, "SURFACE");
 
 	if (dSegment == FLT_MAX)
 	{

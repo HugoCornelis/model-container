@@ -224,15 +224,15 @@ RandomizeInstanceNew
 
 	//- scan random seed
 
-	pri->rio.dRandomSeed = SymbolParameterResolveValue(&palgs->hsle, "RANDOMSEED", ppist);
+	pri->rio.dRandomSeed = SymbolParameterResolveValue(&palgs->hsle, ppist, "RANDOMSEED");
 
 	//- scan lower bound
 
-	pri->rio.dLower = SymbolParameterResolveValue(&palgs->hsle, "LOWER_BOUND", ppist);
+	pri->rio.dLower = SymbolParameterResolveValue(&palgs->hsle, ppist, "LOWER_BOUND");
 
 	//- scan upper bound
 
-	pri->rio.dUpper = SymbolParameterResolveValue(&palgs->hsle, "UPPER_BOUND", ppist);
+	pri->rio.dUpper = SymbolParameterResolveValue(&palgs->hsle, ppist, "UPPER_BOUND");
     }
 
     //- initialize randomize count

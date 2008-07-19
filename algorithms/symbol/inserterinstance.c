@@ -682,7 +682,7 @@ InserterInstanceNew
 
 	//- scan frequency
 
-	pii->io.fInsertFrequency = SymbolParameterResolveValue(&palgs->hsle, "INSERTION_FREQUENCY", ppist);
+	pii->io.fInsertFrequency = SymbolParameterResolveValue(&palgs->hsle, ppist, "INSERTION_FREQUENCY");
     }
 
     //- initialize counts
