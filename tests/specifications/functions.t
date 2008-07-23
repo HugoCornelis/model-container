@@ -112,6 +112,11 @@ my $test
 						   write => "printparameter /segm H"
 						  },
 						  {
+						   description => "What happens for division by zero ?",
+						   read => "= 3.40282e+38",
+						   write => "printparameter /segm J"
+						  },
+						  {
 						   description => "Is a step calculated correctly (low value) ?",
 						   read => "= 0",
 						   write => "printparameter /segm I1"

@@ -31,6 +31,8 @@ PUBLIC_MODELS
 			PARAMETER ( I1 = STEP(PARAMETER (value = 2.0 ), PARAMETER (start = 5.0 ), PARAMETER (stop = 7.0 ), ) ),
 			PARAMETER ( I2 = STEP(PARAMETER (value = 5.1 ), PARAMETER (start = 5.0 ), PARAMETER (stop = 7.0 ), ) ),
 			PARAMETER ( I3 = STEP(PARAMETER (value = 9.0 ), PARAMETER (start = 5.0 ), PARAMETER (stop = 7.0 ), ) ),
+
+			PARAMETER ( J = DIVIDE(PARAMETER (DIVIDEND = 2.0 ), PARAMETER (DIVISOR = 0.0 ), ) ),
 		END PARAMETERS
 
 	END SEGMENT

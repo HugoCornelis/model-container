@@ -610,9 +610,24 @@ FunctionValue
 	double dArg2
 	    = pparArg2 ? ParameterResolveValue(pparArg2, ppist) : 1 ;
 
-	//- set result : divide
+	//- if not zero
 
-	dResult = dArg1 / dArg2;
+	//! mm, how to check for zero here ?
+
+	if (dArg2 != 0.0)
+	{
+	    //- set result : divide
+
+	    dResult = dArg1 / dArg2;
+	}
+	else
+	{
+	    dResult == FLT_MAX;
+
+	    //- give diag's : not yet implemented
+
+	    fprintf(stderr, "Function DIVIDE(): DIVISOR is zero\n");
+	}
     }
 
     //- if time
@@ -821,7 +836,7 @@ FunctionValue
     {
 	//- give diag's : not yet implemented
 
-	fprintf(stdout, "Function %s not implemented\n",pcName);
+	fprintf(stderr, "Function %s not implemented\n", pcName);
     }
 
     //- return result
