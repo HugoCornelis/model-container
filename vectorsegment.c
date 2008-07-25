@@ -114,7 +114,7 @@ VSegmentSegmentRelocatorAbsolute
 	//- get pidinstack from parameter elements
 
 	struct PidinStack *ppistPar
-	    = ParameterResolveToPidinStack(pparParent,ppist);
+	    = ParameterResolveToPidinStack(pparParent, ppist);
 
 	if (ppistPar)
 	{
@@ -140,7 +140,7 @@ VSegmentSegmentRelocatorAbsolute
 
 		if (pparParentX)
 		{
-		    dParentX = ParameterResolveValue(pparParentX,ppist);
+		    dParentX = ParameterResolveValue(pparParentX, ppist);
 		}
 
 		double dParentY = FLT_MAX;
@@ -150,7 +150,7 @@ VSegmentSegmentRelocatorAbsolute
 
 		if (pparParentY)
 		{
-		    dParentY = ParameterResolveValue(pparParentY,ppist);
+		    dParentY = ParameterResolveValue(pparParentY, ppist);
 		}
 
 		double dParentZ = FLT_MAX;
@@ -160,7 +160,7 @@ VSegmentSegmentRelocatorAbsolute
 
 		if (pparParentZ)
 		{
-		    dParentZ = ParameterResolveValue(pparParentZ,ppist);
+		    dParentZ = ParameterResolveValue(pparParentZ, ppist);
 		}
 
 		//- get relative coordinates of this symbol
@@ -384,7 +384,7 @@ int VSegmentCountSegments
 /// ARGS.:
 ///
 ///	pvsegm.: symbol to alias.
-///	pidin.: name of new symbol.
+///	pidin..: name of new symbol.
 ///
 /// RTN..: struct symtab_HSolveListElement * : alias for original symbol.
 ///
@@ -525,7 +525,7 @@ int VSegmentTraverseSegments
 
     //- traverse cell symbol
 
-    iResult = TstrGo(ptstr,phsle);
+    iResult = TstrGo(ptstr, phsle);
 
     //- delete treespace traversal
 
