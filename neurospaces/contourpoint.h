@@ -47,8 +47,8 @@ ContourPointCreateAlias
 struct symtab_Parameters * 
 ContourPointGetParameter
 (struct symtab_ContourPoint *pcpnt,
- char *pcName,
- struct PidinStack *ppist);
+ struct PidinStack *ppist,
+ char *pcName);
 
 void ContourPointInit(struct symtab_ContourPoint *pcpnt);
 

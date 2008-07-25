@@ -297,7 +297,7 @@ ConnectionCheckerInstanceNew
 	//t should use ParameterResolveSymbol()
 
 	struct symtab_Parameters *pparProjection
-	    = SymbolFindParameter(&palgs->hsle, "PROJECTION_NAME", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "PROJECTION_NAME");
 
 	//- scan projection name
 
@@ -404,7 +404,7 @@ struct ConnectionCheckerInstanceCheckConnectionGroups_data
 
 /*     //- if name does not match -pre */
 
-/*     if (strcmp(IdinName(SymbolGetPidin(phsle)),ppiac->pcci->cco.pcPre) != 0) */
+/*     if (strcmp(IdinName(SymbolGetPidin(phsle)), ppiac->pcci->cco.pcPre) != 0) */
 /*     { */
 /* 	//- return result : do not process */
 
@@ -483,11 +483,11 @@ struct ConnectionCheckerInstanceCheckConnectionGroups_data
 
 /*     struct symtab_IdentifierIndex *pidinChannel */
 /* 	= PidinStackElementPidin */
-/* 	  (ptstr->ppist,PidinStackNumberOfEntries(ptstr->ppist) - 2); */
+/* 	  (ptstr->ppist, PidinStackNumberOfEntries(ptstr->ppist) - 2); */
 
 /*     //- if name does not match -post */
 
-/*     if (strcmp(IdinName(pidinChannel),ppiac->pcci->cco.pcPost) != 0) */
+/*     if (strcmp(IdinName(pidinChannel), ppiac->pcci->cco.pcPost) != 0) */
 /*     { */
 /* 	//- return result : do not process */
 
@@ -634,10 +634,10 @@ ConnectionCheckerConnectionProcessor
 
     pparWeight
 	= ConnectionGetParameter
-	  ((struct symtab_Connection *)phsle,"WEIGHT",NULL);
+	  ((struct symtab_Connection *)phsle, NULL, "WEIGHT");
 
     ppiac->pcci->ccv.dAverageWeight
-	+= (ParameterResolveValue(pparWeight,NULL)
+	+= (ParameterResolveValue(pparWeight, NULL)
 	    - ppiac->pcci->ccv.dAverageWeight)
 	   / ppiac->pcci->ccv.iConnections;
 
@@ -645,10 +645,10 @@ ConnectionCheckerConnectionProcessor
 
     pparDelay
 	= ConnectionGetParameter
-	  ((struct symtab_Connection *)phsle,"DELAY",NULL);
+	  ((struct symtab_Connection *)phsle, NULL, "DELAY");
 
     ppiac->pcci->ccv.dAverageDelay
-	+= (ParameterResolveValue(pparDelay,NULL)
+	+= (ParameterResolveValue(pparDelay, NULL)
 	    - ppiac->pcci->ccv.dAverageDelay)
 	   / ppiac->pcci->ccv.iConnections;
 
@@ -734,9 +734,9 @@ ConnectionCheckerInstanceCheckConnectionGroups
     //- count spike receivers and generators in source and target
 
     pcci->ccv.iSources
-	= SymbolCountSpikeGenerators(phsleSource,ppistSource);
+	= SymbolCountSpikeGenerators(phsleSource, ppistSource);
     pcci->ccv.iDestinations
-	= SymbolCountSpikeReceivers(phsleTarget,ppistTarget);
+	= SymbolCountSpikeReceivers(phsleTarget, ppistTarget);
 
     //- loop over connections to make statistics
 
@@ -919,7 +919,7 @@ ConnectionCheckerInstanceSymbolHandler
 	    = PidinStackParse(pcci->cco.pcProjection);
 
 	PidinStackAppendCompact
-	    (pcci->ccv.ppistProjection,pcci->ccv.ppistArgument);
+	    (pcci->ccv.ppistProjection, pcci->ccv.ppistArgument);
 
 	//- lookup projection symbol
 
@@ -937,17 +937,17 @@ ConnectionCheckerInstanceSymbolHandler
 
 	    pparSource
 		= SymbolFindParameter
-		  (pcci->ccv.phsleProjection,"SOURCE",pcci->ccv.ppistProjection);
+		  (pcci->ccv.phsleProjection, pcci->ccv.ppistProjection, "SOURCE");
 	    pcci->ccv.ppistSource
 		= ParameterResolveToPidinStack
-		  (pparSource,pcci->ccv.ppistProjection);
+		  (pparSource, pcci->ccv.ppistProjection);
 
 	    pparTarget
 		= SymbolFindParameter
-		  (pcci->ccv.phsleProjection,"TARGET",pcci->ccv.ppistProjection);
+		  (pcci->ccv.phsleProjection, pcci->ccv.ppistProjection, "TARGET");
 	    pcci->ccv.ppistTarget
 		= ParameterResolveToPidinStack
-		  (pparTarget,pcci->ccv.ppistProjection);
+		  (pparTarget, pcci->ccv.ppistProjection);
 
 	    pcci->ccv.phsleSource
 		= PidinStackLookupTopSymbol(pcci->ccv.ppistSource);
@@ -998,7 +998,7 @@ ConnectionCheckerInstanceSymbolHandler
 		//- recalculate serial ID's for affected symbols
 
 		SymbolRecalcAllSerials
-		    (pcci->ccv.phsleNetwork,pcci->ccv.ppistNetwork);
+		    (pcci->ccv.phsleNetwork, pcci->ccv.ppistNetwork);
 	    }
 
 	    //- else

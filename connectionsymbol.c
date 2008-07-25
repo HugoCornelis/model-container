@@ -351,12 +351,12 @@ ConnectionSymbolGetDelay(struct symtab_ConnectionSymbol *pconsy)
     //! with parameter caches, relies on a valid context so commented out
 
 /*     struct symtab_Parameters *pparPost */
-/* 	= SymbolFindParameter(&pconsy->bio.ioh.iol.hsle, "POST", ppist); */
+/* 	= SymbolFindParameter(&pconsy->bio.ioh.iol.hsle, ppist, "POST"); */
 
     //! without parameter caches
 
     struct symtab_Parameters *pparPost
-	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, "POST", NULL);
+	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "POST");
 
     //- set result
 
@@ -401,12 +401,12 @@ ConnectionSymbolGetPost(struct symtab_ConnectionSymbol *pconsy)
     //! with parameter caches, relies on a valid context so commented out
 
 /*     struct symtab_Parameters *pparPost */
-/* 	= SymbolFindParameter(&pconsy->bio.ioh.iol.hsle, "POST", ppist); */
+/* 	= SymbolFindParameter(&pconsy->bio.ioh.iol.hsle, ppist, "POST"); */
 
     //! without parameter caches
 
     struct symtab_Parameters *pparPost
-	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, "POST", NULL);
+	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "POST");
 
     //- set result
 
@@ -451,7 +451,7 @@ ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy)
     //! with parameter caches, relies on a valid context so commented out
 
 /*     struct symtab_Parameters *pparPre */
-/* 	= SymbolFindParameter(&pconsy->bio.ioh.iol.hsle, "PRE", ppist); */
+/* 	= SymbolFindParameter(&pconsy->bio.ioh.iol.hsle, ppist, "PRE"); */
 
 /* struct PidinStack * */
 /* ParameterResolveToPidinStack */
@@ -461,7 +461,7 @@ ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy)
     //! without parameter caches
 
     struct symtab_Parameters *pparPre
-	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, "PRE", NULL);
+	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "PRE");
 
     //- set result
 
@@ -506,12 +506,12 @@ ConnectionSymbolGetWeight(struct symtab_ConnectionSymbol *pconsy)
     //! with parameter caches, relies on a valid context so commented out
 
 /*     struct symtab_Parameters *pparPost */
-/* 	= SymbolFindParameter(&pconsy->bio.ioh.iol.hsle, "POST", ppist); */
+/* 	= SymbolFindParameter(&pconsy->bio.ioh.iol.hsle, ppist, "POST"); */
 
     //! without parameter caches
 
     struct symtab_Parameters *pparPost
-	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, "POST", NULL);
+	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "POST");
 
     //- set result
 

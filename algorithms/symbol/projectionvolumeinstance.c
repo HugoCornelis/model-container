@@ -293,7 +293,7 @@ ProjectionVolumeInstanceNew
 	//t should use ParameterResolveSymbol()
 
 	struct symtab_Parameters *pparProjection
-	    = SymbolFindParameter(&palgs->hsle, "PROJECTION_NAME", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "PROJECTION_NAME");
 
 	//- scan projection name
 
@@ -310,21 +310,21 @@ ProjectionVolumeInstanceNew
 	//- scan presynaptic part
 
 	struct symtab_Parameters *pparPre
-	    = SymbolFindParameter(&palgs->hsle, "PRE", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "PRE");
 
 	ppvi->pro.pcPre = ParameterGetString(pparPre);
 
 	//- scan postsynaptic part
 
 	struct symtab_Parameters *pparPost
-	    = SymbolFindParameter(&palgs->hsle, "POST", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "POST");
 
 	ppvi->pro.pcPost = ParameterGetString(pparPost);
 
 	//- scan source type
 
 	struct symtab_Parameters *pparSourceType
-	    = SymbolFindParameter(&palgs->hsle, "SOURCE_TYPE", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "SOURCE_TYPE");
 
 	char *pcSourceType = ParameterGetString(pparSourceType);
 
@@ -354,7 +354,7 @@ ProjectionVolumeInstanceNew
 	//- scan destination type
 
 	struct symtab_Parameters *pparDestinationType
-	    = SymbolFindParameter(&palgs->hsle, "DESTINATION_TYPE", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "DESTINATION_TYPE");
 
 	char *pcDestinationType = ParameterGetString(pparDestinationType);
 
@@ -388,7 +388,7 @@ ProjectionVolumeInstanceNew
 	//- scan delay type
 
 	struct symtab_Parameters *pparDelayType
-	    = SymbolFindParameter(&palgs->hsle, "DELAY_TYPE", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "DELAY_TYPE");
 
 	char *pcDelayType = ParameterGetString(pparDelayType);
 
@@ -1182,7 +1182,7 @@ ProjectionVolumeInstanceSymbolHandler
 
 	    pparSource
 		= SymbolFindParameter
-		  (ppvi->prv.phsleProjection,"SOURCE",ppvi->prv.ppistProjection);
+		  (ppvi->prv.phsleProjection,ppvi->prv.ppistProjection,"SOURCE");
 
 	    if (pparSource)
 	    {
@@ -1196,7 +1196,7 @@ ProjectionVolumeInstanceSymbolHandler
 
 	    pparTarget
 		= SymbolFindParameter
-		  (ppvi->prv.phsleProjection,"TARGET",ppvi->prv.ppistProjection);
+		  (ppvi->prv.phsleProjection,ppvi->prv.ppistProjection,"TARGET");
 
 	    if (pparTarget)
 	    {

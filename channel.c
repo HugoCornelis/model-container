@@ -584,8 +584,8 @@ ChannelGetIncomingVirtual
 /// ARGS.:
 ///
 ///	pchan.....: symbol to get parameter for
-///	pcName....: name of parameter
 ///	ppist.....: context of symbol.
+///	pcName....: name of parameter
 ///
 /// RTN..: struct symtab_Parameters *
 ///
@@ -598,8 +598,8 @@ ChannelGetIncomingVirtual
 struct symtab_Parameters * 
 ChannelGetParameter
 (struct symtab_Channel *pchan,
- char *pcName,
- struct PidinStack *ppist)
+ struct PidinStack *ppist,
+ char *pcName)
 {
     //- set default result : failure
 
@@ -607,7 +607,7 @@ ChannelGetParameter
 
     //- get parameter from bio component
 
-    pparResult = BioComponentGetParameter(&pchan->bio, pcName, ppist);
+    pparResult = BioComponentGetParameter(&pchan->bio, ppist, pcName);
 
     //- if not found
 
@@ -685,7 +685,7 @@ ChannelHasMGBlockGMAX
     //- if GMAX present
 
     struct symtab_Parameters *pparGMAX
-	= SymbolFindParameter(&(pchan->bio.ioh.iol.hsle), "G_MAX", ppist);
+	= SymbolFindParameter(&(pchan->bio.ioh.iol.hsle), ppist, "G_MAX");
 
     if (pparGMAX)
     {
@@ -740,7 +740,7 @@ int ChannelHasNernstErev
     //- if Erev present
 
     struct symtab_Parameters *pparErev
-	= SymbolFindParameter(&(pchan->bio.ioh.iol.hsle), "Erev", ppist);
+	= SymbolFindParameter(&(pchan->bio.ioh.iol.hsle), ppist, "Erev");
 
     if (pparErev)
     {
@@ -1043,11 +1043,11 @@ int ChannelSetup(struct symtab_Channel *pchan,struct ParserContext *pac)
 
 	struct symtab_Parameters *ppar = NULL;
 
-	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle),"Xpower",NULL);
+	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle), NULL, "Xpower");
 	chan1->Xpower = ppar ? ParameterValue(ppar) : 0.0 ;
-	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle),"Ypower",NULL);
+	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle), NULL, "Ypower");
 	chan1->Ypower = ppar ? ParameterValue(ppar) : 0.0 ;
-	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle),"Zpower",NULL);
+	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle), NULL, "Zpower");
 	chan1->Zpower = ppar ? ParameterValue(ppar) : 0.0 ;
 
 	//! not used at the moment
@@ -1063,18 +1063,18 @@ int ChannelSetup(struct symtab_Channel *pchan,struct ParserContext *pac)
 
 	struct symtab_Parameters *ppar = NULL;
 
-	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle),"Xpower",NULL);
+	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle), NULL, "Xpower");
 	chan2->Xpower = ppar ? ParameterValue(ppar) : 0.0 ;
-	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle),"Ypower",NULL);
+	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle), NULL, "Ypower");
 	chan2->Ypower = ppar ? ParameterValue(ppar) : 0.0 ;
-	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle),"Zpower",NULL);
+	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle), NULL, "Zpower");
 	chan2->Zpower = ppar ? ParameterValue(ppar) : 0.0 ;
 
-	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle),"Xindex",NULL);
+	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle), NULL, "Xindex");
 	chan2->Xindex = (short) ( ppar ? ParameterValue(ppar) : 0.0 );
-	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle),"Yindex",NULL);
+	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle), NULL, "Yindex");
 	chan2->Yindex = (short) ( ppar ? ParameterValue(ppar) : 0.0 );
-	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle),"Zindex",NULL);
+	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle), NULL, "Zindex");
 	chan2->Zindex = (short) ( ppar ? ParameterValue(ppar) : 0.0 );
 
 	//! not used at the moment

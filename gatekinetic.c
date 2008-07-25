@@ -126,9 +126,9 @@ GateKineticCreateAlias
 ///
 /// ARGS.:
 ///
-///	pgatk..: symbol to get parameter for
-///	pcName....: name of parameter
-///	ppist.....: context of segment.
+///	pgatk...: symbol to get parameter for.
+///	ppist...: context of symbol.
+///	pcName..: name of parameter.
 ///
 /// RTN..: struct symtab_Parameters *
 ///
@@ -141,8 +141,8 @@ GateKineticCreateAlias
 struct symtab_Parameters * 
 GateKineticGetParameter
 (struct symtab_GateKinetic *pgatk,
- char *pcName,
- struct PidinStack *ppist)
+ struct PidinStack *ppist,
+ char *pcName)
 {
     //- set default result : failure
 
@@ -150,7 +150,7 @@ GateKineticGetParameter
 
     //- get parameter from bio component
 
-    pparResult = BioComponentGetParameter(&pgatk->bio, pcName, ppist);
+    pparResult = BioComponentGetParameter(&pgatk->bio, ppist, pcName);
 
     //- if not found
 
@@ -261,7 +261,7 @@ GateKineticGetTabulationFlag
     //- is there a first entry in the table ?
 
     struct symtab_Parameters *pparEntry0
-	= SymbolGetParameter(&pgatk->bio.ioh.iol.hsle, "table[0]", ppist);
+	= SymbolGetParameter(&pgatk->bio.ioh.iol.hsle, ppist, "table[0]");
 
     if (pparEntry0)
     {

@@ -63,8 +63,8 @@ ChannelGetIncomingVirtual
 struct symtab_Parameters * 
 ChannelGetParameter
 (struct symtab_Channel *pchan,
- char *pcName,
- struct PidinStack *ppist);
+ struct PidinStack *ppist,
+ char *pcName);
 
 int ChannelHasEquation
 (struct symtab_Channel *pchan, struct PidinStack *ppist);

@@ -31,7 +31,7 @@ struct descr_HHGate;
 struct symtab_HHGate;
 
 
-#include "idin.h"
+#include "pidinstack.h"
 
 
 //f exported functions
@@ -42,6 +42,12 @@ struct symtab_HSolveListElement *
 HHGateCreateAlias
 (struct symtab_HHGate *pgathh,
  struct symtab_IdentifierIndex *pidin);
+
+struct symtab_Parameters * 
+HHGateGetParameter
+(struct symtab_HHGate *pgathh,
+ struct PidinStack *ppist,
+ char *pcName);
 
 void HHGateInit(struct symtab_HHGate *pgathh);
 

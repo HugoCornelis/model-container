@@ -243,8 +243,9 @@ int SegmenterCountSpikeGenerators
 ///
 /// ARGS.:
 ///
-///	psegr..: symbol to get parameter for
-///	pcName.: name of parameter
+///	psegr..: symbol to get parameter for.
+///	ppist..: context of symbol.
+///	pcName.: name of parameter.
 ///
 /// RTN..: struct symtab_Parameters * : parameter structure
 ///
@@ -255,8 +256,8 @@ int SegmenterCountSpikeGenerators
 struct symtab_Parameters * 
 SegmenterGetParameter
 (struct symtab_Segmenter *psegr,
- char *pcName,
- struct PidinStack *ppist)
+ struct PidinStack *ppist,
+ char *pcName)
 {
     //- set default result : failure
 
@@ -264,7 +265,7 @@ SegmenterGetParameter
 
     //- get parameter from bio component
 
-    pparResult = BioComponentGetParameter(&psegr->bio, pcName, ppist);
+    pparResult = BioComponentGetParameter(&psegr->bio, ppist, pcName);
 
     //- if not found
 
@@ -651,7 +652,7 @@ SegmenterSegmentLinearizer
 	//- lookup parent
 
 	struct symtab_Parameters *pparParent
-	    = SymbolFindParameter(phsle, "PARENT", ptstr->ppist);
+	    = SymbolFindParameter(phsle, ptstr->ppist, "PARENT");
 
 	if (pparParent)
 	{
@@ -1097,7 +1098,7 @@ SegmenterMesherOnLengthProcessor
     //- get parent DIA
 
     struct symtab_Parameters *pparParent
-	= SymbolFindParameter(phsle, "PARENT", ptstr->ppist);
+	= SymbolFindParameter(phsle, ptstr->ppist, "PARENT");
 
     if (!pparParent)
     {
@@ -1697,7 +1698,7 @@ SegmenterParameterScaleValue
     //- get segment surface
 
     struct symtab_Parameters *pparSurface
-	= SymbolFindParameter(&psegr->bio.ioh.iol.hsle,"SURFACE",ppist);
+	= SymbolFindParameter(&psegr->bio.ioh.iol.hsle,ppist,"SURFACE");
 
     double dSurface
 	= pparSurface
@@ -1707,7 +1708,7 @@ SegmenterParameterScaleValue
     //- get segment length
 
     struct symtab_Parameters *pparLength
-	= SymbolFindParameter(&psegr->bio.ioh.iol.hsle,"LENGTH",ppist);
+	= SymbolFindParameter(&psegr->bio.ioh.iol.hsle,ppist,"LENGTH");
 
     double dLength
 	= pparLength
@@ -1717,7 +1718,7 @@ SegmenterParameterScaleValue
     //- get segment diameter
 
     struct symtab_Parameters *pparDia
-	= SymbolFindParameter(&psegr->bio.ioh.iol.hsle,"DIA",ppist);
+	= SymbolFindParameter(&psegr->bio.ioh.iol.hsle,ppist,"DIA");
 
     double dDia
 	= pparDia

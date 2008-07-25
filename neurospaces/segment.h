@@ -52,8 +52,8 @@ SegmentCreateAlias
 struct symtab_Parameters * 
 SegmentGetParameter
 (struct symtab_Segment *psegment,
- char *pcName,
- struct PidinStack *ppist);
+ struct PidinStack *ppist,
+ char *pcName);
 
 void SegmentInit(struct symtab_Segment *psegment);
 

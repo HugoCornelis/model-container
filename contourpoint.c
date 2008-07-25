@@ -118,8 +118,8 @@ ContourPointCreateAlias
 /// ARGS.:
 ///
 ///	pcpnt.....: symbol to get parameter for
-///	pcName....: name of parameter
 ///	ppist.....: context.
+///	pcName....: name of parameter
 ///
 /// RTN..: struct symtab_Parameters *
 ///
@@ -132,8 +132,8 @@ ContourPointCreateAlias
 struct symtab_Parameters * 
 ContourPointGetParameter
 (struct symtab_ContourPoint *pcpnt,
- char *pcName,
- struct PidinStack *ppist)
+ struct PidinStack *ppist,
+ char *pcName)
 {
     //- set default result : failure
 
@@ -141,7 +141,7 @@ ContourPointGetParameter
 
     //- get parameter from bio component
 
-    pparResult = BioComponentGetParameter(&pcpnt->bio,pcName,ppist);
+    pparResult = BioComponentGetParameter(&pcpnt->bio, ppist, pcName);
 
     //- if not found
 

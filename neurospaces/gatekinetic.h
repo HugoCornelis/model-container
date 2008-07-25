@@ -46,8 +46,8 @@ GateKineticCreateAlias
 struct symtab_Parameters * 
 GateKineticGetParameter
 (struct symtab_GateKinetic *pgatk,
- char *pcName,
- struct PidinStack *ppist);
+ struct PidinStack *ppist,
+ char *pcName);
 
 void GateKineticInit(struct symtab_GateKinetic *pgatk);
 

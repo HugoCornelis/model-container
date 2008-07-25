@@ -407,7 +407,7 @@ BioComponentGetModifiableParameter
     //- lookup parameter
 
     struct symtab_Parameters *ppar
-	= SymbolGetParameter(&pbio->ioh.iol.hsle, pcName, ppist);
+	= SymbolGetParameter(&pbio->ioh.iol.hsle, ppist, pcName);
 
     //- if not found
 
@@ -459,8 +459,8 @@ BioComponentGetModifiableParameter
 /// ARGS.:
 ///
 ///	pbio....: component to get parameter for
-///	pcName..: name of parameter to search for
 ///	ppist...: context of symbol
+///	pcName..: name of parameter to search for
 ///
 /// RTN..: struct symtab_Parameters * : parameter, NULL for failure
 ///
@@ -471,8 +471,8 @@ BioComponentGetModifiableParameter
 struct symtab_Parameters * 
 BioComponentGetParameter
 (struct symtab_BioComponent * pbio,
- char *pcName,
- struct PidinStack *ppist)
+ struct PidinStack *ppist,
+ char *pcName)
 {
 /*     if (ppist && !PidinStackIsRooted(ppist)) */
 /*     { */
@@ -509,7 +509,7 @@ BioComponentGetParameter
 	    //- lookup parameter for prototype
 
 	    pparResult
-		= BioComponentGetParameter(pbioPrototype, pcName, ppist);
+		= BioComponentGetParameter(pbioPrototype, ppist, pcName);
 	}
     }
 
@@ -921,7 +921,7 @@ BioComponentResolveParameterFunctionalInput
     //- find parameter
 
     struct symtab_Parameters *ppar
-	= SymbolGetParameter(&pbio->ioh.iol.hsle, pcParameter, ppist);
+	= SymbolGetParameter(&pbio->ioh.iol.hsle, ppist, pcParameter);
 
     //- set result
 

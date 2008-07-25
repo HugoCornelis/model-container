@@ -234,7 +234,7 @@ ProjectionRandomizedInstanceNew
 	//t should use ParameterResolveSymbol()
 
 	struct symtab_Parameters *pparProjection
-	    = SymbolFindParameter(&palgs->hsle, "PROJECTION_NAME", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "PROJECTION_NAME");
 
 	//- scan projection name
 
@@ -251,14 +251,14 @@ ProjectionRandomizedInstanceNew
 	//- scan presynaptic part
 
 	struct symtab_Parameters *pparPre
-	    = SymbolFindParameter(&palgs->hsle, "PRE", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "PRE");
 
 	ppri->pro.pcPre = ParameterGetString(pparPre);
 
 	//- scan postsynaptic part
 
 	struct symtab_Parameters *pparPost
-	    = SymbolFindParameter(&palgs->hsle, "POST", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "POST");
 
 	ppri->pro.pcPost = ParameterGetString(pparPost);
     }
@@ -780,14 +780,14 @@ ProjectionRandomizedInstanceSymbolHandler
 
 	    pparSource
 		= SymbolFindParameter
-		  (ppri->prv.phsleProjection,"SOURCE",ppri->prv.ppistProjection);
+		  (ppri->prv.phsleProjection, ppri->prv.ppistProjection, "SOURCE");
 	    ppri->prv.ppistSource
 		= ParameterResolveToPidinStack
 		  (pparSource,ppri->prv.ppistProjection);
 
 	    pparTarget
 		= SymbolFindParameter
-		  (ppri->prv.phsleProjection,"TARGET",ppri->prv.ppistProjection);
+		  (ppri->prv.phsleProjection, ppri->prv.ppistProjection, "TARGET");
 	    ppri->prv.ppistTarget
 		= ParameterResolveToPidinStack
 		  (pparTarget,ppri->prv.ppistProjection);

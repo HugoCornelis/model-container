@@ -189,7 +189,7 @@ Grid3DInstanceNew
 	//t should use ParameterResolveSymbol()
 
 	struct symtab_Parameters *pparProto
-	    = SymbolFindParameter(&palgs->hsle, "PROTOTYPE", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "PROTOTYPE");
 
 	//- scan prototype name
 

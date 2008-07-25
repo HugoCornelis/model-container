@@ -946,7 +946,7 @@ ParameterResolveToPidinStack
 
 		//- find parameter in symbol
 
-		pparInit = SymbolFindParameter(phsleField, pcTmp, ppistResult);
+		pparInit = SymbolFindParameter(phsleField, ppistResult, pcTmp);
 
 		//- resolve resulting parameter
 
@@ -962,7 +962,7 @@ ParameterResolveToPidinStack
 		//- try to get name field parameter (instead of I/O)
 
 		struct symtab_Parameters *pparField
-		    = SymbolFindParameter(phsleField, pcField, ppistResult);
+		    = SymbolFindParameter(phsleField, ppistResult, pcField);
 
 		if (pparField)
 		{
@@ -1161,7 +1161,7 @@ ParameterResolveValue
 
 		    //- find parameter in symbol
 
-		    pparInit = SymbolFindParameter(phsle, pcTmp, ppistPar);
+		    pparInit = SymbolFindParameter(phsle, ppistPar, pcTmp);
 
 		    //- resolve resulting parameter
 
@@ -1178,7 +1178,7 @@ ParameterResolveValue
 		    //! point to a symbol instead of a field.
 
 		    struct symtab_Parameters *pparReferenced
-			= SymbolFindParameter(phsle, pcField, ppistPar);
+			= SymbolFindParameter(phsle, ppistPar, pcField);
 
 		    //- if the referenced field / parameter is found
 

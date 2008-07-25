@@ -102,7 +102,7 @@ VSegmentSegmentRelocatorAbsolute
     //- if this segment has a named parent segment
 
     struct symtab_Parameters *pparParent
-	= SymbolGetParameter(phsle, "PARENT", ppist);
+	= SymbolGetParameter(phsle, ppist, "PARENT");
 
     if (pparParent)
     {
@@ -136,7 +136,7 @@ VSegmentSegmentRelocatorAbsolute
 		double dParentX = FLT_MAX;
 
 		struct symtab_Parameters *pparParentX
-		    = SymbolGetParameter(phsleParent, "X", ppist);
+		    = SymbolGetParameter(phsleParent, ppist, "X");
 
 		if (pparParentX)
 		{
@@ -146,7 +146,7 @@ VSegmentSegmentRelocatorAbsolute
 		double dParentY = FLT_MAX;
 
 		struct symtab_Parameters *pparParentY
-		    = SymbolGetParameter(phsleParent, "Y", ppist);
+		    = SymbolGetParameter(phsleParent, ppist, "Y");
 
 		if (pparParentY)
 		{
@@ -156,7 +156,7 @@ VSegmentSegmentRelocatorAbsolute
 		double dParentZ = FLT_MAX;
 
 		struct symtab_Parameters *pparParentZ
-		    = SymbolGetParameter(phsleParent, "Z", ppist);
+		    = SymbolGetParameter(phsleParent, ppist, "Z");
 
 		if (pparParentZ)
 		{
@@ -166,13 +166,13 @@ VSegmentSegmentRelocatorAbsolute
 		//- get relative coordinates of this symbol
 
 		struct symtab_Parameters *pparXRel
-		    = SymbolGetParameter(phsle, "rel_X", ppist);
+		    = SymbolGetParameter(phsle, ppist, "rel_X");
 
 		struct symtab_Parameters *pparYRel
-		    = SymbolGetParameter(phsle, "rel_Y", ppist);
+		    = SymbolGetParameter(phsle, ppist, "rel_Y");
 
 		struct symtab_Parameters *pparZRel
-		    = SymbolGetParameter(phsle, "rel_Z", ppist);
+		    = SymbolGetParameter(phsle, ppist, "rel_Z");
 
 		struct symtab_Parameters *pparX
 		    = SymbolGetModifiableParameter(phsle, "X", ppist);

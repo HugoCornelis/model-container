@@ -112,8 +112,8 @@ BioComponentGetModifiableParameter
 struct symtab_Parameters *
 BioComponentGetParameter
 (struct symtab_BioComponent * pbio,
- char *pcName,
- struct PidinStack *ppist);
+ struct PidinStack *ppist,
+ char *pcName);
 
 void BioComponentInit(struct symtab_BioComponent * pbio);
 
@@ -438,7 +438,7 @@ BioComponentParameterResolveValue
     {
 	//- consult caches if possible
 
-	ppar = SymbolFindParameter(&(pbio->ioh.iol.hsle), pcName, ppist);
+	ppar = SymbolFindParameter(&(pbio->ioh.iol.hsle), ppist, pcName);
     }
 
     //- else
@@ -451,7 +451,7 @@ BioComponentParameterResolveValue
     {
 	//- do a direct lookup
 
-	ppar = SymbolGetParameter(&(pbio->ioh.iol.hsle), pcName, ppist);
+	ppar = SymbolGetParameter(&(pbio->ioh.iol.hsle), ppist, pcName);
     }
 
     if (ppar)

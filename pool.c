@@ -161,8 +161,9 @@ static double PoolGetBeta
 ///
 /// ARGS.:
 ///
-///	ppool..: symbol to get parameter for
-///	pcName.: name of parameter
+///	ppool..: symbol to get parameter for.
+///	ppist..: context of given symbol.
+///	pcName.: name of parameter.
 ///
 /// RTN..: struct symtab_Parameters * : parameter structure
 ///
@@ -173,8 +174,8 @@ static double PoolGetBeta
 struct symtab_Parameters * 
 PoolGetParameter
 (struct symtab_Pool *ppool,
- char *pcName,
- struct PidinStack *ppist)
+ struct PidinStack *ppist,
+ char *pcName)
 {
     //- set default result : failure
 
@@ -182,7 +183,7 @@ PoolGetParameter
 
     //- get parameter from bio component
 
-    pparResult = BioComponentGetParameter(&ppool->bio, pcName, ppist);
+    pparResult = BioComponentGetParameter(&ppool->bio, ppist, pcName);
 
     //- if not found
 
@@ -323,7 +324,7 @@ PoolParameterScaleValue
 
 	struct symtab_Parameters *pparPoolDia
 	    = SymbolFindParameter
-	      ((struct symtab_HSolveListElement *)ppool,"DIA",ppist);
+	      ((struct symtab_HSolveListElement *)ppool,ppist,"DIA");
 
 	double dPoolDia = ParameterResolveValue(pparPoolDia,ppist);
 
@@ -331,7 +332,7 @@ PoolParameterScaleValue
 
 	struct symtab_Parameters *pparThickness
 	    = SymbolFindParameter
-	      ((struct symtab_HSolveListElement *)ppool,"THICK",ppist);
+	      ((struct symtab_HSolveListElement *)ppool,ppist,"THICK");
 
 	double dThickness
 	    = ParameterResolveValue(pparThickness,ppist);
@@ -419,7 +420,7 @@ PoolParameterScaleValue
 
 	    struct symtab_Parameters *pparPoolLength
 		= SymbolFindParameter
-		((struct symtab_HSolveListElement *)ppool,"LENGTH",ppist);
+		((struct symtab_HSolveListElement *)ppool,ppist,"LENGTH");
 
 	    double dPoolLength
 		= ParameterResolveValue(pparPoolLength,ppist);

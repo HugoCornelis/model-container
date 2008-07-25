@@ -46,8 +46,8 @@ PoolCreateAlias
 struct symtab_Parameters * 
 PoolGetParameter
 (struct symtab_Pool *ppool,
- char *pcName,
- struct PidinStack *ppist);
+ struct PidinStack *ppist,
+ char *pcName);
 
 void PoolInit(struct symtab_Pool *ppool);
 

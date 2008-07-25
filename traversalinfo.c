@@ -438,7 +438,7 @@ TraversalInfoCollectorProcessor
 	    //- if this segment has a named parent segment
 
 	    struct symtab_Parameters *pparParentSegment
-		= SymbolFindParameter(phsle, "PARENT", ppistCurrent);
+		= SymbolFindParameter(phsle, ppistCurrent, "PARENT");
 
 	    if (pparParentSegment)
 	    {
@@ -483,7 +483,7 @@ TraversalInfoCollectorProcessor
 		//- if this segment has a length
 
 		struct symtab_Parameters *pparLength
-		    = SymbolFindParameter(phsle, "LENGTH", ppistCurrent);
+		    = SymbolFindParameter(phsle, ppistCurrent, "LENGTH");
 
 		if (pparLength)
 		{
@@ -505,7 +505,7 @@ TraversalInfoCollectorProcessor
 		    //- try diameter
 
 		    struct symtab_Parameters *pparDia
-			= SymbolFindParameter(phsle, "DIA", ppistCurrent);
+			= SymbolFindParameter(phsle, ppistCurrent, "DIA");
 
 		    if (pparDia)
 		    {
@@ -531,7 +531,7 @@ TraversalInfoCollectorProcessor
 	    //- try diameter
 
 	    struct symtab_Parameters *pparDia
-		= SymbolFindParameter(phsle, "DIA", ppistCurrent);
+		= SymbolFindParameter(phsle, ppistCurrent, "DIA");
 
 	    if (pparDia)
 	    {

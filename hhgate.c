@@ -28,6 +28,12 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
+static
+double
+HHGateGetStateInit
+(struct symtab_HHGate *pgathh, struct PidinStack *ppist);
+
+
 /// **************************************************************************
 ///
 /// SHORT: HHGateCalloc()
@@ -75,7 +81,7 @@ struct symtab_HHGate * HHGateCalloc(void)
 /// ARGS.:
 ///
 ///	pgathh.: symbol to alias
-///	pidin.: name of new symbol
+///	pidin..: name of new symbol
 ///
 /// RTN..: struct symtab_HSolveListElement * : alias for original symbol
 ///
@@ -104,6 +110,121 @@ HHGateCreateAlias
     //- return result
 
     return(&pgathhResult->bio.ioh.iol.hsle);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: HHGateGetParameter()
+///
+/// ARGS.:
+///
+///	pgathh..: symbol to get parameter for.
+///	ppist...: context of symbol.
+///	pcName..: name of parameter.
+///
+/// RTN..: struct symtab_Parameters *
+///
+///	Parameter structure, NULL for failure.
+///
+/// DESCR: Get parameter of symbol.
+///
+/// **************************************************************************
+
+struct symtab_Parameters * 
+HHGateGetParameter
+(struct symtab_HHGate *pgathh,
+ struct PidinStack *ppist,
+ char *pcName)
+{
+    //- set default result : failure
+
+    struct symtab_Parameters *  pparResult = NULL;
+
+    //- get parameter from bio component
+
+    pparResult = BioComponentGetParameter(&pgathh->bio, ppist, pcName);
+
+    //- if not found
+
+    if (!pparResult)
+    {
+	//- if surface
+
+	if (0 == strcmp(pcName,"state_init"))
+	{
+	    //- get initial state
+
+	    double dState = HHGateGetStateInit(pgathh, ppist);
+
+	    //- set initial state of gate
+
+	    pparResult
+		= SymbolSetParameterDouble
+		  (&pgathh->bio.ioh.iol.hsle, "state_init", dState);
+	}
+    }
+
+    //- return result
+
+    return(pparResult);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: HHGateGetStateInit()
+///
+/// ARGS.:
+///
+///	pgathh.: conceptual gate.
+///	ppist..: context of conceptual gate.
+///
+/// RTN..: double
+///
+///	Initial state, FLT_MAX for unknown.  By default the initial
+///	state is the steady state for the initial membrane potential
+///	found in the parent compartment.
+///
+/// DESCR: Get initial state of this gate.
+///
+/// **************************************************************************
+
+static
+double
+HHGateGetStateInit
+(struct symtab_HHGate *pgathh, struct PidinStack *ppist)
+{
+    //- set default result: failure.
+
+    double dResult = FLT_MAX;
+
+    //- determine the initial membrane potential of the parent segment
+
+    struct PidinStack *ppistSegment = PidinStackDuplicate(ppist);
+
+    PidinStackPop(ppistSegment);
+
+    struct symtab_HSolveListElement *phsleSegment
+	= PidinStackLookupTopSymbol(ppistSegment);
+
+    if (phsleSegment)
+    {
+	double dVm = SymbolParameterResolveValue(phsleSegment, ppistSegment, "Vm_init");
+
+	if (dVm != FLT_MAX)
+	{
+	    //t need access to a gate kinetic calculator
+
+/* 	    A = TabInterp(channel->X_A,v); */
+/* 	    B = TabInterp(channel->X_B,v); */
+/* 	    channel->X = A / B; */
+	}
+    }
+
+    //- return result
+
+    return(dResult);
 }
 
 

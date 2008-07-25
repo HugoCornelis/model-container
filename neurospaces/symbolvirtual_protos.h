@@ -174,14 +174,14 @@ SymbolCalloc(size_t nmemb, size_t size, VTable_symbols * _vtable, int iType);
 struct symtab_Parameters *
 SymbolFindCachedParameter
 (struct symtab_HSolveListElement *phsle,
- char *pcName,
- struct PidinStack *ppist);
+ struct PidinStack *ppist,
+ char *pcName);
 
 struct symtab_Parameters *
 SymbolFindParameter
 (struct symtab_HSolveListElement *phsle,
- char *pcName,
- struct PidinStack *ppist);
+ struct PidinStack *ppist,
+ char *pcName);
 
 int SymbolFree(struct symtab_HSolveListElement *phsle);
 

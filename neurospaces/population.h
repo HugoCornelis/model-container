@@ -51,8 +51,8 @@ PopulationCreateAlias
 struct symtab_Parameters * 
 PopulationGetParameter
 (struct symtab_Population *ppopu,
- char *pcName,
- struct PidinStack *ppist);
+ struct PidinStack *ppist,
+ char *pcName);
 
 void PopulationInit(struct symtab_Population *ppopu);
 

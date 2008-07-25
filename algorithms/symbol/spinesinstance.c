@@ -273,7 +273,7 @@ SpinesInstanceNew
 	//t should use ParameterResolveSymbol()
 
 	struct symtab_Parameters *pparProto
-	    = SymbolFindParameter(&palgs->hsle, "PROTOTYPE", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "PROTOTYPE");
 
 	psi->so.pcRandomSpineProto = pparProto ? ParameterGetString(pparProto) : NULL ;
 
@@ -296,7 +296,7 @@ SpinesInstanceNew
 	//- scan name selector
 
 	struct symtab_Parameters *pparSelector
-	    = SymbolFindParameter(&palgs->hsle, "NAME_SELECTOR", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "NAME_SELECTOR");
 
 	psi->so.pcSelector = pparSelector ? ParameterGetString(pparSelector) : NULL ;
     }

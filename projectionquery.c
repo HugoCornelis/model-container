@@ -890,9 +890,9 @@ int ProjectionQueryInit
 		//- if source and target defined
 
 		struct symtab_Parameters *pparSource
-		    = SymbolFindParameter(phsle, "SOURCE", pppistProjections[i]);
+		    = SymbolFindParameter(phsle, pppistProjections[i], "SOURCE");
 		struct symtab_Parameters *pparTarget
-		    = SymbolFindParameter(phsle, "TARGET", pppistProjections[i]);
+		    = SymbolFindParameter(phsle, pppistProjections[i], "TARGET");
 
 		if (pparSource && pparTarget)
 		{
@@ -1110,7 +1110,7 @@ ProjectionQueryLookupPostSerialID
     //- get target from projection
 
     struct symtab_Parameters *pparTarget
-	= SymbolFindParameter(phsle, "TARGET", ppist);
+	= SymbolFindParameter(phsle, ppist, "TARGET");
 
     ppistTarget = ParameterResolveToPidinStack(pparTarget, ppist);
 

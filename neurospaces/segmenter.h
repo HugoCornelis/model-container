@@ -96,8 +96,8 @@ SegmenterCountSpikeGenerators
 struct symtab_Parameters * 
 SegmenterGetParameter
 (struct symtab_Segmenter *psegr,
- char *pcName,
- struct PidinStack *ppist);
+ struct PidinStack *ppist,
+ char *pcName);
 
 void SegmenterInit(struct symtab_Segmenter *psegr);
 

@@ -193,8 +193,8 @@ struct symtab_Connection * ConnectionCalloc(void)
 /// ARGS.:
 ///
 ///	pconn.: connection.
-///	pcName: name of parameter.
 ///	ppist.: context of connection.
+///	pcName: name of parameter.
 ///
 /// RTN..: struct symtab_Parameters *
 ///
@@ -207,8 +207,8 @@ struct symtab_Connection * ConnectionCalloc(void)
 struct symtab_Parameters *
 ConnectionGetParameter
 (struct symtab_Connection *pconn,
- char *pcName,
- struct PidinStack *ppist)
+ struct PidinStack *ppist,
+ char *pcName)
 {
     //- set default result : failure
 

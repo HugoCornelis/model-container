@@ -91,8 +91,8 @@ static inline
 struct symtab_Parameters * 
 AlgorithmSymbolGetParameter
 (struct symtab_AlgorithmSymbol * palgs,
- char *pcName,
- struct PidinStack *ppist);
+ struct PidinStack *ppist,
+ char *pcName);
 
 #ifndef SWIG
 static inline
@@ -231,8 +231,8 @@ AlgorithmSymbolGetName(struct symtab_AlgorithmSymbol *palgs)
 /// ARGS.:
 ///
 ///	palgs...: component to get parameter for
-///	pcName..: name of parameter to search for
 ///	ppist...: context of symbol
+///	pcName..: name of parameter to search for
 ///
 /// RTN..: struct symtab_Parameters * : parameter, NULL for failure
 ///
@@ -246,8 +246,8 @@ static inline
 struct symtab_Parameters * 
 AlgorithmSymbolGetParameter
 (struct symtab_AlgorithmSymbol * palgs,
- char *pcName,
- struct PidinStack *ppist)
+ struct PidinStack *ppist,
+ char *pcName)
 {
     //- lookup parameters value
 
@@ -297,9 +297,9 @@ AlgorithmSymbolParameterResolveValue
 
 	struct symtab_Parameters *
 	    SymbolFindParameter
-	    (struct symtab_HSolveListElement *phsle, char *pc, struct PidinStack *ppist);
+	    (struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, char *pc);
 
-	ppar = SymbolFindParameter(&palgs->hsle, pcName, ppist);
+	ppar = SymbolFindParameter(&palgs->hsle, ppist, pcName);
     }
 
     //- else
@@ -314,9 +314,9 @@ AlgorithmSymbolParameterResolveValue
 
 	struct symtab_Parameters *
 	    SymbolGetParameter
-	    (struct symtab_HSolveListElement *phsle, char *pc, struct PidinStack *ppist);
+	    (struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, char *pc);
 
-	ppar = SymbolGetParameter(&palgs->hsle, pcName, ppist);
+	ppar = SymbolGetParameter(&palgs->hsle, ppist, pcName);
     }
 
     if (ppar)

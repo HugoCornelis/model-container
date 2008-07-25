@@ -3102,7 +3102,7 @@ SV * symbol_parameter_value(void *phsle, char *pc, void *ppist)
 
     //- get parameter
 
-    struct symtab_Parameters *ppar = SymbolGetParameter(phsle, pc, ppist);
+    struct symtab_Parameters *ppar = SymbolGetParameter(phsle, ppist, pc);
 
    //- convert to SV
 

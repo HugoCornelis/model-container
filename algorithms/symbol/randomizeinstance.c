@@ -202,7 +202,7 @@ RandomizeInstanceNew
 	//t should use ParameterResolveSymbol()
 
 	struct symtab_Parameters *pparSymbol
-	    = SymbolFindParameter(&palgs->hsle, "SYMBOL_NAME", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "SYMBOL_NAME");
 
 	//- scan addto symbol
 
@@ -211,14 +211,14 @@ RandomizeInstanceNew
 	//- scan parameter name
 
 	struct symtab_Parameters *pparParameter
-	    = SymbolFindParameter(&palgs->hsle, "PARAMETER_NAME", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "PARAMETER_NAME");
 
 	pri->rio.pcParameter = ParameterGetString(pparParameter);
 
 	//- scan target name
 
 	struct symtab_Parameters *pparTarget
-	    = SymbolFindParameter(&palgs->hsle, "TARGET_NAME", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "TARGET_NAME");
 
 	pri->rio.pcTarget = ParameterGetString(pparTarget);
 

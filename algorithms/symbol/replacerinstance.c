@@ -318,7 +318,7 @@ ReplacerInstanceNew
 	//- get prototype
 
 	struct symtab_Parameters *pparPrototype
-	    = SymbolFindParameter(&palgs->hsle, "PROTOTYPE", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "PROTOTYPE");
 
 	if (pparPrototype)
 	{
@@ -336,7 +336,7 @@ ReplacerInstanceNew
 	//- get symbol name selector
 
 	struct symtab_Parameters *pparSelector
-	    = SymbolFindParameter(&palgs->hsle, "NAME_SELECTOR", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "NAME_SELECTOR");
 
 	if (pparSelector)
 	{

@@ -188,7 +188,7 @@ SegmentGetBranchpointFlag
     //- get segmenter base symbol
 
     struct symtab_Parameters *pparBase
-	= SymbolFindParameter(&psegment->segr.bio.ioh.iol.hsle, "SEGMENTER_BASE", ppist);
+	= SymbolFindParameter(&psegment->segr.bio.ioh.iol.hsle, ppist, "SEGMENTER_BASE");
 
     if (pparBase)
     {
@@ -339,8 +339,8 @@ SegmentGetLength
 /// ARGS.:
 ///
 ///	psegment..: symbol to get parameter for
-///	pcName....: name of parameter
 ///	ppist.....: context of symbol.
+///	pcName....: name of parameter
 ///
 /// RTN..: struct symtab_Parameters *
 ///
@@ -353,8 +353,8 @@ SegmentGetLength
 struct symtab_Parameters * 
 SegmentGetParameter
 (struct symtab_Segment *psegment,
- char *pcName,
- struct PidinStack *ppist)
+ struct PidinStack *ppist,
+ char *pcName)
 {
     //- set default result : failure
 
@@ -362,7 +362,7 @@ SegmentGetParameter
 
     //- get parameter from bio component
 
-    pparResult = BioComponentGetParameter(&psegment->segr.bio, pcName, ppist);
+    pparResult = BioComponentGetParameter(&psegment->segr.bio, ppist, pcName);
 
     //- if not found
 
@@ -551,7 +551,7 @@ SegmentGetSomatopetalBranchpoints
 	//- go to parent symbol
 
 	struct symtab_Parameters *pparParent
-	    = SymbolFindParameter(phsle, "PARENT", ppistWorking);
+	    = SymbolFindParameter(phsle, ppistWorking, "PARENT");
 
 	if (pparParent)
 	{
@@ -672,7 +672,7 @@ SegmentGetSomatopetalDistance
 	//- go to parent symbol
 
 	struct symtab_Parameters *pparParent
-	    = SymbolFindParameter(phsle, "PARENT", ppistWorking);
+	    = SymbolFindParameter(phsle, ppistWorking, "PARENT");
 
 	if (pparParent)
 	{

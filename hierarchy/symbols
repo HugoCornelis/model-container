@@ -239,6 +239,7 @@ my $class_hierarchy
 				     },
 		      allows => {
 				 'create_alias' => 'h_h_gate',
+				 'get_parameter' => 'h_h_gate',
 				},
 		      description => 'a channel gate with hodgkin huxley alike kinetics',
 		      isa => 'bio_comp',
@@ -1588,8 +1589,8 @@ my $object_methods_signatures
 			 prototype => '(struct symtab_HSolveListElement *phsle)',
 			},
        'get_parameter' => {
-			   calling => '(phsle, pcName, ppist)',
-			   prototype => '(struct symtab_HSolveListElement *phsle, char *pcName, struct PidinStack *ppist)',
+			   calling => '(phsle, ppist, pcName)',
+			   prototype => '(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, char *pcName)',
 			  },
        'get_pidin' => {
 		       calling => '(phsle)',

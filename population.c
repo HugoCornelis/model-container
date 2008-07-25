@@ -184,8 +184,9 @@ PopulationCreateAlias
 ///
 /// ARGS.:
 ///
-///	ppopu..: symbol to get parameter for
-///	pcName.: name of parameter
+///	ppopu..: symbol to get parameter for.
+///	ppist..: context of population.
+///	pcName.: name of parameter.
 ///
 /// RTN..: struct symtab_Parameters * : parameter structure
 ///
@@ -196,8 +197,8 @@ PopulationCreateAlias
 struct symtab_Parameters * 
 PopulationGetParameter
 (struct symtab_Population *ppopu,
- char *pcName,
- struct PidinStack *ppist)
+ struct PidinStack *ppist,
+ char *pcName)
 {
     //- set default result : failure
 
@@ -205,7 +206,7 @@ PopulationGetParameter
 
     //- get parameter from bio component
 
-    pparResult = BioComponentGetParameter(&ppopu->segr.bio, pcName, ppist);
+    pparResult = BioComponentGetParameter(&ppopu->segr.bio, ppist, pcName);
 
     //- if not found
 

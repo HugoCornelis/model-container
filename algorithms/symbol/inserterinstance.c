@@ -655,7 +655,7 @@ InserterInstanceNew
 	//- get heights parameter filename
 
 	struct symtab_Parameters *pparHeights
-	    = SymbolFindParameter(&palgs->hsle, "HEIGHTS_PARAMETER_FILENAME", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "HEIGHTS_PARAMETER_FILENAME");
 
 	if (pparHeights)
 	{
@@ -665,7 +665,7 @@ InserterInstanceNew
 	//- get symbol name selector
 
 	struct symtab_Parameters *pparSelector
-	    = SymbolFindParameter(&palgs->hsle, "NAME_SELECTOR", ppist);
+	    = SymbolFindParameter(&palgs->hsle, ppist, "NAME_SELECTOR");
 
 	if (pparSelector)
 	{

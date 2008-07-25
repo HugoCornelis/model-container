@@ -4502,7 +4502,7 @@ QueryMachineWildcardParameterTraverser
     //- lookup parameter
 
     struct symtab_Parameters *ppar
-	= SymbolFindParameter(phsle, pcPar, ptstr->ppist);
+	= SymbolFindParameter(phsle, ptstr->ppist, pcPar);
 
     //- if parameter found
 
@@ -4674,7 +4674,7 @@ static int QueryHandlerPrintParameter
 	    //- lookup parameter
 
 	    struct symtab_Parameters *ppar
-		= SymbolFindParameter(phsle, pcPar, ppist);
+		= SymbolFindParameter(phsle, ppist, pcPar);
 
 	    //- if parameter found
 
@@ -4956,7 +4956,7 @@ static int QueryHandlerPrintParameterScaled
 	//- lookup parameter
 
 	struct symtab_Parameters *ppar
-	    = SymbolFindParameter(phsle,pcPar,ppist);
+	    = SymbolFindParameter(phsle,ppist,pcPar);
 
 	//- if parameter found
 
@@ -8299,7 +8299,7 @@ SegmentValidator
     //- if this segment has a named parent segment
 
     struct symtab_Parameters *pparParent
-	= SymbolGetParameter(phsle, "PARENT", ppist);
+	= SymbolGetParameter(phsle, ppist, "PARENT");
 
     if (pparParent)
     {

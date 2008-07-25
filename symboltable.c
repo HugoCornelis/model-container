@@ -335,8 +335,8 @@ SymbolCalloc(size_t nmemb, size_t size, VTable_symbols * _vtable, int iType)
 struct symtab_Parameters *
 SymbolFindCachedParameter
 (struct symtab_HSolveListElement *phsle,
- char *pcName,
- struct PidinStack *ppist)
+ struct PidinStack *ppist,
+ char *pcName)
 {
     //- set default result : failure
 
@@ -468,8 +468,8 @@ SymbolFindCachedParameter
 struct symtab_Parameters *
 SymbolFindParameter
 (struct symtab_HSolveListElement *phsle,
- char *pcName,
- struct PidinStack *ppist)
+ struct PidinStack *ppist,
+ char *pcName)
 {
     //- set default result : failure
 
@@ -477,7 +477,7 @@ SymbolFindParameter
 
     //- if the parameter is in the caches
 
-    pparResult = SymbolFindCachedParameter(phsle, pcName, ppist);
+    pparResult = SymbolFindCachedParameter(phsle, ppist, pcName);
 
     if (pparResult)
     {
@@ -488,7 +488,7 @@ SymbolFindParameter
 
     //- regular lookup of the parameter
 
-    pparResult = SymbolGetParameter(phsle, pcName, ppist);
+    pparResult = SymbolGetParameter(phsle, ppist, pcName);
 
     //- return result
 
@@ -761,13 +761,13 @@ SymbolParameterResolveCoordinateValue
 	    //- lookup parameters
 
 	    struct symtab_Parameters *pparX
-		= SymbolFindParameter(phsleWorking, "X", ppistWorking);
+		= SymbolFindParameter(phsleWorking, ppistWorking, "X");
 
 	    struct symtab_Parameters *pparY
-		= SymbolFindParameter(phsleWorking, "Y", ppistWorking);
+		= SymbolFindParameter(phsleWorking, ppistWorking, "Y");
 
 	    struct symtab_Parameters *pparZ
-		= SymbolFindParameter(phsleWorking, "Z", ppistWorking);
+		= SymbolFindParameter(phsleWorking, ppistWorking, "Z");
 
 	    if (!pparX
 		|| !pparY
@@ -951,13 +951,13 @@ SymbolParameterResolveTransformedValue
 	    //- lookup parameters
 
 	    struct symtab_Parameters *pparX
-		= SymbolFindParameter(phsleWorking, "X", ppistWorking);
+		= SymbolFindParameter(phsleWorking, ppistWorking, "X");
 
 	    struct symtab_Parameters *pparY
-		= SymbolFindParameter(phsleWorking, "Y", ppistWorking);
+		= SymbolFindParameter(phsleWorking, ppistWorking, "Y");
 
 	    struct symtab_Parameters *pparZ
-		= SymbolFindParameter(phsleWorking, "Z", ppistWorking);
+		= SymbolFindParameter(phsleWorking, ppistWorking, "Z");
 
 	    if (!pparX || !pparY || !pparZ)
 	    {
@@ -1065,7 +1065,7 @@ SymbolParameterResolveScaledValue
 
     //- lookup parameter
 
-    struct symtab_Parameters *ppar = SymbolFindParameter(phsle, pcName, ppist);
+    struct symtab_Parameters *ppar = SymbolFindParameter(phsle, ppist, pcName);
 
     //- if found
 
@@ -1179,25 +1179,25 @@ SymbolParameterTransformValue
 	    //- get rotation parameters
 
 	    struct symtab_Parameters *pparAngle
-		= SymbolFindParameter(phsle,"ROTATE_ANGLE", ppist);
+		= SymbolFindParameter(phsle, ppist,"ROTATE_ANGLE");
 
 	    struct symtab_Parameters *pparCenterX
-		= SymbolFindParameter(phsle,"ROTATE_CENTER_X", ppist);
+		= SymbolFindParameter(phsle, ppist,"ROTATE_CENTER_X");
 
 	    struct symtab_Parameters *pparCenterY
-		= SymbolFindParameter(phsle,"ROTATE_CENTER_Y", ppist);
+		= SymbolFindParameter(phsle, ppist,"ROTATE_CENTER_Y");
 
 	    struct symtab_Parameters *pparCenterZ
-		= SymbolFindParameter(phsle,"ROTATE_CENTER_Z", ppist);
+		= SymbolFindParameter(phsle, ppist,"ROTATE_CENTER_Z");
 
 	    struct symtab_Parameters *pparAxisX
-		= SymbolFindParameter(phsle,"ROTATE_AXIS_X", ppist);
+		= SymbolFindParameter(phsle, ppist,"ROTATE_AXIS_X");
 
 	    struct symtab_Parameters *pparAxisY
-		= SymbolFindParameter(phsle,"ROTATE_AXIS_Y", ppist);
+		= SymbolFindParameter(phsle, ppist,"ROTATE_AXIS_Y");
 
 	    struct symtab_Parameters *pparAxisZ
-		= SymbolFindParameter(phsle,"ROTATE_AXIS_Z", ppist);
+		= SymbolFindParameter(phsle, ppist,"ROTATE_AXIS_Z");
 
 	    //- resolve values for rotation parameters
 
@@ -3183,9 +3183,9 @@ SymbolTraverseWildcard
 ///
 /// ARGS.:
 ///
-///	phsle..: symbol to get parameter for
-///	pcName.: name of parameter
-///	ppist..: context of symbol
+///	phsle..: symbol to get parameter for.
+///	ppist..: context of symbol.
+///	pcName.: name of parameter.
 ///
 /// RTN..: struct symtab_Parameters * : parameter structure
 ///

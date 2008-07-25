@@ -822,7 +822,7 @@ ProjectionGetSourceSerial
     //- get source population context
 
     struct symtab_Parameters *pparSource
-	= SymbolFindParameter(phsle,"SOURCE",ppist);
+	= SymbolFindParameter(phsle,ppist,"SOURCE");
 
     struct PidinStack *ppistSource
 	= ParameterResolveToPidinStack(pparSource,ppist);
@@ -879,7 +879,7 @@ ProjectionGetTargetSerial
     //- get target population context
 
     struct symtab_Parameters *pparTarget
-	= SymbolFindParameter(phsle,"TARGET",ppist);
+	= SymbolFindParameter(phsle,ppist,"TARGET");
 
     struct PidinStack *ppistTarget
 	= ParameterResolveToPidinStack(pparTarget,ppist);
@@ -1087,7 +1087,7 @@ ProjectionSpikeGenSelector
 	//- get source population context
 
 	struct symtab_Parameters *pparSource
-	    = SymbolFindParameter(phsleProjection,"SOURCE",ppistProjection);
+	    = SymbolFindParameter(phsleProjection,ppistProjection,"SOURCE");
 
 	struct PidinStack *ppistSource
 	    = ParameterResolveToPidinStack(pparSource,ppistProjection);
@@ -1229,7 +1229,7 @@ ProjectionSpikeRecSelector
 	//- get target population context
 
 	struct symtab_Parameters *pparTarget
-	    = SymbolFindParameter(phsleProjection,"TARGET",ppistProjection);
+	    = SymbolFindParameter(phsleProjection,ppistProjection,"TARGET");
 
 	struct PidinStack *ppistTarget
 	    = ParameterResolveToPidinStack(pparTarget,ppistProjection);
@@ -1618,7 +1618,7 @@ ProjectionTraverseConnectionsForSpikeGenerator
 /*     //- get source population context */
 
 /*     struct symtab_Parameters *pparSource */
-/* 	= SymbolFindParameter(phsleProjection,"SOURCE",ppistProjection); */
+/* 	= SymbolFindParameter(phsleProjection,ppistProjection,"SOURCE"); */
 
 /*     struct PidinStack *ppistSource */
 /* 	= ParameterResolveToPidinStack(pparSource,ppistProjection); */
@@ -1894,7 +1894,7 @@ ProjectionTraverseConnectionsForSpikeReceiver
 /*     //- get target population context */
 
 /*     struct symtab_Parameters *pparTarget */
-/* 	= SymbolFindParameter(phsleProjection,"TARGET",ppistProjection); */
+/* 	= SymbolFindParameter(phsleProjection,ppistProjection,"TARGET"); */
 
 /*     struct PidinStack *ppistTarget */
 /* 	= ParameterResolveToPidinStack(pparTarget,ppistProjection); */
