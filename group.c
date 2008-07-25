@@ -81,7 +81,7 @@ struct symtab_Group * GroupCalloc(void)
 
 static int 
 GroupSpikeGeneratorCounter
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : ok
 
@@ -120,7 +120,7 @@ int GroupCountSpikeGenerators
     //- traverse group spike generators and count them
 
     if (SymbolTraverseSpikeGenerators
-	(phsle,ppist,GroupSpikeGeneratorCounter,NULL,(void *)&iResult)
+	(phsle, ppist, GroupSpikeGeneratorCounter, NULL, (void *)&iResult)
 	== FALSE)
     {
 	iResult = -1;
@@ -215,7 +215,7 @@ void GroupInit(struct symtab_Group *pgrup)
 ///
 /// **************************************************************************
 
-struct symtab_Group * GroupNewAtXYZ(double dx,double dy,double dz)
+struct symtab_Group * GroupNewAtXYZ(double dx, double dy, double dz)
 {
     //- set result : new cell
 
@@ -224,11 +224,11 @@ struct symtab_Group * GroupNewAtXYZ(double dx,double dy,double dz)
 
     //- allocate & insert parameters
 
-    if (SymbolSetParameterDouble(&pgrupResult->bio.ioh.iol.hsle,"X",dx))
+    if (SymbolSetParameterDouble(&pgrupResult->bio.ioh.iol.hsle, "X", dx))
     {
-	if (SymbolSetParameterDouble(&pgrupResult->bio.ioh.iol.hsle,"Y",dy))
+	if (SymbolSetParameterDouble(&pgrupResult->bio.ioh.iol.hsle, "Y", dy))
 	{
-	    if (SymbolSetParameterDouble(&pgrupResult->bio.ioh.iol.hsle,"Z",dz))
+	    if (SymbolSetParameterDouble(&pgrupResult->bio.ioh.iol.hsle, "Z", dz))
 	    {
 	    }
 	    else

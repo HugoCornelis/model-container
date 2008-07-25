@@ -2454,9 +2454,9 @@ SymbolSetAlgorithmInstanceInfo
 /// ARGS.:
 ///
 ///	phsle..: symbol to get parameter for
+///	ppist..: context of symbol.
 ///	pcName.: name of parameter
 ///	dNumber: parameter value
-///	ppist..: context of symbol.
 ///
 /// RTN..: struct symtab_Parameters * : parameter structure
 ///
@@ -2475,9 +2475,9 @@ SymbolSetAlgorithmInstanceInfo
 struct symtab_Parameters *
 SymbolSetParameterFixedDouble
 (struct symtab_HSolveListElement *phsle,
+ struct PidinStack *ppist,
  char *pcName,
- double dNumber,
- struct PidinStack *ppist)
+ double dNumber)
 {
     //- set default result : failure
 

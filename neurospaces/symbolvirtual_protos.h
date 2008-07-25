@@ -237,9 +237,9 @@ SymbolSetAlgorithmInstanceInfo
 struct symtab_Parameters *
 SymbolSetParameterFixedDouble
 (struct symtab_HSolveListElement *phsle,
+ struct PidinStack *ppist,
  char *pcName,
- double dNumber,
- struct PidinStack *ppist);
+ double dNumber);
 
 int
 SymbolTraverseBioLevels
