@@ -35,6 +35,11 @@ double
 GateKineticGetHHOffset
 (struct symtab_GateKinetic *pgatk, struct PidinStack *ppist);
 
+static 
+double 
+GateKineticGetNumTableEntries
+(struct symtab_GateKinetic *pgatk, struct PidinStack *ppist);
+
 static
 double
 GateKineticGetTabulationFlag
@@ -185,6 +190,30 @@ GateKineticGetParameter
 		= SymbolSetParameterDouble
 		  (&pgatk->bio.ioh.iol.hsle, "HH_Has_Table", iTable);
 	}
+	else if(0 == strcmp(pcName, "HH_NUMBER_OF_TABLE_ENTRIES"))
+	{
+
+
+	  
+
+	    //- get the number of table entries  
+
+	    double dTableEntries = GateKineticGetNumTableEntries(pgatk,ppist);
+	    
+	    
+	    if(dTableEntries == FLT_MAX)
+	      return NULL;
+  
+
+	    pparResult = SymbolSetParameterDouble(&pgatk->bio.ioh.iol.hsle, 
+						  "HH_NUMBER_OF_TABLE_ENTRIES", 
+						  dTableEntries);
+
+
+	}
+
+
+
 
     }
 
@@ -227,6 +256,60 @@ GateKineticGetHHOffset
     //- return result
 
     return(dResult);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: GateKineticGetNumTableEntries()
+///
+/// ARGS.:
+///
+///	pgatk.: gate kinetic to init
+///     ppist: context of kinetic symbol
+///
+/// RTN..: double
+///
+/// DESCR: Functions returns the number of table parameters in a
+///        gate kinetic in the format "table["index"]"
+///
+/// **************************************************************************
+static double GateKineticGetNumTableEntries
+(struct symtab_GateKinetic *pgatk, struct PidinStack *ppist)
+{
+
+  int i;
+  char pcTable[50];
+  struct symtab_Parameters *pparTable;
+  
+
+/*   double dNumTableEntries */
+/* 	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, "RM", ppist); */
+  
+  
+  pparTable = 
+     SymbolGetParameter(&pgatk->bio.ioh.iol.hsle, ppist, "table[0]");
+
+
+  if(pparTable == NULL)
+    return FLT_MAX;
+
+
+
+  for( i=1; pparTable; i++){
+
+    sprintf(&pcTable[0],"table[%i]",i);
+
+    pparTable = 
+     SymbolGetParameter(&pgatk->bio.ioh.iol.hsle, ppist, pcTable);
+
+  }
+
+
+  
+  return (double)(i + 1);
+  
+
 }
 
 
