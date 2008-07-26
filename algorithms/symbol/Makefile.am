@@ -20,7 +20,7 @@
 #t check what i386 etc do overhere.
 
 AM_CFLAGS=-g3 -fPIC -Wmissing-prototypes -Wmissing-declarations -I$(srcdir)/../.. -DPRE_PROTO_TRAVERSAL @PERL_CCOPTS@ -I$(builddir)../..
-CFLAGS = -O0
+#CFLAGS = -O0
 
 pkglib_LIBRARIES = libsymbol_algorithms.a
 

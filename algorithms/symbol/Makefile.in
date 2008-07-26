@@ -116,7 +116,7 @@ AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
-CFLAGS = -O0
+CFLAGS = @CFLAGS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CYGPATH_W = @CYGPATH_W@
@@ -184,6 +184,7 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 AM_CFLAGS = -g3 -fPIC -Wmissing-prototypes -Wmissing-declarations -I$(srcdir)/../.. -DPRE_PROTO_TRAVERSAL @PERL_CCOPTS@ -I$(builddir)../..
+#CFLAGS = -O0
 pkglib_LIBRARIES = libsymbol_algorithms.a
 libsymbol_algorithms_a_SOURCES = \
 	connectionchecker.c \
