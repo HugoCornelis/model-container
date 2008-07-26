@@ -55,7 +55,7 @@
 /// **************************************************************************
 
 struct DependencyFile * 
-DependencyFileCallocNameSpaceImportedFile(char *pc,struct ImportedFile *pif)
+DependencyFileCallocNameSpaceImportedFile(char *pc, struct ImportedFile *pif)
 {
     //- set default result : failure
 
@@ -68,15 +68,61 @@ DependencyFileCallocNameSpaceImportedFile(char *pc,struct ImportedFile *pif)
 
     //- assign name space
 
-    DependencyFileSetNameSpace(pdfResult,pc);
+    DependencyFileSetNameSpace(pdfResult, pc);
 
     //- link with imported file
 
-    DependencyFileSetImportedFile(pdfResult,pif);
+    DependencyFileSetImportedFile(pdfResult, pif);
 
     //- return result
 
     return(pdfResult);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: DependencyFileGetImportedFile()
+///
+/// ARGS.:
+///
+///	pdf..: dependency file.
+///
+/// RTN..: struct ImportedFile *
+///
+///	imported file.
+///
+/// DESCR: Get imported file attached to this dependency file.
+///
+/// **************************************************************************
+
+struct ImportedFile *
+DependencyFileGetImportedFile(struct DependencyFile *pdf)
+{
+    return(pdf->pifSymbols);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: DependencyFileGetNameSpace()
+///
+/// ARGS.:
+///
+///	pdf..: dependency file.
+///
+/// RTN..: char *
+///
+///	namespace.
+///
+/// DESCR: Get namespace attached to this dependency file.
+///
+/// **************************************************************************
+
+char *
+DependencyFileGetNameSpace(struct DependencyFile *pdf)
+{
+    return(pdf->pcNameSpace);
 }
 
 
@@ -96,7 +142,7 @@ DependencyFileCallocNameSpaceImportedFile(char *pc,struct ImportedFile *pif)
 ///
 /// **************************************************************************
 
-int DependencyFilePrint(struct DependencyFile *pdf,int iIndent,FILE *pfile)
+int DependencyFilePrint(struct DependencyFile *pdf, int iIndent, FILE *pfile)
 {
     //- set default result : ok
 
@@ -113,11 +159,63 @@ int DependencyFilePrint(struct DependencyFile *pdf,int iIndent,FILE *pfile)
     //- pretty print symbols of imported file
 
     ImportedFilePrint
-	(DependencyFileGetImportedFile(pdf),MoreIndent(iIndent),pfile);
+	(DependencyFileGetImportedFile(pdf), MoreIndent(iIndent), pfile);
 
     //- return result
 
     return(bResult);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: DependencyFileSetImportedFile()
+///
+/// ARGS.:
+///
+///	pdf..: dependency file.
+///	pif..: associated imported file.
+///
+/// RTN..: int
+///
+///	success of operation.
+///
+/// DESCR: Set imported file attached to this dependency file.
+///
+/// **************************************************************************
+
+int
+DependencyFileSetImportedFile
+(struct DependencyFile *pdf, struct ImportedFile *pif)
+{
+    pdf->pifSymbols = pif;
+
+    return(1);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: DependencyFileSetNameSpace()
+///
+/// ARGS.:
+///
+///	pdf..: dependency file.
+///	pc...: associated namespace.
+///
+/// RTN..: int
+///
+///	success of operation.
+///
+/// DESCR: Set namespace attached to this dependency file.
+///
+/// **************************************************************************
+
+int
+DependencyFileSetNameSpace
+(struct DependencyFile *pdf, char *pc)
+{
+    pdf->pcNameSpace = pc;
 }
 
 

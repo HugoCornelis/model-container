@@ -50,66 +50,26 @@ struct DependencyFile
 };
 
 
-//d
-//d test type(pdf) == struct DependencyFile * at compile time
-//d
-
-#define CompileTimeTestDependencyFile(pdf)				\
-do {									\
-    struct DependencyFile df;						\
-    (pdf) == &df;							\
-} while (0)
-
-
-//d
-//d get namespace attached to this dependency file
-//d
-
-#define DependencyFileGetImportedFile(pdf)				\
-({									\
-    CompileTimeTestDependencyFile(pdf);					\
-    (pdf)->pifSymbols;							\
-})
-
-
-//d
-//d get namespace attached to this dependency file
-//d
-
-#define DependencyFileGetNameSpace(pdf)					\
-({									\
-    CompileTimeTestDependencyFile(pdf);					\
-    (pdf)->pcNameSpace;							\
-})
-
-
-//d
-//d set namespace attached to this dependency file
-//d
-
-#define DependencyFileSetImportedFile(pdf,pif)				\
-({									\
-    CompileTimeTestDependencyFile(pdf);					\
-    (pdf)->pifSymbols = (pif);						\
-})
-
-
-//d
-//d set namespace attached to this dependency file
-//d
-
-#define DependencyFileSetNameSpace(pdf,pc)				\
-({									\
-    CompileTimeTestDependencyFile(pdf);					\
-    (pdf)->pcNameSpace = (pc);						\
-})
-
-
 struct DependencyFile *
-DependencyFileCallocNameSpaceImportedFile(char *pc,struct ImportedFile *pif);
+DependencyFileCallocNameSpaceImportedFile(char *pc, struct ImportedFile *pif);
 
-int DependencyFilePrint
-(struct DependencyFile *pdf,int iIndent,FILE *pfile);
+struct ImportedFile *
+DependencyFileGetImportedFile(struct DependencyFile *pdf);
+
+char *
+DependencyFileGetNameSpace(struct DependencyFile *pdf);
+
+int
+DependencyFilePrint
+(struct DependencyFile *pdf, int iIndent, FILE *pfile);
+
+int
+DependencyFileSetImportedFile
+(struct DependencyFile *pdf, struct ImportedFile *pif);
+
+int
+DependencyFileSetNameSpace
+(struct DependencyFile *pdf, char *pc);
 
 
 #endif
