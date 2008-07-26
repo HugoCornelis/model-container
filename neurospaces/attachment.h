@@ -28,50 +28,6 @@ struct descr_Attachment;
 struct symtab_Attachment;
 
 
-//d
-//d test type(patta) == struct symtab_Attachment * at compile time
-//d
-
-#define CompileTimeTestAttachment(patta)					\
-do {									\
-    struct symtab_Attachment atta;						\
-    (patta) == &atta;							\
-} while (0)
-
-
-//d
-//d check if attachment is incoming
-//d
-
-#define AttachmentPointIsIncoming(patta)					\
-({									\
-    CompileTimeTestAttachment(patta);					\
-    AttachmentGetType(patta) == TYPE_ATTACHMENT_INCOMING;			\
-})
-
-
-//d
-//d check if attachment is outgoing
-//d
-
-#define AttachmentPointIsOutgoing(patta)					\
-({									\
-    CompileTimeTestAttachment(patta);					\
-    !AttachmentPointIsIncoming(patta);						\
-})
-
-
-//d
-//d set datatype of attachment
-//d
-
-#define AttachmentSetDataType(patta,pc)					\
-do {									\
-    CompileTimeTestAttachment(patta);					\
-    (patta)->deatta.pcDataType = pc;					\
-} while (0)
-
-
 #include "idin.h"
 
 
@@ -136,6 +92,40 @@ struct symtab_Attachment
 //d outgoing connection type
 
 #define TYPE_ATTACHMENT_OUTGOING		2
+
+
+//f exported inlines
+
+#ifndef SWIG
+static inline
+#endif
+int
+AttachmentPointIsIncoming(struct symtab_Attachment *patta)
+{
+    return(AttachmentGetType(patta) == TYPE_ATTACHMENT_INCOMING);
+}
+
+
+#ifndef SWIG
+static inline
+#endif
+int
+AttachmentPointIsOutgoing(struct symtab_Attachment *patta)
+{
+    return(!AttachmentPointIsIncoming(patta));
+}
+
+
+#ifndef SWIG
+static inline
+#endif
+int
+AttachmentSetDataType(struct symtab_Attachment *patta, char *pc)
+{
+    patta->deatta.pcDataType = pc;
+
+    return(1);
+}
 
 
 #endif
