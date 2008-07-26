@@ -106,18 +106,26 @@ CachedConnectionPrint
 
 //f exported inlines
 
-static inline 
+#ifndef SWIG
+static inline
+#endif
 void CachedConnectionFree(struct CachedConnection *pcconn);
 
+/* #ifndef SWIG */
 /* static inline */
+/* #endif */
 /* struct symtab_HSolveListElement * */
 /* CachedConnectionGetConnection(struct CachedConnection *pcconn); */
 
+/* #ifndef SWIG */
 /* static inline */
+/* #endif */
 /* int */
 /* CachedConnectionGetCursor(struct CachedConnection *pcconn); */
 
+#ifndef SWIG
 static inline
+#endif
 void
 CachedConnectionInit
 (struct CachedConnection *pcconn,
@@ -129,19 +137,27 @@ CachedConnectionInit
  double dDelay,
  double dWeight);
 
+#ifndef SWIG
 static inline
+#endif
 double
 CachedConnectionGetCachedDelay(struct CachedConnection *pcconn);
 
+#ifndef SWIG
 static inline
+#endif
 int
 CachedConnectionGetCachedPost(struct CachedConnection *pcconn);
 
+#ifndef SWIG
 static inline
+#endif
 int
 CachedConnectionGetCachedPre(struct CachedConnection *pcconn);
 
+#ifndef SWIG
 static inline
+#endif
 double
 CachedConnectionGetCachedWeight(struct CachedConnection *pcconn);
 
@@ -183,7 +199,9 @@ struct CachedConnection
 /// free cached connection.
 ///
 
-static inline 
+#ifndef SWIG
+static inline
+#endif
 void CachedConnectionFree(struct CachedConnection *pcconn)
 {
 /*     pcconn->iProjection = -1; */
@@ -196,7 +214,9 @@ void CachedConnectionFree(struct CachedConnection *pcconn)
 /* /// get cursor. */
 /* /// */
 
+/* #ifndef SWIG */
 /* static inline */
+/* #endif */
 /* int */
 /* CachedConnectionGetCachedCursor(struct CachedConnection *pcconn) */
 /* { */
@@ -208,7 +228,9 @@ void CachedConnectionFree(struct CachedConnection *pcconn)
 /* /// get connection. */
 /* /// */
 
+/* #ifndef SWIG */
 /* static inline */
+/* #endif */
 /* struct symtab_HSolveListElement * */
 /* CachedConnectionGetCachedConnection(struct CachedConnection *pcconn) */
 /* { */
@@ -220,7 +242,9 @@ void CachedConnectionFree(struct CachedConnection *pcconn)
 /// init cached connection.
 ///
 
+#ifndef SWIG
 static inline
+#endif
 void
 CachedConnectionInit
 (struct CachedConnection *pcconn,
@@ -247,7 +271,9 @@ CachedConnectionInit
 /// get postsynaptic serial from cached connection.
 ///
 
+#ifndef SWIG
 static inline
+#endif
 double
 CachedConnectionGetCachedDelay(struct CachedConnection *pcconn)
 {
@@ -259,7 +285,9 @@ CachedConnectionGetCachedDelay(struct CachedConnection *pcconn)
 /// get postsynaptic serial from cached connection.
 ///
 
+#ifndef SWIG
 static inline
+#endif
 int
 CachedConnectionGetCachedPost(struct CachedConnection *pcconn)
 {
@@ -311,7 +339,9 @@ CachedConnectionGetCachedPost(struct CachedConnection *pcconn)
 /// get presynaptic serial from cached connection.
 ///
 
+#ifndef SWIG
 static inline
+#endif
 int
 CachedConnectionGetCachedPre(struct CachedConnection *pcconn)
 {
@@ -364,7 +394,9 @@ CachedConnectionGetCachedPre(struct CachedConnection *pcconn)
 /// get postsynaptic serial from cached connection.
 ///
 
+#ifndef SWIG
 static inline
+#endif
 double
 CachedConnectionGetCachedWeight(struct CachedConnection *pcconn)
 {

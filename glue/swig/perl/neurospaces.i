@@ -115,6 +115,7 @@ char **get_args() {
 #include "neurospaces/axonhillock.h"
 #include "neurospaces/biocomp.h"
 #include "neurospaces/biolevel.h"
+#include "neurospaces/cachedconnection.h"
 #include "neurospaces/cell.h"
 #include "neurospaces/channel.h"
 #include "neurospaces/connection.h"
@@ -231,7 +232,7 @@ struct pq_traversal_data
 
 SV * parameter_2_SV(struct symtab_Parameters *ppar);
 
-static int 
+static int
 ConnectionTraverser
 (struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
@@ -385,13 +386,146 @@ ConnectionTraverser
 	av_push(pqtd->pavConnections, psvConnection);
     }
 
+    else if (subsetof_cached_connection(iType))
+    {
+	struct CachedConnection *pcconn = (struct CachedConnection *)phsle;
+
+	//t following code cannot work, although it should work.
+	//t see ProjectionQueryTraverseConnectionsForSpikeGenerator()
+	//t comments for projection queries with caching enabled.
+
+/* 	//- get info on connection group (serial, context) */
+
+/* 	int iConnectionGroup = TstrGetPrincipalSerial(ptstr); */
+
+/* 	iConnectionGroup -= SymbolGetPrincipalSerialToParent(phsle); */
+
+/* 	struct PidinStack *ppistConnectionGroup */
+/* 	    = SymbolPrincipalSerial2Context(pqtd->phsleRoot, pqtd->ppistRoot, iConnectionGroup); */
+
+/* 	char pcConnectionGroup[1000]; */
+
+/* 	PidinStackString(ppistConnectionGroup, pcConnectionGroup, 1000); */
+
+	//- default source and target are not set
+
+	int iSource = 0;
+	int iTarget = 0;
+
+	//- if the projection query has not been loaded from a cache file
+
+	if (pqtd->ppq->iCursor != 100000)
+	{
+	    //- set source and target
+
+	    iSource = ProjectionQueryGetCurrentSourceSerial(pqtd->ppq);
+	    iTarget = ProjectionQueryGetCurrentTargetSerial(pqtd->ppq);
+	}
+
+	//- get pre and post synaptic targets
+
+	double dPre = CachedConnectionGetCachedPre(pcconn);
+	double dPost = CachedConnectionGetCachedPost(pcconn);
+
+	//- compute generator and receiver
+
+	int iGenerator = /* iSource +  */dPre;
+	int iReceiver = /* iTarget +  */dPost;
+
+	//- compute attributes (delay, weight)
+
+	double dDelay = CachedConnectionGetCachedDelay(pcconn);
+	double dWeight = CachedConnectionGetCachedWeight(pcconn);
+
+	//- collect data about the generator
+
+	struct PidinStack *ppistGenerator
+	    = SymbolPrincipalSerial2Context(pqtd->phsleRoot, pqtd->ppistRoot, iGenerator);
+
+	char pcGenerator[1000];
+
+	PidinStackString(ppistGenerator, pcGenerator, 1000);
+
+	//- collect data about the receiver
+
+	struct PidinStack *ppistReceiver
+	    = SymbolPrincipalSerial2Context(pqtd->phsleRoot, pqtd->ppistRoot, iReceiver);
+
+	char pcReceiver[1000];
+
+	PidinStackString(ppistReceiver, pcReceiver, 1000);
+
+/* 	//- perlify connection info */
+
+/* 	SV * psvGroupContext = newSVpv(pcConnectionGroup, 0); */
+/* 	SV * psvGroupSerial = newSViv(iConnectionGroup); */
+
+/* 	HV * phvConnectionGroup = newHV(); */
+
+/* 	hv_store(phvConnectionGroup, "context", 7, psvGroupContext, 0); */
+/* 	hv_store(phvConnectionGroup, "serial", 6, psvGroupSerial, 0); */
+
+/* 	SV * psvConnectionGroup = newRV_noinc((SV *)phvConnectionGroup); */
+
+	//- perlify attributes
+
+	SV * psvDelay = newSVnv(dDelay);
+	SV * psvWeight = newSVnv(dWeight);
+
+	HV * phvAttributes = newHV();
+
+	hv_store(phvAttributes, "delay", 5, psvDelay, 0);
+	hv_store(phvAttributes, "weight", 6, psvWeight, 0);
+
+	SV * psvAttributes = newRV_noinc((SV *)phvAttributes);
+
+	//- perlify generator
+
+	SV * psvGeneratorContext = newSVpv(pcGenerator, 0);
+	SV * psvGeneratorSerial = newSViv(iGenerator);
+
+	HV * phvGenerator = newHV();
+
+	hv_store(phvGenerator, "context", 7, psvGeneratorContext, 0);
+	hv_store(phvGenerator, "serial", 6, psvGeneratorSerial, 0);
+
+	SV * psvGenerator = newRV_noinc((SV *)phvGenerator);
+
+	//- perlify receiver
+
+	SV * psvReceiverContext = newSVpv(pcReceiver, 0);
+	SV * psvReceiverSerial = newSViv(iReceiver);
+
+	HV * phvReceiver = newHV();
+
+	hv_store(phvReceiver, "context", 7, psvReceiverContext, 0);
+	hv_store(phvReceiver, "serial", 6, psvReceiverSerial, 0);
+
+	SV * psvReceiver = newRV_noinc((SV *)phvReceiver);
+
+	//- create tuple
+
+	HV * phvConnection = newHV();
+
+	hv_store(phvConnection, "attributes", 10, psvAttributes, 0);
+	hv_store(phvConnection, "generator", 9, psvGenerator, 0);
+/* 	hv_store(phvConnection, "group", 5, psvConnectionGroup, 0); */
+	hv_store(phvConnection, "receiver", 8, psvReceiver, 0);
+
+	SV * psvConnection = newRV_noinc((SV *)phvConnection);
+
+	//- add tuple to the result
+
+	av_push(pqtd->pavConnections, psvConnection);
+    }
+
     //- else
 
     else
     {
 	//- give diag's
 
-	fprintf(stdout,"Non-connection in projection query (internal error)\n");
+	fprintf(stdout, "Non-connection in projection query (internal error, type is %i)\n", iType);
     }
 
     //- return result
@@ -3177,6 +3311,7 @@ double symbol_parameter_resolve_scaled_value(void *phsle, void *ppist, char *pc)
 %include "neurospaces/axonhillock.h"
 %include "neurospaces/biocomp.h"
 %include "neurospaces/biolevel.h"
+%include "neurospaces/cachedconnection.h"
 %include "neurospaces/cell.h"
 %include "neurospaces/channel.h"
 %include "neurospaces/connection.h"
