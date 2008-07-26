@@ -98,7 +98,6 @@ do {									\
 #define ImportedFileSetDefinedSymbols(pif,pds)				\
 ({									\
     CompileTimeTestImportedFile(pif);					\
-    CompileTimeTestDefinedSymbols(pds);					\
     (pif)->pdefsym = (pds);						\
 })
 

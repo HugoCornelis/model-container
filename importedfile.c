@@ -227,7 +227,7 @@ ImportedFileGetRootSymbol(struct ImportedFile *pif)
     //- set default result : from defined symbols
 
     struct symtab_RootSymbol *prootResult
-	= DefSymGetHyptheticalRoot(pif->pdefsym);
+	= DefSymGetRootSymbol(pif->pdefsym);
 
     //- return result
 

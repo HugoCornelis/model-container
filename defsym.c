@@ -168,7 +168,7 @@ int DefSymInit(struct DefinedSymbols *pdefsym)
 
     HSolveListInit(&pdefsym->hslPublicModels);
 
-    //- allocate hypothetical root for model lists
+    //- allocate root for model lists
 
     pdefsym->prootPublic = RootSymbolCalloc();
 
@@ -199,7 +199,7 @@ int DefSymInit(struct DefinedSymbols *pdefsym)
 
 /// **************************************************************************
 ///
-/// SHORT: DefSymGetHyptheticalRoot()
+/// SHORT: DefSymGetRootSymbol()
 ///
 /// ARGS.:
 ///
@@ -214,11 +214,36 @@ int DefSymInit(struct DefinedSymbols *pdefsym)
 /// **************************************************************************
 
 struct symtab_RootSymbol *
-DefSymGetHyptheticalRoot(struct DefinedSymbols *pdefsym)
+DefSymGetRootSymbol(struct DefinedSymbols *pdefsym)
 {
     //- return result : from public models
 
     return(pdefsym->prootPublic);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: DefSymIncrementDependencyFiles()
+///
+/// ARGS.:
+///
+///	pdefsym.: defined symbols of imported file
+///
+/// RTN..: int
+///
+///	success of operation.
+///
+/// DESCR: Increment count of number of dependencies.
+///
+/// **************************************************************************
+
+int
+DefSymIncrementDependencyFiles(struct DefinedSymbols *pdefsym)
+{
+    pdefsym->iDependencyFiles++;
+
+    return(1);
 }
 
 

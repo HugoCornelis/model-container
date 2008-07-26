@@ -59,28 +59,6 @@ struct DefinedSymbols
 };
 
 
-//d
-//d test type(pdefsym) == struct DefinedSymbols * at compile time
-//d
-
-#define CompileTimeTestDefinedSymbols(pdefsym)				\
-do {									\
-    struct DefinedSymbols defsym;					\
-    (pdefsym) == &defsym;						\
-} while (0)
-
-
-//d
-//d get namespace attached to this dependency file
-//d
-
-#define DefSymIncrementDependencyFiles(pdefsym)				\
-({									\
-    CompileTimeTestDefinedSymbols(pdefsym);				\
-    (pdefsym)->iDependencyFiles++;					\
-})
-
-
 #include "symboltable.h"
 
 
@@ -97,7 +75,10 @@ struct DefinedSymbols *DefSymCalloc(void);
 int DefSymInit(struct DefinedSymbols *pdefsym);
 
 struct symtab_RootSymbol *
-DefSymGetHyptheticalRoot(struct DefinedSymbols *pdefsym);
+DefSymGetRootSymbol(struct DefinedSymbols *pdefsym);
+
+int
+DefSymIncrementDependencyFiles(struct DefinedSymbols *pdefsym);
 
 struct symtab_HSolveListElement *
 DefSymLookup
