@@ -186,9 +186,9 @@ ImportedFileFindDependencyFile(struct ImportedFile *pif,char *pc)
 ///
 /// RTN..: struct symtab_HSolveListElement *
 ///
-///	the base hypothetical root symbol, that exports all models
+///	the absolute root symbol, that exports all models
 ///
-/// DESCR: Get the base hypothetical root
+/// DESCR: Get the absolute root symbol.
 ///
 /// **************************************************************************
 
@@ -207,6 +207,58 @@ struct symtab_RootSymbol *ImportedFileGetBaseRootSymbol(void)
 
 /// **************************************************************************
 ///
+/// SHORT: ImportedFileGetDefinedSymbols()
+///
+/// ARGS.:
+///
+///	pif...: imported file
+///
+/// RTN..: struct DefinedSymbols *
+///
+///	symbols defined in this file.
+///
+/// DESCR: Get symbols defined in this file.
+///
+/// **************************************************************************
+
+struct DefinedSymbols *
+ImportedFileGetDefinedSymbols(struct ImportedFile *pif)
+{
+    //- set default result : from defined symbols
+
+    struct DefinedSymbols *pdefsymResult = pif->pdefsym;
+
+    //- return result
+
+    return(pdefsymResult);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: ImportedFileGetFilename()
+///
+/// ARGS.:
+///
+///	pif...: imported file
+///
+/// RTN..: char *
+///
+///	original filename.
+///
+/// DESCR: Get original filename of this imported file.
+///
+/// **************************************************************************
+
+char *
+ImportedFileGetFilename(struct ImportedFile *pif)
+{
+    return(pif->pcFilename);
+}
+
+
+/// **************************************************************************
+///
 /// SHORT: ImportedFileGetBaseRoot()
 ///
 /// ARGS.:
@@ -215,9 +267,9 @@ struct symtab_RootSymbol *ImportedFileGetBaseRootSymbol(void)
 ///
 /// RTN..: struct symtab_HSolveListElement *
 ///
-///	hypothetical root symbol, that exports all models for imported file
+///	root symbol, that exports all models for imported file
 ///
-/// DESCR: Get the hypothetical root
+/// DESCR: Get the root symbol.
 ///
 /// **************************************************************************
 
@@ -540,7 +592,8 @@ int ImportedFilePrint(struct ImportedFile *pif,int iIndent,FILE *pfile)
 ///
 /// **************************************************************************
 
-int ImportedFilePrintNameSpaces
+int
+ImportedFilePrintNameSpaces
 (struct ImportedFile *pif,int iIndent,FILE *pfile)
 {
     //- set default result : ok
@@ -601,7 +654,7 @@ void ImportedFilePrintRootImport(void)
 /// **************************************************************************
 
 int ImportedFilePrintProperties
-(struct ImportedFile *pif,int iIndent,FILE *pfile)
+(struct ImportedFile *pif, int iIndent, FILE *pfile)
 {
     //- set default result : ok
 
@@ -657,6 +710,56 @@ int ImportedFilePrintProperties
     //- return result
 
     return(bResult);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: ImportedFileSetDefinedSymbols()
+///
+/// ARGS.:
+///
+///	pif...: imported file.
+///
+/// RTN..: int
+///
+///	success of operation.
+///
+/// DESCR: Set set of defined symbols for an imported file.
+///
+/// **************************************************************************
+
+int
+ImportedFileSetDefinedSymbols
+(struct ImportedFile *pif, struct DefinedSymbols *pdefsym)
+{
+    pif->pdefsym = pdefsym;
+
+    return(1);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: ImportedFileSetFilename()
+///
+/// ARGS.:
+///
+///	pif...: imported file.
+///
+/// RTN..: int
+///
+///	success of operation.
+///
+/// DESCR: Set filename for an imported file.
+///
+/// **************************************************************************
+
+int ImportedFileSetFilename(struct ImportedFile *pif, char *pc)
+{
+    pif->pcFilename = pc;
+
+    return(1);
 }
 
 

@@ -58,61 +58,6 @@ struct ImportedFile
 #define IMPORTEDFILE_FLAG_ROOT		1
 
 
-//d
-//d test type(pif) == struct ImportedFile * at compile time
-//d
-
-#define CompileTimeTestImportedFile(pif)				\
-do {									\
-    struct ImportedFile imported;					\
-    (pif) == &imported;							\
-} while (0)
-
-
-//d
-//d set defined symbols for an imported file
-//d
-
-#define ImportedFileGetDefinedSymbols(pif)				\
-({									\
-    CompileTimeTestImportedFile(pif);					\
-    (pif)->pdefsym;							\
-})
-
-
-//d
-//d get filename for an imported file
-//d
-
-#define ImportedFileGetFilename(pif)					\
-({									\
-    CompileTimeTestImportedFile(pif);					\
-    (pif)->pcFilename;							\
-})
-
-
-//d
-//d set set of defined symbols for an imported file
-//d
-
-#define ImportedFileSetDefinedSymbols(pif,pds)				\
-({									\
-    CompileTimeTestImportedFile(pif);					\
-    (pif)->pdefsym = (pds);						\
-})
-
-
-//d
-//d set filename for an imported file
-//d
-
-#define ImportedFileSetFilename(pif,pc)					\
-({									\
-    CompileTimeTestImportedFile(pif);					\
-    (pif)->pcFilename = (pc);						\
-})
-
-
 #include "pidinstack.h"
 
 
@@ -121,9 +66,15 @@ struct ImportedFile *ImportedFileCalloc(char *pc);
 void ImportedFileClearRootImport(void);
 
 struct DependencyFile *
-ImportedFileFindDependencyFile(struct ImportedFile *pif,char *pc);
+ImportedFileFindDependencyFile(struct ImportedFile *pif, char *pc);
 
 struct symtab_RootSymbol *ImportedFileGetBaseRootSymbol(void);
+
+struct DefinedSymbols *
+ImportedFileGetDefinedSymbols(struct ImportedFile *pif);
+
+char *
+ImportedFileGetFilename(struct ImportedFile *pif);
 
 struct symtab_RootSymbol *
 ImportedFileGetRootSymbol(struct ImportedFile *pif);
@@ -142,15 +93,21 @@ ImportedFileLookupNameSpace
  struct PidinStack *ppist,
  int *piLevel);
 
-int ImportedFilePrint(struct ImportedFile *pif,int iIndent,FILE *pfile);
+int ImportedFilePrint(struct ImportedFile *pif, int iIndent, FILE *pfile);
 
 int ImportedFilePrintNameSpaces
-(struct ImportedFile *pif,int iIndent,FILE *pfile);
+(struct ImportedFile *pif, int iIndent, FILE *pfile);
 
 void ImportedFilePrintRootImport(void);
 
 int ImportedFilePrintProperties
-(struct ImportedFile *pif,int iIndent,FILE *pfile);
+(struct ImportedFile *pif, int iIndent, FILE *pfile);
+
+int
+ImportedFileSetDefinedSymbols
+(struct ImportedFile *pif, struct DefinedSymbols *pdefsym);
+
+int ImportedFileSetFilename(struct ImportedFile *pif, char *pc);
 
 void ImportedFileSetRootImport(struct ImportedFile *pif);
 
