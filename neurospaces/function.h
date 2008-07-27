@@ -42,50 +42,6 @@ struct symtab_Function
 };
 
 
-//d
-//d test type(pfun) == struct symtab_Function * at compile time
-//d
-
-#define CompileTimeTestFunction(pfun)					\
-do {									\
-    struct symtab_Function fun;						\
-    (pfun) == &fun;							\
-} while (0)
-
-
-//d
-//d test type(ppar) == struct symtab_Parameters * at compile time
-//d
-
-#define CompileTimeTestParameter(ppar)					\
-do {									\
-    struct symtab_Parameters par;					\
-    (ppar) == &par;							\
-} while (0)
-
-
-//d
-//d get field name
-//d
-
-#define FunctionGetName(pfun)						\
-({									\
-    CompileTimeTestFunction(pfun);					\
-									\
-    (pfun)->pcName;							\
-})
-
-//d
-//d get parameter
-//d
-
-#define FunctionGetParameter(pfun,pc)					\
-({									\
-    CompileTimeTestFunction(pfun);					\
-									\
-    ParContainerLookupParameter((pfun)->pparc,(pc));			\
-})
-
 #include "pidinstack.h"
 
 
@@ -98,6 +54,12 @@ FunctionAssignParameters
 int FunctionAllowsScaling(struct symtab_Function *pfun);
 
 struct symtab_Function * FunctionCalloc(void);
+
+char *
+FunctionGetName(struct symtab_Function *pfun);
+
+struct symtab_Parameters *
+FunctionGetParameter(struct symtab_Function *pfun, char *pc);
 
 void FunctionInit(struct symtab_Function *pfun);
 

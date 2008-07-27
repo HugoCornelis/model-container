@@ -133,6 +133,53 @@ struct symtab_Function * FunctionCalloc(void)
 
 /// **************************************************************************
 ///
+/// SHORT: FunctionGetName()
+///
+/// ARGS.:
+///
+///	pfun.: function.
+///
+/// RTN..: char *
+///
+///	Name of the function.
+///
+/// DESCR: Get name of function.
+///
+/// **************************************************************************
+
+char *
+FunctionGetName(struct symtab_Function *pfun)
+{
+    return(pfun->pcName);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: FunctionGetParameter()
+///
+/// ARGS.:
+///
+///	pfun.: function.
+///	pc...: name of parameter.
+///
+/// RTN..: struct symtab_Parameters *
+///
+///	Searched parameter, NULL for not found.
+///
+/// DESCR: Get name function parameter.
+///
+/// **************************************************************************
+
+struct symtab_Parameters *
+FunctionGetParameter(struct symtab_Function *pfun, char *pc)
+{
+    return(ParContainerLookupParameter(pfun->pparc, pc));
+}
+
+
+/// **************************************************************************
+///
 /// SHORT: FunctionInit()
 ///
 /// ARGS.:
