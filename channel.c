@@ -323,7 +323,8 @@ ChannelGetChannelType
 	    pcResult = "ChannelActInact";
 	}
 	else if (ccc.iEquations == 0
-		 && ccc.iGateKineticsConcentration == 1
+		 && (ccc.iGateKineticsConcentration == 1
+		     || ccc.iGateKineticsConcentration == 2)
 		 && ccc.iGateKineticsVoltage == 2
 		 && ccc.iGates == 2
 		 && ccc.iOthers == 0
