@@ -329,9 +329,9 @@ ParserLookupDependencyModel
 struct symtab_HSolveListElement *
 ParserLookupPrivateModel(char *pcIdentifier);
 
-struct symtab_HSolveListElement *
-ParserLookupSymbol
-(struct PidinStack *ppist, struct symtab_IdentifierIndex *pidin);
+/* struct symtab_HSolveListElement * */
+/* ParserLookupSymbol */
+/* (struct PidinStack *ppist, struct symtab_IdentifierIndex *pidin); */
 
 int ParserMessage
 (PARSERCONTEXT *pacContext,
