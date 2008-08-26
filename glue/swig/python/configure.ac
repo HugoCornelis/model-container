@@ -19,11 +19,11 @@ dnl //////////////////////////////////////////////////////////////////////////
 
 AC_PREREQ(2.59)
 
-AC_INIT(neurospaces, swig-glue-perl, hugo\.cornelis\@gmail\.com)
+AC_INIT(neurospaces, swig-glue-python, hugo\.cornelis\@gmail\.com)
 
 
 
-AM_INIT_AUTOMAKE(neurospaces, swig-glue-perl)
+AM_INIT_AUTOMAKE(neurospaces, swig-glue-python)
 
 # Checks for programs.
 # AC_PROG_CC
