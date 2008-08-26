@@ -12,6 +12,8 @@ Makefile$
 ^elc-temp$
 ^glue/swig/perl/SwiggableNeurospaces.pm$
 ^glue/swig/perl/swiggable_neurospaces_wrap.c$
+^glue/swig/python/SwiggableNeurospaces.py$
+^glue/swig/python/swiggable_neurospaces_wrap.c$
 ^hierarchy/output
 ^html/htdocs/neurospaces_project/neurospaces/
 ^installed$

@@ -17,6 +17,7 @@
 ##############################################################################
 ##############################################################################
 
+
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 VPATH = @srcdir@
@@ -38,9 +39,9 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 subdir = .
-DIST_COMMON = $(am__configure_deps) $(srcdir)/../../install-sh \
-	$(srcdir)/../../missing $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in $(top_srcdir)/configure
+DIST_COMMON = $(am__configure_deps) $(nobase_python_HEADERS) \
+	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+	$(top_srcdir)/configure install-sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -63,9 +64,11 @@ am__vpath_adj = case $$p in \
     *) f=$$p;; \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(swigdir)"
-swigDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(swig_DATA)
+am__installdirs = "$(DESTDIR)$(pythondir)" "$(DESTDIR)$(pythondir)"
+pythonDATA_INSTALL = $(INSTALL_DATA)
+DATA = $(python_DATA)
+nobase_pythonHEADERS_INSTALL = $(install_sh_DATA)
+HEADERS = $(nobase_python_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DIST_SUBDIRS = $(SUBDIRS)
@@ -132,13 +135,24 @@ prefix = @prefix@
 program_transform_name = @program_transform_name@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
-subdirs = @subdirs@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-SUBDIRS = perl python
-swigdir = $(prefix)/glue/swig
-swig_DATA = neurospaces.i
-all: all-recursive
+SUBDIRS = 
+pythondir = $(prefix)/glue/swig/python
+nobase_python_HEADERS = Neurospaces.py # Neurospaces/Query.py Neurospaces/Traversal.py
+python_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.py _SwiggableNeurospaces.so # neurospaces_test.py
+BUILT_SOURCES = \
+	SwiggableNeurospaces.py \
+	swiggable_neurospaces_wrap.c
+
+CLEANFILES = \
+	SwiggableNeurospaces.py \
+	swiggable_neurospaces_wrap.c \
+	swiggable_neurospaces_wrap.o \
+	_SwiggableNeurospaces.so
+
+all: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
 .SUFFIXES:
 am--refresh:
@@ -175,22 +189,41 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
 uninstall-info-am:
-install-swigDATA: $(swig_DATA)
+install-pythonDATA: $(python_DATA)
 	@$(NORMAL_INSTALL)
-	test -z "$(swigdir)" || $(mkdir_p) "$(DESTDIR)$(swigdir)"
-	@list='$(swig_DATA)'; for p in $$list; do \
+	test -z "$(pythondir)" || $(mkdir_p) "$(DESTDIR)$(pythondir)"
+	@list='$(python_DATA)'; for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  f=$(am__strip_dir) \
-	  echo " $(swigDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(swigdir)/$$f'"; \
-	  $(swigDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(swigdir)/$$f"; \
+	  echo " $(pythonDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(pythondir)/$$f'"; \
+	  $(pythonDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(pythondir)/$$f"; \
 	done
 
-uninstall-swigDATA:
+uninstall-pythonDATA:
 	@$(NORMAL_UNINSTALL)
-	@list='$(swig_DATA)'; for p in $$list; do \
+	@list='$(python_DATA)'; for p in $$list; do \
 	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(swigdir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(swigdir)/$$f"; \
+	  echo " rm -f '$(DESTDIR)$(pythondir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(pythondir)/$$f"; \
+	done
+install-nobase_pythonHEADERS: $(nobase_python_HEADERS)
+	@$(NORMAL_INSTALL)
+	test -z "$(pythondir)" || $(mkdir_p) "$(DESTDIR)$(pythondir)"
+	@$(am__vpath_adj_setup) \
+	list='$(nobase_python_HEADERS)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  $(am__vpath_adj) \
+	  echo " $(nobase_pythonHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(pythondir)/$$f'"; \
+	  $(nobase_pythonHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(pythondir)/$$f"; \
+	done
+
+uninstall-nobase_pythonHEADERS:
+	@$(NORMAL_UNINSTALL)
+	@$(am__vpath_adj_setup) \
+	list='$(nobase_python_HEADERS)'; for p in $$list; do \
+	  $(am__vpath_adj) \
+	  echo " rm -f '$(DESTDIR)$(pythondir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(pythondir)/$$f"; \
 	done
 
 # This directory's subdirectories are mostly independent; you can cd
@@ -328,7 +361,6 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/../..
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -471,14 +503,16 @@ distcleancheck: distclean
 	       $(distcleancheck_listfiles) ; \
 	       exit 1; } >&2
 check-am: all-am
-check: check-recursive
-all-am: Makefile $(DATA)
+check: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) check-recursive
+all-am: Makefile $(DATA) $(HEADERS)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(swigdir)"; do \
+	for dir in "$(DESTDIR)$(pythondir)" "$(DESTDIR)$(pythondir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
-install: install-recursive
+install: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) install-recursive
 install-exec: install-exec-recursive
 install-data: install-data-recursive
 uninstall: uninstall-recursive
@@ -495,6 +529,7 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
+	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
@@ -502,6 +537,7 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 clean: clean-recursive
 
 clean-am: clean-generic mostlyclean-am
@@ -521,7 +557,7 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-swigDATA
+install-data-am: install-nobase_pythonHEADERS install-pythonDATA
 
 install-exec-am:
 
@@ -549,7 +585,8 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-info-am uninstall-swigDATA
+uninstall-am: uninstall-info-am uninstall-nobase_pythonHEADERS \
+	uninstall-pythonDATA
 
 uninstall-info: uninstall-info-recursive
 
@@ -561,12 +598,14 @@ uninstall-info: uninstall-info-recursive
 	distcleancheck distdir distuninstallcheck dvi dvi-am html \
 	html-am info info-am install install-am install-data \
 	install-data-am install-exec install-exec-am install-info \
-	install-info-am install-man install-strip install-swigDATA \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic \
-	maintainer-clean-recursive mostlyclean mostlyclean-generic \
-	mostlyclean-recursive pdf pdf-am ps ps-am tags tags-recursive \
-	uninstall uninstall-am uninstall-info-am uninstall-swigDATA
+	install-info-am install-man install-nobase_pythonHEADERS \
+	install-pythonDATA install-strip installcheck installcheck-am \
+	installdirs installdirs-am maintainer-clean \
+	maintainer-clean-generic maintainer-clean-recursive \
+	mostlyclean mostlyclean-generic mostlyclean-recursive pdf \
+	pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
+	uninstall-info-am uninstall-nobase_pythonHEADERS \
+	uninstall-pythonDATA
 
 
 #t the following rules are crap complete, would be good if a auto
@@ -574,6 +613,21 @@ uninstall-info: uninstall-info-recursive
 
 dist-hook:
 	cp $(srcdir)/neurospaces.i $(distdir)
+	$(INSTALL) -d $(distdir)/tests
+	cp $(srcdir)/tests/*.py $(distdir)/tests
+
+SwiggableNeurospaces.py swiggable_neurospaces_wrap.c: $(swig_DATA)
+	swig -DPRE_PROTO_TRAVERSAL -I$(builddir)../../.. -I$(srcdir)/../../.. -python -makedefault -module SwiggableNeurospaces -o swiggable_neurospaces_wrap.c $(srcdir)/neurospaces.i
+
+swiggable_neurospaces_wrap.o: swiggable_neurospaces_wrap.c
+	gcc -g -DPRE_PROTO_TRAVERSAL -I/usr/include/python2.4 -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols/ -c swiggable_neurospaces_wrap.c -fPIC -Xlinker -export-dynamic
+
+#t this line needs -f PIC for some architectures, and -lncurses for some architectures
+
+_SwiggableNeurospaces.so: swiggable_neurospaces_wrap.o
+	gcc -g -shared swiggable_neurospaces_wrap.o -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -lhistory -lreadline -fPIC -o _SwiggableNeurospaces.so -Xlinker -export-dynamic
+
+all: _SwiggableNeurospaces.so
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
