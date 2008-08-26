@@ -33,17 +33,17 @@
 static
 double
 GateKineticGetHHOffset
-(struct symtab_GateKinetic *pgatk, struct PidinStack *ppist);
+(struct symtab_ConcentrationGateKinetic *pcgatc, struct PidinStack *ppist);
 
 static 
-double 
+double
 GateKineticGetNumTableEntries
-(struct symtab_GateKinetic *pgatk, struct PidinStack *ppist);
+(struct symtab_ConcentrationGateKinetic *pcgatc, struct PidinStack *ppist);
 
 static
 double
 GateKineticGetTabulationFlag
-(struct symtab_GateKinetic *pgatk, struct PidinStack *ppist);
+(struct symtab_ConcentrationGateKinetic *pcgatc, struct PidinStack *ppist);
 
 
 /// **************************************************************************
@@ -93,7 +93,7 @@ struct symtab_ConcentrationGateKinetic * ConcentrationGateKineticCalloc(void)
 /// ARGS.:
 ///
 ///	pcgatc.: symbol to alias
-///	pidin.: name of new symbol
+///	pidin..: name of new symbol
 ///
 /// RTN..: struct symtab_HSolveListElement * : alias for original symbol
 ///
@@ -159,9 +159,9 @@ void ConcentrationGateKineticInit(struct symtab_ConcentrationGateKinetic *pcgatc
 ///
 /// ARGS.:
 ///
-///	pgatk...: symbol to get parameter for.
-///	ppist...: context of symbol.
-///	pcName..: name of parameter.
+///	pcgatc...: symbol to get parameter for.
+///	ppist....: context of symbol.
+///	pcName...: name of parameter.
 ///
 /// RTN..: struct symtab_Parameters *
 ///
@@ -173,7 +173,7 @@ void ConcentrationGateKineticInit(struct symtab_ConcentrationGateKinetic *pcgatc
 
 struct symtab_Parameters * 
 ConcentrationGateKineticGetParameter
-(struct symtab_GateKinetic *pgatk,
+(struct symtab_ConcentrationGateKinetic *pcgatc,
  struct PidinStack *ppist,
  char *pcName)
 {
@@ -183,7 +183,7 @@ ConcentrationGateKineticGetParameter
 
     //- get parameter from bio component
 
-    pparResult = BioComponentGetParameter(&pgatk->bio, ppist, pcName);
+    pparResult = BioComponentGetParameter(&pcgatc->bio, ppist, pcName);
 
     //- if not found
 
@@ -195,19 +195,19 @@ ConcentrationGateKineticGetParameter
 	{
 	    //- check for table
 
-	    int iTable = GateKineticGetTabulationFlag(pgatk, ppist);
+	    int iTable = GateKineticGetTabulationFlag(pcgatc, ppist);
 
 	    //- cache result
 
 	    pparResult
 		= SymbolSetParameterDouble
-		  (&pgatk->bio.ioh.iol.hsle, "HH_Has_Table", iTable);
+		  (&pcgatc->bio.ioh.iol.hsle, "HH_Has_Table", iTable);
 	}
 	else if (0 == strcmp(pcName, "HH_NUMBER_OF_TABLE_ENTRIES"))
 	{
 	    //- get the number of table entries  
 
-	    double dTableEntries = GateKineticGetNumTableEntries(pgatk,ppist);
+	    double dTableEntries = GateKineticGetNumTableEntries(pcgatc,ppist);
 
 	    if (dTableEntries == FLT_MAX)
 	    {
@@ -216,7 +216,7 @@ ConcentrationGateKineticGetParameter
 
 	    pparResult
 		= SymbolSetParameterDouble
-		  (&pgatk->bio.ioh.iol.hsle,
+		  (&pcgatc->bio.ioh.iol.hsle,
 		   "HH_NUMBER_OF_TABLE_ENTRIES", 
 		   dTableEntries);
 	}
@@ -234,8 +234,8 @@ ConcentrationGateKineticGetParameter
 ///
 /// ARGS.:
 ///
-///	pgatk.: gate kinetic to init
-///     ppist: context of kinetic symbol
+///	pcgatc.: gate kinetic to init
+///     ppist..: context of kinetic symbol
 ///
 /// RTN..: double
 ///
@@ -247,7 +247,7 @@ ConcentrationGateKineticGetParameter
 static
 double
 GateKineticGetNumTableEntries
-(struct symtab_GateKinetic *pgatk, struct PidinStack *ppist)
+(struct symtab_ConcentrationGateKinetic *pcgatc, struct PidinStack *ppist)
 {
     int i;
     char pcTable[50];
@@ -257,7 +257,7 @@ GateKineticGetNumTableEntries
 /* 	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, "RM", ppist); */
   
     pparTable
-	= SymbolGetParameter(&pgatk->bio.ioh.iol.hsle, ppist, "table[0]");
+	= SymbolGetParameter(&pcgatc->bio.ioh.iol.hsle, ppist, "table[0]");
 
     if (pparTable == NULL)
     {
@@ -269,7 +269,7 @@ GateKineticGetNumTableEntries
 	sprintf(&pcTable[0],"table[%i]",i);
 
 	pparTable
-	    = SymbolGetParameter(&pgatk->bio.ioh.iol.hsle, ppist, pcTable);
+	    = SymbolGetParameter(&pcgatc->bio.ioh.iol.hsle, ppist, pcTable);
     }
 
     return (double)(i + 1);
@@ -282,8 +282,8 @@ GateKineticGetNumTableEntries
 ///
 /// ARGS.:
 ///
-///	pgatk.: gate kinetic symbol.
-///	ppist.: context of gate kinetic symbol.
+///	pcgatc.: gate kinetic symbol.
+///	ppist..: context of gate kinetic symbol.
 ///
 /// RTN..: int : TRUE if this table can be tabulated.
 ///
@@ -298,7 +298,7 @@ GateKineticGetNumTableEntries
 static
 double
 GateKineticGetTabulationFlag
-(struct symtab_GateKinetic *pgatk, struct PidinStack *ppist)
+(struct symtab_ConcentrationGateKinetic *pcgatc, struct PidinStack *ppist)
 {
     //- set result: no
 
@@ -307,7 +307,7 @@ GateKineticGetTabulationFlag
     //- is there a first entry in the table ?
 
     struct symtab_Parameters *pparEntry0
-	= SymbolGetParameter(&pgatk->bio.ioh.iol.hsle, ppist, "table[0]");
+	= SymbolGetParameter(&pcgatc->bio.ioh.iol.hsle, ppist, "table[0]");
 
     if (pparEntry0)
     {

@@ -31,7 +31,7 @@ struct descr_ConcentrationGateKinetic;
 struct symtab_ConcentrationGateKinetic;
 
 
-#include "idin.h"
+#include "pidinstack.h"
 
 
 //f exported functions
@@ -45,7 +45,7 @@ ConcentrationGateKineticCreateAlias
 
 struct symtab_Parameters * 
 ConcentrationGateKineticGetParameter
-(struct symtab_GateKinetic *pgatk,
+(struct symtab_ConcentrationGateKinetic *pcgatc,
  struct PidinStack *ppist,
  char *pcName);
 
