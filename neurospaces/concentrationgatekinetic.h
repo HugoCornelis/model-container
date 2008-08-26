@@ -43,6 +43,12 @@ ConcentrationGateKineticCreateAlias
 (struct symtab_ConcentrationGateKinetic *pcgatc,
  struct symtab_IdentifierIndex *pidin);
 
+struct symtab_Parameters * 
+ConcentrationGateKineticGetParameter
+(struct symtab_GateKinetic *pgatk,
+ struct PidinStack *ppist,
+ char *pcName);
+
 void ConcentrationGateKineticInit(struct symtab_ConcentrationGateKinetic *pgatk);
 
 

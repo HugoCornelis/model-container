@@ -180,6 +180,7 @@ my $class_hierarchy
 	 concentration_gate_kinetic => {
 					allows => {
 						   'create_alias' => 'concentration_gate_kinetic',
+						   'get_parameter' => 'concentration_gate_kinetic',
 						  },
 					annotations => {
 							'piSymbolType2Biolevel' => 'BIOLEVEL_MECHANISM',
