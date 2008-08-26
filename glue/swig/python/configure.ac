@@ -1,17 +1,17 @@
 dnl
-dnl Heccer : a compartmental solver that implements efficient Crank-Nicolson
-dnl integration for neuronal models.
+dnl Neurospaces: a library which implements a global typed symbol table to
+dnl be used in neurobiological model maintenance and simulation.
 dnl
 
 dnl //////////////////////////////////////////////////////////////////////////
 dnl
-dnl Heccer : testbed C implementation
+dnl Neurospaces : testbed C implementation that integrates with genesis
 dnl
-dnl Copyright (C) 2006-2008 Hugo Cornelis
+dnl Copyright (C) 1999-2008 Hugo Cornelis
 dnl
-dnl functional ideas .. Hugo Cornelis, hugo.cornelis@gmail.com
+dnl functional ideas ..	Hugo Cornelis, hugo.cornelis@gmail.com
 dnl
-dnl coding ............ Hugo Cornelis, hugo.cornelis@gmail.com
+dnl coding ............	Hugo Cornelis, hugo.cornelis@gmail.com
 dnl
 dnl //////////////////////////////////////////////////////////////////////////
 
