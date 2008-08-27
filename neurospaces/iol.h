@@ -106,7 +106,7 @@ IOListResolveInput
 
 // prototype functions
 
-struct symtab_IOList * IOListCalloc(void);
+/* struct symtab_IOList * IOListCalloc(void); */
 
 struct symtab_IOContainer *
 IOListGetInputs
