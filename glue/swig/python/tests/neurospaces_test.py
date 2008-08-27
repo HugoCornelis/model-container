@@ -4,19 +4,19 @@ import Neurospaces
 
 print "Neurospaces loaded"
 
-s1 = Neurospaces.SegmentCalloc()
+##s1 = Neurospaces.SegmentCalloc()
 
-print "Segment created"
+##print "Segment created"
 
-s2 = Neurospaces.Segment()
+##s2 = Neurospaces.Segment()
 
-print "Segment object created"
+##print "Segment object created"
 
 import Neurospaces.SingleModelContainer
 
 print "SingleModelContainer loaded"
 
-# s3 = Neurospaces.SingleModelContainer.Segment();
+s3 = Neurospaces.SingleModelContainer.Segment("/segment");
 
-# print "Segment object created and inserted"
+print "Segment object created and inserted"
 
