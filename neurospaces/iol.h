@@ -210,7 +210,7 @@ struct PidinStack *
 IOListResolveInput
 (struct symtab_IOList *piol, struct PidinStack *ppist, char *pcName, int i)
 {
-    return(IOContainerResolve(piol->piocInputs,ppist,pcName,i));
+    return(IOContainerResolve(piol->piocInputs, ppist, pcName, i));
 }
 
 
