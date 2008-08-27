@@ -13,3 +13,9 @@ class Segment:
         
     
     
+def new():
+    "Construct a model container"
+    self.backend = SwiggableNeurospaces.NeurospacesNew()
+    return self
+
+

@@ -12,11 +12,11 @@ s2 = Neurospaces.Segment()
 
 print "Segment object created"
 
-# import Neurospaces.ModelContainer
+import Neurospaces.SingleModelContainer
 
-# print "ModelContainer loaded"
+print "SingleModelContainer loaded"
 
-# s3 = Neurospaces.ModelContainer.Segment();
+# s3 = Neurospaces.SingleModelContainer.Segment();
 
 # print "Segment object created and inserted"
 

@@ -31,7 +31,7 @@ dist-hook:
 
 pythondir = $(prefix)/glue/swig/python
 
-nobase_python_HEADERS = Neurospaces.py # Neurospaces/Query.py Neurospaces/Traversal.py
+nobase_python_HEADERS = Neurospaces/__init__.py Neurospaces/SingleModelContainer.py # Neurospaces/Query.py Neurospaces/Traversal.py
 
 python_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.py _SwiggableNeurospaces.so # neurospaces_test.py
 
