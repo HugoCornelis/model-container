@@ -75,22 +75,30 @@ do {									\
 
 /* //f static inline prototypes */
 
+#ifndef SWIG
 static inline
+#endif
 int
 IOListAssignBindableIO
 (struct symtab_IOList *piol, struct symtab_IOContainer *pioc);
 
+#ifndef SWIG
 static inline
+#endif
 int
 IOListAssignInputs
 (struct symtab_IOList *piol, struct symtab_InputOutput *pio);
 
+#ifndef SWIG
 static inline
+#endif
 int
 IOListHasBindableIO
 (struct symtab_IOList *piol, char *pcInput, int i);
 
+#ifndef SWIG
 static inline
+#endif
 struct PidinStack *
 IOListResolveInput
 (struct symtab_IOList *piol, struct PidinStack *ppist, char *pcName, int i);
@@ -114,7 +122,9 @@ void IOListInit(struct symtab_IOList * piol);
 /// assign inputs
 ///
 
+#ifndef SWIG
 static inline
+#endif
 int
 IOListAssignBindableIO
 (struct symtab_IOList *piol, struct symtab_IOContainer *pioc)
@@ -131,12 +141,16 @@ IOListAssignBindableIO
 
 //t remove
 
+#ifndef SWIG
 static inline
+#endif
 void
 IOContainerAssignRelations
 (struct symtab_IOContainer *pioc,  struct symtab_InputOutput *pio);
 
+#ifndef SWIG
 static inline
+#endif
 int
 IOListAssignInputs
 (struct symtab_IOList *piol, struct symtab_InputOutput *pio)
@@ -153,11 +167,15 @@ IOListAssignInputs
 
 //t remove
 
+#ifndef SWIG
 static inline
+#endif
 int
 IOContainerHasRelation(struct symtab_IOContainer *pioc, char *pc, int i);
 
+#ifndef SWIG
 static inline
+#endif
 int
 IOListHasBindableIO
 (struct symtab_IOList *piol, char *pcInput, int i)
@@ -170,7 +188,9 @@ IOListHasBindableIO
 /// find specified bindable I/O
 ///
 
+#ifndef SWIG
 static inline
+#endif
 struct symtab_InputOutput *
 IOListLookupBindableIO
 (struct symtab_IOList *piol, char* pcInput, int i)
@@ -183,7 +203,9 @@ IOListLookupBindableIO
 /// find element that is attached to the given input
 ///
 
+#ifndef SWIG
 static inline
+#endif
 struct PidinStack *
 IOListResolveInput
 (struct symtab_IOList *piol, struct PidinStack *ppist, char *pcName, int i)
