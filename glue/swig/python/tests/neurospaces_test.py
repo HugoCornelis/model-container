@@ -16,7 +16,11 @@ import Neurospaces.SingleModelContainer
 
 print "SingleModelContainer loaded"
 
-s3 = Neurospaces.SingleModelContainer.Segment("/segment");
+s = Neurospaces.SingleModelContainer.Segment("/segment");
 
 print "Segment object created and inserted"
+
+c = Neurospaces.SingleModelContainer.Cell("/cell");
+
+print "Cell object created and inserted"
 
