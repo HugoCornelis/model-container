@@ -228,6 +228,46 @@ int SymbolConnectionSelector(struct TreespaceTraversal *ptstr,void *pvUserdata)
 
 /// **************************************************************************
 ///
+/// SHORT: SymbolGateKineticSelector()
+///
+/// ARGS.:
+///
+///	std. SymbolSelector args.
+///
+/// RTN..: int : SymbolSelector return value.
+///
+/// DESCR: Select only gate kinetics (includes concentration gate kinetics).
+///
+/// **************************************************************************
+
+int SymbolGateKineticSelector(struct TreespaceTraversal *ptstr,void *pvUserdata)
+{
+    //- set default result : process children of this symbol
+
+    int iResult = TSTR_SELECTOR_PROCESS_CHILDREN;
+
+    //- set actual symbol
+
+    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
+
+    //- if a gate kinetic
+
+    if (instanceof_gate_kinetic(phsle)
+	|| instanceof_concentration_gate_kinetic(phsle))
+      {
+	//- process including children
+
+	iResult = TSTR_SELECTOR_PROCESS_CHILDREN;
+      }
+
+    //- return result
+
+    return(iResult);
+}
+
+
+/// **************************************************************************
+///
 /// SHORT: SymbolProjectionSelector()
 ///
 /// ARGS.:
@@ -257,6 +297,84 @@ int SymbolProjectionSelector(struct TreespaceTraversal *ptstr,void *pvUserdata)
 	//- do not process but continue with children
 
 	iResult = TSTR_SELECTOR_PROCESS_ONLY_CHILDREN;
+    }
+
+    //- return result
+
+    return(iResult);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: SymbolTableEntriesCollector()
+///
+/// ARGS.:
+///
+///	pvUserdata.: int * : number of table entries for each gate kinetic.
+///
+/// RTN..: int : SymbolProcessor return value.
+///
+/// DESCR:
+///
+///	Determine the unique number of table entries for all gate
+///	kinetics.
+///
+/// **************************************************************************
+
+int
+SymbolTableEntriesCollector
+(struct TreespaceTraversal *ptstr,void *pvUserdata)
+{
+    //- set default result : ok
+
+    int iResult = TSTR_PROCESSOR_SUCCESS;
+
+    //- get pointer to number of entries
+
+    int *piEntries = (int *)pvUserdata;
+
+    //- set actual symbol
+
+    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
+
+    //- if this gate kinetic has a hardcoded table
+
+    double dEntries
+      = SymbolParameterResolveValue(phsle, ptstr->ppist, "HH_NUMBER_OF_TABLE_ENTRIES");
+
+    if (dEntries != FLT_MAX)
+    {
+	//- if number of entries not initialized
+
+	if (*piEntries == 0)
+	{
+	    //- initialize number of entries
+
+	    *piEntries = (int)dEntries;
+	}
+
+	//- if number of entries found different from previous gate
+
+	else if (*piEntries != (int)dEntries)
+	{
+	    //- flag as error
+
+	    *piEntries = -1;
+
+	    iResult = TSTR_PROCESSOR_ABORT;
+	}
+    }
+
+    //- else this gate kinetic has not table, so the gate has none either
+
+    else
+    {
+	//- flag as error
+
+	*piEntries = -1;
+
+	iResult = TSTR_PROCESSOR_ABORT;
     }
 
     //- return result

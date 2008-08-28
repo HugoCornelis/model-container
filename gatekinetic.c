@@ -266,50 +266,49 @@ GateKineticGetHHOffset
 /// ARGS.:
 ///
 ///	pgatk.: gate kinetic to init
-///     ppist: context of kinetic symbol
+///     ppist.: context of kinetic symbol
 ///
 /// RTN..: double
 ///
-/// DESCR: Functions returns the number of table parameters in a
-///        gate kinetic in the format "table["index"]"
+///	Number of entries in the table, FLT_MAX for no table.
+///
+/// DESCR: Calculate the number of entries in the gate kinetic table.
 ///
 /// **************************************************************************
-static double GateKineticGetNumTableEntries
+
+static
+double
+GateKineticGetNumTableEntries
 (struct symtab_GateKinetic *pgatk, struct PidinStack *ppist)
 {
+    int i;
+    char pcTable[50];
 
-  int i;
-  char pcTable[50];
-  struct symtab_Parameters *pparTable;
-  
+    //- if no first table entry
 
-/*   double dNumTableEntries */
-/* 	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, "RM", ppist); */
-  
-  
-  pparTable = 
-     SymbolGetParameter(&pgatk->bio.ioh.iol.hsle, ppist, "table[0]");
+    struct symtab_Parameters *pparTable
+	= SymbolGetParameter(&pgatk->bio.ioh.iol.hsle, ppist, "table[0]");
 
+    if (pparTable == NULL)
+    {
+	//- return no entries
 
-  if(pparTable == NULL)
-    return FLT_MAX;
+	return FLT_MAX;
+    }
 
+    //- loop over all table entries by index
 
+    for (i = 0 ; pparTable ; i++)
+    {
+	sprintf(&pcTable[0], "table[%i]", i);
 
-  for( i=1; pparTable; i++){
+	pparTable
+	    = SymbolGetParameter(&pgatk->bio.ioh.iol.hsle, ppist, pcTable);
+    }
 
-    sprintf(&pcTable[0],"table[%i]",i);
+    //- return index of last found
 
-    pparTable = 
-     SymbolGetParameter(&pgatk->bio.ioh.iol.hsle, ppist, pcTable);
-
-  }
-
-
-  
-  return (double)(i + 1);
-  
-
+    return (double)(i - 1);
 }
 
 

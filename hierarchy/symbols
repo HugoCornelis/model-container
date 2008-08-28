@@ -189,8 +189,9 @@ my $class_hierarchy
 					isa => 'bio_comp',
 					name => 'symtab_ConcentrationGateKinetic',
 					parameters => {
-						       Base => 'basal level, A in EDS1994',
-						       Tau => 'time constant, B in EDS1994',
+						       'Base' => 'basal level, A in EDS1994',
+						       'HH_NUMBER_OF_TABLE_ENTRIES' => 'number of table entries in the gate kinetic',
+						       'Tau' => 'time constant, B in EDS1994',
 						      },
 				       },
 	 gate_kinetic => {
@@ -205,14 +206,15 @@ my $class_hierarchy
 			  isa => 'bio_comp',
 			  name => 'symtab_GateKinetic',
 			  parameters => {
-					 'Entry[0]' => 'First entry when a tabulated representation is available',
-					 'HH_AB_Scale' => '1: multiplier',
-					 'HH_AB_Mult' => '2: multiplier membrane dependence, 0.0 for no dependence',
 					 'HH_AB_Factor_Flag' => '3: choose between nominator or denominator, 1 means nominator, -1',
+					 'HH_AB_Mult' => '2: multiplier membrane dependence, 0.0 for no dependence',
 					 'HH_AB_Offset' => '4: nominator or denominator offset',
 					 'HH_AB_OffsetM' => '4: nominator or denominator offset',
 					 'HH_AB_Offset_E' => '5: membrane offset',
+					 'HH_AB_Scale' => '1: multiplier',
 					 'HH_AB_Tau' => '6: denormalized time constant',
+					 'HH_NUMBER_OF_TABLE_ENTRIES' => 'number of table entries in the gate kinetic',
+					 'table[0]' => 'First entry when a tabulated representation is available',
 					},
 			 },
 # 	 gate_kinetic_tabulated => {
@@ -246,9 +248,10 @@ my $class_hierarchy
 		      isa => 'bio_comp',
 		      name => 'symtab_HHGate',
 		      parameters => {
-				     POWER => 'gate power',
-				     state => 'current state, normally a solved variable',
-				     state_init => 'initial value, commonly forward over backward steady states',
+				     'HH_NUMBER_OF_TABLE_ENTRIES' => 'number of table entries in each of the gates',
+				     'POWER' => 'gate power',
+				     'state' => 'current state, normally a solved variable',
+				     'state_init' => 'initial value, commonly forward over backward steady states',
 				    },
 		     },
 	 connection => {

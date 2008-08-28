@@ -10,3 +10,8 @@ class Segment:
     def __init__(self, name):
         segment = Neurospaces.Segment(name)
         
+class Cell:
+    "SingleModelContainer.Cell class"
+    def __init__(self, name):
+        cell = Neurospaces.Cell(name)
+        

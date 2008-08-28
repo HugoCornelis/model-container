@@ -30,6 +30,11 @@
 
 static
 double
+HHGateGetNumTableEntries
+(struct symtab_HHGate *pgathh, struct PidinStack *ppist);
+
+static
+double
 HHGateGetStateInit
 (struct symtab_HHGate *pgathh, struct PidinStack *ppist);
 
@@ -149,7 +154,7 @@ HHGateGetParameter
 
     if (!pparResult)
     {
-	//- if surface
+	//- if initial gate state
 
 	if (0 == strcmp(pcName,"state_init"))
 	{
@@ -163,11 +168,95 @@ HHGateGetParameter
 		= SymbolSetParameterDouble
 		  (&pgathh->bio.ioh.iol.hsle, "state_init", dState);
 	}
+
+	//- if number of table entries
+
+	else if (0 == strcmp(pcName,"HH_NUMBER_OF_TABLE_ENTRIES"))
+	{
+	    //- get number of table entries
+
+	    double dState = HHGateGetNumTableEntries(pgathh, ppist);
+
+	    //- set number of table entries
+
+	    pparResult
+		= SymbolSetParameterDouble
+		  (&pgathh->bio.ioh.iol.hsle, "HH_NUMBER_OF_TABLE_ENTRIES", dState);
+	}
     }
 
     //- return result
 
     return(pparResult);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: HHGateGetNumTableEntries()
+///
+/// ARGS.:
+///
+///	pgathh.: conceptual gate.
+///	ppist..: context of conceptual gate.
+///
+/// RTN..: double
+///
+///	Number of table entries of precalculated tables for all of the
+///	kinetics inside the gate, FLT_MAX for inconsistent tables, 0
+///	for no tables.
+///
+/// DESCR: Get number of table entries.
+///
+/// **************************************************************************
+
+static
+double
+HHGateGetNumTableEntries
+(struct symtab_HHGate *pgathh, struct PidinStack *ppist)
+{
+    //- set default result: failure.
+
+    double dResult = FLT_MAX;
+
+    //- set default number of entries: no tables
+
+    int iEntries = 0;
+
+    //- traverse gate symbol, collect number of entries for each gate
+    //- kinetic
+
+    struct TreespaceTraversal *ptstr
+	= TstrNew
+	  (ppist,
+	   SymbolGateKineticSelector,
+	   NULL,
+	   SymbolTableEntriesCollector,
+	   (void *)&iEntries,
+	   NULL,
+	   NULL);
+
+    int i = TstrGo(ptstr, &pgathh->bio.ioh.iol.hsle);
+
+    if (i == 1)
+    {
+	//- if no errors
+
+	if (iEntries >= 0)
+	{
+	    //- set result
+
+	    dResult = iEntries;
+	}
+    }
+
+    //- delete treespace traversal
+
+    TstrDelete(ptstr);
+
+    //- return result
+
+    return(dResult);
 }
 
 
