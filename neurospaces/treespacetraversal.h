@@ -165,7 +165,7 @@ int SymbolProjectionSelector(struct TreespaceTraversal *ptstr,void *pvUserdata);
 
 int SymbolGateKineticSelector(struct TreespaceTraversal *ptstr,void *pvUserdata);
 
-int SymbolTableEntriesCollector(struct TreespaceTraversal *ptstr,void *pvUserdata);
+int SymbolTableValueCollector(struct TreespaceTraversal *ptstr,void *pvUserdata);
 
 
 struct TreespaceTraversal * TstrCalloc(void);

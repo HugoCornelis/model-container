@@ -22,6 +22,7 @@
 #include <stdlib.h>
 
 #include "neurospaces/biocomp.h"
+#include "neurospaces/hhgate.h"
 #include "neurospaces/pidinstack.h"
 #include "neurospaces/treespacetraversal.h"
 #include "neurospaces/symbolvirtual_protos.h"
@@ -42,7 +43,7 @@
 ///
 /// **************************************************************************
 
-int SymbolCellCounter(struct TreespaceTraversal *ptstr,void *pvUserdata)
+int SymbolCellCounter(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : ok
 
@@ -85,7 +86,7 @@ int SymbolCellCounter(struct TreespaceTraversal *ptstr,void *pvUserdata)
 ///
 /// **************************************************************************
 
-int SymbolCellSelector(struct TreespaceTraversal *ptstr,void *pvUserdata)
+int SymbolCellSelector(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : process children of this symbol
 
@@ -127,7 +128,7 @@ int SymbolCellSelector(struct TreespaceTraversal *ptstr,void *pvUserdata)
 ///
 /// **************************************************************************
 
-int SymbolConnectionCounter(struct TreespaceTraversal *ptstr,void *pvUserdata)
+int SymbolConnectionCounter(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : ok, continue with children
 
@@ -187,7 +188,7 @@ int SymbolConnectionCounter(struct TreespaceTraversal *ptstr,void *pvUserdata)
 ///
 /// **************************************************************************
 
-int SymbolConnectionSelector(struct TreespaceTraversal *ptstr,void *pvUserdata)
+int SymbolConnectionSelector(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : process children of this symbol
 
@@ -240,7 +241,7 @@ int SymbolConnectionSelector(struct TreespaceTraversal *ptstr,void *pvUserdata)
 ///
 /// **************************************************************************
 
-int SymbolGateKineticSelector(struct TreespaceTraversal *ptstr,void *pvUserdata)
+int SymbolGateKineticSelector(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : process children of this symbol
 
@@ -280,7 +281,7 @@ int SymbolGateKineticSelector(struct TreespaceTraversal *ptstr,void *pvUserdata)
 ///
 /// **************************************************************************
 
-int SymbolProjectionSelector(struct TreespaceTraversal *ptstr,void *pvUserdata)
+int SymbolProjectionSelector(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : process children of this symbol
 
@@ -307,7 +308,7 @@ int SymbolProjectionSelector(struct TreespaceTraversal *ptstr,void *pvUserdata)
 
 /// **************************************************************************
 ///
-/// SHORT: SymbolTableEntriesCollector()
+/// SHORT: SymbolTableValueCollector()
 ///
 /// ARGS.:
 ///
@@ -323,16 +324,17 @@ int SymbolProjectionSelector(struct TreespaceTraversal *ptstr,void *pvUserdata)
 /// **************************************************************************
 
 int
-SymbolTableEntriesCollector
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+SymbolTableValueCollector
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : ok
 
     int iResult = TSTR_PROCESSOR_SUCCESS;
 
-    //- get pointer to number of entries
+    //- get pointer to collector data
 
-    int *piEntries = (int *)pvUserdata;
+    struct table_parameter_collector_data *ptpcd
+	= (struct table_parameter_collector_data *)pvUserdata;
 
     //- set actual symbol
 
@@ -340,39 +342,38 @@ SymbolTableEntriesCollector
 
     //- if this gate kinetic has a hardcoded table
 
-    double dEntries
-      = SymbolParameterResolveValue(phsle, ptstr->ppist, "HH_NUMBER_OF_TABLE_ENTRIES");
+    double dValue = SymbolParameterResolveValue(phsle, ptstr->ppist, ptpcd->pcParameter);
 
-    if (dEntries != FLT_MAX)
+    if (dValue != FLT_MAX)
     {
-	//- if number of entries not initialized
+	//- if value not initialized
 
-	if (*piEntries == 0)
+	if (ptpcd->iValue == 0)
 	{
-	    //- initialize number of entries
+	    //- initialize value
 
-	    *piEntries = (int)dEntries;
+	    ptpcd->iValue = (int)dValue;
 	}
 
-	//- if number of entries found different from previous gate
+	//- if value found different from previous gate
 
-	else if (*piEntries != (int)dEntries)
+	else if (ptpcd->iValue != (int)dValue)
 	{
 	    //- flag as error
 
-	    *piEntries = -1;
+	    ptpcd->iValue = -1;
 
 	    iResult = TSTR_PROCESSOR_ABORT;
 	}
     }
 
-    //- else this gate kinetic has not table, so the gate has none either
+    //- else this gate kinetic has no table, so the gate has none either
 
     else
     {
 	//- flag as error
 
-	*piEntries = -1;
+	ptpcd->iValue = -1;
 
 	iResult = TSTR_PROCESSOR_ABORT;
     }
@@ -501,7 +502,7 @@ TstrGetActualParent(struct TreespaceTraversal *ptstr)
     //! (#entries - 1) is top, (#entries - 2) is parent
 
     return(PSymbolStackElementSymbol
-	   (ptstr->psymst,PSymbolStackNumberOfEntries(ptstr->psymst) - 2));
+	   (ptstr->psymst, PSymbolStackNumberOfEntries(ptstr->psymst) - 2));
 }
 
 

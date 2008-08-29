@@ -34,6 +34,23 @@ struct symtab_HHGate;
 #include "pidinstack.h"
 
 
+//s info for traversals collecting data about gate kinetics belonging
+//s to the same gate
+
+struct table_parameter_collector_data
+{
+    //m parameter under investigation
+
+    char *pcParameter;
+
+    //m current value
+
+    //! must be initialized to zero for correct error processing
+
+    int iValue;
+};
+
+
 //f exported functions
 
 struct symtab_HHGate * HHGateCalloc(void);

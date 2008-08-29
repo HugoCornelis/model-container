@@ -30,8 +30,8 @@
 
 static
 double
-HHGateGetNumTableEntries
-(struct symtab_HHGate *pgathh, struct PidinStack *ppist);
+HHGateGetTableValue
+(struct symtab_HHGate *pgathh, struct PidinStack *ppist, char *pc);
 
 static
 double
@@ -175,13 +175,58 @@ HHGateGetParameter
 	{
 	    //- get number of table entries
 
-	    double dState = HHGateGetNumTableEntries(pgathh, ppist);
+	    double dState = HHGateGetTableValue(pgathh, ppist, "HH_NUMBER_OF_TABLE_ENTRIES");
 
 	    //- set number of table entries
 
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&pgathh->bio.ioh.iol.hsle, "HH_NUMBER_OF_TABLE_ENTRIES", dState);
+	}
+
+	//- if start of table
+
+	else if (0 == strcmp(pcName,"HH_TABLE_START_Y"))
+	{
+	    //- get start of table
+
+	    double dState = HHGateGetTableValue(pgathh, ppist, "HH_TABLE_START_Y");
+
+	    //- set start of table
+
+	    pparResult
+		= SymbolSetParameterDouble
+		  (&pgathh->bio.ioh.iol.hsle, "HH_TABLE_START_Y", dState);
+	}
+
+	//- if end of table
+
+	else if (0 == strcmp(pcName,"HH_TABLE_END_Y"))
+	{
+	    //- get end of table
+
+	    double dState = HHGateGetTableValue(pgathh, ppist, "HH_TABLE_END_Y");
+
+	    //- set end of table
+
+	    pparResult
+		= SymbolSetParameterDouble
+		  (&pgathh->bio.ioh.iol.hsle, "HH_TABLE_END_Y", dState);
+	}
+
+	//- if table step
+
+	else if (0 == strcmp(pcName,"HH_TABLE_STEP_Y"))
+	{
+	    //- get table step
+
+	    double dState = HHGateGetTableValue(pgathh, ppist, "HH_TABLE_STEP_Y");
+
+	    //- set table step
+
+	    pparResult
+		= SymbolSetParameterDouble
+		  (&pgathh->bio.ioh.iol.hsle, "HH_TABLE_STEP_Y", dState);
 	}
     }
 
@@ -193,12 +238,13 @@ HHGateGetParameter
 
 /// **************************************************************************
 ///
-/// SHORT: HHGateGetNumTableEntries()
+/// SHORT: HHGateGetTableValue()
 ///
 /// ARGS.:
 ///
 ///	pgathh.: conceptual gate.
 ///	ppist..: context of conceptual gate.
+///	pc.....: name of parameter.
 ///
 /// RTN..: double
 ///
@@ -206,22 +252,34 @@ HHGateGetParameter
 ///	kinetics inside the gate, FLT_MAX for inconsistent tables, 0
 ///	for no tables.
 ///
-/// DESCR: Get number of table entries.
+/// DESCR: Get number of table entries, or a similar parameter.
+///
+///	Similar parameters are currently HH_TABLE_START_Y,
+///	HH_TABLE_END_Y, and HH_TABLE_STEP_Y.
 ///
 /// **************************************************************************
 
 static
 double
-HHGateGetNumTableEntries
-(struct symtab_HHGate *pgathh, struct PidinStack *ppist)
+HHGateGetTableValue
+(struct symtab_HHGate *pgathh, struct PidinStack *ppist, char *pc)
 {
     //- set default result: failure.
 
     double dResult = FLT_MAX;
 
-    //- set default number of entries: no tables
+    struct table_parameter_collector_data tpcd =
+	{
+	    //m parameter under investigation
 
-    int iEntries = 0;
+	    pc,
+
+	    //m current value
+
+	    //! must be initialized to zero for correct error processing
+
+	    0,
+	};
 
     //- traverse gate symbol, collect number of entries for each gate
     //- kinetic
@@ -231,8 +289,8 @@ HHGateGetNumTableEntries
 	  (ppist,
 	   SymbolGateKineticSelector,
 	   NULL,
-	   SymbolTableEntriesCollector,
-	   (void *)&iEntries,
+	   SymbolTableValueCollector,
+	   (void *)&tpcd,
 	   NULL,
 	   NULL);
 
@@ -242,11 +300,11 @@ HHGateGetNumTableEntries
     {
 	//- if no errors
 
-	if (iEntries >= 0)
+	if (tpcd.iValue >= 0)
 	{
 	    //- set result
 
-	    dResult = iEntries;
+	    dResult = tpcd.iValue;
 	}
     }
 

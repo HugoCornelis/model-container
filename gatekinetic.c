@@ -190,31 +190,90 @@ GateKineticGetParameter
 		= SymbolSetParameterDouble
 		  (&pgatk->bio.ioh.iol.hsle, "HH_Has_Table", iTable);
 	}
-	else if(0 == strcmp(pcName, "HH_NUMBER_OF_TABLE_ENTRIES"))
+
+	//- if number of table entries
+
+	else if (0 == strcmp(pcName, "HH_NUMBER_OF_TABLE_ENTRIES"))
 	{
-
-
-	  
-
 	    //- get the number of table entries  
 
-	    double dTableEntries = GateKineticGetNumTableEntries(pgatk,ppist);
-	    
-	    
-	    if(dTableEntries == FLT_MAX)
-	      return NULL;
-  
+	    double dEntries = GateKineticGetNumTableEntries(pgatk, ppist);
 
-	    pparResult = SymbolSetParameterDouble(&pgatk->bio.ioh.iol.hsle, 
-						  "HH_NUMBER_OF_TABLE_ENTRIES", 
-						  dTableEntries);
+	    if (dEntries == FLT_MAX)
+	    {
+		return NULL;
+	    }
 
-
+	    pparResult
+		= SymbolSetParameterDouble
+		  (&pgatk->bio.ioh.iol.hsle, "HH_NUMBER_OF_TABLE_ENTRIES", dEntries);
 	}
 
+	//- if table start
 
+	else if (0 == strcmp(pcName, "HH_TABLE_START_Y"))
+	{
+	    //- get first table entry
 
+	    pparResult
+		= SymbolGetParameter(&pgatk->bio.ioh.iol.hsle, ppist, "table[0]");
+	}
 
+	//- if table end
+
+	else if (0 == strcmp(pcName, "HH_TABLE_END_Y"))
+	{
+	    //- get number of entries in the table
+
+	    double dEntries = SymbolParameterResolveValue(&pgatk->bio.ioh.iol.hsle, ppist, "HH_NUMBER_OF_TABLE_ENTRIES");
+
+	    if (dEntries != FLT_MAX)
+	    {
+		//- get last table entry
+
+		char pc[50];
+
+		int iEntries = dEntries - 1;
+
+		sprintf(pc, "table[%i]", iEntries);
+
+		//- set result
+
+		double dResult = SymbolParameterResolveValue(&pgatk->bio.ioh.iol.hsle, ppist, pc);
+
+		pparResult
+		    = SymbolSetParameterDouble
+		      (&pgatk->bio.ioh.iol.hsle, "HH_TABLE_END_Y", dResult);
+	    }
+	}
+
+	//- if table step
+
+	else if (0 == strcmp(pcName, "HH_TABLE_STEP_Y"))
+	{
+	    //- get first table entry
+
+	    double d0 = SymbolParameterResolveValue(&pgatk->bio.ioh.iol.hsle, ppist, "table[0]");
+
+	    //- get second table entry
+
+	    double d1 = SymbolParameterResolveValue(&pgatk->bio.ioh.iol.hsle, ppist, "table[1]");
+
+	    //- if both are defined
+
+	    if (d0 != FLT_MAX
+		&& d1 != FLT_MAX)
+	    {
+		//- subtract
+
+		double dResult = d1 - d0;
+
+		//- set result
+
+		pparResult
+		    = SymbolSetParameterDouble(&pgatk->bio.ioh.iol.hsle, "HH_TABLE_STEP_Y", dResult);
+	    }
+	}
     }
 
     //- return result
@@ -281,8 +340,9 @@ double
 GateKineticGetNumTableEntries
 (struct symtab_GateKinetic *pgatk, struct PidinStack *ppist)
 {
-    int i;
-    char pcTable[50];
+    //- set default result: failure
+
+    double dResult = FLT_MAX;
 
     //- if no first table entry
 
@@ -298,17 +358,25 @@ GateKineticGetNumTableEntries
 
     //- loop over all table entries by index
 
+    int i;
+
     for (i = 0 ; pparTable ; i++)
     {
+	char pcTable[50];
+
 	sprintf(&pcTable[0], "table[%i]", i);
 
 	pparTable
 	    = SymbolGetParameter(&pgatk->bio.ioh.iol.hsle, ppist, pcTable);
     }
 
+    //- set result
+
+    dResult = i - 1;
+
     //- return index of last found
 
-    return (double)(i - 1);
+    return(dResult);
 }
 
 
