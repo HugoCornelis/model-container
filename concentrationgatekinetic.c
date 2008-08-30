@@ -249,30 +249,43 @@ double
 GateKineticGetNumTableEntries
 (struct symtab_ConcentrationGateKinetic *pcgatc, struct PidinStack *ppist)
 {
-    int i;
-    char pcTable[50];
-    struct symtab_Parameters *pparTable;
+    //- set default result: failure
 
-/*   double dNumTableEntries */
-/* 	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, "RM", ppist); */
-  
-    pparTable
+    double dResult = FLT_MAX;
+
+    //- if no first table entry
+
+    struct symtab_Parameters *pparTable
 	= SymbolGetParameter(&pcgatc->bio.ioh.iol.hsle, ppist, "table[0]");
 
     if (pparTable == NULL)
     {
+	//- return no entries
+
 	return FLT_MAX;
     }
 
-    for (i = 1 ; pparTable ; i++)
+    //- loop over all table entries by index
+
+    int i;
+
+    for (i = 0 ; pparTable ; i++)
     {
-	sprintf(&pcTable[0],"table[%i]",i);
+	char pcTable[50];
+
+	sprintf(&pcTable[0], "table[%i]", i);
 
 	pparTable
 	    = SymbolGetParameter(&pcgatc->bio.ioh.iol.hsle, ppist, pcTable);
     }
 
-    return (double)(i + 1);
+    //- set result
+
+    dResult = i - 1;
+
+    //- return index of last found
+
+    return(dResult);
 }
 
 
