@@ -3142,6 +3142,25 @@ my $test
 						 ],
 				description => "syntax of tests/cells/hardcoded_tables1.ndf",
 			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-R',
+					      'tests/cells/hardcoded_tables2.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (tests/cells/hardcoded_tables2.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/hardcoded_tables2.ndf', ],
+						   timeout => 5,
+						   write => undef,
+						  },
+						 ],
+				description => "syntax of tests/cells/hardcoded_tables2.ndf",
+			       },
 		      ],
        description => "general syntax of library files",
        name => 'parsing.t',
