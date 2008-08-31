@@ -206,7 +206,7 @@ END PRIVATE_MODELS
 
 PUBLIC_MODELS
 
-	CELL hardcoded_tables1
+	CELL hardcoded_tables2
 
 		SEGMENT_GROUP segments
 
