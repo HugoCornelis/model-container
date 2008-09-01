@@ -185,67 +185,6 @@ struct PidinStack
 /* #define FLAG_PIST_SYMBOLSTACK_CACHE	2 */
 
 
-//d
-//d test type(ppist) == struct PidinStack * at compile time
-//d
-
-#define CompileTimeTestPidinStack(ppist)				\
-do {									\
-    struct PidinStack pist;						\
-    (ppist) == &pist;							\
-} while (0)
-
-
-//d
-//d duplicate pidin stack
-//d
-
-#define PidinStackDuplicate(ppist)					\
-({									\
-    struct PidinStack *pidinResult = NULL;				\
-    CompileTimeTestPidinStack(ppist);					\
-    pidinResult = PidinStackCalloc();					\
-    if (pidinResult)							\
-    {									\
-	*pidinResult = *(ppist);					\
-    }									\
-    pidinResult;							\
-})
-
-
-//d
-//d get flag
-//d
-
-#define PidinStackGetFlag(ppist,iF)					\
-({									\
-    CompileTimeTestPidinStack(ppist);					\
-    (ppist)->iFlags & iF;						\
-})
-
-
-//d
-//d check if pidin stack is rooted
-//d
-
-#define PidinStackIsRooted(ppist)					\
-({									\
-    CompileTimeTestPidinStack(ppist);					\
-    PidinStackGetFlag((ppist),FLAG_PIST_ROOTED);			\
-})
-
-
-//d
-//d get topmost element
-//d
-
-#define PidinStackTop(ppist)						\
-({									\
-    CompileTimeTestPidinStack(ppist);					\
-    PidinStackElementPidin((ppist),(ppist)->iTop);			\
-})
-
-
 #include "parameters.h"
 //#include "symbols.h"
 
@@ -335,6 +274,12 @@ static inline
 void PidinStackCompress(struct PidinStack *ppist);
 
 #ifndef SWIG
+static inline
+#endif
+struct PidinStack *
+PidinStackDuplicate(struct PidinStack *ppist);
+
+#ifndef SWIG
 static inline 
 #endif
 struct symtab_IdentifierIndex *
@@ -347,10 +292,22 @@ int
 PidinStackFree(struct PidinStack *ppist);
 
 #ifndef SWIG
+static inline
+#endif
+int
+PidinStackGetFlag(struct PidinStack *ppist, int iF);
+
+#ifndef SWIG
 static inline 
 #endif
 int
 PidinStackIsNamespaced(struct PidinStack *ppist);
+
+#ifndef SWIG
+static inline 
+#endif
+int
+PidinStackIsRooted(struct PidinStack *ppist);
 
 #ifndef SWIG
 static inline
@@ -371,6 +328,13 @@ void PidinStackSetRooted(struct PidinStack *ppist);
 /* int */
 /* PidinStackToRelativeSerial */
 /* (struct PidinStack *ppist,struct PidinStack *ppistBase); */
+
+#ifndef SWIG
+static inline
+#endif
+struct symtab_IdentifierIndex *
+PidinStackTop(struct PidinStack *ppist);
+
 
 #ifndef SWIG
 static inline
@@ -467,6 +431,27 @@ void PidinStackCompress(struct PidinStack *ppist)
 
 
 ///
+/// duplicate pidin stack
+///
+
+#ifndef SWIG
+static inline
+#endif
+struct PidinStack *
+PidinStackDuplicate(struct PidinStack *ppist)
+{
+    struct PidinStack *pidinResult = PidinStackCalloc();
+
+    if (pidinResult)
+    {
+	*pidinResult = *ppist;
+    }
+
+    return(pidinResult);
+}
+
+
+///
 /// get element at given place
 ///
 
@@ -504,6 +489,20 @@ PidinStackFree(struct PidinStack *ppist)
 
 
 ///
+/// get flag
+///
+
+#ifndef SWIG
+static inline
+#endif
+int
+PidinStackGetFlag(struct PidinStack *ppist, int iF)
+{
+    return(ppist->iFlags & iF);
+}
+
+
+///
 /// check if a pidin stack is namespaced
 ///
 
@@ -516,6 +515,20 @@ PidinStackIsNamespaced(struct PidinStack *ppist)
     struct symtab_IdentifierIndex *pidin = PidinStackElementPidin(ppist, 0);
 
     return(IdinIsNamespaced(pidin));
+}
+
+
+///
+/// check if pidin stack is rooted
+///
+
+#ifndef SWIG
+static inline 
+#endif
+int
+PidinStackIsRooted(struct PidinStack *ppist)
+{
+    return(PidinStackGetFlag(ppist, FLAG_PIST_ROOTED));
 }
 
 
@@ -629,6 +642,20 @@ void PidinStackSetRooted(struct PidinStack *ppist)
 
 /*     return(iResult); */
 /* } */
+
+
+///
+/// get topmost element
+///
+
+#ifndef SWIG
+static inline
+#endif
+struct symtab_IdentifierIndex *
+PidinStackTop(struct PidinStack *ppist)
+{
+    return(PidinStackElementPidin(ppist, ppist->iTop));
+}
 
 
 ///
