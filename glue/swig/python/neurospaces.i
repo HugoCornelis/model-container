@@ -1,9 +1,5 @@
 /* -*- c -*- */
 
-/* swig -perl5 -makedefault -module Neurospaces neurospaces.i */
-/* gcc -c neurospaces_wrap.c `perl -MExtUtils::Embed -e ccopts`  */
-/* gcc -shared neurospaces_wrap.o -L. -lneurospaces -o neurospaces.so */
-
 %module SwiggableNeurospaces
 
 %typemap(in) void * {
@@ -11,59 +7,34 @@
     $1 = $input;
 };
 
-/* // This tells SWIG to treat char ** as a special case */
-/* %typemap(in) char ** { */
-/* 	AV *tempav; */
-/* 	I32 len; */
-/* 	int i; */
-/* 	SV  **tv; */
-/* 	if (!SvROK($input)) */
-/* 	    croak("Argument $argnum is not a reference."); */
-/*         if (SvTYPE(SvRV($input)) != SVt_PVAV) */
-/* 	    croak("Argument $argnum is not an array."); */
-/*         tempav = (AV*)SvRV($input); */
-/* 	len = av_len(tempav); */
-/* 	$1 = (char **) malloc((len+2)*sizeof(char *)); */
-/* 	for (i = 0; i <= len; i++) { */
-/* 	    tv = av_fetch(tempav, i, 0);	 */
-/* 	    $1[i] = (char *) SvPV(*tv,PL_na); */
-/*         } */
-/* 	$1[i] = NULL; */
-/* }; */
+// This tells SWIG to treat char ** as a special case
+%typemap(in) char ** {
+  /* Check if is a list */
+  if (PyList_Check($input)) {
+    int size = PyList_Size($input);
+    int i = 0;
+    $1 = (char **) malloc((size+1)*sizeof(char *));
+    for (i = 0; i < size; i++) {
+      PyObject *o = PyList_GetItem($input,i);
+      if (PyString_Check(o))
+	$1[i] = PyString_AsString(PyList_GetItem($input,i));
+      else {
+	PyErr_SetString(PyExc_TypeError,"list must contain strings");
+	free($1);
+	return NULL;
+      }
+    }
+    $1[i] = 0;
+  } else {
+    PyErr_SetString(PyExc_TypeError,"not a list");
+    return NULL;
+  }
+}
 
-/* // This cleans up the char ** array after the function call */
-/* %typemap(freearg) char ** { */
-/* 	free($1); */
-/* } */
-
-/* // Creates a new Perl array and places a NULL-terminated char ** into it */
-/* %typemap(out) char ** { */
-/* 	AV *myav; */
-/* 	SV **svs; */
-/* 	int i = 0,len = 0; */
-/* 	/* Figure out how many elements we have * */
-/* 	while ($1[len]) */
-/* 	   len++; */
-/* 	svs = (SV **) malloc(len*sizeof(SV *)); */
-/* 	for (i = 0; i < len ; i++) { */
-/* 	    svs[i] = sv_newmortal(); */
-/* 	    sv_setpv((SV*)svs[i],$1[i]); */
-/* 	}; */
-/* 	myav =	av_make(len,svs); */
-/* 	free(svs); */
-/*         $result = newRV((SV*)myav); */
-/*         sv_2mortal($result); */
-/*         argvi++; */
-/* } */
-
-/* // perl variables are passed out unaltered */
-/* %typemap(out) SV * { */
-/*     $result = $1; */
-
-/*     //! not sure if this is correct and compatible */
-
-/*     argvi++; */
-/* } */
+// This cleans up the char ** array we malloc'd before the function call
+%typemap(freearg) char ** {
+  free((char *) $1);
+}
 
 // Now a few test functions
 %inline %{
@@ -83,19 +54,6 @@ char **get_args() {
 }
 %}
 
-
-/* %typemap(ruby,in) (int size, int *ary) { */
-/*    int i; */
-/*    if (!rb_obj_is_kind_of($input,rb_cArray)) */
-/*      rb_raise(rb_eArgError, "Expected Array of Integers"); */
-/*    $1 = RARRAY($input)->len; */
-/*    $2 = malloc($1*sizeof(int)); */
-/*    for (i=0; i<$1; ++i) */
-/*      ($2)[i] = NUM2INT(RARRAY($input)->ptr[i]); */
-/* } */
-/* %typemap(freearg) (int size, int *ary) { */
-/*     if ($2) free($2); */
-/* } */
 
 /* %typemap(memberin) int [ANY] */
 /* { */
