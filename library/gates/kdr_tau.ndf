@@ -133,9 +133,9 @@ PUBLIC_MODELS
 			PARAMETER ( state_init = 0.99997858779733162 ),
 			PARAMETER ( POWER = 1.0 ),
 
-			//m values have been specified using steady state and time constant
+// 			//m values have been specified using steady state and time constant
 
-			PARAMETER ( TAU_format = 1.0 ),
+// 			PARAMETER ( TAU_format = 1.0 ),
 
 		END PARAMETERS
 

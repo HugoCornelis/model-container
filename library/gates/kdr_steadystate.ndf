@@ -248,9 +248,9 @@ PUBLIC_MODELS
 			PARAMETER ( state_init = 0.0045016011008226975 ),
 			PARAMETER ( POWER = 2.0 ),
 
-			//m values have been specified using steady state and time constant
+// 			//m values have been specified using steady state and time constant
 
-			PARAMETER ( STEADY_STATE_format = 1.0 ),
+// 			PARAMETER ( STEADY_STATE_format = 1.0 ),
 
 		END PARAMETERS
 
