@@ -141,8 +141,7 @@ SegmenterSegmentCounter
 
 int
 SegmenterCountSegments
-(struct symtab_Segmenter *psegr,
- struct PidinStack *ppist)
+(struct symtab_Segmenter *psegr, struct PidinStack *ppist)
 {
     //- set default result : none
 
@@ -273,7 +272,7 @@ SegmenterGetParameter
     {
 	//- if total length
 
-	if (0 == strcmp(pcName,"TOTALLENGTH"))
+	if (0 == strcmp(pcName, "TOTALLENGTH"))
 	{
 	    //- get length
 
@@ -288,7 +287,7 @@ SegmenterGetParameter
 
 	//- if total surface
 
-	else if (0 == strcmp(pcName,"TOTALSURFACE"))
+	else if (0 == strcmp(pcName, "TOTALSURFACE"))
 	{
 	    //- get surface
 
@@ -303,7 +302,7 @@ SegmenterGetParameter
 
 	//- if total volume
 
-	else if (0 == strcmp(pcName,"TOTALVOLUME"))
+	else if (0 == strcmp(pcName, "TOTALVOLUME"))
 	{
 	    //- get volume
 
@@ -333,7 +332,7 @@ SegmenterGetParameter
 ///	psegr.: segment to get length for.
 ///	ppist.: context of segment.
 ///
-/// RTN..: double : segment length, -1 for failure.
+/// RTN..: double : segment length, FLT_MAX for failure.
 ///
 /// DESCR: get total length of segmenter.
 ///
@@ -390,7 +389,7 @@ SegmenterGetTotalLength
 	 (void *)&dResult)
 	== FALSE)
     {
-	dResult = -1;
+	dResult = FLT_MAX;
     }
 
     //- return result
@@ -408,7 +407,7 @@ SegmenterGetTotalLength
 ///	psegr.: segment to get surface for.
 ///	ppist.: context of segment.
 ///
-/// RTN..: double : segment surface, -1 for failure.
+/// RTN..: double : segment surface, FLT_MAX for failure.
 ///
 /// DESCR: get total surface of segmenter.
 ///
@@ -465,7 +464,7 @@ SegmenterGetTotalSurface
 	 (void *)&dResult)
 	== FALSE)
     {
-	dResult = -1;
+	dResult = FLT_MAX;
     }
 
     //- return result
@@ -483,7 +482,7 @@ SegmenterGetTotalSurface
 ///	psegr.: segment to get volume for.
 ///	ppist.: context of segment.
 ///
-/// RTN..: double : segment volume, -1 for failure.
+/// RTN..: double : segment volume, FLT_MAX for failure.
 ///
 /// DESCR: get total volume of segmenter.
 ///
@@ -540,7 +539,7 @@ SegmenterGetTotalVolume
 	 (void *)&dResult)
 	== FALSE)
     {
-	dResult = -1;
+	dResult = FLT_MAX;
     }
 
     //- return result
@@ -1131,7 +1130,7 @@ SegmenterMesherOnLengthProcessor
 	PidinStackString(ppistParent, pc, sizeof(pc[0]) * 1000);
 
 	fprintf
-	    (stdout,
+	    (stderr,
 	     "for segment %s, parent %s not found\n",
 	     SymbolGetName(phsle),
 	     pc);
@@ -1695,34 +1694,41 @@ SegmenterParameterScaleValue
 
     double dResult = FLT_MAX;
 
+    //! safety and robustness first
+
+    if (dValue == FLT_MAX)
+    {
+	return(FLT_MAX);
+    }
+
     //- get segment surface
 
     struct symtab_Parameters *pparSurface
-	= SymbolFindParameter(&psegr->bio.ioh.iol.hsle,ppist,"SURFACE");
+	= SymbolFindParameter(&psegr->bio.ioh.iol.hsle, ppist, "SURFACE");
 
     double dSurface
 	= pparSurface
-	  ? ParameterResolveValue(pparSurface,ppist)
+	  ? ParameterResolveValue(pparSurface, ppist)
 	  : FLT_MAX ;
 
     //- get segment length
 
     struct symtab_Parameters *pparLength
-	= SymbolFindParameter(&psegr->bio.ioh.iol.hsle,ppist,"LENGTH");
+	= SymbolFindParameter(&psegr->bio.ioh.iol.hsle, ppist, "LENGTH");
 
     double dLength
 	= pparLength
-	  ? ParameterResolveValue(pparLength,ppist)
+	  ? ParameterResolveValue(pparLength, ppist)
 	  : FLT_MAX ;
 
     //- get segment diameter
 
     struct symtab_Parameters *pparDia
-	= SymbolFindParameter(&psegr->bio.ioh.iol.hsle,ppist,"DIA");
+	= SymbolFindParameter(&psegr->bio.ioh.iol.hsle, ppist, "DIA");
 
     double dDia
 	= pparDia
-	  ? ParameterResolveValue(pparDia,ppist)
+	  ? ParameterResolveValue(pparDia, ppist)
 	  : FLT_MAX ;
 
     //- get channel parameter field name
@@ -1736,39 +1742,39 @@ SegmenterParameterScaleValue
 
     //- if membrane resistance
 
-    if (0 == strcmp(pcName,"RM"))
+    if (0 == strcmp(pcName, "RM"))
     {
 	//- scale value : divide through surface
 
-	dResult = dValue / dSurface;
-
-	if (!pparSurface)
+	if (dSurface != FLT_MAX)
 	{
-	    fprintf(stdout,"Used unitialized surface\n");
-
+	    dResult = dValue / dSurface;
+	}
+	else
+	{
 	    return(FLT_MAX);
 	}
     }
 
     //- else if membrane capacitance
 
-    else if (0 == strcmp(pcName,"CM"))
+    else if (0 == strcmp(pcName, "CM"))
     {
 	//- scale value : multiply with surface
 
-	dResult = dValue * dSurface;
-
-	if (!pparSurface)
+	if (dSurface != FLT_MAX)
 	{
-	    fprintf(stdout,"Used unitialized surface\n");
-
+	    dResult = dValue * dSurface;
+	}
+	else
+	{
 	    return(FLT_MAX);
 	}
     }
 
     //- else if segment axial resistance
 
-    else if (0 == strcmp(pcName,"RA"))
+    else if (0 == strcmp(pcName, "RA"))
     {
 	//- if spherical
 
@@ -1783,12 +1789,12 @@ SegmenterParameterScaleValue
 
 	    //- scale value
 
-	    dResult = 13.50 * dValue / (dDia * M_PI);
-
-	    if (!pparDia)
+	    if (dDia != FLT_MAX)
 	    {
-		fprintf(stdout,"Used unitialized dia\n");
-
+		dResult = 13.50 * dValue / (dDia * M_PI);
+	    }
+	    else
+	    {
 		return(FLT_MAX);
 	    }
 	}
@@ -1799,18 +1805,13 @@ SegmenterParameterScaleValue
 	{
 	    //- scale value
 
-	    dResult = 4.0 * dValue * dLength / (dDia * dDia * M_PI);
-
-	    if (!pparLength)
+	    if (dDia != FLT_MAX
+		&& dLength != FLT_MAX)
 	    {
-		fprintf(stdout,"Used unitialized length\n");
-
-		return(FLT_MAX);
+		dResult = 4.0 * dValue * dLength / (dDia * dDia * M_PI);
 	    }
-	    if (!pparDia)
+	    else
 	    {
-		fprintf(stdout,"Used unitialized dia\n");
-
 		return(FLT_MAX);
 	    }
 	}
@@ -1849,7 +1850,7 @@ SegmenterParentCount
 
     if (!PidinStackLookupTopSymbol(ppist))
     {
-	fprintf(stdout, "cannot build context caches for %s, aborting\n", SymbolGetName(&psegr->bio.ioh.iol.hsle));
+	fprintf(stderr, "cannot build context caches for %s, aborting\n", SymbolGetName(&psegr->bio.ioh.iol.hsle));
 
 	return(0);
     }
@@ -1994,7 +1995,7 @@ SegmenterTips
 
     if (!PidinStackLookupTopSymbol(ppist))
     {
-	fprintf(stdout, "cannot build context caches for %s, aborting\n", SymbolGetName(&psegr->bio.ioh.iol.hsle));
+	fprintf(stderr, "cannot build context caches for %s, aborting\n", SymbolGetName(&psegr->bio.ioh.iol.hsle));
 
 	return(0);
     }
@@ -2096,7 +2097,7 @@ SegmenterTips
 
 static int 
 SegmenterSegmentSelector
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : process children of this symbol
 

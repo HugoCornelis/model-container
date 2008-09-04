@@ -270,7 +270,7 @@ SegmentGetBranchpointFlag
 ///	psegment.: segment to get length for.
 ///	ppist....: context of segment.
 ///
-/// RTN..: double : segment length, -1 for failure.
+/// RTN..: double : segment length, FLT_MAX for failure.
 ///
 /// DESCR: Get length of segment.
 ///
@@ -299,7 +299,7 @@ SegmentGetLength
 {
     //- set default result : failure
 
-    double dResult = -1;
+    double dResult = FLT_MAX;
 
     //- get coordinates
 
@@ -451,7 +451,7 @@ SegmentGetParameter
 
 	    double dLength = SegmentGetLength(psegment, ppist);
 
-	    if (dLength != -1)
+	    if (dLength != FLT_MAX)
 	    {
 		//- set length of segment
 
@@ -473,7 +473,7 @@ SegmentGetParameter
 
 /* 	    pparResult = ParameterNewFromNumber(pcName, dTau); */
 
-	    if (dTau != -1)
+	    if (dTau != FLT_MAX)
 	    {
 		//- set length of segment
 
@@ -499,7 +499,7 @@ SegmentGetParameter
 ///	psegment.: segment to get somatopetal branchpoints for.
 ///	ppist....: context of segment.
 ///
-/// RTN..: double : segment somatopetal branchpoints, -1 for failure.
+/// RTN..: double : segment somatopetal branchpoints, FLT_MAX for failure.
 ///
 /// DESCR: get somatopetal branchpoints of segment.
 ///
@@ -583,7 +583,7 @@ SegmentGetSomatopetalBranchpoints
 	    }
 	    else
 	    {
-		dResult = -1;
+		dResult = FLT_MAX;
 	    }
 
 	    phsle = NULL;
@@ -622,7 +622,7 @@ SegmentGetSomatopetalBranchpoints
 ///	psegment.: segment to get somatopetal distance for.
 ///	ppist....: context of segment.
 ///
-/// RTN..: double : segment somatopetal distance, -1 for failure.
+/// RTN..: double : segment somatopetal distance, FLT_MAX for failure.
 ///
 /// DESCR: get somatopetal distance of segment.
 ///
@@ -662,7 +662,7 @@ SegmentGetSomatopetalDistance
 
 	if (dLength == FLT_MAX)
 	{
-	    dResult = -1;
+	    dResult = FLT_MAX;
 
 	    break;
 	}
@@ -691,7 +691,7 @@ SegmentGetSomatopetalDistance
 
 		PidinStackFree(ppistParent);
 
-		dResult = -1;
+		dResult = FLT_MAX;
 
 		break;
 	    }
@@ -710,7 +710,7 @@ SegmentGetSomatopetalDistance
 	    }
 	    else
 	    {
-		dResult = -1;
+		dResult = FLT_MAX;
 	    }
 
 	    phsle = NULL;
@@ -749,7 +749,7 @@ SegmentGetSomatopetalDistance
 ///	psegment.: segment to get surface for.
 ///	ppist....: context of segment.
 ///
-/// RTN..: double : segment surface, -1 for failure.
+/// RTN..: double : segment surface, FLT_MAX for failure.
 ///
 /// DESCR: get surface of segment.
 ///
@@ -762,7 +762,7 @@ SegmentGetSurface
 {
     //- set default result : failure
 
-    double dResult = -1;
+    double dResult = FLT_MAX;
 
     //- if spherical segment
 
@@ -779,7 +779,10 @@ SegmentGetSurface
 	    = SymbolParameterResolveValue
 	      (&psegment->segr.bio.ioh.iol.hsle, ppist, "DIA");
 
-	dResult = dResult * dResult * M_PI;
+	if (dResult != FLT_MAX)
+	{
+	    dResult = dResult * dResult * M_PI;
+	}
     }
 
     //- else (cylindrical)
@@ -819,7 +822,7 @@ SegmentGetSurface
 ///	psegment.: segment to get time constant for.
 ///	ppist....: context of segment.
 ///
-/// RTN..: double : segment time constant, -1 for failure.
+/// RTN..: double : segment time constant, FLT_MAX for failure.
 ///
 /// DESCR: Get time constant of segment.
 ///
@@ -832,7 +835,7 @@ SegmentGetTau
 {
     //- set default result : failure
 
-    double dResult = -1;
+    double dResult = FLT_MAX;
 
     //- get capacitance and resistance
 
@@ -873,7 +876,7 @@ SegmentGetTau
 ///	psegment.: segment to get volume for.
 ///	ppist....: context of segment.
 ///
-/// RTN..: double : segment volume, -1 for failure.
+/// RTN..: double : segment volume, FLT_MAX for failure.
 ///
 /// DESCR: get volume of segment.
 ///
@@ -886,7 +889,7 @@ SegmentGetVolume
 {
     //- set default result : failure
 
-    double dResult = -1;
+    double dResult = FLT_MAX;
 
     //- if spherical segment
 
