@@ -437,7 +437,7 @@ my $test
 				description => "thickness of EM contours and points",
 			       },
 			      ],
-       description => "parameter calculations",
+       description => "parameter calculations on existing models",
        name => 'parameters.t',
       };
 
