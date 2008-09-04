@@ -96,7 +96,8 @@ or use the -m switch to configure where neurospaces looks for models.
 						  },
 						  {
 						   description => "What happens if we try to scale a parameter that does not have all the necessary dependencies ?",
-						   read => "= -1",
+						   read => " = 3.40282e+38
+",
 						   write => "printparameter /Purk_maind SURFACE"
 						  },
 						 ],
@@ -120,35 +121,41 @@ or use the -m switch to configure where neurospaces looks for models.
 						  {
 						   description => "What happens if we try to resolve a parameter that has circular dependencies ?",
 						   read => "ParameterResolveToPidinStack(): presumably unbound recursion for RM, this parameter value depends on other parameter values that depend back on this parameter value.
-value = 3.40282e+38",
+value = 3.40282e+38
+",
 						   write => "printparameter /segm RM"
 						  },
 						  {
 						   description => "What happens if we try to resolve a parameter that has circular dependencies ?",
 						   read => "ParameterResolveToPidinStack(): presumably unbound recursion for RM, this parameter value depends on other parameter values that depend back on this parameter value.
-value = 3.40282e+38",
+value = 3.40282e+38
+",
 						   write => "printparameter /segm RM"
 						  },
 						  {
 						   description => "What happens if we try to resolve a parameter with a function with wrong parameters ?",
-						   read => "value = 3.40282e+38",
+						   read => "value = 3.40282e+38
+",
 						   write => "printparameter /segm RA"
 						  },
 						  {
 						   description => "What happens if we try to resolve a parameter with a function parameter dependent on an unresolvable parameter ?",
-						   read => "value = 3.40282e+38",
+						   read => "value = 3.40282e+38
+",
 						   write => "printparameter /segm CM"
 						  },
 						  {
 						   description => "What happens if we try to resolve a parameter that is dependent on a parameter with circular dependencies ?",
 						   read => "ParameterResolveToPidinStack(): presumably unbound recursion for B, this parameter value depends on other parameter values that depend back on this parameter value.
-value = 3.40282e+38",
+value = 3.40282e+38
+",
 						   write => "printparameter /segm A"
 						  },
 						  {
 						   description => "What happens if we try to resolve a parameter that is dependent on a parameter with circular dependencies ?",
 						   read => "ParameterResolveToPidinStack(): presumably unbound recursion for A, this parameter value depends on other parameter values that depend back on this parameter value.
-value = 3.40282e+38",
+value = 3.40282e+38
+",
 						   write => "printparameter /segm B"
 						  },
 						 ],
@@ -180,7 +187,8 @@ value = 3.40282e+38",
 				command_tests => [
 						  {
 						   description => "Has neurospaces reported that the conductance cannot be resolved ?",
-						   read => "scaled value = 3.40282e+38",
+						   read => "scaled value = 3.40282e+38
+",
 						   write => "printparameterscaled /cap G_MAX",
 						  },
 						 ],
@@ -196,7 +204,8 @@ value = 3.40282e+38",
 				command_tests => [
 						  {
 						   description => "Has neurospaces reported that beta cannot be resolved ?",
-						   read => "scaled value = 3.40282e+38",
+						   read => "scaled value = 3.40282e+38
+",
 						   write => "printparameterscaled /Ca_concen BETA",
 						  },
 						 ],
