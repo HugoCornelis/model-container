@@ -1,5 +1,12 @@
 -*- outline -*-
 
+* implement tests for parameter that cannot be resolved
+Bugs in the source can easily be found by browsing on
+SegmenterIsSpherical().
+** segment volume tests
+** channel scaling tests
+** pool scaling tests
+
 * swig and autotools
 http://www.geocities.com/foetsch/python/swig_linux.htm
 
