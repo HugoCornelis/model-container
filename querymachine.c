@@ -7949,6 +7949,13 @@ static int QueryHandlerSetParameterConcept
 
 	pcArg = strpbrk(pcInit, pcSeparator);
 
+	if (!pcArg)
+	{
+	    fprintf(stdout, "parameter-type not found (must be NUMBER)\n");
+
+	    return(FALSE);
+	}
+
 	char pcName[1000];
 
 	strncpy(pcName, pcInit, pcArg - pcInit);
@@ -7962,6 +7969,13 @@ static int QueryHandlerSetParameterConcept
 	//! will core for invalid command lines
 
 	pcArg = strpbrk(pcInit, pcSeparator);
+
+	if (!pcArg)
+	{
+	    fprintf(stdout, "value not found (must be a NUMBER)\n");
+
+	    return(FALSE);
+	}
 
 	char pcType[1000];
 
