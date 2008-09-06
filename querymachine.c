@@ -7951,7 +7951,7 @@ static int QueryHandlerSetParameterConcept
 
 	if (!pcArg)
 	{
-	    fprintf(stdout, "parameter-type not found (must be NUMBER)\n");
+	    fprintf(stdout, "parameter-type not found (must be 'number')\n");
 
 	    return(FALSE);
 	}
@@ -7972,7 +7972,7 @@ static int QueryHandlerSetParameterConcept
 
 	if (!pcArg)
 	{
-	    fprintf(stdout, "value not found (must be a NUMBER)\n");
+	    fprintf(stdout, "value not found (must be a number)\n");
 
 	    return(FALSE);
 	}
