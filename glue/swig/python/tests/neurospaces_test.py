@@ -49,7 +49,7 @@ print "Segment parameter set"
 
 # Neurospaces.SingleCellContainer.querymachine("printinfo /cell")
 
-# Neurospaces.SingleCellContainer.output_filename("/tmp/output")
+Neurospaces.SingleCellContainer.set_output_filename("/tmp/output")
 
 Neurospaces.SingleCellContainer.compile()
 
