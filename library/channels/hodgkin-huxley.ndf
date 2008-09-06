@@ -1,0 +1,17 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+    FILE k "channels/hodgkin-huxley/potassium.ndf"
+    FILE na "channels/hodgkin-huxley/sodium.ndf"
+END IMPORT
+PRIVATE_MODELS
+    ALIAS k::/k k END ALIAS
+    ALIAS na::/na na END ALIAS
+END PRIVATE_MODELS
+PUBLIC_MODELS
+    ALIAS k k END ALIAS
+    ALIAS na na END ALIAS
+END PUBLIC_MODELS
