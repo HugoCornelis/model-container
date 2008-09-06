@@ -7,33 +7,28 @@ import SwiggableNeurospaces
 
 nmc = SwiggableNeurospaces.NeurospacesNew()
 
-output = None
+output_filename = None
 
 SwiggableNeurospaces.NeurospacesRead(nmc, 2, [ "python", "utilities/empty_model.ndf" ] )
 
-print "SwiggableNeurospaces.NeurospacesRead() executed"
+class NoOutputFilenameException:
+    def __init__(self, cause):
+        self.cause = cause
 
-class Cell:
-    "SimpleModelContainer.Cell class"
+class Symbol:
+    def insert_child(self, name):
+        Neurospaces.Symbol.insert_child(self, nmc, name)
+
+class Cell(Symbol):
+    "SingleCellContainer.Cell class"
     def __init__(self, path):
         [ name, top_symbol ] = prepare(path)
         cell = Neurospaces.Cell(name.pcIdentifier)
         SwiggableNeurospaces.SymbolAddChild(top_symbol, cell.backend.segr.bio.ioh.iol.hsle)
         self.backend = cell
 
-# class Output:
-#     "SimpleModelContainer.Output class"
-#     def __init__(self, filename, component, field):
-#         global output
-#         if output == None:
-#             output = SimpleHeccer.Output(filename)
-#             context = SwiggableNeurospaces.PidinStackParse("/cell")
-#             SwiggableNeurospaces.SolverInfoRegistrationAddFromContext(nmc, context, "SimpleHeccer")
-#         output.AddOutput(nmc, component, field)
-#         self.backend = output
-
-class Segment:
-    "SimpleModelContainer.Segment class"
+class Segment(Symbol):
+    "SingleCellContainer.Segment class"
     def __init__(self, path):
         [ name, top_symbol ] = prepare(path)
         segment = Neurospaces.Segment(name.pcIdentifier)
@@ -43,8 +38,11 @@ class Segment:
     def parameter(self, name, value):
         SwiggableNeurospaces.SymbolSetParameterDouble(self.backend.backend.segr.bio.ioh.iol.hsle, name, value)
         
-def compile(filename):
-    Neurospaces.SimpleHeccer.new(nmc, filename)
+def compile():
+    global output_filename
+    if output_filename == None:
+        raise NoOutputFilenameException("output_filename must be defined during compile()")
+    Neurospaces.SimpleHeccer.new(nmc, output_filename)
     Neurospaces.SimpleHeccer.compile()
 
 def output(component, field):
@@ -53,6 +51,10 @@ def output(component, field):
     serial = SwiggableNeurospaces.PidinStackToSerial(context)
     Neurospaces.SimpleHeccer.output(serial, field)
 
+def set_output_filename(filename):
+    global output_filename
+    output_filename = filename
+    
 def prepare(path):
     context = SwiggableNeurospaces.PidinStackParse(path)
     name = SwiggableNeurospaces.PidinStackTop(context)
