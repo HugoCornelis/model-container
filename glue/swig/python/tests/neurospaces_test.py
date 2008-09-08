@@ -2,21 +2,15 @@
 
 import Neurospaces.SingleCellContainer
 
-# import Heccer
-
 print "SingleCellContainer loaded"
 
 c = Neurospaces.SingleCellContainer.Cell("/cell");
 
 print "Cell object created and inserted"
 
-# Neurospaces.SingleCellContainer.querymachine("expand /**")
-
 s = Neurospaces.SingleCellContainer.Segment("/cell/segment");
 
 print "Segment object created and inserted"
-
-# Neurospaces.SingleCellContainer.querymachine("expand /**")
 
 s.parameter("Vm_init", -0.0680)
 s.parameter("RM", 1.000)
@@ -42,22 +36,20 @@ s.parameter("LENGTH", 4.47e-05)
 
 s.parameter("INJECT", 1e-9)
 
-print "Segment parameter set"
+print "Segment parameters set"
 
-# s.insert_child("channels/hodgkin-huxley/potassium.ndf::/k")
-# s.insert_child("channels/hodgkin-huxley/sodium.ndf::/na")
-
-# Neurospaces.SingleCellContainer.querymachine("printinfo /cell")
+s.insert_child("channels/hodgkin-huxley.ndf::/k")
+s.insert_child("channels/hodgkin-huxley.ndf::/na")
 
 Neurospaces.SingleCellContainer.set_output_filename("/tmp/output")
 
-Neurospaces.SingleCellContainer.compile()
+Neurospaces.SingleCellContainer.compile("/cell")
 
-Neurospaces.SingleCellContainer.querymachine("printinfo /cell")
+Neurospaces.SingleCellContainer.query("printinfo /cell")
 
-Neurospaces.SingleCellContainer.querymachine("printparameterscaled /cell/segment CM")
-Neurospaces.SingleCellContainer.querymachine("printparameterscaled /cell/segment RM")
-Neurospaces.SingleCellContainer.querymachine("printparameterscaled /cell/segment RA")
+Neurospaces.SingleCellContainer.query("printparameterscaled /cell/segment CM")
+Neurospaces.SingleCellContainer.query("printparameterscaled /cell/segment RM")
+Neurospaces.SingleCellContainer.query("printparameterscaled /cell/segment RA")
 
 print "Neurospaces.SingleCellContainer.compile() called"
 

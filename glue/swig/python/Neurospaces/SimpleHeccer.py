@@ -13,8 +13,8 @@ def compile():
     for schedulee in schedulees:
         schedulee.compile()
 
-def new(nmc, filename):
-    heccer = Heccer.Heccer( { 'model_source': nmc, 'name': '/cell' } )
+def new(nmc, modelname, filename):
+    heccer = Heccer.Heccer( { 'model_source': nmc, 'name': modelname } )
     global our_dt
     heccer.timestep(our_dt)
     global schedulees

@@ -5,11 +5,11 @@ import Neurospaces
 
 import SwiggableNeurospaces
 
-nmc = SwiggableNeurospaces.NeurospacesNew()
+nmc = Neurospaces.ModelContainer()
 
 output_filename = None
 
-SwiggableNeurospaces.NeurospacesRead(nmc, 2, [ "python", "utilities/empty_model.ndf" ] )
+nmc.read("utilities/empty_model.ndf")
 
 class NoOutputFilenameException:
     def __init__(self, cause):
@@ -17,7 +17,7 @@ class NoOutputFilenameException:
 
 class Symbol:
     def insert_child(self, name):
-        Neurospaces.Symbol.insert_child(self, nmc, name)
+        Neurospaces.Symbol.insert_child(self, nmc.backend, name)
 
 class Cell(Symbol):
     "SingleCellContainer.Cell class"
@@ -37,12 +37,15 @@ class Segment(Symbol):
         
     def parameter(self, name, value):
         SwiggableNeurospaces.SymbolSetParameterDouble(self.backend.backend.segr.bio.ioh.iol.hsle, name, value)
-        
-def compile():
+
+    def insert_child(self, name):
+        Neurospaces.Segment.insert_child(self.backend, nmc.backend, name)
+
+def compile(modelname):
     global output_filename
     if output_filename == None:
         raise NoOutputFilenameException("output_filename must be defined during compile()")
-    Neurospaces.SimpleHeccer.new(nmc, output_filename)
+    Neurospaces.SimpleHeccer.new(nmc.backend, modelname, output_filename)
     Neurospaces.SimpleHeccer.compile()
 
 def output(component, field):
@@ -62,8 +65,11 @@ def prepare(path):
     top_symbol = SwiggableNeurospaces.PidinStackLookupTopSymbol(context)
     return [ name, top_symbol ]
 
-def querymachine(command):
-    Neurospaces.querymachine(nmc, command)
+def query(command):
+    nmc.query(command)
     
+def read(filename):
+    nmc.read(filename)
+
 def run(time):
     Neurospaces.SimpleHeccer.run(time)

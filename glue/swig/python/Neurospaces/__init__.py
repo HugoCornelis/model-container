@@ -31,6 +31,9 @@ class Segment(Symbol):
         SwiggableNeurospaces.SymbolSetName(segment.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars("segment"))
 #         SwiggableNeurospaces.SymbolSetName(segment.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinDuplicate(SwiggableNeurospaces.IdinNewFromChars(name)))
         self.backend = segment
+
+    def insert_child(self, nmc, name):
+        Symbol.insert_child(self, nmc, name)
         
 # should remain here
 
@@ -39,14 +42,20 @@ class Context:
     def __init__(self, path):
         self.backend = SwiggableNeurospaces.PidinStackParse(path);
 
+class ModelContainer:
+    def __init__(self):
+        self.backend = SwiggableNeurospaces.NeurospacesNew()
 
-def new():
-    "Construct a model container"
-    self.backend = SwiggableNeurospaces.NeurospacesNew()
-    return self
-
-
-def querymachine(self, command):
-    "submit querymachine commands to the model container"
-    SwiggableNeurospaces.QueryMachineHandle(self, command)
+    def query(self, command):
+        "submit querymachine commands to the model container"
+        SwiggableNeurospaces.QueryMachineHandle(self.backend, command)
     
+    def read(self, filename):
+        "read an NDF model file"
+        SwiggableNeurospaces.NeurospacesRead(self.backend, 2, [ "python", filename ] )
+
+# def new():
+#     "Construct a model container"
+#     self.backend = SwiggableNeurospaces.NeurospacesNew()
+#     return self
+
