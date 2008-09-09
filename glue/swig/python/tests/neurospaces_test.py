@@ -8,7 +8,7 @@ c = Neurospaces.SingleCellContainer.Cell("/cell");
 
 print "Cell object created and inserted"
 
-s = Neurospaces.SingleCellContainer.Segment("/cell/segment");
+s = Neurospaces.SingleCellContainer.Segment("/cell/soma");
 
 print "Segment object created and inserted"
 
@@ -47,14 +47,14 @@ Neurospaces.SingleCellContainer.compile("/cell")
 
 Neurospaces.SingleCellContainer.query("printinfo /cell")
 
-Neurospaces.SingleCellContainer.query("printparameterscaled /cell/segment CM")
-Neurospaces.SingleCellContainer.query("printparameterscaled /cell/segment RM")
-Neurospaces.SingleCellContainer.query("printparameterscaled /cell/segment RA")
+Neurospaces.SingleCellContainer.query("printparameterscaled /cell/soma CM")
+Neurospaces.SingleCellContainer.query("printparameterscaled /cell/soma RM")
+Neurospaces.SingleCellContainer.query("printparameterscaled /cell/soma RA")
 
 print "Neurospaces.SingleCellContainer.compile() called"
 
 try:
-    Neurospaces.SingleCellContainer.output("/cell/segment", "Vm")
+    Neurospaces.SingleCellContainer.output("/cell/soma", "Vm")
 except Heccer.AddressError, e:
     print "*** Error: " + e.cause
     import sys
