@@ -10,7 +10,7 @@ print "Cell object created and inserted"
 
 s = Neurospaces.SingleCellContainer.Segment("/cell/soma");
 
-print "Segment object created and inserted"
+print "Soma object created and inserted"
 
 s.parameter("Vm_init", -0.0680)
 s.parameter("RM", 1.000)
@@ -36,7 +36,7 @@ s.parameter("LENGTH", 4.47e-05)
 
 s.parameter("INJECT", 1e-9)
 
-print "Segment parameters set"
+print "Soma parameters set"
 
 s.insert_child("channels/hodgkin-huxley.ndf::/k")
 s.insert_child("channels/hodgkin-huxley.ndf::/na")
