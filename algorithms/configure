@@ -1572,7 +1572,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=model-container_algorithms
- VERSION=network-17
+ VERSION=python-1
 
 
 # Some tools Automake needs.
