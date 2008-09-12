@@ -59,7 +59,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 //#include "lexsupport.h"
-int yylex(YYSTYPE *lvalp,void *pacParserContext);
+int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %}
 
 %pure_parser
@@ -484,7 +484,7 @@ DependenciesEnumerated
 
 		    pc
 			= ParserContextQualifyFilename
-			  ((PARSERCONTEXT *)pacParserContext,pc);
+			  ((PARSERCONTEXT *)pacParserContext, pc);
 
 		    if (pc)
 		    {
@@ -597,7 +597,7 @@ PrivateModelsEnumerated
 			//- add private model
 
 			ParserAddPrivateModel
-			    ((PARSERCONTEXT *)pacParserContext,$2);
+			    ((PARSERCONTEXT *)pacParserContext, $2);
 		    }
 
 		    //- else
@@ -1428,7 +1428,7 @@ ConcentrationGateKineticDescription	/* <pcgatk> */
 #line
 		    //- link parameters
 
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle,$2);
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
 
 		    //- reset actual symbol
 
@@ -1555,7 +1555,7 @@ HHGateDescription	/* <pgathh> */
 #line
 		    //- link parameters
 
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle,$2);
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
 
 		    //- reset actual symbol
 
@@ -1731,7 +1731,7 @@ GateKineticDescription	/* <pgatk> */
 #line
 		    //- link parameters
 
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle,$2);
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
 
 		    //- reset actual symbol
 
@@ -2016,7 +2016,7 @@ EMContourDescription	/* <pemc> */
 #line
 		    //- link parameters
 
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle,$2);
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
 
 		    //- reset actual symbol
 
@@ -2144,7 +2144,7 @@ ContourGroupDescription	/* <pvcont> */
 #line
 		    //- link parameters
 
-		    SymbolAssignParameters(&$1->vect.bio.ioh.iol.hsle,$2);
+		    SymbolAssignParameters(&$1->vect.bio.ioh.iol.hsle, $2);
 
 		    //- reset actual symbol
 
@@ -2252,7 +2252,7 @@ ContourPointDescription	/* <pcpnt> */
 #line
 		    //- link parameters
 
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle,$2);
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
 
 		    //- reset actual symbol
 
@@ -2360,7 +2360,7 @@ GroupedModelDescription	/* <pgrup> */
 #line
 		    //- link parameters
 
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle,$2);
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
 
 		    //- reset actual symbol
 
@@ -2384,17 +2384,17 @@ AttachmentPointSection	/* <patta> */
 #line
 		    //- link name
 
-		    SymbolSetName(&$3->bio.ioh.iol.hsle,$1);
+		    SymbolSetName(&$3->bio.ioh.iol.hsle, $1);
 
 		    //- set type of attachment
 
-		    if (strcasecmp(IdinName($1),"spikegen") == 0)
+		    if (strcasecmp(IdinName($1), "spikegen") == 0)
 		    {
-			AttachmentSetType($3,TYPE_ATTACHMENT_OUTGOING);
+			AttachmentSetType($3, TYPE_ATTACHMENT_OUTGOING);
 		    }
-		    else if (strcasecmp(IdinName($1),"synapse") == 0)
+		    else if (strcasecmp(IdinName($1), "synapse") == 0)
 		    {
-			AttachmentSetType($3,TYPE_ATTACHMENT_INCOMING);
+			AttachmentSetType($3, TYPE_ATTACHMENT_INCOMING);
 		    }
 		    else
 		    {
@@ -2451,15 +2451,15 @@ AttachmentPointDescription	/* <patta> */
 
 /* 		    //- set type : outgoing */
 
-/* 		    AttachmentSetType($$,TYPE_ATTACHMENT_OUTGOING); */
+/* 		    AttachmentSetType($$, TYPE_ATTACHMENT_OUTGOING); */
 
 		    //- assign attributes
 
-		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle,$1);
+		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle, $1);
 
 		    //- set datatype
 
-		    AttachmentSetDataType($$,"null data");
+		    AttachmentSetDataType($$, "null data");
 
 		    //- set actual symbol
 
@@ -2478,15 +2478,15 @@ AttachmentPointDescription	/* <patta> */
 
 		    //- set type : incoming
 
-		    AttachmentSetType($$,TYPE_ATTACHMENT_INCOMING);
+		    AttachmentSetType($$, TYPE_ATTACHMENT_INCOMING);
 
 		    //- assign attributes
 
-		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle,$2);
+		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle, $2);
 
 		    //- set datatype
 
-		    AttachmentSetDataType($$,$1);
+		    AttachmentSetDataType($$, $1);
 
 		    //- set actual symbol
 
@@ -2505,15 +2505,15 @@ AttachmentPointDescription	/* <patta> */
 
 		    //- set type : outgoing
 
-		    AttachmentSetType($$,TYPE_ATTACHMENT_OUTGOING);
+		    AttachmentSetType($$, TYPE_ATTACHMENT_OUTGOING);
 
 		    //- assign attributes
 
-		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle,$2);
+		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle, $2);
 
 		    //- set datatype
 
-		    AttachmentSetDataType($$,$1);
+		    AttachmentSetDataType($$, $1);
 
 		    //- set actual symbol
 
@@ -2588,7 +2588,7 @@ PoolSection	/* <ppool> */
 #line
 		    //- set pool name
 
-		    SymbolSetName(&$4->bio.ioh.iol.hsle,$1);
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
 
 		    //- set outside bindable fields
 
@@ -2636,7 +2636,7 @@ PoolDescription	/* <ppool> */
 
 		    $$->depool.iType = TYPE_POOL_PARAMETERS;
 
-		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle,$1);
+		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle, $1);
 
 		    //- set actual symbol
 
@@ -2657,7 +2657,7 @@ ChannelSection	/* <pchan> */
 #line
 		    //- set channel name
 
-		    SymbolSetName(&$4->bio.ioh.iol.hsle,$1);
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
 
 		    //- set outside bindable fields
 
@@ -2673,7 +2673,7 @@ ChannelSection	/* <pchan> */
 
 		    //- initialize channel specifics
 
-		    ChannelSetup($$,(PARSERCONTEXT *)pacParserContext);
+		    ChannelSetup($$, (PARSERCONTEXT *)pacParserContext);
 		}
 	;
 
@@ -3465,7 +3465,7 @@ AxonHillockSection	/* <paxhi> */
 #line
 		    //- assign identifier to cell struct
 
-		    SymbolSetName(&$2->segr.bio.ioh.iol.hsle,$1);
+		    SymbolSetName(&$2->segr.bio.ioh.iol.hsle, $1);
 
 		    //- put cell struct on stack
 
@@ -3581,7 +3581,7 @@ RandomvalueSection	/* <pranv> */
 #line
 		    //- set pool name
 
-		    SymbolSetName(&$4->bio.ioh.iol.hsle,$1);
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
 
 		    //- set outside bindable fields
 
@@ -3639,7 +3639,7 @@ RandomvalueDescription	/* <pranv> */
 #line
 		    //- link parameters
 
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle,$2);
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
 
 		    //- reset actual symbol
 
@@ -3873,7 +3873,7 @@ ConnectionSection	/* <pconsy> */
 #line
 		    //- assign identifier to connection struct
 
-		    SymbolSetName(&$2->bio.ioh.iol.hsle,$1);
+		    SymbolSetName(&$2->bio.ioh.iol.hsle, $1);
 
 		    //- put connection struct on stack
 
@@ -4022,7 +4022,7 @@ ConnectionGroupSectionFront	/* <pvconsy> */
 
 		    //- set name of group
 
-		    SymbolSetName(&$$->vect.bio.ioh.iol.hsle,pidin);
+		    SymbolSetName(&$$->vect.bio.ioh.iol.hsle, pidin);
 
 		    //- push container on container stack
 
@@ -4111,7 +4111,7 @@ ProjectionSection	/* <pproj> */
 #line
 		    //- assign identifier to projection struct
 
-		    SymbolSetName(&$2->bio.ioh.iol.hsle,$1);
+		    SymbolSetName(&$2->bio.ioh.iol.hsle, $1);
 
 		    //- put projection struct on stack
 
@@ -4235,7 +4235,7 @@ NetworkSection	/* <pnetw> */
 #line
 		    //- assign identifier to network struct
 
-		    SymbolSetName(&$4->segr.bio.ioh.iol.hsle,$1);
+		    SymbolSetName(&$4->segr.bio.ioh.iol.hsle, $1);
 
 		    //- set outside bindable fields
 
@@ -4554,7 +4554,7 @@ ItemInputRelations	/* <pio> */
 
 		    //- set TOKEN_INPUT flag for root idin $2
 
-		    IdinSetFlags($2,FLAG_IDENTINDEX_INPUTROOT);
+		    IdinSetFlags($2, FLAG_IDENTINDEX_INPUTROOT);
 
 		    //- put io list on stack
 
@@ -4574,7 +4574,7 @@ ItemInputRelations	/* <pio> */
 
 		    //- set TOKEN_INPUT flag for root idin $4
 
-		    IdinSetFlags($4,FLAG_IDENTINDEX_INPUTROOT);
+		    IdinSetFlags($4, FLAG_IDENTINDEX_INPUTROOT);
 
 		    //- store idin
 
@@ -4635,7 +4635,7 @@ Attributes	/* <ppar> */
 
 		    ParameterSetAttribute($$);
 
-		    ParameterSetName($$,$1);
+		    ParameterSetName($$, $1);
 		}
 	|
 		Attributes
@@ -4651,7 +4651,7 @@ Attributes	/* <ppar> */
 
 		    ParameterSetAttribute(ppar);
 
-		    ParameterSetName(ppar,$3);
+		    ParameterSetName(ppar, $3);
 
 		    //- link new parameter in list
 
@@ -4832,7 +4832,7 @@ FunctionSpecification	/* <pfun> */
 
 		    $$ = FunctionCalloc();
 
-		    FunctionSetName($$,$1);
+		    FunctionSetName($$, $1);
 
 		    //- remember function has parameters
 
@@ -5081,7 +5081,7 @@ Field	/* <pidin> */
 
 		    $$ = IdinCalloc();
 
-		    IdinSetFlags($$,FLAG_IDENTINDEX_FIELD);
+		    IdinSetFlags($$, FLAG_IDENTINDEX_FIELD);
 
 		    $$->pcIdentifier = $1;
 		}
@@ -5097,7 +5097,7 @@ IO	/* <pidin> */
 
 		    $$ = IdinCalloc();
 
-		    IdinSetFlags($$,FLAG_IDENTINDEX_IO);
+		    IdinSetFlags($$, FLAG_IDENTINDEX_IO);
 
 		    $$->pcIdentifier = $1;
 		}
@@ -5550,7 +5550,7 @@ Identifier	/* <pcIdentifier> */
 #line
 		    //- get id name from lexical scanner
 
-		    //fprintf(stderr,"TOKEN_IDENTIFIER(%s)\n",$1);
+		    //fprintf(stderr, "TOKEN_IDENTIFIER(%s)\n", $1);
 		    $$ = $1;
 		}
 	;
