@@ -38,8 +38,8 @@ s.parameter("INJECT", 1e-9)
 
 print "Soma parameters set"
 
-s.insert_child("channels/hodgkin-huxley.ndf::/k")
-s.insert_child("channels/hodgkin-huxley.ndf::/na")
+s.import_child("channels/hodgkin-huxley.ndf::/k")
+s.import_child("channels/hodgkin-huxley.ndf::/na")
 
 Neurospaces.SingleCellContainer.set_output_filename("/tmp/output")
 

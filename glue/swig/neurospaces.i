@@ -56,6 +56,7 @@
 #include "neurospaces/treespacetraversal.h"
 #include "neurospaces/vector.h"
 #include "neurospaces/vectorconnectionsymbol.h"
+#include "neurospaces/vectorcontour.h"
 #include "neurospaces/vectorsegment.h"
 
 #include "neurospaces/symbolvirtual_protos.h"
@@ -174,6 +175,7 @@ treespace_traversal_new
 %include "neurospaces/treespacetraversal.h"
 %include "neurospaces/vector.h"
 %include "neurospaces/vectorconnectionsymbol.h"
+%include "neurospaces/vectorcontour.h"
 %include "neurospaces/vectorsegment.h"
 
 %include "neurospaces/symbolvirtual_protos.h"

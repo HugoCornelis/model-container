@@ -5,17 +5,14 @@ import SwiggableNeurospaces
 # should go to Component.py
 
 class Symbol:
-    def insert_child(self, nmc, name):
-        import re
-        paths = re.split("::", name)
-        if len(paths) != 2:
-            raise Error
-        filename = paths[0]
-        component = paths[1]
-        #t import the file
-        #t lookup the symbol
-        #t call lowlevel SwiggableNeurospaces.SymbolAddChild()
-
+    def backend_object(self):
+        return self.backend
+    
+    def insert_child(self, child):
+        s = self.backend_object()
+        c = child.backend_object()
+        return SwiggableNeurospaces.SymbolAddChild(s, c)
+        
     def parameter(self, name, value):
         return SwiggableNeurospaces.SymbolSetParameterDouble(self.backend_object(), name, value)
 
@@ -27,12 +24,18 @@ class Cell(Symbol):
 #         SwiggableNeurospaces.SymbolSetName(cell.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinDuplicate(SwiggableNeurospaces.IdinNewFromChars("cell")))
         self.backend = cell
 
+    def backend_object(self):
+        return self.backend.segr.bio.ioh.iol.hsle
+
 class ContourGroup(Symbol):
     "ContourGroup class"
     def __init__(self, name):
         group = SwiggableNeurospaces.VContourCalloc()
-        SwiggableNeurospaces.SymbolSetName(groupbio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars("group"))
+        SwiggableNeurospaces.SymbolSetName(group.vect.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars("group"))
         self.backend = group
+
+    def backend_object(self):
+        return self.backend.vect.bio.ioh.iol.hsle
 
 class ContourPoint(Symbol):
     "ContourPoint class"
@@ -40,6 +43,9 @@ class ContourPoint(Symbol):
         point = SwiggableNeurospaces.ContourPointCalloc()
         SwiggableNeurospaces.SymbolSetName(point.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars("point"))
         self.backend = point
+
+    def backend_object(self):
+        return self.backend.bio.ioh.iol.hsle
 
 class EMContour(Symbol):
     "EMContour class"
@@ -59,12 +65,12 @@ class Segment(Symbol):
 #         SwiggableNeurospaces.SymbolSetName(segment.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinDuplicate(SwiggableNeurospaces.IdinNewFromChars(name)))
         self.backend = segment
 
+    def backend_object(self):
+        return self.backend.segr.bio.ioh.iol.hsle
+
     def parameter(self, name, value):
         SwiggableNeurospaces.SymbolSetParameterDouble(self.backend.segr.bio.ioh.iol.hsle, name, value)
 
-    def insert_child(self, nmc, name):
-        Symbol.insert_child(self, nmc, name)
-        
 # should remain here
 
 class Context:
@@ -76,10 +82,16 @@ class ModelContainer:
     def __init__(self):
         self.backend = SwiggableNeurospaces.NeurospacesNew()
 
+    def import_file(self, filename):
+        pass
+    
     def insert(self, path, symbol):
         context = SwiggableNeurospaces.PidinStackParse(path)
         top = SwiggableNeurospaces.PidinStackLookupTopSymbol(context)
-        SwiggableNeurospaces.SymbolAddChild(top, symbol)
+        SwiggableNeurospaces.SymbolAddChild(top, symbol.backend_object())
+
+    def lookup(self, name):
+        pass
 
     def query(self, command):
         "submit querymachine commands to the model container"

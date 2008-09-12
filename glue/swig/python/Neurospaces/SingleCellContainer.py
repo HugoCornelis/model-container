@@ -16,8 +16,16 @@ class NoOutputFilenameException:
         self.cause = cause
 
 class Symbol:
-    def insert_child(self, name):
-        Neurospaces.Symbol.insert_child(self, nmc.backend, name)
+    def import_child(self, name):
+        import re
+        paths = re.split("::", name)
+        if len(paths) != 2:
+            raise Error
+        filename = paths[0]
+        component = paths[1]
+        nmc.import_file(filename)
+        symbol = nmc.lookup(component)
+#         Neurospaces.Symbol.insert_child(self.backend, symbol)
 
 class Cell(Symbol):
     "SingleCellContainer.Cell class"
@@ -37,9 +45,6 @@ class Segment(Symbol):
         
     def parameter(self, name, value):
         self.backend.parameter(name, value)
-
-    def insert_child(self, name):
-        Neurospaces.Segment.insert_child(self.backend, nmc.backend, name)
 
 def compile(modelname):
     global output_filename
