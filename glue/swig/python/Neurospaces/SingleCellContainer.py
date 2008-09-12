@@ -36,7 +36,7 @@ class Segment(Symbol):
         self.backend = segment
         
     def parameter(self, name, value):
-        SwiggableNeurospaces.SymbolSetParameterDouble(self.backend.backend.segr.bio.ioh.iol.hsle, name, value)
+        self.backend.parameter(name, value)
 
     def insert_child(self, name):
         Neurospaces.Segment.insert_child(self.backend, nmc.backend, name)

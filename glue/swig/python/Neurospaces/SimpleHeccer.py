@@ -36,3 +36,4 @@ def run(time):
         for schedulee in schedulees:
             simulation_time += our_dt
             schedulee.advance(simulation_time)
+    schedulee.finish()
