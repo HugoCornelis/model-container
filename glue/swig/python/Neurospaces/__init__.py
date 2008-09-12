@@ -20,8 +20,7 @@ class Cell(Symbol):
     "Cell class"
     def __init__(self, name):
         cell = SwiggableNeurospaces.CellCalloc()
-        SwiggableNeurospaces.SymbolSetName(cell.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars("cell"))
-#         SwiggableNeurospaces.SymbolSetName(cell.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinDuplicate(SwiggableNeurospaces.IdinNewFromChars("cell")))
+        SwiggableNeurospaces.SymbolSetName(cell.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars(name))
         self.backend = cell
 
     def backend_object(self):
@@ -31,7 +30,7 @@ class ContourGroup(Symbol):
     "ContourGroup class"
     def __init__(self, name):
         group = SwiggableNeurospaces.VContourCalloc()
-        SwiggableNeurospaces.SymbolSetName(group.vect.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars("group"))
+        SwiggableNeurospaces.SymbolSetName(group.vect.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars(name))
         self.backend = group
 
     def backend_object(self):
@@ -41,7 +40,7 @@ class ContourPoint(Symbol):
     "ContourPoint class"
     def __init__(self, name):
         point = SwiggableNeurospaces.ContourPointCalloc()
-        SwiggableNeurospaces.SymbolSetName(point.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars("point"))
+        SwiggableNeurospaces.SymbolSetName(point.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars(name))
         self.backend = point
 
     def backend_object(self):
@@ -51,7 +50,7 @@ class EMContour(Symbol):
     "EMContour class"
     def __init__(self, name):
         contour = SwiggableNeurospaces.EMContourCalloc()
-        SwiggableNeurospaces.SymbolSetName(contour.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars("contour"))
+        SwiggableNeurospaces.SymbolSetName(contour.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars(name))
         self.backend = contour
 
     def backend_object(self):
@@ -61,7 +60,7 @@ class Segment(Symbol):
     "Segment class"
     def __init__(self, name):
         segment = SwiggableNeurospaces.SegmentCalloc()
-        SwiggableNeurospaces.SymbolSetName(segment.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars("soma"))
+        SwiggableNeurospaces.SymbolSetName(segment.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars(name))
 #         SwiggableNeurospaces.SymbolSetName(segment.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinDuplicate(SwiggableNeurospaces.IdinNewFromChars(name)))
         self.backend = segment
 
