@@ -20,7 +20,7 @@ class Cell(Symbol):
     "Cell class"
     def __init__(self, name):
         cell = SwiggableNeurospaces.CellCalloc()
-        SwiggableNeurospaces.SymbolSetName(cell.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars(name))
+        SwiggableNeurospaces.SymbolSetName(cell.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars("cell"))
         self.backend = cell
 
     def backend_object(self):
@@ -60,8 +60,7 @@ class Segment(Symbol):
     "Segment class"
     def __init__(self, name):
         segment = SwiggableNeurospaces.SegmentCalloc()
-        SwiggableNeurospaces.SymbolSetName(segment.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars(name))
-#         SwiggableNeurospaces.SymbolSetName(segment.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinDuplicate(SwiggableNeurospaces.IdinNewFromChars(name)))
+        SwiggableNeurospaces.SymbolSetName(segment.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinNewFromChars("soma"))
         self.backend = segment
 
     def backend_object(self):
