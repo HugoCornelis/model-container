@@ -118,7 +118,8 @@ This web page reflects the status as for project version python-1 of the Neurosp
 	<li>
 
 	  <a href="#section-neurospaces">Neurospaces Model
-	  Container</a>.
+	  Container</a>: provides a solver independent internal
+	  storage format for models.
 
 	<li>
 
@@ -228,8 +229,9 @@ This web page reflects the status as for project version python-1 of the Neurosp
       The <em>Neurospaces Model Container</em> is used as an
       abstraction layer on top of a simulator and deals with
       biological entities and end-user concepts instead of
-      mathematical equations.  This allows to optimize the numerical
-      core separately from the modeling package.
+      mathematical equations.  It provides a solver independent
+      internal storage format for models to allow user invisible
+      optimizations of the numerical core.
 
     </p><p>
 
@@ -440,7 +442,8 @@ This web page reflects the status as for project version python-1 of the Neurosp
     <ul>
       <li>
 
-	Can be driven from C, Perl, SSP or the model container.
+	Can be driven from C, Perl, SSP, and can fetch the model
+	parameters from the Neurospaces model container.
 
       <li>
 
@@ -494,9 +497,9 @@ This web page reflects the status as for project version python-1 of the Neurosp
 	Can be used with or without the Neurospaces model container.
 	To use Heccer without the Neurospaces model container,
 	configure the package with the command line './configure
-	--without-neurospaces' (currently broken, sorry folks).  To
-	use Heccer with the model container, the model container must
-	be installed before Heccer is compiled.
+	--without-neurospaces'.  To use Heccer with the model
+	container, the model container must be installed before Heccer
+	is compiled.
 
     </ul>
 
@@ -564,9 +567,8 @@ This web page reflects the status as for project version python-1 of the Neurosp
 	Can be used with or without the Neurospaces model container.
 	To use Dash without the Neurospaces model container, configure
 	the package with the command line './configure
-	--without-neurospaces' (currently broken, sorry folks).  To
-	use Dash with the model container, the model container must be
-	installed before Dash is compiled.
+	--without-neurospaces'.  To use Dash with the model container,
+	the model container must be installed before Dash is compiled.
 
     </ul>
 
@@ -811,12 +813,12 @@ solverclasses:
 
     </p><h2><a name="section-studio">Neurospaces Studio</a></h2>
 
-      The <em>Neurospaces studio</em> is a front-end to the
-      Neurospaces model container.  It allows browsing and
-      visualization of the model contained in Neurospaces.  Note that
-      the Neurospaces studio is not a graphical editor or construction
-      kit.  I prefer to rely on external applications for this type of
-      functionality, a good example is <a
+      The <em>Neurospaces studio</em> has a GUI front-end to the
+      Neurospaces model container and allows browsing and
+      visualization of the model.  Note that the Neurospaces studio is
+      not a graphical editor or construction kit.  I prefer to rely on
+      external applications for this type of functionality, a good
+      example is <a
       href="http://www.neuroconstruct.org/">neuroConstruct</a>.
 
     </p><p>
@@ -961,14 +963,6 @@ $ neurospaces cells/purkinje/edsjb1994.ndf --traversal-symbol / --reporting-fiel
 
 	These tests give an idea of the functionality of the
 	Neurospaces studio for examining complicated neuronal models.
-
-      <p>
-
-	PS: most (but not all) of this front-end used to be
-	distributed with the Neurospaces model container, for legacy
-	reasons.  This introduced ambiguity in the packaging system,
-	and a number of installation problems.  Factoring out the
-	studio solves those problems.
 
     </p><h2><a name="section-genesis-sli">Genesis Script Layer</a></h2>
 
@@ -1271,7 +1265,7 @@ $ neurospaces cells/purkinje/edsjb1994.ndf --traversal-symbol / --reporting-fiel
       <address><a href="mailto:hugo.cornelis@gmail.com"></a></address>
 <!-- Created: Thu Apr  6 11:31:32 CDT 2006 -->
 <!-- hhmts start -->
-Last modified: Tue Sep  9 11:02:35 CDT 2008
+Last modified: Mon Sep 22 09:46:00 CDT 2008
 <!-- hhmts end -->
       <script type="text/javascript">
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
