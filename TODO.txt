@@ -6,6 +6,8 @@ SegmenterIsSpherical().
 ** segment volume tests
 ** channel scaling tests
 ** pool scaling tests
+Seems that SegmenterIsSpherical() should just be moved to
+SegmentIsSpherical() ?
 
 * swig and autotools
 http://www.geocities.com/foetsch/python/swig_linux.htm
