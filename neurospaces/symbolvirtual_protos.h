@@ -227,6 +227,12 @@ SymbolPrincipalSerial2Context
  struct PidinStack *ppist,
  int iPrincipal);
 
+struct PidinStack *
+SymbolPrincipalSerial2RelativeContext
+(struct symtab_HSolveListElement *phsle,
+ struct PidinStack *ppist,
+ int iPrincipal);
+
 int SymbolRecalcAllSerials
 (struct symtab_HSolveListElement *phsle, struct PidinStack *ppist);
 

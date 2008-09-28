@@ -1386,7 +1386,8 @@ SymbolParameterTransformValue
 
 struct SymbolPrincipal2ContextData
 {
-    //m result of operation
+    //m result of operation: uninitialized means result context
+    //m will be based on the given context
 
     struct PidinStack *ppistResult;
 
@@ -1400,9 +1401,10 @@ struct SymbolPrincipal2ContextData
 };
 
 
-static int 
+static
+int 
 SymbolPrincipal2SymbolSelector
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : siblings
 
@@ -1429,9 +1431,19 @@ SymbolPrincipal2SymbolSelector
 
     if (iSerial <= 0)
     {
-	printf
-	    ("SymbolPrincipalSerial2Context() :"
+	fprintf
+	    (stderr,
+	     "SymbolPrincipalSerial2Context() :"
 	     " internal error: zero serial\n");
+
+	//- remove result
+
+	if (psip2c->ppistResult)
+	{
+	    PidinStackFree(psip2c->ppistResult);
+
+	    psip2c->ppistResult = NULL;
+	}
 
 	//- we have an internal error : abort
 
@@ -1451,6 +1463,15 @@ SymbolPrincipal2SymbolSelector
 	//- register number of skipped successors : zero
 
 	psip2c->iSkippedSuccessors = 0;
+
+	//- if there is a result
+
+	if (psip2c->ppistResult)
+	{
+	    //- push current symbol to the result
+
+	    PidinStackPushSymbol(psip2c->ppistResult, phsle);
+	}
 
 	//- set result : process children
 
@@ -1476,9 +1497,10 @@ SymbolPrincipal2SymbolSelector
 }
 
 
-static int 
+static
+int 
 SymbolPrincipal2SymbolConvertor
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : siblings
 
@@ -1501,11 +1523,25 @@ SymbolPrincipal2SymbolConvertor
 
     if (0 == psip2c->iPrincipal)
     {
-	//- set result : current symbol
+	//- if there is a result
 
-	psip2c->ppistResult = PidinStackDuplicate(ptstr->ppist);
+	if (psip2c->ppistResult)
+	{
+/* 	    //- push current symbol to the result */
 
-	//- abort traversal
+/* 	    PidinStackPushSymbol(psip2c->ppistResult, phsle); */
+	}
+
+	//- no result yet
+
+	else
+	{
+	    //- initialize result: context of current symbol
+
+	    psip2c->ppistResult = PidinStackDuplicate(ptstr->ppist);
+	}
+
+	//- we are done, abort traversal
 
 	return(TSTR_PROCESSOR_ABORT);
     }
@@ -1514,9 +1550,19 @@ SymbolPrincipal2SymbolConvertor
 
     if (iSuccessors < psip2c->iPrincipal)
     {
-	printf
-	    ("SymbolPrincipalSerial2Context() :"
+	fprintf
+	    (stderr,
+	     "SymbolPrincipalSerial2Context() :"
 	     " internal error: #SU < serial\n");
+
+	//- remove result
+
+	if (psip2c->ppistResult)
+	{
+	    PidinStackFree(psip2c->ppistResult);
+
+	    psip2c->ppistResult = NULL;
+	}
 
 	//- we have an internal error : abort
 
@@ -1527,9 +1573,19 @@ SymbolPrincipal2SymbolConvertor
 
     if (psip2c->iPrincipal < 0)
     {
-	printf
-	    ("SymbolPrincipalSerial2Context() :"
+	fprintf
+	    (stderr,
+	     "SymbolPrincipalSerial2Context() :"
 	     " internal error: negative serial\n");
+
+	//- remove result
+
+	if (psip2c->ppistResult)
+	{
+	    PidinStackFree(psip2c->ppistResult);
+
+	    psip2c->ppistResult = NULL;
+	}
 
 	//- we have an internal error : abort
 
@@ -1566,7 +1622,8 @@ SymbolPrincipalSerial2Context
 
     struct SymbolPrincipal2ContextData sip2c =
     {
-	//m result of operation
+	//m result of operation: uninitialized means result context
+	//m will be based on the given context
 
 	NULL,
 
@@ -1593,17 +1650,17 @@ SymbolPrincipalSerial2Context
 	return(NULL);
     }
 
+    //- duplicate given context
+
+    sip2c.ppistResult = PidinStackDuplicate(ppist);
+
     //- if this symbol requested
 
     if (iPrincipal == 0)
     {
-	//- duplicate given context
+	//- set result
 
-	ppistResult = PidinStackDuplicate(ppist);
-
-/* 	//- push this symbol */
-
-/* 	PidinStackPushSymbol(ppistResult,phsle); */
+	ppistResult = sip2c.ppistResult;
 
 	//- return result
 
@@ -1624,7 +1681,104 @@ SymbolPrincipalSerial2Context
 
     //- traverse symbols, looking for serial
 
-    iTraversal = TstrGo(ptstr,phsle);
+    iTraversal = TstrGo(ptstr, phsle);
+
+    //- delete treespace traversal
+
+    TstrDelete(ptstr);
+
+    //- set result from traversal data
+
+    ppistResult = sip2c.ppistResult;
+
+    //- return result
+
+    return(ppistResult);
+}
+
+
+struct PidinStack *
+SymbolPrincipalSerial2RelativeContext
+(struct symtab_HSolveListElement *phsle,
+ struct PidinStack *ppist,
+ int iPrincipal)
+{
+    //- set default result : not found
+
+    struct PidinStack *ppistResult = NULL;
+
+    //v treespace traversal to go over successors
+
+    struct TreespaceTraversal *ptstr = NULL;
+
+    int iTraversal = 0;
+
+    //v number of successors for top of solved symbol tree
+
+    int iSuccessors = 0;
+
+    //v traversal user data
+
+    struct SymbolPrincipal2ContextData sip2c =
+    {
+	//m result of operation: uninitialized means result context
+	//m will be based on the given context
+
+	NULL,
+
+	//m number of skipped successors
+
+	0,
+
+	//m relative principal ID
+
+	iPrincipal,
+    };
+
+    //- get #SU for symbol
+
+    iSuccessors = SymbolGetPrincipalNumOfSuccessors(phsle);
+
+    //- if serial out of range for this symbol
+
+    if (iPrincipal > iSuccessors
+	|| iPrincipal < 0)
+    {
+	//- serial ID unknown, return failure
+
+	return(NULL);
+    }
+
+    sip2c.ppistResult = PidinStackParse(".");
+
+    //- if this symbol requested
+
+    if (iPrincipal == 0)
+    {
+	//- current result
+
+	ppistResult = sip2c.ppistResult;
+
+	//- return result
+
+	return(ppistResult);
+    }
+
+    //- allocate treespace traversal
+
+    ptstr
+	= TstrNew
+	  (ppist,
+	   SymbolPrincipal2SymbolSelector,
+	   (void *)&sip2c,
+	   SymbolPrincipal2SymbolConvertor,
+	   (void *)&sip2c,
+	   NULL,
+	   NULL);
+
+    //- traverse symbols, looking for serial
+
+    iTraversal = TstrGo(ptstr, phsle);
 
     //- delete treespace traversal
 

@@ -457,7 +457,7 @@ Principal serial ID = 265331 of 439542 Principal successors
 - found using SymbolsLookupHierarchical()
 - found using PidinStackLookupTopSymbol()
 ',
-						   write => "contextinfo /CerebellarCortex/Purkinjes",
+						   write => "context-info /CerebellarCortex/Purkinjes",
 						  },
 						  {
 						   description => "Can we get parse info on //CerebellarCortex/Purkinjes ?",
@@ -466,7 +466,7 @@ Principal serial ID = 265331 of 439542 Principal successors
 - found using SymbolsLookupHierarchical()
 - found using PidinStackLookupTopSymbol()
 ',
-						   write => "contextinfo //CerebellarCortex/Purkinjes",
+						   write => "context-info //CerebellarCortex/Purkinjes",
 						  },
 						  {
 						   description => "Can we get parse info on /CerebellarCortex//Purkinjes ?",
@@ -475,7 +475,7 @@ Principal serial ID = 265331 of 439542 Principal successors
 - found using SymbolsLookupHierarchical()
 - found using PidinStackLookupTopSymbol()
 ',
-						   write => "contextinfo /CerebellarCortex//Purkinjes",
+						   write => "context-info /CerebellarCortex//Purkinjes",
 						  },
 						  {
 						   description => "Can we get parse info on //CerebellarCortex//Purkinjes ?",
@@ -484,7 +484,7 @@ Principal serial ID = 265331 of 439542 Principal successors
 - found using SymbolsLookupHierarchical()
 - found using PidinStackLookupTopSymbol()
 ',
-						   write => "contextinfo //CerebellarCortex//Purkinjes",
+						   write => "context-info //CerebellarCortex//Purkinjes",
 						  },
 						 ],
 				description => "context parsing",

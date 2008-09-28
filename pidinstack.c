@@ -2335,6 +2335,208 @@ int PidinStackString(struct PidinStack *ppist, char *pc, int iSize)
 
 /// **************************************************************************
 ///
+/// SHORT: PidinStackSubtract()
+///
+/// ARGS.:
+///
+///	ppistA.: pidin stack.
+///	ppistB.: pidin stack.
+///
+/// RTN..: struct PidinStack *
+///
+///	result context, NULL for failure.
+///
+/// DESCR: Subtract two contexts.
+///
+///	The result is a context that when append compacted to the
+///	first context, results in the second context.
+///
+/// NOTE.:
+///
+///	The used algorithm depends on valid serials.
+///
+/// **************************************************************************
+
+struct PidinStack *
+PidinStackSubtract(struct PidinStack *ppistA, struct PidinStack *ppistB)
+{
+    static struct symtab_IdentifierIndex *pidinParent = NULL;
+
+    if (!pidinParent)
+    {
+	pidinParent = IdinNewFromChars("..");
+    }
+
+    //- set default result: failure
+
+    struct PidinStack *ppistResult = NULL;
+
+    //- update caches
+
+    int iContinue
+	= PidinStackUpdateCaches(ppistA) && PidinStackUpdateCaches(ppistB);
+
+    //- create working stacks
+
+    struct PidinStack *ppist1 = PidinStackDuplicate(ppistA);
+    struct PidinStack *ppist2 = PidinStackDuplicate(ppistB);
+
+    if (iContinue)
+    {
+	//- calculate serials
+
+	int iSerial1 = PidinStackToSerial(ppist1);
+	int iSerial2 = PidinStackToSerial(ppist2);
+
+	//- subtract serials
+
+	int iSerialResult = iSerial1 - iSerial2;
+
+	//- lookup top symbols of first stack
+
+	struct symtab_HSolveListElement *phsle1
+	    = PidinStackLookupTopSymbol(ppist1);
+
+	struct symtab_HSolveListElement *phsle2
+	    = PidinStackLookupTopSymbol(ppist2);
+
+	//- case 1: zero
+
+	if (iSerialResult == 0)
+	{
+	    //- result is current element
+
+	    ppistResult = PidinStackParse(".");
+	}
+
+	//- case 2: positive, serial is in the descendents range
+
+	else if (iSerialResult > 0
+		 && iSerialResult < SymbolGetPrincipalNumOfSuccessors(phsle2))
+	{
+	    //- set result by constructing the context towards the descendent
+
+	    ppistResult
+		= SymbolPrincipalSerial2RelativeContext(phsle2, ppist2, iSerialResult);
+	}
+
+	//- case 3: positive, serial is not in the descendents range
+
+	else if (iSerialResult > 0)
+	{
+	    //- initialize result
+
+	    ppistResult = PidinStackCalloc();
+
+	    //- while not in the descendents range
+
+	    while (iSerialResult > SymbolGetPrincipalNumOfSuccessors(phsle2))
+	    {
+		//- add parent indicator to result
+
+		if (!PidinStackPush(ppistResult, pidinParent))
+		{
+		    PidinStackFree(ppistResult);
+
+		    return(NULL);
+		}
+
+		//- pop symbol of first stack
+
+		phsle1 = PidinStackLookupTopSymbol(ppist1);
+
+		PidinStackPop(ppist1);
+
+		//- add serial
+
+		iSerialResult += SymbolGetPrincipalSerialToParent(phsle1);
+	    }
+
+	    //- if serial strict positive
+
+	    if (iSerialResult > SymbolGetPrincipalNumOfSuccessors(phsle2))
+	    {
+		//- convert serial to context
+
+		struct PidinStack *ppist
+		    = SymbolPrincipalSerial2RelativeContext(phsle2, ppist2, iSerialResult);
+
+		//- append compact
+
+		if (!PidinStackAppendCompact(ppistResult, ppist))
+		{
+		    PidinStackFree(ppistResult);
+
+		    ppistResult = NULL;
+		}
+
+		PidinStackFree(ppist);
+	    }
+	}
+
+	//- case 4: negative
+
+	else
+	{
+	    //- initialize result
+
+	    ppistResult = PidinStackCalloc();
+
+	    //- while negative
+
+	    while (iSerialResult < 0)
+	    {
+		//- add parent indicator to result
+
+		if (!PidinStackPush(ppistResult, pidinParent))
+		{
+		    PidinStackFree(ppistResult);
+
+		    return(NULL);
+		}
+
+		//- pop symbol of second stack
+
+		phsle2 = PidinStackLookupTopSymbol(ppist2);
+
+		PidinStackPop(ppist2);
+
+		//- add serial
+
+		iSerialResult += SymbolGetPrincipalSerialToParent(phsle2);
+	    }
+
+	    //- if serial strict positive
+
+	    if (iSerialResult > 0)
+	    {
+		//- convert serial to context
+
+		struct PidinStack *ppist
+		    = SymbolPrincipalSerial2RelativeContext(phsle2, ppist2, iSerialResult);
+
+		//- append compact
+
+		if (!PidinStackAppendCompact(ppistResult, ppist))
+		{
+		    PidinStackFree(ppistResult);
+
+		    ppistResult = NULL;
+		}
+
+		PidinStackFree(ppist);
+	    }
+	}
+    }
+
+    //- return result
+
+    return(ppistResult);
+}
+
+
+/// **************************************************************************
+///
 /// SHORT: PidinStackToPidinQueue()
 ///
 /// ARGS.:

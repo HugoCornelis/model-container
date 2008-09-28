@@ -195,9 +195,69 @@ my $test
 						 ],
 				description => "wildcard expansions",
 			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-q',
+					      'tests/cells/pool1.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/pool1.ndf.', ],
+						   timeout => 3,
+						   write => undef,
+						  },
+						  {
+						   comment => "for conversion of a genesis SLI CHANNEL message",
+						   description => "Can we do a context subraction, from channel to segment ?",
+						   read => '
+first-second: ./cat
+second-first: ..
+',
+						   write => 'context-subtract /pool1/segments/soma/cat /pool1/segments/soma',
+						  },
+						  {
+						   comment => "for conversion of a genesis SLI VOLTAGE message",
+						   description => "Can we do a context subraction, from segment to channel ?",
+						   read => '
+first-second: ..
+second-first: ./cat
+',
+						   write => 'context-subtract /pool1/segments/soma /pool1/segments/soma/cat',
+						  },
+						  {
+						   description => "Can we do a context subraction, identical elements ?",
+						   read => '
+first-second: .
+second-first: .
+',
+						   write => 'context-subtract /pool1/segments/soma/cat /pool1/segments/soma/cat',
+						  },
+						  {
+						   description => "Can we do a context subraction, 2 symbols ?",
+						   read => '
+first-second: ../..
+second-first: ./soma/cat
+',
+						   write => 'context-subtract /pool1/segments /pool1/segments/soma/cat',
+						  },
+						  {
+						   description => "Can we do a context subraction, 3 symbols ?",
+						   read => '
+first-second: ../../..
+second-first: ./segments/soma/cat
+',
+						   write => 'context-subtract /pool1 /pool1/segments/soma/cat',
+						  },
+						 ],
+				description => "relative context subtraction",
+			       },
 			      ],
-       description => "wildcard matching and expansion",
-       name => 'matching.t',
+       description => "context operations, wildcard matching and expansion",
+       name => 'contextoperations.t',
       };
 
 

@@ -144,6 +144,7 @@ static QueryHandler QueryHandlerAllocations;
 static QueryHandler QueryHandlerBiogroup2Biolevel;
 static QueryHandler QueryHandlerBiolevel2Biogroup;
 static QueryHandler QueryHandlerContextInfo;
+static QueryHandler QueryHandlerContextSubtract;
 static QueryHandler QueryHandlerCountAliases;
 static QueryHandler QueryHandlerCountAllocatedSymbols;
 static QueryHandler QueryHandlerDelete;
@@ -307,8 +308,19 @@ static QueryHandlerAssociation pquhasTable[] =
     //m find out information about a context
 
     {
-	"contextinfo",
+	"context-info",
 	QueryHandlerContextInfo,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    //m subtract two contexts
+
+    {
+	"context-subtract",
+	QueryHandlerContextSubtract,
 #ifdef USE_READLINE
 	1,
 	QueryMachineSymbolGenerator,
@@ -1287,6 +1299,75 @@ static int QueryHandlerContextInfo
 
 /// **************************************************************************
 ///
+/// SHORT: QueryHandlerContextSubtract()
+///
+/// ARGS.:
+///
+///	std. QueryHandler args
+///
+/// RTN..: int : QueryHandler return value
+///
+/// DESCR: Handle context subtraction query.
+///
+/// **************************************************************************
+
+static int QueryHandlerContextSubtract
+(char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
+{
+    //- set result : ok
+
+    int bResult = TRUE;
+
+    struct PidinStack *ppist3 = NULL;
+
+    char pc3[1000];
+
+    //- get first pidinstack
+
+    struct PidinStack *ppist1 = PidinStackParse(&pcLine[iLength]);
+
+    //- get second pidinstack
+
+    //! will core for invalid command lines
+
+    struct PidinStack *ppist2
+	= PidinStackParse(strpbrk(&pcLine[iLength + 1], " \t"));
+
+    //- subtract two contexts
+
+    ppist3 = PidinStackSubtract(ppist1, ppist2);
+
+    PidinStackString(ppist3, pc3, 1000);
+
+    fprintf(stdout, "---\n");
+
+    fprintf(stdout, "first-second: %s\n", pc3);
+
+    PidinStackFree(ppist3);
+
+    //- subtract two contexts, reverse order
+
+    ppist3 = PidinStackSubtract(ppist2, ppist1);
+
+    PidinStackString(ppist3, pc3, 1000);
+
+    fprintf(stdout, "second-first: %s\n", pc3);
+
+    PidinStackFree(ppist3);
+
+    //- free memory
+
+    PidinStackFree(ppist2);
+    PidinStackFree(ppist1);
+
+    //- return result
+
+    return(bResult);
+}
+
+
+/// **************************************************************************
+///
 /// SHORT: QueryHandlerCountAliases()
 ///
 /// ARGS.:
@@ -2230,7 +2311,7 @@ static int QueryHandlerPidinStackMatch
 
     //- diag's on matching
 
-    if (PidinStackMatch(ppist1,ppist2))
+    if (PidinStackMatch(ppist1, ppist2))
     {
 	fprintf(stdout, "Match\n");
     }
@@ -2712,7 +2793,7 @@ static int QueryHandlerPQLoad
 
     //- open file
 
-    FILE *pfile = fopen(pcQualified,"r");;
+    FILE *pfile = fopen(pcQualified, "r");;
 
     if (!pfile)
     {
@@ -2840,7 +2921,7 @@ static int QueryHandlerPQLoad
 	NeurospacesRemoveProjectionQuery(pneuro);
     }
 
-    NeurospacesSetProjectionQuery(pneuro,ppq);
+    NeurospacesSetProjectionQuery(pneuro, ppq);
 
     //- return result
 
@@ -3022,7 +3103,7 @@ static int QueryHandlerPQSave
 
 	//- give some diag's
 
-	fprintf(stdout, "Storing connection matrix in file %s\n",pcFilename);
+	fprintf(stdout, "Storing connection matrix in file %s\n", pcFilename);
 
 	//- set if projectionquery should use caches
 
@@ -3030,7 +3111,7 @@ static int QueryHandlerPQSave
 
 	//- open output file
 
-	qtd.pfile = fopen(pcFilename,"w");
+	qtd.pfile = fopen(pcFilename, "w");
 
 	//- write number of connections
 
@@ -3166,7 +3247,7 @@ static int QueryHandlerPQSet
 
 		//- get resource usage
 
-		if (-1 == getrusage(RUSAGE_SELF,&ruBefore))
+		if (-1 == getrusage(RUSAGE_SELF, &ruBefore))
 		{
 		    //return(FALSE);
 		}
@@ -3182,7 +3263,7 @@ static int QueryHandlerPQSet
 
 		//- get resource usage
 
-		if (-1 == getrusage(RUSAGE_SELF,&ruAfter))
+		if (-1 == getrusage(RUSAGE_SELF, &ruAfter))
 		{
 		    //return(FALSE);
 		}
@@ -3190,9 +3271,9 @@ static int QueryHandlerPQSet
 		//- compute time to execute query
 
 		timeval_subtract
-		    (&tvUser,&ruAfter.ru_utime,&ruBefore.ru_utime);
+		    (&tvUser, &ruAfter.ru_utime, &ruBefore.ru_utime);
 		timeval_subtract
-		    (&tvSystem,&ruAfter.ru_stime,&ruBefore.ru_stime);
+		    (&tvSystem, &ruAfter.ru_stime, &ruBefore.ru_stime);
 
 		//- register projection query in neurospaces
 
@@ -3201,7 +3282,7 @@ static int QueryHandlerPQSet
 		    NeurospacesRemoveProjectionQuery(pneuro);
 		}
 
-		NeurospacesSetProjectionQuery(pneuro,ppq);
+		NeurospacesSetProjectionQuery(pneuro, ppq);
 
 		//- diag's
 
@@ -3420,7 +3501,7 @@ static int QueryHandlerPQSetAll
     struct symtab_HSolveListElement *phsleRoot
 	= PidinStackLookupTopSymbol(ppistRoot);
 
-    int iTraverse = TstrGo(ptstr,phsleRoot);
+    int iTraverse = TstrGo(ptstr, phsleRoot);
 
     //- delete treespace traversal
 
@@ -3433,7 +3514,7 @@ static int QueryHandlerPQSetAll
 
 	struct ProjectionQuery *ppq
 	    = ProjectionQueryCallocFromProjections
-	      (pcd.pppistProjections,pcd.iProjections);
+	      (pcd.pppistProjections, pcd.iProjections);
 
 	//- failed to allocate a projection query
 
@@ -3494,7 +3575,7 @@ static int QueryHandlerPQSetAll
 		    NeurospacesRemoveProjectionQuery(pneuro);
 		}
 
-		NeurospacesSetProjectionQuery(pneuro,ppq);
+		NeurospacesSetProjectionQuery(pneuro, ppq);
 
 		//- diag's
 
@@ -4928,7 +5009,7 @@ static int QueryHandlerPrintParameterScaled
 
     char pcSeparator[] = " \t,;\n";
 
-    char *pcPar = strpbrk(&pcLine[iLength + 1],pcSeparator);
+    char *pcPar = strpbrk(&pcLine[iLength + 1], pcSeparator);
 
     if (!pcPar)
     {
@@ -4956,7 +5037,7 @@ static int QueryHandlerPrintParameterScaled
 	//- lookup parameter
 
 	struct symtab_Parameters *ppar
-	    = SymbolFindParameter(phsle,ppist,pcPar);
+	    = SymbolFindParameter(phsle, ppist, pcPar);
 
 	//- if parameter found
 
@@ -5393,7 +5474,7 @@ static int QueryHandlerPrintSpikeReceiverCount
 
 	    //- get resource usage
 
-	    if (-1 == getrusage(RUSAGE_SELF,&ruBefore))
+	    if (-1 == getrusage(RUSAGE_SELF, &ruBefore))
 	    {
 		//return(FALSE);
 	    }
@@ -5404,11 +5485,11 @@ static int QueryHandlerPrintSpikeReceiverCount
 
 	    iConnections
 		= ProjectionGetNumberOfConnectionsForSpikeReceiver
-		  (pproj,ppistProjection,ppistReceiver);
+		  (pproj, ppistProjection, ppistReceiver);
 
 	    //- get resource usage
 
-	    if (-1 == getrusage(RUSAGE_SELF,&ruAfter))
+	    if (-1 == getrusage(RUSAGE_SELF, &ruAfter))
 	    {
 		//return(FALSE);
 	    }
@@ -5416,13 +5497,13 @@ static int QueryHandlerPrintSpikeReceiverCount
 	    //- compute time to execute query
 
 	    timeval_subtract
-		(&tvUser,&ruAfter.ru_utime,&ruBefore.ru_utime);
+		(&tvUser, &ruAfter.ru_utime, &ruBefore.ru_utime);
 	    timeval_subtract
-		(&tvSystem,&ruAfter.ru_stime,&ruBefore.ru_stime);
+		(&tvSystem, &ruAfter.ru_stime, &ruBefore.ru_stime);
 
 	    //- print connection count
 
-	    fprintf(stdout, "Number of connections : %i\n",iConnections);
+	    fprintf(stdout, "Number of connections : %i\n", iConnections);
 
 	    //- diag's
 
@@ -5655,11 +5736,11 @@ static int QueryHandlerPrintSpikeSenderCount
 
 	    iConnections
 		= ProjectionGetNumberOfConnectionsForSpikeGenerator
-		  (pproj,ppistProjection,ppistSender);
+		  (pproj, ppistProjection, ppistSender);
 
 	    //- get resource usage
 
-	    if (-1 == getrusage(RUSAGE_SELF,&ruAfter))
+	    if (-1 == getrusage(RUSAGE_SELF, &ruAfter))
 	    {
 		//return(FALSE);
 	    }
@@ -5667,11 +5748,11 @@ static int QueryHandlerPrintSpikeSenderCount
 	    //- compute time to execute query
 
 	    timeval_subtract
-		(&tvUser,&ruAfter.ru_utime,&ruBefore.ru_utime);
+		(&tvUser, &ruAfter.ru_utime, &ruBefore.ru_utime);
 	    timeval_subtract
-		(&tvSystem,&ruAfter.ru_stime,&ruBefore.ru_stime);
+		(&tvSystem, &ruAfter.ru_stime, &ruBefore.ru_stime);
 
-	    fprintf(stdout, "Number of connections : %i\n",iConnections);
+	    fprintf(stdout, "Number of connections : %i\n", iConnections);
 
 	    //- diag's
 
@@ -6112,8 +6193,8 @@ QueryMachineConnectionCounter
     {
 	//- give diag's
 
-	fprintf(stdout, "Non-connection at serial (%5.5i)\n",pqtd->iSerial);
-	fprintf(stdout, "--------------------------------\n",pqtd->iSerial);
+	fprintf(stdout, "Non-connection at serial (%5.5i)\n", pqtd->iSerial);
+	fprintf(stdout, "--------------------------------\n", pqtd->iSerial);
     }
 
     //- return result
@@ -6474,13 +6555,13 @@ static int QueryHandlerResolveSolverID
 
 	    if (!psi)
 	    {
-		fprintf(stdout, "Could not find solver info\n",iSerialID);
+		fprintf(stdout, "Could not find solver info\n", iSerialID);
 		return(FALSE);
 	    }
 
 	    //- lookup serial ID
 
-	    iSerialID = SolverInfoLookupPrincipalSerial(psi,ppist);
+	    iSerialID = SolverInfoLookupPrincipalSerial(psi, ppist);
 
 	    //- diag's
 
@@ -6493,7 +6574,7 @@ static int QueryHandlerResolveSolverID
 	    //- convert serial back to context
 
 	    ppistSerial
-		= SolverInfoLookupContextFromPrincipalSerial(psi,iSerialID);
+		= SolverInfoLookupContextFromPrincipalSerial(psi, iSerialID);
 
 	    if (ppistSerial)
 	    {
@@ -6504,7 +6585,7 @@ static int QueryHandlerResolveSolverID
 		     "Solver serial context for %i = \n\t",
 		     iSerialID);
 
-		PidinStackPrint(ppistSerial,stdout);
+		PidinStackPrint(ppistSerial, stdout);
 
 		fprintf(stdout, "\n");
 
@@ -7057,18 +7138,18 @@ QueryMachineForestspaceEdgeSerializer
     {
     case 'x':
     {
-	fprintf(pfsd->pfile,"  edge:  {");
-	fprintf(pfsd->pfile,"    sourcename: \"%p\"",phsleParent);
-	fprintf(pfsd->pfile,"    targetname: \"%p\"",phsle);
-	fprintf(pfsd->pfile,"    color: black }\n");
+	fprintf(pfsd->pfile, "  edge:  {");
+	fprintf(pfsd->pfile, "    sourcename: \"%p\"", phsleParent);
+	fprintf(pfsd->pfile, "    targetname: \"%p\"", phsle);
+	fprintf(pfsd->pfile, "    color: black }\n");
 	break;
     }
     case 'a':
     {
-	fprintf(pfsd->pfile,"  edge:  {");
-	fprintf(pfsd->pfile,"    sourcename: \"%p\"",phsleParent);
-	fprintf(pfsd->pfile,"    targetname: \"%p\"",phsle);
-	fprintf(pfsd->pfile,"    color: black }\n");
+	fprintf(pfsd->pfile, "  edge:  {");
+	fprintf(pfsd->pfile, "    sourcename: \"%p\"", phsleParent);
+	fprintf(pfsd->pfile, "    targetname: \"%p\"", phsle);
+	fprintf(pfsd->pfile, "    color: black }\n");
 	break;
     }
     }
@@ -7086,8 +7167,8 @@ QueryMachineForestspaceNodeSerializer
     {
     case 'x':
     {
-	fprintf(pfsd->pfile,"  node:\n  {\n");
-	fprintf(pfsd->pfile,"    title: \"%p\"\n",phsle);
+	fprintf(pfsd->pfile, "  node:\n  {\n");
+	fprintf(pfsd->pfile, "    title: \"%p\"\n", phsle);
 	fprintf
 	    (pfsd->pfile,
 	     "    label: \"%s\"\n",
@@ -7097,13 +7178,13 @@ QueryMachineForestspaceNodeSerializer
 	     "    info1: \"%s\"\n",
 	     SymbolName(phsle) ? SymbolName(phsle) : "Unlabeled" );
 
-	fprintf(pfsd->pfile,"  }\n");
+	fprintf(pfsd->pfile, "  }\n");
 	break;
     }
     case 'a':
     {
-	fprintf(pfsd->pfile,"  node:  {");
-	fprintf(pfsd->pfile,"    title: \"%p\"",phsle);
+	fprintf(pfsd->pfile, "  node:  {");
+	fprintf(pfsd->pfile, "    title: \"%p\"", phsle);
 	fprintf
 	    (pfsd->pfile,
 	     "    label: \"%s\"",
@@ -7113,7 +7194,7 @@ QueryMachineForestspaceNodeSerializer
 	     "    info1: \"%s\"",
 	     SymbolName(phsle) ? SymbolName(phsle) : "Unlabeled" );
 
-	fprintf(pfsd->pfile,"  }\n");
+	fprintf(pfsd->pfile, "  }\n");
 	break;
     }
     }
@@ -7153,11 +7234,11 @@ QueryMachineForestspaceSerializer
 
 	//- write info on symbol
 
-	QueryMachineForestspaceNodeSerializer(phsle,pfsd);
+	QueryMachineForestspaceNodeSerializer(phsle, pfsd);
 
 	//- write info on to parent edge
 
-	QueryMachineForestspaceEdgeSerializer(phsleParent,phsle,pfsd);
+	QueryMachineForestspaceEdgeSerializer(phsleParent, phsle, pfsd);
     }
 
     //- return result
@@ -7234,7 +7315,7 @@ static int QueryHandlerSerializeForestspace
 
 	    //- open output file
 
-	    fsd.pfile = fopen(pcFilename,"w");
+	    fsd.pfile = fopen(pcFilename, "w");
 	    fsd.pcType = pcType;
 
 	    //- output header
@@ -7247,18 +7328,18 @@ static int QueryHandlerSerializeForestspace
 	    }
 	    case 'x':
 	    {
-		fprintf(fsd.pfile,"graph:\n{\n");
-		fprintf(fsd.pfile,"  title: \"forestspace\"\n");
-		fprintf(fsd.pfile,"  port_sharing: no\n");
-		fprintf(fsd.pfile,"  layoutalgorithm: minbackward\n");
-		fprintf(fsd.pfile,"  layout_downfactor: 39\n");
-		fprintf(fsd.pfile,"  layout_upfactor: 0\n");
-		fprintf(fsd.pfile,"  layout_nearfactor: 0\n");
-		fprintf(fsd.pfile,"  nearedges: no\n");
-		fprintf(fsd.pfile,"  splines: yes\n");
-		fprintf(fsd.pfile,"  straight_phase: yes\n");
-		fprintf(fsd.pfile,"  priority_phase: yes\n");
-		fprintf(fsd.pfile,"  cmin: 10\n");
+		fprintf(fsd.pfile, "graph:\n{\n");
+		fprintf(fsd.pfile, "  title: \"forestspace\"\n");
+		fprintf(fsd.pfile, "  port_sharing: no\n");
+		fprintf(fsd.pfile, "  layoutalgorithm: minbackward\n");
+		fprintf(fsd.pfile, "  layout_downfactor: 39\n");
+		fprintf(fsd.pfile, "  layout_upfactor: 0\n");
+		fprintf(fsd.pfile, "  layout_nearfactor: 0\n");
+		fprintf(fsd.pfile, "  nearedges: no\n");
+		fprintf(fsd.pfile, "  splines: yes\n");
+		fprintf(fsd.pfile, "  straight_phase: yes\n");
+		fprintf(fsd.pfile, "  priority_phase: yes\n");
+		fprintf(fsd.pfile, "  cmin: 10\n");
 		break;
 	    }
 	    default:
@@ -7286,7 +7367,7 @@ static int QueryHandlerSerializeForestspace
 
 	    //- traverse segment symbol
 
-	    iTraverse = TstrGo(ptstr,phsle);
+	    iTraverse = TstrGo(ptstr, phsle);
 
 	    //- delete treespace traversal
 
@@ -7298,7 +7379,7 @@ static int QueryHandlerSerializeForestspace
 	    {
 	    case 'x':
 	    {
-		fprintf(fsd.pfile,"\n}\n");
+		fprintf(fsd.pfile, "\n}\n");
 		break;
 	    }
 	    }
@@ -7620,7 +7701,7 @@ static int QueryHandlerSerialToContext
 	//- get context
 
 	struct PidinStack *ppistSerial 
-	    = SymbolPrincipalSerial2Context(phsle,ppist,iSerial);
+	    = SymbolPrincipalSerial2Context(phsle, ppist, iSerial);
 
 	//- if found
 
@@ -7630,11 +7711,11 @@ static int QueryHandlerSerialToContext
 
 	    fprintf(stdout, "serial id ");
 
-	    PidinStackPrint(ppist,stdout);
+	    PidinStackPrint(ppist, stdout);
 
-	    fprintf(stdout, ",%i -> ",iSerial);
+	    fprintf(stdout, ",%i -> ", iSerial);
 
-	    PidinStackPrint(ppistSerial,stdout);
+	    PidinStackPrint(ppistSerial, stdout);
 
 	    fprintf(stdout, "\n");
 
@@ -8115,7 +8196,7 @@ static int QueryHandlerSolverGet
 	{
 	    //- diag's
 
-	    fprintf(stdout, "%s\n",pcSolver);
+	    fprintf(stdout, "%s\n", pcSolver);
 	}
 	else
 	{
@@ -8325,7 +8406,7 @@ SegmentValidator
 	//- get pidinstack from parameter elements
 
 	struct PidinStack *ppistPar
-	    = ParameterResolveToPidinStack(pparParent,ppist);
+	    = ParameterResolveToPidinStack(pparParent, ppist);
 
 	if (ppistPar)
 	{
@@ -8664,16 +8745,16 @@ int QueryMachineHandle(struct Neurospaces *pneuro, char *pcLine)
 
     //- skip first white space
 
-    pcArg = strpbrk(pcInit,pcSeparator);
+    pcArg = strpbrk(pcInit, pcSeparator);
     while (pcArg == pcInit)
     {
 	pcInit++;
-	pcArg = strpbrk(pcInit,pcSeparator);
+	pcArg = strpbrk(pcInit, pcSeparator);
     }
 
     //- get length for command
 
-    pcArg = strpbrk(pcInit,pcSeparator);
+    pcArg = strpbrk(pcInit, pcSeparator);
 
     if (pcArg)
     {
@@ -8795,7 +8876,7 @@ QueryMachineCommandGenerator(text,state)
 	    //- return match
 
 	    pcResult = calloc(2 + strlen(pcCommand), sizeof(char));
-	    strcpy(pcResult,pcCommand);
+	    strcpy(pcResult, pcCommand);
 	    return(pcResult);
 	}
     }
@@ -8872,7 +8953,7 @@ QueryMachineSymbolGeneratorChildProcessor
 
     IdinFullName(SymbolGetPidin(phsle), pc);
 
-    if (strncmp(pc,psgd->pcSymbol,strlen(psgd->pcSymbol)) == 0)
+    if (strncmp(pc, psgd->pcSymbol, strlen(psgd->pcSymbol)) == 0)
     {
 	//- increment matching children index
 
@@ -9008,7 +9089,7 @@ QueryMachineSymbolGenerator(text,state)
 
 	pcText = calloc(2 + pcEnd - text, sizeof(char));
 
-	strncpy(pcText,text,pcEnd - text);
+	strncpy(pcText, text, pcEnd - text);
 
 	//- if symbols in context
 
@@ -9074,7 +9155,7 @@ QueryMachineSymbolGenerator(text,state)
 
 	    //- traverse segment symbol
 
-	    int iTraverse = TstrGo(ptstr,phsle);
+	    int iTraverse = TstrGo(ptstr, phsle);
 
 	    //- delete treespace traversal
 
@@ -9113,7 +9194,7 @@ QueryMachineSymbolGenerator(text,state)
 		//- allocate result
 
 		pcResult = calloc(2 + strlen(pc), sizeof(char));
-		strcpy(pcResult,pc);
+		strcpy(pcResult, pc);
 
 		//- initialize ambiguation state
 
@@ -9124,7 +9205,7 @@ QueryMachineSymbolGenerator(text,state)
 		       + strlen(IDENTIFIER_CHILD_STRING),
 		       sizeof(char));
 
-		strcpy(pcAmbiguate,pcResult);
+		strcpy(pcAmbiguate, pcResult);
 
 		strcat(pcAmbiguate, IDENTIFIER_CHILD_STRING);
 	    }
@@ -9285,8 +9366,8 @@ QueryMachineCompletorSelector(text, start, end)
 
 	    while (i <= start)
 	    {
-		i += strcspn(&rl_line_buffer[i]," \t") + 1;
-		i += strspn(&rl_line_buffer[i]," \t") + 1;
+		i += strcspn(&rl_line_buffer[i], " \t") + 1;
+		i += strspn(&rl_line_buffer[i], " \t") + 1;
 
 		iArguments++;
 	    }
