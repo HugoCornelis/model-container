@@ -253,12 +253,28 @@ second-first: ./segments/soma/cat
 						   write => 'context-subtract /pool1 /pool1/segments/soma/cat',
 						  },
 						  {
-						   description => "Can we do a context subraction, 3 symbols ?",
+						   description => "Can we do a context subraction, 3 symbols, siblings involved (1) ?",
 						   read => '
 first-second: .././cat/cat_gate_inactivation/B
 second-first: ../../.././ca_pool
 ',
 						   write => 'context-subtract /pool1/segments/soma/cat/cat_gate_inactivation/B /pool1/segments/soma/ca_pool',
+						  },
+						  {
+						   description => "Can we do a context subraction, 3 symbols, siblings involved (2)  ?",
+						   read => '
+first-second: .././cat/cat_gate_inactivation/A
+second-first: ../../.././ca_pool
+',
+						   write => 'context-subtract /pool1/segments/soma/cat/cat_gate_inactivation/A /pool1/segments/soma/ca_pool',
+						  },
+						  {
+						   description => "Can we do a context subraction, 2 symbols, siblings involved ?",
+						   read => '
+first-second: .././cat/cat_gate_inactivation
+second-first: ../.././ca_pool
+',
+						   write => 'context-subtract /pool1/segments/soma/cat/cat_gate_inactivation /pool1/segments/soma/ca_pool',
 						  },
 						 ],
 				description => "relative context subtraction",
