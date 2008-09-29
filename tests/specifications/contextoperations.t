@@ -255,6 +255,40 @@ second-first: ./segments/soma/cat
 						 ],
 				description => "relative context subtraction",
 			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-q',
+					      'tests/cells/pool1.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/pool1.ndf.', ],
+						   timeout => 3,
+						   write => undef,
+						  },
+						  {
+						   description => "Can we do a context subraction, edge case last descendant, child - parent ?",
+						   read => '
+first-second: ./ca_pool
+second-first: ..
+',
+						   write => 'context-subtract /pool1/segments/soma/ca_pool /pool1/segments/soma',
+						  },
+						  {
+						   description => "Can we do a context subraction, edge case last descendant, siblings ?",
+						   read => '
+first-second: .././ca_pool
+second-first: .././cat
+',
+						   write => 'context-subtract /pool1/segments/soma/ca_pool /pool1/segments/soma/cat',
+						  },
+						 ],
+				description => "relative context subtraction, edge cases",
+			       },
 			      ],
        description => "context operations, wildcard matching and expansion",
        name => 'contextoperations.t',

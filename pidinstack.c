@@ -2349,11 +2349,12 @@ int PidinStackString(struct PidinStack *ppist, char *pc, int iSize)
 /// DESCR: Subtract two contexts.
 ///
 ///	The result is a context that when append compacted to the
-///	first context, results in the second context.
+///	second context, results in the first context.
 ///
 /// NOTE.:
 ///
-///	The used algorithm depends on valid serials.
+///	The used algorithm depends on valid serials.  You might want
+///	to call SymbolRecalcAllSerials() first.
 ///
 /// **************************************************************************
 
@@ -2412,7 +2413,7 @@ PidinStackSubtract(struct PidinStack *ppistA, struct PidinStack *ppistB)
 	//- case 2: positive, serial is in the descendents range
 
 	else if (iSerialResult > 0
-		 && iSerialResult < SymbolGetPrincipalNumOfSuccessors(phsle2))
+		 && iSerialResult < SymbolGetPrincipalNumOfSuccessors(phsle2) + 1)
 	{
 	    //- set result by constructing the context towards the descendent
 
@@ -2441,37 +2442,32 @@ PidinStackSubtract(struct PidinStack *ppistA, struct PidinStack *ppistB)
 		    return(NULL);
 		}
 
-		//- pop symbol of first stack
-
-		phsle1 = PidinStackLookupTopSymbol(ppist1);
-
-		PidinStackPop(ppist1);
-
 		//- add serial
 
-		iSerialResult += SymbolGetPrincipalSerialToParent(phsle1);
+		iSerialResult += SymbolGetPrincipalSerialToParent(phsle2);
+
+		//- pop symbol of first stack
+
+		PidinStackPop(ppist2);
+
+		phsle2 = PidinStackLookupTopSymbol(ppist2);
 	    }
 
-	    //- if serial strict positive
+	    //- convert serial to context
 
-	    if (iSerialResult > SymbolGetPrincipalNumOfSuccessors(phsle2))
+	    struct PidinStack *ppist
+		= SymbolPrincipalSerial2RelativeContext(phsle2, ppist2, iSerialResult);
+
+	    //- append compact
+
+	    if (!PidinStackAppendCompact(ppistResult, ppist))
 	    {
-		//- convert serial to context
+		PidinStackFree(ppistResult);
 
-		struct PidinStack *ppist
-		    = SymbolPrincipalSerial2RelativeContext(phsle2, ppist2, iSerialResult);
-
-		//- append compact
-
-		if (!PidinStackAppendCompact(ppistResult, ppist))
-		{
-		    PidinStackFree(ppistResult);
-
-		    ppistResult = NULL;
-		}
-
-		PidinStackFree(ppist);
+		ppistResult = NULL;
 	    }
+
+	    PidinStackFree(ppist);
 	}
 
 	//- case 4: negative
@@ -2495,15 +2491,15 @@ PidinStackSubtract(struct PidinStack *ppistA, struct PidinStack *ppistB)
 		    return(NULL);
 		}
 
+		//- add serial
+
+		iSerialResult += SymbolGetPrincipalSerialToParent(phsle2);
+
 		//- pop symbol of second stack
 
 		phsle2 = PidinStackLookupTopSymbol(ppist2);
 
 		PidinStackPop(ppist2);
-
-		//- add serial
-
-		iSerialResult += SymbolGetPrincipalSerialToParent(phsle2);
 	    }
 
 	    //- if serial strict positive
@@ -2513,7 +2509,10 @@ PidinStackSubtract(struct PidinStack *ppistA, struct PidinStack *ppistB)
 		//- convert serial to context
 
 		struct PidinStack *ppist
-		    = SymbolPrincipalSerial2RelativeContext(phsle2, ppist2, iSerialResult);
+		    = SymbolPrincipalSerial2RelativeContext
+		      (PidinStackLookupTopSymbol(ppist2),
+		       ppist2,
+		       iSerialResult);
 
 		//- append compact
 
