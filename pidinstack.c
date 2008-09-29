@@ -2418,7 +2418,10 @@ PidinStackSubtract(struct PidinStack *ppistA, struct PidinStack *ppistB)
 	    //- set result by constructing the context towards the descendent
 
 	    ppistResult
-		= SymbolPrincipalSerial2RelativeContext(phsle2, ppist2, iSerialResult);
+		= SymbolPrincipalSerial2RelativeContext
+		  (PidinStackLookupTopSymbol(ppist2),
+		   ppist2,
+		   iSerialResult);
 	}
 
 	//- case 3: positive, serial is not in the descendents range
@@ -2456,7 +2459,10 @@ PidinStackSubtract(struct PidinStack *ppistA, struct PidinStack *ppistB)
 	    //- convert serial to context
 
 	    struct PidinStack *ppist
-		= SymbolPrincipalSerial2RelativeContext(phsle2, ppist2, iSerialResult);
+		= SymbolPrincipalSerial2RelativeContext
+		  (PidinStackLookupTopSymbol(ppist2),
+		   ppist2,
+		   iSerialResult);
 
 	    //- append compact
 
