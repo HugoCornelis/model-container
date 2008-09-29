@@ -252,6 +252,14 @@ second-first: ./segments/soma/cat
 ',
 						   write => 'context-subtract /pool1 /pool1/segments/soma/cat',
 						  },
+						  {
+						   description => "Can we do a context subraction, 3 symbols ?",
+						   read => '
+first-second: .././cat/cat_gate_inactivation/B
+second-first: ../../.././ca_pool
+',
+						   write => 'context-subtract /pool1/segments/soma/cat/cat_gate_inactivation/B /pool1/segments/soma/ca_pool',
+						  },
 						 ],
 				description => "relative context subtraction",
 			       },
