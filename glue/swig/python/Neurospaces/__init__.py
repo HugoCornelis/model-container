@@ -2,8 +2,7 @@
 
 import SwiggableNeurospaces
 
-# should go to Component.py
-
+exec """
 class Symbol:
     def backend_object(self):
         return self.backend
@@ -25,6 +24,7 @@ class Cell(Symbol):
 
     def backend_object(self):
         return self.backend.segr.bio.ioh.iol.hsle
+"""
 
 class ContourGroup(Symbol):
     "ContourGroup class"
