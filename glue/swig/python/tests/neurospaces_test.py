@@ -19,7 +19,7 @@ s.parameter("CM", 0.0164)
 s.parameter("ELEAK", -0.0800)
 
 # These are needed to make scaling on RM work properly, alternatively
-# we can use the FIXED function to fix values to their unscaled value.
+# we can use the FIXED function to fix values to their scaled value.
 
 # s.parameter("rel_X", 0.000e-6)
 # s.parameter("rel_Y", 0.000e-6)
