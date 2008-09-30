@@ -2,6 +2,25 @@
 
 import SwiggableNeurospaces
 
+classes = {
+    'Symbol': { 'methods': { 'backend_object': 'self.backend',
+                             'insert_child': 'abc',
+                             },
+                },
+    }
+
+for class_name in classes.keys():
+    class_definition = classes[class_name]
+    method_definitions = class_definition['methods']
+    for method_name in method_definitions.keys():
+        method_definition = method_definitions[method_name]
+        string = ("class " + class_name + ":\n"
+                  + "    def " + method_name + "(self):"
+                  + "        return " + method_definition + "\n")
+        print "exec " + string
+        exec string
+
+
 exec """
 class Symbol:
     def backend_object(self):
