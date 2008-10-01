@@ -687,7 +687,9 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 
 				# or forced to compare numerically
 
-				|| $command_test->{numerical_compare})
+				|| $command_test->{numerical_compare}
+				|| $command_definition->{numerical_compare}
+				|| $module_definition->{numerical_compare})
 			    {
 				# compare numerically
 
