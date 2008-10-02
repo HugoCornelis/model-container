@@ -44,7 +44,7 @@ struct symtab_InputOutput
 
     struct symtab_IdentifierIndex *pidinField;
 
-    //m type of input
+    //m type of input (0 means invalid)
 
     int iType;
 
@@ -63,6 +63,10 @@ struct symtab_InputOutput
 /*     struct symtab_HSolveListElement *phsle; */
 };
 
+
+//d invalid IO type
+
+#define INPUT_TYPE_INVALID			0
 
 //d input specification
 

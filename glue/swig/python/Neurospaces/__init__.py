@@ -2,12 +2,13 @@
 
 import SwiggableNeurospaces
 
-classes = {
-    'Symbol': { 'methods': { 'backend_object': 'self.backend',
-                             'insert_child': 'abc',
-                             },
-                },
-    }
+classes = { 'Symbol': { 'methods': { 'backend_object': 'self.backend',
+                                     'insert_child': 'abc',
+                                     },
+                        },
+            }
+
+print type(classes)
 
 for class_name in classes.keys():
     class_definition = classes[class_name]

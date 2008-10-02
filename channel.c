@@ -800,6 +800,31 @@ void ChannelInit(struct symtab_Channel *pchan)
     //- set type
 
     pchan->bio.ioh.iol.hsle.iType = HIERARCHY_TYPE_symbols_channel;
+
+    //- create default bindables for the Channel.
+
+    static char *ppcParameters[] = {
+	"Vm",
+	"G",
+	"I",
+	NULL,
+    };
+
+    static int piTypes[] = {
+	INPUT_TYPE_INPUT,
+	INPUT_TYPE_OUTPUT,
+	INPUT_TYPE_OUTPUT,
+	INPUT_TYPE_INVALID,
+    };
+
+    static struct symtab_IOContainer *piocChannelDefault = NULL;
+
+    if (!piocChannelDefault)
+    {
+	piocChannelDefault = IOContainerNewFromList(ppcParameters, piTypes);
+    }
+
+    SymbolAssignBindableIO(&pchan->bio.ioh.iol.hsle, piocChannelDefault);
 }
 
 
