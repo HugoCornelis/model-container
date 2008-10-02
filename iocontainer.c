@@ -332,3 +332,67 @@ IOContainerResolvePosition
 }
 
 
+/// **************************************************************************
+///
+/// SHORT: IOContainerFromList()
+///
+/// ARGS.:
+///
+///	ppcParameters: Strings indicating parameters, NULL terminated.
+///     piIO.........: Integers indicating parameters are input or output. 
+///
+/// RTN..: struct symtab_IOContainer
+///
+///	IO Container, NULL for failure.
+///
+/// DESCR: creates an IOContainer from two arrays composed of strings of the 
+///        parameters and a corresponding Type value.
+///
+/// **************************************************************************
+
+struct symtab_IOContainer *
+IOContainerFromList(char *ppcParameters[], int iType[])
+{
+    int i;
+
+    int iParameterLen = 0;
+
+    for (iParameterLen = 0 ; ppcParameters[iParameterLen] ; iParameterLen++);
+    
+  
+    struct symtab_InputOutput ** pios
+	= (struct symtab_InputOutput **)
+          calloc(iParameterLen, sizeof(struct symtab_InputOutput *));
+
+    //- First create the ios and idins
+
+    for (i = 0; i < iParameterLen; i++)
+    {
+	struct symtab_IdentifierIndex *pidin = IdinNewFromChars(ppcParameters[i]);
+
+	struct symtab_InputOutput *pio
+	    = InputOutputNewForType( iType[i] );
+
+	//! set the pidin in the pidinField
+	pio->pidinField = pidin;
+
+	//! put this pio into our pios array
+	pios[i] = pio;
+
+	//! go ahead and set this to point at element 0
+	pios[i]->pioFirst = pios[0];
+    }
+
+    //- Now make each parameter point to the next in succession.
+
+    for (i = 0 ; i < iParameterLen ; i++)
+    {
+	if (i == iParameterLen - 1)
+	    pios[i]->pioNext = NULL;
+	else
+	    pios[i]->pioNext = pios[i + 1];
+    }
+
+    return IOContainerNewFromIO(pios);
+} 
+
