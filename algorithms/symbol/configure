@@ -1607,7 +1607,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=neurospaces/algorithms/symbol
- VERSION=python-1
+ VERSION=python-2
 
 
 # Some tools Automake needs.
