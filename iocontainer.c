@@ -220,8 +220,11 @@ IOContainerNewFromList(char *ppcParameters[], int piTypes[])
     int iParameterLen = 0;
 
     for (iParameterLen = 0 ; ppcParameters[iParameterLen] ; iParameterLen++);
-    
-  
+
+    //- allocate IO structs memory
+
+    //! allocated in one block.
+
     struct symtab_InputOutput ** pios
 	= (struct symtab_InputOutput **)
           calloc(iParameterLen, sizeof(struct symtab_InputOutput *));
