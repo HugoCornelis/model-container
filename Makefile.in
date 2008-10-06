@@ -1371,7 +1371,7 @@ html-upload-prepare:
 	hierarchy/types_2_html >html/htdocs/neurospaces_project/neurospaces/symbols.html hierarchy/symbols
 
 html-upload: html-upload-prepare
-	scp -pr html/htdocs/* hcornelis@shell.sourceforge.net:/home/groups/n/ne/neurospaces/htdocs/
+	scp -pr html/htdocs/* hcornelis,neurospaces@shell.sourceforge.net:/home/groups/n/ne/neurospaces/htdocs/
 
 internal-library:
 # $Format: "	tar cfz library-${package}-${label}.tar.gz library/"$
