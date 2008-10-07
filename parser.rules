@@ -288,26 +288,11 @@ FullModelHeader
 	:
 		/* ok if no interpreter sequence	*/
 	|
-		'#'
-		'!'
-		FullModelHeaderExecutable
+		TOKEN_SHEBANGER
 		{
 #line
 		    ParserStart();
 		}
-	;
-
-FullModelHeaderExecutable
-	:
-		/* ok if no interpreter sequence	*/
-	|
-		TOKEN_HIERARCHICALSEPERATOR FullModelHeaderExecutable
-	|
-		'-' FullModelHeaderExecutable
-	|
-		TOKEN_IDENTIFIER FullModelHeaderExecutable
-	|
-		TOKEN_NUMBER FullModelHeaderExecutable
 	;
 
 FullModelContents		/* no type	*/

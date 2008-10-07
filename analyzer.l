@@ -44,10 +44,8 @@ YY_DECL;
 %option noyywrap
 %option stack
 
-%x START_VERSION
 %x START_PCOMMENT
 %x START_CCOMMENT
-/* %x START_ALGORITHM */
 
 string  \"[^\0\\\"]*\"
 bstring \"[^\0\\\"]*
@@ -59,123 +57,8 @@ commentstart	"/*"
 commentend	"*/"
 
 
-/* <START_ALGORITHM>{ */
-/* 	algorithm		{ */
-/* 				yy_pop_state(); */
-/* 				return(TOKEN_ALGORITHM); */
-/* 			} */
-/* 	end		{	return(TOKEN_END);		} */
-/* 	algorithm_instance	{	return(TOKEN_ALGORITHM_INSTANCE);	} */
-/* 	{identifier}	{ */
-/* 				//- store matched identifier */
-
-/* 				lvalp->pcIdentifier  */
-/* 				    = (char *)malloc(1 + yyleng); */
-
-/* 				strncpy(lvalp->pcIdentifier,yytext,yyleng); */
-
-/* 				lvalp->pcIdentifier[yyleng] = '\0'; */
-
-/* 				return(TOKEN_IDENTIFIER); */
-/* 			} */
-/* 	{string}	{ */
-/* 				lvalp->pstring */
-/* 				  = (struct symtab_String *) */
-/* 				    malloc */
-/* 					(1 */
-/* 					 + yyleng */
-/* 					 + sizeof(struct symtab_String)); */
-
-/* 				lvalp->pstring->pcString */
-/* 				  = (char *)&lvalp->pstring[1]; */
-
-/* 				strncpy */
-/* 				  (lvalp->pstring->pcString,yytext,yyleng); */
-
-/* 				lvalp->pstring->pcString[yyleng] = '\0'; */
-
-/* 				lvalp->pstring->iLength = yyleng; */
-
-/* 				return(TOKEN_STRING); */
-/* 			} */
-/* 	"{"[^}\n]*"}"	{ */
-/* 				lvalp->pstring */
-/* 				  = (struct symtab_String *) */
-/* 				    malloc */
-/* 					(1 */
-/* 					 + yyleng */
-/* 					 + sizeof(struct symtab_String)); */
-
-/* 				lvalp->pstring->pcString */
-/* 				  = (char *)&lvalp->pstring[1]; */
-
-/* 				strncpy */
-/* 				  (lvalp->pstring->pcString,yytext,yyleng); */
-
-/* 				lvalp->pstring->pcString[yyleng] = '\0'; */
-
-/* 				lvalp->pstring->iLength = yyleng; */
-
-/* 				return(TOKEN_ALGORITHMPARAMETERS); */
-/* 			} */
-/* 	\n		{ */
-/* 				((PARSERCONTEXT *)pacParserContext)->iLineNumber++; */
-/* 			} */
-/* } */
-
-
-/* algorithm			{ */
-/* 				yy_push_state(START_ALGORITHM); */
-/* 				return(TOKEN_ALGORITHM); */
-/* 			} */
-
-
 %%
 
-<START_VERSION>{
-	input		{	return(TOKEN_INPUT);		}
-	output		{	return(TOKEN_OUTPUT);		}
-	{identifier}	{
-				//- store matched identifier
-
-				lvalp->pcIdentifier 
-				    = (char *)malloc(1 + yyleng);
-
-				strncpy(lvalp->pcIdentifier,yytext,yyleng);
-
-				lvalp->pcIdentifier[yyleng] = '\0';
-
-				return(TOKEN_IDENTIFIER);
-			}
-	{digit}+("."{digit}+)?	{
-					/* *lvalp = atof(yytext); */
-					yy_pop_state();
-					return(TOKEN_VERSIONNUMBER);
-				}
-	{string}	{
-				lvalp->pstring
-				  = (struct symtab_String *)
-				    malloc
-					(1
-					 + yyleng
-					 + sizeof(struct symtab_String));
-
-				lvalp->pstring->pcString
-				  = (char *)&lvalp->pstring[1];
-
-				strncpy
-				  (lvalp->pstring->pcString,yytext,yyleng);
-
-				lvalp->pstring->pcString[yyleng] = '\0';
-
-				lvalp->pstring->iLength = yyleng;
-
-				return(TOKEN_STRING);
-			}
-	\n		{
-				((PARSERCONTEXT *)pacParserContext)->iLineNumber++;
-			}
-}
 
 "{*"			yy_push_state(START_PCOMMENT);
 <START_PCOMMENT>{
@@ -202,36 +85,25 @@ commentend	"*/"
 			}
 }
 
+^"#!".*			{	return(TOKEN_SHEBANGER);	}
 <*>[ \t]+		/* eat up whitespace 		*/
 \n			((PARSERCONTEXT *)pacParserContext)->iLineNumber++;
 
-neurospaces		{
-/* 				yy_push_state(START_VERSION); */
-				return(TOKEN_NEUROSPACES);
-			}
+neurospaces		{	return(TOKEN_NEUROSPACES);	}
 ndf			{	return(TOKEN_NDF);		}
 nnd			{	return(TOKEN_NND);		}
 ncd			{	return(TOKEN_NCD);		}
 nmd			{	return(TOKEN_NMD);		}
 ned			{	return(TOKEN_NED);		}
-version			{
-/* 				yy_push_state(START_VERSION); */
-				return(TOKEN_VERSION);
-			}
+version			{	return(TOKEN_VERSION);		}
 units			{	return(TOKEN_UNITS);		}
-seconds			{	return(TOKEN_SECONDS);	}
+seconds			{	return(TOKEN_SECONDS);		}
 meters			{	return(TOKEN_METERS);		}
-voltage			{	return(TOKEN_VOLTAGE);	}
-siemens			{	return(TOKEN_SIEMENS);	}
-import			{	return(TOKEN_IMPORT);	}
-file			{
-/* 				yy_push_state(START_VERSION); */
-				return(TOKEN_FILE);
-			}
-chantablefile		{
-/* 				yy_push_state(START_VERSION); */
-				return(TOKEN_TABLEFILE);
-			}
+voltage			{	return(TOKEN_VOLTAGE);		}
+siemens			{	return(TOKEN_SIEMENS);		}
+import			{	return(TOKEN_IMPORT);		}
+file			{	return(TOKEN_FILE);		}
+chantablefile		{	return(TOKEN_TABLEFILE);	}
 end			{	return(TOKEN_END);		}
 public_models		{	return(TOKEN_PUBLIC_MODELS);	}
 algorithm		{	return(TOKEN_ALGORITHM);	}
@@ -242,14 +114,14 @@ has			{	return(TOKEN_HAS);		}
 child			{	return(TOKEN_CHILD);		}
 attachment_point	{	return(TOKEN_ATTACHMENT_POINT);	}
 generates		{	return(TOKEN_GENERATES);	}
-receives		{	return(TOKEN_RECEIVES);	}
+receives		{	return(TOKEN_RECEIVES);		}
 events			{	return(TOKEN_EVENTS);		}
 bindables		{	return(TOKEN_BINDABLES);	}
 bindings		{	return(TOKEN_BINDINGS);		}
 input			{	return(TOKEN_INPUT);		}
 output			{	return(TOKEN_OUTPUT);		}
-<*>"("			{	return('(');		}
-<*>")"			{	return(')');		}
+<*>"("			{	return('(');			}
+<*>")"			{	return(')');			}
 alias			{	return(TOKEN_ALIAS);		}
 attributes		{	return(TOKEN_ATTRIBUTES);	}
 parameter		{	return(TOKEN_PARAMETER);	}
@@ -257,7 +129,7 @@ parameters		{	return(TOKEN_PARAMETERS);	}
 projection		{	return(TOKEN_PROJECTION);	}
 gate_kinetic_b		{	return(TOKEN_GATE_KINETIC_B);	}
 gate_kinetic_a		{	return(TOKEN_GATE_KINETIC_A);	}
-gate_kinetic_part	{	return(TOKEN_GATE_KINETIC_PART);	}
+gate_kinetic_part	{	return(TOKEN_GATE_KINETIC_PART);}
 em_contour		{	return(TOKEN_EM_CONTOUR);	}
 concentration_gate_kinetic	{	return(TOKEN_CONCENTRATION_GATE_KINETIC);	}
 hh_gate			{	return(TOKEN_HH_GATE);		}
@@ -276,7 +148,7 @@ channel			{	return(TOKEN_CHANNEL);		}
 pool			{	return(TOKEN_POOL);		}
 alpha_equation		{	return(TOKEN_ALPHA_EQUATION);	}
 exponential_equation	{	return(TOKEN_EXPONENTIAL_EQUATION);	}
-options			{	return(TOKEN_OPTIONS);	}
+options			{	return(TOKEN_OPTIONS);		}
 spherical		{	return(TOKEN_SPHERICAL);	}
 cylindrical		{	return(TOKEN_CYLINDRICAL);	}
 absolute		{	return(TOKEN_ABSOLUTE);		}
