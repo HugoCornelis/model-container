@@ -742,6 +742,15 @@ sub register_engine
 }
 
 
+sub version
+{
+    # $Format: "    my $version=\"${package}-${label}\";"$
+    my $version="model-container-python-2";
+
+    return $version;
+}
+
+
 1;
 
 

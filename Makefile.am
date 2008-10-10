@@ -19,6 +19,8 @@
 
 SUBDIRS = algorithms convertors . glue/swig
 
+dist_bin_SCRIPTS = bin/model-container
+
 #CC = g++
 LEX_OUTPUT_ROOT = lex.parser
 LFLAGS=-i -l -Pparser

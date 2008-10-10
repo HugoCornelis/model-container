@@ -20,6 +20,7 @@
 
 
 
+
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 VPATH = @srcdir@
@@ -42,8 +43,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 bin_PROGRAMS = neurospacesparse$(EXEEXT)
 subdir = .
-DIST_COMMON = $(am__configure_deps) $(dist_lisp_DATA) \
-	$(nobase_dist_neurospacesmodel_DATA) \
+DIST_COMMON = $(am__configure_deps) $(dist_bin_SCRIPTS) \
+	$(dist_lisp_DATA) $(nobase_dist_neurospacesmodel_DATA) \
 	$(nobase_dist_neurospacestest_DATA) $(nobase_include_HEADERS) \
 	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
 	$(srcdir)/config.h.in $(top_srcdir)/configure COPYING INSTALL \
@@ -65,7 +66,8 @@ am__vpath_adj = case $$p in \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(bindir)" \
-	"$(DESTDIR)$(lispdir)" "$(DESTDIR)$(neurospacesmodeldir)" \
+	"$(DESTDIR)$(bindir)" "$(DESTDIR)$(lispdir)" \
+	"$(DESTDIR)$(neurospacesmodeldir)" \
 	"$(DESTDIR)$(neurospacestestdir)" \
 	"$(DESTDIR)$(instrumentordir)" "$(DESTDIR)$(includedir)"
 pkglibLIBRARIES_INSTALL = $(INSTALL_DATA)
@@ -112,6 +114,8 @@ binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am_neurospacesparse_OBJECTS = main.$(OBJEXT)
 neurospacesparse_OBJECTS = $(am_neurospacesparse_OBJECTS)
+dist_binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
+SCRIPTS = $(dist_bin_SCRIPTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -265,6 +269,7 @@ subdirs = @subdirs@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 SUBDIRS = algorithms convertors . glue/swig
+dist_bin_SCRIPTS = bin/model-container
 LFLAGS = -i -l -Pparser
 YFLAGS = -dv -p parser
 AM_CFLAGS = -g3 -fPIC -Wmissing-prototypes -Wmissing-declarations -include config.h -DPRE_PROTO_TRAVERSAL @PERL_CCOPTS@ -I$(top_builddir)
@@ -594,6 +599,25 @@ clean-binPROGRAMS:
 neurospacesparse$(EXEEXT): $(neurospacesparse_OBJECTS) $(neurospacesparse_DEPENDENCIES) 
 	@rm -f neurospacesparse$(EXEEXT)
 	$(LINK) $(neurospacesparse_LDFLAGS) $(neurospacesparse_OBJECTS) $(neurospacesparse_LDADD) $(LIBS)
+install-dist_binSCRIPTS: $(dist_bin_SCRIPTS)
+	@$(NORMAL_INSTALL)
+	test -z "$(bindir)" || $(mkdir_p) "$(DESTDIR)$(bindir)"
+	@list='$(dist_bin_SCRIPTS)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  if test -f $$d$$p; then \
+	    f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
+	    echo " $(dist_binSCRIPT_INSTALL) '$$d$$p' '$(DESTDIR)$(bindir)/$$f'"; \
+	    $(dist_binSCRIPT_INSTALL) "$$d$$p" "$(DESTDIR)$(bindir)/$$f"; \
+	  else :; fi; \
+	done
+
+uninstall-dist_binSCRIPTS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(dist_bin_SCRIPTS)'; for p in $$list; do \
+	  f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
+	  echo " rm -f '$(DESTDIR)$(bindir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(bindir)/$$f"; \
+	done
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -1019,7 +1043,7 @@ check-TESTS: $(TESTS)
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/emacs/neurospaces-mode $(distdir)/neurospaces $(distdir)/neurospaces/genesis/olf $(distdir)/neurospaces/genesis/sim
+	$(mkdir_p) $(distdir)/bin $(distdir)/emacs/neurospaces-mode $(distdir)/neurospaces $(distdir)/neurospaces/genesis/olf $(distdir)/neurospaces/genesis/sim
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -1166,10 +1190,11 @@ check-am: all-am
 	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
 check: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) check-recursive
-all-am: Makefile $(LIBRARIES) $(PROGRAMS) $(DATA) $(HEADERS) config.h
+all-am: Makefile $(LIBRARIES) $(PROGRAMS) $(SCRIPTS) $(DATA) \
+		$(HEADERS) config.h
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(bindir)" "$(DESTDIR)$(lispdir)" "$(DESTDIR)$(neurospacesmodeldir)" "$(DESTDIR)$(neurospacestestdir)" "$(DESTDIR)$(instrumentordir)" "$(DESTDIR)$(includedir)"; do \
+	for dir in "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(bindir)" "$(DESTDIR)$(bindir)" "$(DESTDIR)$(lispdir)" "$(DESTDIR)$(neurospacesmodeldir)" "$(DESTDIR)$(neurospacestestdir)" "$(DESTDIR)$(instrumentordir)" "$(DESTDIR)$(includedir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: $(BUILT_SOURCES)
@@ -1228,7 +1253,8 @@ install-data-am: install-dist_lispDATA \
 	install-nobase_dist_neurospacestestDATA \
 	install-nobase_includeHEADERS install-nobase_instrumentorDATA
 
-install-exec-am: install-binPROGRAMS install-pkglibLIBRARIES
+install-exec-am: install-binPROGRAMS install-dist_binSCRIPTS \
+	install-pkglibLIBRARIES
 
 install-info: install-info-recursive
 
@@ -1255,8 +1281,9 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-binPROGRAMS uninstall-dist_lispDATA \
-	uninstall-info-am uninstall-nobase_dist_neurospacesmodelDATA \
+uninstall-am: uninstall-binPROGRAMS uninstall-dist_binSCRIPTS \
+	uninstall-dist_lispDATA uninstall-info-am \
+	uninstall-nobase_dist_neurospacesmodelDATA \
 	uninstall-nobase_dist_neurospacestestDATA \
 	uninstall-nobase_includeHEADERS \
 	uninstall-nobase_instrumentorDATA uninstall-pkglibLIBRARIES
@@ -1272,9 +1299,9 @@ uninstall-info: uninstall-info-recursive
 	distclean-recursive distclean-tags distcleancheck distdir \
 	distuninstallcheck dvi dvi-am html html-am info info-am \
 	install install-am install-binPROGRAMS install-data \
-	install-data-am install-dist_lispDATA install-exec \
-	install-exec-am install-info install-info-am install-man \
-	install-nobase_dist_neurospacesmodelDATA \
+	install-data-am install-dist_binSCRIPTS install-dist_lispDATA \
+	install-exec install-exec-am install-info install-info-am \
+	install-man install-nobase_dist_neurospacesmodelDATA \
 	install-nobase_dist_neurospacestestDATA \
 	install-nobase_includeHEADERS install-nobase_instrumentorDATA \
 	install-pkglibLIBRARIES install-strip installcheck \
@@ -1283,8 +1310,8 @@ uninstall-info: uninstall-info-recursive
 	mostlyclean mostlyclean-compile mostlyclean-generic \
 	mostlyclean-recursive pdf pdf-am ps ps-am tags tags-recursive \
 	uninstall uninstall-am uninstall-binPROGRAMS \
-	uninstall-dist_lispDATA uninstall-info-am \
-	uninstall-nobase_dist_neurospacesmodelDATA \
+	uninstall-dist_binSCRIPTS uninstall-dist_lispDATA \
+	uninstall-info-am uninstall-nobase_dist_neurospacesmodelDATA \
 	uninstall-nobase_dist_neurospacestestDATA \
 	uninstall-nobase_includeHEADERS \
 	uninstall-nobase_instrumentorDATA uninstall-pkglibLIBRARIES
