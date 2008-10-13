@@ -982,6 +982,19 @@ sub report_error_add
 
 	print STDERR $processed_seen;
 
+	use IO::File;
+
+	my $expected_file = new IO::File ">/tmp/text_expected";
+
+	print $expected_file $expected;
+
+	$expected_file->close();
+
+	my $seen_file = new IO::File ">/tmp/text_seen";
+
+	print $seen_file $seen;
+
+	$seen_file->close();
     }
 
 }
