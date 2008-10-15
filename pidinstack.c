@@ -862,7 +862,7 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 	{
 	    //- push current entry back to minor
 
-	    PidinStackPush(ppistMinor,PidinStackTop(ppist));
+	    PidinStackPush(ppistMinor, PidinStackTop(ppist));
 
 	    //- do lookup on (non-)minor, in last symbol from minor
 
@@ -873,7 +873,7 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
 	    phsle
 		= SymbolLookupHierarchical
-		  (phsleMinor,ppistMinor,iEntries - 1,TRUE);
+		  (phsleMinor, ppistMinor, iEntries - 1, TRUE);
 
 	    //- if found
 
@@ -999,13 +999,13 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
 	//- push current entry back to minor
 
-	PidinStackPush(ppistMinor,PidinStackTop(ppist));
+	PidinStackPush(ppistMinor, PidinStackTop(ppist));
 
 	//- do lookup on (non-)minor, in last symbol from minor
 
 	phsle
 	    = SymbolLookupHierarchical
-	      (phsleMinor,ppistMinor,iEntries - 1, TRUE);
+	      (phsleMinor, ppistMinor, iEntries - 1, TRUE);
 
 	//- free minor context
 
@@ -1659,6 +1659,13 @@ PidinStackParse(char *pc)
 	if (strcmp(pcName, IDENTIFIER_SYMBOL_PARENT_STRING) == 0)
 	{
 	    IdinSetFlags(pidin, FLAG_IDENTINDEX_PARENT);
+	}
+
+	//- if reference to current
+
+	if (strcmp(pcName, IDENTIFIER_SYMBOL_CURRENT_STRING) == 0)
+	{
+	    IdinSetFlags(pidin, FLAG_IDENTINDEX_CURRENT);
 	}
 
 	//- if field

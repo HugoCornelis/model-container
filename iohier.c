@@ -215,7 +215,7 @@ IOHierarchyLookupHierarchical
     //- get active pidin
 
     struct symtab_IdentifierIndex *pidin
-	= PidinStackElementPidin(ppist,iLevel);
+	= PidinStackElementPidin(ppist, iLevel);
 
     //- if points to current
 
@@ -225,7 +225,12 @@ IOHierarchyLookupHierarchical
 
 	phsleResult = (struct symtab_HSolveListElement *)pioh;
 
-	return(phsleResult);
+	//- if stop at current symbol
+
+	if (!bAll)
+	{
+	    return(phsleResult);
+	}
     }
 
     //- loop over sub symbols
@@ -238,7 +243,7 @@ IOHierarchyLookupHierarchical
 
 	if (strcmp
 	    (SymbolName(&piohSub->iol.hsle),
-	     IdinName(PidinStackElementPidin(ppist,iLevel))) == 0)
+	     IdinName(PidinStackElementPidin(ppist, iLevel))) == 0)
 	{
 	    //- if stop at current symbol
 
@@ -255,7 +260,7 @@ IOHierarchyLookupHierarchical
 
 	    phsleResult
 		= SymbolLookupHierarchical
-		  (&piohSub->iol.hsle,ppist,iLevel + 1,TRUE);
+		  (&piohSub->iol.hsle, ppist, iLevel + 1, TRUE);
 
 	    //- if found
 
@@ -306,7 +311,7 @@ IOHierarchyLookupHierarchical
 /// **************************************************************************
 
 int IOHierarchyPrint
-(struct symtab_IOHierarchy *pioh,int bAll,int iIndent,FILE *pfile)
+(struct symtab_IOHierarchy *pioh, int bAll, int iIndent, FILE *pfile)
 {
     //- set default result : ok
 
@@ -318,7 +323,7 @@ int IOHierarchyPrint
 
     //- do indent
 
-    PrintSymbolIndent(&pioh->iol.hsle,iIndent,pfile);
+    PrintSymbolIndent(&pioh->iol.hsle, iIndent, pfile);
 
     //- name
 
@@ -332,11 +337,11 @@ int IOHierarchyPrint
 
     //- do indent
 
-    PrintSymbolIndent(&pioh->iol.hsle,iIndent,pfile);
+    PrintSymbolIndent(&pioh->iol.hsle, iIndent, pfile);
 
     //- begin section header
 
-    fprintf(pfile,"{-- begin HIER sections ---\n");
+    fprintf(pfile, "{-- begin HIER sections ---\n");
 
     //- loop over sections
 
@@ -348,7 +353,7 @@ int IOHierarchyPrint
     {
 	//- print symbol
 
-	if (!SymbolPrint(phsle,iIndent + 4,pfile))
+	if (!SymbolPrint(phsle, iIndent + 4, pfile))
 	{
 	    bResult = FALSE;
 	    break;
@@ -363,11 +368,11 @@ int IOHierarchyPrint
 
     //- do indent
 
-    PrintSymbolIndent(&pioh->iol.hsle,iIndent,pfile);
+    PrintSymbolIndent(&pioh->iol.hsle, iIndent, pfile);
 
     //- begin section header
 
-    fprintf(pfile,"}--  end  HIER sections ---\n");
+    fprintf(pfile, "}--  end  HIER sections ---\n");
 
     //- return result
 

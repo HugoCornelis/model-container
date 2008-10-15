@@ -228,6 +228,13 @@ InputOutputResolve
 	    PidinStackPop(ppistDupl);
 	}
 
+	//- if idin points to current
+
+	else if (IdinPointsToCurrent(pidin))
+	{
+	    //- we do nothing
+	}
+
 	//- else
 
 	else

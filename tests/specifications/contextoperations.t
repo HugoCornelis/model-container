@@ -128,6 +128,15 @@ my $test
 ',
 						   write => "context-info //CerebellarCortex//Purkinjes",
 						  },
+						  {
+						   description => "Can we get parse info on //CerebellarCortex/./Purkinjes ?",
+						   read => '
+- parsed context: /CerebellarCortex/Purkinjes
+- found using SymbolsLookupHierarchical()
+- found using PidinStackLookupTopSymbol()
+',
+						   write => "context-info //CerebellarCortex/./Purkinjes",
+						  },
 						 ],
 				description => "context parsing, no fields",
 			       },

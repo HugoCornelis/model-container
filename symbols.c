@@ -92,7 +92,7 @@ SymbolsAddImportedFile
     //! dependency tree can be a graph : shared dependencies
     //! shared dependencies give worse performance
 
-    HSolveListEnqueue(&pisSymbols->hslFiles,&pifResult->hsleLink);
+    HSolveListEnqueue(&pisSymbols->hslFiles, &pifResult->hsleLink);
 
     //- return result
 
@@ -120,7 +120,7 @@ struct Symbols * SymbolsCalloc(void)
 
     //- allocate symbol table
 
-    psymResult = (struct Symbols *)calloc(1,sizeof(struct Symbols));
+    psymResult = (struct Symbols *)calloc(1, sizeof(struct Symbols));
 
     //- initialize symbol table
 
@@ -178,7 +178,7 @@ SymbolsLookupImportedFile
     {
 	//- if found
 
-	if (strcmp(pcQualified,pifLoop->pcFilename) == 0)
+	if (strcmp(pcQualified, pifLoop->pcFilename) == 0)
 	{
 	    //- set result
 
@@ -230,7 +230,7 @@ int SymbolsPrintImportedFiles(struct Symbols *pisSymbols,FILE *pfile)
     {
 	//- print properties of imported file
 
-	ImportedFilePrintProperties(pif,4,pfile);
+	ImportedFilePrintProperties(pif, 4, pfile);
 
 	//- go to next imported file
 
@@ -351,7 +351,7 @@ SymbolsLookupHierarchical
     {
 	//- resolve namespaces
 
-	pif = ImportedFileLookupNameSpace(pif,ppist,&iLevel);
+	pif = ImportedFileLookupNameSpace(pif, ppist, &iLevel);
 
 	if (!pif)
 	{
@@ -371,11 +371,11 @@ SymbolsLookupHierarchical
 	//- lookup symbol stack in root
 
 	phsleResult
-	    = SymbolLookupHierarchical(&proot->hsle,ppist,iLevel,TRUE);
+	    = SymbolLookupHierarchical(&proot->hsle, ppist, iLevel, TRUE);
 
 /* 	//- lookup symbol in imported file */
 
-/* 	phsleResult = ImportedFileLookupHierarchical(NULL,ppist,0); */
+/* 	phsleResult = ImportedFileLookupHierarchical(NULL, ppist, 0); */
     }
 
     //- else
@@ -417,7 +417,7 @@ SymbolsLookupNameSpace
     //- lookup symbol in imported file
 
     struct ImportedFile *pifResult
-	= ImportedFileLookupNameSpace(NULL,ppist,&iLevel);
+	= ImportedFileLookupNameSpace(NULL, ppist, &iLevel);
 
     //- return result
 
@@ -498,7 +498,7 @@ int SymbolsPrintModel
 
     //- pretty print symbol info
 
-    SymbolPrint(phsle,MoreIndent(iIndent),pfile);
+    SymbolPrint(phsle, MoreIndent(iIndent), pfile);
 
     //- return result
 

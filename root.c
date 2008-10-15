@@ -54,11 +54,11 @@ RootSymbolAddChild
 
     //- link symbol into child list
 
-    HSolveListEntail(&proot->hslSubs,&phsle->hsleLink);
+    HSolveListEntail(&proot->hslSubs, &phsle->hsleLink);
 
     //- set serials of child
 
-    SymbolAllSerialsEntailChild(&proot->hsle,phsle);
+    SymbolAllSerialsEntailChild(&proot->hsle, phsle);
 
     //- return result
 
@@ -250,7 +250,7 @@ RootSymbolLookup(struct symtab_RootSymbol *proot, char *pcName)
     {
 	//- if symbol names match
 
-	if (strcmp(pcName,SymbolName(phsle)) == 0)
+	if (strcmp(pcName, SymbolName(phsle)) == 0)
 	{
 	    //- set result
 
@@ -304,9 +304,9 @@ RootSymbolLookupHierarchical
 
     //- lookup first entry
 
-    char *pcName = IdinName(PidinStackElementPidin(ppist,iLevel));
+    char *pcName = IdinName(PidinStackElementPidin(ppist, iLevel));
 
-    phsleResult = RootSymbolLookup(proot,pcName);
+    phsleResult = RootSymbolLookup(proot, pcName);
 
     //- if found
 
@@ -319,7 +319,7 @@ RootSymbolLookupHierarchical
 	//- lookup other entries
 
 	phsleResult
-	    = SymbolLookupHierarchical(phsleResult,ppist,iLevel + 1,bAll);
+	    = SymbolLookupHierarchical(phsleResult, ppist, iLevel + 1, bAll);
     }
 
     //- return result
@@ -362,7 +362,7 @@ RootSymbolPrint
     {
 	//- print symbol
 
-	bResult = SymbolsPrintModel(phsle,iIndent,pfile);
+	bResult = SymbolsPrintModel(phsle, iIndent, pfile);
 
 	//- goto next element
 
@@ -437,7 +437,7 @@ RootSymbolTraverse
 
 	iSelectorValue
 	    = ptstr->pfPreSelector
-	      ? ptstr->pfPreSelector(ptstr,ptstr->pvPreSelector)
+	      ? ptstr->pfPreSelector(ptstr, ptstr->pvPreSelector)
 	      : TSTR_SELECTOR_PROCESS_CHILDREN ;
 
 	//- if selected
@@ -462,7 +462,7 @@ RootSymbolTraverse
 
 		iProcessorValue
 		    = ptstr->pfProcessor
-		      ? ptstr->pfProcessor(ptstr,ptstr->pvProcessor)
+		      ? ptstr->pfProcessor(ptstr, ptstr->pvProcessor)
 		      : TSTR_PROCESSOR_SUCCESS ;
 	    }
 
@@ -473,7 +473,7 @@ RootSymbolTraverse
 	    {
 		//- traverse children
 
-		iResult = TstrGo(ptstr,phsleChild);
+		iResult = TstrGo(ptstr, phsleChild);
 	    }
 
 	    //- if aborted
@@ -519,7 +519,7 @@ RootSymbolTraverse
 
 		iPostSelectorValue
 		    = ptstr->pfFinalizer
-		      ? ptstr->pfFinalizer(ptstr,ptstr->pvFinalizer)
+		      ? ptstr->pfFinalizer(ptstr, ptstr->pvFinalizer)
 		      : TSTR_SELECTOR_PROCESS_SIBLING ;
 
 		//- if ok
@@ -598,7 +598,7 @@ RootSymbolTraverse
 
 static int 
 SymbolSpikeGeneratorSelector
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : process children of this symbol
 
@@ -650,7 +650,7 @@ RootSymbolTraverseSpikeGenerators
 
     //- traverse symbol
 
-    iResult = TstrGo(ptstr,phsle);
+    iResult = TstrGo(ptstr, phsle);
 
     //- delete treespace traversal
 
@@ -682,7 +682,7 @@ RootSymbolTraverseSpikeGenerators
 
 static int 
 SymbolSpikeReceiverSelector
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : process children of this symbol
 
@@ -734,7 +734,7 @@ RootSymbolTraverseSpikeReceivers
 
     //- traverse symbol
 
-    iResult = TstrGo(ptstr,phsle);
+    iResult = TstrGo(ptstr, phsle);
 
     //- delete treespace traversal
 
