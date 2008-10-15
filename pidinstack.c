@@ -1444,7 +1444,8 @@ PidinStackNewFromParameterSymbols(struct symtab_Parameters *ppar)
 ///
 /// **************************************************************************
 
-struct PidinStack *PidinStackParse(char *pc)
+struct PidinStack *
+PidinStackParse(char *pc)
 {
     //- set default result : failure
 
@@ -1452,9 +1453,7 @@ struct PidinStack *PidinStackParse(char *pc)
 
     int iPos = 0;
 
-    char *pcSeperators = "  \t\n";
-
-    char *pcSymbolSeperator = IDENTIFIER_CHILD_STRING;
+    char *pcSeparators = "  \t\n";
 
     char *pcArg = NULL;
 
@@ -1473,13 +1472,13 @@ struct PidinStack *PidinStackParse(char *pc)
 
     //- skip first white space
 
-    pcArg = strpbrk(pc, pcSeperators);
+    pcArg = strpbrk(pc, pcSeparators);
 
     while (pcArg == pc)
     {
 	pc++;
 
-	pcArg = strpbrk(pc, pcSeperators);
+	pcArg = strpbrk(pc, pcSeparators);
     }
 
     //- skip first namespace operator
@@ -1538,7 +1537,7 @@ struct PidinStack *PidinStackParse(char *pc)
 	iPos += iSize + strlen(IDENTIFIER_NAMESPACE_STRING);
     }
 
-    //- if first char is symbol seperator
+    //- if first char is symbol separator
 
     if (strncmp(&pc[iPos], SYMBOL_ROOT, strlen(SYMBOL_ROOT)) == 0)
     {
@@ -1550,9 +1549,9 @@ struct PidinStack *PidinStackParse(char *pc)
     //- loop over string
 
     while (pc[iPos] != '\0'
-	   && pc[iPos] != pcSeperators[0]
-	   && pc[iPos] != pcSeperators[1]
-	   && pc[iPos] != pcSeperators[2])
+	   && pc[iPos] != pcSeparators[0]
+	   && pc[iPos] != pcSeparators[1]
+	   && pc[iPos] != pcSeparators[2])
     {
 	struct symtab_IdentifierIndex *pidin = NULL;
 
@@ -1562,7 +1561,9 @@ struct PidinStack *PidinStackParse(char *pc)
 
 	int iTokenSize = -1;
 
-	//- if first char is symbol seperator
+	int iField = 0;
+
+	//- if first char is symbol separator
 
 	if (strncmp
 	    (&pc[iPos],
@@ -1573,6 +1574,23 @@ struct PidinStack *PidinStackParse(char *pc)
 	    //- go to next char
 
 	    iPos += strlen(IDENTIFIER_CHILD_STRING);
+	}
+
+	//- if first char is field separator
+
+	else if (strncmp
+		 (&pc[iPos],
+		  IDENTIFIER_DEREFERENCE_STRING,
+		  strlen(IDENTIFIER_DEREFERENCE_STRING))
+		 == 0)
+	{
+	    //- go to next char
+
+	    iPos += strlen(IDENTIFIER_DEREFERENCE_STRING);
+
+	    //- register as field
+
+	    iField = 1;
 	}
 
 	//- else
@@ -1641,6 +1659,13 @@ struct PidinStack *PidinStackParse(char *pc)
 	if (strcmp(pcName, IDENTIFIER_SYMBOL_PARENT_STRING) == 0)
 	{
 	    IdinSetFlags(pidin, FLAG_IDENTINDEX_PARENT);
+	}
+
+	//- if field
+
+	if (iField)
+	{
+	    IdinSetFlags(pidin, FLAG_IDENTINDEX_FIELD);
 	}
 
 	IdinSetName(pidin, pcName);
@@ -2232,7 +2257,7 @@ int PidinStackString(struct PidinStack *ppist, char *pc, int iSize)
 	struct symtab_IdentifierIndex *pidin
 	    = PidinStackElementPidin(ppist, i - 1);
 
-	//- print seperator if necessary
+	//- print separator if necessary
 
 	if (!bFirst)
 	{
@@ -2285,7 +2310,7 @@ int PidinStackString(struct PidinStack *ppist, char *pc, int iSize)
 	struct symtab_IdentifierIndex *pidin
 	    = PidinStackElementPidin(ppist, i - 1);
 
-	//- print seperator if necessary
+	//- print separator if necessary
 
 	if (!bFirst)
 	{

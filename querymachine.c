@@ -150,6 +150,7 @@ static QueryHandler QueryHandlerCountAllocatedSymbols;
 static QueryHandler QueryHandlerDelete;
 static QueryHandler QueryHandlerEcho;
 static QueryHandler QueryHandlerExpand;
+static QueryHandler QueryHandlerInputInfo;
 static QueryHandler QueryHandlerHelpCommands;
 static QueryHandler QueryHandlerImportFile;
 static QueryHandler QueryHandlerImportedFiles;
@@ -376,6 +377,17 @@ static QueryHandlerAssociation pquhasTable[] =
     {
 	"expand",
 	QueryHandlerExpand,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    //m find out information about an input
+
+    {
+	"input-info",
+	QueryHandlerInputInfo,
 #ifdef USE_READLINE
 	1,
 	QueryMachineSymbolGenerator,
@@ -1703,6 +1715,75 @@ QueryHandlerExpand
     //- free allocated memory
 
     PidinStackFree(ppistRoot);
+
+    //- return result
+
+    return(bResult);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: QueryHandlerInputInfo()
+///
+/// ARGS.:
+///
+///	std. QueryHandler args
+///
+/// RTN..: int : QueryHandler return value
+///
+/// DESCR: Print information about an input.
+///
+///	input-info <wildcard>
+///
+/// **************************************************************************
+
+static
+int
+QueryHandlerInputInfo
+(char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
+{
+    //- set result : ok
+
+    int bResult = TRUE;
+
+    //- parse command line element
+
+    struct PidinStack *ppist = PidinStackParse(&pcLine[iLength]);
+
+    //- lookup child symbol
+
+    //! allows namespacing, yet incompatible with parameter caches.
+
+    struct symtab_HSolveListElement *phsle1
+	= SymbolsLookupHierarchical(pneuro->psym, ppist);
+
+    struct symtab_HSolveListElement *phsle2
+	= PidinStackLookupTopSymbol(ppist);
+
+    fprintf(stdout, "---\n- parsed context: ");
+
+    PidinStackPrint(ppist, stdout);
+
+    fprintf(stdout, "\n");
+
+/*     if (phsle1) */
+/*     { */
+/* 	fprintf(stdout, "- found using SymbolsLookupHierarchical()\n"); */
+/*     } */
+/*     else */
+/*     { */
+/* 	fprintf(stdout, "- not found using SymbolsLookupHierarchical()\n"); */
+/*     } */
+
+/*     if (phsle2) */
+/*     { */
+/* 	fprintf(stdout, "- found using PidinStackLookupTopSymbol()\n"); */
+/*     } */
+/*     else */
+/*     { */
+/* 	fprintf(stdout, "- not found using PidinStackLookupTopSymbol()\n"); */
+/*     } */
 
     //- return result
 

@@ -82,6 +82,85 @@ my $test
 					      '-v',
 					      '1',
 					      '-q',
+					      'legacy/networks/network-test.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/network-test.ndf.', ],
+						   timeout => 100,
+						   write => undef,
+						  },
+						  {
+						   description => "Can we get parse info on /CerebellarCortex/Purkinjes ?",
+						   read => '
+- parsed context: /CerebellarCortex/Purkinjes
+- found using SymbolsLookupHierarchical()
+- found using PidinStackLookupTopSymbol()
+',
+						   write => "context-info /CerebellarCortex/Purkinjes",
+						  },
+						  {
+						   description => "Can we get parse info on //CerebellarCortex/Purkinjes ?",
+						   read => '
+- parsed context: /CerebellarCortex/Purkinjes
+- found using SymbolsLookupHierarchical()
+- found using PidinStackLookupTopSymbol()
+',
+						   write => "context-info //CerebellarCortex/Purkinjes",
+						  },
+						  {
+						   description => "Can we get parse info on /CerebellarCortex//Purkinjes ?",
+						   read => '
+- parsed context: /CerebellarCortex/Purkinjes
+- found using SymbolsLookupHierarchical()
+- found using PidinStackLookupTopSymbol()
+',
+						   write => "context-info /CerebellarCortex//Purkinjes",
+						  },
+						  {
+						   description => "Can we get parse info on //CerebellarCortex//Purkinjes ?",
+						   read => '
+- parsed context: /CerebellarCortex/Purkinjes
+- found using SymbolsLookupHierarchical()
+- found using PidinStackLookupTopSymbol()
+',
+						   write => "context-info //CerebellarCortex//Purkinjes",
+						  },
+						 ],
+				description => "context parsing, no fields",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-q',
+					      'legacy/networks/network-test.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/network-test.ndf.', ],
+						   timeout => 100,
+						   write => undef,
+						  },
+						  {
+						   description => "Can we get input info on /CerebellarCortex/Purkinjes/0/segments/soma/CaT->I ?",
+						   read => '
+- parsed context: /CerebellarCortex/Purkinjes/0/segments/soma/CaT->I
+',
+						   write => "input-info /CerebellarCortex/Purkinjes/0/segments/soma/CaT->I",
+						  },
+						 ],
+				description => "context and field parsing",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-q',
 					      'legacy/networks/networksmall.ndf',
 					     ],
 				command => './neurospacesparse',

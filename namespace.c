@@ -121,7 +121,7 @@ int NameSpaceEndThisToken(char *pc)
     {
 	//- find start of current seperator
 
-	char *pcArg = strpbrk(pc,ppcSeperators[i]);
+	char *pcArg = strpbrk(pc, ppcSeperators[i]);
 
 	//- if found
 
