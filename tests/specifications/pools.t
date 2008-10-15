@@ -142,7 +142,7 @@ my $test
 						  {
 						   description => "Is neurospaces startup successful ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/cells/purk2m9s.ndf.', ],
-						   timeout => 3,
+						   timeout => 5,
 						   write => undef,
 						  },
 						  {
