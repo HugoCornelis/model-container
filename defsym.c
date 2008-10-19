@@ -19,9 +19,9 @@
 
 
 
+#include "neurospaces/components/root.h"
 #include "neurospaces/defsym.h"
 #include "neurospaces/dependencyfile.h"
-#include "neurospaces/root.h"
 #include "neurospaces/symbolvirtual_protos.h"
 
 

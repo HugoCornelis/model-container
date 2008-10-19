@@ -25,11 +25,11 @@
 #include <string.h>
 
 
-#include "neurospaces/biocomp.h"
+#include "neurospaces/components/biocomp.h"
+#include "neurospaces/components/iol.h"
 #include "neurospaces/function.h"
 #include "neurospaces/idin.h"
 #include "neurospaces/inputoutput.h"
-#include "neurospaces/iol.h"
 #include "neurospaces/parameters.h"
 #include "neurospaces/symbols.h"
 #include "neurospaces/symbolvirtual_protos.h"

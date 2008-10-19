@@ -26,7 +26,7 @@
 #define VTABLE_H
 
 
-#include "iohier.h"
+#include "components/iohier.h"
 
 
 // type maintenance structures

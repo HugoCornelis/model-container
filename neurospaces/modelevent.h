@@ -261,15 +261,15 @@ struct
 ParserEventAssociationTable;
 
 
-#include "cell.h"
-#include "channel.h"
-#include "segment.h"
-#include "connection.h"
 #include "algorithm.h"
-#include "network.h"
+#include "components/cell.h"
+#include "components/channel.h"
+#include "components/connection.h"
+#include "components/network.h"
+#include "components/population.h"
+#include "components/projection.h"
+#include "components/segment.h"
 #include "pidinstack.h"
-#include "population.h"
-#include "projection.h"
 
 
 int ParserEventCellGenerate

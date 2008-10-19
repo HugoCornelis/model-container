@@ -27,7 +27,7 @@
 #include "neurospaces/symbols.h"
 
 
-#include "neurospaces/vectorconnection.h"
+#include "neurospaces/components/vectorconnection.h"
 
 
 /// **************************************************************************

@@ -95,7 +95,7 @@ my $test
 
 				    # check how many calls there are in the code
 
-				    my $code_calls_grep = [ `cd $directory ; grep -n SymbolIncrementAliases *.c`, ];
+				    my $code_calls_grep = [ `cd $directory/components ; grep -n SymbolIncrementAliases *.c`, ];
 
 				    my $code_calls = $#$code_calls_grep + 1;
 

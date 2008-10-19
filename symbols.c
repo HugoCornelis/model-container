@@ -21,15 +21,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "neurospaces/neurospaces.h"
-#include "neurospaces/hines_list.h"
+#include "neurospaces/algorithmset.h"
+#include "neurospaces/components/root.h"
 #include "neurospaces/defsym.h"
 #include "neurospaces/dependencyfile.h"
+#include "neurospaces/hines_list.h"
 #include "neurospaces/importedfile.h"
+#include "neurospaces/neurospaces.h"
 #include "neurospaces/parsersupport.h"
 #include "neurospaces/pidinstack.h"
-#include "neurospaces/algorithmset.h"
-#include "neurospaces/root.h"
 #include "neurospaces/symbols.h"
 #include "neurospaces/symboltable.h"
 

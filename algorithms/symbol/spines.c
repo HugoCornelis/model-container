@@ -25,11 +25,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "neurospaces/idin.h"
 #include "neurospaces/algorithmclass.h"
 #include "neurospaces/algorithminstance.h"
+#include "neurospaces/components/segment.h"
+#include "neurospaces/idin.h"
 #include "neurospaces/parsersupport.h"
-#include "neurospaces/segment.h"
 #include "neurospaces/symbolvirtual_protos.h"
 
 #include "spines.h"

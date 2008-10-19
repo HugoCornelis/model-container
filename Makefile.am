@@ -35,44 +35,56 @@ libneurospacesread_a_SOURCES = \
 	algorithmclass.c \
 	algorithminstance.c \
 	algorithmset.c \
-	algorithmsymbol.c \
 	analyzer.l \
-	attachment.c \
-	axonhillock.c \
-	biocomp.c \
 	biolevel.c \
 	cachedconnection.c \
 	cachedcoordinate.c \
 	cachedparameter.c \
 	cacheregistry.c \
-	cell.c \
-	channel.c \
-	concentrationgatekinetic.c \
-	hhgate.c \
-	connection.c \
-	connectionsymbol.c \
+	components/algorithmsymbol.c \
+	components/attachment.c \
+	components/axonhillock.c \
+	components/biocomp.c \
+	components/cell.c \
+	components/channel.c \
+	components/concentrationgatekinetic.c \
+	components/connection.c \
+	components/connectionsymbol.c \
+	components/contourpoint.c \
+	components/emcontour.c \
+	components/equation.c \
+	components/fiber.c \
+	components/gatekinetic.c \
+	components/group.c \
+	components/hhgate.c \
+	components/iohier.c \
+	components/iol.c \
+	components/network.c \
+	components/pool.c \
+	components/population.c \
+	components/projection.c \
+	components/randomvalue.c \
+	components/root.c \
+	components/segment.c \
+	components/segmenter.c \
+	components/vector.c \
+	components/vectorconnection.c \
+	components/vectorconnectionsymbol.c \
+	components/vectorcontour.c \
+	components/vectorsegment.c \
 	connectioncache.c \
 	coordinatecache.c \
-	contourpoint.c \
 	defsym.c \
 	dependencyfile.c \
 	description.tokens \
-	emcontour.c \
-	equation.c \
-	fiber.c \
 	function.c \
-	gatekinetic.c \
-	group.c \
 	hines_listlist.c \
 	idin.c \
 	importedfile.c \
 	inputoutput.c \
 	iocontainer.c \
-	iohier.c \
-	iol.c \
 	modelevent.c \
 	namespace.c \
-	network.c \
 	neurospaces.c \
 	orderedconnectioncache.c \
 	parametercache.c \
@@ -84,29 +96,17 @@ libneurospacesread_a_SOURCES = \
 	parser.y \
 	parsersupport.c \
 	pidinstack.c \
-	pool.c \
-	population.c \
 	positionD3.c \
-	projection.c \
 	projectionquery.c \
 	psymbolserialstack.c \
 	psymbolstack.c \
 	querymachine.c \
-	randomvalue.c \
-	root.c \
-	segment.c \
-	segmenter.c \
 	solverinfo.c \
 	symbols.c \
 	symboltable.c \
-	traversalinfo.c \
 	traversablealgorithm.c \
+	traversalinfo.c \
 	treespacetraversal.c \
-	vector.c \
-	vectorconnection.c \
-	vectorconnectionsymbol.c \
-	vectorcontour.c \
-	vectorsegment.c \
 	workload.c \
 	xs_initialize.c
 
@@ -203,48 +203,60 @@ nobase_include_HEADERS = \
 	neurospaces/algorithminstance.h \
 	neurospaces/algorithminstance_vtable.h \
 	neurospaces/algorithmset.h \
-	neurospaces/algorithmsymbol.h \
-	neurospaces/attachment.h \
-	neurospaces/axonhillock.h \
-	neurospaces/biocomp.h \
 	neurospaces/biolevel.h \
 	neurospaces/cachedconnection.h \
 	neurospaces/cachedcoordinate.h \
 	neurospaces/cachedparameter.h \
 	neurospaces/cacheregistry.h \
-	neurospaces/cell.h \
-	neurospaces/channel.h \
-	neurospaces/concentrationgatekinetic.h \
-	neurospaces/hhgate.h \
-	neurospaces/connection.h \
-	neurospaces/connectionsymbol.h \
+	neurospaces/components/algorithmsymbol.h \
+	neurospaces/components/attachment.h \
+	neurospaces/components/axonhillock.h \
+	neurospaces/components/biocomp.h \
+	neurospaces/components/cell.h \
+	neurospaces/components/channel.h \
+	neurospaces/components/concentrationgatekinetic.h \
+	neurospaces/components/connection.h \
+	neurospaces/components/connectionsymbol.h \
+	neurospaces/components/contourpoint.h \
+	neurospaces/components/emcontour.h \
+	neurospaces/components/equation.h \
+	neurospaces/components/fiber.h \
+	neurospaces/components/gatekinetic.h \
+	neurospaces/components/group.h \
+	neurospaces/components/hhgate.h \
+	neurospaces/components/iohier.h \
+	neurospaces/components/iol.h \
+	neurospaces/components/network.h \
+	neurospaces/components/pool.h \
+	neurospaces/components/population.h \
+	neurospaces/components/projection.h \
+	neurospaces/components/randomvalue.h \
+	neurospaces/components/root.h \
+	neurospaces/components/segment.h \
+	neurospaces/components/segmenter.h \
+	neurospaces/components/vector.h \
+	neurospaces/components/vectorconnection.h \
+	neurospaces/components/vectorconnectionsymbol.h \
+	neurospaces/components/vectorcontour.h \
+	neurospaces/components/vectorsegment.h \
 	neurospaces/connectioncache.h \
 	neurospaces/coordinatecache.h \
-	neurospaces/contourpoint.h \
 	neurospaces/defsym.h \
 	neurospaces/dependencyfile.h \
 	neurospaces/double.h \
-	neurospaces/emcontour.h \
-	neurospaces/equation.h \
-	neurospaces/fiber.h \
 	neurospaces/function.h \
-	neurospaces/gatekinetic.h \
 	neurospaces/genesis/olf/olf_defs.h \
 	neurospaces/genesis/olf/olf_struct.h \
 	neurospaces/genesis/sim/sim_struct.h \
-	neurospaces/group.h \
 	neurospaces/hines_list.h \
 	neurospaces/hines_listlist.h \
 	neurospaces/idin.h \
 	neurospaces/importedfile.h \
 	neurospaces/inputoutput.h \
 	neurospaces/iocontainer.h \
-	neurospaces/iohier.h \
-	neurospaces/iol.h \
 	neurospaces/lexsupport.h \
 	neurospaces/modelevent.h \
 	neurospaces/namespace.h \
-	neurospaces/network.h \
 	neurospaces/neurospaces.h \
 	neurospaces/orderedconnectioncache.h \
 	neurospaces/parametercache.h \
@@ -252,31 +264,19 @@ nobase_include_HEADERS = \
 	neurospaces/parcontainer.h \
 	neurospaces/parsersupport.h \
 	neurospaces/pidinstack.h \
-	neurospaces/pool.h \
-	neurospaces/population.h \
 	neurospaces/positionD3.h \
-	neurospaces/projection.h \
 	neurospaces/projectionquery.h \
 	neurospaces/psymbolserialstack.h \
 	neurospaces/psymbolstack.h \
 	neurospaces/querymachine.h \
-	neurospaces/randomvalue.h \
-	neurospaces/root.h \
-	neurospaces/segment.h \
-	neurospaces/segmenter.h \
 	neurospaces/solverinfo.h \
 	neurospaces/solvermapper.h \
-	neurospaces/traversablealgorithm.h \
-	neurospaces/treespacetraversal.h \
 	neurospaces/symbols.h \
 	neurospaces/symboltable.h \
 	neurospaces/symbolvirtual_protos.h \
+	neurospaces/traversablealgorithm.h \
 	neurospaces/traversalinfo.h \
-	neurospaces/vector.h \
-	neurospaces/vectorconnection.h \
-	neurospaces/vectorconnectionsymbol.h \
-	neurospaces/vectorcontour.h \
-	neurospaces/vectorsegment.h \
+	neurospaces/treespacetraversal.h \
 	neurospaces/vtable.h \
 	neurospaces/workload.h
 

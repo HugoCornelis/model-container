@@ -22,15 +22,15 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "neurospaces/cell.h"
-#include "neurospaces/neurospaces.h"
-#include "neurospaces/modelevent.h"
 #include "neurospaces/algorithm.h"
-#include "neurospaces/network.h"
+#include "neurospaces/components/cell.h"
+#include "neurospaces/components/network.h"
+#include "neurospaces/components/projection.h"
+#include "neurospaces/components/vector.h"
+#include "neurospaces/modelevent.h"
+#include "neurospaces/neurospaces.h"
 #include "neurospaces/pidinstack.h"
-#include "neurospaces/projection.h"
 #include "neurospaces/symboltable.h"
-#include "neurospaces/vector.h"
 
 #include "neurospaces/symbolvirtual_protos.h"
 

@@ -27,10 +27,10 @@
 #include "neurospaces/algorithmclass.h"
 #include "neurospaces/algorithminstance.h"
 #include "neurospaces/algorithminstance_vtable.h"
-#include "neurospaces/cell.h"
-#include "neurospaces/group.h"
+#include "neurospaces/components/cell.h"
+#include "neurospaces/components/group.h"
+#include "neurospaces/components/iohier.h"
 #include "neurospaces/idin.h"
-#include "neurospaces/iohier.h"
 #include "neurospaces/parsersupport.h"
 #include "neurospaces/symbolvirtual_protos.h"
 

@@ -119,10 +119,10 @@ struct ProjectionQuery
 
 
 
-#include "connection.h"
-#include "pidinstack.h"
-#include "projection.h"
-#include "solverinfo.h"
+#include "components/connection.h"
+#include "components/projection.h"
+#include "neurospaces/pidinstack.h"
+#include "neurospaces/solverinfo.h"
 
 
 int ProjectionQueryBuildCaches(struct ProjectionQuery *ppq);
