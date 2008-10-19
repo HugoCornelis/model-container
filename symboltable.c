@@ -118,6 +118,49 @@ int SymbolDeleter(struct TreespaceTraversal *ptstr, void *pvUserdata)
 
 /// **************************************************************************
 ///
+/// SHORT: BaseSymbolGetID()
+///
+/// ARGS.:
+///
+///	phsle.: symbol to get ID for.
+///
+/// RTN..: char *
+///
+///	Unique string representation identifying this symbol content.
+///
+/// DESCR: Get ID identifying this symbol content.
+///
+/// NOTE.:
+///
+/// 	The result is a pointer to static memory and must be used
+/// 	immediately.
+///
+/// **************************************************************************
+
+char *
+BaseSymbolGetID(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)
+{
+    //- set default result: none
+
+    char *pcResult = NULL;
+
+    //- define result
+
+    static char pc[100];
+
+    if (sprintf(pc, "%p", phsle) >= 0)
+    {
+	pcResult = pc;
+    }
+
+    //- return result
+
+    return(pcResult);
+}
+
+
+/// **************************************************************************
+///
 /// SHORT: SymbolCacheParameterDouble()
 ///
 /// ARGS.:

@@ -211,6 +211,13 @@ BioComponentChangeParameter
 static inline
 #endif
 char *
+BioComponentGetID
+(struct symtab_BioComponent *pbio, struct PidinStack *ppist);
+
+#ifndef SWIG
+static inline
+#endif
+char *
 BioComponentGetName(struct symtab_BioComponent *pbio);
 
 #ifndef SWIG
@@ -341,6 +348,44 @@ BioComponentChangeParameter
     //- return result
 
     return(pparResult);
+}
+
+
+///
+/// get a unique string representation identifying this symbol
+/// content.
+///
+
+#ifndef SWIG
+static inline
+#endif
+char *
+BioComponentGetID
+(struct symtab_BioComponent *pbio, struct PidinStack *ppist)
+{
+    //- set default result: none
+
+    char *pcResult = NULL;
+
+    //t check for availability of parameters in parameter caches
+    //t if none found,
+    //t   loop over prototypes,
+    //t     check for parameters in this symbol
+    //t     if found,
+    //t       return this symbol string representation
+
+    //- define result
+
+    static char pc[100];
+
+    if (sprintf(pc, "%p", pbio) >= 0)
+    {
+	pcResult = pc;
+    }
+
+    //- return result
+
+    return(pcResult);
 }
 
 
