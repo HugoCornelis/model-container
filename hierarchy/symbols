@@ -178,6 +178,7 @@ my $class_hierarchy
 				    G => 'actual channel conductance, normally a solved variable',
 				    I => 'actual channel current, normally a solved variable',
 				   },
+		     token_name => 'TOKEN_CHANNEL',
 		    },
 	 concentration_gate_kinetic => {
 					allows => {
@@ -195,6 +196,7 @@ my $class_hierarchy
 						       'HH_NUMBER_OF_TABLE_ENTRIES' => 'number of table entries in the gate kinetic',
 						       'Tau' => 'time constant, B in EDS1994',
 						      },
+					token_name => 'TOKEN_CONCENTRATION_GATE_KINETIC',
 				       },
 	 gate_kinetic => {
 			  allows => {
@@ -255,6 +257,7 @@ my $class_hierarchy
 				     'state' => 'current state, normally a solved variable',
 				     'state_init' => 'initial value, commonly forward over backward steady states',
 				    },
+		      token_name => 'TOKEN_HH_GATE',
 		     },
 	 connection => {
 			allows => {
@@ -304,6 +307,7 @@ my $class_hierarchy
 					      'PRE' => 'connection pre synaptic symbol',
 					      'WEIGHT' => 'connection weight',
 					     },
+			       token_name => 'TOKEN_CONNECTION',
 			      },
 	 projection => {
 			annotations => {
@@ -320,6 +324,7 @@ my $class_hierarchy
 				       SOURCE => 'source population',
 				       TARGET => 'target population',
 				      },
+			token_name => 'TOKEN_PROJECTION',
 		       },
 	 pool => {
 		  allows => {
@@ -344,6 +349,7 @@ my $class_hierarchy
 				 concen => 'actual concentration value, normally a solved variable',
 				 concen_init => 'initial concentration level',
 				},
+		  token_name => 'TOKEN_POOL',
 		 },
 	),
 
@@ -403,6 +409,7 @@ my $class_hierarchy
 			   name => 'symtab_AxonHillock',
 			   parameters => {
 					 },
+			   token_name => 'TOKEN_AXON_HILLOCK',
 			  },
 	  cell => {
 		   allows => {
@@ -416,6 +423,7 @@ my $class_hierarchy
 		   name => 'symtab_Cell',
 		   parameters => {
 				 },
+		   token_name => 'TOKEN_CELL',
 		  },
 	  fiber => {
 		    allows => {
@@ -431,6 +439,7 @@ my $class_hierarchy
 				   RATE => 'average firing frequence, bind it to the threshold of a spikegenerator',
 				   REFRACTORY => 'absolute refractory period',
 				  },
+		    token_name => 'TOKEN_FIBER',
 		   },
 	  network => {
 		      allows => {
@@ -446,6 +455,7 @@ my $class_hierarchy
 		      name => 'symtab_Network',
 		      parameters => {
 				    },
+		      token_name => 'TOKEN_NETWORK',
 		     },
 	  population => {
 			 allows => {
@@ -464,6 +474,7 @@ my $class_hierarchy
 					EXTENT_Y => 'coordinate of the last cell minus coordinate of the first cell',
 					EXTENT_Z => 'coordinate of the last cell minus coordinate of the first cell',
 				       },
+			 token_name => 'TOKEN_POPULATION',
 			},
 	  segment => {
 		      allows => {
@@ -487,6 +498,7 @@ my $class_hierarchy
 				     Vm => 'membrane potential, normally a solved variable',
 				     Vm_init => 'initial membrane potential',
 				    },
+		      token_name => 'TOKEN_SEGMENT',
 		     },
 	 ),
 	),
@@ -515,6 +527,7 @@ my $class_hierarchy
 		      name => 'symtab_VContour',
 		      parameters => {
 				    },
+		      token_name => 'TOKEN_CONTOUR_GROUP',
 		     },
 	v_connection => {
 			 allows => {
@@ -542,6 +555,7 @@ my $class_hierarchy
 				name => 'symtab_VConnectionSymbol',
 				parameters => {
 					      },
+				token_name => 'TOKEN_CONNECTION_GROUP',
 			       },
 
 	#t this one should be a segmenter, but need to use instrumentation for that.
@@ -557,6 +571,7 @@ my $class_hierarchy
 		      name => 'symtab_VSegment',
 		      parameters => {
 				    },
+		      token_name => 'TOKEN_SEGMENT_GROUP',
 		     },
        ),
 
@@ -573,6 +588,7 @@ my $class_hierarchy
 		  name => 'symtab_Group',
 		  parameters => {
 				},
+		  token_name => 'TOKEN_GROUP',
 		 },
        ),
 
@@ -592,6 +608,7 @@ my $class_hierarchy
 				    TAU1 => 'first time constant',
 				    TAU2 => 'second time constant',
 				   },
+		     token_name => 'TOKEN_EXPONENTIAL_EQUATION',
 		    },
 	randomvalue => {
 			allows => {
@@ -612,6 +629,7 @@ my $class_hierarchy
 				       MAXIMUM => 'maximum value the random variable can take',
 				       MINIMUM => 'minimum value the random variable can take',
 				      },
+			token_name => 'TOKEN_RANDOMVALUE',
 		       },
        ),
 
@@ -631,6 +649,7 @@ my $class_hierarchy
 			name => 'symtab_EMContour',
 			parameters => {
 				      },
+			token_name => 'TOKEN_EM_CONTOUR',
 		       },
 	contour_point => {
 			  allows => {
@@ -646,6 +665,7 @@ my $class_hierarchy
 			  parameters => {
 					 THICKNESS => 'thickness of the slice originating the contour',
 					},
+			  token_name => 'TOKEN_CONTOUR_POINT',
 			 },
        ),
 
@@ -666,6 +686,7 @@ my $class_hierarchy
 			     name => 'symtab_AlgorithmSymbol',
 			     parameters => {
 					   },
+			     token_name => 'TOKEN_ALGORITHM',
 			    },
 	traversable_algorithm => {
 				  allows => {
@@ -699,6 +720,7 @@ my $class_hierarchy
 		       name => 'symtab_Attachment',
 		       parameters => {
 				     },
+		       token_name => 'TOKEN_ATTACHMENT_POINT',
 		      },
 
 	#t specific functions can be derived, but shouldn't this be

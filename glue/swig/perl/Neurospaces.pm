@@ -415,6 +415,16 @@ sub input_2_solverinfo
 }
 
 
+sub list_elements
+{
+    my $path = shift;
+
+    print "not implemented yet\n";
+
+    return [];
+}
+
+
 sub load
 {
     my $self = shift;
