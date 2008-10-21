@@ -152,7 +152,27 @@ void
 IOContainerAssignRelations
 (struct symtab_IOContainer *pioc,  struct symtab_InputOutput *pio)
 {
+  if(!pioc->pio)
+  { 
+
     pioc->pio = pio;
+
+    return;
+
+  }
+
+  pio->pioFirst = pioc->pio;
+
+  pio->pioNext = NULL;
+  
+  struct symtab_InputOutput *pioTmp = pioc->pio;
+  
+  for(pioTmp = pioc->pio; pioTmp->pioNext; pioTmp = pioTmp->pioNext);
+
+  pioTmp->pioNext = pio;
+
+  return;
+
 }
 
 
