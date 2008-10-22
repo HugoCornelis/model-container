@@ -57,7 +57,7 @@ typedef struct AlgorithmSet AlgorithmSet;
 
 //#include "modelevent.h"
 #include "algorithminstance.h"
-#include "algorithmsymbol.h"
+#include "neurospaces/components/algorithmsymbol.h"
 #include "parsersupport.h"
 
 

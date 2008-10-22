@@ -35,9 +35,9 @@ struct AlgorithmClassHandlerLibrary;
 struct AlgorithmClass;
 
 
-#include "hines_list.h"
 #include "algorithminstance.h"
-#include "algorithmsymbol.h"
+#include "hines_list.h"
+#include "neurospaces/components/algorithmsymbol.h"
 
 
 #ifndef TRUE

@@ -22,11 +22,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "neurospaces/components/attachment.h"
 #include "neurospaces/pidinstack.h"
 #include "neurospaces/solverinfo.h"
 #include "neurospaces/symboltable.h"
 #include "neurospaces/symbolvirtual_protos.h"
-#include "neurospaces/attachment.h"
 
 
 //f local functions

@@ -41,6 +41,7 @@ my $class_hierarchy
 			      'all_successors_set' => 'base_symbol',
 			      'all_serials_to_parent_get' => 'base_symbol',
 			      'all_serials_to_parent_set' => 'base_symbol',
+			      'get_i_d' => 'base_symbol',
 			     },
 		   description => 'symbol that maintains its own identification numbers',
 		   isa => 'base',
@@ -98,6 +99,7 @@ my $class_hierarchy
 				'count_spike_receivers' => 'bio_component',
 				'create_alias' => 'bio_component',
 				'get_child_from_input' => 'bio_component',
+				'get_i_d' => 'bio_component',
 				'get_modifiable_parameter' => 'bio_component',
 				'get_name' => 'bio_component',
 				'get_options' => 'bio_component',
@@ -176,6 +178,7 @@ my $class_hierarchy
 				    G => 'actual channel conductance, normally a solved variable',
 				    I => 'actual channel current, normally a solved variable',
 				   },
+		     token_name => 'TOKEN_CHANNEL',
 		    },
 	 concentration_gate_kinetic => {
 					allows => {
@@ -193,6 +196,7 @@ my $class_hierarchy
 						       'HH_NUMBER_OF_TABLE_ENTRIES' => 'number of table entries in the gate kinetic',
 						       'Tau' => 'time constant, B in EDS1994',
 						      },
+					token_name => 'TOKEN_CONCENTRATION_GATE_KINETIC',
 				       },
 	 gate_kinetic => {
 			  allows => {
@@ -253,6 +257,7 @@ my $class_hierarchy
 				     'state' => 'current state, normally a solved variable',
 				     'state_init' => 'initial value, commonly forward over backward steady states',
 				    },
+		      token_name => 'TOKEN_HH_GATE',
 		     },
 	 connection => {
 			allows => {
@@ -302,6 +307,7 @@ my $class_hierarchy
 					      'PRE' => 'connection pre synaptic symbol',
 					      'WEIGHT' => 'connection weight',
 					     },
+			       token_name => 'TOKEN_CONNECTION',
 			      },
 	 projection => {
 			annotations => {
@@ -318,6 +324,7 @@ my $class_hierarchy
 				       SOURCE => 'source population',
 				       TARGET => 'target population',
 				      },
+			token_name => 'TOKEN_PROJECTION',
 		       },
 	 pool => {
 		  allows => {
@@ -342,6 +349,7 @@ my $class_hierarchy
 				 concen => 'actual concentration value, normally a solved variable',
 				 concen_init => 'initial concentration level',
 				},
+		  token_name => 'TOKEN_POOL',
 		 },
 	),
 
@@ -401,6 +409,7 @@ my $class_hierarchy
 			   name => 'symtab_AxonHillock',
 			   parameters => {
 					 },
+			   token_name => 'TOKEN_AXON_HILLOCK',
 			  },
 	  cell => {
 		   allows => {
@@ -414,6 +423,7 @@ my $class_hierarchy
 		   name => 'symtab_Cell',
 		   parameters => {
 				 },
+		   token_name => 'TOKEN_CELL',
 		  },
 	  fiber => {
 		    allows => {
@@ -429,6 +439,7 @@ my $class_hierarchy
 				   RATE => 'average firing frequence, bind it to the threshold of a spikegenerator',
 				   REFRACTORY => 'absolute refractory period',
 				  },
+		    token_name => 'TOKEN_FIBER',
 		   },
 	  network => {
 		      allows => {
@@ -444,6 +455,7 @@ my $class_hierarchy
 		      name => 'symtab_Network',
 		      parameters => {
 				    },
+		      token_name => 'TOKEN_NETWORK',
 		     },
 	  population => {
 			 allows => {
@@ -462,6 +474,7 @@ my $class_hierarchy
 					EXTENT_Y => 'coordinate of the last cell minus coordinate of the first cell',
 					EXTENT_Z => 'coordinate of the last cell minus coordinate of the first cell',
 				       },
+			 token_name => 'TOKEN_POPULATION',
 			},
 	  segment => {
 		      allows => {
@@ -485,6 +498,7 @@ my $class_hierarchy
 				     Vm => 'membrane potential, normally a solved variable',
 				     Vm_init => 'initial membrane potential',
 				    },
+		      token_name => 'TOKEN_SEGMENT',
 		     },
 	 ),
 	),
@@ -513,6 +527,7 @@ my $class_hierarchy
 		      name => 'symtab_VContour',
 		      parameters => {
 				    },
+		      token_name => 'TOKEN_CONTOUR_GROUP',
 		     },
 	v_connection => {
 			 allows => {
@@ -540,6 +555,7 @@ my $class_hierarchy
 				name => 'symtab_VConnectionSymbol',
 				parameters => {
 					      },
+				token_name => 'TOKEN_CONNECTION_GROUP',
 			       },
 
 	#t this one should be a segmenter, but need to use instrumentation for that.
@@ -555,6 +571,7 @@ my $class_hierarchy
 		      name => 'symtab_VSegment',
 		      parameters => {
 				    },
+		      token_name => 'TOKEN_SEGMENT_GROUP',
 		     },
        ),
 
@@ -571,6 +588,7 @@ my $class_hierarchy
 		  name => 'symtab_Group',
 		  parameters => {
 				},
+		  token_name => 'TOKEN_GROUP',
 		 },
        ),
 
@@ -590,6 +608,7 @@ my $class_hierarchy
 				    TAU1 => 'first time constant',
 				    TAU2 => 'second time constant',
 				   },
+		     token_name => 'TOKEN_EXPONENTIAL_EQUATION',
 		    },
 	randomvalue => {
 			allows => {
@@ -610,6 +629,7 @@ my $class_hierarchy
 				       MAXIMUM => 'maximum value the random variable can take',
 				       MINIMUM => 'minimum value the random variable can take',
 				      },
+			token_name => 'TOKEN_RANDOMVALUE',
 		       },
        ),
 
@@ -629,6 +649,7 @@ my $class_hierarchy
 			name => 'symtab_EMContour',
 			parameters => {
 				      },
+			token_name => 'TOKEN_EM_CONTOUR',
 		       },
 	contour_point => {
 			  allows => {
@@ -644,6 +665,7 @@ my $class_hierarchy
 			  parameters => {
 					 THICKNESS => 'thickness of the slice originating the contour',
 					},
+			  token_name => 'TOKEN_CONTOUR_POINT',
 			 },
        ),
 
@@ -664,6 +686,7 @@ my $class_hierarchy
 			     name => 'symtab_AlgorithmSymbol',
 			     parameters => {
 					   },
+			     token_name => 'TOKEN_ALGORITHM',
 			    },
 	traversable_algorithm => {
 				  allows => {
@@ -697,6 +720,7 @@ my $class_hierarchy
 		       name => 'symtab_Attachment',
 		       parameters => {
 				     },
+		       token_name => 'TOKEN_ATTACHMENT_POINT',
 		      },
 
 	#t specific functions can be derived, but shouldn't this be
@@ -811,6 +835,7 @@ my $object_methods
 	'get_child_from_input',
 	'get_children',
 	'get_delay',
+	'get_i_d',
 	'get_inputs',
 	'get_modifiable_parameter',
 	'get_name',
@@ -924,6 +949,9 @@ my $object_methods_custom_code
        'get_delay' => {
 		       simple => 1,
 		      },
+       'get_i_d' => {
+		     simple => 1,
+		    },
        'get_inputs' => {
 			simple => 1,
 		       },
@@ -1200,6 +1228,11 @@ my $object_methods_return_types
 		       selector => '.uSelector.dFunc',
 		       type => 'double',
 		      },
+       'get_i_d' => {
+		     default => 'NULL',
+		     selector => '.uSelector.pcFunc',
+		     type => 'char *',
+		    },
        'get_inputs' => {
 			default => 'NULL',
 			selector => '.uSelector.piocFunc',
@@ -1576,6 +1609,10 @@ my $object_methods_signatures
 		       calling => '(phsle, ppist)',
 		       prototype => '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)',
 		      },
+       'get_i_d' => {
+		     calling => '(phsle, ppist)',
+		     prototype => '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)',
+		    },
        'get_inputs' => {
 			calling => '(phsle)',
 			prototype => '(struct symtab_HSolveListElement *phsle)',

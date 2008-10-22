@@ -21,11 +21,11 @@
 
 #include <stdlib.h>
 
-#include "neurospaces/biocomp.h"
-#include "neurospaces/hhgate.h"
+#include "neurospaces/components/biocomp.h"
+#include "neurospaces/components/hhgate.h"
 #include "neurospaces/pidinstack.h"
-#include "neurospaces/treespacetraversal.h"
 #include "neurospaces/symbolvirtual_protos.h"
+#include "neurospaces/treespacetraversal.h"
 
 
 

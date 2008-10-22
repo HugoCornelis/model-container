@@ -22,7 +22,7 @@
 #define ALGORITHMINSTANCE_CONNECTIONCHECKERINSTANCE_H
 
 
-#include "neurospaces/algorithmsymbol.h"
+#include "neurospaces/components/algorithmsymbol.h"
 #include "neurospaces/parameters.h"
 
 

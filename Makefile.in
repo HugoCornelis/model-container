@@ -78,37 +78,35 @@ libneurospacesread_a_AR = $(AR) $(ARFLAGS)
 libneurospacesread_a_LIBADD =
 am_libneurospacesread_a_OBJECTS = algorithm.$(OBJEXT) \
 	algorithmclass.$(OBJEXT) algorithminstance.$(OBJEXT) \
-	algorithmset.$(OBJEXT) algorithmsymbol.$(OBJEXT) \
-	analyzer.$(OBJEXT) attachment.$(OBJEXT) axonhillock.$(OBJEXT) \
-	biocomp.$(OBJEXT) biolevel.$(OBJEXT) \
+	algorithmset.$(OBJEXT) analyzer.$(OBJEXT) biolevel.$(OBJEXT) \
 	cachedconnection.$(OBJEXT) cachedcoordinate.$(OBJEXT) \
 	cachedparameter.$(OBJEXT) cacheregistry.$(OBJEXT) \
-	cell.$(OBJEXT) channel.$(OBJEXT) \
-	concentrationgatekinetic.$(OBJEXT) hhgate.$(OBJEXT) \
+	algorithmsymbol.$(OBJEXT) attachment.$(OBJEXT) \
+	axonhillock.$(OBJEXT) biocomp.$(OBJEXT) cell.$(OBJEXT) \
+	channel.$(OBJEXT) concentrationgatekinetic.$(OBJEXT) \
 	connection.$(OBJEXT) connectionsymbol.$(OBJEXT) \
+	contourpoint.$(OBJEXT) emcontour.$(OBJEXT) equation.$(OBJEXT) \
+	fiber.$(OBJEXT) gatekinetic.$(OBJEXT) group.$(OBJEXT) \
+	hhgate.$(OBJEXT) iohier.$(OBJEXT) iol.$(OBJEXT) \
+	network.$(OBJEXT) pool.$(OBJEXT) population.$(OBJEXT) \
+	projection.$(OBJEXT) randomvalue.$(OBJEXT) root.$(OBJEXT) \
+	segment.$(OBJEXT) segmenter.$(OBJEXT) vector.$(OBJEXT) \
+	vectorconnection.$(OBJEXT) vectorconnectionsymbol.$(OBJEXT) \
+	vectorcontour.$(OBJEXT) vectorsegment.$(OBJEXT) \
 	connectioncache.$(OBJEXT) coordinatecache.$(OBJEXT) \
-	contourpoint.$(OBJEXT) defsym.$(OBJEXT) \
-	dependencyfile.$(OBJEXT) emcontour.$(OBJEXT) \
-	equation.$(OBJEXT) fiber.$(OBJEXT) function.$(OBJEXT) \
-	gatekinetic.$(OBJEXT) group.$(OBJEXT) hines_listlist.$(OBJEXT) \
-	idin.$(OBJEXT) importedfile.$(OBJEXT) inputoutput.$(OBJEXT) \
-	iocontainer.$(OBJEXT) iohier.$(OBJEXT) iol.$(OBJEXT) \
-	modelevent.$(OBJEXT) namespace.$(OBJEXT) network.$(OBJEXT) \
-	neurospaces.$(OBJEXT) orderedconnectioncache.$(OBJEXT) \
-	parametercache.$(OBJEXT) parameters.$(OBJEXT) \
-	parcontainer.$(OBJEXT) parser.$(OBJEXT) \
-	parsersupport.$(OBJEXT) pidinstack.$(OBJEXT) pool.$(OBJEXT) \
-	population.$(OBJEXT) positionD3.$(OBJEXT) projection.$(OBJEXT) \
-	projectionquery.$(OBJEXT) psymbolserialstack.$(OBJEXT) \
-	psymbolstack.$(OBJEXT) querymachine.$(OBJEXT) \
-	randomvalue.$(OBJEXT) root.$(OBJEXT) segment.$(OBJEXT) \
-	segmenter.$(OBJEXT) solverinfo.$(OBJEXT) symbols.$(OBJEXT) \
-	symboltable.$(OBJEXT) traversalinfo.$(OBJEXT) \
-	traversablealgorithm.$(OBJEXT) treespacetraversal.$(OBJEXT) \
-	vector.$(OBJEXT) vectorconnection.$(OBJEXT) \
-	vectorconnectionsymbol.$(OBJEXT) vectorcontour.$(OBJEXT) \
-	vectorsegment.$(OBJEXT) workload.$(OBJEXT) \
-	xs_initialize.$(OBJEXT)
+	defsym.$(OBJEXT) dependencyfile.$(OBJEXT) function.$(OBJEXT) \
+	hines_listlist.$(OBJEXT) idin.$(OBJEXT) importedfile.$(OBJEXT) \
+	inputoutput.$(OBJEXT) iocontainer.$(OBJEXT) \
+	modelevent.$(OBJEXT) namespace.$(OBJEXT) neurospaces.$(OBJEXT) \
+	orderedconnectioncache.$(OBJEXT) parametercache.$(OBJEXT) \
+	parameters.$(OBJEXT) parcontainer.$(OBJEXT) parser.$(OBJEXT) \
+	parsersupport.$(OBJEXT) pidinstack.$(OBJEXT) \
+	positionD3.$(OBJEXT) projectionquery.$(OBJEXT) \
+	psymbolserialstack.$(OBJEXT) psymbolstack.$(OBJEXT) \
+	querymachine.$(OBJEXT) solverinfo.$(OBJEXT) symbols.$(OBJEXT) \
+	symboltable.$(OBJEXT) traversablealgorithm.$(OBJEXT) \
+	traversalinfo.$(OBJEXT) treespacetraversal.$(OBJEXT) \
+	workload.$(OBJEXT) xs_initialize.$(OBJEXT)
 libneurospacesread_a_OBJECTS = $(am_libneurospacesread_a_OBJECTS)
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
@@ -279,44 +277,56 @@ libneurospacesread_a_SOURCES = \
 	algorithmclass.c \
 	algorithminstance.c \
 	algorithmset.c \
-	algorithmsymbol.c \
 	analyzer.l \
-	attachment.c \
-	axonhillock.c \
-	biocomp.c \
 	biolevel.c \
 	cachedconnection.c \
 	cachedcoordinate.c \
 	cachedparameter.c \
 	cacheregistry.c \
-	cell.c \
-	channel.c \
-	concentrationgatekinetic.c \
-	hhgate.c \
-	connection.c \
-	connectionsymbol.c \
+	components/algorithmsymbol.c \
+	components/attachment.c \
+	components/axonhillock.c \
+	components/biocomp.c \
+	components/cell.c \
+	components/channel.c \
+	components/concentrationgatekinetic.c \
+	components/connection.c \
+	components/connectionsymbol.c \
+	components/contourpoint.c \
+	components/emcontour.c \
+	components/equation.c \
+	components/fiber.c \
+	components/gatekinetic.c \
+	components/group.c \
+	components/hhgate.c \
+	components/iohier.c \
+	components/iol.c \
+	components/network.c \
+	components/pool.c \
+	components/population.c \
+	components/projection.c \
+	components/randomvalue.c \
+	components/root.c \
+	components/segment.c \
+	components/segmenter.c \
+	components/vector.c \
+	components/vectorconnection.c \
+	components/vectorconnectionsymbol.c \
+	components/vectorcontour.c \
+	components/vectorsegment.c \
 	connectioncache.c \
 	coordinatecache.c \
-	contourpoint.c \
 	defsym.c \
 	dependencyfile.c \
 	description.tokens \
-	emcontour.c \
-	equation.c \
-	fiber.c \
 	function.c \
-	gatekinetic.c \
-	group.c \
 	hines_listlist.c \
 	idin.c \
 	importedfile.c \
 	inputoutput.c \
 	iocontainer.c \
-	iohier.c \
-	iol.c \
 	modelevent.c \
 	namespace.c \
-	network.c \
 	neurospaces.c \
 	orderedconnectioncache.c \
 	parametercache.c \
@@ -328,29 +338,17 @@ libneurospacesread_a_SOURCES = \
 	parser.y \
 	parsersupport.c \
 	pidinstack.c \
-	pool.c \
-	population.c \
 	positionD3.c \
-	projection.c \
 	projectionquery.c \
 	psymbolserialstack.c \
 	psymbolstack.c \
 	querymachine.c \
-	randomvalue.c \
-	root.c \
-	segment.c \
-	segmenter.c \
 	solverinfo.c \
 	symbols.c \
 	symboltable.c \
-	traversalinfo.c \
 	traversablealgorithm.c \
+	traversalinfo.c \
 	treespacetraversal.c \
-	vector.c \
-	vectorconnection.c \
-	vectorconnectionsymbol.c \
-	vectorcontour.c \
-	vectorsegment.c \
 	workload.c \
 	xs_initialize.c
 
@@ -384,48 +382,60 @@ nobase_include_HEADERS = \
 	neurospaces/algorithminstance.h \
 	neurospaces/algorithminstance_vtable.h \
 	neurospaces/algorithmset.h \
-	neurospaces/algorithmsymbol.h \
-	neurospaces/attachment.h \
-	neurospaces/axonhillock.h \
-	neurospaces/biocomp.h \
 	neurospaces/biolevel.h \
 	neurospaces/cachedconnection.h \
 	neurospaces/cachedcoordinate.h \
 	neurospaces/cachedparameter.h \
 	neurospaces/cacheregistry.h \
-	neurospaces/cell.h \
-	neurospaces/channel.h \
-	neurospaces/concentrationgatekinetic.h \
-	neurospaces/hhgate.h \
-	neurospaces/connection.h \
-	neurospaces/connectionsymbol.h \
+	neurospaces/components/algorithmsymbol.h \
+	neurospaces/components/attachment.h \
+	neurospaces/components/axonhillock.h \
+	neurospaces/components/biocomp.h \
+	neurospaces/components/cell.h \
+	neurospaces/components/channel.h \
+	neurospaces/components/concentrationgatekinetic.h \
+	neurospaces/components/connection.h \
+	neurospaces/components/connectionsymbol.h \
+	neurospaces/components/contourpoint.h \
+	neurospaces/components/emcontour.h \
+	neurospaces/components/equation.h \
+	neurospaces/components/fiber.h \
+	neurospaces/components/gatekinetic.h \
+	neurospaces/components/group.h \
+	neurospaces/components/hhgate.h \
+	neurospaces/components/iohier.h \
+	neurospaces/components/iol.h \
+	neurospaces/components/network.h \
+	neurospaces/components/pool.h \
+	neurospaces/components/population.h \
+	neurospaces/components/projection.h \
+	neurospaces/components/randomvalue.h \
+	neurospaces/components/root.h \
+	neurospaces/components/segment.h \
+	neurospaces/components/segmenter.h \
+	neurospaces/components/vector.h \
+	neurospaces/components/vectorconnection.h \
+	neurospaces/components/vectorconnectionsymbol.h \
+	neurospaces/components/vectorcontour.h \
+	neurospaces/components/vectorsegment.h \
 	neurospaces/connectioncache.h \
 	neurospaces/coordinatecache.h \
-	neurospaces/contourpoint.h \
 	neurospaces/defsym.h \
 	neurospaces/dependencyfile.h \
 	neurospaces/double.h \
-	neurospaces/emcontour.h \
-	neurospaces/equation.h \
-	neurospaces/fiber.h \
 	neurospaces/function.h \
-	neurospaces/gatekinetic.h \
 	neurospaces/genesis/olf/olf_defs.h \
 	neurospaces/genesis/olf/olf_struct.h \
 	neurospaces/genesis/sim/sim_struct.h \
-	neurospaces/group.h \
 	neurospaces/hines_list.h \
 	neurospaces/hines_listlist.h \
 	neurospaces/idin.h \
 	neurospaces/importedfile.h \
 	neurospaces/inputoutput.h \
 	neurospaces/iocontainer.h \
-	neurospaces/iohier.h \
-	neurospaces/iol.h \
 	neurospaces/lexsupport.h \
 	neurospaces/modelevent.h \
 	neurospaces/namespace.h \
-	neurospaces/network.h \
 	neurospaces/neurospaces.h \
 	neurospaces/orderedconnectioncache.h \
 	neurospaces/parametercache.h \
@@ -433,31 +443,19 @@ nobase_include_HEADERS = \
 	neurospaces/parcontainer.h \
 	neurospaces/parsersupport.h \
 	neurospaces/pidinstack.h \
-	neurospaces/pool.h \
-	neurospaces/population.h \
 	neurospaces/positionD3.h \
-	neurospaces/projection.h \
 	neurospaces/projectionquery.h \
 	neurospaces/psymbolserialstack.h \
 	neurospaces/psymbolstack.h \
 	neurospaces/querymachine.h \
-	neurospaces/randomvalue.h \
-	neurospaces/root.h \
-	neurospaces/segment.h \
-	neurospaces/segmenter.h \
 	neurospaces/solverinfo.h \
 	neurospaces/solvermapper.h \
-	neurospaces/traversablealgorithm.h \
-	neurospaces/treespacetraversal.h \
 	neurospaces/symbols.h \
 	neurospaces/symboltable.h \
 	neurospaces/symbolvirtual_protos.h \
+	neurospaces/traversablealgorithm.h \
 	neurospaces/traversalinfo.h \
-	neurospaces/vector.h \
-	neurospaces/vectorconnection.h \
-	neurospaces/vectorconnectionsymbol.h \
-	neurospaces/vectorcontour.h \
-	neurospaces/vectorsegment.h \
+	neurospaces/treespacetraversal.h \
 	neurospaces/vtable.h \
 	neurospaces/workload.h
 
@@ -714,6 +712,440 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
+
+algorithmsymbol.o: components/algorithmsymbol.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT algorithmsymbol.o -MD -MP -MF "$(DEPDIR)/algorithmsymbol.Tpo" -c -o algorithmsymbol.o `test -f 'components/algorithmsymbol.c' || echo '$(srcdir)/'`components/algorithmsymbol.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/algorithmsymbol.Tpo" "$(DEPDIR)/algorithmsymbol.Po"; else rm -f "$(DEPDIR)/algorithmsymbol.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/algorithmsymbol.c' object='algorithmsymbol.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o algorithmsymbol.o `test -f 'components/algorithmsymbol.c' || echo '$(srcdir)/'`components/algorithmsymbol.c
+
+algorithmsymbol.obj: components/algorithmsymbol.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT algorithmsymbol.obj -MD -MP -MF "$(DEPDIR)/algorithmsymbol.Tpo" -c -o algorithmsymbol.obj `if test -f 'components/algorithmsymbol.c'; then $(CYGPATH_W) 'components/algorithmsymbol.c'; else $(CYGPATH_W) '$(srcdir)/components/algorithmsymbol.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/algorithmsymbol.Tpo" "$(DEPDIR)/algorithmsymbol.Po"; else rm -f "$(DEPDIR)/algorithmsymbol.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/algorithmsymbol.c' object='algorithmsymbol.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o algorithmsymbol.obj `if test -f 'components/algorithmsymbol.c'; then $(CYGPATH_W) 'components/algorithmsymbol.c'; else $(CYGPATH_W) '$(srcdir)/components/algorithmsymbol.c'; fi`
+
+attachment.o: components/attachment.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT attachment.o -MD -MP -MF "$(DEPDIR)/attachment.Tpo" -c -o attachment.o `test -f 'components/attachment.c' || echo '$(srcdir)/'`components/attachment.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/attachment.Tpo" "$(DEPDIR)/attachment.Po"; else rm -f "$(DEPDIR)/attachment.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/attachment.c' object='attachment.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o attachment.o `test -f 'components/attachment.c' || echo '$(srcdir)/'`components/attachment.c
+
+attachment.obj: components/attachment.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT attachment.obj -MD -MP -MF "$(DEPDIR)/attachment.Tpo" -c -o attachment.obj `if test -f 'components/attachment.c'; then $(CYGPATH_W) 'components/attachment.c'; else $(CYGPATH_W) '$(srcdir)/components/attachment.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/attachment.Tpo" "$(DEPDIR)/attachment.Po"; else rm -f "$(DEPDIR)/attachment.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/attachment.c' object='attachment.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o attachment.obj `if test -f 'components/attachment.c'; then $(CYGPATH_W) 'components/attachment.c'; else $(CYGPATH_W) '$(srcdir)/components/attachment.c'; fi`
+
+axonhillock.o: components/axonhillock.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT axonhillock.o -MD -MP -MF "$(DEPDIR)/axonhillock.Tpo" -c -o axonhillock.o `test -f 'components/axonhillock.c' || echo '$(srcdir)/'`components/axonhillock.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/axonhillock.Tpo" "$(DEPDIR)/axonhillock.Po"; else rm -f "$(DEPDIR)/axonhillock.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/axonhillock.c' object='axonhillock.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o axonhillock.o `test -f 'components/axonhillock.c' || echo '$(srcdir)/'`components/axonhillock.c
+
+axonhillock.obj: components/axonhillock.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT axonhillock.obj -MD -MP -MF "$(DEPDIR)/axonhillock.Tpo" -c -o axonhillock.obj `if test -f 'components/axonhillock.c'; then $(CYGPATH_W) 'components/axonhillock.c'; else $(CYGPATH_W) '$(srcdir)/components/axonhillock.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/axonhillock.Tpo" "$(DEPDIR)/axonhillock.Po"; else rm -f "$(DEPDIR)/axonhillock.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/axonhillock.c' object='axonhillock.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o axonhillock.obj `if test -f 'components/axonhillock.c'; then $(CYGPATH_W) 'components/axonhillock.c'; else $(CYGPATH_W) '$(srcdir)/components/axonhillock.c'; fi`
+
+biocomp.o: components/biocomp.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT biocomp.o -MD -MP -MF "$(DEPDIR)/biocomp.Tpo" -c -o biocomp.o `test -f 'components/biocomp.c' || echo '$(srcdir)/'`components/biocomp.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/biocomp.Tpo" "$(DEPDIR)/biocomp.Po"; else rm -f "$(DEPDIR)/biocomp.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/biocomp.c' object='biocomp.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o biocomp.o `test -f 'components/biocomp.c' || echo '$(srcdir)/'`components/biocomp.c
+
+biocomp.obj: components/biocomp.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT biocomp.obj -MD -MP -MF "$(DEPDIR)/biocomp.Tpo" -c -o biocomp.obj `if test -f 'components/biocomp.c'; then $(CYGPATH_W) 'components/biocomp.c'; else $(CYGPATH_W) '$(srcdir)/components/biocomp.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/biocomp.Tpo" "$(DEPDIR)/biocomp.Po"; else rm -f "$(DEPDIR)/biocomp.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/biocomp.c' object='biocomp.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o biocomp.obj `if test -f 'components/biocomp.c'; then $(CYGPATH_W) 'components/biocomp.c'; else $(CYGPATH_W) '$(srcdir)/components/biocomp.c'; fi`
+
+cell.o: components/cell.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT cell.o -MD -MP -MF "$(DEPDIR)/cell.Tpo" -c -o cell.o `test -f 'components/cell.c' || echo '$(srcdir)/'`components/cell.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/cell.Tpo" "$(DEPDIR)/cell.Po"; else rm -f "$(DEPDIR)/cell.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/cell.c' object='cell.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o cell.o `test -f 'components/cell.c' || echo '$(srcdir)/'`components/cell.c
+
+cell.obj: components/cell.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT cell.obj -MD -MP -MF "$(DEPDIR)/cell.Tpo" -c -o cell.obj `if test -f 'components/cell.c'; then $(CYGPATH_W) 'components/cell.c'; else $(CYGPATH_W) '$(srcdir)/components/cell.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/cell.Tpo" "$(DEPDIR)/cell.Po"; else rm -f "$(DEPDIR)/cell.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/cell.c' object='cell.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o cell.obj `if test -f 'components/cell.c'; then $(CYGPATH_W) 'components/cell.c'; else $(CYGPATH_W) '$(srcdir)/components/cell.c'; fi`
+
+channel.o: components/channel.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT channel.o -MD -MP -MF "$(DEPDIR)/channel.Tpo" -c -o channel.o `test -f 'components/channel.c' || echo '$(srcdir)/'`components/channel.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/channel.Tpo" "$(DEPDIR)/channel.Po"; else rm -f "$(DEPDIR)/channel.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/channel.c' object='channel.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o channel.o `test -f 'components/channel.c' || echo '$(srcdir)/'`components/channel.c
+
+channel.obj: components/channel.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT channel.obj -MD -MP -MF "$(DEPDIR)/channel.Tpo" -c -o channel.obj `if test -f 'components/channel.c'; then $(CYGPATH_W) 'components/channel.c'; else $(CYGPATH_W) '$(srcdir)/components/channel.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/channel.Tpo" "$(DEPDIR)/channel.Po"; else rm -f "$(DEPDIR)/channel.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/channel.c' object='channel.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o channel.obj `if test -f 'components/channel.c'; then $(CYGPATH_W) 'components/channel.c'; else $(CYGPATH_W) '$(srcdir)/components/channel.c'; fi`
+
+concentrationgatekinetic.o: components/concentrationgatekinetic.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT concentrationgatekinetic.o -MD -MP -MF "$(DEPDIR)/concentrationgatekinetic.Tpo" -c -o concentrationgatekinetic.o `test -f 'components/concentrationgatekinetic.c' || echo '$(srcdir)/'`components/concentrationgatekinetic.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/concentrationgatekinetic.Tpo" "$(DEPDIR)/concentrationgatekinetic.Po"; else rm -f "$(DEPDIR)/concentrationgatekinetic.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/concentrationgatekinetic.c' object='concentrationgatekinetic.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o concentrationgatekinetic.o `test -f 'components/concentrationgatekinetic.c' || echo '$(srcdir)/'`components/concentrationgatekinetic.c
+
+concentrationgatekinetic.obj: components/concentrationgatekinetic.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT concentrationgatekinetic.obj -MD -MP -MF "$(DEPDIR)/concentrationgatekinetic.Tpo" -c -o concentrationgatekinetic.obj `if test -f 'components/concentrationgatekinetic.c'; then $(CYGPATH_W) 'components/concentrationgatekinetic.c'; else $(CYGPATH_W) '$(srcdir)/components/concentrationgatekinetic.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/concentrationgatekinetic.Tpo" "$(DEPDIR)/concentrationgatekinetic.Po"; else rm -f "$(DEPDIR)/concentrationgatekinetic.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/concentrationgatekinetic.c' object='concentrationgatekinetic.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o concentrationgatekinetic.obj `if test -f 'components/concentrationgatekinetic.c'; then $(CYGPATH_W) 'components/concentrationgatekinetic.c'; else $(CYGPATH_W) '$(srcdir)/components/concentrationgatekinetic.c'; fi`
+
+connection.o: components/connection.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT connection.o -MD -MP -MF "$(DEPDIR)/connection.Tpo" -c -o connection.o `test -f 'components/connection.c' || echo '$(srcdir)/'`components/connection.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/connection.Tpo" "$(DEPDIR)/connection.Po"; else rm -f "$(DEPDIR)/connection.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/connection.c' object='connection.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o connection.o `test -f 'components/connection.c' || echo '$(srcdir)/'`components/connection.c
+
+connection.obj: components/connection.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT connection.obj -MD -MP -MF "$(DEPDIR)/connection.Tpo" -c -o connection.obj `if test -f 'components/connection.c'; then $(CYGPATH_W) 'components/connection.c'; else $(CYGPATH_W) '$(srcdir)/components/connection.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/connection.Tpo" "$(DEPDIR)/connection.Po"; else rm -f "$(DEPDIR)/connection.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/connection.c' object='connection.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o connection.obj `if test -f 'components/connection.c'; then $(CYGPATH_W) 'components/connection.c'; else $(CYGPATH_W) '$(srcdir)/components/connection.c'; fi`
+
+connectionsymbol.o: components/connectionsymbol.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT connectionsymbol.o -MD -MP -MF "$(DEPDIR)/connectionsymbol.Tpo" -c -o connectionsymbol.o `test -f 'components/connectionsymbol.c' || echo '$(srcdir)/'`components/connectionsymbol.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/connectionsymbol.Tpo" "$(DEPDIR)/connectionsymbol.Po"; else rm -f "$(DEPDIR)/connectionsymbol.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/connectionsymbol.c' object='connectionsymbol.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o connectionsymbol.o `test -f 'components/connectionsymbol.c' || echo '$(srcdir)/'`components/connectionsymbol.c
+
+connectionsymbol.obj: components/connectionsymbol.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT connectionsymbol.obj -MD -MP -MF "$(DEPDIR)/connectionsymbol.Tpo" -c -o connectionsymbol.obj `if test -f 'components/connectionsymbol.c'; then $(CYGPATH_W) 'components/connectionsymbol.c'; else $(CYGPATH_W) '$(srcdir)/components/connectionsymbol.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/connectionsymbol.Tpo" "$(DEPDIR)/connectionsymbol.Po"; else rm -f "$(DEPDIR)/connectionsymbol.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/connectionsymbol.c' object='connectionsymbol.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o connectionsymbol.obj `if test -f 'components/connectionsymbol.c'; then $(CYGPATH_W) 'components/connectionsymbol.c'; else $(CYGPATH_W) '$(srcdir)/components/connectionsymbol.c'; fi`
+
+contourpoint.o: components/contourpoint.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT contourpoint.o -MD -MP -MF "$(DEPDIR)/contourpoint.Tpo" -c -o contourpoint.o `test -f 'components/contourpoint.c' || echo '$(srcdir)/'`components/contourpoint.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/contourpoint.Tpo" "$(DEPDIR)/contourpoint.Po"; else rm -f "$(DEPDIR)/contourpoint.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/contourpoint.c' object='contourpoint.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o contourpoint.o `test -f 'components/contourpoint.c' || echo '$(srcdir)/'`components/contourpoint.c
+
+contourpoint.obj: components/contourpoint.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT contourpoint.obj -MD -MP -MF "$(DEPDIR)/contourpoint.Tpo" -c -o contourpoint.obj `if test -f 'components/contourpoint.c'; then $(CYGPATH_W) 'components/contourpoint.c'; else $(CYGPATH_W) '$(srcdir)/components/contourpoint.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/contourpoint.Tpo" "$(DEPDIR)/contourpoint.Po"; else rm -f "$(DEPDIR)/contourpoint.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/contourpoint.c' object='contourpoint.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o contourpoint.obj `if test -f 'components/contourpoint.c'; then $(CYGPATH_W) 'components/contourpoint.c'; else $(CYGPATH_W) '$(srcdir)/components/contourpoint.c'; fi`
+
+emcontour.o: components/emcontour.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT emcontour.o -MD -MP -MF "$(DEPDIR)/emcontour.Tpo" -c -o emcontour.o `test -f 'components/emcontour.c' || echo '$(srcdir)/'`components/emcontour.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/emcontour.Tpo" "$(DEPDIR)/emcontour.Po"; else rm -f "$(DEPDIR)/emcontour.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/emcontour.c' object='emcontour.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o emcontour.o `test -f 'components/emcontour.c' || echo '$(srcdir)/'`components/emcontour.c
+
+emcontour.obj: components/emcontour.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT emcontour.obj -MD -MP -MF "$(DEPDIR)/emcontour.Tpo" -c -o emcontour.obj `if test -f 'components/emcontour.c'; then $(CYGPATH_W) 'components/emcontour.c'; else $(CYGPATH_W) '$(srcdir)/components/emcontour.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/emcontour.Tpo" "$(DEPDIR)/emcontour.Po"; else rm -f "$(DEPDIR)/emcontour.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/emcontour.c' object='emcontour.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o emcontour.obj `if test -f 'components/emcontour.c'; then $(CYGPATH_W) 'components/emcontour.c'; else $(CYGPATH_W) '$(srcdir)/components/emcontour.c'; fi`
+
+equation.o: components/equation.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT equation.o -MD -MP -MF "$(DEPDIR)/equation.Tpo" -c -o equation.o `test -f 'components/equation.c' || echo '$(srcdir)/'`components/equation.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/equation.Tpo" "$(DEPDIR)/equation.Po"; else rm -f "$(DEPDIR)/equation.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/equation.c' object='equation.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o equation.o `test -f 'components/equation.c' || echo '$(srcdir)/'`components/equation.c
+
+equation.obj: components/equation.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT equation.obj -MD -MP -MF "$(DEPDIR)/equation.Tpo" -c -o equation.obj `if test -f 'components/equation.c'; then $(CYGPATH_W) 'components/equation.c'; else $(CYGPATH_W) '$(srcdir)/components/equation.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/equation.Tpo" "$(DEPDIR)/equation.Po"; else rm -f "$(DEPDIR)/equation.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/equation.c' object='equation.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o equation.obj `if test -f 'components/equation.c'; then $(CYGPATH_W) 'components/equation.c'; else $(CYGPATH_W) '$(srcdir)/components/equation.c'; fi`
+
+fiber.o: components/fiber.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT fiber.o -MD -MP -MF "$(DEPDIR)/fiber.Tpo" -c -o fiber.o `test -f 'components/fiber.c' || echo '$(srcdir)/'`components/fiber.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/fiber.Tpo" "$(DEPDIR)/fiber.Po"; else rm -f "$(DEPDIR)/fiber.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/fiber.c' object='fiber.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o fiber.o `test -f 'components/fiber.c' || echo '$(srcdir)/'`components/fiber.c
+
+fiber.obj: components/fiber.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT fiber.obj -MD -MP -MF "$(DEPDIR)/fiber.Tpo" -c -o fiber.obj `if test -f 'components/fiber.c'; then $(CYGPATH_W) 'components/fiber.c'; else $(CYGPATH_W) '$(srcdir)/components/fiber.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/fiber.Tpo" "$(DEPDIR)/fiber.Po"; else rm -f "$(DEPDIR)/fiber.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/fiber.c' object='fiber.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o fiber.obj `if test -f 'components/fiber.c'; then $(CYGPATH_W) 'components/fiber.c'; else $(CYGPATH_W) '$(srcdir)/components/fiber.c'; fi`
+
+gatekinetic.o: components/gatekinetic.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT gatekinetic.o -MD -MP -MF "$(DEPDIR)/gatekinetic.Tpo" -c -o gatekinetic.o `test -f 'components/gatekinetic.c' || echo '$(srcdir)/'`components/gatekinetic.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/gatekinetic.Tpo" "$(DEPDIR)/gatekinetic.Po"; else rm -f "$(DEPDIR)/gatekinetic.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/gatekinetic.c' object='gatekinetic.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o gatekinetic.o `test -f 'components/gatekinetic.c' || echo '$(srcdir)/'`components/gatekinetic.c
+
+gatekinetic.obj: components/gatekinetic.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT gatekinetic.obj -MD -MP -MF "$(DEPDIR)/gatekinetic.Tpo" -c -o gatekinetic.obj `if test -f 'components/gatekinetic.c'; then $(CYGPATH_W) 'components/gatekinetic.c'; else $(CYGPATH_W) '$(srcdir)/components/gatekinetic.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/gatekinetic.Tpo" "$(DEPDIR)/gatekinetic.Po"; else rm -f "$(DEPDIR)/gatekinetic.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/gatekinetic.c' object='gatekinetic.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o gatekinetic.obj `if test -f 'components/gatekinetic.c'; then $(CYGPATH_W) 'components/gatekinetic.c'; else $(CYGPATH_W) '$(srcdir)/components/gatekinetic.c'; fi`
+
+group.o: components/group.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT group.o -MD -MP -MF "$(DEPDIR)/group.Tpo" -c -o group.o `test -f 'components/group.c' || echo '$(srcdir)/'`components/group.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/group.Tpo" "$(DEPDIR)/group.Po"; else rm -f "$(DEPDIR)/group.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/group.c' object='group.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o group.o `test -f 'components/group.c' || echo '$(srcdir)/'`components/group.c
+
+group.obj: components/group.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT group.obj -MD -MP -MF "$(DEPDIR)/group.Tpo" -c -o group.obj `if test -f 'components/group.c'; then $(CYGPATH_W) 'components/group.c'; else $(CYGPATH_W) '$(srcdir)/components/group.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/group.Tpo" "$(DEPDIR)/group.Po"; else rm -f "$(DEPDIR)/group.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/group.c' object='group.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o group.obj `if test -f 'components/group.c'; then $(CYGPATH_W) 'components/group.c'; else $(CYGPATH_W) '$(srcdir)/components/group.c'; fi`
+
+hhgate.o: components/hhgate.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT hhgate.o -MD -MP -MF "$(DEPDIR)/hhgate.Tpo" -c -o hhgate.o `test -f 'components/hhgate.c' || echo '$(srcdir)/'`components/hhgate.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/hhgate.Tpo" "$(DEPDIR)/hhgate.Po"; else rm -f "$(DEPDIR)/hhgate.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/hhgate.c' object='hhgate.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o hhgate.o `test -f 'components/hhgate.c' || echo '$(srcdir)/'`components/hhgate.c
+
+hhgate.obj: components/hhgate.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT hhgate.obj -MD -MP -MF "$(DEPDIR)/hhgate.Tpo" -c -o hhgate.obj `if test -f 'components/hhgate.c'; then $(CYGPATH_W) 'components/hhgate.c'; else $(CYGPATH_W) '$(srcdir)/components/hhgate.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/hhgate.Tpo" "$(DEPDIR)/hhgate.Po"; else rm -f "$(DEPDIR)/hhgate.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/hhgate.c' object='hhgate.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o hhgate.obj `if test -f 'components/hhgate.c'; then $(CYGPATH_W) 'components/hhgate.c'; else $(CYGPATH_W) '$(srcdir)/components/hhgate.c'; fi`
+
+iohier.o: components/iohier.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT iohier.o -MD -MP -MF "$(DEPDIR)/iohier.Tpo" -c -o iohier.o `test -f 'components/iohier.c' || echo '$(srcdir)/'`components/iohier.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/iohier.Tpo" "$(DEPDIR)/iohier.Po"; else rm -f "$(DEPDIR)/iohier.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/iohier.c' object='iohier.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o iohier.o `test -f 'components/iohier.c' || echo '$(srcdir)/'`components/iohier.c
+
+iohier.obj: components/iohier.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT iohier.obj -MD -MP -MF "$(DEPDIR)/iohier.Tpo" -c -o iohier.obj `if test -f 'components/iohier.c'; then $(CYGPATH_W) 'components/iohier.c'; else $(CYGPATH_W) '$(srcdir)/components/iohier.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/iohier.Tpo" "$(DEPDIR)/iohier.Po"; else rm -f "$(DEPDIR)/iohier.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/iohier.c' object='iohier.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o iohier.obj `if test -f 'components/iohier.c'; then $(CYGPATH_W) 'components/iohier.c'; else $(CYGPATH_W) '$(srcdir)/components/iohier.c'; fi`
+
+iol.o: components/iol.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT iol.o -MD -MP -MF "$(DEPDIR)/iol.Tpo" -c -o iol.o `test -f 'components/iol.c' || echo '$(srcdir)/'`components/iol.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/iol.Tpo" "$(DEPDIR)/iol.Po"; else rm -f "$(DEPDIR)/iol.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/iol.c' object='iol.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o iol.o `test -f 'components/iol.c' || echo '$(srcdir)/'`components/iol.c
+
+iol.obj: components/iol.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT iol.obj -MD -MP -MF "$(DEPDIR)/iol.Tpo" -c -o iol.obj `if test -f 'components/iol.c'; then $(CYGPATH_W) 'components/iol.c'; else $(CYGPATH_W) '$(srcdir)/components/iol.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/iol.Tpo" "$(DEPDIR)/iol.Po"; else rm -f "$(DEPDIR)/iol.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/iol.c' object='iol.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o iol.obj `if test -f 'components/iol.c'; then $(CYGPATH_W) 'components/iol.c'; else $(CYGPATH_W) '$(srcdir)/components/iol.c'; fi`
+
+network.o: components/network.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT network.o -MD -MP -MF "$(DEPDIR)/network.Tpo" -c -o network.o `test -f 'components/network.c' || echo '$(srcdir)/'`components/network.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/network.Tpo" "$(DEPDIR)/network.Po"; else rm -f "$(DEPDIR)/network.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/network.c' object='network.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o network.o `test -f 'components/network.c' || echo '$(srcdir)/'`components/network.c
+
+network.obj: components/network.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT network.obj -MD -MP -MF "$(DEPDIR)/network.Tpo" -c -o network.obj `if test -f 'components/network.c'; then $(CYGPATH_W) 'components/network.c'; else $(CYGPATH_W) '$(srcdir)/components/network.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/network.Tpo" "$(DEPDIR)/network.Po"; else rm -f "$(DEPDIR)/network.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/network.c' object='network.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o network.obj `if test -f 'components/network.c'; then $(CYGPATH_W) 'components/network.c'; else $(CYGPATH_W) '$(srcdir)/components/network.c'; fi`
+
+pool.o: components/pool.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pool.o -MD -MP -MF "$(DEPDIR)/pool.Tpo" -c -o pool.o `test -f 'components/pool.c' || echo '$(srcdir)/'`components/pool.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/pool.Tpo" "$(DEPDIR)/pool.Po"; else rm -f "$(DEPDIR)/pool.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/pool.c' object='pool.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pool.o `test -f 'components/pool.c' || echo '$(srcdir)/'`components/pool.c
+
+pool.obj: components/pool.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pool.obj -MD -MP -MF "$(DEPDIR)/pool.Tpo" -c -o pool.obj `if test -f 'components/pool.c'; then $(CYGPATH_W) 'components/pool.c'; else $(CYGPATH_W) '$(srcdir)/components/pool.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/pool.Tpo" "$(DEPDIR)/pool.Po"; else rm -f "$(DEPDIR)/pool.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/pool.c' object='pool.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pool.obj `if test -f 'components/pool.c'; then $(CYGPATH_W) 'components/pool.c'; else $(CYGPATH_W) '$(srcdir)/components/pool.c'; fi`
+
+population.o: components/population.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT population.o -MD -MP -MF "$(DEPDIR)/population.Tpo" -c -o population.o `test -f 'components/population.c' || echo '$(srcdir)/'`components/population.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/population.Tpo" "$(DEPDIR)/population.Po"; else rm -f "$(DEPDIR)/population.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/population.c' object='population.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o population.o `test -f 'components/population.c' || echo '$(srcdir)/'`components/population.c
+
+population.obj: components/population.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT population.obj -MD -MP -MF "$(DEPDIR)/population.Tpo" -c -o population.obj `if test -f 'components/population.c'; then $(CYGPATH_W) 'components/population.c'; else $(CYGPATH_W) '$(srcdir)/components/population.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/population.Tpo" "$(DEPDIR)/population.Po"; else rm -f "$(DEPDIR)/population.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/population.c' object='population.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o population.obj `if test -f 'components/population.c'; then $(CYGPATH_W) 'components/population.c'; else $(CYGPATH_W) '$(srcdir)/components/population.c'; fi`
+
+projection.o: components/projection.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT projection.o -MD -MP -MF "$(DEPDIR)/projection.Tpo" -c -o projection.o `test -f 'components/projection.c' || echo '$(srcdir)/'`components/projection.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/projection.Tpo" "$(DEPDIR)/projection.Po"; else rm -f "$(DEPDIR)/projection.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/projection.c' object='projection.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o projection.o `test -f 'components/projection.c' || echo '$(srcdir)/'`components/projection.c
+
+projection.obj: components/projection.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT projection.obj -MD -MP -MF "$(DEPDIR)/projection.Tpo" -c -o projection.obj `if test -f 'components/projection.c'; then $(CYGPATH_W) 'components/projection.c'; else $(CYGPATH_W) '$(srcdir)/components/projection.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/projection.Tpo" "$(DEPDIR)/projection.Po"; else rm -f "$(DEPDIR)/projection.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/projection.c' object='projection.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o projection.obj `if test -f 'components/projection.c'; then $(CYGPATH_W) 'components/projection.c'; else $(CYGPATH_W) '$(srcdir)/components/projection.c'; fi`
+
+randomvalue.o: components/randomvalue.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT randomvalue.o -MD -MP -MF "$(DEPDIR)/randomvalue.Tpo" -c -o randomvalue.o `test -f 'components/randomvalue.c' || echo '$(srcdir)/'`components/randomvalue.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/randomvalue.Tpo" "$(DEPDIR)/randomvalue.Po"; else rm -f "$(DEPDIR)/randomvalue.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/randomvalue.c' object='randomvalue.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o randomvalue.o `test -f 'components/randomvalue.c' || echo '$(srcdir)/'`components/randomvalue.c
+
+randomvalue.obj: components/randomvalue.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT randomvalue.obj -MD -MP -MF "$(DEPDIR)/randomvalue.Tpo" -c -o randomvalue.obj `if test -f 'components/randomvalue.c'; then $(CYGPATH_W) 'components/randomvalue.c'; else $(CYGPATH_W) '$(srcdir)/components/randomvalue.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/randomvalue.Tpo" "$(DEPDIR)/randomvalue.Po"; else rm -f "$(DEPDIR)/randomvalue.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/randomvalue.c' object='randomvalue.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o randomvalue.obj `if test -f 'components/randomvalue.c'; then $(CYGPATH_W) 'components/randomvalue.c'; else $(CYGPATH_W) '$(srcdir)/components/randomvalue.c'; fi`
+
+root.o: components/root.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT root.o -MD -MP -MF "$(DEPDIR)/root.Tpo" -c -o root.o `test -f 'components/root.c' || echo '$(srcdir)/'`components/root.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/root.Tpo" "$(DEPDIR)/root.Po"; else rm -f "$(DEPDIR)/root.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/root.c' object='root.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o root.o `test -f 'components/root.c' || echo '$(srcdir)/'`components/root.c
+
+root.obj: components/root.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT root.obj -MD -MP -MF "$(DEPDIR)/root.Tpo" -c -o root.obj `if test -f 'components/root.c'; then $(CYGPATH_W) 'components/root.c'; else $(CYGPATH_W) '$(srcdir)/components/root.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/root.Tpo" "$(DEPDIR)/root.Po"; else rm -f "$(DEPDIR)/root.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/root.c' object='root.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o root.obj `if test -f 'components/root.c'; then $(CYGPATH_W) 'components/root.c'; else $(CYGPATH_W) '$(srcdir)/components/root.c'; fi`
+
+segment.o: components/segment.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT segment.o -MD -MP -MF "$(DEPDIR)/segment.Tpo" -c -o segment.o `test -f 'components/segment.c' || echo '$(srcdir)/'`components/segment.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/segment.Tpo" "$(DEPDIR)/segment.Po"; else rm -f "$(DEPDIR)/segment.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/segment.c' object='segment.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o segment.o `test -f 'components/segment.c' || echo '$(srcdir)/'`components/segment.c
+
+segment.obj: components/segment.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT segment.obj -MD -MP -MF "$(DEPDIR)/segment.Tpo" -c -o segment.obj `if test -f 'components/segment.c'; then $(CYGPATH_W) 'components/segment.c'; else $(CYGPATH_W) '$(srcdir)/components/segment.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/segment.Tpo" "$(DEPDIR)/segment.Po"; else rm -f "$(DEPDIR)/segment.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/segment.c' object='segment.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o segment.obj `if test -f 'components/segment.c'; then $(CYGPATH_W) 'components/segment.c'; else $(CYGPATH_W) '$(srcdir)/components/segment.c'; fi`
+
+segmenter.o: components/segmenter.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT segmenter.o -MD -MP -MF "$(DEPDIR)/segmenter.Tpo" -c -o segmenter.o `test -f 'components/segmenter.c' || echo '$(srcdir)/'`components/segmenter.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/segmenter.Tpo" "$(DEPDIR)/segmenter.Po"; else rm -f "$(DEPDIR)/segmenter.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/segmenter.c' object='segmenter.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o segmenter.o `test -f 'components/segmenter.c' || echo '$(srcdir)/'`components/segmenter.c
+
+segmenter.obj: components/segmenter.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT segmenter.obj -MD -MP -MF "$(DEPDIR)/segmenter.Tpo" -c -o segmenter.obj `if test -f 'components/segmenter.c'; then $(CYGPATH_W) 'components/segmenter.c'; else $(CYGPATH_W) '$(srcdir)/components/segmenter.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/segmenter.Tpo" "$(DEPDIR)/segmenter.Po"; else rm -f "$(DEPDIR)/segmenter.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/segmenter.c' object='segmenter.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o segmenter.obj `if test -f 'components/segmenter.c'; then $(CYGPATH_W) 'components/segmenter.c'; else $(CYGPATH_W) '$(srcdir)/components/segmenter.c'; fi`
+
+vector.o: components/vector.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT vector.o -MD -MP -MF "$(DEPDIR)/vector.Tpo" -c -o vector.o `test -f 'components/vector.c' || echo '$(srcdir)/'`components/vector.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/vector.Tpo" "$(DEPDIR)/vector.Po"; else rm -f "$(DEPDIR)/vector.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/vector.c' object='vector.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o vector.o `test -f 'components/vector.c' || echo '$(srcdir)/'`components/vector.c
+
+vector.obj: components/vector.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT vector.obj -MD -MP -MF "$(DEPDIR)/vector.Tpo" -c -o vector.obj `if test -f 'components/vector.c'; then $(CYGPATH_W) 'components/vector.c'; else $(CYGPATH_W) '$(srcdir)/components/vector.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/vector.Tpo" "$(DEPDIR)/vector.Po"; else rm -f "$(DEPDIR)/vector.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/vector.c' object='vector.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o vector.obj `if test -f 'components/vector.c'; then $(CYGPATH_W) 'components/vector.c'; else $(CYGPATH_W) '$(srcdir)/components/vector.c'; fi`
+
+vectorconnection.o: components/vectorconnection.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT vectorconnection.o -MD -MP -MF "$(DEPDIR)/vectorconnection.Tpo" -c -o vectorconnection.o `test -f 'components/vectorconnection.c' || echo '$(srcdir)/'`components/vectorconnection.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/vectorconnection.Tpo" "$(DEPDIR)/vectorconnection.Po"; else rm -f "$(DEPDIR)/vectorconnection.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/vectorconnection.c' object='vectorconnection.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o vectorconnection.o `test -f 'components/vectorconnection.c' || echo '$(srcdir)/'`components/vectorconnection.c
+
+vectorconnection.obj: components/vectorconnection.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT vectorconnection.obj -MD -MP -MF "$(DEPDIR)/vectorconnection.Tpo" -c -o vectorconnection.obj `if test -f 'components/vectorconnection.c'; then $(CYGPATH_W) 'components/vectorconnection.c'; else $(CYGPATH_W) '$(srcdir)/components/vectorconnection.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/vectorconnection.Tpo" "$(DEPDIR)/vectorconnection.Po"; else rm -f "$(DEPDIR)/vectorconnection.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/vectorconnection.c' object='vectorconnection.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o vectorconnection.obj `if test -f 'components/vectorconnection.c'; then $(CYGPATH_W) 'components/vectorconnection.c'; else $(CYGPATH_W) '$(srcdir)/components/vectorconnection.c'; fi`
+
+vectorconnectionsymbol.o: components/vectorconnectionsymbol.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT vectorconnectionsymbol.o -MD -MP -MF "$(DEPDIR)/vectorconnectionsymbol.Tpo" -c -o vectorconnectionsymbol.o `test -f 'components/vectorconnectionsymbol.c' || echo '$(srcdir)/'`components/vectorconnectionsymbol.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/vectorconnectionsymbol.Tpo" "$(DEPDIR)/vectorconnectionsymbol.Po"; else rm -f "$(DEPDIR)/vectorconnectionsymbol.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/vectorconnectionsymbol.c' object='vectorconnectionsymbol.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o vectorconnectionsymbol.o `test -f 'components/vectorconnectionsymbol.c' || echo '$(srcdir)/'`components/vectorconnectionsymbol.c
+
+vectorconnectionsymbol.obj: components/vectorconnectionsymbol.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT vectorconnectionsymbol.obj -MD -MP -MF "$(DEPDIR)/vectorconnectionsymbol.Tpo" -c -o vectorconnectionsymbol.obj `if test -f 'components/vectorconnectionsymbol.c'; then $(CYGPATH_W) 'components/vectorconnectionsymbol.c'; else $(CYGPATH_W) '$(srcdir)/components/vectorconnectionsymbol.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/vectorconnectionsymbol.Tpo" "$(DEPDIR)/vectorconnectionsymbol.Po"; else rm -f "$(DEPDIR)/vectorconnectionsymbol.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/vectorconnectionsymbol.c' object='vectorconnectionsymbol.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o vectorconnectionsymbol.obj `if test -f 'components/vectorconnectionsymbol.c'; then $(CYGPATH_W) 'components/vectorconnectionsymbol.c'; else $(CYGPATH_W) '$(srcdir)/components/vectorconnectionsymbol.c'; fi`
+
+vectorcontour.o: components/vectorcontour.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT vectorcontour.o -MD -MP -MF "$(DEPDIR)/vectorcontour.Tpo" -c -o vectorcontour.o `test -f 'components/vectorcontour.c' || echo '$(srcdir)/'`components/vectorcontour.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/vectorcontour.Tpo" "$(DEPDIR)/vectorcontour.Po"; else rm -f "$(DEPDIR)/vectorcontour.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/vectorcontour.c' object='vectorcontour.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o vectorcontour.o `test -f 'components/vectorcontour.c' || echo '$(srcdir)/'`components/vectorcontour.c
+
+vectorcontour.obj: components/vectorcontour.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT vectorcontour.obj -MD -MP -MF "$(DEPDIR)/vectorcontour.Tpo" -c -o vectorcontour.obj `if test -f 'components/vectorcontour.c'; then $(CYGPATH_W) 'components/vectorcontour.c'; else $(CYGPATH_W) '$(srcdir)/components/vectorcontour.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/vectorcontour.Tpo" "$(DEPDIR)/vectorcontour.Po"; else rm -f "$(DEPDIR)/vectorcontour.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/vectorcontour.c' object='vectorcontour.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o vectorcontour.obj `if test -f 'components/vectorcontour.c'; then $(CYGPATH_W) 'components/vectorcontour.c'; else $(CYGPATH_W) '$(srcdir)/components/vectorcontour.c'; fi`
+
+vectorsegment.o: components/vectorsegment.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT vectorsegment.o -MD -MP -MF "$(DEPDIR)/vectorsegment.Tpo" -c -o vectorsegment.o `test -f 'components/vectorsegment.c' || echo '$(srcdir)/'`components/vectorsegment.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/vectorsegment.Tpo" "$(DEPDIR)/vectorsegment.Po"; else rm -f "$(DEPDIR)/vectorsegment.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/vectorsegment.c' object='vectorsegment.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o vectorsegment.o `test -f 'components/vectorsegment.c' || echo '$(srcdir)/'`components/vectorsegment.c
+
+vectorsegment.obj: components/vectorsegment.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT vectorsegment.obj -MD -MP -MF "$(DEPDIR)/vectorsegment.Tpo" -c -o vectorsegment.obj `if test -f 'components/vectorsegment.c'; then $(CYGPATH_W) 'components/vectorsegment.c'; else $(CYGPATH_W) '$(srcdir)/components/vectorsegment.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/vectorsegment.Tpo" "$(DEPDIR)/vectorsegment.Po"; else rm -f "$(DEPDIR)/vectorsegment.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/vectorsegment.c' object='vectorsegment.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o vectorsegment.obj `if test -f 'components/vectorsegment.c'; then $(CYGPATH_W) 'components/vectorsegment.c'; else $(CYGPATH_W) '$(srcdir)/components/vectorsegment.c'; fi`
 
 .l.c:
 	$(LEXCOMPILE) $<
@@ -1043,7 +1475,7 @@ check-TESTS: $(TESTS)
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/bin $(distdir)/emacs/neurospaces-mode $(distdir)/neurospaces $(distdir)/neurospaces/genesis/olf $(distdir)/neurospaces/genesis/sim
+	$(mkdir_p) $(distdir)/bin $(distdir)/emacs/neurospaces-mode $(distdir)/neurospaces $(distdir)/neurospaces/components $(distdir)/neurospaces/genesis/olf $(distdir)/neurospaces/genesis/sim
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \

@@ -24,14 +24,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "neurospaces/cell.h"
-#include "neurospaces/segment.h"
+#include "neurospaces/algorithm.h"
+#include "neurospaces/components/cell.h"
+#include "neurospaces/components/segment.h"
+#include "neurospaces/components/vector.h"
 #include "neurospaces/hines_list.h"
 #include "neurospaces/idin.h"
 #include "neurospaces/modelevent.h"
-#include "neurospaces/algorithm.h"
 #include "neurospaces/parsersupport.h"
-#include "neurospaces/vector.h"
 
 #include "algorithms/event/serialcell.h"
 #include "algorithms/event/serialsegment.h"

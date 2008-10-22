@@ -24,15 +24,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "neurospaces/idin.h"
 #include "neurospaces/algorithmclass.h"
 #include "neurospaces/algorithminstance.h"
+#include "neurospaces/components/population.h"
+#include "neurospaces/components/projection.h"
+#include "neurospaces/components/vectorconnection.h"
+#include "neurospaces/idin.h"
 #include "neurospaces/parsersupport.h"
 #include "neurospaces/pidinstack.h"
-#include "neurospaces/population.h"
-#include "neurospaces/projection.h"
 #include "neurospaces/symbolvirtual_protos.h"
-#include "neurospaces/vectorconnection.h"
 
 #include "projectionvolume.h"
 #include "projectionvolumeinstance.h"

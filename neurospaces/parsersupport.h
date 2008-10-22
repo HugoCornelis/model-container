@@ -238,7 +238,7 @@ do {									\
 
 
 #include "algorithminstance.h"
-#include "algorithmsymbol.h"
+#include "neurospaces/components/algorithmsymbol.h"
 
 
 // parsing function itself

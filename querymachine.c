@@ -55,18 +55,18 @@ extern "C" {
 #endif
 
 
-#include "neurospaces/attachment.h"
-#include "neurospaces/coordinatecache.h"
+#include "neurospaces/algorithmset.h"
 #include "neurospaces/biolevel.h"
-#include "neurospaces/segment.h"
+#include "neurospaces/components/attachment.h"
+#include "neurospaces/components/root.h"
+#include "neurospaces/components/segment.h"
+#include "neurospaces/coordinatecache.h"
 #include "neurospaces/importedfile.h"
 #include "neurospaces/inputoutput.h"
-#include "neurospaces/algorithmset.h"
 #include "neurospaces/namespace.h"
 #include "neurospaces/pidinstack.h"
 #include "neurospaces/projectionquery.h"
 #include "neurospaces/querymachine.h"
-#include "neurospaces/root.h"
 #include "neurospaces/solverinfo.h"
 #include "neurospaces/symbols.h"
 #include "neurospaces/symboltable.h"

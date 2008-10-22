@@ -24,13 +24,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "neurospaces/connection.h"
+#include "neurospaces/algorithm.h"
+#include "neurospaces/components/connection.h"
+#include "neurospaces/components/vector.h"
 #include "neurospaces/hines_list.h"
 #include "neurospaces/idin.h"
 #include "neurospaces/modelevent.h"
-#include "neurospaces/algorithm.h"
 #include "neurospaces/parsersupport.h"
-#include "neurospaces/vector.h"
 
 #include "algorithms/event/serialconnection.h"
 

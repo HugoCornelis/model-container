@@ -26,35 +26,35 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "neurospaces/algorithmsymbol.h"
-#include "neurospaces/attachment.h"
-#include "neurospaces/axonhillock.h"
-#include "neurospaces/biocomp.h"
 #include "neurospaces/biolevel.h"
-#include "neurospaces/cell.h"
 #include "neurospaces/cachedparameter.h"
-#include "neurospaces/connection.h"
-#include "neurospaces/channel.h"
-#include "neurospaces/equation.h"
-#include "neurospaces/group.h"
+#include "neurospaces/components/algorithmsymbol.h"
+#include "neurospaces/components/attachment.h"
+#include "neurospaces/components/axonhillock.h"
+#include "neurospaces/components/biocomp.h"
+#include "neurospaces/components/cell.h"
+#include "neurospaces/components/channel.h"
+#include "neurospaces/components/connection.h"
+#include "neurospaces/components/equation.h"
+#include "neurospaces/components/group.h"
+#include "neurospaces/components/iohier.h"
+#include "neurospaces/components/network.h"
+#include "neurospaces/components/pool.h"
+#include "neurospaces/components/population.h"
+#include "neurospaces/components/projection.h"
+#include "neurospaces/components/randomvalue.h"
+#include "neurospaces/components/root.h"
+#include "neurospaces/components/segment.h"
+#include "neurospaces/components/vector.h"
+#include "neurospaces/components/vectorconnection.h"
+#include "neurospaces/components/vectorsegment.h"
 #include "neurospaces/idin.h"
-#include "neurospaces/iohier.h"
 #include "neurospaces/importedfile.h"
-#include "neurospaces/network.h"
 #include "neurospaces/parametercache.h"
 #include "neurospaces/pidinstack.h"
-#include "neurospaces/pool.h"
-#include "neurospaces/population.h"
-#include "neurospaces/projection.h"
-#include "neurospaces/randomvalue.h"
-#include "neurospaces/root.h"
-#include "neurospaces/segment.h"
-#include "neurospaces/symboltable.h"
 #include "neurospaces/symbols.h"
+#include "neurospaces/symboltable.h"
 #include "neurospaces/symbolvirtual_protos.h"
-#include "neurospaces/vector.h"
-#include "neurospaces/vectorconnection.h"
-#include "neurospaces/vectorsegment.h"
 #include "neurospaces/workload.h"
 
 
@@ -113,6 +113,49 @@ int SymbolDeleter(struct TreespaceTraversal *ptstr, void *pvUserdata)
     //- return result
 
     return(iResult);
+}
+
+
+/// **************************************************************************
+///
+/// SHORT: BaseSymbolGetID()
+///
+/// ARGS.:
+///
+///	phsle.: symbol to get ID for.
+///
+/// RTN..: char *
+///
+///	Unique string representation identifying this symbol content.
+///
+/// DESCR: Get ID identifying this symbol content.
+///
+/// NOTE.:
+///
+/// 	The result is a pointer to static memory and must be used
+/// 	immediately.
+///
+/// **************************************************************************
+
+char *
+BaseSymbolGetID(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)
+{
+    //- set default result: none
+
+    char *pcResult = NULL;
+
+    //- define result
+
+    static char pc[100];
+
+    if (sprintf(pc, "%p", phsle) >= 0)
+    {
+	pcResult = pc;
+    }
+
+    //- return result
+
+    return(pcResult);
 }
 
 
