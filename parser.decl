@@ -39,6 +39,7 @@
 #include "neurospaces/components/emcontour.h"
 #include "neurospaces/function.h"
 #include "neurospaces/components/gatekinetic.h"
+#include "neurospaces/components/groupedparameters.h"
 #include "neurospaces/neurospaces.h"
 #include "neurospaces/components/fiber.h"
 #include "neurospaces/components/group.h"

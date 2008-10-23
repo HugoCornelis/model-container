@@ -79,6 +79,10 @@ struct symtab_GroupedParameters * GroupedParametersCalloc(void)
 
 void GroupedParametersInit(struct symtab_GroupedParameters *pgrpp)
 {
+    //- initialize base symbol
+
+    BioComponentInit(&pgrpp->bio);
+
     //- set type
 
     pgrpp->bio.ioh.iol.hsle.iType = HIERARCHY_TYPE_symbols_grouped_parameters;

@@ -21,6 +21,7 @@
     struct symtab_Function *pfun;
     struct symtab_GateKinetic *pgatk;
     struct symtab_Group *pgrup;
+    struct symtab_GroupedParameters *pgrpp;
     struct symtab_HSolveListElement *phsle;
     struct symtab_IOContainer *pioc;
     struct symtab_IdentifierIndex *pidin;
@@ -115,6 +116,10 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pgrup> GroupedModelSection
 %type <pidin> GroupedModelSectionFront
 %type <pgrup> GroupedModelDescription
+%type <phsle> GroupedParametersSymbol
+%type <pgrpp> GroupedParametersSection
+%type <pidin> GroupedParametersSectionFront
+%type <pgrpp> GroupedParametersDescription
 %type <phsle> ChannelComponent
 %type <phsle> SegmentComponent
 %type <phsle> SegmentGroupComponent
@@ -944,6 +949,8 @@ AnySymbol	/* <phsle> */
 	|
 		GroupedModelSymbol
 	|
+		GroupedParametersSymbol
+	|
 		FiberModelSymbol
 	|
 		EMContourSymbol
@@ -1157,6 +1164,17 @@ ContourPointSymbol
 GroupedModelSymbol
 	:
 		GroupedModelSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = (struct symtab_HSolveListElement *)$1;
+		}
+	;
+
+GroupedParametersSymbol
+	:
+		GroupedParametersSection
 		{
 #line
 		    //- put symbol table element on stack
@@ -2340,6 +2358,114 @@ GroupedModelDescription	/* <pgrup> */
 		}
 	|
 		GroupedModelDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put extension on stack
+
+		    $$ = $1;
+		}
+	;
+
+GroupedParametersSection	/* <pgrpp> */
+	:
+		GroupedParametersSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			GroupedParametersDescription
+		GroupedParametersSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put group info on stack
+
+		    $$ = $4;
+		}
+	;
+
+GroupedParametersSectionFront	/* <pidin> */
+	:
+		TOKEN_PARAMETER_GROUP
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+GroupedParametersSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_PARAMETER_GROUP
+		{
+#line
+		}
+	;
+
+GroupedParametersDescription	/* <pgrup> */
+	:
+		{
+#line
+		    //- allocate extension
+
+		    $$ = GroupedParametersCalloc();
+
+		    //- set actual symbol
+
+		    //! note : will not work, should use EndPushedPidin
+		    //! and related here
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		GroupedParametersDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put extension on stack
+
+		    $$ = $1;
+		}
+	|
+		GroupedParametersDescription
 		Parameters
 		{
 #line
