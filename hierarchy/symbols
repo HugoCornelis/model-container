@@ -744,6 +744,16 @@ my $class_hierarchy
 # 				   },
 # 		    },
 
+	grouped_parameters => {
+			       allows => {
+					 },
+			       description => 'a group of parameters',
+			       isa => 'bio_comp',
+			       name => 'symtab_GroupedParameters',
+			       parameters => {
+					     },
+			       token_name => 'TOKEN_PARAMETER_GROUP',
+			      },
 	invisible => {
 		      description => 'an entry that has been inserted during memory optimization, and is generally invisible to the user',
 		      isa => 'symbol',

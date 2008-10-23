@@ -27,6 +27,16 @@ PUBLIC_MODELS
 			PARAMETER ( B = .->A ),
 		END PARAMETERS
 
+		PARAMETER_GROUP nernst
+			PARAMETER ( GMAX = 5 ),
+			PARAMETER
+			( Erev = NERNST
+				(PARAMETER ( Cin = ^/ca_pool->concen ),
+					PARAMETER ( Cout = 2.4 ),
+					PARAMETER ( valency = ^/ca_pool->VAL) ,/* 2.0, */
+					PARAMETER ( T = 37.0) )),
+		END PARAMETER_GROUP
+
 	END SEGMENT
 
 END PUBLIC_MODELS

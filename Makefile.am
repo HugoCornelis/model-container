@@ -56,6 +56,7 @@ libneurospacesread_a_SOURCES = \
 	components/fiber.c \
 	components/gatekinetic.c \
 	components/group.c \
+	components/groupedparameters.c \
 	components/hhgate.c \
 	components/iohier.c \
 	components/iol.c \
@@ -223,6 +224,7 @@ nobase_include_HEADERS = \
 	neurospaces/components/fiber.h \
 	neurospaces/components/gatekinetic.h \
 	neurospaces/components/group.h \
+	neurospaces/components/groupedparameters.h \
 	neurospaces/components/hhgate.h \
 	neurospaces/components/iohier.h \
 	neurospaces/components/iol.h \

@@ -87,10 +87,11 @@ am_libneurospacesread_a_OBJECTS = algorithm.$(OBJEXT) \
 	connection.$(OBJEXT) connectionsymbol.$(OBJEXT) \
 	contourpoint.$(OBJEXT) emcontour.$(OBJEXT) equation.$(OBJEXT) \
 	fiber.$(OBJEXT) gatekinetic.$(OBJEXT) group.$(OBJEXT) \
-	hhgate.$(OBJEXT) iohier.$(OBJEXT) iol.$(OBJEXT) \
-	network.$(OBJEXT) pool.$(OBJEXT) population.$(OBJEXT) \
-	projection.$(OBJEXT) randomvalue.$(OBJEXT) root.$(OBJEXT) \
-	segment.$(OBJEXT) segmenter.$(OBJEXT) vector.$(OBJEXT) \
+	groupedparameters.$(OBJEXT) hhgate.$(OBJEXT) iohier.$(OBJEXT) \
+	iol.$(OBJEXT) network.$(OBJEXT) pool.$(OBJEXT) \
+	population.$(OBJEXT) projection.$(OBJEXT) \
+	randomvalue.$(OBJEXT) root.$(OBJEXT) segment.$(OBJEXT) \
+	segmenter.$(OBJEXT) vector.$(OBJEXT) \
 	vectorconnection.$(OBJEXT) vectorconnectionsymbol.$(OBJEXT) \
 	vectorcontour.$(OBJEXT) vectorsegment.$(OBJEXT) \
 	connectioncache.$(OBJEXT) coordinatecache.$(OBJEXT) \
@@ -298,6 +299,7 @@ libneurospacesread_a_SOURCES = \
 	components/fiber.c \
 	components/gatekinetic.c \
 	components/group.c \
+	components/groupedparameters.c \
 	components/hhgate.c \
 	components/iohier.c \
 	components/iol.c \
@@ -402,6 +404,7 @@ nobase_include_HEADERS = \
 	neurospaces/components/fiber.h \
 	neurospaces/components/gatekinetic.h \
 	neurospaces/components/group.h \
+	neurospaces/components/groupedparameters.h \
 	neurospaces/components/hhgate.h \
 	neurospaces/components/iohier.h \
 	neurospaces/components/iol.h \
@@ -653,6 +656,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/function.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gatekinetic.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/group.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/groupedparameters.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hhgate.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hines_listlist.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/idin.Po@am__quote@
@@ -922,6 +926,20 @@ group.obj: components/group.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/group.c' object='group.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o group.obj `if test -f 'components/group.c'; then $(CYGPATH_W) 'components/group.c'; else $(CYGPATH_W) '$(srcdir)/components/group.c'; fi`
+
+groupedparameters.o: components/groupedparameters.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT groupedparameters.o -MD -MP -MF "$(DEPDIR)/groupedparameters.Tpo" -c -o groupedparameters.o `test -f 'components/groupedparameters.c' || echo '$(srcdir)/'`components/groupedparameters.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/groupedparameters.Tpo" "$(DEPDIR)/groupedparameters.Po"; else rm -f "$(DEPDIR)/groupedparameters.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/groupedparameters.c' object='groupedparameters.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o groupedparameters.o `test -f 'components/groupedparameters.c' || echo '$(srcdir)/'`components/groupedparameters.c
+
+groupedparameters.obj: components/groupedparameters.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT groupedparameters.obj -MD -MP -MF "$(DEPDIR)/groupedparameters.Tpo" -c -o groupedparameters.obj `if test -f 'components/groupedparameters.c'; then $(CYGPATH_W) 'components/groupedparameters.c'; else $(CYGPATH_W) '$(srcdir)/components/groupedparameters.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/groupedparameters.Tpo" "$(DEPDIR)/groupedparameters.Po"; else rm -f "$(DEPDIR)/groupedparameters.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/groupedparameters.c' object='groupedparameters.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o groupedparameters.obj `if test -f 'components/groupedparameters.c'; then $(CYGPATH_W) 'components/groupedparameters.c'; else $(CYGPATH_W) '$(srcdir)/components/groupedparameters.c'; fi`
 
 hhgate.o: components/hhgate.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT hhgate.o -MD -MP -MF "$(DEPDIR)/hhgate.Tpo" -c -o hhgate.o `test -f 'components/hhgate.c' || echo '$(srcdir)/'`components/hhgate.c; \

@@ -109,6 +109,7 @@ public_models		{	return(TOKEN_PUBLIC_MODELS);	}
 algorithm		{	return(TOKEN_ALGORITHM);	}
 private_models		{	return(TOKEN_PRIVATE_MODELS);	}
 fiber			{	return(TOKEN_FIBER);		}
+parameter_group		{	return(TOKEN_PARAMETER_GROUP);	}
 group			{	return(TOKEN_GROUP);		}
 has			{	return(TOKEN_HAS);		}
 child			{	return(TOKEN_CHILD);		}
