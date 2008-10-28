@@ -7002,7 +7002,7 @@ QueryHandlerSegmenterTips
 
 	if (instanceof_segmenter(phsle))
 	{
-	    //- linearize
+	    //- report tips
 
 	    struct symtab_Segmenter *psegr = (struct symtab_Segmenter *)phsle;
 
