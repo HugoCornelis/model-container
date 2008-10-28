@@ -231,6 +231,13 @@ IOHierarchyLookupHierarchical
 	{
 	    return(phsleResult);
 	}
+	else
+	{
+	  phsleResult
+	    = SymbolLookupHierarchical
+	    (&pioh->iol.hsle, ppist, iLevel + 1, TRUE);
+	  
+	}
     }
 
     //- loop over sub symbols
