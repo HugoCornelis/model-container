@@ -6759,7 +6759,7 @@ QueryHandlerSegmenterLinearize
 	    struct symtab_Segmenter *psegr = (struct symtab_Segmenter *)phsle;
 
 	    fprintf(stdout, "---\n", psegr->desegmenter.iSegments);
-	    fprintf(stdout, "Number of segments linearized: %i\n", psegr->desegmenter.iSegments);
+	    fprintf(stdout, "Number of segments: %i\n", psegr->desegmenter.iSegments);
 	    fprintf(stdout, "Number of segments without parents: %i\n", psegr->desegmenter.iNoParents);
 	    fprintf(stdout, "Number of segment tips: %i\n", psegr->desegmenter.iTips);
 
