@@ -129,6 +129,9 @@ extern char *ppcParameterStruct[];
     (ppcParameterStruct[(iType)])
 
 
+
+
+
 //f static inline prototypes
 
 #ifndef SWIG
@@ -173,6 +176,7 @@ int ParameterIsField(struct symtab_Parameters *ppar);
 static inline
 #endif
 int ParameterIsFunction(struct symtab_Parameters *ppar);
+
 
 #ifndef SWIG
 static inline
@@ -377,6 +381,9 @@ int ParameterIsFunction(struct symtab_Parameters *ppar)
 }
 
 
+
+
+
 ///
 /// check if number
 ///
@@ -564,6 +571,11 @@ struct PidinStack;
 
 
 struct symtab_Parameters * ParameterCalloc(void);
+
+struct symtab_Function * 
+ParameterContextGetFunction(struct symtab_Parameters *ppar, 
+			    struct PidinStack *ppist);
+
 
 void ParameterFree(struct symtab_Parameters *ppar);
 

@@ -98,6 +98,65 @@ struct symtab_Parameters * ParameterCalloc(void)
 }
 
 
+
+///
+///
+///
+struct symtab_Function * 
+ParameterContextGetFunction(struct symtab_Parameters *ppar, struct PidinStack *ppist)
+{
+
+
+    if (!ParameterIsField(ppar))
+    {
+	return NULL;
+    }
+
+    //t pcFieldname = ParameterGetFieldName(ppar)
+    //t ppistPar1 = ppist
+    //t while ParameterIsField(ppar)
+    //t   ppistPar2 = ParameterResolveToPidinStack(ppar, ppistPar1)
+    //t   phsle = PidinStackLookupTopSymbol(ppistPar2)
+    //t   ppar = SymbolFindParameter(phsle, ppistPar2, pcFieldname)
+    //t
+    //t PidinStackFree(ppistPar2)
+    //t if ParameterIsFunction(ppar)
+    //t   return 1
+    //t else
+    //t   return 0
+  
+    struct PidinStack *ppistPar1 = ppist;
+
+    while (ParameterIsField(ppar))
+    {
+	struct PidinStack *ppistPar2 = ParameterResolveToPidinStack(ppar,ppistPar1);
+
+	struct symtab_HSolveListElement *phsle2 = PidinStackLookupTopSymbol(ppistPar2);
+
+	char *pcFieldname = ParameterGetFieldName(ppar);
+
+	ppar = SymbolFindParameter(phsle2,ppistPar2,pcFieldname);
+
+	ppistPar1 = PidinStackDuplicate(ppistPar2);
+
+	PidinStackFree(ppistPar2);
+    }
+
+    PidinStackFree(ppistPar1);
+
+    if (ParameterIsFunction(ppar))
+    {
+	return ParameterGetFunction(ppar);
+    }
+
+    return NULL;
+}
+
+
+
+
+
+
 /// **************************************************************************
 ///
 /// SHORT: ParameterFree()
