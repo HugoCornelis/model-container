@@ -325,9 +325,6 @@ consequences for Heccer.  I guess I need to do comparable things for
 ** ParameterResolveFunctionalInput()
 ** ParameterResolveSymbol()
 
-* Remove querymachine command 'resolvechildposition'.
-See -r 883.
-
 * neurospaces as a static library & swig
 http://www.swig.org/Doc1.3/Modules.html#Modules_nn4
 
