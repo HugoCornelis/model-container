@@ -220,6 +220,31 @@ value = 3.40282e+38
 				command => './neurospacesparse',
 				command_tests => [
 						  {
+						   description => "Has neurospaces reported that we need two parameters for this command (1) ?",
+						   read => "please specify a context and two parameters on the command line",
+						   write => "printparameterinput",
+						  },
+						  {
+						   description => "Has neurospaces reported that we need two parameters for this command (2) ?",
+						   read => "please specify a context and two parameters on the command line",
+						   write => "printparameterinput /Purkinje/segments/main[0]/CaT",
+						  },
+						  {
+						   description => "Has neurospaces reported that we need two parameters for this command (3) ?",
+						   read => "please specify a context and two parameters on the command line",
+						   write => "printparameterinput /Purkinje/segments/main[0]/CaT Erev",
+						  },
+						  {
+						   description => "Has neurospaces reported that we need two parameters for this command (4) ?",
+						   read => "input not found",
+						   write => "printparameterinput /Purkinje/segments/main[0]/CaT Erev Cin ",
+						  },
+						  {
+						   description => "Has neurospaces reported that the symbol cannot be found ?",
+						   read => "symbol not found",
+						   write => "printparameterinput /Purkinje/segments/CaT Erev concen ",
+						  },
+						  {
 						   description => "Has neurospaces reported that the parameter cannot be found ?",
 
 						   #t would be better if said 'parameter not found'
