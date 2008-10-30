@@ -606,6 +606,8 @@ ParameterNewFromString
 int ParameterPrint
 (struct symtab_Parameters *ppar, int bAll, int iIndent, FILE *pfile);
 
+int ParameterPrintInfo(struct symtab_Parameters *ppar,struct PidinStack *ppist);
+
 struct symtab_HSolveListElement *
 ParameterResolveFunctionalInput
 (struct symtab_Parameters *ppar,
