@@ -591,7 +591,8 @@ int ParameterPrintInfo(struct symtab_Parameters *ppar,struct PidinStack *ppist)
       fprintf(stdout,"  type: Number\n");
       fprintf(stdout,"  value: %g\n", d);
       fprintf(stdout,"  flags: %i\n",ppar->iFlags);
-		  
+      return 1;
+
     }
   if(ParameterIsFunction(ppar))
     {
@@ -626,22 +627,25 @@ int ParameterPrintInfo(struct symtab_Parameters *ppar,struct PidinStack *ppist)
 	      fprintf(stdout,"    %s: %g\n",
 		      pparFunCurr->pcIdentifier,
 		      pparFunCurr->uValue.dNumber);
-
+	      return 1;
 	      break;
 
 
 
 	    case (TYPE_PARA_FIELD):		      
 
-	      fprintf(stdout,"\t%s = %s\n",
+	      fprintf(stdout,"    %s: %s\n",
 		      pparFunCurr->pcIdentifier,
+
+
 		      pparFunCurr->uValue.dNumber);
 
 	      break;
 
+
 	    case (TYPE_PARA_STRING):
 
-	      fprintf(stdout,"\t%s = %s\n",
+	      fprintf(stdout,"    %s: %s\n",
 		      pparFunCurr->pcIdentifier,
 		      pparFunCurr->uValue.pcString);
 	      break;
@@ -658,13 +662,17 @@ int ParameterPrintInfo(struct symtab_Parameters *ppar,struct PidinStack *ppist)
 
   if(ParameterIsField(ppar))
     {
-      //- resolve parameter value
+    
 
-      double d = ParameterResolveValue(ppar, ppist);
+      //double d = ParameterResolveValue(ppar, ppist);
 
-      //- print result
+      char *pcFieldName = ParameterGetFieldName(ppar);
+      
+      struct symtab_IdentifierIndex *pidinField = ParameterGetFieldPidin(ppar);
 
-      fprintf(stdout, "value = %g\n", d);
+      //      struct PidinStack *ppistPar = ParameterResolveToPidinStack(
+      fprintf(stdout,"    type: Field\n");
+      fprintf(stdout,"    field name: %s\n", pcFieldName);
     }
 
   //- for string parameter values
@@ -674,10 +682,11 @@ int ParameterPrintInfo(struct symtab_Parameters *ppar,struct PidinStack *ppist)
       //- print string result
 
       char *pc = ParameterGetString(ppar);
-	      
-      fprintf(stdout, "value = \"%s\"\n", pc);
-      fprintf(stdout,"type = String\n");
-      fprintf(stdout,"flags = %i\n",ppar->iFlags);
+      fprintf(stdout,"---\n");
+      fprintf(stdout,"  type: String\n");
+      fprintf(stdout,"  value: \"%s\"\n", pc);
+      fprintf(stdout,"  flags: %i\n",ppar->iFlags);
+      return 1;
     }
   else if (ParameterIsSymbolic(ppar))
     {
@@ -704,6 +713,153 @@ int ParameterPrintInfo(struct symtab_Parameters *ppar,struct PidinStack *ppist)
 
 
 }
+
+
+
+
+
+
+
+
+
+
+/// **************************************************************************
+///
+/// SHORT: ParameterPrintInfoRecursive()
+///
+///
+/// **************************************************************************
+int ParameterPrintInfoRecursive(struct symtab_Parameters *ppar,struct PidinStack *ppist,int iLevel)
+{
+
+
+
+
+  if (ParameterIsNumber(ppar))
+    {
+
+
+      double d = ParameterResolveValue(ppar, ppist);
+
+      //- print result
+      fprintf(stdout,"---\n");
+      fprintf(stdout,"  name: %s\n",ParameterGetName(ppar));
+      fprintf(stdout,"  type: Number\n");
+      fprintf(stdout,"  value: %g\n", d);
+      fprintf(stdout,"  flags: %i\n",ppar->iFlags);
+      return 1;
+
+    }
+  if(ParameterIsField(ppar))
+    {
+    
+
+      //double d = ParameterResolveValue(ppar, ppist);
+
+      char *pcFieldName = ParameterGetFieldName(ppar);
+
+      struct PidinStack *ppistValue = ParameterResolveToPidinStack(ppar,ppist);
+      
+      fprintf(stdout,"  type: Field\n");
+      fprintf(stdout,"  field name: %s\n", pcFieldName);
+
+
+      fprintf(stdout,"  value: ");
+      IdinPrint(ppar->uValue.pidin,stdout);
+      fprintf(stdout,"\n");
+
+      fprintf(stdout,"  resolved value: ");
+      PidinStackTo_stdout(ppistValue);
+      fprintf("->%s\n",pcFieldName);
+
+
+      fprintf(stdout,"hi there\n");
+      return 1;
+    }
+
+  //- for string parameter values
+
+  else if (ParameterIsString(ppar))
+    {
+      //- print string result
+
+      char *pc = ParameterGetString(ppar);
+      fprintf(stdout,"---\n");
+      fprintf(stdout,"  name: %s\n",ParameterGetName(ppar));
+      fprintf(stdout,"  type: String\n");
+      fprintf(stdout,"  value: \"%s\"\n", pc);
+      fprintf(stdout,"  flags: %i\n",ppar->iFlags);
+      return 1;
+
+    }
+  else if (ParameterIsSymbolic(ppar))
+    {
+      //- give diagnostics: not implemented yet
+
+      fprintf(stdout, "\nreporting of symbolic parameters is not implemented yet\n");
+      
+      return 0;
+
+    }
+  else if (ParameterIsAttribute(ppar))
+    {
+      //- give diagnostics: not implemented yet
+
+      fprintf(stdout, "\nreporting of attribute parameters is not implemented yet\n");
+
+      return 0;
+    }
+
+  if(ParameterIsFunction(ppar))
+    {
+
+
+      struct symtab_Function *pfun = ParameterContextGetFunction(ppar,ppist);
+		
+      if(!pfun)
+	{
+	  pfun = ppar->uValue.pfun;
+	}
+		
+      fprintf(stdout,"---\n");
+      fprintf(stdout,"  type: Function\n");
+      fprintf(stdout,"  Function name: %s\n", FunctionGetName(pfun));
+
+		
+
+      fprintf(stdout,"  Parameters:\n");
+
+      struct symtab_Parameters *pparFunCurr = 
+	pfun->pparc->ppars;
+
+
+      for(;pparFunCurr;pparFunCurr = pparFunCurr->pparNext)
+      {
+
+	ParameterPrintInfoRecursive(pparFunCurr,ppist,iLevel+1);    
+      
+      }
+
+      return 1;
+
+    }
+
+
+
+//- else
+
+ else
+   {
+     //- diag's
+
+     fprintf(stdout, "parameter (%s) not found in symbol\n",ppar->pcIdentifier);
+
+     return 0;
+   }
+
+
+}
+
 
 
 

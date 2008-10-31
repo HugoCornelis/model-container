@@ -5086,7 +5086,7 @@ static int QueryHandlerPrintParameterInfo
 
 	    if (ppar)
 	    {
-	      int iResult = ParameterPrintInfo(ppar,ppist);
+	      int iResult = ParameterPrintInfoRecursive(ppar,ppist,3);
 
 	      return iResult;
 	    }
