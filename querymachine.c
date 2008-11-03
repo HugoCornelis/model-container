@@ -5086,8 +5086,10 @@ static int QueryHandlerPrintParameterInfo
 
 	    if (ppar)
 	    {
-	      int iResult = ParameterPrintInfoRecursive(ppar,ppist,3);
 
+	      fprintf(stdout,"%s","---\n");
+	      int iResult = ParameterPrintInfoRecursive(ppar,ppist,0);
+	      
 	      return iResult;
 	    }
 	}

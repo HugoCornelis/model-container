@@ -733,7 +733,14 @@ int ParameterPrintInfoRecursive(struct symtab_Parameters *ppar,struct PidinStack
 {
 
 
+  int iIndent = (iLevel==0) ? 0:(iLevel*2);
 
+
+
+
+  PrintIndent(iIndent,stdout);
+  fprintf(stdout,"'parameter name': %s\n",ParameterGetName(ppar));
+ 
 
   if (ParameterIsNumber(ppar))
     {
@@ -742,11 +749,12 @@ int ParameterPrintInfoRecursive(struct symtab_Parameters *ppar,struct PidinStack
       double d = ParameterResolveValue(ppar, ppist);
 
       //- print result
-      fprintf(stdout,"---\n");
-      fprintf(stdout,"  name: %s\n",ParameterGetName(ppar));
-      fprintf(stdout,"  type: Number\n");
-      fprintf(stdout,"  value: %g\n", d);
-      fprintf(stdout,"  flags: %i\n",ppar->iFlags);
+
+      PrintIndent(iIndent,stdout);
+      fprintf(stdout,"type: Number\n");
+      PrintIndent(iIndent,stdout);
+      fprintf(stdout,"value: %g\n", d);
+
       return 1;
 
     }
@@ -759,21 +767,39 @@ int ParameterPrintInfoRecursive(struct symtab_Parameters *ppar,struct PidinStack
       char *pcFieldName = ParameterGetFieldName(ppar);
 
       struct PidinStack *ppistValue = ParameterResolveToPidinStack(ppar,ppist);
+
+      PrintIndent(iIndent,stdout);
+      fprintf(stdout,"'field name': %s\n", pcFieldName);
+
+      PrintIndent(iIndent,stdout);      
+      fprintf(stdout,"type: Field\n");
+
+      char pc[1024];
+
+      PrintIndent(iIndent,stdout);
+      fprintf(stdout,"%s","value: ");
+
+      struct PidinStack *ppist = PidinStackCalloc();
+
+      PidinStackPushAll(ppist, ppar->uValue.pidin);
+
+      PidinStackPrint(ppist, stdout);
+
+      PidinStackFree(ppist);      
+
+      //IdinPrint(ppar->uValue.pidin,stdout);
+      fprintf(stdout,"%s","\n");
+      //fprintf(stdout,"\n");
+
+
+
+      PrintIndent(iIndent,stdout);
+      PidinStackString(ppistValue, pc, sizeof(pc));  
+      fprintf(stdout,"'resolved value': %s%s%s\n",pc,"->",pcFieldName);
+
       
-      fprintf(stdout,"  type: Field\n");
-      fprintf(stdout,"  field name: %s\n", pcFieldName);
 
-
-      fprintf(stdout,"  value: ");
-      IdinPrint(ppar->uValue.pidin,stdout);
-      fprintf(stdout,"\n");
-
-      fprintf(stdout,"  resolved value: ");
-      PidinStackTo_stdout(ppistValue);
-      fprintf("->%s\n",pcFieldName);
-
-
-      fprintf(stdout,"hi there\n");
+     
       return 1;
     }
 
@@ -784,11 +810,13 @@ int ParameterPrintInfoRecursive(struct symtab_Parameters *ppar,struct PidinStack
       //- print string result
 
       char *pc = ParameterGetString(ppar);
-      fprintf(stdout,"---\n");
-      fprintf(stdout,"  name: %s\n",ParameterGetName(ppar));
-      fprintf(stdout,"  type: String\n");
-      fprintf(stdout,"  value: \"%s\"\n", pc);
-      fprintf(stdout,"  flags: %i\n",ppar->iFlags);
+     
+
+      PrintIndent(iIndent,stdout);
+      fprintf(stdout,"type: String\n");
+      PrintIndent(iIndent,stdout);
+      fprintf(stdout,"value: \"%s\"\n\n", pc);
+
       return 1;
 
     }
@@ -821,13 +849,17 @@ int ParameterPrintInfoRecursive(struct symtab_Parameters *ppar,struct PidinStack
 	  pfun = ppar->uValue.pfun;
 	}
 		
-      fprintf(stdout,"---\n");
-      fprintf(stdout,"  type: Function\n");
-      fprintf(stdout,"  Function name: %s\n", FunctionGetName(pfun));
+
+      PrintIndent(iIndent,stdout);
+      fprintf(stdout,"type: function\n");
+
+
+      PrintIndent(iIndent,stdout);
+      fprintf(stdout,"'function name': %s\n", FunctionGetName(pfun));
 
 		
-
-      fprintf(stdout,"  Parameters:\n");
+      PrintIndent(iIndent,stdout);
+      fprintf(stdout,"'function parameters':\n\n");
 
       struct symtab_Parameters *pparFunCurr = 
 	pfun->pparc->ppars;
@@ -836,7 +868,8 @@ int ParameterPrintInfoRecursive(struct symtab_Parameters *ppar,struct PidinStack
       for(;pparFunCurr;pparFunCurr = pparFunCurr->pparNext)
       {
 
-	ParameterPrintInfoRecursive(pparFunCurr,ppist,iLevel+1);    
+	ParameterPrintInfoRecursive(pparFunCurr,ppist,iLevel+1); 
+	fprintf(stdout,"%s","\n");
       
       }
 
