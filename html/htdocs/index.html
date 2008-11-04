@@ -179,13 +179,16 @@ This web page reflects the status as for project version python-2 of the Neurosp
 	  The <a href="#section-configurator">Configurator package</a>
 	  contains configuration utilities for the other tools.  It is
 	  not needed for the other tools to work properly.  Rather, it
-	  allows to set up database servers in a convenient way.
+	  allows to set up model database and simulation servers in a
+	  convenient way.
 
       </ul>
       <ul>
 	<li>
 
 	  There is also a <a
+	  href="http://neurospaces.blogspot.com/">Neurospaces blog</a>
+	  and a <a
 	  href="http://code.google.com/p/neurospaces/wiki/Index">wiki
 	  at googlecode</a> for the Neurospaces project, with
 	  information for developers.
@@ -215,7 +218,7 @@ This web page reflects the status as for project version python-2 of the Neurosp
       downloaded
       <a href="http://sourceforge.net/project/showfiles.php?group_id=162899">
         here</a>.  If you find the Neurospaces project interesting or
-        useful, you can always let me know.
+        useful, you can always let us know.
 
       <p>
 
@@ -231,7 +234,11 @@ This web page reflects the status as for project version python-2 of the Neurosp
       biological entities and end-user concepts instead of
       mathematical equations.  It provides a solver independent
       internal storage format for models to allow user invisible
-      optimizations of the numerical core.
+      optimizations of the numerical core.  By 'containing' the
+      biological model, the model container reliefs the implementation
+      of the numerical core from the software implementation pressures
+      typically associated with heterogeneously structured data such
+      as dendritic morphologies.
 
     </p><p>
 
@@ -331,8 +338,8 @@ This web page reflects the status as for project version python-2 of the Neurosp
       <p>
 
 	The <a href="CNS2006-workshop/index.html"> presentation given
-	at the CNS2006 meeting</a> gives a good view and feeling of
-	the functionality of Neurospaces.
+	at the CNS2006 meeting</a> gives a good view and feeling for
+	the functionality of the model container.
 
       <p>
 
@@ -1265,7 +1272,7 @@ $ neurospaces cells/purkinje/edsjb1994.ndf --traversal-symbol / --reporting-fiel
       <address><a href="mailto:hugo.cornelis@gmail.com"></a></address>
 <!-- Created: Thu Apr  6 11:31:32 CDT 2006 -->
 <!-- hhmts start -->
-Last modified: Mon Oct  6 17:00:38 CDT 2008
+Last modified: Mon Nov  3 21:43:31 CST 2008
 <!-- hhmts end -->
       <script type="text/javascript">
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
