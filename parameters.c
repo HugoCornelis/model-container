@@ -107,10 +107,10 @@ ParameterContextGetFunction(struct symtab_Parameters *ppar, struct PidinStack *p
 {
 
 
-    if (!ParameterIsField(ppar))
-    {
-	return NULL;
-    }
+/*     if (!ParameterIsField(ppar)) */
+/*     { */
+/* 	return NULL; */
+/*     } */
 
     //t pcFieldname = ParameterGetFieldName(ppar)
     //t ppistPar1 = ppist
@@ -125,9 +125,9 @@ ParameterContextGetFunction(struct symtab_Parameters *ppar, struct PidinStack *p
     //t else
     //t   return 0
   
-    struct PidinStack *ppistPar1 = ppist;
+  struct PidinStack *ppistPar1 = PidinStackDuplicate(ppist);
 
-    while (ParameterIsField(ppar))
+    while (!ParameterIsFunction(ppar))
     {
 	struct PidinStack *ppistPar2 = ParameterResolveToPidinStack(ppar,ppistPar1);
 
@@ -797,9 +797,7 @@ int ParameterPrintInfoRecursive(struct symtab_Parameters *ppar,struct PidinStack
       PidinStackString(ppistValue, pc, sizeof(pc));  
       fprintf(stdout,"'resolved value': %s%s%s\n",pc,"->",pcFieldName);
 
-      
-
-     
+           
       return 1;
     }
 
@@ -844,10 +842,10 @@ int ParameterPrintInfoRecursive(struct symtab_Parameters *ppar,struct PidinStack
 
       struct symtab_Function *pfun = ParameterContextGetFunction(ppar,ppist);
 		
-      if(!pfun)
-	{
-	  pfun = ppar->uValue.pfun;
-	}
+/*       if(!pfun) */
+/* 	{ */
+/* 	  pfun = ppar->uValue.pfun; */
+/* 	} */
 		
 
       PrintIndent(iIndent,stdout);
