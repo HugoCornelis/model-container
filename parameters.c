@@ -98,6 +98,47 @@ struct symtab_Parameters * ParameterCalloc(void)
 }
 
 
+///
+///
+///
+struct PidinStack * 
+ParameterContextGetFunctionContext(struct symtab_Parameters *ppar, struct PidinStack *ppist)
+{
+
+  struct PidinStack *ppistPar1 = PidinStackDuplicate(ppist);
+
+    while (!ParameterIsFunction(ppar))
+    {
+	struct PidinStack *ppistPar2 = ParameterResolveToPidinStack(ppar,ppistPar1);
+
+	struct symtab_HSolveListElement *phsle2 = PidinStackLookupTopSymbol(ppistPar2);
+
+	char *pcFieldname = ParameterGetFieldName(ppar);
+
+	if(pcFieldname)
+	{
+	
+	  ppar = SymbolFindParameter(phsle2,ppistPar2,pcFieldname);
+
+	  ppistPar1 = PidinStackDuplicate(ppistPar2);
+
+	  PidinStackFree(ppistPar2);
+
+	}
+	else
+	  break;
+    }
+
+
+    if (ParameterIsFunction(ppar))
+    {
+      return ppistPar1;
+    }
+
+    return NULL;
+}
+
+
 
 ///
 ///
@@ -135,11 +176,18 @@ ParameterContextGetFunction(struct symtab_Parameters *ppar, struct PidinStack *p
 
 	char *pcFieldname = ParameterGetFieldName(ppar);
 
-	ppar = SymbolFindParameter(phsle2,ppistPar2,pcFieldname);
+	if(pcFieldname)
+	{
+	
+	  ppar = SymbolFindParameter(phsle2,ppistPar2,pcFieldname);
 
-	ppistPar1 = PidinStackDuplicate(ppistPar2);
+	  ppistPar1 = PidinStackDuplicate(ppistPar2);
 
-	PidinStackFree(ppistPar2);
+	  PidinStackFree(ppistPar2);
+
+	}
+	else
+	  break;
     }
 
     PidinStackFree(ppistPar1);
@@ -1046,17 +1094,19 @@ ParameterResolveFunctionalInput
 
     //- if parameter is function
 
-    if (ParameterIsFunction(ppar))
-    {
-	//- get function
+    struct symtab_Function *pfun
+	  = ParameterContextGetFunction(ppar,ppist);
 
-	struct symtab_Function *pfun
-	    = ParameterGetFunction(ppar);
+    if (pfun)
+    {
+	//- get function context
+
+	struct PidinStack *ppistFun = ParameterContextGetFunctionContext(ppar,ppist);
 
 	//- set result : input from function
 
 	phsleResult
-	    = FunctionResolveInput(pfun, ppist, pcInput, iPosition);
+	    = FunctionResolveInput(pfun, ppistFun, pcInput, iPosition);
     }
 
     //- return result
@@ -1172,18 +1222,46 @@ ParameterResolveSymbol
 
     struct symtab_HSolveListElement *phsleResult = NULL;
 
-    //- get pidinstack from parameter elements
 
-    struct PidinStack *ppistPar
-	= ParameterResolveToPidinStack(ppar, ppist);
+    struct PidinStack *ppistPar1 = PidinStackDuplicate(ppist);
 
-    //- lookup symbol from pidinstack
 
-    phsleResult = SymbolsLookupHierarchical(NULL, ppistPar);
 
-    //- free pidin stack
+    while(ParameterIsSymbolic(ppar) || ParameterIsField(ppar))
+    {
+      
+      //- get pidinstack from parameter elements
 
-    PidinStackFree(ppistPar);
+      struct PidinStack *ppistPar2
+	= ParameterResolveToPidinStack(ppar, ppistPar1);
+
+      //- lookup symbol from pidinstack
+
+      phsleResult = PidinStackLookupTopSymbol(ppistPar2); 
+
+      
+      char *pcFieldname = ParameterGetFieldName(ppar); 
+      
+
+      if(phsleResult && pcFieldname)
+      {
+
+	//! Since this is a pointer to the parameter argument I'm not certain
+	//! changing this value is always safe. 
+
+	ppar = SymbolFindParameter(phsleResult,ppistPar1,pcFieldname);
+
+	ppistPar1 = PidinStackDuplicate(ppistPar2);
+
+	PidinStackFree(ppistPar2);
+	
+      }
+      else
+	break;
+
+    }
+
+    PidinStackFree(ppistPar1);
 
     //- return result
 
