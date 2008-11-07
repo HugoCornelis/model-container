@@ -178,7 +178,6 @@ my $class_hierarchy
 				    G => 'actual channel conductance, normally a solved variable',
 				    I => 'actual channel current, normally a solved variable',
 				   },
-		     token_name => 'TOKEN_CHANNEL',
 		    },
 	 concentration_gate_kinetic => {
 					allows => {
@@ -196,7 +195,6 @@ my $class_hierarchy
 						       'HH_NUMBER_OF_TABLE_ENTRIES' => 'number of table entries in the gate kinetic',
 						       'Tau' => 'time constant, B in EDS1994',
 						      },
-					token_name => 'TOKEN_CONCENTRATION_GATE_KINETIC',
 				       },
 	 gate_kinetic => {
 			  allows => {
@@ -257,7 +255,6 @@ my $class_hierarchy
 				     'state' => 'current state, normally a solved variable',
 				     'state_init' => 'initial value, commonly forward over backward steady states',
 				    },
-		      token_name => 'TOKEN_HH_GATE',
 		     },
 	 connection => {
 			allows => {
@@ -307,7 +304,6 @@ my $class_hierarchy
 					      'PRE' => 'connection pre synaptic symbol',
 					      'WEIGHT' => 'connection weight',
 					     },
-			       token_name => 'TOKEN_CONNECTION',
 			      },
 	 projection => {
 			annotations => {
@@ -324,7 +320,6 @@ my $class_hierarchy
 				       SOURCE => 'source population',
 				       TARGET => 'target population',
 				      },
-			token_name => 'TOKEN_PROJECTION',
 		       },
 	 pool => {
 		  allows => {
@@ -349,7 +344,6 @@ my $class_hierarchy
 				 concen => 'actual concentration value, normally a solved variable',
 				 concen_init => 'initial concentration level',
 				},
-		  token_name => 'TOKEN_POOL',
 		 },
 	),
 
@@ -409,7 +403,6 @@ my $class_hierarchy
 			   name => 'symtab_AxonHillock',
 			   parameters => {
 					 },
-			   token_name => 'TOKEN_AXON_HILLOCK',
 			  },
 	  cell => {
 		   allows => {
@@ -423,7 +416,6 @@ my $class_hierarchy
 		   name => 'symtab_Cell',
 		   parameters => {
 				 },
-		   token_name => 'TOKEN_CELL',
 		  },
 	  fiber => {
 		    allows => {
@@ -439,7 +431,6 @@ my $class_hierarchy
 				   RATE => 'average firing frequence, bind it to the threshold of a spikegenerator',
 				   REFRACTORY => 'absolute refractory period',
 				  },
-		    token_name => 'TOKEN_FIBER',
 		   },
 	  network => {
 		      allows => {
@@ -455,7 +446,6 @@ my $class_hierarchy
 		      name => 'symtab_Network',
 		      parameters => {
 				    },
-		      token_name => 'TOKEN_NETWORK',
 		     },
 	  population => {
 			 allows => {
@@ -474,7 +464,6 @@ my $class_hierarchy
 					EXTENT_Y => 'coordinate of the last cell minus coordinate of the first cell',
 					EXTENT_Z => 'coordinate of the last cell minus coordinate of the first cell',
 				       },
-			 token_name => 'TOKEN_POPULATION',
 			},
 	  segment => {
 		      allows => {
@@ -498,7 +487,6 @@ my $class_hierarchy
 				     Vm => 'membrane potential, normally a solved variable',
 				     Vm_init => 'initial membrane potential',
 				    },
-		      token_name => 'TOKEN_SEGMENT',
 		     },
 	 ),
 	),
@@ -527,7 +515,6 @@ my $class_hierarchy
 		      name => 'symtab_VContour',
 		      parameters => {
 				    },
-		      token_name => 'TOKEN_CONTOUR_GROUP',
 		     },
 	v_connection => {
 			 allows => {
@@ -555,7 +542,6 @@ my $class_hierarchy
 				name => 'symtab_VConnectionSymbol',
 				parameters => {
 					      },
-				token_name => 'TOKEN_CONNECTION_GROUP',
 			       },
 
 	#t this one should be a segmenter, but need to use instrumentation for that.
@@ -571,7 +557,6 @@ my $class_hierarchy
 		      name => 'symtab_VSegment',
 		      parameters => {
 				    },
-		      token_name => 'TOKEN_SEGMENT_GROUP',
 		     },
        ),
 
@@ -588,7 +573,6 @@ my $class_hierarchy
 		  name => 'symtab_Group',
 		  parameters => {
 				},
-		  token_name => 'TOKEN_GROUP',
 		 },
        ),
 
@@ -608,7 +592,6 @@ my $class_hierarchy
 				    TAU1 => 'first time constant',
 				    TAU2 => 'second time constant',
 				   },
-		     token_name => 'TOKEN_EXPONENTIAL_EQUATION',
 		    },
 	randomvalue => {
 			allows => {
@@ -629,7 +612,6 @@ my $class_hierarchy
 				       MAXIMUM => 'maximum value the random variable can take',
 				       MINIMUM => 'minimum value the random variable can take',
 				      },
-			token_name => 'TOKEN_RANDOMVALUE',
 		       },
        ),
 
@@ -649,7 +631,6 @@ my $class_hierarchy
 			name => 'symtab_EMContour',
 			parameters => {
 				      },
-			token_name => 'TOKEN_EM_CONTOUR',
 		       },
 	contour_point => {
 			  allows => {
@@ -665,7 +646,6 @@ my $class_hierarchy
 			  parameters => {
 					 THICKNESS => 'thickness of the slice originating the contour',
 					},
-			  token_name => 'TOKEN_CONTOUR_POINT',
 			 },
        ),
 
@@ -686,7 +666,6 @@ my $class_hierarchy
 			     name => 'symtab_AlgorithmSymbol',
 			     parameters => {
 					   },
-			     token_name => 'TOKEN_ALGORITHM',
 			    },
 	traversable_algorithm => {
 				  allows => {
@@ -720,7 +699,6 @@ my $class_hierarchy
 		       name => 'symtab_Attachment',
 		       parameters => {
 				     },
-		       token_name => 'TOKEN_ATTACHMENT_POINT',
 		      },
 
 	#t specific functions can be derived, but shouldn't this be
@@ -752,7 +730,6 @@ my $class_hierarchy
 			       name => 'symtab_GroupedParameters',
 			       parameters => {
 					     },
-			       token_name => 'TOKEN_PARAMETER_GROUP',
 			      },
 	invisible => {
 		      description => 'an entry that has been inserted during memory optimization, and is generally invisible to the user',
@@ -1450,6 +1427,7 @@ my $object_methods_return_types
 # 			      },
       };
 
+
 my $object_methods_signatures
     = {
        'add_child' => {
@@ -1837,6 +1815,275 @@ my $object_methods_signatures
       };
 
 
+my $tokens
+    = {
+       absolute => {
+		    lexical => 'TOKEN_ABSOLUTE',
+		   },
+       alias => {
+		 lexical => 'TOKEN_ALIAS',
+		},
+       alpha_equation => {
+			  lexical => 'TOKEN_ALPHA_EQUATION',
+			 },
+       attributes => {
+		      lexical => 'TOKEN_ATTRIBUTES',
+		     },
+       axon_hillock => {
+			class => 'axon_hillock',
+			lexical => 'TOKEN_AXON_HILLOCK',
+		       },
+       bindables => {
+		     lexical => 'TOKEN_BINDABLES',
+		    },
+       bindings => {
+		    lexical => 'TOKEN_BINDINGS',
+		   },
+       cell => {
+		class => 'cell',
+		lexical => 'TOKEN_CELL',
+	       },
+       channel => {
+		   class => 'channel',
+		   lexical => 'TOKEN_CHANNEL',
+		  },
+       child => {
+		 lexical => 'TOKEN_CHILD',
+		},
+       children => {
+		    lexical => 'TOKEN_CHILDREN',
+		   },
+       concentration_gate_kinetic => {
+				      class => 'concentration_gate_kinetic',
+				      lexical => 'TOKEN_CONCENTRATION_GATE_KINETIC',
+				     },
+       h_h_gate => {
+		    class => 'h_h_gate',
+		    lexical => 'TOKEN_HH_GATE',
+		   },
+       connection => {
+		      class => 'connection_symbol',
+		      lexical => 'TOKEN_CONNECTION',
+		     },
+       connection_group => {
+			    class => 'v_connection_symbol',
+			    lexical => 'TOKEN_CONNECTION_GROUP',
+			   },
+       contour_group => {
+			 class => 'v_contour',
+			 lexical => 'TOKEN_CONTOUR_GROUP',
+			},
+       contour_point => {
+			 class => 'contour_point',
+			 lexical => 'TOKEN_CONTOUR_POINT',
+			},
+       cylindrical => {
+		       lexical => 'TOKEN_CYLINDRICAL',
+		      },
+       current_symbol => {
+			  lexical => 'TOKEN_CURRENT_SYMBOL',
+			 },
+       define => {
+		  lexical => 'TOKEN_DEFINE',
+		 },
+       dereference => {
+		       lexical => 'TOKEN_DEREFERENCE',
+		      },
+       em_contour => {
+		      class => 'e_m_contour',
+		      lexical => 'TOKEN_EM_CONTOUR',
+		     },
+       end => {
+	       lexical => 'TOKEN_END',
+	      },
+       events => {
+		  lexical => 'TOKEN_EVENTS',
+		 },
+       exponential_equation => {
+				class => 'equation',
+				lexical => 'TOKEN_EXPONENTIAL_EQUATION',
+			       },
+       fiber => {
+		 class => 'fiber',
+		 lexical => 'TOKEN_FIBER',
+		},
+       file => {
+		lexical => 'TOKEN_FILE',
+	       },
+       gate_kinetic_b => {
+			  lexical => 'TOKEN_GATE_KINETIC_B',
+			 },
+       gate_kinetic_a => {
+			  lexical => 'TOKEN_GATE_KINETIC_A',
+			 },
+       gate_kinetic_part => {
+			     lexical => 'TOKEN_GATE_KINETIC_PART',
+			    },
+       generates => {
+		     lexical => 'TOKEN_GENERATES',
+		    },
+       group => {
+		 class => 'group',
+		 lexical => 'TOKEN_GROUP',
+		},
+       has => {
+	       lexical => 'TOKEN_HAS',
+	      },
+       hierarchicalseperator => {
+				 lexical => 'TOKEN_HIERARCHICALSEPERATOR',
+				},
+       identifier => {
+		      lexical => 'TOKEN_IDENTIFIER',
+		      type => 'pcIdentifier',
+		     },
+       import => {
+		  lexical => 'TOKEN_IMPORT',
+		 },
+       input => {
+		 lexical => 'TOKEN_INPUT',
+		},
+       integer => {
+		   lexical => 'TOKEN_INTEGER',
+		   type => 'iInteger',
+		  },
+       ioselect => {
+		    lexical => 'TOKEN_IOSELECT',
+		   },
+       meters => {
+		  lexical => 'TOKEN_METERS',
+		 },
+       algorithm => {
+		     class => 'algorithm_symbol',
+		     lexical => 'TOKEN_ALGORITHM',
+		    },
+       namespaceseperator => {
+			      lexical => 'TOKEN_NAMESPACESEPERATOR',
+			     },
+       ncd => {
+	       lexical => 'TOKEN_NCD',
+	      },
+       ndf => {
+	       lexical => 'TOKEN_NDF',
+	      },
+       ned => {
+	       lexical => 'TOKEN_NED',
+	      },
+       network => {
+		   class => 'network',
+		   lexical => 'TOKEN_NETWORK',
+		  },
+       neuron => {
+		  lexical => 'TOKEN_NEURON',
+		 },
+       neurospaces => {
+		       lexical => 'TOKEN_NEUROSPACES',
+		      },
+       nmd => {
+	       lexical => 'TOKEN_NMD',
+	      },
+       nnd => {
+	       lexical => 'TOKEN_NND',
+	      },
+       number => {
+		  lexical => 'TOKEN_NUMBER',
+		  type => 'dNumber',
+		 },
+       options => {
+		   lexical => 'TOKEN_OPTIONS',
+		  },
+       origin => {
+		  lexical => 'TOKEN_ORIGIN',
+		 },
+       output => {
+		  lexical => 'TOKEN_OUTPUT',
+		 },
+       parameter => {
+		     lexical => 'TOKEN_PARAMETER',
+		    },
+       parameters => {
+		      lexical => 'TOKEN_PARAMETERS',
+		     },
+       parameter_group => {
+			   class => 'grouped_parameters',
+			   lexical => 'TOKEN_PARAMETER_GROUP',
+			  },
+       parent_symbol => {
+			 lexical => 'TOKEN_PARENT_SYMBOL',
+			},
+       pool => {
+		class => 'pool',
+		lexical => 'TOKEN_POOL',
+	       },
+       population => {
+		      class => 'population',
+		      lexical => 'TOKEN_POPULATION',
+		     },
+       private_models => {
+			  lexical => 'TOKEN_PRIVATE_MODELS',
+			 },
+       projection => {
+		      class => 'projection',
+		      lexical => 'TOKEN_PROJECTION',
+		     },
+       public_models => {
+			 lexical => 'TOKEN_PUBLIC_MODELS',
+			},
+       randomvalue => {
+		       class => 'randomvalue',
+		       lexical => 'TOKEN_RANDOMVALUE',
+		      },
+       receives => {
+		    lexical => 'TOKEN_RECEIVES',
+		   },
+       relative => {
+		    lexical => 'TOKEN_RELATIVE',
+		   },
+       seconds => {
+		   lexical => 'TOKEN_SECONDS',
+		  },
+       segment => {
+		   class => 'segment',
+		   lexical => 'TOKEN_SEGMENT',
+		  },
+       segment_group => {
+			 class => 'v_segment',
+			 lexical => 'TOKEN_SEGMENT_GROUP',
+			},
+       shebanger => {
+		     lexical => 'TOKEN_SHEBANGER',
+		    },
+       siemens => {
+		   lexical => 'TOKEN_SIEMENS',
+		  },
+       spherical => {
+		     lexical => 'TOKEN_SPHERICAL',
+		    },
+       string => {
+		  lexical => 'TOKEN_STRING',
+		  type => 'pstring',
+		 },
+       tablefile => {
+		     lexical => 'TOKEN_TABLEFILE',
+		    },
+       units => {
+		 lexical => 'TOKEN_UNITS',
+		},
+       version => {
+		   lexical => 'TOKEN_VERSION',
+		  },
+       versionnumber => {
+			 lexical => 'TOKEN_VERSIONNUMBER',
+			},
+       attachment_point => {
+			    class => 'attachment',
+			    lexical => 'TOKEN_ATTACHMENT_POINT',
+			   },
+       voltage => {
+		   lexical => 'TOKEN_VOLTAGE',
+		  },
+      };
+
+
 my $definitions
     = {
        annotations => {
@@ -1854,6 +2101,7 @@ my $definitions
        object_methods_prefix => 'symbol',
        object_methods_return_types => $object_methods_return_types,
        object_methods_signatures => $object_methods_signatures,
+       tokens => $tokens,
 
        typing => {
 		  typer => {

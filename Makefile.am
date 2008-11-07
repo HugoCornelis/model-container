@@ -77,7 +77,6 @@ libneurospacesread_a_SOURCES = \
 	coordinatecache.c \
 	defsym.c \
 	dependencyfile.c \
-	description.tokens \
 	function.c \
 	hines_listlist.c \
 	idin.c \
@@ -328,8 +327,8 @@ hierarchy/output/algorithmclasses/.sentinel: $(srcdir)/hierarchy/algorithmclasse
 instrumentordir = $(prefix)/neurospaces/instrumentor
 nobase_instrumentor_DATA = $(shell find $(srcdir)/hierarchy -type f)
 
-parser.y: $(srcdir)/parser.decl $(srcdir)/description.tokens parser.rules.numbered $(srcdir)/parser.additions
-	cat >parser.y $(srcdir)/parser.decl $(srcdir)/description.tokens parser.rules.numbered $(srcdir)/parser.additions
+parser.y: $(srcdir)/parser.decl hierarchy/output/symbols/.sentinel parser.rules.numbered $(srcdir)/parser.additions
+	cat >parser.y $(srcdir)/parser.decl hierarchy/output/symbols/description.tokens parser.rules.numbered $(srcdir)/parser.additions
 parser.rules.numbered: $(srcdir)/parser.rules
 	perl -ne 'BEGIN { $$filename = shift @ARGV ; $$line++ } $$line++ ; s/^#line.*/#line $$line "$$filename"/; print' <$(srcdir)/parser.rules >parser.rules.numbered $(srcdir)/parser.rules
 analyzer.o: parser.h

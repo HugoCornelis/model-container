@@ -20,6 +20,34 @@ my $option_static_inline;
 my $option_verbose;
 
 
+sub assign_token_names
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+    my $tokens = $definitions->{tokens};
+
+    # loop over all tokens
+
+    foreach my $token_name (sort keys %$tokens)
+    {
+	my $token = $tokens->{$token_name};
+
+	# assign token name
+
+	if ($token->{class})
+	{
+	    my $class = $token->{class};
+
+	    $class_hierarchy->{$class}->{token_name} = $token->{lexical};
+	}
+    }
+}
+
+
 sub assign_type_numbers
 {
     my $definitions = shift;
@@ -28,6 +56,7 @@ sub assign_type_numbers
     my $object_methods = $definitions->{object_methods};
     my $object_methods_return_types = $definitions->{object_methods_return_types};
     my $object_methods_signatures = $definitions->{object_methods_signatures};
+    my $tokens = $definitions->{tokens};
 
     # loop over all types
 
@@ -56,6 +85,7 @@ sub build_forward_derivation_lists
     my $object_methods = $definitions->{object_methods};
     my $object_methods_return_types = $definitions->{object_methods_return_types};
     my $object_methods_signatures = $definitions->{object_methods_signatures};
+    my $tokens = $definitions->{tokens};
 
     # loop over all types
 
@@ -91,6 +121,7 @@ sub build_indices
     my $object_methods = $definitions->{object_methods};
     my $object_methods_return_types = $definitions->{object_methods_return_types};
     my $object_methods_signatures = $definitions->{object_methods_signatures};
+    my $tokens = $definitions->{tokens};
 
     build_forward_derivation_lists($definitions);
 
@@ -110,6 +141,7 @@ sub build_isas
     my $object_methods = $definitions->{object_methods};
     my $object_methods_return_types = $definitions->{object_methods_return_types};
     my $object_methods_signatures = $definitions->{object_methods_signatures};
+    my $tokens = $definitions->{tokens};
 
     # loop over all types
 
@@ -153,6 +185,7 @@ sub build_object_methods_reversed
     my $object_methods = $definitions->{object_methods};
     my $object_methods_return_types = $definitions->{object_methods_return_types};
     my $object_methods_signatures = $definitions->{object_methods_signatures};
+    my $tokens = $definitions->{tokens};
 
     my $object_methods_reversed = { reverse %$object_methods, };
 
@@ -182,6 +215,7 @@ sub generate_annotations
     my $object_methods = $definitions->{object_methods};
     my $object_methods_return_types = $definitions->{object_methods_return_types};
     my $object_methods_signatures = $definitions->{object_methods_signatures};
+    my $tokens = $definitions->{tokens};
 
     # loop over all annotions
 
@@ -281,6 +315,7 @@ sub generate_callees
     my $object_methods = $definitions->{object_methods};
     my $object_methods_return_types = $definitions->{object_methods_return_types};
     my $object_methods_signatures = $definitions->{object_methods_signatures};
+    my $tokens = $definitions->{tokens};
 
     # if required to generate callees
 
@@ -692,6 +727,7 @@ sub generate_instanceof_relationships
     my $object_methods = $definitions->{object_methods};
     my $object_methods_return_types = $definitions->{object_methods_return_types};
     my $object_methods_signatures = $definitions->{object_methods_signatures};
+    my $tokens = $definitions->{tokens};
 
     # determine filename
 
@@ -850,6 +886,7 @@ sub generate_textual_descriptions
     my $object_methods = $definitions->{object_methods};
     my $object_methods_return_types = $definitions->{object_methods_return_types};
     my $object_methods_signatures = $definitions->{object_methods_signatures};
+    my $tokens = $definitions->{tokens};
 
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	= gmtime(time());
@@ -1047,6 +1084,7 @@ sub generate_type_defines
     my $object_methods = $definitions->{object_methods};
     my $object_methods_return_types = $definitions->{object_methods_return_types};
     my $object_methods_signatures = $definitions->{object_methods_signatures};
+    my $tokens = $definitions->{tokens};
 
     # determine filename
 
@@ -1146,6 +1184,7 @@ sub generate_vtables
     my $object_methods = $definitions->{object_methods};
     my $object_methods_return_types = $definitions->{object_methods_return_types};
     my $object_methods_signatures = $definitions->{object_methods_signatures};
+    my $tokens = $definitions->{tokens};
 
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	= gmtime(time());
@@ -1409,6 +1448,75 @@ VTable_symbols _vtable_all[$max_type][NUMBER_OF_VIRTUAL_FUNCTIONS_$definitions->
 }
 
 
+sub generate_lexical_tokens
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+    my $tokens = $definitions->{tokens};
+
+    if (!$tokens)
+    {
+	return;
+    }
+
+    # determine filename
+
+    my $filename = "description.tokens";
+
+    # open file, write header
+
+    my $file = IO::File->new(">$option_output/$definitions->{name}/$filename");
+
+    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+	= gmtime(time());
+
+    my $date = gmtime();
+
+    print $file "/*
+** type defines
+** automatically generated by $0 at $date
+**
+** $0 is a type hierarchy generator that allows to build derivation
+** hierarchies in C that are faster than equivalent hierarchies built in
+** C++.
+*/
+
+";
+
+    # loop over all tokens
+
+    #! note: offset of two as a safeguard, probably an options should
+    #! allow to configure this.
+
+    my $count = 2;
+
+    my $done = {};
+
+    my $max = -1;
+
+    foreach my $token_name (sort keys %$tokens)
+    {
+	# get token definition
+
+	my $token = $tokens->{$token_name};
+
+	# write out the token with its type
+
+	print $file "%token " . ($token->{type} ? "<$token->{type}> " : "") . $token->{lexical} . "\n";
+
+    }
+
+    print $file "\n\n";
+
+    $file->close();
+
+}
+
+
 sub generate_sentinels
 {
     my $definitions = shift;
@@ -1417,6 +1525,7 @@ sub generate_sentinels
     my $object_methods = $definitions->{object_methods};
     my $object_methods_return_types = $definitions->{object_methods_return_types};
     my $object_methods_signatures = $definitions->{object_methods_signatures};
+    my $tokens = $definitions->{tokens};
 
     `touch $option_output/$definitions->{name}/.sentinel`;
 }
@@ -1430,6 +1539,7 @@ sub generate_vtable_structure
     my $object_methods = $definitions->{object_methods};
     my $object_methods_return_types = $definitions->{object_methods_return_types};
     my $object_methods_signatures = $definitions->{object_methods_signatures};
+    my $tokens = $definitions->{tokens};
 
     # open file, write header
 
@@ -1570,6 +1680,10 @@ options :
 
     assign_type_numbers($definitions);
 
+    # assign token names if any
+
+    assign_token_names($definitions);
+
     # build indices to speedup processing
 
     build_indices($definitions);
@@ -1601,6 +1715,10 @@ options :
     # generate the annotations
 
     generate_annotations($definitions);
+
+    # generate the tokens for the lexical analyzer
+
+    generate_lexical_tokens($definitions);
 
     # generate the sentinel file for make
 
