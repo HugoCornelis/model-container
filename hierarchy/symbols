@@ -1955,7 +1955,7 @@ my $tokens
 		     },
        import => {
 		  lexical => 'TOKEN_IMPORT',
-		  purpose => 'section',
+		  purpose => 'sections',
 		 },
        input => {
 		 lexical => 'TOKEN_INPUT',
@@ -2045,7 +2045,7 @@ my $tokens
 		     },
        private_models => {
 			  lexical => 'TOKEN_PRIVATE_MODELS',
-			  purpose => 'section',
+			  purpose => 'sections',
 			 },
        projection => {
 		      class => 'projection',
@@ -2054,7 +2054,7 @@ my $tokens
 		     },
        public_models => {
 			 lexical => 'TOKEN_PUBLIC_MODELS',
-			 purpose => 'section',
+			 purpose => 'sections',
 			},
        randomvalue => {
 		       class => 'randomvalue',
