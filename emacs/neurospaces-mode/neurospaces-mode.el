@@ -185,7 +185,7 @@ Key bindings:
 		 "\\|TIME"
 		 "\\|STEP"
 		 "\\|FIXED"
-		 "\\|randomize"
+		 "\\|RANDOMIZE"
 		 "\\|MGBLOCK"
 		 "\\|NERNST"
 		 "\\)\\>")

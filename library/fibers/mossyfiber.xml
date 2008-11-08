@@ -90,7 +90,7 @@
 <!-- /* 			dX = 0.00015, */ -->
 <!-- /* 			dY = 0.00015, */ -->
 <!-- /* 			dZ = 0.0, */ -->
-<!-- /* 			RATE = randomize(min = 35.0,max = 45.0) */ -->
+<!-- /* 			RATE = RANDOMIZE(min = 35.0,max = 45.0) */ -->
 <!-- /* 		END CHILD */ -->
 
 <!-- /* 		CHILD MossyFiber */ -->
@@ -101,7 +101,7 @@
 <!-- /* 			dX = 0.00015, */ -->
 <!-- /* 			dY = 0.00015, */ -->
 <!-- /* 			dZ = 0.0, */ -->
-<!-- /* 			RATE = randomize(min = 35.0,max = 45.0) */ -->
+<!-- /* 			RATE = RANDOMIZE(min = 35.0,max = 45.0) */ -->
 <!-- /* 		END CHILD */ -->
 
 	</population>

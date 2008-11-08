@@ -99,7 +99,7 @@ PRIVATE_MODELS
 /* 				PARAMETER ( dY = 0.00015 ), */
 /* 				PARAMETER ( dZ = 0.0 ), */
 /* 				PARAMETER */
-/* 				( RATE = randomize */
+/* 				( RATE = RANDOMIZE */
 /* 					(PARAMETER ( min = 35.0 ), */
 /* 						PARAMETER ( max = 45.0)  )) */
 /* 			END PARAMETERS */
@@ -115,7 +115,7 @@ PRIVATE_MODELS
 /* 				PARAMETER ( dY = 0.00015 ), */
 /* 				PARAMETER ( dZ = 0.0 ), */
 /* 				PARAMETER */
-/* 				( RATE = randomize */
+/* 				( RATE = RANDOMIZE */
 /* 					(PARAMETER ( min = 35.0 ), */
 /* 						PARAMETER ( max = 45.0)  )) */
 /* 			END PARAMETERS */

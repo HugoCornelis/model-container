@@ -755,7 +755,7 @@ FunctionValue
 
     //- if randomized
 
-    else if (0 == strcmp(pcName, "randomize"))
+    else if (0 == strcmp(pcName, "RANDOMIZE"))
     {
 	//- get seed
 

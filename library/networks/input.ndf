@@ -37,12 +37,12 @@ PRIVATE_MODELS
 				PARAMETER ( Y = 0.0 ),
 				PARAMETER ( Z = 0.0 ),
 				PARAMETER
-				( Em = randomize
+				( Em = RANDOMIZE
 					(PARAMETER ( min = -0.06 ),
 						PARAMETER ( max = -0.05),
 						PARAMETER ( seed = SERIAL()) ) ),
 				PARAMETER
-				( Vm_init = gaussrandomize
+				( Vm_init = GAUSSRANDOMIZE
 						(PARAMETER ( relmin = -0.09 ),
 							PARAMETER ( relmax = -0.05),
 							PARAMETER ( seed = SERIAL()) ))
@@ -56,12 +56,12 @@ PRIVATE_MODELS
 				PARAMETER ( Y = 0.00015 ),
 				PARAMETER ( Z = 0.0 ),
 				PARAMETER
-				( Em = randomize
+				( Em = RANDOMIZE
 					(PARAMETER ( min = -0.06 ),
 						PARAMETER ( max = -0.05),
 						PARAMETER ( seed = SERIAL()) ) ),
 				PARAMETER
-				( Vm_init = gaussrandomize
+				( Vm_init = GAUSSRANDOMIZE
 						(PARAMETER ( relmin = -0.09 ),
 							PARAMETER ( relmax = -0.05),
 							PARAMETER ( seed = SERIAL()) ))

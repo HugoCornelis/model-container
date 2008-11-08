@@ -156,7 +156,7 @@ PUBLIC_MODELS
 				PARAMETER ( RA = 1.00 ),
 				PARAMETER ( CM = 0.010 ),
 				PARAMETER
-				( ELEAK = randomize
+				( ELEAK = RANDOMIZE
 						(PARAMETER ( min = -0.075 ),
 							PARAMETER ( max = -0.065),
 							PARAMETER ( seed = SERIAL()) ) )

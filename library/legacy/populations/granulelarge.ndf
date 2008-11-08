@@ -69,8 +69,8 @@ PUBLIC_MODELS
 /* 			dX = 0.00015, */
 /* 			dY = 0.00015, */
 /* 			dZ = 0.0, */
-/* 			Em = randomize(min = -0.06,max = -0.05), */
-/* 			Vm_init = gaussrandomize */
+/* 			Em = RANDOMIZE(min = -0.06,max = -0.05), */
+/* 			Vm_init = GAUSSRANDOMIZE */
 /* 					(relmin = -0.09, */
 /* 						relmax = -0.05) */
 /* 		END CHILD */
