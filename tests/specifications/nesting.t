@@ -159,21 +159,21 @@ inputs (if any) :
 						   description => "Can we succesfully initialize a projectionquery that indexes all projections ?",
 						   read => "caching = yes
 ",
-						   timeout => 20,
+						   timeout => 30,
 						   write => "pqsetall c",
 						  },
 						  {
 						   description => "Can we succesfully reinitialize a projectionquery that indexes all projections ?",
 						   read => "caching = yes
 ",
-						   timeout => 20,
+						   timeout => 30,
 						   write => "pqsetall c",
 						  },
 						  {
 						   description => "Can we succesfully reinitialize a projectionquery that indexes all projections ?",
 						   read => "caching = yes
 ",
-						   timeout => 20,
+						   timeout => 30,
 						   write => "pqsetall c",
 						  },
 						  {
@@ -184,7 +184,7 @@ inputs (if any) :
 #memory used by connection cache = 10703532
 #memory used by ordered cache 1  = 5351780
 #memory used by ordered cache 2  = 5351780
-						   timeout => 20,
+						   timeout => 30,
 						   write => "pqcount c /CerebellarCortex/0/MossyFibers/1/spikegen",
 						  },
 						  {
