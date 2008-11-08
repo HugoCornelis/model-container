@@ -1822,6 +1822,7 @@ my $tokens
 		   },
        alias => {
 		 lexical => 'TOKEN_ALIAS',
+		 purpose => 'structure',
 		},
        alpha_equation => {
 			  lexical => 'TOKEN_ALPHA_EQUATION',
@@ -1832,23 +1833,29 @@ my $tokens
        axon_hillock => {
 			class => 'axon_hillock',
 			lexical => 'TOKEN_AXON_HILLOCK',
+			purpose => 'physical',
 		       },
        bindables => {
 		     lexical => 'TOKEN_BINDABLES',
+		     purpose => 'structure',
 		    },
        bindings => {
 		    lexical => 'TOKEN_BINDINGS',
+		    purpose => 'structure',
 		   },
        cell => {
 		class => 'cell',
 		lexical => 'TOKEN_CELL',
+		purpose => 'physical',
 	       },
        channel => {
 		   class => 'channel',
 		   lexical => 'TOKEN_CHANNEL',
+		   purpose => 'physical',
 		  },
        child => {
 		 lexical => 'TOKEN_CHILD',
+		 purpose => 'structure',
 		},
        children => {
 		    lexical => 'TOKEN_CHILDREN',
@@ -1856,26 +1863,32 @@ my $tokens
        concentration_gate_kinetic => {
 				      class => 'concentration_gate_kinetic',
 				      lexical => 'TOKEN_CONCENTRATION_GATE_KINETIC',
+				      purpose => 'physical',
 				     },
        h_h_gate => {
 		    class => 'h_h_gate',
 		    lexical => 'TOKEN_HH_GATE',
+		    purpose => 'physical',
 		   },
        connection => {
 		      class => 'connection_symbol',
 		      lexical => 'TOKEN_CONNECTION',
+		      purpose => 'physical',
 		     },
        connection_group => {
 			    class => 'v_connection_symbol',
 			    lexical => 'TOKEN_CONNECTION_GROUP',
+			    purpose => 'physical',
 			   },
        contour_group => {
 			 class => 'v_contour',
 			 lexical => 'TOKEN_CONTOUR_GROUP',
+			 purpose => 'physical',
 			},
        contour_point => {
 			 class => 'contour_point',
 			 lexical => 'TOKEN_CONTOUR_POINT',
+			 purpose => 'physical',
 			},
        cylindrical => {
 		       lexical => 'TOKEN_CYLINDRICAL',
@@ -1892,6 +1905,7 @@ my $tokens
        em_contour => {
 		      class => 'e_m_contour',
 		      lexical => 'TOKEN_EM_CONTOUR',
+		      purpose => 'physical',
 		     },
        end => {
 	       lexical => 'TOKEN_END',
@@ -1902,10 +1916,12 @@ my $tokens
        exponential_equation => {
 				class => 'equation',
 				lexical => 'TOKEN_EXPONENTIAL_EQUATION',
+				purpose => 'physical',
 			       },
        fiber => {
 		 class => 'fiber',
 		 lexical => 'TOKEN_FIBER',
+		 purpose => 'physical',
 		},
        file => {
 		lexical => 'TOKEN_FILE',
@@ -1925,6 +1941,7 @@ my $tokens
        group => {
 		 class => 'group',
 		 lexical => 'TOKEN_GROUP',
+		 purpose => 'physical',
 		},
        has => {
 	       lexical => 'TOKEN_HAS',
@@ -1938,6 +1955,7 @@ my $tokens
 		     },
        import => {
 		  lexical => 'TOKEN_IMPORT',
+		  purpose => 'section',
 		 },
        input => {
 		 lexical => 'TOKEN_INPUT',
@@ -1955,6 +1973,7 @@ my $tokens
        algorithm => {
 		     class => 'algorithm_symbol',
 		     lexical => 'TOKEN_ALGORITHM',
+		     purpose => 'physical',
 		    },
        namespaceseperator => {
 			      lexical => 'TOKEN_NAMESPACESEPERATOR',
@@ -1971,6 +1990,7 @@ my $tokens
        network => {
 		   class => 'network',
 		   lexical => 'TOKEN_NETWORK',
+		   purpose => 'physical',
 		  },
        neuron => {
 		  lexical => 'TOKEN_NEURON',
@@ -1999,13 +2019,16 @@ my $tokens
 		 },
        parameter => {
 		     lexical => 'TOKEN_PARAMETER',
+		     purpose => 'structure',
 		    },
        parameters => {
 		      lexical => 'TOKEN_PARAMETERS',
+		      purpose => 'structure',
 		     },
        parameter_group => {
 			   class => 'grouped_parameters',
 			   lexical => 'TOKEN_PARAMETER_GROUP',
+			   purpose => 'physical',
 			  },
        parent_symbol => {
 			 lexical => 'TOKEN_PARENT_SYMBOL',
@@ -2013,24 +2036,30 @@ my $tokens
        pool => {
 		class => 'pool',
 		lexical => 'TOKEN_POOL',
+		purpose => 'physical',
 	       },
        population => {
 		      class => 'population',
 		      lexical => 'TOKEN_POPULATION',
+		      purpose => 'physical',
 		     },
        private_models => {
 			  lexical => 'TOKEN_PRIVATE_MODELS',
+			  purpose => 'section',
 			 },
        projection => {
 		      class => 'projection',
 		      lexical => 'TOKEN_PROJECTION',
+		      purpose => 'physical',
 		     },
        public_models => {
 			 lexical => 'TOKEN_PUBLIC_MODELS',
+			 purpose => 'section',
 			},
        randomvalue => {
 		       class => 'randomvalue',
 		       lexical => 'TOKEN_RANDOMVALUE',
+		       purpose => 'physical',
 		      },
        receives => {
 		    lexical => 'TOKEN_RECEIVES',
@@ -2044,10 +2073,12 @@ my $tokens
        segment => {
 		   class => 'segment',
 		   lexical => 'TOKEN_SEGMENT',
+		   purpose => 'physical',
 		  },
        segment_group => {
 			 class => 'v_segment',
 			 lexical => 'TOKEN_SEGMENT_GROUP',
+			 purpose => 'physical',
 			},
        shebanger => {
 		     lexical => 'TOKEN_SHEBANGER',
@@ -2077,6 +2108,7 @@ my $tokens
        attachment_point => {
 			    class => 'attachment',
 			    lexical => 'TOKEN_ATTACHMENT_POINT',
+			    purpose => 'physical',
 			   },
        voltage => {
 		   lexical => 'TOKEN_VOLTAGE',
