@@ -42,6 +42,7 @@ my $class_hierarchy
 			      'all_serials_to_parent_get' => 'base_symbol',
 			      'all_serials_to_parent_set' => 'base_symbol',
 			      'get_i_d' => 'base_symbol',
+			      'get_symbol' => 'base_symbol',
 			     },
 		   description => 'symbol that maintains its own identification numbers',
 		   isa => 'base',
@@ -832,6 +833,7 @@ my $object_methods
 	'get_post',
 	'get_pre',
 	'get_prototype',
+	'get_symbol',
 	'get_type',
 	'get_weight',
 	'has_bindable_i_o',
@@ -963,6 +965,9 @@ my $object_methods_custom_code
        'get_prototype' => {
 			   simple => 1,
 			  },
+       'get_symbol' => {
+			simple => 1,
+		       },
        'get_type' => {
 		      simple => 1,
 		     },
@@ -1265,6 +1270,11 @@ my $object_methods_return_types
 			   selector => '.uSelector.phsleFunc',
 			   type => 'struct symtab_HSolveListElement *',
 			  },
+       'get_symbol' => {
+			default => 'NULL',
+			selector => '.uSelector.phsleFunc',
+			type => 'struct symtab_HSolveListElement *',
+		       },
        'get_type' => {
 		      default => '-1',
 		      selector => '.uSelector.iFunc',
@@ -1637,6 +1647,10 @@ my $object_methods_signatures
 			   calling => '(phsle)',
 			   prototype => '(struct symtab_HSolveListElement *phsle)',
 			  },
+       'get_symbol' => {
+			calling => '(phsle)',
+			prototype => '(struct symtab_HSolveListElement *phsle)',
+		       },
        'get_type' => {
 		      calling => '(phsle)',
 		      prototype => '(struct symtab_HSolveListElement *phsle)',

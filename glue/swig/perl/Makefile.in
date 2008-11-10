@@ -139,7 +139,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 SUBDIRS = 
 perldir = $(prefix)/glue/swig/perl
-nobase_perl_HEADERS = Neurospaces.pm Neurospaces/Query.pm Neurospaces/Traversal.pm
+nobase_perl_HEADERS = Neurospaces.pm Neurospaces/Query.pm Neurospaces/Traversal.pm Neurospaces/Tokens/Physical.pm
 perl_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.pm SwiggableNeurospaces.so # neurospaces_test.pm
 BUILT_SOURCES = \
 	SwiggableNeurospaces.pm \
@@ -361,7 +361,7 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/Neurospaces
+	$(mkdir_p) $(distdir)/Neurospaces $(distdir)/Neurospaces/Tokens
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \

@@ -132,8 +132,8 @@ int SymbolDeleter(struct TreespaceTraversal *ptstr, void *pvUserdata)
 ///
 /// NOTE.:
 ///
-/// 	The result is a pointer to static memory and must be used
-/// 	immediately.
+/// 	The result is a pointer to static memory that gets overwitten
+/// 	on each call to this function.
 ///
 /// **************************************************************************
 
@@ -311,9 +311,9 @@ SymbolCacheParameterString
 ///
 /// RTN..: struct symtab_HSolveListElement * 
 ///
-///	Newly allocated symbol, NULL for failure
+///	Newly allocated symbol, NULL for failure.
 ///
-/// DESCR: Allocate a new symbol table element
+/// DESCR: Allocate a new symbol table element.
 ///
 /// **************************************************************************
 

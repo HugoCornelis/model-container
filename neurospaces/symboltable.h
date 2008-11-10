@@ -376,6 +376,12 @@ BaseSymbolAllSuccessorsSet
 #ifndef SWIG
 static inline
 #endif
+struct symtab_HSolveListElement *
+BaseSymbolGetSymbol(struct symtab_HSolveListElement *phsle);
+
+#ifndef SWIG
+static inline
+#endif
 int * SymbolGetArrayOfNumberOfAliases();
 
 #ifndef SWIG
@@ -675,6 +681,22 @@ BaseSymbolAllSuccessorsSet
 #ifdef TREESPACES_SUBSET_SEGMENT
     SymbolSetSegmentNumOfSuccessors(phsle,iSuccessorsSegment);
 #endif
+}
+
+
+///
+/// return a pointer to this symbol.
+///
+
+#ifndef SWIG
+static inline
+#endif
+struct symtab_HSolveListElement *
+BaseSymbolGetSymbol(struct symtab_HSolveListElement *phsle)
+{
+    //- return result: self
+
+    return(phsle);
 }
 
 

@@ -67,7 +67,7 @@ sub add_component
 
     if (!$success)
     {
-	die "$0: Backend deleting child failed";
+	die "$0: Backend SymbolAddChild() child failed";
     }
 
     $success = SwiggableNeurospaces::SymbolRecalcAllSerials(undef, undef);
