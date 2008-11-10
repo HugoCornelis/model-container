@@ -109,6 +109,8 @@ char **get_args() {
 %{
 
 
+struct symtab_Invisible;
+
 #include "neurospaces/algorithminstance.h"
 #include "neurospaces/biolevel.h"
 #include "neurospaces/cachedconnection.h"
@@ -123,6 +125,7 @@ char **get_args() {
 #include "neurospaces/components/fiber.h"
 #include "neurospaces/components/gatekinetic.h"
 #include "neurospaces/components/group.h"
+#include "neurospaces/components/groupedparameters.h"
 #include "neurospaces/components/hhgate.h"
 #include "neurospaces/components/network.h"
 #include "neurospaces/components/pool.h"
@@ -3319,6 +3322,7 @@ double symbol_parameter_resolve_scaled_value(void *phsle, void *ppist, char *pc)
 %include "neurospaces/components/fiber.h"
 %include "neurospaces/components/gatekinetic.h"
 %include "neurospaces/components/group.h"
+%include "neurospaces/components/groupedparameters.h"
 %include "neurospaces/components/hhgate.h"
 %include "neurospaces/dependencyfile.h"
 %include "neurospaces/function.h"
@@ -3351,4 +3355,5 @@ double symbol_parameter_resolve_scaled_value(void *phsle, void *ppist, char *pc)
 %include "neurospaces/symbolvirtual_protos.h"
 
 %include "hierarchy/output/symbols/all_callees_headers.i"
+%include "hierarchy/output/symbols/runtime_casters.i"
 

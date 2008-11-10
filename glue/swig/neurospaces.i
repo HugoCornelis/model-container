@@ -188,5 +188,4 @@ treespace_traversal_new
 %include "neurospaces/symbolvirtual_protos.h"
 
 %include "hierarchy/output/symbols/all_callees_headers.i"
-%include "hierarchy/output/symbols/runtime_casters.h"
 

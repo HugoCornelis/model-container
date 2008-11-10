@@ -35,13 +35,19 @@ sub create
 
     # assign name
 
+    #t bug: $name not newly allocated in C space, gets overwritten
+
     my $pidin = SwiggableNeurospaces::IdinNewFromChars($name);
 
-    no strict "refs";
+#     no strict "refs";
 
-    print Data::Dumper::Dumper(\%{"SwiggableNeurospaces::"});
+#     print Data::Dumper::Dumper(\%{"SwiggableNeurospaces::"});
 
-    SwiggableNeurospaces::cast_segment_2_symbol($backend)->SymbolSetName($pidin);
+    my $caster = "SwiggableNeurospaces::cast_${type}_2_symbol";
+
+    my $s = $backend->$caster();
+
+    $s->SymbolSetName($pidin);
 
     my $self
 	= {
@@ -65,10 +71,10 @@ sub create
 
     if (!defined $parent)
     {
-	die "$0: Cannot find context $path (does it exist ?)";
+	die "$0: Cannot find context symbol $path (does it exist ?)";
     }
 
-    my $success = $parent->SymbolAddChild($backend);
+    my $success = $parent->SymbolAddChild($backend->$caster());
 
     if (!$success)
     {
