@@ -199,14 +199,10 @@ do {									\
 
 struct symtab_IdentifierIndex * IdinCalloc(void);
 
-struct symtab_IdentifierIndex * IdinCallocUnique(void);
+struct symtab_IdentifierIndex * IdinCallocUnique(char *pc);
 
 struct symtab_IdentifierIndex *
 IdinCreateAlias(struct symtab_IdentifierIndex *pidin, int iCount);
-
-struct symtab_IdentifierIndex * 
-IdinDuplicate
-(struct symtab_IdentifierIndex *pidin);
 
 void IdinFullName(struct symtab_IdentifierIndex *pidin, char *pcName);
 

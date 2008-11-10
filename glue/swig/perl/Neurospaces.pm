@@ -57,7 +57,7 @@ sub add_component
 
     # create an alias of the source
 
-    my $pidin = SwiggableNeurospaces::IdinNewFromChars($target_new);
+    my $pidin = SwiggableNeurospaces::IdinCallocUnique($target_new);
 
     my $symbol_alias = $symbol_source->SymbolCreateAlias($pidin);
 

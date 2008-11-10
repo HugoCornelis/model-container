@@ -959,7 +959,7 @@ ProjectionVolumeInstanceAddConnectionGroups
      0;
     struct symtab_VConnection *pvconn = VConnectionCalloc();
 
-    struct symtab_IdentifierIndex *pidin = IdinCallocUnique();
+    struct symtab_IdentifierIndex *pidin = IdinCallocUnique("v_group_");
 
     SymbolSetName(&pvconn->vect.bio.ioh.iol.hsle,pidin);
 

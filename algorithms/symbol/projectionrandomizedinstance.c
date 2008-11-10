@@ -565,7 +565,7 @@ ProjectionRandomizedInstanceAddConnectionGroups
 
 /*     VConnectionAddConnection(NULL, NULL); */
 
-    struct symtab_IdentifierIndex *pidin = IdinCallocUnique();
+    struct symtab_IdentifierIndex *pidin = IdinCallocUnique("v_group_");
 
     SymbolSetName(&pvconn->vect.bio.ioh.iol.hsle, pidin);
 

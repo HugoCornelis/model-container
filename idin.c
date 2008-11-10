@@ -108,17 +108,20 @@ struct symtab_IdentifierIndex * IdinCalloc(void)
 ///
 /// ARGS.:
 ///
+///	pc...: sprintf format, NULL for a default, %i gets count.
+///
 /// RTN..: struct symtab_IdentifierIndex * 
 ///
-///	Newly allocated idin, NULL for failure
+///	Newly allocated idin with a count in the name, NULL for
+///	failure.
 ///
-/// DESCR: Allocate a new idin, give unique name
+/// DESCR: Allocate a new idin, give unique name using a counter.
 ///
-/// NOTE: DO NOTE USE
+/// NOTE.: Do not exceed 50 chars with format.
 ///
 /// **************************************************************************
 
-struct symtab_IdentifierIndex * IdinCallocUnique(void)
+struct symtab_IdentifierIndex * IdinCallocUnique(char *pcFormat)
 {
     //- set default result : failure
 
@@ -126,11 +129,20 @@ struct symtab_IdentifierIndex * IdinCallocUnique(void)
 
     static int iUnique = 0;
 
-    char pcUnique[100];
+    char pcUnique[1000];
+
+    //- get a format
+
+    char *pcDefaultFormat = "unique[%i]";
+
+    if (!pcFormat)
+    {
+	pcFormat = pcDefaultFormat;
+    }
 
     //- generate unique string
 
-    sprintf(pcUnique,"unique[%i]",iUnique);
+    sprintf(pcUnique, pcFormat, iUnique);
 
     iUnique++;
 
@@ -138,7 +150,7 @@ struct symtab_IdentifierIndex * IdinCallocUnique(void)
 
     pidinResult = IdinCalloc();
 
-    pidinResult->pcIdentifier = (char *)malloc(1 + strlen(pcUnique));
+    pidinResult->pcIdentifier = (char *)calloc(1, 1 + strlen(pcUnique));
 
     strcpy(pidinResult->pcIdentifier,pcUnique);
 
@@ -211,50 +223,6 @@ IdinCreateAlias(struct symtab_IdentifierIndex *pidin, int iCount)
 
 /// **************************************************************************
 ///
-/// SHORT: IdinDuplicate()
-///
-/// ARGS.:
-///
-///	pidin.: id to duplicate
-///
-/// RTN..: struct symtab_IdentifierIndex * 
-///
-///	Newly allocated idin, NULL for failure
-///
-/// DESCR: Duplicate idin
-///
-/// **************************************************************************
-
-struct symtab_IdentifierIndex * 
-IdinDuplicate
-(struct symtab_IdentifierIndex *pidin)
-{
-    //- set default result : allocate
-
-    struct symtab_IdentifierIndex *pidinResult = IdinCalloc();
-
-    //- copy pidin
-
-    //memcpy(pidinResult,pidin,sizeof(*pidinResult));
-
-    pidinResult->iFlags = pidin->iFlags;
-/*     pidinResult->iIndex = pidin->iIndex; */
-    pidinResult->dValue = pidin->dValue;
-
-    //- set name
-
-    pidinResult->pcIdentifier = (char *)malloc(1 + strlen(IdinName(pidin)));
-
-    IdinSetName(pidinResult,IdinName(pidin));
-
-    //- return result
-
-    return(pidinResult);
-}
-
-
-/// **************************************************************************
-///
 /// SHORT: IdinFullName()
 ///
 /// ARGS.:
@@ -311,57 +279,6 @@ void IdinFullName(struct symtab_IdentifierIndex *pidin, char *pcName)
 
     pcName[-1] = '\0';
 }
-
-
-/* /// ************************************************************************** */
-/* /// */
-/* /// SHORT: IdinIndex() */
-/* /// */
-/* /// ARGS.: */
-/* /// */
-/* ///	pidin.: IdentifierIndex struct to get index for */
-/* /// */
-/* /// RTN..: int : index of IdentifierIndex struct, -1 for none */
-/* /// */
-/* /// DESCR: get index of IdentifierIndex struct */
-/* /// */
-/* /// ************************************************************************** */
-
-/* int IdinIndex(struct symtab_IdentifierIndex *pidin) */
-/* { */
-/*     //- set default result : no index */
-
-/*     int iResult = -1; */
-
-/*     //- if pidin is legal pidin */
-
-/*     //t gives a warning on 64bit machines. */
-
-/*     if ((int)pidin > 0x80000) */
-/*     { */
-/* 	//- if pidin has identifier */
-
-/* 	if (!(pidin->iFlags & FLAG_IDENTINDEX_NOINDEX)) */
-/* 	{ */
-/* 	    //- set result from pidin index */
-
-/* 	    iResult = pidin->iIndex; */
-/* 	} */
-/*     } */
-
-/*     //- else */
-
-/*     else */
-/*     { */
-/* 	//- set result : illegal pidin (from connection ?) */
-
-/* 	iResult = -7; */
-/*     } */
-
-/*     //- return result */
-
-/*     return(iResult); */
-/* } */
 
 
 /// **************************************************************************

@@ -37,7 +37,7 @@ sub create
 
     #t bug: $name not newly allocated in C space, gets overwritten
 
-    my $pidin = SwiggableNeurospaces::IdinNewFromChars($name);
+    my $pidin = SwiggableNeurospaces::IdinCallocUnique($name);
 
 #     no strict "refs";
 
