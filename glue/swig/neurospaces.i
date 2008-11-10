@@ -13,6 +13,7 @@
 
 %{
 
+struct symtab_Invisible;
 
 #include "neurospaces/algorithminstance.h"
 #include "neurospaces/algorithmset.h"
@@ -29,6 +30,7 @@
 #include "neurospaces/components/fiber.h"
 #include "neurospaces/components/gatekinetic.h"
 #include "neurospaces/components/group.h"
+#include "neurospaces/components/groupedparameters.h"
 #include "neurospaces/components/hhgate.h"
 #include "neurospaces/components/iohier.h"
 #include "neurospaces/components/iol.h"
@@ -63,6 +65,8 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 #include "hierarchy/output/symbols/all_callees_headers.h"
+#include "hierarchy/output/symbols/runtime_casters.h"
+#include "hierarchy/output/symbols/runtime_casters.c"
 
 %}
 
@@ -151,6 +155,7 @@ treespace_traversal_new
 %include "neurospaces/function.h"
 %include "neurospaces/components/gatekinetic.h"
 %include "neurospaces/components/group.h"
+%include "neurospaces/components/groupedparameters.h"
 %include "neurospaces/components/hhgate.h"
 %include "neurospaces/idin.h"
 %include "neurospaces/importedfile.h"
@@ -183,4 +188,5 @@ treespace_traversal_new
 %include "neurospaces/symbolvirtual_protos.h"
 
 %include "hierarchy/output/symbols/all_callees_headers.i"
+%include "hierarchy/output/symbols/runtime_casters.h"
 

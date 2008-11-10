@@ -37,7 +37,11 @@ sub create
 
     my $pidin = SwiggableNeurospaces::IdinNewFromChars($name);
 
-    $backend->SymbolGetSymbol()->SymbolSetName($pidin);
+    no strict "refs";
+
+    print Data::Dumper::Dumper(\%{"SwiggableNeurospaces::"});
+
+    SwiggableNeurospaces::cast_segment_2_symbol($backend)->SymbolSetName($pidin);
 
     my $self
 	= {
