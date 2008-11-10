@@ -1214,7 +1214,7 @@ ParameterResolveScaledValue
 /// **************************************************************************
 
 struct symtab_HSolveListElement *
-ParameterResolveSymbol
+ ParameterResolveSymbol
 (struct symtab_Parameters *ppar,
  struct PidinStack *ppist)
 {
