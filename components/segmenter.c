@@ -2004,6 +2004,13 @@ SegmenterTips
 
     iResult = iResult && SegmenterLinearize(psegr, ppist);
 
+    if (!iResult)
+    {
+	fprintf(stderr, "cannot build segment linearization caches for %s, aborting\n", SymbolGetName(&psegr->bio.ioh.iol.hsle));
+
+	return(0);
+    }
+
     struct cable_structure *pcs = &psegr->desegmenter.pcs[0];
 
     //- give header output
