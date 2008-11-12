@@ -747,20 +747,24 @@ int ChannelHasNernstErev
     {
 	//- if Erev is function
 
-	if (ParameterIsFunction(pparErev))
+      //  if (ParameterIsFunction(pparErev))
 	{
 	    //- get function
 
 	    struct symtab_Function *pfunErev
-		= ParameterGetFunction(pparErev);
+	      = ParameterContextGetFunction(pparErev,ppist);
 
 	    //- if function name is NERNST
-
-	    if (strcmp(FunctionGetName(pfunErev), "NERNST") == 0)
+	    if(pfunErev)
 	    {
-		//- set result : ok
 
-		bResult = TRUE;
+	      if (strcmp(FunctionGetName(pfunErev), "NERNST") == 0)
+		{
+		  //- set result : ok
+
+		  bResult = TRUE;
+		}
+
 	    }
 	}
     }

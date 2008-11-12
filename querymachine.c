@@ -61,9 +61,11 @@ extern "C" {
 #include "neurospaces/components/root.h"
 #include "neurospaces/components/segment.h"
 #include "neurospaces/coordinatecache.h"
+#include "neurospaces/function.h"
 #include "neurospaces/importedfile.h"
 #include "neurospaces/inputoutput.h"
 #include "neurospaces/namespace.h"
+#include "neurospaces/parameters.h"
 #include "neurospaces/pidinstack.h"
 #include "neurospaces/projectionquery.h"
 #include "neurospaces/querymachine.h"
@@ -71,6 +73,7 @@ extern "C" {
 #include "neurospaces/symbols.h"
 #include "neurospaces/symboltable.h"
 #include "neurospaces/workload.h"
+
 
 #include "neurospaces/symbolvirtual_protos.h"
 
@@ -173,6 +176,7 @@ static QueryHandler QueryHandlerPrintConnectionCount;
 static QueryHandler QueryHandlerPrintCoordinates;
 static QueryHandler QueryHandlerPrintInfo;
 static QueryHandler QueryHandlerPrintParameter;
+static QueryHandler QueryHandlerPrintParameterInfo;
 static QueryHandler QueryHandlerPrintParameterInput;
 static QueryHandler QueryHandlerPrintParameterScaled;
 static QueryHandler QueryHandlerPrintParameterSet;
@@ -602,6 +606,20 @@ static QueryHandlerAssociation pquhasTable[] =
 	QueryMachineSymbolGenerator,
 #endif
     },
+
+
+    //m get parameter info
+
+    {
+	"printparameterinfo",
+	QueryHandlerPrintParameterInfo,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+
 
     //m get function parameter input
 
@@ -4737,6 +4755,24 @@ QueryMachineWildcardParameterTraverser
     return(iResult);
 }
 
+
+
+
+/// **************************************************************************
+///
+/// SHORT: QueryHandlerPrintParameter()
+///
+/// ARGS.:
+///
+///	std. QueryHandler args
+///
+/// RTN..: int : QueryHandler return value
+///
+/// DESCR: Handle parameter query
+///
+///	printparameter <context> <parameter1-name> <parameter2-name>
+///
+/// **************************************************************************
 static int QueryHandlerPrintParameter
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
 {
@@ -4924,6 +4960,173 @@ static int QueryHandlerPrintParameter
 
     return(bResult);
 }
+
+
+
+
+
+
+/// **************************************************************************
+///
+/// SHORT: QueryHandlerPrintParameterInfo()
+///
+/// ARGS.:
+///
+///	std. QueryHandler args
+///
+/// RTN..: int : QueryHandler return value
+///
+/// DESCR: Handle parameter query
+///
+///	printparameter <context> <parameter1-name> <parameter2-name>
+///
+/// **************************************************************************
+static int QueryHandlerPrintParameterInfo
+(char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
+{
+    //- set result : ok
+
+    int bResult = TRUE;
+
+    struct symtab_HSolveListElement *phsle = NULL;
+
+    //- parse command line element
+
+    struct PidinStack *ppist = PidinStackParse(&pcLine[iLength]);
+
+    //- parse parameter
+
+    char pcSeparator[] = " \t,;\n";
+
+    char *pcPar = strpbrk(&pcLine[iLength + 1], pcSeparator);
+
+    if (!pcPar)
+    {
+	fprintf(stdout, "parameter not found on command line\n");
+
+	return(FALSE);
+    }
+
+    pcPar++;
+
+    //- if the context is a wildcard
+
+    if (PidinStackIsWildcard(ppist))
+    {
+	//- allocate pidin stack pointing to root
+
+	struct PidinStack *ppistRoot = PidinStackCalloc();
+
+	if (!ppistRoot)
+	{
+	    return(FALSE);
+	}
+
+	PidinStackSetRooted(ppistRoot);
+
+	struct symtab_HSolveListElement *phsleRoot
+	    = PidinStackLookupTopSymbol(ppistRoot);
+
+	//! so phsleRoot can be NULL if the model description file was not found
+
+	if (phsleRoot)
+	{
+	    //- traverse symbols that match with wildcard
+
+	    int iResult
+		= SymbolTraverseWildcard
+		  (phsleRoot,
+		   ppistRoot,
+		   ppist,
+		   QueryMachineWildcardParameterTraverser,
+		   NULL,
+		   (void *)pcPar);
+
+	    if (iResult != 1)
+	    {
+		fprintf(stdout, "SymbolTraverseWildcard() failed (or aborted)\n");
+	    }
+	}
+	else
+	{
+	    //- diag's
+
+	    fprintf(stdout, "no model loaded\n");
+	}
+
+	//- free allocated memory
+
+	PidinStackFree(ppistRoot);
+    }
+
+    //- else single parameter query
+
+    else
+    {
+	//- lookup symbol
+
+/* 	//! allows namespacing, yet incompatible with parameter caches. */
+
+/* 	phsle = SymbolsLookupHierarchical(pneuro->psym, ppist); */
+
+	//! does not allow namespacing
+
+	phsle = PidinStackLookupTopSymbol(ppist);
+
+	//- if found
+
+	if (phsle)
+	{
+	    //- lookup parameter
+
+	    struct symtab_Parameters *ppar
+		= SymbolFindParameter(phsle, ppist, pcPar);
+
+	    //- if parameter found
+
+	    if (ppar)
+	    {
+
+	      fprintf(stdout,"%s","---\n");
+	      int iResult = ParameterPrintInfoRecursive(ppar,ppist,0);
+	      
+	      return iResult;
+	    }
+	}
+
+	//- else
+
+	else
+	{
+	    //- diag's
+
+	    fprintf(stdout, "symbol not found\n");
+	}
+    }
+
+    //- free stacks
+
+    PidinStackFree(ppist);
+
+    //- return result
+
+    return(bResult);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /// **************************************************************************
