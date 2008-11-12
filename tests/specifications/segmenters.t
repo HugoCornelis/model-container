@@ -23,7 +23,7 @@ my $test
 						  },
 						  {
 						   description => "Can we linearize segments of a network ?",
-						   read => 'Number of segments linearized: 33548
+						   read => 'Number of segments: 33548
 Number of segments without parents: 6266
 Number of segment tips: 15104
 ',
@@ -33,7 +33,7 @@ Number of segment tips: 15104
 						  {
 						   comment => 'note that the number of tips is the number of spine heads (nothing more, nothing less)',
 						   description => "Can we linearize segments of a heterogeneous population ?",
-						   read => 'Number of segments linearized: 27288
+						   read => 'Number of segments: 27288
 Number of segments without parents: 6
 Number of segment tips: 8844
 ',
@@ -42,7 +42,7 @@ Number of segment tips: 8844
 						  },
 						  {
 						   description => "Can we linearize segments of a homogeneous population ?",
-						   read => 'Number of segments linearized: 6240
+						   read => 'Number of segments: 6240
 Number of segments without parents: 6240
 Number of segment tips: 6240
 ',
@@ -52,7 +52,7 @@ Number of segment tips: 6240
 						  {
 						   comment => 'note that the number of tips is the number of spine heads (nothing more, nothing less)',
 						   description => "Can we linearize segments of a big neuron ?",
-						   read => 'Number of segments linearized: 4548
+						   read => 'Number of segments: 4548
 Number of segments without parents: 1
 Number of segment tips: 1474
 ',
@@ -63,7 +63,7 @@ Number of segment tips: 1474
 						   comment => 'note that the number of tips is the number of spine heads (nothing more, nothing less)',
 						   description => "Can we linearize segments of a part of a big neuron ?",
 						   disabled => 'See developer TODOs: instrumentation related',
-						   read => 'Number of segments linearized: 4548
+						   read => 'Number of segments: 4548
 Number of segments without parents: 1
 Number of segment tips: 1474
 ',
@@ -72,7 +72,7 @@ Number of segment tips: 1474
 						  },
 						  {
 						   description => "Can we linearize segments of a one segment neuron ?",
-						   read => 'Number of segments linearized: 1
+						   read => 'Number of segments: 1
 Number of segments without parents: 1
 Number of segment tips: 1
 ',
@@ -81,7 +81,7 @@ Number of segment tips: 1
 						  },
 						  {
 						   description => "Can we linearize segments of a network (2) ?",
-						   read => 'Number of segments linearized: 33548
+						   read => 'Number of segments: 33548
 Number of segments without parents: 6266
 Number of segment tips: 15104
 ',
@@ -91,7 +91,7 @@ Number of segment tips: 15104
 						  {
 						   comment => 'note that the number of tips is the number of spine heads (nothing more, nothing less)',
 						   description => "Can we linearize segments of a heterogeneous population (2) ?",
-						   read => 'Number of segments linearized: 27288
+						   read => 'Number of segments: 27288
 Number of segments without parents: 6
 Number of segment tips: 8844
 ',
@@ -100,7 +100,7 @@ Number of segment tips: 8844
 						  },
 						  {
 						   description => "Can we linearize segments of a homogeneous population (2) ?",
-						   read => 'Number of segments linearized: 6240
+						   read => 'Number of segments: 6240
 Number of segments without parents: 6240
 Number of segment tips: 6240
 ',
@@ -110,7 +110,7 @@ Number of segment tips: 6240
 						  {
 						   comment => 'note that the number of tips is the number of spine heads (nothing more, nothing less)',
 						   description => "Can we linearize segments of a big neuron (2) ?",
-						   read => 'Number of segments linearized: 4548
+						   read => 'Number of segments: 4548
 Number of segments without parents: 1
 Number of segment tips: 1474
 ',
@@ -122,7 +122,7 @@ Number of segment tips: 1474
 						   description => "Can we linearize segments of a part of a big neuron (2) ?",
 						   disabled => 'See developer TODOs: instrumentation related',
 						   timeout => 25,
-						   read => 'Number of segments linearized: 4548
+						   read => 'Number of segments: 4548
 Number of segments without parents: 1
 Number of segment tips: 1474
 ',
@@ -131,7 +131,7 @@ Number of segment tips: 1474
 						  {
 						   description => "Can we linearize segments of a one segment neuron (2) ?",
 						   timeout => 25,
-						   read => 'Number of segments linearized: 1
+						   read => 'Number of segments: 1
 Number of segments without parents: 1
 Number of segment tips: 1',
 						   write => "segmenterlinearize /CerebellarCortex/Granules/0",

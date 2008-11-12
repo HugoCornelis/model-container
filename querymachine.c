@@ -5145,7 +5145,8 @@ static int QueryHandlerPrintParameterInfo
 ///
 /// **************************************************************************
 
-static int QueryHandlerPrintParameterInput
+static int
+QueryHandlerPrintParameterInput
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
 {
     //- set result : ok
@@ -5160,6 +5161,13 @@ static int QueryHandlerPrintParameterInput
 
     struct PidinStack *ppist = PidinStackParse(&pcLine[iLength]);
 
+    if (!ppist)
+    {
+	fprintf(stdout, "please specify a context and two parameters on the command line\n");
+
+	return(FALSE);
+    }
+
     //- parse parameter
 
     char pcPar1[100];
@@ -5167,20 +5175,27 @@ static int QueryHandlerPrintParameterInput
 
     char pcSeparator[] = " \t,;\n";
 
+    //- get parameter 1
+
+    if (strpbrk(&pcLine[iLength + 1], pcSeparator) == NULL)
+    {
+	fprintf(stdout, "please specify a context and two parameters on the command line\n");
+
+	return(FALSE);
+    }
+
     //- go to next arg
 
-    iLength += strpbrk(&pcLine[iLength + 1], " \t") - &pcLine[iLength];
+    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
 
-    //- get filename
+    if (strpbrk(&pcLine[iLength + 1], pcSeparator) == NULL)
+    {
+	fprintf(stdout, "please specify a context and two parameters on the command line\n");
 
-    if (strpbrk(&pcLine[iLength + 1], " \t") == 0)
-    {
-	iSize = strlen(&pcLine[iLength + 1]);
+	return(FALSE);
     }
-    else
-    {
-	iSize = strpbrk(&pcLine[iLength + 1], " \t") - &pcLine[iLength];
-    }
+
+    iSize = strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
 
     strncpy(pcPar1, &pcLine[iLength + 1], iSize);
 
@@ -5188,17 +5203,17 @@ static int QueryHandlerPrintParameterInput
 
     //- go to next arg
 
-    iLength += strpbrk(&pcLine[iLength + 1], " \t") - &pcLine[iLength];
+    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
 
-    //- get filename
+    //- get parameter 2
 
-    if (strpbrk(&pcLine[iLength + 1], " \t") == 0)
+    if (strpbrk(&pcLine[iLength + 1], pcSeparator) == NULL)
     {
 	iSize = strlen(&pcLine[iLength + 1]);
     }
     else
     {
-	iSize = strpbrk(&pcLine[iLength + 1], " \t") - &pcLine[iLength];
+	iSize = strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
     }
 
     strncpy(pcPar2, &pcLine[iLength + 1], iSize);
@@ -5299,7 +5314,7 @@ static int QueryHandlerPrintParameterScaled
     {
 	fprintf(stdout, "parameter not found on command line\n");
 
-	return(bResult);
+	return(FALSE);
     }
 
     pcPar++;
@@ -6962,7 +6977,7 @@ QueryHandlerSegmenterLinearize
 	    struct symtab_Segmenter *psegr = (struct symtab_Segmenter *)phsle;
 
 	    fprintf(stdout, "---\n", psegr->desegmenter.iSegments);
-	    fprintf(stdout, "Number of segments linearized: %i\n", psegr->desegmenter.iSegments);
+	    fprintf(stdout, "Number of segments: %i\n", psegr->desegmenter.iSegments);
 	    fprintf(stdout, "Number of segments without parents: %i\n", psegr->desegmenter.iNoParents);
 	    fprintf(stdout, "Number of segment tips: %i\n", psegr->desegmenter.iTips);
 
@@ -7205,7 +7220,7 @@ QueryHandlerSegmenterTips
 
 	if (instanceof_segmenter(phsle))
 	{
-	    //- linearize
+	    //- report tips
 
 	    struct symtab_Segmenter *psegr = (struct symtab_Segmenter *)phsle;
 
