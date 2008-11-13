@@ -828,7 +828,7 @@ int ParameterPrintInfoRecursive(struct symtab_Parameters *ppar,struct PidinStack
       fprintf(stdout,"%s","value: ");
 
       struct PidinStack *ppist = PidinStackCalloc();
-
+ 
       PidinStackPushAll(ppist, ppar->uValue.pidin);
 
       PidinStackPrint(ppist, stdout);
@@ -845,8 +845,16 @@ int ParameterPrintInfoRecursive(struct symtab_Parameters *ppar,struct PidinStack
       PidinStackString(ppistValue, pc, sizeof(pc));  
       fprintf(stdout,"'resolved value': %s%s%s\n",pc,"->",pcFieldName);
 
-           
+
       return 1;
+      //!
+      //! recursively follow fields to print values
+      //!
+      //      struct symtab_Parameters *pparTarget = ParameterNewFromPidinQueue(pcFieldName,
+      //							ppar->uValue.pidin,
+      //							TYPE_PARA_FIELD);
+      
+      //return  ParameterPrintInfoRecursive(ppar,ppistValue,iLevel+1);
     }
 
   //- for string parameter values
@@ -1250,6 +1258,9 @@ struct symtab_HSolveListElement *
 	//! changing this value is always safe. 
 
 	ppar = SymbolFindParameter(phsleResult,ppistPar1,pcFieldname);
+
+	if(!ppar)
+	  break;
 
 	ppistPar1 = PidinStackDuplicate(ppistPar2);
 
