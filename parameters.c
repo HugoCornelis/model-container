@@ -98,96 +98,105 @@ struct symtab_Parameters * ParameterCalloc(void)
 }
 
 
+/// **************************************************************************
 ///
+/// SHORT: ParameterContextGetFunctionContext()
 ///
+/// ARGS.:
 ///
-struct PidinStack * 
-ParameterContextGetFunctionContext(struct symtab_Parameters *ppar, struct PidinStack *ppist)
-{
+///	ppar...: parameter.
+///	ppist..: context.
+///
+/// RTN..: struct PidinStack *
+///
+///	Context attached to this function parameter in this context,
+///	NULL for none.
+///
+/// DESCR: Get context attached to this function parameter.
+///
+/// **************************************************************************
 
-  struct PidinStack *ppistPar1 = PidinStackDuplicate(ppist);
+struct PidinStack *
+ParameterContextGetFunctionContext
+(struct symtab_Parameters *ppar, struct PidinStack *ppist)
+{
+    struct PidinStack *ppistPar1 = PidinStackDuplicate(ppist);
 
     while (!ParameterIsFunction(ppar))
     {
-	struct PidinStack *ppistPar2 = ParameterResolveToPidinStack(ppar,ppistPar1);
+	struct PidinStack *ppistPar2 = ParameterResolveToPidinStack(ppar, ppistPar1);
 
 	struct symtab_HSolveListElement *phsle2 = PidinStackLookupTopSymbol(ppistPar2);
 
 	char *pcFieldname = ParameterGetFieldName(ppar);
 
-	if(pcFieldname)
+	if (pcFieldname)
 	{
-	
-	  ppar = SymbolFindParameter(phsle2,ppistPar2,pcFieldname);
+	    ppar = SymbolFindParameter(phsle2, ppistPar2, pcFieldname);
 
-	  ppistPar1 = PidinStackDuplicate(ppistPar2);
+	    ppistPar1 = PidinStackDuplicate(ppistPar2);
 
-	  PidinStackFree(ppistPar2);
-
+	    PidinStackFree(ppistPar2);
 	}
 	else
-	  break;
+	{
+	    break;
+	}
     }
-
 
     if (ParameterIsFunction(ppar))
     {
-      return ppistPar1;
+	return ppistPar1;
     }
 
     return NULL;
 }
 
 
+/// **************************************************************************
+///
+/// SHORT: ParameterContextGetFunction()
+///
+/// ARGS.:
+///
+///	ppar...: parameter.
+///	ppist..: context.
+///
+/// RTN..: struct symtab_Function *
+///
+///	Function attached to this parameter in this context, NULL for
+///	none.
+///
+/// DESCR: Get function attached to this parameter.
+///
+/// **************************************************************************
 
-///
-///
-///
-struct symtab_Function * 
-ParameterContextGetFunction(struct symtab_Parameters *ppar, struct PidinStack *ppist)
+struct symtab_Function *
+ParameterContextGetFunction
+(struct symtab_Parameters *ppar, struct PidinStack *ppist)
 {
-
-
-/*     if (!ParameterIsField(ppar)) */
-/*     { */
-/* 	return NULL; */
-/*     } */
-
-    //t pcFieldname = ParameterGetFieldName(ppar)
-    //t ppistPar1 = ppist
-    //t while ParameterIsField(ppar)
-    //t   ppistPar2 = ParameterResolveToPidinStack(ppar, ppistPar1)
-    //t   phsle = PidinStackLookupTopSymbol(ppistPar2)
-    //t   ppar = SymbolFindParameter(phsle, ppistPar2, pcFieldname)
-    //t
-    //t PidinStackFree(ppistPar2)
-    //t if ParameterIsFunction(ppar)
-    //t   return 1
-    //t else
-    //t   return 0
-  
-  struct PidinStack *ppistPar1 = PidinStackDuplicate(ppist);
+    struct PidinStack *ppistPar1 = PidinStackDuplicate(ppist);
 
     while (!ParameterIsFunction(ppar))
     {
-	struct PidinStack *ppistPar2 = ParameterResolveToPidinStack(ppar,ppistPar1);
+	struct PidinStack *ppistPar2 = ParameterResolveToPidinStack(ppar, ppistPar1);
 
 	struct symtab_HSolveListElement *phsle2 = PidinStackLookupTopSymbol(ppistPar2);
 
 	char *pcFieldname = ParameterGetFieldName(ppar);
 
-	if(pcFieldname)
+	if (pcFieldname)
 	{
-	
-	  ppar = SymbolFindParameter(phsle2,ppistPar2,pcFieldname);
+	    ppar = SymbolFindParameter(phsle2, ppistPar2, pcFieldname);
 
-	  ppistPar1 = PidinStackDuplicate(ppistPar2);
+	    ppistPar1 = PidinStackDuplicate(ppistPar2);
 
-	  PidinStackFree(ppistPar2);
-
+	    PidinStackFree(ppistPar2);
 	}
 	else
-	  break;
+	{
+	    break;
+	}
     }
 
     PidinStackFree(ppistPar1);
@@ -199,10 +208,6 @@ ParameterContextGetFunction(struct symtab_Parameters *ppar, struct PidinStack *p
 
     return NULL;
 }
-
-
-
-
 
 
 /// **************************************************************************
@@ -617,158 +622,136 @@ ParameterNewFromString
 }
 
 
-
 /// **************************************************************************
 ///
 /// SHORT: ParameterPrintInfo()
 ///
 ///
 /// **************************************************************************
-int ParameterPrintInfo(struct symtab_Parameters *ppar,struct PidinStack *ppist)
+
+int
+ParameterPrintInfo
+(struct symtab_Parameters *ppar, struct PidinStack *ppist)
 {
-
-
-  if (ParameterIsNumber(ppar))
+    if (ParameterIsNumber(ppar))
     {
+	double d = ParameterResolveValue(ppar, ppist);
 
+	//- print result
 
-      double d = ParameterResolveValue(ppar, ppist);
+	fprintf(stdout,"---\n");
+	fprintf(stdout,"  type: Number\n");
+	fprintf(stdout,"  value: %g\n", d);
+	fprintf(stdout,"  flags: %i\n",ppar->iFlags);
 
-      //- print result
-      fprintf(stdout,"---\n");
-      fprintf(stdout,"  type: Number\n");
-      fprintf(stdout,"  value: %g\n", d);
-      fprintf(stdout,"  flags: %i\n",ppar->iFlags);
-      return 1;
-
+	return 1;
     }
-  if(ParameterIsFunction(ppar))
+
+    if (ParameterIsFunction(ppar))
     {
+	struct symtab_Function *pfun = ParameterContextGetFunction(ppar, ppist);
 
-
-      struct symtab_Function *pfun = ParameterContextGetFunction(ppar,ppist);
+/* 	if (!pfun) */
+/* 	{ */
+/* 	    pfun = ppar->uValue.pfun; */
+/* 	} */
 		
-      if(!pfun)
-	{
-	  pfun = ppar->uValue.pfun;
-	}
-		
-      fprintf(stdout,"---\n");
-      fprintf(stdout,"  type: Function\n");
-      fprintf(stdout,"  Function name: %s\n", FunctionGetName(pfun));
+	fprintf(stdout,"---\n");
+	fprintf(stdout,"  type: Function\n");
+	fprintf(stdout,"  Function name: %s\n", FunctionGetName(pfun));
 
-		
+	fprintf(stdout,"  Parameters:\n");
 
-      fprintf(stdout,"  Parameters:\n");
+	struct symtab_Parameters *pparFunCurr
+	    = pfun->pparc->ppars;
 
-      struct symtab_Parameters *pparFunCurr = 
-	pfun->pparc->ppars;
-
-
-      for(;pparFunCurr;pparFunCurr = pparFunCurr->pparNext)
+	for ( ; pparFunCurr ; pparFunCurr = pparFunCurr->pparNext)
 	{
 
-	  switch(pparFunCurr->iType)
+	    switch(pparFunCurr->iType)
 	    {
-	    case (TYPE_PARA_NUMBER):
+	    case TYPE_PARA_NUMBER:
 
-	      fprintf(stdout,"    %s: %g\n",
-		      pparFunCurr->pcIdentifier,
-		      pparFunCurr->uValue.dNumber);
-	      return 1;
-	      break;
+		fprintf(stdout, "    %s: %g\n",
+			pparFunCurr->pcIdentifier,
+			pparFunCurr->uValue.dNumber);
+		return 1;
 
+		break;
 
+	    case TYPE_PARA_FIELD:		      
 
-	    case (TYPE_PARA_FIELD):		      
+		fprintf(stdout, "    %s: %s\n",
+			pparFunCurr->pcIdentifier,
+			pparFunCurr->uValue.dNumber);
 
-	      fprintf(stdout,"    %s: %s\n",
-		      pparFunCurr->pcIdentifier,
+		break;
 
+	    case TYPE_PARA_STRING:
 
-		      pparFunCurr->uValue.dNumber);
-
-	      break;
-
-
-	    case (TYPE_PARA_STRING):
-
-	      fprintf(stdout,"    %s: %s\n",
-		      pparFunCurr->pcIdentifier,
-		      pparFunCurr->uValue.pcString);
-	      break;
-
+		fprintf(stdout, "    %s: %s\n",
+			pparFunCurr->pcIdentifier,
+			pparFunCurr->uValue.pcString);
+		break;
 	    }
-
-
-
-
 	}
-
-
     }
 
-  if(ParameterIsField(ppar))
+    if (ParameterIsField(ppar))
     {
-    
+	//double d = ParameterResolveValue(ppar, ppist);
 
-      //double d = ParameterResolveValue(ppar, ppist);
-
-      char *pcFieldName = ParameterGetFieldName(ppar);
+	char *pcFieldName = ParameterGetFieldName(ppar);
       
-      struct symtab_IdentifierIndex *pidinField = ParameterGetFieldPidin(ppar);
+	struct symtab_IdentifierIndex *pidinField = ParameterGetFieldPidin(ppar);
 
-      //      struct PidinStack *ppistPar = ParameterResolveToPidinStack(
-      fprintf(stdout,"    type: Field\n");
-      fprintf(stdout,"    field name: %s\n", pcFieldName);
+	//      struct PidinStack *ppistPar = ParameterResolveToPidinStack(
+	fprintf(stdout,"    type: Field\n");
+	fprintf(stdout,"    field name: %s\n", pcFieldName);
     }
 
-  //- for string parameter values
+    //- for string parameter values
 
-  else if (ParameterIsString(ppar))
+    else if (ParameterIsString(ppar))
     {
-      //- print string result
+	//- print string result
 
-      char *pc = ParameterGetString(ppar);
-      fprintf(stdout,"---\n");
-      fprintf(stdout,"  type: String\n");
-      fprintf(stdout,"  value: \"%s\"\n", pc);
-      fprintf(stdout,"  flags: %i\n",ppar->iFlags);
-      return 1;
+	char *pc = ParameterGetString(ppar);
+	fprintf(stdout,"---\n");
+	fprintf(stdout,"  type: String\n");
+	fprintf(stdout,"  value: \"%s\"\n", pc);
+	fprintf(stdout,"  flags: %i\n",ppar->iFlags);
+
+	return 1;
     }
-  else if (ParameterIsSymbolic(ppar))
+
+    //- for symbolic parameter values
+
+    else if (ParameterIsSymbolic(ppar))
     {
-      //- give diagnostics: not implemented yet
+	//- give diagnostics: not implemented yet
 
-      fprintf(stdout, "\nreporting of symbolic parameters is not implemented yet\n");
+	fprintf(stdout, "\nreporting of symbolic parameters is not implemented yet\n");
     }
-  else if (ParameterIsAttribute(ppar))
+
+    //- for attribute parameter values
+
+    else if (ParameterIsAttribute(ppar))
     {
-      //- give diagnostics: not implemented yet
+	//- give diagnostics: not implemented yet
 
-      fprintf(stdout, "\nreporting of attribute parameters is not implemented yet\n");
+	fprintf(stdout, "\nreporting of attribute parameters is not implemented yet\n");
     }
 
+    //- else
 
-//- else
+    else
+    {
+	//- diag's
 
- else
-   {
-     //- diag's
-
-     fprintf(stdout, "parameter (%s) not found in symbol\n",ppar->pcIdentifier);
-   }
-
-
+	fprintf(stdout, "parameter (%s) not found in symbol\n", ppar->pcIdentifier);
+    }
 }
-
-
-
-
-
-
-
-
 
 
 /// **************************************************************************
@@ -777,166 +760,144 @@ int ParameterPrintInfo(struct symtab_Parameters *ppar,struct PidinStack *ppist)
 ///
 ///
 /// **************************************************************************
-int ParameterPrintInfoRecursive(struct symtab_Parameters *ppar,struct PidinStack *ppist,int iLevel)
+
+int
+ParameterPrintInfoRecursive
+(struct symtab_Parameters *ppar, struct PidinStack *ppist, int iLevel)
 {
+    int iIndent = (iLevel == 0) ? 0 : (iLevel * 2);
 
+    PrintIndent(iIndent, stdout);
+    fprintf(stdout, "'parameter name': %s\n", ParameterGetName(ppar));
 
-  int iIndent = (iLevel==0) ? 0:(iLevel*2);
-
-
-
-
-  PrintIndent(iIndent,stdout);
-  fprintf(stdout,"'parameter name': %s\n",ParameterGetName(ppar));
- 
-
-  if (ParameterIsNumber(ppar))
+    if (ParameterIsNumber(ppar))
     {
+	double d = ParameterResolveValue(ppar, ppist);
 
+	//- print result
 
-      double d = ParameterResolveValue(ppar, ppist);
+	PrintIndent(iIndent, stdout);
+	fprintf(stdout, "type: Number\n");
+	PrintIndent(iIndent, stdout);
+	fprintf(stdout, "value: %g\n", d);
 
-      //- print result
-
-      PrintIndent(iIndent,stdout);
-      fprintf(stdout,"type: Number\n");
-      PrintIndent(iIndent,stdout);
-      fprintf(stdout,"value: %g\n", d);
-
-      return 1;
-
+	return 1;
     }
-  if(ParameterIsField(ppar))
+
+    if (ParameterIsField(ppar))
     {
     
 
-      //double d = ParameterResolveValue(ppar, ppist);
+	//double d = ParameterResolveValue(ppar, ppist);
 
-      char *pcFieldName = ParameterGetFieldName(ppar);
+	char *pcFieldName = ParameterGetFieldName(ppar);
 
-      struct PidinStack *ppistValue = ParameterResolveToPidinStack(ppar,ppist);
+	struct PidinStack *ppistValue = ParameterResolveToPidinStack(ppar, ppist);
 
-      PrintIndent(iIndent,stdout);
-      fprintf(stdout,"'field name': %s\n", pcFieldName);
+	PrintIndent(iIndent, stdout);
+	fprintf(stdout, "'field name': %s\n", pcFieldName);
 
-      PrintIndent(iIndent,stdout);      
-      fprintf(stdout,"type: Field\n");
+	PrintIndent(iIndent, stdout);      
+	fprintf(stdout, "type: Field\n");
 
-      char pc[1024];
+	char pc[1024];
 
-      PrintIndent(iIndent,stdout);
-      fprintf(stdout,"%s","value: ");
+	PrintIndent(iIndent, stdout);
+	fprintf(stdout, "%s", "value: ");
 
-      struct PidinStack *ppist = PidinStackCalloc();
+	struct PidinStack *ppist = PidinStackCalloc();
 
-      PidinStackPushAll(ppist, ppar->uValue.pidin);
+	PidinStackPushAll(ppist, ppar->uValue.pidin);
 
-      PidinStackPrint(ppist, stdout);
+	PidinStackPrint(ppist, stdout);
 
-      PidinStackFree(ppist);      
+	PidinStackFree(ppist);      
 
-      //IdinPrint(ppar->uValue.pidin,stdout);
-      fprintf(stdout,"%s","\n");
-      //fprintf(stdout,"\n");
+	//IdinPrint(ppar->uValue.pidin, stdout);
+	fprintf(stdout, "%s", "\n");
+	//fprintf(stdout, "\n");
 
-
-
-      PrintIndent(iIndent,stdout);
-      PidinStackString(ppistValue, pc, sizeof(pc));  
-      fprintf(stdout,"'resolved value': %s%s%s\n",pc,"->",pcFieldName);
+	PrintIndent(iIndent, stdout);
+	PidinStackString(ppistValue, pc, sizeof(pc));  
+	fprintf(stdout, "'resolved value': %s%s%s\n", pc, "->", pcFieldName);
 
            
-      return 1;
+	return 1;
     }
 
-  //- for string parameter values
+    //- for string parameter values
 
-  else if (ParameterIsString(ppar))
+    else if (ParameterIsString(ppar))
     {
-      //- print string result
+	//- print string result
 
-      char *pc = ParameterGetString(ppar);
-     
+	char *pc = ParameterGetString(ppar);
 
-      PrintIndent(iIndent,stdout);
-      fprintf(stdout,"type: String\n");
-      PrintIndent(iIndent,stdout);
-      fprintf(stdout,"value: \"%s\"\n\n", pc);
+	PrintIndent(iIndent, stdout);
+	fprintf(stdout,"type: String\n");
+	PrintIndent(iIndent, stdout);
+	fprintf(stdout,"value: \"%s\"\n\n", pc);
 
-      return 1;
-
+	return 1;
     }
-  else if (ParameterIsSymbolic(ppar))
+    else if (ParameterIsSymbolic(ppar))
     {
-      //- give diagnostics: not implemented yet
+	//- give diagnostics: not implemented yet
 
-      fprintf(stdout, "\nreporting of symbolic parameters is not implemented yet\n");
+	fprintf(stdout, "\nreporting of symbolic parameters is not implemented yet\n");
       
-      return 0;
-
+	return 0;
     }
-  else if (ParameterIsAttribute(ppar))
+    else if (ParameterIsAttribute(ppar))
     {
-      //- give diagnostics: not implemented yet
+	//- give diagnostics: not implemented yet
 
-      fprintf(stdout, "\nreporting of attribute parameters is not implemented yet\n");
+	fprintf(stdout, "\nreporting of attribute parameters is not implemented yet\n");
 
-      return 0;
+	return 0;
     }
 
-  if(ParameterIsFunction(ppar))
+    if (ParameterIsFunction(ppar))
     {
-
-
-      struct symtab_Function *pfun = ParameterContextGetFunction(ppar,ppist);
+	struct symtab_Function *pfun = ParameterContextGetFunction(ppar, ppist);
 		
 /*       if(!pfun) */
 /* 	{ */
 /* 	  pfun = ppar->uValue.pfun; */
 /* 	} */
 		
+	PrintIndent(iIndent,stdout);
+	fprintf(stdout,"type: function\n");
 
-      PrintIndent(iIndent,stdout);
-      fprintf(stdout,"type: function\n");
+	PrintIndent(iIndent,stdout);
+	fprintf(stdout,"'function name': %s\n", FunctionGetName(pfun));
 
+	PrintIndent(iIndent,stdout);
+	fprintf(stdout,"'function parameters':\n\n");
 
-      PrintIndent(iIndent,stdout);
-      fprintf(stdout,"'function name': %s\n", FunctionGetName(pfun));
+	struct symtab_Parameters *pparFunCurr
+	    = pfun->pparc->ppars;
 
-		
-      PrintIndent(iIndent,stdout);
-      fprintf(stdout,"'function parameters':\n\n");
+	for(;pparFunCurr;pparFunCurr = pparFunCurr->pparNext)
+	{
+	    ParameterPrintInfoRecursive(pparFunCurr, ppist, iLevel + 1); 
 
-      struct symtab_Parameters *pparFunCurr = 
-	pfun->pparc->ppars;
+	    fprintf(stdout, "%s", "\n");
+	}
 
-
-      for(;pparFunCurr;pparFunCurr = pparFunCurr->pparNext)
-      {
-
-	ParameterPrintInfoRecursive(pparFunCurr,ppist,iLevel+1); 
-	fprintf(stdout,"%s","\n");
-      
-      }
-
-      return 1;
-
+	return 1;
     }
 
+    //- else
 
+    else
+    {
+	//- diag's
 
-//- else
+	fprintf(stdout, "parameter (%s) not found in symbol\n", ppar->pcIdentifier);
 
- else
-   {
-     //- diag's
-
-     fprintf(stdout, "parameter (%s) not found in symbol\n",ppar->pcIdentifier);
-
-     return 0;
-   }
-
-
+	return 0;
+    }
 }
 
 
@@ -967,7 +928,8 @@ do									\
 }									\
 while (0)								\
 
-int ParameterPrint
+int
+ParameterPrint
 (struct symtab_Parameters *ppar, int bAll, int iIndent, FILE *pfile)
 {
     //- set default result : ok
@@ -1214,7 +1176,7 @@ ParameterResolveScaledValue
 /// **************************************************************************
 
 struct symtab_HSolveListElement *
- ParameterResolveSymbol
+ParameterResolveSymbol
 (struct symtab_Parameters *ppar,
  struct PidinStack *ppist)
 {
@@ -1222,44 +1184,55 @@ struct symtab_HSolveListElement *
 
     struct symtab_HSolveListElement *phsleResult = NULL;
 
+    //- loop over the parameters referenced by the one given
 
     struct PidinStack *ppistPar1 = PidinStackDuplicate(ppist);
 
-
-
-    while(ParameterIsSymbolic(ppar) || ParameterIsField(ppar))
+    while (ParameterIsSymbolic(ppar) || ParameterIsField(ppar))
     {
-      
-      //- get pidinstack from parameter elements
+	//- lookup symbol from parameter elements
 
-      struct PidinStack *ppistPar2
-	= ParameterResolveToPidinStack(ppar, ppistPar1);
+	struct PidinStack *ppistPar2
+	    = ParameterResolveToPidinStack(ppar, ppistPar1);
 
-      //- lookup symbol from pidinstack
+	phsleResult = PidinStackLookupTopSymbol(ppistPar2); 
 
-      phsleResult = PidinStackLookupTopSymbol(ppistPar2); 
+	if (phsleResult)
+	{
+	    //- if there is a field name and the symbol was found
 
-      
-      char *pcFieldname = ParameterGetFieldName(ppar); 
-      
+	    char *pcFieldname = ParameterGetFieldName(ppar); 
 
-      if(phsleResult && pcFieldname)
-      {
+	    //! if pcFieldname is an IO, ppar will become NULL, that seems ok ?
 
-	//! Since this is a pointer to the parameter argument I'm not certain
-	//! changing this value is always safe. 
+	    //! Since this is a pointer to the parameter argument I'm not certain
+	    //! changing this value is always safe. 
 
-	ppar = SymbolFindParameter(phsleResult,ppistPar1,pcFieldname);
+	    ppar = SymbolFindParameter(phsleResult, ppistPar2, pcFieldname);
 
-	ppistPar1 = PidinStackDuplicate(ppistPar2);
+	    if (ppar)
+	    {
+		ppistPar1 = PidinStackDuplicate(ppistPar2);
 
-	PidinStackFree(ppistPar2);
-	
-      }
-      else
-	break;
+		PidinStackFree(ppistPar2);
+	    }
 
+	    //- else
+
+	    else
+	    {
+		//- no symbol referenced
+
+		break;
+	    }
+	}
+	else
+	{
+	    break;
+	}
     }
+
+    //- free pidin stack
 
     PidinStackFree(ppistPar1);
 
