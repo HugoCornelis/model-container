@@ -186,14 +186,27 @@ PidinStackAppendCompact
 
 	    if (IdinPointsToParent(pidin))
 	    {
-		//- pop target
 
-		if (!PidinStackPop(ppistTarget))
+	  
+	      //- pop target
+	      struct symtab_IdentifierIndex *pidinTarget = 
+		PidinStackPop(ppistTarget);
+
+	      while(IdinPointsToCurrent(pidinTarget))
+	      {
+		
+		pidinTarget = PidinStackPop(ppistTarget);
+
+		if (!pidinTarget)
 		{
 		    iResult = 0;
 		    break;
 		}
+
+	      }
+
 	    }
+	    
 
 	    //- else
 
@@ -264,6 +277,7 @@ PidinStackAppendCompact
 		    break;
 		}
 	    }
+
 
 	    //- else
 
