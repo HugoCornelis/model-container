@@ -109,21 +109,45 @@ AC_PROG_RANLIB
 
 dnl Checks for libraries.
 dnl Replace `main' with a function in -lcurses:
-AC_CHECK_LIB(curses, main)
+AC_CHECK_LIB(curses, main,[echo "Found! lib curses."],[
+   echo "Error! lib curses is not installed."
+   exit -1
+])
+
 dnl Replace `main' with a function in -lfl:
-AC_CHECK_LIB(fl, main)
+AC_CHECK_LIB(fl, main,[echo "Found! lib flex."],[
+   echo "Error! lib flex is not installed."
+   exit -1
+])
+
 dnl Replace `main' with a function in -lhistory:
-AC_CHECK_LIB(history, main)
+AC_CHECK_LIB(history, main,[echo "Found! lib history."],[
+   echo "Error! lib history is not installed."
+   exit -1
+])
+
 dnl Replace `main' with a function in -lm:
-AC_CHECK_LIB(m, main)
+AC_CHECK_LIB(m, main,[echo "Found! lib m."],[
+   echo "Error! lib math is not installed."
+   exit -1
+])
+
 dnl Replace `main' with a function in -lreadline:
-AC_CHECK_LIB(readline, main)
+AC_CHECK_LIB(readline, main,[echo "Found! lib readline."],[
+   echo "Error! lib readline is not installed."
+   exit -1
+])
 
 
 dnl Checks for header files.
 AC_HEADER_STDC
 AC_HEADER_STDBOOL
-AC_CHECK_HEADERS([limits.h malloc.h sys/time.h unistd.h float.h stddef.h libintl.h])
+AC_CHECK_HEADERS([limits.h malloc.h sys/time.h unistd.h float.h stddef.h libintl.h],[],[
+   echo "Error! Header not found."
+   exit -1
+])
+
+
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -146,6 +170,12 @@ WARNED=yes
 # this is only a test of autoconf's functionality
 
 )
+
+
+dnl Check for some needed programs.
+AC_CHECK_PROGS(PERL, perl5 perl)
+
+
 
 # search lisp dir for installing the emacs major mode
 
