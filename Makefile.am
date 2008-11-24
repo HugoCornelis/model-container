@@ -17,7 +17,7 @@
 ##'
 ##############################################################################
 
-SUBDIRS = algorithms convertors . glue/swig
+SUBDIRS = algorithms . glue/swig
 
 dist_bin_SCRIPTS = bin/model-container
 
