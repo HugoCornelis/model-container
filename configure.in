@@ -133,9 +133,9 @@ AC_CHECK_LIB(m, main,[echo "Found! lib m."],[
 ])
 
 dnl Replace `main' with a function in -lreadline:
+dnl the second command on failure should be an 'exit -1'
 AC_CHECK_LIB(readline, main,[echo "Found! lib readline."],[
    echo "Error! lib readline is not installed."
-   exit -1
 ])
 
 

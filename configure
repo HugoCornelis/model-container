@@ -4220,7 +4220,6 @@ if test $ac_cv_lib_readline_main = yes; then
 else
 
    echo "Error! lib readline is not installed."
-   exit -1
 
 fi
 
