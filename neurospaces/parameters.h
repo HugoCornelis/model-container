@@ -572,10 +572,13 @@ struct PidinStack;
 
 struct symtab_Parameters * ParameterCalloc(void);
 
-struct symtab_Function * 
-ParameterContextGetFunction(struct symtab_Parameters *ppar, 
-			    struct PidinStack *ppist);
+struct PidinStack *
+ParameterContextGetFunctionContext
+(struct symtab_Parameters *ppar, struct PidinStack *ppist);
 
+struct symtab_Function *
+ParameterContextGetFunction
+(struct symtab_Parameters *ppar, struct PidinStack *ppist);
 
 void ParameterFree(struct symtab_Parameters *ppar);
 
@@ -606,7 +609,13 @@ ParameterNewFromString
 int ParameterPrint
 (struct symtab_Parameters *ppar, int bAll, int iIndent, FILE *pfile);
 
-int ParameterPrintInfo(struct symtab_Parameters *ppar,struct PidinStack *ppist);
+int
+ParameterPrintInfo
+(struct symtab_Parameters *ppar, struct PidinStack *ppist);
+
+int
+ParameterPrintInfoRecursive
+(struct symtab_Parameters *ppar, struct PidinStack *ppist, int iLevel);
 
 struct symtab_HSolveListElement *
 ParameterResolveFunctionalInput

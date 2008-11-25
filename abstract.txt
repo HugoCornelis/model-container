@@ -1,11 +1,12 @@
 
 
-Neurospaces design goals
+Neurospaces model container design goals
 
-Neurospaces is a data container for large and complex neuronal models.
-It is used as an abstraction layer on top of a simulator and deals
-with end-user concepts instead of mathematical equations.  This allows
-to optimize the simulator separately from the modeling package.
+The Neurospaces model container is a data container for large and
+complex neuronal models.  It is used as an abstraction layer on top of
+a simulator and deals with end-user concepts instead of mathematical
+equations.  This allows to optimize the simulator separately from the
+modeling package.
 
 The optimization of a neuronal simulator consists of ultimate accuracy
 and performance.  Transforming complex biological parameters into
@@ -13,14 +14,14 @@ precomputed tables and optimizing for a high CPU cache hit ratio are
 the most important features for a good simulator, and gives the
 simulator a performance boost of about a factor four.
 
-Neurospaces on the other hand, abstracts away all the mathematical and
+The model container abstracts away all the mathematical and
 computational details of the simulator.  Optimized to store large
 models in little memory -- it stores neuronal models in a fraction of
 the memory that would be used by conventional simulators -- it allows
 for automatic partitioning of the model such that simulations can be
-run in parallel.  From the modeler's side, Neurospaces will be able to
-import and export NeuroML files, facilitating exchange of models and
-ideas, and fostering computational neuroscience.
+run in parallel.  From the modeler's side, the model container will be
+able to import and export NeuroML files, facilitating exchange of
+models and ideas, and fostering computational neuroscience.
 
 
 Refs :
