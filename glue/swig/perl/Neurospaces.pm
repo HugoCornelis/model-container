@@ -383,6 +383,20 @@ sub delete_component
 }
 
 
+sub exists_component
+{
+    my $component = shift;
+
+    # the parameter context base is always the root for now
+
+    my $context = SwiggableNeurospaces::PidinStackParse($component);
+
+    my $symbol = $context->PidinStackLookupTopSymbol();
+
+    return $symbol;
+}
+
+
 sub import_qualified_filename
 {
     my $self = shift;
