@@ -120,36 +120,66 @@ struct PidinStack *
 ParameterContextGetFunctionContext
 (struct symtab_Parameters *ppar, struct PidinStack *ppist)
 {
-    struct PidinStack *ppistPar1 = PidinStackDuplicate(ppist);
+    //- set default result: duplicate context
+
+    struct PidinStack *ppistResult = PidinStackDuplicate(ppist);
+
+    //- while this parameter is not a function
 
     while (!ParameterIsFunction(ppar))
     {
-	struct PidinStack *ppistPar2 = ParameterResolveToPidinStack(ppar, ppistPar1);
+	//- get context referenced to by the parameter
 
-	struct symtab_HSolveListElement *phsle2 = PidinStackLookupTopSymbol(ppistPar2);
+	struct PidinStack *ppistPar = ParameterResolveToPidinStack(ppar, ppistResult);
+
+	struct symtab_HSolveListElement *phslePar = PidinStackLookupTopSymbol(ppistPar);
+
+	//- if there is a parameter field name
 
 	char *pcFieldname = ParameterGetFieldName(ppar);
 
 	if (pcFieldname)
 	{
-	    ppar = SymbolFindParameter(phsle2, ppistPar2, pcFieldname);
+	    //- find field in referenced context
 
-	    ppistPar1 = PidinStackDuplicate(ppistPar2);
+	    ppar = SymbolFindParameter(phslePar, ppistPar, pcFieldname);
 
-	    PidinStackFree(ppistPar2);
+	    ppistResult = PidinStackDuplicate(ppistPar);
+
+	    PidinStackFree(ppistPar);
 	}
+
+	//- else no field name
+
 	else
 	{
+	    //- break loop
+
 	    break;
 	}
     }
 
+    //- if the resolved parameter is a function
+
     if (ParameterIsFunction(ppar))
     {
-	return ppistPar1;
+	//- return result
+
+	return(ppistResult);
     }
 
-    return NULL;
+    //- else no function
+
+    else
+    {
+	//- free allocated memory
+
+	PidinStackFree(ppistResult);
+
+	//- return failure
+
+	return(NULL);
+    }
 }
 
 
@@ -175,38 +205,61 @@ struct symtab_Function *
 ParameterContextGetFunction
 (struct symtab_Parameters *ppar, struct PidinStack *ppist)
 {
+    //- create a working context
+
     struct PidinStack *ppistPar1 = PidinStackDuplicate(ppist);
+
+    //- while this parameter is not a function
 
     while (!ParameterIsFunction(ppar))
     {
+	//- get context referenced to by the parameter
+
 	struct PidinStack *ppistPar2 = ParameterResolveToPidinStack(ppar, ppistPar1);
 
 	struct symtab_HSolveListElement *phsle2 = PidinStackLookupTopSymbol(ppistPar2);
+
+	//- if there is a parameter field name
 
 	char *pcFieldname = ParameterGetFieldName(ppar);
 
 	if (pcFieldname)
 	{
+	    //- find field in referenced context
+
 	    ppar = SymbolFindParameter(phsle2, ppistPar2, pcFieldname);
 
 	    ppistPar1 = PidinStackDuplicate(ppistPar2);
 
 	    PidinStackFree(ppistPar2);
 	}
+
+	//- else no field name
+
 	else
 	{
+	    //- break loop
+
 	    break;
 	}
     }
 
+    //- free allocated memory
+
     PidinStackFree(ppistPar1);
+
+    //- if the resolved parameter is a function
 
     if (ParameterIsFunction(ppar))
     {
-	return ParameterGetFunction(ppar);
+	//- return function of the resolved parameter
+
+	return(ParameterGetFunction(ppar));
     }
 
-    return NULL;
+    //- return failure
+
+    return(NULL);
 }
 
 
@@ -626,6 +679,16 @@ ParameterNewFromString
 ///
 /// SHORT: ParameterPrintInfo()
 ///
+/// ARGS.:
+///
+///	ppar..: parameter.
+///	ppist.: context.
+///
+/// RTN..: int
+///
+///	success of operation.
+///
+/// DESCR: Print parameter info.
 ///
 /// **************************************************************************
 
@@ -751,6 +814,8 @@ ParameterPrintInfo
 
 	fprintf(stdout, "parameter (%s) not found in symbol\n", ppar->pcIdentifier);
     }
+
+    return 1;
 }
 
 
@@ -758,6 +823,17 @@ ParameterPrintInfo
 ///
 /// SHORT: ParameterPrintInfoRecursive()
 ///
+/// ARGS.:
+///
+///	ppar..: parameter.
+///	ppist.: context.
+///	iLevel: indentation depth.
+///
+/// RTN..: int
+///
+///	success of operation.
+///
+/// DESCR: Print parameter info, following symbolic references.
 ///
 /// **************************************************************************
 
@@ -898,6 +974,8 @@ ParameterPrintInfoRecursive
 
 	return 0;
     }
+
+    return 1;
 }
 
 
