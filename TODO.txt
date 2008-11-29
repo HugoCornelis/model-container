@@ -23,17 +23,17 @@ been affected (including descendants).  SegmenterLinearize() (oa) can
 pick up this flag, and decide to recalculate indices.  Use
 FLAGS_HSLE_AFFECTED or so.
 
-* p20 of dendritica is an example of multiple compartments in the soma
+* swc files
+** p20 of dendritica is an example of multiple compartments in the soma
 adapt morphology2ndf accordingly, group all these compartments in a
 segment group with name soma.
+** when converting swc files, soma case
+The dimensions of the soma are not correctly converted, no clue how
+that is supposed to be done.
 
 * swigi_coordinates_2_array()
 Make TRAVERSAL_INFO_NAMES optional, depending on options given by the
 caller.
-
-* when converting swc files, soma case
-The dimensions of the soma are not correctly converted, no clue how
-that is supposed to be done.
 
 * perl glue & morphology2ndf
 add a way to include the morphology2ndf configuration directly from
