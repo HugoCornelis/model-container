@@ -43,19 +43,15 @@ static double PoolGetBeta
 (struct symtab_Pool *ppool, struct PidinStack *ppist);
 
 
-/// **************************************************************************
-///
-/// SHORT: PoolCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Pool * 
-///
+/// 
+/// 
+/// \return struct symtab_Pool * 
+/// 
 ///	Newly allocated pool, NULL for failure
-///
-/// DESCR: Allocate a new pool symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new pool symbol table element
+/// \details 
+/// 
 
 struct symtab_Pool * PoolCalloc(void)
 {
@@ -83,20 +79,16 @@ struct symtab_Pool * PoolCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PoolCreateAlias()
-///
-/// ARGS.:
-///
-///	ppool.: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppool symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 PoolCreateAlias
@@ -122,30 +114,26 @@ PoolCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PoolGetBeta()
-///
-/// ARGS.:
-///
-///	ppool..: pool to get unscaled beta for.
-///	ppist..: context of pool.
-///
-/// RTN..: double : always 1.
-///
-/// DESCR: Get time constant of segment.
-///
+/// 
+/// 
+/// \arg ppool pool to get unscaled beta for.
+/// \arg ppist context of pool.
+/// 
+/// \return double : always 1.
+/// 
+/// \brief Get time constant of segment.
+/// \details 
+/// 
 ///	Beta is completely dependent on other values, so this value is
 ///	ignored.
-///
-/// **************************************************************************
+/// 
 
 static double PoolGetBeta
 (struct symtab_Pool *ppool, struct PidinStack *ppist)
 {
     //- set default result : always one
 
-    //! beta is completely dependent on other values, so this is ignored.
+    /// \note beta is completely dependent on other values, so this is ignored.
 
     double dResult = 1;
 
@@ -155,21 +143,17 @@ static double PoolGetBeta
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PoolGetParameter()
-///
-/// ARGS.:
-///
-///	ppool..: symbol to get parameter for.
-///	ppist..: context of given symbol.
-///	pcName.: name of parameter.
-///
-/// RTN..: struct symtab_Parameters * : parameter structure
-///
-/// DESCR: Get parameter of symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppool symbol to get parameter for.
+/// \arg ppist context of given symbol.
+/// \arg pcName name of parameter.
+/// 
+/// \return struct symtab_Parameters * : parameter structure
+/// 
+/// \brief Get parameter of symbol.
+/// \details 
+/// 
 
 struct symtab_Parameters * 
 PoolGetParameter
@@ -211,19 +195,15 @@ PoolGetParameter
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PoolInit()
-///
-/// ARGS.:
-///
-///	ppool.: pool to init
-///
-/// RTN..: void
-///
-/// DESCR: init pool
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppool pool to init
+/// 
+/// \return void
+/// 
+/// \brief init pool
+/// \details 
+/// 
 
 void PoolInit(struct symtab_Pool *ppool)
 {
@@ -237,26 +217,22 @@ void PoolInit(struct symtab_Pool *ppool)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PoolLookupHierarchical()
-///
-/// ARGS.:
-///
-///	ppool.: pool container
-///	ppist.: name(s) to search
-///	iLevel: active level of ppist
-///	bAll..: set TRUE if next entries in ppist have to be searched
-///
-/// RTN..: struct symtab_HSolveListElement * :
-///
+/// 
+/// 
+/// \arg ppool pool container
+/// \arg ppist name(s) to search
+/// \arg iLevel: active level of ppist
+/// \arg bAll set TRUE if next entries in ppist have to be searched
+/// 
+/// \return struct symtab_HSolveListElement * :
+/// 
 ///	found symbol, NULL for not found
-///
-/// DESCR: Hierarchical lookup in pool subsymbols.
-///
+/// 
+/// \brief Hierarchical lookup in pool subsymbols.
+/// \details 
+/// 
 ///	Always fails.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_HSolveListElement *
 PoolLookupHierarchical
@@ -275,22 +251,18 @@ PoolLookupHierarchical
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PoolParameterScaleValue()
-///
-/// ARGS.:
-///
-///	ppool...: pool to scale value for
-///	ppist...: context of given element
-///	dValue..: value to scale
-///	ppar....: parameter that specify type of scaling
-///
-/// RTN..: double : scaled value, FLT_MAX for failure
-///
-/// DESCR: Scale value according to parameter type and symbol type
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppool pool to scale value for
+/// \arg ppist context of given element
+/// \arg dValue value to scale
+/// \arg ppar parameter that specify type of scaling
+/// 
+/// \return double : scaled value, FLT_MAX for failure
+/// 
+/// \brief Scale value according to parameter type and symbol type
+/// \details 
+/// 
 
 double
 PoolParameterScaleValue
@@ -316,7 +288,7 @@ PoolParameterScaleValue
 
     if (0 == strcmp(pcName,"BETA"))
     {
-	//v parent segment
+	/// parent segment
 
 	struct symtab_HSolveListElement *phsleComp = NULL;
 
@@ -363,16 +335,16 @@ PoolParameterScaleValue
 
 	    phsleComp = PidinStackLookupTopSymbol(ppistComp);
 
-	    //t this is a realy hack, to solve need to revisit all of
-	    //t pidinstack and make it more consistent with:
-	    //t
-	    //t root symbols
-	    //t rooted pidinstacks
-	    //t namespaces
-	    //t namespaced pidinstacks
-	    //t
-	    //t see also channel.c for a comparable hack.
-	    //t
+	    /// \todo this is a realy hack, to solve need to revisit all of
+	    /// \todo pidinstack and make it more consistent with:
+	    ///
+	    /// \todo root symbols
+	    /// \todo rooted pidinstacks
+	    /// \todo namespaces
+	    /// \todo namespaced pidinstacks
+	    ///
+	    /// \todo see also channel.c for a comparable hack.
+	    ///
 
 	    if (instanceof_root_symbol(phsleComp))
 	    {
@@ -396,16 +368,16 @@ PoolParameterScaleValue
 	    }
 	}
 
-	//v volume
+	/// volume
 
 	double dVolume;
 
 	if (iSpherical)
 	{
-	    //! calculation of shell volume when compartment is spherical,
-	    //! factor between parentheses comes from
-	    //! (dCompDia^3 - (dCompDia - dDia)^3)
-	    //! (optimized to minimize cancellations)
+	    /// \note calculation of shell volume when compartment is spherical,
+	    /// \note factor between parentheses comes from
+	    /// \note (dCompDia^3 - (dCompDia - dDia)^3)
+	    /// \note (optimized to minimize cancellations)
 
 	    dVolume
 		= (3 * dPoolDia * dPoolDia * dDia
@@ -425,8 +397,8 @@ PoolParameterScaleValue
 	    double dPoolLength
 		= ParameterResolveValue(pparPoolLength,ppist);
 
-	    //! factor between parentheses comes from (see above)
-	    //! (dCompDia^2 - (dCompDia - dDia)^2)
+	    /// \note factor between parentheses comes from (see above)
+	    /// \note (dCompDia^2 - (dCompDia - dDia)^2)
 
 	    dVolume
 		= (2 * dPoolDia * dDia
@@ -435,7 +407,7 @@ PoolParameterScaleValue
 
 	//- scale valency to pool volume of segment
 
-	//t 2.0 is valency, get this from parameter
+	/// \todo 2.0 is valency, get this from parameter
 
 	dResult = 1.0 / (2.0 * 96494 * dVolume);
 

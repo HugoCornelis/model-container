@@ -29,17 +29,17 @@
 #include "neurospaces/symboltable.h"
 
 
-//s
-//s hypothetical root symbol
-//s
+/// \struct
+/// \struct hypothetical root symbol
+/// \struct
 
 struct symtab_RootSymbol
 {
-    //m base symbol
+    /// base symbol
 
     struct symtab_HSolveListElement hsle;
 
-    //m subsymbols
+    /// subsymbols
 
     HSolveList hslSubs;
 };
@@ -48,7 +48,6 @@ struct symtab_RootSymbol
 #include "neurospaces/pidinstack.h"
 
 
-//f exported functions
 
 int
 RootSymbolAddChild

@@ -46,7 +46,6 @@
 #endif
 
 
-//f static functions
 
 static
 char *
@@ -56,9 +55,9 @@ ChannelGetChannelType
 static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename);
 
 
-//d
-//d check if genesis style object present
-//d
+/// \def
+/// \def check if genesis style object present
+/// \def
 
 #define ChannelHasGenesisObject(pchan)					\
 ({									\
@@ -66,19 +65,15 @@ static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename);
 })
 
 
-/// **************************************************************************
-///
-/// SHORT: ChannelCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Channel * 
-///
+/// 
+/// 
+/// \return struct symtab_Channel * 
+/// 
 ///	Newly allocated channel, NULL for failure
-///
-/// DESCR: Allocate a new channel symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new channel symbol table element
+/// \details 
+/// 
 
 struct symtab_Channel * ChannelCalloc(void)
 {
@@ -106,20 +101,16 @@ struct symtab_Channel * ChannelCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ChannelCreateAlias()
-///
-/// ARGS.:
-///
-///	pchan.: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pchan symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 ChannelCreateAlias
@@ -145,46 +136,42 @@ ChannelCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ChannelGetChannelType()
-///
-/// ARGS.:
-///
-///	pchan....: channel to get channel type for.
-///	ppist....: context of channel.
-///
-/// RTN..: char *
-///
+/// 
+/// 
+/// \arg pchan channel to get channel type for.
+/// \arg ppist context of channel.
+/// 
+/// \return char *
+/// 
 ///	Textual description of the channel type, NULL for failure.
-///
-/// DESCR: Get CHANNEL_TYPE parameter for this channel.
-///
-/// **************************************************************************
+/// 
+/// \brief Get CHANNEL_TYPE parameter for this channel.
+/// \details 
+/// 
 
 struct channel_children_counts
 {
-    //m number of gates
+    /// number of gates
 
     int iGates;
 
-    //m number of voltage gate kinetics
+    /// number of voltage gate kinetics
 
     int iGateKineticsVoltage;
 
-    //m number of concentration gate kinetics
+    /// number of concentration gate kinetics
 
     int iGateKineticsConcentration;
 
-    //m number of equations
+    /// number of equations
 
     int iEquations;
 
-    //m number of event receivers
+    /// number of event receivers
 
     int iReceivers;
 
-    //m others
+    /// others
 
     int iOthers;
 
@@ -250,31 +237,31 @@ ChannelGetChannelType
 
     char *pcResult = NULL;
 
-    //v number of children according to their type found in the channel
+    /// number of children according to their type found in the channel
 
     struct channel_children_counts ccc =
     {
-	//m number of gates
+	/// number of gates
 
 	0,
 
-	//m number of voltage gate kinetics
+	/// number of voltage gate kinetics
 
 	0,
 
-	//m number of concentration gate kinetics
+	/// number of concentration gate kinetics
 
 	0,
 
-	//m number of equations
+	/// number of equations
 
 	0,
 
-	//m number of event receivers
+	/// number of event receivers
 
 	0,
 
-	//m others
+	/// others
 
 	0,
 
@@ -340,22 +327,18 @@ ChannelGetChannelType
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ChannelGetEquation()
-///
-/// ARGS.:
-///
-///	pchan.: channel to check
-///	ppist.: context of channel
-///
-/// RTN..: struct symtab_HSolveListElement * : 
-///
+/// 
+/// 
+/// \arg pchan channel to check
+/// \arg ppist context of channel
+/// 
+/// \return struct symtab_HSolveListElement * : 
+/// 
 ///	channel equation, NULL if none, -1 for failure
-///
-/// DESCR: get channel equation
-///
-/// **************************************************************************
+/// 
+/// \brief get channel equation
+/// \details 
+/// 
 
 static int 
 ChannelEquationChecker
@@ -395,7 +378,7 @@ ChannelGetEquation
 
     struct symtab_HSolveListElement *phsleResult = NULL;
 
-    //v result from traversal
+    /// result from traversal
 
     int iTraversal;
 
@@ -434,19 +417,15 @@ ChannelGetEquation
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ChannelGetGenesisObject()
-///
-/// ARGS.:
-///
-///	pchan.: channel to check
-///
-/// RTN..: struct descr_genesis_object * : genesis object, NULL for failure
-///
-/// DESCR: get channel genesis object
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pchan channel to check
+/// 
+/// \return struct descr_genesis_object * : genesis object, NULL for failure
+/// 
+/// \brief get channel genesis object
+/// \details 
+/// 
 
 struct descr_genesis_object *
 ChannelGetGenesisObject(struct symtab_Channel *pchan)
@@ -479,22 +458,18 @@ ChannelGetGenesisObject(struct symtab_Channel *pchan)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ChannelGetIncomingVirtual()
-///
-/// ARGS.:
-///
-///	pchan.: channel to check
-///	ppist.: context of channel
-///
-/// RTN..: struct symtab_HSolveListElement * : 
-///
+/// 
+/// 
+/// \arg pchan channel to check
+/// \arg ppist context of channel
+/// 
+/// \return struct symtab_HSolveListElement * : 
+/// 
 ///	incoming attachment, NULL if none, -1 for failure
-///
-/// DESCR: get channel incoming attachment.
-///
-/// **************************************************************************
+/// 
+/// \brief get channel incoming attachment.
+/// \details 
+/// 
 
 static int 
 ChannelIncomingVirtualChecker
@@ -539,7 +514,7 @@ ChannelGetIncomingVirtual
 
     struct symtab_HSolveListElement *phsleResult = NULL;
 
-    //v result from traversal
+    /// result from traversal
 
     int iTraversal;
 
@@ -578,23 +553,19 @@ ChannelGetIncomingVirtual
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ChannelGetParameter()
-///
-/// ARGS.:
-///
-///	pchan.....: symbol to get parameter for
-///	ppist.....: context of symbol.
-///	pcName....: name of parameter
-///
-/// RTN..: struct symtab_Parameters *
-///
+/// 
+/// 
+/// \arg pchan symbol to get parameter for
+/// \arg ppist context of symbol.
+/// \arg pcName name of parameter
+/// 
+/// \return struct symtab_Parameters *
+/// 
 ///	Parameter structure, NULL for failure.
-///
-/// DESCR: Get specific parameter of symbol.
-///
-/// **************************************************************************
+/// 
+/// \brief Get specific parameter of symbol.
+/// \details 
+/// 
 
 struct symtab_Parameters * 
 ChannelGetParameter
@@ -636,20 +607,16 @@ ChannelGetParameter
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ChannelHasEquation()
-///
-/// ARGS.:
-///
-///	pchan.: channel to check
-///	ppist.: context of channel
-///
-/// RTN..: int : TRUE if channel contains an equation.
-///
-/// DESCR: Check if channel contains an equation.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pchan channel to check
+/// \arg ppist context of channel
+/// 
+/// \return int : TRUE if channel contains an equation.
+/// 
+/// \brief Check if channel contains an equation.
+/// \details 
+/// 
 
 int ChannelHasEquation
 (struct symtab_Channel *pchan, struct PidinStack *ppist)
@@ -660,20 +627,16 @@ int ChannelHasEquation
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ChannelHasMGBlockedGMAX()
-///
-/// ARGS.:
-///
-///	pchan.: channel to check
-///	ppist.: context of channel
-///
-/// RTN..: int : TRUE if channel MG block dependent
-///
-/// DESCR: Check if channel conductance is blocked by magnesium.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pchan channel to check
+/// \arg ppist context of channel
+/// 
+/// \return int : TRUE if channel MG block dependent
+/// 
+/// \brief Check if channel conductance is blocked by magnesium.
+/// \details 
+/// 
 
 int
 ChannelHasMGBlockGMAX
@@ -716,20 +679,16 @@ ChannelHasMGBlockGMAX
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ChannelHasNernstErev()
-///
-/// ARGS.:
-///
-///	pchan.: channel to check
-///	ppist.: context of channel
-///
-/// RTN..: int : TRUE if channel has nernst
-///
-/// DESCR: Check if channel Erev nernst-equation controlled
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pchan channel to check
+/// \arg ppist context of channel
+/// 
+/// \return int : TRUE if channel has nernst
+/// 
+/// \brief Check if channel Erev nernst-equation controlled
+/// \details 
+/// 
 
 int ChannelHasNernstErev
 (struct symtab_Channel *pchan, struct PidinStack *ppist)
@@ -775,19 +734,15 @@ int ChannelHasNernstErev
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ChannelInit()
-///
-/// ARGS.:
-///
-///	pchan.: channel to init
-///
-/// RTN..: void
-///
-/// DESCR: init channel
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pchan channel to init
+/// 
+/// \return void
+/// 
+/// \brief init channel
+/// \details 
+/// 
 
 void ChannelInit(struct symtab_Channel *pchan)
 {
@@ -832,22 +787,18 @@ void ChannelInit(struct symtab_Channel *pchan)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ChannelParameterScaleValue()
-///
-/// ARGS.:
-///
-///	pchan...: channel to scale value for
-///	ppist...: context of given element
-///	dValue..: value to scale
-///	ppar....: parameter that specify type of scaling
-///
-/// RTN..: double : scaled value, FLT_MAX for failure
-///
-/// DESCR: Scale value according to parameter type and symbol type
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pchan channel to scale value for
+/// \arg ppist context of given element
+/// \arg dValue value to scale
+/// \arg ppar parameter that specify type of scaling
+/// 
+/// \return double : scaled value, FLT_MAX for failure
+/// 
+/// \brief Scale value according to parameter type and symbol type
+/// \details 
+/// 
 
 double
 ChannelParameterScaleValue
@@ -873,7 +824,7 @@ ChannelParameterScaleValue
 
     if (0 == strcmp(pcName,"G_MAX"))
     {
-	//v parent segment
+	/// parent segment
 
 	struct symtab_HSolveListElement *phsle = NULL;
 
@@ -893,16 +844,16 @@ ChannelParameterScaleValue
 
 	    phsle = PidinStackLookupTopSymbol(ppistComp);
 
-	    //t this is a realy hack, to solve need to revisit all of
-	    //t pidinstack and make it more consistent with:
-	    //t
-	    //t root symbols
-	    //t rooted pidinstacks
-	    //t namespaces
-	    //t namespaced pidinstacks
-	    //t
-	    //t see also pool.c for a comparable hack.
-	    //t
+	    /// \todo this is a realy hack, to solve need to revisit all of
+	    /// \todo pidinstack and make it more consistent with:
+	    ///
+	    /// \todo root symbols
+	    /// \todo rooted pidinstacks
+	    /// \todo namespaces
+	    /// \todo namespaced pidinstacks
+	    ///
+	    /// \todo see also pool.c for a comparable hack.
+	    ///
 
 	    if (instanceof_root_symbol(phsle))
 	    {
@@ -918,7 +869,7 @@ ChannelParameterScaleValue
 
 	if (phsle && instanceof_segment(phsle))
 	{
-	    //v surface
+	    /// surface
 
 	    double dSurface;
 
@@ -962,20 +913,16 @@ ChannelParameterScaleValue
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ChannelReceivesSpikes()
-///
-/// ARGS.:
-///
-///	pchan.: channel to check
-///	ppist.: context of channel
-///
-/// RTN..: int : TRUE if receives spikes
-///
-/// DESCR: Check if channel receives spikes
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pchan channel to check
+/// \arg ppist context of channel
+/// 
+/// \return int : TRUE if receives spikes
+/// 
+/// \brief Check if channel receives spikes
+/// \details 
+/// 
 
 int ChannelReceivesSpikes
 (struct symtab_Channel *pchan, struct PidinStack *ppist)
@@ -986,23 +933,19 @@ int ChannelReceivesSpikes
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ChannelSetTableParameters()
-///
-/// ARGS.:
-///
-///	pchan......: channel to set table parameters for
-///	pcFilename.: filename of table to read
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Initialize tabulated channel.
-///
+/// 
+/// 
+/// \arg pchan channel to set table parameters for
+/// \arg pcFilename filename of table to read
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Initialize tabulated channel.
+/// \details 
+/// 
 ///	Call ChannelSetup() after all bindable I/O relations have been 
 ///	assigned.
-///
-/// **************************************************************************
+/// 
 
 int
 ChannelSetTableParameters
@@ -1027,24 +970,20 @@ ChannelSetTableParameters
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ChannelSetup()
-///
-/// ARGS.:
-///
-///	pchan......: channel to setup
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Setup tabulated channel
-///
+/// 
+/// 
+/// \arg pchan channel to setup
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Setup tabulated channel
+/// \details 
+/// 
 ///	Reads tables according to bindable I/O relations
 ///	Sets power parameters and indices in genesis structure.
-///
-/// NOTE.: needs HH parameters, these have to be hardcoded.
-///
-/// **************************************************************************
+/// 
+/// \note  needs HH parameters, these have to be hardcoded.
+/// 
 
 int ChannelSetup(struct symtab_Channel *pchan,struct ParserContext *pac)
 {
@@ -1080,7 +1019,7 @@ int ChannelSetup(struct symtab_Channel *pchan,struct ParserContext *pac)
 	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle), NULL, "Zpower");
 	chan1->Zpower = ppar ? ParameterValue(ppar) : 0.0 ;
 
-	//! not used at the moment
+	/// \note not used at the moment
 
 	chan1->instant = 0;
 
@@ -1107,7 +1046,7 @@ int ChannelSetup(struct symtab_Channel *pchan,struct ParserContext *pac)
 	ppar = SymbolGetParameter(&(pchan->bio.ioh.iol.hsle), NULL, "Zindex");
 	chan2->Zindex = (short) ( ppar ? ParameterValue(ppar) : 0.0 );
 
-	//! not used at the moment
+	/// \note not used at the moment
 
 	chan2->instant = 0;
 
@@ -1132,20 +1071,16 @@ int ChannelSetup(struct symtab_Channel *pchan,struct ParserContext *pac)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ChannelTable_READ()
-///
-/// ARGS.:
-///
-///	pchan......: channel to print symbols for
-///	pcFilename.: filename of table to read
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Initialize tabulated channel
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pchan channel to print symbols for
+/// \arg pcFilename filename of table to read
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Initialize tabulated channel
+/// \details 
+/// 
 
 static int
 ChannelTable_dims
@@ -1489,7 +1424,7 @@ ChannelTable_ptrs
 	    pbAllocated = &chan1->Z_alloced;
 	}
 
-	//! could do sanity check here on pbAllocated
+	/// \note could do sanity check here on pbAllocated
 
 	if (!(*ppipolA))
 	{
@@ -1538,7 +1473,7 @@ ChannelTable_ptrs
 	    pbAllocated = &chan2->Z_alloced;
 	}
 
-	//! could do sanity check here on pbAllocated
+	/// \note could do sanity check here on pbAllocated
 
 	if (!(*ppipol2A))
 	{

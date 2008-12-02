@@ -38,65 +38,65 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-//s algorithm handlers for connection checker algorithm
+/// \struct algorithm handlers for connection checker algorithm
 
 static AlgorithmClassInstanceCreator ConnectionCheckerClassCreateInstance;
 
 static AlgorithmClassHandler ConnectionCheckerClassPrintInfo;
 
 
-//s algorithm class method table
+/// \struct algorithm class method table
 
 static struct AlgorithmClassHandlerLibrary pfConnectionCheckerClassHandlers =
 {
-    //m class info handler
+    /// class info handler
 
     ConnectionCheckerClassPrintInfo,
 
-    //m create instance from class (self, name, context, init string)
+    /// create instance from class (self, name, context, init string)
 
     ConnectionCheckerClassCreateInstance,
 };
 
 
-//s ConnectionChecker class derives from algorithm class
+/// \struct ConnectionChecker class derives from algorithm class
 
 struct ConnectionCheckerClass
 {
-    //m base struct : algorithm class
+    /// base struct : algorithm class
 
     struct AlgorithmClass algc;
 
-    //m number of created instances
+    /// number of created instances
 
     int iInstances;
 };
 
 
-//s algorithm class description
+/// \struct algorithm class description
 
 static struct ConnectionCheckerClass scConnectionChecker =
 {
-    //m base struct : algorithm class
+    /// base struct : algorithm class
 
     {
-	//m link
+	/// link
 
 	{
 	    NULL,
 	    NULL,
 	},
 
-	//m name
+	/// name
 
 	"ConnectionChecker",
 
-	//m algorithm handlers
+	/// algorithm handlers
 
 	&pfConnectionCheckerClassHandlers,
     },
 
-    //m number of instances
+    /// number of instances
 
     0,
 };
@@ -105,21 +105,17 @@ static struct ConnectionCheckerClass scConnectionChecker =
 struct AlgorithmClass *palgcConnectionChecker = &scConnectionChecker.algc;
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionCheckerClassCreateInstance()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: struct AlgorithmInstance * : 
-///
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return struct AlgorithmInstance *  
+/// 
 ///	created algorithm instance, NULL for failure
-///
-/// DESCR: Algorithm handler to create instance of connection checker algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief Algorithm handler to create instance of connection checker algorithm.
+/// \details 
+/// 
 
 static
 struct AlgorithmInstance *
@@ -152,19 +148,15 @@ ConnectionCheckerClassCreateInstance
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionCheckerClassPrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on connection checker algorithm class.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int  std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on connection checker algorithm class.
+/// \details 
+/// 
 
 static int ConnectionCheckerClassPrintInfo
 (struct AlgorithmClass *palgc,char *pcName,void *pvGlobal,void *pvData)

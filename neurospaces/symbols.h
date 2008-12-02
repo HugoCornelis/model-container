@@ -29,7 +29,7 @@
 #include <stdlib.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct Symbols;
 
@@ -49,17 +49,17 @@ struct Symbols;
 #endif
 
 
-//s
-//s global symbol table
-//s
+/// \struct
+/// \struct global symbol table
+/// \struct
 
 struct Symbols
 {
-    //m list of imported files
+    /// list of imported files
 
     HSolveList hslFiles;
 
-    //m set of algorithms
+    /// set of algorithms
 
     AlgorithmSet *pas;
 };

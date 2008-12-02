@@ -40,7 +40,7 @@
 struct symtab_IOHierarchy;
 
 
-//d IOHierarchy container
+/// \def IOHierarchy container
 
 #define IOHContainer HSolveList
 
@@ -55,18 +55,18 @@ struct symtab_IOHierarchy;
 #include "neurospaces/pidinstack.h"
 
 
-//s
-//s gives transparant access to hierarchical structures with input/output, 
-//s inherits from linked list structure
-//s
+/// \struct
+/// \struct gives transparant access to hierarchical structures with input/output, 
+/// \struct inherits from linked list structure
+/// \struct
 
 struct symtab_IOHierarchy
 {
-    //m base symbol
+    /// base symbol
 
     struct symtab_IOList iol;
 
-    //m children relations
+    /// children relations
 
     IOHContainer iohc;
 };

@@ -37,18 +37,18 @@
 #include "algorithms/event/serialsegment.h"
 
 
-//s event associations for serial cell algorithm
+/// \struct event associations for serial cell algorithm
 
 static ParserEventListener SerialCellParserEventListener;
 
 static ParserEventAssociation pevasSerialCell[] = 
 {
     {
-	//m listens to any cell event
+	/// listens to any cell event
 
 	EVENT_TYPE_CELL,
 
-	//m function to call
+	/// function to call
 
 	SerialCellParserEventListener,
     }
@@ -57,17 +57,17 @@ static ParserEventAssociation pevasSerialCell[] =
 
 static ParserEventAssociationTable evatSerialCell =
 {
-    //m number of entries
+    /// number of entries
 
     sizeof(*pevasSerialCell) / sizeof(ParserEventAssociation),
 
-    //m event associations
+    /// event associations
 
     pevasSerialCell,
 };
 
 
-//s algorithm handlers for serial cell algorithm
+/// \struct algorithm handlers for serial cell algorithm
 
 static AlgorithmHandler SerialCellInitAlgorithm;
 
@@ -78,52 +78,52 @@ static AlgorithmHandler SerialCellSerialQuery;
 
 static struct AlgorithmHandlerLibrary pfSerialCellHandlers =
 {
-    //m after constructor, global is parser context, data is init string
+    /// after constructor, global is parser context, data is init string
 
     SerialCellInitAlgorithm,
 
-    //m after init, before destruct
+    /// after init, before destruct
 
     NULL,
 
-    //m print info handler
+    /// print info handler
 
     SerialCellPrintInfo,
 
-    //m serial query handler
+    /// serial query handler
 
     SerialCellSerialQuery,
 };
 
 
-//s algorithm description
+/// \struct algorithm description
 
 static struct symtab_Algorithm modSerialCell =
 {
-    //m link
+    /// link
 
     {
 	NULL,
 	NULL,
     },
 
-    //m type
+    /// type
 
     0,
 
-    //m flags
+    /// flags
 
     0,
 
-    //m name
+    /// name
 
     "SerialCell",
 
-    //m algorithm handlers
+    /// algorithm handlers
 
     &pfSerialCellHandlers,
 
-    //m event association table
+    /// event association table
 
     &evatSerialCell
 };
@@ -131,35 +131,31 @@ static struct symtab_Algorithm modSerialCell =
 struct symtab_Algorithm *palgSerialCell = &modSerialCell;
 
 
-//d default number of serial cells
+/// \def default number of serial cells
 
 #define ENTRIES_SERIAL_CELLS		10000
 
 
-//v serial cell array
+/// serial cell array
 
 struct SerialCellVariables sercellVariables;
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialCellParserEventListener()
-///
-/// ARGS.:
-///
-///	std ParserEventListener args
-///
-/// RTN..: int : std ParserEventListener return value
-///
-/// DESCR: ParserEvent listener to put cells in a serial array
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std ParserEventListener args
+/// 
+/// \return int : std ParserEventListener return value
+/// 
+/// \brief ParserEvent listener to put cells in a serial array
+/// \details 
+/// 
 
 static int SerialCellParserEventListener
 (struct ParserEvent *pev,
  struct symtab_Algorithm *palg)
 {
-    //- set default result : ok
+    //- set default result  ok
 
     int bResult = TRUE;
 
@@ -203,7 +199,7 @@ static int SerialCellParserEventListener
 	{
 	    //- register number of segments
 
-	    //! number of created segments == until last created cell
+	    /// \note number of created segments == until last created cell
 
 	    sercellVariables.psymsercell[sercellVariables.iCellsAdded].iSegments
 		= sersegmentVariables.iSegmentsCreated
@@ -243,24 +239,20 @@ static int SerialCellParserEventListener
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialCellInitAlgorithm()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to init serial cell algorithm
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to init serial cell algorithm
+/// \details 
+/// 
 
 static int SerialCellInitAlgorithm
 (struct symtab_Algorithm *palgSelf,char *pcName,void *pvGlobal,void *pvData)
 {
-    //- set default result : ok
+    //- set default result  ok
 
     int bResult = TRUE;
 
@@ -291,19 +283,15 @@ static int SerialCellInitAlgorithm
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialCellPrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on serial cell algorithm
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on serial cell algorithm
+/// \details 
+/// 
 
 static int SerialCellPrintInfo
 (struct symtab_Algorithm *palgSelf,char *pcName,void *pvGlobal,void *pvData)
@@ -312,7 +300,7 @@ static int SerialCellPrintInfo
 
     int bResult = TRUE;
 
-    //v loop var
+    /// loop var
 
     int i;
 
@@ -327,7 +315,7 @@ static int SerialCellPrintInfo
 	 "\n\n"
 	 "SerCellAlgorithm : \n"
 	 "---------------\n"
-	 "Number of created/added cells : %i/%i\n",
+	 "Number of created/added cells  %i/%i\n",
 	 sercellVariables.iCellsCreated,
 	 sercellVariables.iCellsAdded);
 
@@ -353,22 +341,18 @@ static int SerialCellPrintInfo
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialCellSerialQuery()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-///	pvGlobal.: query spec
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+///	pvGlobal query spec
 ///	pvData...: query result array
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to query serial cell algorithm
-///
-/// **************************************************************************
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to query serial cell algorithm
+/// \details 
+/// 
 
 static int SerialCellSerialQuery
 (struct symtab_Algorithm *palgSelf,char *pcName,void *pvGlobal,void *pvData)
@@ -377,7 +361,7 @@ static int SerialCellSerialQuery
 
     int bResult = FALSE;
 
-    //v loop var
+    /// loop var
 
     int i;
 

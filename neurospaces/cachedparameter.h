@@ -24,7 +24,7 @@
 
 
 
-//d declarations
+/// \def declarations
 
 struct symtab_Parameters;
 
@@ -38,7 +38,6 @@ struct CachedParameter
 };
 
 
-//f exported inlines
 
 static inline 
 void CachedParameterFree(struct CachedParameter *pcacpar);
@@ -56,11 +55,10 @@ CachedParameterNewFromString
 (int iSerial, char *pcName, char *pcValue);
 
 
-//f exported inlines
 
-///
+/// 
 /// free cached parameter.
-///
+/// 
 
 static inline 
 void CachedParameterFree(struct CachedParameter *pcacpar)
@@ -69,9 +67,9 @@ void CachedParameterFree(struct CachedParameter *pcacpar)
 }
 
 
-///
+/// 
 /// get parameter.
-///
+/// 
 
 static inline
 struct symtab_Parameters *

@@ -51,92 +51,91 @@ typedef struct ParserContext PARSERCONTEXT;
 
 struct ParserContext
 {
-    //m link to next, previous context
+    /// link to next, previous context
 
     struct ParserContext *pacNext;
     struct ParserContext *pacPrev;
 
-    //m filename from this context
+    /// filename from this context
 
     char *pcFilename;
 
-    //m directory name from this context
-    //m ending in '/' or empty string
+    /// directory name from this context
+    /// ending in '/' or empty string
 
     char *pcDirectory;
 
-    //m current line number
+    /// current line number
 
     int iLineNumber;
 
-    //m nesting level of imported files
+    /// nesting level of imported files
 
     int iNestingLevel;
 
-    //m pointer to ANSI FILE structure
+    /// pointer to ANSI FILE structure
 
     FILE *pFILE;
 
-    //m lexical state for this parser context
+    /// lexical state for this parser context
 
     struct yy_buffer_state *pyyBuffer;
 
-    //m pointer to currently parsed file its symbols
+    /// pointer to currently parsed file its symbols
 
     struct ImportedFile *pifInParse;
 
-    //m pointer to neurospaces (with e.g. symbol table)
+    /// pointer to neurospaces (with e.g. symbol table)
 
     struct Neurospaces *pneuro;
 
-    //m state of parser context
+    /// state of parser context
 
     int iState;
 
-    //m current element stack : max depth is 20 at the moment
+    /// current element stack : max depth is 20 at the moment
 
     struct PidinStack pist;
 
-    //m current element being defined
+    /// current element being defined
 
-    //m this should be set after the symbol has been defined,
-    //m before the symbol is added
-    //m such that the symbol can first be inspected before
-    //m being added
-    //m e.g. by spine algorithm, cell position filter etc.
+    /// this should be set after the symbol has been defined,
+    /// before the symbol is added
+    /// such that the symbol can first be inspected before
+    /// being added
+    /// e.g. by spine algorithm, cell position filter etc.
 
     struct symtab_HSolveListElement *phsleActual;
 };
 
 
-//d parsing header
+/// \def parsing header
 
 #define PARSER_STATE_HEADER		1
 
-//d parsing dependencies
+/// \def parsing dependencies
 
 #define PARSER_STATE_DEPENDENCIES	2
 
-//d parsing private models
+/// \def parsing private models
 
 #define PARSER_STATE_PRIVATEMODELS	3
 
-//d parsing public models
+/// \def parsing public models
 
 #define PARSER_STATE_PUBLICMODELS	4
 
 
-//d parser context is root context
+/// \def parser context is root context
 
 #define PARSER_FLAG_ROOTCONTEXT		8
 
 
-//d all parsing states
+/// \def all parsing states
 
 #define PARSER_MASK_STATES		7
 
 
-//f static inline prototypes
 
 #ifndef SWIG
 static inline 
@@ -154,9 +153,9 @@ static inline
 int ParserContextGetLineNumber(PARSERCONTEXT *pacContext);
 
 
-///
+/// 
 /// get associated directory
-///
+/// 
 
 #ifndef SWIG
 static inline 
@@ -167,9 +166,9 @@ char * ParserContextGetDirectory(PARSERCONTEXT *pacContext)
 }
 
 
-///
+/// 
 /// get associated filename
-///
+/// 
 
 #ifndef SWIG
 static inline 
@@ -180,9 +179,9 @@ char * ParserContextGetFilename(PARSERCONTEXT *pacContext)
 }
 
 
-///
+/// 
 /// get associated line number
-///
+/// 
 
 #ifndef SWIG
 static inline 
@@ -193,9 +192,9 @@ int ParserContextGetLineNumber(PARSERCONTEXT *pacContext)
 }
 
 
-//d
-//d test type(pac) == struct ParserContext * at compile time
-//d
+/// \def
+/// \def test type(pac) == struct ParserContext * at compile time
+/// \def
 
 #define CompileTimeTestParserContext(pac)				\
 do {									\
@@ -204,9 +203,9 @@ do {									\
 } while (0)
 
 
-//d
-//d get imported file attached to parser context
-//d
+/// \def
+/// \def get imported file attached to parser context
+/// \def
 
 #define ParserContextGetImportedFile(pac)				\
 ({									\
@@ -215,9 +214,9 @@ do {									\
 })
 
 
-//d
-//d get current pidin context stack
-//d
+/// \def
+/// \def get current pidin context stack
+/// \def
 
 #define ParserContextGetPidinContext(pac)				\
 ({									\
@@ -226,9 +225,9 @@ do {									\
 })
 
 
-//d
-//d get parser state
-//d
+/// \def
+/// \def get parser state
+/// \def
 
 #define ParserContextGetState(pac)					\
 ({									\

@@ -34,19 +34,15 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: AxonHillockCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_AxonHillock * 
-///
+/// 
+/// 
+/// \return struct symtab_AxonHillock * 
+/// 
 ///	Newly allocated axon hillock, NULL for failure
-///
-/// DESCR: Allocate a new axon hillock symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new axon hillock symbol table element
+/// \details 
+/// 
 
 struct symtab_AxonHillock * AxonHillockCalloc(void)
 {
@@ -74,20 +70,16 @@ struct symtab_AxonHillock * AxonHillockCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AxonHillockCreateAlias()
-///
-/// ARGS.:
-///
-///	paxhi.: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg paxhi symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 AxonHillockCreateAlias
@@ -113,19 +105,15 @@ AxonHillockCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AxonHillockInit()
-///
-/// ARGS.:
-///
-///	paxhi.: axon hillock to init
-///
-/// RTN..: void
-///
-/// DESCR: init axon hillock
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg paxhi axon hillock to init
+/// 
+/// \return void
+/// 
+/// \brief init axon hillock
+/// \details 
+/// 
 
 void AxonHillockInit(struct symtab_AxonHillock *paxhi)
 {

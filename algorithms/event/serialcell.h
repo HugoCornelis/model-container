@@ -26,70 +26,70 @@
 #define ALGORITHM_SERIALCELL_H
 
 
-//s
-//s cell array entry
-//s
+/// \struct
+/// \struct cell array entry
+/// \struct
 
 struct SymbolSerialCell
 {
-    //m cell symbol
+    /// cell symbol
 
     struct symtab_Cell *pcell;
 
-    //m first segment, -1 for none
+    /// first segment, -1 for none
 
     int iFirstSegment;
 
-    //m number of segments
+    /// number of segments
 
     int iSegments;
 };
 
 
-//s serial cell struct
+/// \struct serial cell struct
 
 struct SerialCellVariables
 {
-    //m number of serialized created cells
+    /// number of serialized created cells
 
     int iCellsCreated;
 
-    //m number of serialized added cells
+    /// number of serialized added cells
 
     int iCellsAdded;
 
-    //m array of all cells
+    /// array of all cells
 
     struct SymbolSerialCell *psymsercell;
 };
 
 
-//s serial cell query
+/// \struct serial cell query
 
 struct SerialCellQuery
 {
-    //m cell to look up
+    /// cell to look up
 
     struct symtab_Cell *pcell;
 
-    //m result cell index
+    /// result cell index
 
     int iIndexCell;
 
-    //m result segment index
+    /// result segment index
 
     int iIndexSegment;
 
-    //m result segment symbols
+    /// result segment symbols
 
     struct SymbolSerialSegment *psymsersegment;
 
-    //m result number of segments
+    /// result number of segments
 
     int iSegments;
 };
 
-//v serial cell array
+/// serial cell array
 
 extern struct SerialCellVariables sercellVariables;
 

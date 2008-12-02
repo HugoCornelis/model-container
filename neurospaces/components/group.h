@@ -22,7 +22,7 @@
 #define GROUP_H
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_Group;
 struct symtab_Group;
@@ -34,7 +34,6 @@ struct symtab_Group;
 #include "neurospaces/treespacetraversal.h"
 
 
-//f exported functions
 
 struct symtab_Group * GroupCalloc(void);
 
@@ -55,9 +54,9 @@ struct symtab_Group * GroupNewAtXYZ(double dx,double dy,double dz);
 #include "neurospaces/inputoutput.h"
 
 
-//s
-//s group
-//s
+/// \struct
+/// \struct group
+/// \struct
 
 struct descr_Group
 {
@@ -65,17 +64,17 @@ struct descr_Group
 };
 
 
-//s
-//s struct symtab_Group
-//s
+/// \struct
+/// \struct struct symtab_Group
+/// \struct
 
 struct symtab_Group
 {
-    //m base struct : bio component
+    /// base struct : bio component
 
     struct symtab_BioComponent bio;
 
-    //m group description
+    /// group description
 
     struct descr_Group degrup;
 };

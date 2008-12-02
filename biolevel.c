@@ -25,9 +25,9 @@
 #include "neurospaces/symboltable.h"
 
 
-//v map a symbol type to a biological level, where I am currently
-//v unsure, you will get -1 for failure.  No compromises allowed for the
-//v moment.
+/// map a symbol type to a biological level, where I am currently
+/// unsure, you will get -1 for failure.  No compromises allowed for the
+/// moment.
 
 
 
@@ -74,9 +74,9 @@ int piSymbolType2Biolevel[COUNT_HIERARCHY_TYPE_symbols + 2] =
 };
 
 
-//v map a biological level to its group, where I am currently
-//v unsure, you will get -1 for failure.  No compromises allowed for the
-//v moment.
+/// map a biological level to its group, where I am currently
+/// unsure, you will get -1 for failure.  No compromises allowed for the
+/// moment.
 
 int piBiolevel2Biolevelgroup[COUNT_BIOLEVEL + 2] =
 {
@@ -98,7 +98,7 @@ int piBiolevel2Biolevelgroup[COUNT_BIOLEVEL + 2] =
 };
 
 
-//v give biolevels a human readable form
+/// give biolevels a human readable form
 
 char *ppcBiolevel[COUNT_BIOLEVEL + 2] =
 {
@@ -120,9 +120,9 @@ char *ppcBiolevel[COUNT_BIOLEVEL + 2] =
 };
 
 
-//v map a biological group to its lowest biological level, where I am currently
-//v unsure, you will get -1 for failure.  No compromises allowed for the
-//v moment.
+/// map a biological group to its lowest biological level, where I am currently
+/// unsure, you will get -1 for failure.  No compromises allowed for the
+/// moment.
 
 int piBiolevelgroup2Biolevel[COUNT_BIOLEVELGROUP + 2] =
 {
@@ -137,7 +137,7 @@ int piBiolevelgroup2Biolevel[COUNT_BIOLEVELGROUP + 2] =
 };
 
 
-//v give biological groups a human readable form
+/// give biological groups a human readable form
 
 char *ppcBiolevelgroup[COUNT_BIOLEVELGROUP + 2] =
 {

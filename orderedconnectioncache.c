@@ -25,21 +25,17 @@
 #include "neurospaces/orderedconnectioncache.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: OrderedConnectionCacheGetFirstIndexForSerial()
-///
-/// ARGS.:
-///
-///	pocc....: ordered connection cache.
-///	ppq.....: projection query that makes this call.
+/// 
+/// 
+/// \arg pocc ordered connection cache.
+/// \arg ppq projection query that makes this call.
 ///	iSerial.: pre- or post-serial to get first entry for.
-///
-/// RTN..: int : index into ordered connection cache, -1 for failure.
-///
-/// DESCR: Get index into ordered connection cache.
-///
-/// **************************************************************************
+/// 
+/// \return int : index into ordered connection cache, -1 for failure.
+/// 
+/// \brief Get index into ordered connection cache.
+/// \details 
+/// 
 
 int
 OrderedConnectionCacheGetFirstIndexForSerial
@@ -51,10 +47,10 @@ OrderedConnectionCacheGetFirstIndexForSerial
 
     //1 determine any entry that matches
 
-    //! binary search, probably better to use this in combination with
-    //! an interpolation search and apply an heuristic based on the 
-    //! cumulative distribution of the post- and pre-synaptic targets
-    //! to choose between them.
+    /// \note binary search, probably better to use this in combination with
+    /// \note an interpolation search and apply an heuristic based on the 
+    /// \note cumulative distribution of the post- and pre-synaptic targets
+    /// \note to choose between them.
 
     //- initialize top and bottom counters
 
@@ -111,9 +107,9 @@ OrderedConnectionCacheGetFirstIndexForSerial
 
     //2 determine first entry that matches
 
-    //! iResult matches, possibly somewhere in middle of matching series
-    //! iLower could match if still first entry in array
-    //! iUpper does not matter
+    /// \note iResult matches, possibly somewhere in middle of matching series
+    /// \note iLower could match if still first entry in array
+    /// \note iUpper does not matter
 
     //- if we found a matching entry
 
@@ -170,28 +166,24 @@ OrderedConnectionCacheGetFirstIndexForSerial
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: OrderedConnectionCacheNew()
-///
-/// ARGS.:
-///
-///	pcc...: connection cache to order.
-///	ppq...: projection query that makes this call.
+/// 
+/// 
+/// \arg pcc connection cache to order.
+/// \arg ppq projection query that makes this call.
 ///	iPost.: TRUE == post ordering, FALSE == pre ordering.
-///
-/// RTN..: struct OrderedConnectionCache * 
-///
+/// 
+/// \return struct OrderedConnectionCache * 
+/// 
 ///	New ordered connection cache, NULL for failure.
-///
-/// DESCR: Initialize new ordered connection cache.
-///
+/// 
+/// \brief Initialize new ordered connection cache.
+/// \details 
+/// 
 ///	The connection cache pcc is kept by reference, don't free it 
 ///	as long as the ordered connection cache is in use.
-///
-/// **************************************************************************
+/// 
 
-//t how to get rid of this static variable ?  Don't use qsort() ?
+/// \todo how to get rid of this static variable ?  Don't use qsort() ?
 
 static struct ConnectionCache *pccToOrder = NULL;
 

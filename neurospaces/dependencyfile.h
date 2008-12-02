@@ -27,24 +27,24 @@
 #include "symboltable.h"
 
 
-//s
-//s one dependency file
-//s
-//s A dependency file is valid if it is already imported. we use this to
-//s link this structure with struct ImportedFile
-//s
+/// \struct
+/// \struct one dependency file
+/// \struct
+/// \struct A dependency file is valid if it is already imported. we use this to
+/// \struct link this structure with struct ImportedFile
+/// \struct
 
 struct DependencyFile
 {
-    //m links elements in list
+    /// links elements in list
 
     HSolveListElement hsleLink;
 
-    //m name space
+    /// name space
 
     char *pcNameSpace;
 
-    //m pointer to imported file its symbols
+    /// pointer to imported file its symbols
 
     struct ImportedFile *pifSymbols;
 };

@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_HHGate;
 struct symtab_HHGate;
@@ -34,24 +34,23 @@ struct symtab_HHGate;
 #include "neurospaces/pidinstack.h"
 
 
-//s info for traversals collecting data about gate kinetics belonging
-//s to the same gate
+/// \struct info for traversals collecting data about gate kinetics belonging
+/// \struct to the same gate
 
 struct table_parameter_collector_data
 {
-    //m parameter under investigation
+    /// parameter under investigation
 
     char *pcParameter;
 
-    //m current value
+    /// current value
 
-    //! must be initialized to zero for correct error processing
+    /// \note must be initialized to zero for correct error processing
 
     int iValue;
 };
 
 
-//f exported functions
 
 struct symtab_HHGate * HHGateCalloc(void);
 
@@ -72,29 +71,29 @@ void HHGateInit(struct symtab_HHGate *pgathh);
 #include "biocomp.h"
 
 
-//s
-//s gate kinetic description
-//s
+/// \struct
+/// \struct gate kinetic description
+/// \struct
 
 struct descr_HHGate
 {
-    //m compiler happy
+    /// compiler happy
 
     int iHappy;
 };
 
 
-//s
-//s struct symtab_HHGate
-//s
+/// \struct
+/// \struct struct symtab_HHGate
+/// \struct
 
 struct symtab_HHGate
 {
-    //m base struct : bio component
+    /// base struct : bio component
 
     struct symtab_BioComponent bio;
 
-    //m gate kinetic description
+    /// gate kinetic description
 
     struct descr_HHGate degathh;
 };

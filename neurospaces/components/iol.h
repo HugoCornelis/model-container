@@ -38,30 +38,30 @@
 #endif
 
 
-//s
-//s gives transparant access to structures with input/output, inherits from
-//s linked list structure
-//s
+/// \struct
+/// \struct gives transparant access to structures with input/output, inherits from
+/// \struct linked list structure
+/// \struct
 
 struct symtab_IOList
 {
-    //m base symbol
+    /// base symbol
 
     struct symtab_HSolveListElement hsle;
 
-    //m bindable input/output relations for outside world
+    /// bindable input/output relations for outside world
 
     struct symtab_IOContainer * piocBindable;
 
-    //m bounded input from inside elements
+    /// bounded input from inside elements
 
     struct symtab_IOContainer * piocInputs;
 };
 
 
-//d
-//d test type(piol) == struct symtab_IOList * at compile time
-//d
+/// \def
+/// \def test type(piol) == struct symtab_IOList * at compile time
+/// \def
 
 #define CompileTimeTestIOList(piol)					\
 do {									\
@@ -73,7 +73,7 @@ do {									\
 #include "neurospaces/iocontainer.h"
 
 
-/* //f static inline prototypes */
+/* ///
 
 #ifndef SWIG
 static inline
@@ -118,9 +118,9 @@ void IOListInit(struct symtab_IOList * piol);
 #include "neurospaces/iocontainer.h"
 
 
-///
+/// 
 /// assign inputs
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -135,11 +135,11 @@ IOListAssignBindableIO
 }
 
 
-///
+/// 
 /// set outside bindable fields of given I/O element
-///
+/// 
 
-//t remove
+/// \todo remove
 
 #ifndef SWIG
 static inline
@@ -161,11 +161,11 @@ IOListAssignInputs
 }
 
 
-///
+/// 
 /// check if element has specified I/O
-///
+/// 
 
-//t remove
+/// \todo remove
 
 #ifndef SWIG
 static inline
@@ -184,9 +184,9 @@ IOListHasBindableIO
 }
 
 
-///
+/// 
 /// find specified bindable I/O
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -199,9 +199,9 @@ IOListLookupBindableIO
 }
 
 
-///
+/// 
 /// find element that is attached to the given input
-///
+/// 
 
 #ifndef SWIG
 static inline

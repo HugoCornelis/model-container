@@ -52,7 +52,7 @@ struct _algorithm_instances_typeinfo
 
 // convenience defines for the above
 
-//d get pointer to ttable
+/// \def get pointer to ttable
 
 #define typeinfo_algorithm_instances(palgi) \
     ((struct _algorithm_instances_typeinfo *)&((struct _algorithm_instances_typeinfo *)palgi)[-1])

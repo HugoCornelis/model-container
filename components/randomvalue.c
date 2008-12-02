@@ -36,19 +36,15 @@
 #endif
 
 
-/// **************************************************************************
-///
-/// SHORT: RandomvalueCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Randomvalue * 
-///
+/// 
+/// 
+/// \return struct symtab_Randomvalue * 
+/// 
 ///	Newly allocated randomvalue, NULL for failure
-///
-/// DESCR: Allocate a new randomvalue symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new randomvalue symbol table element
+/// \details 
+/// 
 
 struct symtab_Randomvalue * RandomvalueCalloc(void)
 {
@@ -76,20 +72,16 @@ struct symtab_Randomvalue * RandomvalueCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RandomvalueCreateAlias()
-///
-/// ARGS.:
-///
-///	pranv.: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pranv symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 RandomvalueCreateAlias
@@ -115,22 +107,18 @@ RandomvalueCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RandomvalueGetSpikeGenerator()
-///
-/// ARGS.:
-///
-///	pranv.: randomvalue 
-///	ppist.: occurence context
-///
-/// RTN..: struct symtab_HSolveListElement *
-///
+/// 
+/// 
+/// \arg pranv randomvalue 
+/// \arg ppist occurence context
+/// 
+/// \return struct symtab_HSolveListElement *
+/// 
 ///	Spike generator, NULL if not found, -1 for failure
-///
-/// DESCR: Get (first) spike generator for give randomvalue.
-///
-/// **************************************************************************
+/// 
+/// \brief Get (first) spike generator for give randomvalue.
+/// \details 
+/// 
 
 static int 
 RandomvalueSpikeGeneratorChecker
@@ -171,7 +159,7 @@ RandomvalueGetSpikeGenerator
 
     struct symtab_HSolveListElement *phsleResult = NULL;
 
-    //v result from traversal
+    /// result from traversal
 
     int iTraversal;
 
@@ -210,19 +198,15 @@ RandomvalueGetSpikeGenerator
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RandomvalueInit()
-///
-/// ARGS.:
-///
-///	pranv.: randomvalue to init
-///
-/// RTN..: void
-///
-/// DESCR: init randomvalue
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pranv randomvalue to init
+/// 
+/// \return void
+/// 
+/// \brief init randomvalue
+/// \details 
+/// 
 
 void RandomvalueInit(struct symtab_Randomvalue *pranv)
 {
@@ -236,26 +220,22 @@ void RandomvalueInit(struct symtab_Randomvalue *pranv)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RandomvalueLookupHierarchical()
-///
-/// ARGS.:
-///
-///	pranv.: randomvalue container
-///	ppist.: name(s) to search
-///	iLevel: active level of ppist
-///	bAll..: set TRUE if next entries in ppist have to be searched
-///
-/// RTN..: struct symtab_HSolveListElement * :
-///
+/// 
+/// 
+/// \arg pranv randomvalue container
+/// \arg ppist name(s) to search
+/// \arg iLevel: active level of ppist
+/// \arg bAll set TRUE if next entries in ppist have to be searched
+/// 
+/// \return struct symtab_HSolveListElement * :
+/// 
 ///	found symbol, NULL for not found
-///
-/// DESCR: Hierarchical lookup in randomvalue subsymbols
-///
+/// 
+/// \brief Hierarchical lookup in randomvalue subsymbols
+/// \details 
+/// 
 ///	Always fails.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_HSolveListElement *
 RandomvalueLookupHierarchical

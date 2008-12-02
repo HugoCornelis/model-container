@@ -43,14 +43,15 @@
 /* ///	pconn..: connection to assign parameters to */
 /* ///	ppar...: parameters to assign to connection */
 /* /// */
-/* /// RTN..: int : success of operation. */
+/* /// \return int : success of operation. */
 /* /// */
-/* /// DESCR: Assign parameters to connection. */
+/* /// \brief Assign parameters to connection. */
+/// \details 
 /* /// */
 /* ///	Goes through parameter set and frees all encountered parameters. */
 /* ///	values are assigned to internal fields of the connection. */
 /* /// */
-/* /// NOTE.: Use this function as little as possible. */
+/* /// \note  Use this function as little as possible. */
 /* /// */
 /* /// ************************************************************************** */
 
@@ -142,19 +143,15 @@
 /* } */
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Connection * 
-///
+/// 
+/// 
+/// \return struct symtab_Connection * 
+/// 
 ///	Newly allocated connection, NULL for failure
-///
-/// DESCR: Allocate a new connection symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new connection symbol table element
+/// \details 
+/// 
 
 struct symtab_Connection * ConnectionCalloc(void)
 {
@@ -186,23 +183,19 @@ struct symtab_Connection * ConnectionCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionGetParameter()
-///
-/// ARGS.:
-///
-///	pconn.: connection.
-///	ppist.: context of connection.
-///	pcName: name of parameter.
-///
-/// RTN..: struct symtab_Parameters *
-///
+/// 
+/// 
+/// \arg pconn connection.
+/// \arg ppist context of connection.
+/// \arg pcName name of parameter.
+/// 
+/// \return struct symtab_Parameters *
+/// 
 ///	static parameter struct, NULL for failure.
-///
-/// DESCR: Get parameter for connection.
-///
-/// **************************************************************************
+/// 
+/// \brief Get parameter for connection.
+/// \details 
+/// 
 
 struct symtab_Parameters *
 ConnectionGetParameter
@@ -320,26 +313,22 @@ ConnectionGetParameter
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionGetSpikeGenerator()
-///
-/// ARGS.:
-///
-///	pconn.: connection with spike generator reference
+/// 
+/// 
+/// \arg pconn connection with spike generator reference
 ///	phsle.: symbol relative to which connection occurs (== population)
 ///	ppist.: context of connection (== population)
-///
-/// RTN..: struct PidinStack *
-///
+/// 
+/// \return struct PidinStack *
+/// 
 ///	spike generator, -1 for failure, NULL for none
-///
-/// DESCR: Get spike generator for connection
-///
+/// 
+/// \brief Get spike generator for connection
+/// \details 
+/// 
 ///	ppist is context of source of projection to which this connection
 ///	belongs, phsle is referred to by ppist.
-///
-/// **************************************************************************
+/// 
 
 struct PidinStack *
 ConnectionGetSpikeGenerator
@@ -383,26 +372,22 @@ ConnectionGetSpikeGenerator
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionGetSpikeReceiver()
-///
-/// ARGS.:
-///
-///	pconn.: connection with spike receiver reference
+/// 
+/// 
+/// \arg pconn connection with spike receiver reference
 ///	phsle.: symbol relative to which connection occurs (== population)
 ///	ppist.: context of connection (== population)
-///
-/// RTN..: struct PidinStack *
-///
+/// 
+/// \return struct PidinStack *
+/// 
 ///	spike receiver, -1 for failure, NULL for none
-///
-/// DESCR: Get spike receiver for connection
-///
+/// 
+/// \brief Get spike receiver for connection
+/// \details 
+/// 
 ///	ppist is context of target of projection to which this connection
 ///	belongs, phsle is referred to by ppist.
-///
-/// **************************************************************************
+/// 
 
 struct PidinStack *
 ConnectionGetSpikeReceiver
@@ -424,19 +409,15 @@ ConnectionGetSpikeReceiver
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionInit()
-///
-/// ARGS.:
-///
-///	pconn.: connection to init
-///
-/// RTN..: void
-///
-/// DESCR: init connection
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pconn connection to init
+/// 
+/// \return void
+/// 
+/// \brief init connection
+/// \details 
+/// 
 
 void ConnectionInit(struct symtab_Connection *pconn)
 {
@@ -454,11 +435,12 @@ void ConnectionInit(struct symtab_Connection *pconn)
 /* ///	iLevel: active level of ppist */
 /* ///	bAll..: set TRUE if next entries in ppist have to be searched */
 /* /// */
-/* /// RTN..: struct symtab_HSolveListElement * : */
+/* /// \return struct symtab_HSolveListElement * : */
 /* /// */
 /* ///	found symbol, NULL for not found */
 /* /// */
-/* /// DESCR: Hierarchical lookup in connection subsymbols. */
+/* /// \brief Hierarchical lookup in connection subsymbols. */
+/// \details 
 /* /// */
 /* ///	Always fails. */
 /* /// */
@@ -481,24 +463,20 @@ void ConnectionInit(struct symtab_Connection *pconn)
 /* } */
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionNewForStandardConnection()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	iPreSynaptic.: pre-synaptic serial ID
 ///	iPostSynaptic: post-synaptic serial ID
-///	dWeight......: weight of connection
-///	dDelay.......: delay of connection
-///
-/// RTN..: struct symtab_Connection *
-///
+/// \arg dWeight weight of connection
+/// \arg dDelay delay of connection
+/// 
+/// \return struct symtab_Connection *
+/// 
 ///	newly allocated and initialized connection
-///
-/// DESCR: Allocate connection, assign parameters.
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate connection, assign parameters.
+/// \details 
+/// 
 
 struct symtab_Connection *
 ConnectionNewForStandardConnection
@@ -525,21 +503,17 @@ ConnectionNewForStandardConnection
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionParameterResolveValue()
-///
-/// ARGS.:
-///
-///	pconn.: connection.
-///	ppist.: context of connection.
-///	pcName: name of parameter.
-///
-/// RTN..: double : parameter value, FLT_MAX for failure.
-///
-/// DESCR: Resolve parameter value for connection.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pconn connection.
+/// \arg ppist context of connection.
+/// \arg pcName name of parameter.
+/// 
+/// \return double : parameter value, FLT_MAX for failure.
+/// 
+/// \brief Resolve parameter value for connection.
+/// \details 
+/// 
 
 double
 ConnectionParameterResolveValue
@@ -593,22 +567,18 @@ ConnectionParameterResolveValue
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionPrint()
-///
-/// ARGS.:
-///
-///	pconn....: connection to print symbols for
+/// 
+/// 
+/// \arg pconn connection to print symbols for
 ///	bAll.....: TRUE == full list of symbols, FALSE == only given conn
-///	iIndent..: number of indentation spaces
-///	pfile....: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Print symbol info for connection
-///
-/// **************************************************************************
+/// \arg iIndent number of indentation spaces
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Print symbol info for connection
+/// \details 
+/// 
 
 #define PrintConnectionIndent(iIndent,pfile)				\
 do									\
@@ -660,37 +630,33 @@ int ConnectionPrint
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionTraverse()
-///
-/// ARGS.:
-///
-///	ptstr.: initialized treespace traversal
-///	pconn.: symbol to traverse
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg ptstr initialized treespace traversal
+/// \arg pconn symbol to traverse
+/// 
+/// \return int
+/// 
 ///	1  : success
 ///	0  : no success, failure
 ///	-1 : immediate abort
-///
-/// DESCR: Traverse symbols in tree manner.
-///
-/// NOTE.: See IOHierarchyTraverse()
-///
+/// 
+/// \brief Traverse symbols in tree manner.
+/// \details 
+/// 
+/// \note  See IOHierarchyTraverse()
+/// 
 ///	Note that not all symbols are required to have a pidin.
 ///	Interfaces with Tstr{Prepare,Traverse,Repair}() :
-///
+/// 
 ///	Loops over children of top symbol
 ///		1. Calls TstrPrepare()
 ///		2. Calls TstrTraverse()
 ///		3. Calls TstrRepair()
-///
+/// 
 ///	Use Tstr.*() to obtain info on serial IDs and contexts
 ///	during traversals.
-///
-/// **************************************************************************
+/// 
 
 int
 ConnectionTraverse

@@ -26,37 +26,37 @@
 #define ALGORITHM_SERIALCONNECTION_H
 
 
-//s
-//s connection array entry
-//s
+/// \struct
+/// \struct connection array entry
+/// \struct
 
 struct SymbolSerialConnection
 {
-    //m connection symbol
+    /// connection symbol
 
     struct symtab_Connection *pconn;
 };
 
 
-//s serial connection struct
+/// \struct serial connection struct
 
 struct SerialConnectionVariables
 {
-    //m number of serialized created connections
+    /// number of serialized created connections
 
     int iConnectionsCreated;
 
-    //m number of serialized added connections
+    /// number of serialized added connections
 
     int iConnectionsAdded;
 
-    //m array of all connections
+    /// array of all connections
 
     struct SymbolSerialConnection *psymserconn;
 };
 
 
-//v serial connection array
+/// serial connection array
 
 extern struct SerialConnectionVariables serconnVariables;
 

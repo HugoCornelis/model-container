@@ -31,7 +31,7 @@
 #include "segmenter.h"
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_Segment;
 struct symtab_Segment;
@@ -40,7 +40,6 @@ struct symtab_Segment;
 #include "neurospaces/treespacetraversal.h"
 
 
-//f exported functions
 
 struct symtab_Segment * SegmentCalloc(void);
 
@@ -63,33 +62,33 @@ void SegmentInit(struct symtab_Segment *psegment);
 #include "neurospaces/parameters.h"
 
 
-//s
-//s segment description
-//s
+/// \struct
+/// \struct segment description
+/// \struct
 
 struct descr_Segment
 {
-    //m type of segment data
+    /// type of segment data
 
     int iType;
 
-    //m segment specific flags (OPTIONS keyword)
+    /// segment specific flags (OPTIONS keyword)
 
     int iFlags;
 };
 
 
-//s
-//s struct symtab_Segment
-//s
+/// \struct
+/// \struct struct symtab_Segment
+/// \struct
 
 struct symtab_Segment
 {
-    //m base struct : segmenter
+    /// base struct : segmenter
 
     struct symtab_Segmenter segr;
 
-    //m segment description
+    /// segment description
 
     struct descr_Segment desegment;
 };

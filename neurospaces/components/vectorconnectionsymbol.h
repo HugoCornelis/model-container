@@ -25,13 +25,12 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_VConnectionSymbol;
 struct symtab_VConnectionSymbol;
 
 
-//f exported functions
 
 struct symtab_VConnectionSymbol * VConnectionSymbolCalloc(void);
 
@@ -46,9 +45,9 @@ void VConnectionSymbolInit(struct symtab_VConnectionSymbol *pvconsy);
 #include "vector.h"
 
 
-//s
-//s vector description
-//s
+/// \struct
+/// \struct vector description
+/// \struct
 
 struct descr_VConnectionSymbol
 {
@@ -56,17 +55,17 @@ struct descr_VConnectionSymbol
 };
 
 
-//s
-//s struct symtab_VConnection
-//s
+/// \struct
+/// \struct struct symtab_VConnection
+/// \struct
 
 struct symtab_VConnectionSymbol
 {
-    //m base struct : vector
+    /// base struct : vector
 
     struct symtab_Vector vect;
 
-    //m enumeration container
+    /// enumeration container
 
     struct descr_VConnectionSymbol devconsy;
 };

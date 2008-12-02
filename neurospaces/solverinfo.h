@@ -28,11 +28,11 @@ struct SolverInfo;
 
 struct SolverInfo
 {
-    //m (absolute ?) path specification, identifies a solver
+    /// (absolute ?) path specification, identifies a solver
 
     char *pcSolver;
 
-    //m context stack of solved symbol
+    /// context stack of solved symbol
 
     struct PidinStack *ppist;
 };

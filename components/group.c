@@ -26,19 +26,15 @@
 #include "neurospaces/idin.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: GroupCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Group * 
-///
+/// 
+/// 
+/// \return struct symtab_Group * 
+/// 
 ///	Newly allocated group, NULL for failure
-///
-/// DESCR: Allocate a new group symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new group symbol table element
+/// \details 
+/// 
 
 struct symtab_Group * GroupCalloc(void)
 {
@@ -64,20 +60,16 @@ struct symtab_Group * GroupCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: GroupCountSpikeGenerators()
-///
-/// ARGS.:
-///
-///	pgrup.: group to count spike generators for
+/// 
+/// 
+/// \arg pgrup group to count spike generators for
 ///	ppist.: context, group on top
-///
-/// RTN..: int : number of spike generators in group, -1 for failure
-///
-/// DESCR: count all spike generators in group
-///
-/// **************************************************************************
+/// 
+/// \return int : number of spike generators in group, -1 for failure
+/// 
+/// \brief count all spike generators in group
+/// \details 
+/// 
 
 static int 
 GroupSpikeGeneratorCounter
@@ -132,20 +124,16 @@ int GroupCountSpikeGenerators
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: GroupCreateAlias()
-///
-/// ARGS.:
-///
-///	pgrup.: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pgrup symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 GroupCreateAlias
@@ -171,19 +159,15 @@ GroupCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: GroupInit()
-///
-/// ARGS.:
-///
-///	pgrup.: group to init
-///
-/// RTN..: void
-///
-/// DESCR: init group
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pgrup group to init
+/// 
+/// \return void
+/// 
+/// \brief init group
+/// \details 
+/// 
 
 void GroupInit(struct symtab_Group *pgrup)
 {
@@ -197,23 +181,19 @@ void GroupInit(struct symtab_Group *pgrup)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: GroupNewAtXYZ()
-///
-/// ARGS.:
-///
-///	dx..: X coordinate
-///	dy..: Y coordinate
-///	dz..: Z coordinate
-///
-/// RTN..: struct symtab_Group * : resulting cell, NULL for failure
-///
-/// DESCR: Allocate cell, put at specified position.
-///
+/// 
+/// 
+/// \arg dx X coordinate
+/// \arg dy Y coordinate
+/// \arg dz Z coordinate
+/// 
+/// \return struct symtab_Group * : resulting cell, NULL for failure
+/// 
+/// \brief Allocate cell, put at specified position.
+/// \details 
+/// 
 ///	Contains memory leak.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_Group * GroupNewAtXYZ(double dx, double dy, double dz)
 {

@@ -22,9 +22,9 @@
 #define DOUBLE_H
 
 
-//d
-//d test type(dx) == double at compile time
-//d
+/// \def
+/// \def test type(dx) == double at compile time
+/// \def
 
 #define CompileTimeTestDouble(dx)					\
 do {									\

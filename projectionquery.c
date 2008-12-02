@@ -32,7 +32,6 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-//f local functions
 
 static int
 ProjectionQueryTraverseProjectionConnections
@@ -46,19 +45,15 @@ static int
 ProjectionQueryBuildConnectionCache(struct ProjectionQuery *ppq);
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryBuildCaches()
-///
-/// ARGS.:
-///
-///	ppq..: projection query
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Build caches for projection query.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppq projection query
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Build caches for projection query.
+/// \details 
+/// 
 
 int ProjectionQueryBuildCaches(struct ProjectionQuery *ppq)
 {
@@ -86,31 +81,27 @@ int ProjectionQueryBuildCaches(struct ProjectionQuery *ppq)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryBuildConnectionCache()
-///
-/// ARGS.:
-///
-///	ppq..: projection query
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Build the unordered connection cache for initialized query.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppq projection query
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Build the unordered connection cache for initialized query.
+/// \details 
+/// 
 
 struct UnorderedCaching_data
 {
-    //m original projection query
+    /// original projection query
 
     struct ProjectionQuery *ppq;
 
-    //m connection cache associated with projection query
+    /// connection cache associated with projection query
 
     struct ConnectionCache *pcc;
 
-    //m current entry in connection cache
+    /// current entry in connection cache
 
     int iCurrent;
 };
@@ -211,19 +202,19 @@ ProjectionQueryBuildConnectionCache(struct ProjectionQuery *ppq)
 
     int bResult = FALSE;
 
-    //v cache build data
+    /// cache build data
 
     struct UnorderedCaching_data ucd = 
     {
-	//m original projection query
+	/// original projection query
 
 	ppq,
 
-	//m connection cache associated with projection query
+	/// connection cache associated with projection query
 
 	NULL,
 
-	//m current entry in connection cache
+	/// current entry in connection cache
 
 	0,
     };
@@ -271,19 +262,15 @@ ProjectionQueryBuildConnectionCache(struct ProjectionQuery *ppq)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryBuildOrderedConnectionCaches()
-///
-/// ARGS.:
-///
-///	ppq..: projection query
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Build the ordered connection caches for an initialized query.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppq projection query
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Build the ordered connection caches for an initialized query.
+/// \details 
+/// 
 
 int
 ProjectionQueryBuildOrderedConnectionCaches(struct ProjectionQuery *ppq)
@@ -314,22 +301,18 @@ ProjectionQueryBuildOrderedConnectionCaches(struct ProjectionQuery *ppq)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryCallocFromProjections()
-///
-/// ARGS.:
-///
-///	ppistProjections.: array of projections to query
-///	iProjections.....: number of projections in array
-///
-/// RTN..: struct ProjectionQuery *
-///
-/// DESCR: Construct a projection query for given projections
-///
+/// 
+/// 
+/// \arg ppistProjections array of projections to query
+/// \arg iProjections number of projections in array
+/// 
+/// \return struct ProjectionQuery *
+/// 
+/// \brief Construct a projection query for given projections
+/// \details 
+/// 
 /// SEE..: ProjectionQueryInit()
-///
-/// **************************************************************************
+/// 
 
 struct ProjectionQuery *
 ProjectionQueryCallocFromProjections
@@ -360,23 +343,19 @@ ProjectionQueryCallocFromProjections
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryCallocFromSolverRegistrations()
-///
-/// ARGS.:
-///
-///	psiSolvers..: array of solver registrations
-///	iSolvers....: number of entries in array
-///
-/// RTN..: struct ProjectionQuery *
-///
-/// DESCR: Construct a projection query for projections onto solvers.
-///
+/// 
+/// 
+/// \arg psiSolvers array of solver registrations
+/// \arg iSolvers number of entries in array
+/// 
+/// \return struct ProjectionQuery *
+/// 
+/// \brief Construct a projection query for projections onto solvers.
+/// \details 
+/// 
 ///	Constructs an array of projections on the solvers and calls
 ///	ProjectionQueryCallocFromProjections().
-///
-/// **************************************************************************
+/// 
 
 /* struct ProjectionQuery * */
 /* ProjectionQueryCallocFromSolverRegistration */
@@ -392,24 +371,20 @@ ProjectionQueryCallocFromProjections
 /* } */
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryClone()
-///
-/// ARGS.:
-///
-///	ppq...........: projection query to clone
-///
-/// RTN..: struct ProjectionQuery *
-///
+/// 
+/// 
+/// \arg ppq projection query to clone
+/// 
+/// \return struct ProjectionQuery *
+/// 
 ///	cloned projection query, NULL for failure
-///
-/// DESCR: Clone a projection query for new queries on same projections.
-///
+/// 
+/// \brief Clone a projection query for new queries on same projections.
+/// \details 
+/// 
 ///	Result is completely seperate from original projection query.
 ///	Query cursor is reset to zero.
-///
-/// **************************************************************************
+/// 
 
 struct ProjectionQuery *ProjectionQueryClone(struct ProjectionQuery *ppq)
 {
@@ -419,8 +394,8 @@ struct ProjectionQuery *ProjectionQueryClone(struct ProjectionQuery *ppq)
 
     //- allocate new projection query
 
-    //! this will check if all symbols involved are indeed projections,
-    //! this is a small overhead which could be eliminated.
+    /// \note this will check if all symbols involved are indeed projections,
+    /// \note this is a small overhead which could be eliminated.
 
     ppqResult
 	= ProjectionQueryCallocFromProjections
@@ -449,7 +424,7 @@ struct ProjectionQuery *ProjectionQueryClone(struct ProjectionQuery *ppq)
 	ppqResult->iCursor = ppq->iCursor;
     }
 
-    //! we do not share memory use for the moment.
+    /// \note we do not share memory use for the moment.
 
     //- return result
 
@@ -457,19 +432,15 @@ struct ProjectionQuery *ProjectionQueryClone(struct ProjectionQuery *ppq)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryCountConnections()
-///
-/// ARGS.:
-///
-///	ppq...........: projection query
-///
-/// RTN..: int : number of connections, -1 for failure
-///
-/// DESCR: Count connections for all projections in query.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppq projection query
+/// 
+/// \return int : number of connections, -1 for failure
+/// 
+/// \brief Count connections for all projections in query.
+/// \details 
+/// 
 
 int ProjectionQueryCountConnections(struct ProjectionQuery *ppq)
 {
@@ -547,20 +518,16 @@ int ProjectionQueryCountConnections(struct ProjectionQuery *ppq)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryCountConnectionsForSpikeGenerator()
-///
-/// ARGS.:
-///
-///	ppq...........: projection query
-///	ppist.........: spike generator
-///
-/// RTN..: int : number of connections, -1 for failure
-///
-/// DESCR: Count connections attached to spikegen.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppq projection query
+/// \arg ppist spike generator
+/// 
+/// \return int : number of connections, -1 for failure
+/// 
+/// \brief Count connections attached to spikegen.
+/// \details 
+/// 
 
 static int ProjectionQueryConnectionForSpikeGeneratorCounter
 (struct TreespaceTraversal *ptstr,void *pvUserdata)
@@ -611,20 +578,16 @@ ProjectionQueryCountConnectionsForSpikeGenerator
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryCountConnectionsForSpikeReceiver()
-///
-/// ARGS.:
-///
-///	ppq...........: projection query
-///	ppist.........: spike receiver
-///
-/// RTN..: int : number of connections, -1 for failure
-///
-/// DESCR: Count connections attached to spikerec.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppq projection query
+/// \arg ppist spike receiver
+/// 
+/// \return int : number of connections, -1 for failure
+/// 
+/// \brief Count connections attached to spikerec.
+/// \details 
+/// 
 
 static int ProjectionQueryConnectionForSpikeReceiverCounter
 (struct TreespaceTraversal *ptstr,void *pvUserdata)
@@ -675,22 +638,18 @@ ProjectionQueryCountConnectionsForSpikeReceiver
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryFree()
-///
-/// ARGS.:
-///
-///	ppist.: projection to query
-///
-/// RTN..: void
-///
-/// DESCR: Free a projection query.
-///
+/// 
+/// 
+/// \arg ppist projection to query
+/// 
+/// \return void
+/// 
+/// \brief Free a projection query.
+/// \details 
+/// 
 ///	It is illegal to free projection queries that have pending clones.
 ///	First free the clones afterwards the cloned one.
-///
-/// **************************************************************************
+/// 
 
 void ProjectionQueryFree(struct ProjectionQuery *ppq)
 {
@@ -730,7 +689,7 @@ void ProjectionQueryFree(struct ProjectionQuery *ppq)
 	free(ppq->pppistSource);
 	free(ppq->pppistTarget);
 
-	//t free ->piSource and ->piTarget ?
+	/// \todo free ->piSource and ->piTarget ?
 
 	//- if non-cloned projectionquery
 
@@ -738,7 +697,7 @@ void ProjectionQueryFree(struct ProjectionQuery *ppq)
 	{
 	    //- free caches
 
-	    //! first free ordered caches : they use the unordered cache.
+	    /// \note first free ordered caches : they use the unordered cache.
 
 	    if (ppq->poccPre)
 	    {
@@ -757,7 +716,7 @@ void ProjectionQueryFree(struct ProjectionQuery *ppq)
 	}
 	else
 	{
-	    //! force that these are not used anymore
+	    /// \note force that these are not used anymore
 
 	    ppq->poccPre = NULL;
 	    ppq->poccPost = NULL;
@@ -781,23 +740,19 @@ void ProjectionQueryFree(struct ProjectionQuery *ppq)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryInit()
-///
-/// ARGS.:
-///
-///	ppq..............: projection query to init
-///	ppistProjections.: array of projections to query
-///	iProjections.....: number of projections in array
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Init a projection query from an enumeration of projections.
-///
+/// 
+/// 
+/// \arg ppq projection query to init
+/// \arg ppistProjections array of projections to query
+/// \arg iProjections number of projections in array
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Init a projection query from an enumeration of projections.
+/// \details 
+/// 
 ///	ppistProjections may be discarded afterwards.
-///
-/// **************************************************************************
+/// 
 
 int ProjectionQueryInit
 (struct ProjectionQuery *ppq,
@@ -974,19 +929,16 @@ int ProjectionQueryInit
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryLookupPostSerialID()
-///
-/// ARGS.:
-///
-///	ppq....: projection query
-///	pconn..: connection symbol
-///
-/// RTN..: int : Serial ID for connection, -1 for failure
-///
-/// DESCR: Get synapse number on synaptic target.
-///
+/// 
+/// 
+/// \arg ppq projection query
+/// \arg pconn connection symbol
+/// 
+/// \return int : Serial ID for connection, -1 for failure
+/// 
+/// \brief Get synapse number on synaptic target.
+/// \details 
+/// 
 ///	Get serial ID of specified connection, relative to the spike 
 ///	receiver for the connection symbol.  This is the same as the
 ///	synapse number for that spike receiver.  The given connection
@@ -994,16 +946,15 @@ int ProjectionQueryInit
 ///	given projection query, meaning the post serial id of the 
 ///	connection is assumed to be relative to the TARGET of that 
 ///	projection.
-///
-/// **************************************************************************
+/// 
 
 struct ProjectionQuerySpikeReceiverCounterData
 {
-    //m serial id of connection on spike receiver
+    /// serial id of connection on spike receiver
 
     int iSerialID;
 
-    //m connection symbol
+    /// connection symbol
 
     struct symtab_Connection *pconn;
 };
@@ -1013,7 +964,7 @@ static int
 ProjectionQuerySpikeReceiverCounter
 (struct TreespaceTraversal *ptstr,void *pvUserdata)
 {
-    //! we get here for connections with a specified spike receiver
+    /// \note we get here for connections with a specified spike receiver
 
     //- set default result : ok, but process sibling afterwards
 
@@ -1030,7 +981,7 @@ ProjectionQuerySpikeReceiverCounter
 
     //- if connection
 
-    //! sanity check
+    /// \note sanity check
 
     int iType = TstrGetActualType(ptstr);
 
@@ -1073,25 +1024,25 @@ ProjectionQueryLookupPostSerialID
 
     int iTraverse = 0;
 
-    //v target of projection
+    /// target of projection
 
     struct PidinStack *ppistTarget = NULL;
 
     struct symtab_HSolveListElement *phsleTarget = NULL;
 
-    //v post-synaptic target
+    /// post-synaptic target
 
     struct PidinStack *ppistPost = NULL;
 
-    //v user data for traversal
+    /// user data for traversal
 
     struct ProjectionQuerySpikeReceiverCounterData pqpid =
     {
-	//m serial id
+	/// serial id
 
 	0,
 
-	//m connection symbol
+	/// connection symbol
 
 	pconn,
     };
@@ -1163,20 +1114,17 @@ ProjectionQueryLookupPostSerialID
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryLookupPostSerialIDForAbsoluteSerials()
-///
-/// ARGS.:
-///
-///	ppq....: projection query
+/// 
+/// 
+/// \arg ppq projection query
 ///	iPre...: rooted pre-synaptic serial
 ///	iPost..: rooted post-synaptic serial
-///
-/// RTN..: int : Serial ID for connection, -1 for failure
-///
-/// DESCR: Get synapse number on synaptic target.
-///
+/// 
+/// \return int : Serial ID for connection, -1 for failure
+/// 
+/// \brief Get synapse number on synaptic target.
+/// \details 
+/// 
 ///	Get serial ID of specified connection, relative to the spike 
 ///	receiver for the connection symbol.  This is the same as the
 ///	synapse number for that spike receiver.  The connection, 
@@ -1185,22 +1133,21 @@ ProjectionQueryLookupPostSerialID
 ///	given projection query, meaning the post serial id of the 
 ///	connection is assumed to be relative to the TARGET of that 
 ///	projection.
-///
-/// **************************************************************************
+/// 
 
 struct ProjectionQueryPostSerialIDCounterData
 {
-    //m serial id of connection on spike receiver
+    /// serial id of connection on spike receiver
 
     int iSerialID;
 
-    //m connection {pre,post}synaptic pair
+    /// connection {pre,post}synaptic pair
 
     int iPre;
 
     int iPost;
 
-    //m traversal projection query
+    /// traversal projection query
 
     struct ProjectionQuery *ppq;
 };
@@ -1210,7 +1157,7 @@ static int
 ProjectionQueryPostSerialIDCounter
 (struct TreespaceTraversal *ptstr,void *pvUserdata)
 {
-    //! we get here for connections with a specified spike receiver
+    /// \note we get here for connections with a specified spike receiver
 
     //- set default result : ok, but process sibling afterwards
 
@@ -1227,7 +1174,7 @@ ProjectionQueryPostSerialIDCounter
 
     //- if connection
 
-    //! sanity check
+    /// \note sanity check
 
     int iType = TstrGetActualType(ptstr);
 
@@ -1237,7 +1184,7 @@ ProjectionQueryPostSerialIDCounter
 
 	//- if connection matches
 
-	//! post always matches, if not means bug in traversal interface.
+	/// \note post always matches, if not means bug in traversal interface.
 
 	int iPre
 	    = (ConnectionGetPre
@@ -1277,20 +1224,20 @@ ProjectionQueryLookupPostSerialIDForAbsoluteSerials
 
     int iTraverse = 0;
 
-    //v user data for traversal
+    /// user data for traversal
 
     struct ProjectionQueryPostSerialIDCounterData pqpsid =
     {
-	//m serial id of connection on spike receiver
+	/// serial id of connection on spike receiver
 
 	0,
 
-	//m connection {pre,post}synaptic pair
+	/// connection {pre,post}synaptic pair
 
 	iPre,
 	iPost,
 
-	//m traversal projection query
+	/// traversal projection query
 
 	NULL,
     };
@@ -1339,26 +1286,22 @@ ProjectionQueryLookupPostSerialIDForAbsoluteSerials
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryTraverseConnections()
-///
-/// ARGS.:
-///
-///	ppq...........: projection query
-///	psi...........: solver registration
-///	pfProcessor...: processor to be called on matching connections
-///	pfFinalizer...: finalizer
-///	pvUserdata....: any user data
-///
-/// RTN..: see TstrTraverse()
-///
-/// DESCR: Traverse connections.
-///
+/// 
+/// 
+/// \arg ppq projection query
+/// \arg psi solver registration
+/// \arg pfProcessor processor to be called on matching connections
+/// \arg pfFinalizer finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return see TstrTraverse()
+/// 
+/// \brief Traverse connections.
+/// \details 
+/// 
 ///	Call processor on connections.  If no connections, always 
 ///	successfull.
-///
-/// **************************************************************************
+/// 
 
 int
 ProjectionQueryTraverseConnections
@@ -1421,17 +1364,17 @@ ProjectionQueryTraverseConnections
 
 	//- get a treespace traversal context
 
-	//! if this is solved, enabled the associated code in br2p and
-	//! test with the connection matrix explorer.
+	/// \note if this is solved, enabled the associated code in br2p and
+	/// \note test with the connection matrix explorer.
 
-	//! what I could do here :
-	//!
-	//! attach to each cached connection
-	//!     1. projection cursor of projection query
-	//!     2. serial to projection of connection
-	//! use context of projection the connection belongs to do traversal
-	//! inform struct TreespaceTraversal about serial of connection
-	//!     before pre- or post-processing
+	/// \note what I could do here :
+	///
+	/// \note attach to each cached connection
+	/// \note     1. projection cursor of projection query
+	/// \note     2. serial to projection of connection
+	/// \note use context of projection the connection belongs to do traversal
+	/// \note inform struct TreespaceTraversal about serial of connection
+	/// \note     before pre- or post-processing
 
 	ppistTraversal = PidinStackCalloc();
 
@@ -1466,23 +1409,23 @@ ProjectionQueryTraverseConnections
 		ppq->iCursor = -1; // CachedConnectionGetCursor(pcconn);
 	    }
 
-	    //t calculate serial of connection:
-	    //t the serial of the connection is defined during the 
-	    //t traversal of the projection, to build the cache.
-	    //t So it has to go in the cache, and then set in the traversal
-	    //t overhere.  This means that the stream served by a projectionquery
-	    //t can be out of order.
+	    /// \todo calculate serial of connection:
+	    /// \todo the serial of the connection is defined during the 
+	    /// \todo traversal of the projection, to build the cache.
+	    /// \todo So it has to go in the cache, and then set in the traversal
+	    /// \todo overhere.  This means that the stream served by a projectionquery
+	    /// \todo can be out of order.
 
 	    //- call processor and finalizer on connection
 
-	    //! if this is solved, enabled the associated code in br2p and
-	    //! test with the connection matrix explorer.
+	    /// \note if this is solved, enabled the associated code in br2p and
+	    /// \note test with the connection matrix explorer.
 
-	    //! this prepare is real dirty : officially the treespace traversal 
-	    //! has been not initialized yet, a call to
-	    //! TstrTraverse() is necessary to do this.
-	    //! I only need to set ->phsleActual, so this should do it for
-	    //! the moment.
+	    /// \note this prepare is real dirty : officially the treespace traversal 
+	    /// \note has been not initialized yet, a call to
+	    /// \note TstrTraverse() is necessary to do this.
+	    /// \note I only need to set ->phsleActual, so this should do it for
+	    /// \note the moment.
 
 /* 	    phsle */
 /* 		= (struct symtab_HSolveListElement *) */
@@ -1592,29 +1535,25 @@ ProjectionQueryTraverseConnections
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryTraverseProjectionConnections()
-///
-/// ARGS.:
-///
-///	ppq...........: projection query
-///	psi...........: solver registration
-///	pfProcessor...: processor to be called on matching connections
-///	pfFinalizer...: finalizer
-///	pvUserdata....: any user data
-///
-/// RTN..: see TstrTraverse()
-///
-/// DESCR: Traverse connections, do not use any caches.
-///
+/// 
+/// 
+/// \arg ppq projection query
+/// \arg psi solver registration
+/// \arg pfProcessor processor to be called on matching connections
+/// \arg pfFinalizer finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return see TstrTraverse()
+/// 
+/// \brief Traverse connections, do not use any caches.
+/// \details 
+/// 
 ///	Call processor on connections.  If no connections, always 
 ///	successfull.
-///
+/// 
 ///	This function never uses caches, so it can be used for cache
 ///	maintenance.
-///
-/// **************************************************************************
+/// 
 
 static int
 ProjectionQueryTraverseProjectionConnections
@@ -1688,30 +1627,26 @@ ProjectionQueryTraverseProjectionConnections
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryTraverseConnectionsForPostSerial()
-///
-/// ARGS.:
-///
-///	ppq...........: projection query
-///	iReceiver.....: spike receiver
-///	psi...........: solver registration
-///	pfProcessor...: processor to be called on matching connections
-///	pfFinalizer...: finalizer
-///	pvUserdata....: any user data
-///
-/// RTN..: see TstrTraverse()
-///
-/// DESCR: Traverse connections attached to spikerec and solver.
-///
+/// 
+/// 
+/// \arg ppq projection query
+/// \arg iReceiver spike receiver
+/// \arg psi solver registration
+/// \arg pfProcessor processor to be called on matching connections
+/// \arg pfFinalizer finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return see TstrTraverse()
+/// 
+/// \brief Traverse connections attached to spikerec and solver.
+/// \details 
+/// 
 ///	Call processor on connections attached to spikerec, but only if 
 ///	the spikegens of the connections are solved by the solver given
 ///	by psi.
-///
+/// 
 ///	If no connections, always successfull.
-///
-/// **************************************************************************
+/// 
 
 int
 ProjectionQueryTraverseConnectionsForPostSerial
@@ -1775,14 +1710,14 @@ ProjectionQueryTraverseConnectionsForPostSerial
 
 	//- get a treespace traversal context
 
-	//! what I could do here :
-	//!
-	//! attach to each cached connection
-	//!     1. projection cursor of projection query
-	//!     2. serial to projection of connection
-	//! use context of projection the connection belongs to do traversal
-	//! inform struct TreespaceTraversal about serial of connection
-	//!     before pre- or post-processing
+	/// \note what I could do here :
+	///
+	/// \note attach to each cached connection
+	/// \note     1. projection cursor of projection query
+	/// \note     2. serial to projection of connection
+	/// \note use context of projection the connection belongs to do traversal
+	/// \note inform struct TreespaceTraversal about serial of connection
+	/// \note     before pre- or post-processing
 
 	ppistTraversal = PidinStackCalloc();
 
@@ -1829,23 +1764,23 @@ ProjectionQueryTraverseConnectionsForPostSerial
 		    ppq->iCursor = -1; // CachedConnectionGetCachedCursor(pcconn);
 		}
 
-		//t calculate serial of connection:
-		//t the serial of the connection is defined during the 
-		//t traversal of the projection, to build the cache.
-		//t So it has to go in the cache, and then set in the traversal
-		//t overhere.  This means that the stream served by a projectionquery
-		//t can be out of order.
+		/// \todo calculate serial of connection:
+		/// \todo the serial of the connection is defined during the 
+		/// \todo traversal of the projection, to build the cache.
+		/// \todo So it has to go in the cache, and then set in the traversal
+		/// \todo overhere.  This means that the stream served by a projectionquery
+		/// \todo can be out of order.
 
 		//- call processor and finalizer on connection
 
-		//! if this is solved, enabled the associated code in br2p and
-		//! test with the connection matrix explorer.
+		/// \note if this is solved, enabled the associated code in br2p and
+		/// \note test with the connection matrix explorer.
 
-		//! this prepare is real dirty : officially the treespace traversal 
-		//! has not been initialized yet, a call to 
-		//! TstrTraverse() is necessary to do this.
-		//! I only need to set ->phsleActual, so this should do it for
-		//! the moment.
+		/// \note this prepare is real dirty : officially the treespace traversal 
+		/// \note has not been initialized yet, a call to 
+		/// \note TstrTraverse() is necessary to do this.
+		/// \note I only need to set ->phsleActual, so this should do it for
+		/// \note the moment.
 
 /* 		phsle */
 /* 		    = (struct symtab_HSolveListElement *) */
@@ -1963,30 +1898,26 @@ ProjectionQueryTraverseConnectionsForPostSerial
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryTraverseConnectionsForSpikeGenerator()
-///
-/// ARGS.:
-///
-///	ppq...........: projection query
-///	ppist.........: spike generator
-///	psi...........: solver registration
-///	pfProcessor...: processor to be called on matching connections
-///	pfFinalizer...: finalizer
-///	pvUserdata....: any user data
-///
-/// RTN..: see TstrTraverse()
-///
-/// DESCR: Traverse connections attached to spikegen and solver.
-///
+/// 
+/// 
+/// \arg ppq projection query
+/// \arg ppist spike generator
+/// \arg psi solver registration
+/// \arg pfProcessor processor to be called on matching connections
+/// \arg pfFinalizer finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return see TstrTraverse()
+/// 
+/// \brief Traverse connections attached to spikegen and solver.
+/// \details 
+/// 
 ///	Call processor on connections attached to spikegen, but only if 
 ///	the spikerecs of the connections are solved by the solver given
 ///	by psi.
-///
+/// 
 ///	If no connections, always successfull.
-///
-/// **************************************************************************
+/// 
 
 int
 ProjectionQueryTraverseConnectionsForSpikeGenerator
@@ -2051,23 +1982,23 @@ ProjectionQueryTraverseConnectionsForSpikeGenerator
 
 	//- get a treespace traversal context
 
-	//! if this is solved, enabled the associated code in br2p and
-	//! test with the connection matrix explorer.
+	/// \note if this is solved, enabled the associated code in br2p and
+	/// \note test with the connection matrix explorer.
 
-	//! what I could do here :
-	//!
-	//! attach to each cached connection
-	//!     1. projection cursor of projection query
-	//!     2. serial to projection of connection
-	//! use context of projection the connection belongs to do traversal
-	//! inform struct TreespaceTraversal about serial of connection
-	//!     before pre- or post-processing
+	/// \note what I could do here :
+	///
+	/// \note attach to each cached connection
+	/// \note     1. projection cursor of projection query
+	/// \note     2. serial to projection of connection
+	/// \note use context of projection the connection belongs to do traversal
+	/// \note inform struct TreespaceTraversal about serial of connection
+	/// \note     before pre- or post-processing
 
 	ppistTraversal = PidinStackCalloc();
 
 	//- get serial for spike generator
 
-	//! update cache
+	/// \note update cache
 
 	PidinStackLookupTopSymbol(ppist);
 
@@ -2116,23 +2047,23 @@ ProjectionQueryTraverseConnectionsForSpikeGenerator
 		    ppq->iCursor = -1; // CachedConnectionGetCachedCursor(pcconn);
 		}
 
-		//t calculate serial of connection:
-		//t the serial of the connection is defined during the 
-		//t traversal of the projection, to build the cache.
-		//t So it has to go in the cache, and then set in the traversal
-		//t overhere.  This means that the stream served by a projectionquery
-		//t can be out of order.
+		/// \todo calculate serial of connection:
+		/// \todo the serial of the connection is defined during the 
+		/// \todo traversal of the projection, to build the cache.
+		/// \todo So it has to go in the cache, and then set in the traversal
+		/// \todo overhere.  This means that the stream served by a projectionquery
+		/// \todo can be out of order.
 
 		//- call processor and finalizer on connection
 
-		//! if this is solved, enabled the associated code in br2p and
-		//! test with the connection matrix explorer.
+		/// \note if this is solved, enabled the associated code in br2p and
+		/// \note test with the connection matrix explorer.
 
-		//! this prepare is real dirty : officially the treespace traversal 
-		//! has been not initialized yet, a call to
-		//! TstrTraverse() is necessary to do this.
-		//! I only need to set ->phsleActual, so this should do it for
-		//! the moment.
+		/// \note this prepare is real dirty : officially the treespace traversal 
+		/// \note has been not initialized yet, a call to
+		/// \note TstrTraverse() is necessary to do this.
+		/// \note I only need to set ->phsleActual, so this should do it for
+		/// \note the moment.
 
 /* 		phsle */
 /* 		    = (struct symtab_HSolveListElement *) */
@@ -2250,30 +2181,26 @@ ProjectionQueryTraverseConnectionsForSpikeGenerator
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionQueryTraverseConnectionsForSpikeReceiver()
-///
-/// ARGS.:
-///
-///	ppq...........: projection query
-///	ppist.........: spike receiver
-///	psi...........: solver registration
-///	pfProcessor...: processor to be called on matching connections
-///	pfFinalizer...: finalizer
-///	pvUserdata....: any user data
-///
-/// RTN..: see TstrTraverse()
-///
-/// DESCR: Traverse connections attached to spikerec and solver.
-///
+/// 
+/// 
+/// \arg ppq projection query
+/// \arg ppist spike receiver
+/// \arg psi solver registration
+/// \arg pfProcessor processor to be called on matching connections
+/// \arg pfFinalizer finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return see TstrTraverse()
+/// 
+/// \brief Traverse connections attached to spikerec and solver.
+/// \details 
+/// 
 ///	Call processor on connections attached to spikerec, but only if 
 ///	the spikegens of the connections are solved by the solver given
 ///	by psi.
-///
+/// 
 ///	If no connections, always successfull.
-///
-/// **************************************************************************
+/// 
 
 int
 ProjectionQueryTraverseConnectionsForSpikeReceiver
@@ -2292,7 +2219,7 @@ ProjectionQueryTraverseConnectionsForSpikeReceiver
 
     //- get serial for spike receiver
 
-    //! update cache
+    /// \note update cache
 
     PidinStackLookupTopSymbol(ppist);
 

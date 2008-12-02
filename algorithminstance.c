@@ -30,19 +30,15 @@
 #define ALGORITHMINSTANCE_FLAG_MODELACTIVE 1
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmInstanceCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct AlgorithmInstance * 
-///
+/// 
+/// 
+/// \return struct AlgorithmInstance * 
+/// 
 ///	Newly allocated algorithm, NULL for failure
-///
-/// DESCR: Allocate a new algorithm symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new algorithm symbol table element
+/// \details 
+/// 
 
 struct AlgorithmInstance * AlgorithmInstanceCalloc/* (void) */
 (size_t nmemb, size_t size, VTable_algorithm_instances * _vtable, int iType)
@@ -89,20 +85,16 @@ struct AlgorithmInstance * AlgorithmInstanceCalloc/* (void) */
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmInstanceDisable()
-///
-/// ARGS.:
-///
-///	pcName.: name of algorithm to import
-///	pcInit.: init string for algorithm
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: disable algorithm with given name
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pcName name of algorithm to import
+/// \arg pcInit init string for algorithm
+/// 
+/// \return int : success of operation
+/// 
+/// \brief disable algorithm with given name
+/// \details 
+/// 
 
 int
 AlgorithmInstanceDisable
@@ -116,7 +108,7 @@ AlgorithmInstanceDisable
 
     palgi->iFlags &= ~ALGORITHMINSTANCE_FLAG_MODELACTIVE;
 
-    //t could register where in file tree has been disabled etc.
+    /// \todo could register where in file tree has been disabled etc.
 
     //- return result
 
@@ -124,21 +116,17 @@ AlgorithmInstanceDisable
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmInstanceGetName()
-///
-/// ARGS.:
-///
-///	palgi.: algorithm to get name for
-///
-/// RTN..: char * : name of algorithm, NULL for failure
-///
-/// DESCR: get name of algorithm
-///
+/// 
+/// 
+/// \arg palgi algorithm to get name for
+/// 
+/// \return char * : name of algorithm, NULL for failure
+/// 
+/// \brief get name of algorithm
+/// \details 
+/// 
 ///	Return value is pointer to symbol table read only data
-///
-/// **************************************************************************
+/// 
 
 /* char * AlgorithmInstanceGetName(struct AlgorithmInstance *palgi) */
 /* { */
@@ -156,21 +144,17 @@ AlgorithmInstanceDisable
 /* } */
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmInstanceInit()
-///
-/// ARGS.:
-///
-///	palgi.: algorithm to init
-///	pc....: name of instance.
-///	ppf...: algorithm instance handlers.
-///
-/// RTN..: void
-///
-/// DESCR: init algorithm instance.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg palgi algorithm to init
+/// \arg pc name of instance.
+/// \arg ppf algorithm instance handlers.
+/// 
+/// \return void
+/// 
+/// \brief init algorithm instance.
+/// \details 
+/// 
 
 void
 AlgorithmInstanceInit(struct AlgorithmInstance *palgi)
@@ -192,26 +176,21 @@ AlgorithmInstanceInit(struct AlgorithmInstance *palgi)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmInstancePrintInfo()
-///
-/// ARGS.:
-///
-///	palgi.: algorithm to handle symbol.
-///	pfile.: file to print to.
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Print info about algorithm instance.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg palgi algorithm to handle symbol.
+/// \arg pfile file to print to.
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Print info about algorithm instance.
+/// \details 
+/// 
 
-//t extract function todo :
-//t
-//t fontify preview buffer.
-//t add function tags : inline, static etc.
-//t ask for filename for prototype.
+/// \todo extract function todo :
+/// \todo fontify preview buffer.
+/// \todo add function tags : inline, static etc.
+/// \todo ask for filename for prototype.
 
 int AlgorithmInstancePrintInfo(struct AlgorithmInstance *palgi, FILE *pfile)
 {
@@ -225,7 +204,7 @@ int AlgorithmInstancePrintInfo(struct AlgorithmInstance *palgi, FILE *pfile)
 /*     { */
 /* 	//- print algorithm info, remember result */
 
-/* 	//t use vtable */
+/* 	/// \todo use vtable */
 
 /* 	iResult */
 /* 	    = iResult */
@@ -267,20 +246,16 @@ int AlgorithmInstancePrintInfo(struct AlgorithmInstance *palgi, FILE *pfile)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmInstanceSymbolHandler()
-///
-/// ARGS.:
-///
-///	palgi.: algorithm to handle symbol.
-///	pac...: parser context.
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Ask algorithm to handle a current symbol in the parser context.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg palgi algorithm to handle symbol.
+/// \arg pac parser context.
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Ask algorithm to handle a current symbol in the parser context.
+/// \details 
+/// 
 
 int AlgorithmInstanceSymbolHandler
 (struct AlgorithmInstance *palgi, struct ParserContext *pac)
@@ -291,7 +266,7 @@ int AlgorithmInstanceSymbolHandler
 
     //- call algorithm's symbol handler
 
-    //t use vtable
+    /// \todo use vtable
 
 /*     iResult = palgi->ppfHandlers->pfSymbolHandler(palgi, pac); */
 

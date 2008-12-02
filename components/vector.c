@@ -32,19 +32,15 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: VectorInit()
-///
-/// ARGS.:
-///
-///	pvect.: vector to init
-///
-/// RTN..: void
-///
-/// DESCR: init vector
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pvect vector to init
+/// 
+/// \return void
+/// 
+/// \brief init vector
+/// \details 
+/// 
 
 void VectorInit(struct symtab_Vector *pvect)
 {

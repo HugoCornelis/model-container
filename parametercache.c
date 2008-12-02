@@ -27,24 +27,20 @@
 #include "neurospaces/parameters.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterCacheAddDouble()
-///
-/// ARGS.:
-///
-///	pparcac.: parameter cache.
-///	iSerial.: context of parameter value.
-///	pcName..: name of parameter value.
-///	dNumber.: parameter value.
-///
-/// RTN..: struct CachedParameter *
-///
+/// 
+/// 
+/// \arg pparcac parameter cache.
+/// \arg iSerial context of parameter value.
+/// \arg pcName name of parameter value.
+/// \arg dNumber parameter value.
+/// 
+/// \return struct CachedParameter *
+/// 
 ///	Newly added cached parameter, NULL for failure.
-///
-/// DESCR: Add a parameter to the cache.
-///
-/// **************************************************************************
+/// 
+/// \brief Add a parameter to the cache.
+/// \details 
+/// 
 
 struct CachedParameter *
 ParameterCacheAddDouble
@@ -73,24 +69,20 @@ ParameterCacheAddDouble
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterCacheAddString()
-///
-/// ARGS.:
-///
-///	pparcac.: parameter cache.
-///	iSerial.: context of parameter value.
-///	pcName..: name of parameter value.
-///	pcValue.: parameter value.
-///
-/// RTN..: struct CachedParameter *
-///
+/// 
+/// 
+/// \arg pparcac parameter cache.
+/// \arg iSerial context of parameter value.
+/// \arg pcName name of parameter value.
+/// \arg pcValue parameter value.
+/// 
+/// \return struct CachedParameter *
+/// 
 ///	Newly added cached parameter, NULL for failure.
-///
-/// DESCR: Add a parameter to the cache.
-///
-/// **************************************************************************
+/// 
+/// \brief Add a parameter to the cache.
+/// \details 
+/// 
 
 struct CachedParameter *
 ParameterCacheAddString
@@ -119,22 +111,18 @@ ParameterCacheAddString
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterCacheInsert()
-///
-/// ARGS.:
-///
-///	pparcac.: parameter cache.
-///	ppar....: parameter to be cached.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pparcac parameter cache.
+/// \arg ppar parameter to be cached.
+/// 
+/// \return int
+/// 
 ///	Success of operation.
-///
-/// DESCR: Insert a parameter in the cache.
-///
-/// **************************************************************************
+/// 
+/// \brief Insert a parameter in the cache.
+/// \details 
+/// 
 
 int
 ParameterCacheInsert
@@ -160,19 +148,15 @@ ParameterCacheInsert
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterCacheNew()
-///
-/// ARGS.:
-///
-/// RTN..: struct ParameterCache * 
-///
+/// 
+/// 
+/// \return struct ParameterCache * 
+/// 
 ///	New parameter cache, NULL for failure.
-///
-/// DESCR: Initialize new parameter cache.
-///
-/// **************************************************************************
+/// 
+/// \brief Initialize new parameter cache.
+/// \details 
+/// 
 
 struct ParameterCache * ParameterCacheNew(void)
 {

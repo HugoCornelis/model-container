@@ -28,30 +28,30 @@
 #include "hines_list.h"
 
 
-//s
-//s defined symbols on a per file basis
-//s
+/// \struct
+/// \struct defined symbols on a per file basis
+/// \struct
 
 struct DefinedSymbols
 {
-    //m list of dependency files
+    /// list of dependency files
 
     HSolveList hslDependencyFiles;
 
-    //m number of dependency files
+    /// number of dependency files
 
     int iDependencyFiles;
 
-    //m symbols from private models
+    /// symbols from private models
 
-    //! private models can contain cross references into foreign models
-    //! meaning symbols not contained in this struct DefinedSymbols
+    /// \note private models can contain cross references into foreign models
+    /// \note meaning symbols not contained in this struct DefinedSymbols
 
     HSolveList hslPrivateModels;
 
     struct symtab_RootSymbol *prootPrivate;
 
-    //m symbols from public models
+    /// symbols from public models
 
     HSolveList hslPublicModels;
 

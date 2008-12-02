@@ -26,53 +26,53 @@
 #include "idin.h"
 
 
-//s
-//s input/output description
-//s
+/// \struct
+/// \struct input/output description
+/// \struct
 
 struct symtab_InputOutput
 {
-    //m link structures into list
+    /// link structures into list
 
     struct symtab_InputOutput *pioNext;
 
-    //m pointer to first entry in this list
+    /// pointer to first entry in this list
 
     struct symtab_InputOutput *pioFirst;
 
-    //m hierarchical field identifier with index
+    /// hierarchical field identifier with index
 
     struct symtab_IdentifierIndex *pidinField;
 
-    //m type of input (0 means invalid)
+    /// type of input (0 means invalid)
 
     int iType;
 
     // optional name of prototype
 
-    //! check if this can be used for connections
+    /// \note check if this can be used for connections
 
     //char *pcPrototype;
 
-    //m flags, see below
+    /// flags, see below
 
     int iFlags;
 
-/*     //m related symbol */
+/*     /// related symbol */
 
 /*     struct symtab_HSolveListElement *phsle; */
 };
 
 
-//d invalid IO type
+/// \def invalid IO type
 
 #define INPUT_TYPE_INVALID			0
 
-//d input specification
+/// \def input specification
 
 #define INPUT_TYPE_INPUT			1
 
-//d output specification
+/// \def output specification
 
 #define INPUT_TYPE_OUTPUT			2
 

@@ -37,21 +37,17 @@ CoordinateCacheCoordinateFiller
 (struct TreespaceTraversal *ptstr, void *pvUserdata);
 
 
-/// **************************************************************************
-///
-/// SHORT: CoordinateCacheBuildCaches()
-///
-/// ARGS.:
-///
-///	pcc..: coordinate cache to build caches for.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pcc coordinate cache to build caches for.
+/// 
+/// \return int
+/// 
 ///	Success of operation.
-///
-/// DESCR: Build caches.
-///
-/// **************************************************************************
+/// 
+/// \brief Build caches.
+/// \details 
+/// 
 
 static int 
 CoordinateCacheCoordinateCounter
@@ -91,8 +87,8 @@ CoordinateCacheCoordinateFiller
 
     //- compute coordinate
 
-    //! xref cannot complete the following array, change to pointer
-    //! dereference, and it works
+    /// \note xref cannot complete the following array, change to pointer
+    /// \note dereference, and it works
 
     SymbolParameterResolveCoordinateValue
 	(pcc->phsle, pcc->ppist, ptstr->ppist, &pcc->pccrd[iCoordinate].D3);
@@ -148,7 +144,7 @@ CoordinateCacheBuildCaches(struct CoordinateCache *pcc)
 
 	//- traverse
 
-	//! the filler uses ->iCoordinates as the active coordinate
+	/// \note the filler uses ->iCoordinates as the active coordinate
 
 	pcc->iCoordinates = 0;
 
@@ -174,21 +170,17 @@ CoordinateCacheBuildCaches(struct CoordinateCache *pcc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: CoordinateCacheInit()
-///
-/// ARGS.:
-///
-///	pcc..: coordinate cache to init.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pcc coordinate cache to init.
+/// 
+/// \return int
+/// 
 ///	Success of operation.
-///
-/// DESCR: Initialize new coordinate cache, without building caches.
-///
-/// **************************************************************************
+/// 
+/// \brief Initialize new coordinate cache, without building caches.
+/// \details 
+/// 
 
 int
 CoordinateCacheInit(struct CoordinateCache *pcc, int iCoordinates)
@@ -217,22 +209,18 @@ CoordinateCacheInit(struct CoordinateCache *pcc, int iCoordinates)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: CoordinateCacheLookup()
-///
-/// ARGS.:
-///
-///	pcc.....: coordinate cache.
-///	iSerial.: serial to search for.
-///
-/// RTN..: struct CachedCoordinate *
-///
+/// 
+/// 
+/// \arg pcc coordinate cache.
+/// \arg iSerial serial to search for.
+/// 
+/// \return struct CachedCoordinate *
+/// 
 ///	cached coordinate for this serial, NULL for not found.
-///
-/// DESCR: Find the cached coordinate for the given serial.
-///
-/// **************************************************************************
+/// 
+/// \brief Find the cached coordinate for the given serial.
+/// \details 
+/// 
 
 struct CachedCoordinate *
 CoordinateCacheLookup(struct CoordinateCache *pcc, int iSerial)
@@ -246,7 +234,7 @@ CoordinateCacheLookup(struct CoordinateCache *pcc, int iSerial)
     int iLower = 0;
     int iUpper = pcc->iCoordinates - 1;
 
-    //! binary search
+    /// \note binary search
 
     //- search until the range to search in becomes invalid
 
@@ -287,28 +275,24 @@ CoordinateCacheLookup(struct CoordinateCache *pcc, int iSerial)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: CoordinateCacheNewForTraversal()
-///
-/// ARGS.:
-///
-///	ptstr..: traversal that visits symbol to cache coordinates for.
-///
-/// RTN..: struct CoordinateCache * 
-///
+/// 
+/// 
+/// \arg ptstr traversal that visits symbol to cache coordinates for.
+/// 
+/// \return struct CoordinateCache * 
+/// 
 ///	New coordinate cache, NULL for failure.
-///
-/// DESCR: Create new coordinate cache, without building caches.
-///
+/// 
+/// \brief Create new coordinate cache, without building caches.
+/// \details 
+/// 
 ///	Note that the semantics of the traversal are not defined.  Probably,
 ///     in the future the client has to set the selector, while this
 ///     module sets the processor.
-///
+/// 
 ///	At present, the client is responsible for allocation and
 ///	destruction of the traversal.
-///
-/// **************************************************************************
+/// 
 
 struct CoordinateCache *
 CoordinateCacheNewForTraversal(struct TreespaceTraversal *ptstr)

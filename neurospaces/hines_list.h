@@ -47,7 +47,7 @@ typedef struct hsolve_list HSolveList;
 
 struct hsolve_list_element
 {
-    //m normal double linked list, never NULL
+    /// normal double linked list, never NULL
 
     struct hsolve_list_element *phsleNext;
     struct hsolve_list_element *phslePrev;
@@ -56,26 +56,26 @@ struct hsolve_list_element
 
 struct hsolve_list
 {
-    //m two joint nodes (one for head, one for tail)
+    /// two joint nodes (one for head, one for tail)
 
-    //m pointer to head of list
+    /// pointer to head of list
 
     struct hsolve_list_element *phsleHead;
 
-    //m tail of list, always NULL
+    /// tail of list, always NULL
 
     struct hsolve_list_element *phsleTail;
 
-    //m last entry in list
+    /// last entry in list
 
     struct hsolve_list_element *phsleLast;
 };
 
 
 
-//d
-//d test type(phsl) == struct hsolve_list * at compile time
-//d
+/// \def
+/// \def test type(phsl) == struct hsolve_list * at compile time
+/// \def
 
 #define CompileTimeTestHSolveList(phsl)					\
 do {									\
@@ -84,9 +84,9 @@ do {									\
 } while (0)
 
 
-//d
-//d test type(phsle) == struct hsolve_list_element * at compile time
-//d
+/// \def
+/// \def test type(phsle) == struct hsolve_list_element * at compile time
+/// \def
 
 #define CompileTimeTestHSolveListElement(phsle)				\
 do {									\
@@ -95,9 +95,9 @@ do {									\
 } while (0)
 
 
-//d
-//d init an element
-//d
+/// \def
+/// \def init an element
+/// \def
 
 #define HSolveListElementInit(phsle)					\
 do {									\
@@ -107,9 +107,9 @@ do {									\
 } while (0)
 
 
-//d
-//d link two individual elements that are not yet in a list with a header
-//d
+/// \def
+/// \def link two individual elements that are not yet in a list with a header
+/// \def
 
 #define HSolveListElementLink(phsle1,phsle2)				\
 do {									\
@@ -129,7 +129,7 @@ do {									\
 } while (0)
 
 
-//d initialize a list
+/// \def initialize a list
 
 #define HSolveListInit(phslList)					\
     do {								\
@@ -143,22 +143,22 @@ do {									\
     } while (0)
 
 
-//d test if a list is empty (this is just one of three possibilities)
-//d	last == &list,
-//d	head->next == NULL,
-//d	tail->prev == NULL
-//d
-//d This one is the most efficient ?
-//d
+/// \def test if a list is empty (this is just one of three possibilities)
+/// \def	last == &list,
+/// \def	head->next == NULL,
+/// \def	tail->prev == NULL
+/// \def
+/// \def This one is the most efficient ?
+/// \def
 
 #define HSolveListIsEmpty(phslList)					\
 	(int)((phslList)->phsleLast == (HSolveListElement *)(phslList))	\
 
 
-//d insert element after predecessor
-//d set predecessor to ->phsleHead to insert at first position
-//d
-//d dangerous macro if used with pp macro for tail of list
+/// \def insert element after predecessor
+/// \def set predecessor to ->phsleHead to insert at first position
+/// \def
+/// \def dangerous macro if used with pp macro for tail of list
 
 #define HSolveListInsertWithPred(phsleNew,phslePred)			\
     do {								\
@@ -173,10 +173,10 @@ do {									\
     } while (0)
 
 
-//d insert element before successor
-//d set successor to ->phsleLast to add element at the very end
-//d
-//d dangerous macro if used with pp macro for head of list
+/// \def insert element before successor
+/// \def set successor to ->phsleLast to add element at the very end
+/// \def
+/// \def dangerous macro if used with pp macro for head of list
 
 #define HSolveListInsertWithSucc(phsleNew,phsleSucc)			\
     do {								\
@@ -191,9 +191,9 @@ do {									\
     } while (0)
 
 
-//d add element to head of list
-//d
-//d should use insert with predecessor here
+/// \def add element to head of list
+/// \def
+/// \def should use insert with predecessor here
 
 #define HSolveListEnqueue(phslList,phsleNew)				\
     do {								\
@@ -207,8 +207,8 @@ do {									\
     } while (0)
 
 
-//d add element to tail of list
-//d should use insert with successor here
+/// \def add element to tail of list
+/// \def should use insert with successor here
 
 #define HSolveListEntail(phslList,phsleNew)				\
     do {								\
@@ -222,50 +222,50 @@ do {									\
     } while (0)
 
 
-//d give pointer to first element in list
-//d
-//d can give problems if used on an empty list
+/// \def give pointer to first element in list
+/// \def
+/// \def can give problems if used on an empty list
 
 #define HSolveListHead(phslList)					\
 	((HSolveList *)(phslList))->phsleHead				\
 
 
-//d give pointer to last element in list
-//d
-//d can give problems if used on an empty list
+/// \def give pointer to last element in list
+/// \def
+/// \def can give problems if used on an empty list
 
 #define HSolveListTail(phslList)					\
 	((HSolveList *)(phslList))->phsleLast				\
 
 
-//d give pointer to next element in list
+/// \def give pointer to next element in list
 
 #define HSolveListNext(phsleElement)					\
 	(phsleElement)->phsleNext					\
 
 
-//d give pointer to previous element in list
+/// \def give pointer to previous element in list
 
 #define HSolveListPrev(phsleElement)					\
 	(phsleElement)->phslePrev					\
 
 
-//d say if element is a valid successor
+/// \def say if element is a valid successor
 
 #define HSolveListValidSucc(phsleElement)				\
 	((phsleElement)->phsleNext != NULL)
 
 
-//d say if element is a valid successor
+/// \def say if element is a valid successor
 
 #define HSolveListValidPred(phsleElement)				\
 	((phsleElement)->phslePrev != NULL)
 
 
-//d remove element from list
-//d
-//d do not use with a pp argument (like HSolveListHead() )
-//d var's are always possible
+/// \def remove element from list
+/// \def
+/// \def do not use with a pp argument (like HSolveListHead() )
+/// \def var's are always possible
 
 #define HSolveListRemove(phsleElement)					\
     do {								\
@@ -279,7 +279,7 @@ do {									\
     } while (0)
 
 
-//d remove head from list
+/// \def remove head from list
 
 #define HSolveListRemoveHead(phslList)					\
     do {								\
@@ -291,7 +291,7 @@ do {									\
     } while (0)
 
 
-//d remove tail from list
+/// \def remove tail from list
 
 #define HSolveListRemoveTail(phslList)					\
     do {								\
@@ -303,7 +303,7 @@ do {									\
     } while (0)
 
 
-//d unlink from - to elements
+/// \def unlink from - to elements
 
 #define HSolveListUnMerge(phsleFrom,phsleTo)				\
     do {								\
@@ -315,9 +315,9 @@ do {									\
     } while (0)
 
 
-//d link from - to elements with predecessor
-//d
-//d do not use HSolveListHead() or HSolveListTail() as pp arg predecessor
+/// \def link from - to elements with predecessor
+/// \def
+/// \def do not use HSolveListHead() or HSolveListTail() as pp arg predecessor
 
 #define HSolveListMergeWithPred(phsleFrom,phsleTo,phslePred)		\
     do {								\
@@ -333,9 +333,9 @@ do {									\
     } while (0)
 
 
-//d link from - to elements with successor
-//d
-//d do not use HSolveListHead() or HSolveListTail() as pp arg predecessor
+/// \def link from - to elements with successor
+/// \def
+/// \def do not use HSolveListHead() or HSolveListTail() as pp arg predecessor
 
 #define HSolveListMergeWithSucc(phsleFrom,phsleTo,phsleSucc)		\
     do {								\
@@ -351,8 +351,8 @@ do {									\
     } while (0)
 
 
-//d link from - to elements at head
-//d
+/// \def link from - to elements at head
+/// \def
 
 #define HSolveListMergeAtHead(phsleFrom,phsleTo,phslList)		\
     do {								\
@@ -369,8 +369,8 @@ do {									\
     } while (0)
 
 
-//d link from - to elements at tail
-//d
+/// \def link from - to elements at tail
+/// \def
 
 #define HSolveListMergeAtTail(phsleFrom,phsleTo,phslList)		\
     do {								\

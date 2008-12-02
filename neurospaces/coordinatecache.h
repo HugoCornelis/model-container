@@ -23,7 +23,7 @@
 #define COORDINATECACHE_H
 
 
-//d declarations
+/// \def declarations
 
 struct CachedCoordinate;
 struct CoordinateCache;
@@ -31,7 +31,6 @@ struct D3Position;
 struct TreespaceTraversal;
 
 
-//f exported functions
 
 int
 CoordinateCacheBuildCaches(struct CoordinateCache *pcc);
@@ -46,7 +45,6 @@ struct CachedCoordinate *
 CoordinateCacheLookup(struct CoordinateCache *pcc, int iSerial);
 
 
-//f exported inlines
 
 static inline 
 void CoordinateCacheFree(struct CoordinateCache *pcc);
@@ -72,38 +70,37 @@ CoordinateCacheSetEntry
 
 struct CoordinateCache
 {
-    //m traversal used to build the cache
+    /// traversal used to build the cache
 
-    //! see notes of CoordinateCacheNew() for more information.
+    /// \note see notes of CoordinateCacheNew() for more information.
 
     struct TreespaceTraversal *ptstr;
 
-    //m root symbol of cache
+    /// root symbol of cache
 
     struct symtab_HSolveListElement *phsle;
 
     struct PidinStack *ppist;
 
-    //m memory used by this coordinate cache.
+    /// memory used by this coordinate cache.
 
     int iMemoryUsed;
 
-    //m number of coordinates involved
+    /// number of coordinates involved
 
     int iCoordinates;
 
-    //m array of referred coordinates
+    /// array of referred coordinates
 
     struct CachedCoordinate *pccrd;
 };
 
 
 
-//f exported inlines
 
-///
+/// 
 /// free coordinate cache.
-///
+/// 
 
 static inline 
 void CoordinateCacheFree(struct CoordinateCache *pcc)
@@ -114,9 +111,9 @@ void CoordinateCacheFree(struct CoordinateCache *pcc)
 }
 
 
-///
+/// 
 /// get an entry in the cache.
-///
+/// 
 
 static inline
 struct CachedCoordinate *
@@ -126,9 +123,9 @@ CoordinateCacheGetEntry(struct CoordinateCache *pcc, int iEntry)
 }
 
 
-///
+/// 
 /// get memory size taken by cache.
-///
+/// 
 
 static inline 
 int CoordinateCacheGetMemorySize(struct CoordinateCache *pcc)
@@ -137,9 +134,9 @@ int CoordinateCacheGetMemorySize(struct CoordinateCache *pcc)
 }
 
 
-///
+/// 
 /// get number of coordinates in cache.
-///
+/// 
 
 static inline 
 int CoordinateCacheGetNumberOfCoordinates(struct CoordinateCache *pcc)
@@ -148,9 +145,9 @@ int CoordinateCacheGetNumberOfCoordinates(struct CoordinateCache *pcc)
 }
 
 
-///
+/// 
 /// set an entry in the cache.
-///
+/// 
 
 static inline
 int

@@ -33,22 +33,18 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: VConnectionAddConnection()
-///
-/// ARGS.:
-///
-///	pvconn..: connection vector.
-///	pconn...: connection to add.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pvconn connection vector.
+/// \arg pconn connection to add.
+/// 
+/// \return int
+/// 
 ///	Success of operation.
-///
-/// DESCR: Add a connection to the connection vector.
-///
-/// **************************************************************************
+/// 
+/// \brief Add a connection to the connection vector.
+/// \details 
+/// 
 
 int
 VConnectionAddConnection
@@ -73,7 +69,7 @@ VConnectionAddConnection
 
 	if (!pvconn->devconn.pconn)
 	{
-	    //t memory leak, don't care
+	    /// \todo memory leak, don't care
 
 	    return(FALSE);
 	}
@@ -101,11 +97,12 @@ VConnectionAddConnection
 /* /// */
 /* /// ARGS.: */
 /* /// */
-/* /// RTN..: struct symtab_VConnection *  */
+/* /// \return struct symtab_VConnection *  */
 /* /// */
 /* ///	Newly allocated connection vector, NULL for failure */
 /* /// */
-/* /// DESCR: Allocate a new connection vector symbol table element */
+/* /// \brief Allocate a new connection vector symbol table element */
+/// \details 
 /* /// */
 /* /// ************************************************************************** */
 
@@ -135,19 +132,15 @@ VConnectionAddConnection
 /* } */
 
 
-/// **************************************************************************
-///
-/// SHORT: VConnectionInit()
-///
-/// ARGS.:
-///
-///	pvconn.: connection vector to init
-///
-/// RTN..: void
-///
-/// DESCR: init connection vector
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pvconn connection vector to init
+/// 
+/// \return void
+/// 
+/// \brief init connection vector
+/// \details 
+/// 
 
 void VConnectionInit(struct symtab_VConnection *pvconn)
 {
@@ -161,37 +154,33 @@ void VConnectionInit(struct symtab_VConnection *pvconn)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: VConnectionTraverse()
-///
-/// ARGS.:
-///
-///	ptstr.: initialized treespace traversal
-///	pvconn: symbol to traverse
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg ptstr initialized treespace traversal
+/// \arg pvconn: symbol to traverse
+/// 
+/// \return int
+/// 
 ///	1  : success
 ///	0  : no success, failure
-///	-1 : immediate abort
-///
-/// DESCR: Traverse symbols in tree manner.
-///
-/// NOTE.: 
-///
+///	-1  immediate abort
+/// 
+/// \brief Traverse symbols in tree manner.
+/// \details 
+/// 
+/// \note  
+/// 
 ///	Note that not all symbols are required to have a pidin.
 ///	Interfaces with Tstr{Prepare,Traverse,Repair}() :
-///
+/// 
 ///	Loops over children of top symbol
 ///		1. Calls TstrPrepare()
 ///		2. Calls TstrTraverse()
 ///		3. Calls TstrRepair()
-///
+/// 
 ///	Use Tstr.*() to obtain info on serial IDs and contexts
 ///	during traversals.
-///
-/// **************************************************************************
+/// 
 
 int
 VConnectionTraverse
@@ -261,8 +250,8 @@ VConnectionTraverse
 
 /* 		iResult = TstrGo(ptstr,phsleChild); */
 
-		//! hardcoded, but cannot be anything else
-		//! this gets fixed automatically, once the truth table logic is moved to treespacetraversal.c.
+		/// \note hardcoded, but cannot be anything else
+		/// \note this gets fixed automatically, once the truth table logic is moved to treespacetraversal.c.
 
 		iResult = ConnectionTraverse(ptstr, &pvconn->devconn.pconn[i]);
 	    }

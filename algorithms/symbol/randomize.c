@@ -37,65 +37,65 @@
 #include "randomizeinstance.h"
 
 
-//s algorithm handlers for Randomize algorithm
+/// \struct algorithm handlers for Randomize algorithm
 
 static AlgorithmClassInstanceCreator RandomizeClassCreateInstance;
 
 static AlgorithmClassHandler RandomizeClassPrintInfo;
 
 
-//s algorithm class method table
+/// \struct algorithm class method table
 
 static struct AlgorithmClassHandlerLibrary pfRandomizeClassHandlers =
 {
-    //m class info handler
+    /// class info handler
 
     RandomizeClassPrintInfo,
 
-    //m symbol handler
+    /// symbol handler
 
     RandomizeClassCreateInstance,
 };
 
 
-//s spines class derives from algorithm class
+/// \struct spines class derives from algorithm class
 
 struct RandomizeClass
 {
-    //m base struct : algorithm class
+    /// base struct : algorithm class
 
     struct AlgorithmClass algc;
 
-    //m number of created instances
+    /// number of created instances
 
     int iInstances;
 };
 
 
-//s algorithm class description
+/// \struct algorithm class description
 
 static struct RandomizeClass rcRandomize =
 {
-    //m base struct : algorithm class
+    /// base struct : algorithm class
 
     {
-	//m link
+	/// link
 
 	{
 	    NULL,
 	    NULL,
 	},
 
-	//m name
+	/// name
 
 	"Randomize",
 
-	//m algorithm handlers
+	/// algorithm handlers
 
 	&pfRandomizeClassHandlers,
     },
 
-    //m number of instances
+    /// number of instances
 
     0,
 };
@@ -104,21 +104,17 @@ static struct RandomizeClass rcRandomize =
 struct AlgorithmClass *palgcRandomize = &rcRandomize.algc;
 
 
-/// **************************************************************************
-///
-/// SHORT: RandomizeClassCreateInstance()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: struct AlgorithmInstance * : 
-///
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return struct AlgorithmInstance *  
+/// 
 ///	created algorithm instance, NULL for failure
-///
-/// DESCR: Algorithm handler to create instance of Randomize algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief Algorithm handler to create instance of Randomize algorithm.
+/// \details 
+/// 
 
 static
 struct AlgorithmInstance *
@@ -150,19 +146,15 @@ RandomizeClassCreateInstance
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RandomizeClassPrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on randomize algorithm class.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int  std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on randomize algorithm class.
+/// \details 
+/// 
 
 static
 int

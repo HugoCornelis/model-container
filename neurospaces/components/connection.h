@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_Connection;
 struct symtab_Connection;
@@ -36,7 +36,6 @@ struct symtab_Connection;
 #include "neurospaces/symboltable.h"
 
 
-//f exported functions
 
 /* int */
 /* ConnectionAssignParameters */
@@ -89,7 +88,6 @@ ConnectionTraverse
 (struct TreespaceTraversal *ptstr, struct symtab_Connection *pconn);
 
 
-//f exported inline functions
 
 #ifndef SWIG
 static inline
@@ -174,45 +172,45 @@ ConnectionGetPre
 #include "neurospaces/parameters.h"
 
 
-//s
-//s connection description
-//s
+/// \struct
+/// \struct connection description
+/// \struct
 
 struct descr_Connection
 {
-/*     //m pre-synaptic principal serial */
+/*     /// pre-synaptic principal serial */
 
 /*     struct symtab_IdentifierIndex *pidin; */
 
-    //m pre-synaptic principal serial
+    /// pre-synaptic principal serial
 
     int iPreSynaptic;
 
-    //m post-synaptic principal serial
+    /// post-synaptic principal serial
 
     int iPostSynaptic;
 
-    //m weight of connection
+    /// weight of connection
 
     double dWeight;
 
-    //m delay of connection
+    /// delay of connection
 
     double dDelay;
 };
 
 
-//s
-//s struct symtab_Connection
-//s
+/// \struct
+/// \struct struct symtab_Connection
+/// \struct
 
 struct symtab_Connection
 {
-/*     //m base struct : symbol */
+/*     /// base struct : symbol */
 
 /*     struct symtab_HSolveListElement hsle; */
 
-    //m connection description
+    /// connection description
 
     struct descr_Connection deconn;
 };
@@ -324,9 +322,10 @@ ConnectionAllSuccessorsSet
 /* /// */
 /* ///	pconn.: connection with pidin. */
 /* /// */
-/* /// RTN..: struct symtab_IdentifierIndex * : pidin of connection. */
+/* /// \return struct symtab_IdentifierIndex * : pidin of connection. */
 /* /// */
-/* /// DESCR: Get pidin of connection. */
+/* /// \brief Get pidin of connection. */
+/// \details 
 /* /// */
 /* /// ************************************************************************** */
 
@@ -340,19 +339,15 @@ ConnectionAllSuccessorsSet
 /* } */
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionGetDelay()
-///
-/// ARGS.:
-///
-///	pconn.: connection.
-///
-/// RTN..: double : delay, FLT_MAX for failure
-///
-/// DESCR: Get connection delay.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pconn connection.
+/// 
+/// \return double : delay, FLT_MAX for failure
+/// 
+/// \brief Get connection delay.
+/// \details 
+/// 
 
 #ifndef SWIG
 static inline
@@ -365,20 +360,16 @@ ConnectionGetDelay
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionGetPost()
-///
-/// ARGS.:
-///
-///	pconn...: connection.
-///	iTarget.: projection target serial.
-///
-/// RTN..: int : post principal serial, -1 for failure
-///
-/// DESCR: Get connection post principal serial.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pconn connection.
+/// \arg iTarget projection target serial.
+/// 
+/// \return int : post principal serial, -1 for failure
+/// 
+/// \brief Get connection post principal serial.
+/// \details 
+/// 
 
 #ifndef SWIG
 static inline
@@ -391,20 +382,16 @@ ConnectionGetPost
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionGetPre()
-///
-/// ARGS.:
-///
-///	pconn...: connection.
-///	iSource.: projection source serial.
-///
-/// RTN..: int : pre principal serial, -1 for failure
-///
-/// DESCR: Get connection pre principal serial.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pconn connection.
+/// \arg iSource projection source serial.
+/// 
+/// \return int : pre principal serial, -1 for failure
+/// 
+/// \brief Get connection pre principal serial.
+/// \details 
+/// 
 
 #ifndef SWIG
 static inline
@@ -417,19 +404,15 @@ ConnectionGetPre
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionGetWeight()
-///
-/// ARGS.:
-///
-///	pconn.: connection.
-///
-/// RTN..: double : weight, FLT_MAX for failure
-///
-/// DESCR: Get connection weight.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pconn connection.
+/// 
+/// \return double : weight, FLT_MAX for failure
+/// 
+/// \brief Get connection weight.
+/// \details 
+/// 
 
 #ifndef SWIG
 static inline

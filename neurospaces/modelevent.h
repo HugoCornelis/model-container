@@ -34,138 +34,138 @@
 #endif
 
 
-//d
-//d event bit classification
-//d
+/// \def
+/// \def event bit classification
+/// \def
 
-//d event type offset, #bits
+/// \def event type offset, #bits
 
 #define EVENT_OFFSET_TYPES			((unsigned int)24)
 #define EVENT_BITS_TYPES			((unsigned int)8)
 
 
-//d event flag offset, #bits
+/// \def event flag offset, #bits
 
 #define EVENT_OFFSET_FLAGS			((unsigned int)0)
 #define EVENT_BITS_FLAGS			((unsigned int)8)
 
 
-//d event action offset, #bits
+/// \def event action offset, #bits
 
 #define EVENT_OFFSET_ACTIONS			((unsigned int)8)
 #define EVENT_BITS_ACTIONS			((unsigned int)8)
 
 
-//d
-//d all types of events (this should be an enumeration instead of flag)
-//d
+/// \def
+/// \def all types of events (this should be an enumeration instead of flag)
+/// \def
 
-//d more than one component in this element
-//d (e.g. prototype with multiple channels)
+/// \def more than one component in this element
+/// \def (e.g. prototype with multiple channels)
 
 #define EVENT_TYPE_EXTENDED			((unsigned int)(1 << EVENT_OFFSET_TYPES))
 
-//d element aliasing a model from the dependencies
+/// \def element aliasing a model from the dependencies
 
 #define EVENT_TYPE_DEPENDENT			((unsigned int)(2 << EVENT_OFFSET_TYPES))
 
-//d pidin element
+/// \def pidin element
 
 #define EVENT_TYPE_IDENTINDEX			((unsigned int)(3 << EVENT_OFFSET_TYPES))
 
-//d equation element
+/// \def equation element
 
 #define EVENT_TYPE_EQUATION			((unsigned int)(4 << EVENT_OFFSET_TYPES))
 
-//d channel element
+/// \def channel element
 
 #define EVENT_TYPE_CHANNEL			((unsigned int)(5 << EVENT_OFFSET_TYPES))
 
-//d pool element
+/// \def pool element
 
 #define EVENT_TYPE_POOL				((unsigned int)(6 << EVENT_OFFSET_TYPES))
 
-//d segment element
+/// \def segment element
 
 #define EVENT_TYPE_SEGMENT			((unsigned int)(7 << EVENT_OFFSET_TYPES))
 
-//d single cell
+/// \def single cell
 
 #define EVENT_TYPE_CELL				((unsigned int)(8 << EVENT_OFFSET_TYPES))
 
-//d cell population
+/// \def cell population
 
 #define EVENT_TYPE_POPULATION			((unsigned int)(9 << EVENT_OFFSET_TYPES))
 
-//d single connection
+/// \def single connection
 
 #define EVENT_TYPE_CONNECTION			((unsigned int)(10 << EVENT_OFFSET_TYPES))
 
-//d population to population projection
+/// \def population to population projection
 
 #define EVENT_TYPE_PROJECTION			((unsigned int)(11 << EVENT_OFFSET_TYPES))
 
-//d network with populations/cells/projections/connections
+/// \def network with populations/cells/projections/connections
 
 #define EVENT_TYPE_NETWORK			((unsigned int)(12 << EVENT_OFFSET_TYPES))
 
-//d attachment point
+/// \def attachment point
 
 #define EVENT_TYPE_VIRTUAL			((unsigned int)(20 << EVENT_OFFSET_TYPES))
 
 
-//d enumeration flag
+/// \def enumeration flag
 
 #define EVENT_FLAG_ENUMERATION			((unsigned int)(1 << EVENT_OFFSET_FLAGS))
 
-//d D3 position flag
+/// \def D3 position flag
 
 #define EVENT_FLAG_D3POSITION			((unsigned int)(2 << EVENT_OFFSET_FLAGS))
 
-//d main instantiated model
+/// \def main instantiated model
 
 #define EVENT_FLAG_FINALMODEL			((unsigned int)(3 << EVENT_OFFSET_FLAGS))
 
 
-//d event actions
+/// \def event actions
 
-//d start of parse
+/// \def start of parse
 
 #define EVENT_ACTION_START			((unsigned int)1 << EVENT_OFFSET_ACTIONS)
 
-//d finish of parse
+/// \def finish of parse
 
 #define EVENT_ACTION_FINISH			((unsigned int)2 << EVENT_OFFSET_ACTIONS)
 
-//d creation of symbol (before add)
+/// \def creation of symbol (before add)
 
 #define EVENT_ACTION_CREATE			((unsigned int)3 << EVENT_OFFSET_ACTIONS)
 
-//d add of symbol
+/// \def add of symbol
 
 #define EVENT_ACTION_ADD			((unsigned int)4 << EVENT_OFFSET_ACTIONS)
 
 
-//d all event types
+/// \def all event types
 
 #define EVENT_MASK_TYPES			((unsigned int)((1 << EVENT_BITS_TYPES) - 1) << EVENT_OFFSET_TYPES)
 
 
-//d all event flags
+/// \def all event flags
 
 #define EVENT_MASK_FLAGS			((unsigned int)((1 << EVENT_BITS_FLAGS) - 1) << EVENT_OFFSET_FLAGS)
 
 
-//d all event actions
+/// \def all event actions
 
 #define EVENT_MASK_ACTIONS			((unsigned int)((1 << EVENT_BITS_ACTIONS) - 1) << EVENT_OFFSET_ACTIONS)
 
 
-//d
-//d some convenience defines
-//d
+/// \def
+/// \def some convenience defines
+/// \def
 
-//d MULTIPLECOMPD3
+/// \def MULTIPLECOMPD3
 
 #define EVENT_MULTIPLECOMPD3 ((unsigned int)(EVENT_TYPE_SEGMENT \
 					     | EVENT_FLAG_ENUMERATION \
@@ -176,7 +176,6 @@
 
 
 //f
-//f function listening to events
 //f
 
 struct ParserEvent;
@@ -192,21 +191,21 @@ int ParserEventListener
 #include "pidinstack.h"
 
 
-//s
-//s base event structure
-//s
+/// \struct
+/// \struct base event structure
+/// \struct
 
 typedef struct ParserEvent
 {
-    //m type of event
+    /// type of event
 
     int iType;
 
-    //m type specific info
+    /// type specific info
 
     union
     {
-	//m pointer to related symbol table entry
+	/// pointer to related symbol table entry
 
 	struct symtab_HSolveListElement *phsle;
 
@@ -216,45 +215,45 @@ typedef struct ParserEvent
     }
     uInfo;
 
-    //m context element of event
+    /// context element of event
 
     struct PidinStack pist;
 }
 ParserEvent;
 
 
-//s
-//s event listener associated with a particular event
-//s
+/// \struct
+/// \struct event listener associated with a particular event
+/// \struct
 
 typedef 
 struct 
 {
-    //m event type
+    /// event type
 
     int iParserEventType;
 
-    //m function to process this event
+    /// function to process this event
 
     ParserEventListener *pfParserEventListener;
 
-    //! probably more required
+    /// \note probably more required
 }
 ParserEventAssociation;
 
 
-//s
-//s event association table
-//s
+/// \struct
+/// \struct event association table
+/// \struct
 
 typedef
 struct
 {
-    //m number of registrations
+    /// number of registrations
 
     int iParserEvents;
 
-    //m event associations
+    /// event associations
 
     ParserEventAssociation *pevas;
 }

@@ -40,26 +40,25 @@
 
 struct PSymbolStack
 {
-    //m stack top
+    /// stack top
 
     int iTop;
 
-    //m flags
+    /// flags
 
     int iFlags;
 
-    //m array of stacked symbols
+    /// array of stacked symbols
 
     struct symtab_HSolveListElement *pphsle[MAX_ELEMENT_DEPTH];
 };
 
 
-//d rooted symbol stack
+/// \def rooted symbol stack
 
 #define FLAG_SYMST_ROOTED		1
 
 
-//f static inline prototypes
 
 static inline
 struct symtab_HSolveListElement *
@@ -76,9 +75,9 @@ struct symtab_HSolveListElement *
 PSymbolStackElementSymbol(struct PSymbolStack *psymst, int i);
 
 
-///
+/// 
 /// get base element
-///
+/// 
 
 static inline
 struct symtab_HSolveListElement *
@@ -88,9 +87,9 @@ PSymbolStackBase(struct PSymbolStack *psymst)
 }
 
 
-///
+/// 
 /// register symbol stack is not rooted
-///
+/// 
 
 static inline 
 void PSymbolStackClearFlags(struct PSymbolStack *psymst,int iFlags)
@@ -101,9 +100,9 @@ void PSymbolStackClearFlags(struct PSymbolStack *psymst,int iFlags)
 }
 
 
-///
+/// 
 /// register symbol stack is not rooted
-///
+/// 
 
 static inline 
 void PSymbolStackClearRooted(struct PSymbolStack *psymst)
@@ -114,9 +113,9 @@ void PSymbolStackClearRooted(struct PSymbolStack *psymst)
 }
 
 
-///
+/// 
 /// get element at given place
-///
+/// 
 
 static inline
 struct symtab_HSolveListElement *
@@ -138,9 +137,9 @@ PSymbolStackElementSymbol(struct PSymbolStack *psymst, int i)
 }
 
 
-//d
-//d test type(psymst) == struct PSymbolStack * at compile time
-//d
+/// \def
+/// \def test type(psymst) == struct PSymbolStack * at compile time
+/// \def
 
 #define CompileTimeTestPSymbolStack(psymst)				\
 do {									\
@@ -149,9 +148,9 @@ do {									\
 } while (0)
 
 
-//d
-//d append two symbol stacks, flags unaffected, no compaction
-//d
+/// \def
+/// \def append two symbol stacks, flags unaffected, no compaction
+/// \def
 
 #define PSymbolStackAppend(psymstTarget,psymstSource)			\
 ({									\
@@ -168,9 +167,9 @@ do {									\
 })
 
 
-//d
-//d free given symbol stack
-//d
+/// \def
+/// \def free given symbol stack
+/// \def
 
 #define PSymbolStackFree(psymst)					\
 do {									\
@@ -179,9 +178,9 @@ do {									\
 } while (0)
 
 
-//d
-//d duplicate symbol stack
-//d
+/// \def
+/// \def duplicate symbol stack
+/// \def
 
 #define PSymbolStackDuplicate(psymst)					\
 ({									\
@@ -196,9 +195,9 @@ do {									\
 })
 
 
-//d
-//d get number of entries in symbol stack
-//d
+/// \def
+/// \def get number of entries in symbol stack
+/// \def
 
 #define PSymbolStackNumberOfEntries(psymst)				\
 ({									\
@@ -207,9 +206,9 @@ do {									\
 })
 
 
-//d
-//d register symbol stack is rooted
-//d
+/// \def
+/// \def register symbol stack is rooted
+/// \def
 
 #define PSymbolStackSetRooted(psymst)					\
 do {									\
@@ -218,9 +217,9 @@ do {									\
 } while (0)
 
 
-//d
-//d check if symbol stack is rooted
-//d
+/// \def
+/// \def check if symbol stack is rooted
+/// \def
 
 #define PSymbolStackIsRooted(psymst)					\
 ({									\
@@ -229,9 +228,9 @@ do {									\
 })
 
 
-//d
-//d get topmost element
-//d
+/// \def
+/// \def get topmost element
+/// \def
 
 #define PSymbolStackTop(psymst)						\
 ({									\

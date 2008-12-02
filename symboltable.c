@@ -63,18 +63,18 @@
 #include "hierarchy/output/symbols/short_descriptions.c"
 
 
-//v global number of allocated symbols
+/// global number of allocated symbols
 
 int iTotalAllocatedSymbols = 1;
 
 
-//v number of created aliases for biocomponents
+/// number of created aliases for biocomponents
 
 int iCreatedAliases = 0;
 
-//v number of created aliases for biocomponents by type, 
-//v first entry (the null type that cannot be aliased) 
-//v contains number of valid entries (inclusive).
+/// number of created aliases for biocomponents by type, 
+/// first entry (the null type that cannot be aliased) 
+/// contains number of valid entries (inclusive).
 
 int piCreatedAliases[COUNT_HIERARCHY_TYPE_symbols + 1] =
 {
@@ -88,10 +88,10 @@ int piCreatedAliases[COUNT_HIERARCHY_TYPE_symbols + 1] =
 TreespaceTraversalProcessor SymbolDeleter;
 
 
-//t would be great to put all the selectors and processors in a
-//t library
+/// \todo would be great to put all the selectors and processors in a
+/// \todo library
 
-//! note that deletions are only possible during finalization.
+/// \note note that deletions are only possible during finalization.
 
 int SymbolDeleter(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
@@ -116,26 +116,22 @@ int SymbolDeleter(struct TreespaceTraversal *ptstr, void *pvUserdata)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BaseSymbolGetID()
-///
-/// ARGS.:
-///
-///	phsle.: symbol to get ID for.
-///
-/// RTN..: char *
-///
+/// 
+/// 
+/// \arg phsle symbol to get ID for.
+/// 
+/// \return char *
+/// 
 ///	Unique string representation identifying this symbol content.
-///
-/// DESCR: Get ID identifying this symbol content.
-///
-/// NOTE.:
-///
+/// 
+/// \brief Get ID identifying this symbol content.
+/// \details 
+/// 
+/// \note 
+/// 
 /// 	The result is a pointer to static memory that gets overwitten
 /// 	on each call to this function.
-///
-/// **************************************************************************
+/// 
 
 char *
 BaseSymbolGetID(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)
@@ -159,27 +155,22 @@ BaseSymbolGetID(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolCacheParameterDouble()
-///
-/// ARGS.:
-///
-///	phsle..: symbol to use for caching.
+/// 
+/// 
+/// \arg phsle symbol to use for caching.
 ///	iSerial: serial to use for caching, context of parameter.
-///	pcName.: name of parameter.
-///	dNumber: value of parameter.
-///
-/// RTN..: struct symtab_Parameters *
-///
+/// \arg pcName name of parameter.
+/// \arg dNumber value of parameter.
+/// 
+/// \return struct symtab_Parameters *
+/// 
 ///	Newly allocated parameters, NULL for failure.
-///
-/// DESCR:
-///
+/// 
+/// \details 
+/// 
 ///	Allocate a parameter for the given value and insert it in the
 ///	parameter cache of the given symbol.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_Parameters *
 SymbolCacheParameterDouble
@@ -229,27 +220,22 @@ SymbolCacheParameterDouble
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolCacheParameterString()
-///
-/// ARGS.:
-///
-///	phsle..: symbol to use for caching.
+/// 
+/// 
+/// \arg phsle symbol to use for caching.
 ///	iSerial: serial to use for caching, context of parameter.
-///	pcName.: name of parameter.
-///	pcValue: value of parameter.
-///
-/// RTN..: struct symtab_Parameters *
-///
+/// \arg pcName name of parameter.
+/// \arg pcValue value of parameter.
+/// 
+/// \return struct symtab_Parameters *
+/// 
 ///	Newly allocated parameters, NULL for failure.
-///
-/// DESCR:
-///
+/// 
+/// \details 
+/// 
 ///	Allocate a parameter for the given value and insert it in the
 ///	parameter cache of the given symbol.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_Parameters *
 SymbolCacheParameterString
@@ -299,23 +285,19 @@ SymbolCacheParameterString
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolCalloc()
-///
-/// ARGS.:
-///
-///	std ANSI calloc() parameters.
+/// 
+/// 
+/// \arg std ANSI calloc() parameters.
 ///	_vtable..: function table.
-///	iType....: type of element.
-///
-/// RTN..: struct symtab_HSolveListElement * 
-///
+/// \arg iType type of element.
+/// 
+/// \return struct symtab_HSolveListElement * 
+/// 
 ///	Newly allocated symbol, NULL for failure.
-///
-/// DESCR: Allocate a new symbol table element.
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new symbol table element.
+/// \details 
+/// 
 
 struct symtab_HSolveListElement *
 SymbolCalloc(size_t nmemb, size_t size, VTable_symbols * _vtable, int iType)
@@ -356,24 +338,19 @@ SymbolCalloc(size_t nmemb, size_t size, VTable_symbols * _vtable, int iType)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolFindCachedParameter()
-///
-/// ARGS.:
-///
-///	phsle..: symbol to find parameter of.
-///	pcName.: name of parameter.
-///	ppist..: context of symbol.
-///
-/// RTN..: struct symtab_Parameters * : parameter structure.
-///
-/// DESCR:
-///
+/// 
+/// 
+/// \arg phsle symbol to find parameter of.
+/// \arg pcName name of parameter.
+/// \arg ppist context of symbol.
+/// 
+/// \return struct symtab_Parameters * : parameter structure.
+/// 
+/// \details 
+/// 
 ///	Consulte caches as appropriate for the given context, and try
 ///	to find the parameter with given name.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_Parameters *
 SymbolFindCachedParameter
@@ -387,18 +364,18 @@ SymbolFindCachedParameter
 
     //- update context caches
 
-    //t how can I get around this hack in a clean way ?
+    /// \todo how can I get around this hack in a clean way ?
 
-    //t I force to have at least one symbol in the context cache, such
-    //t that caches can be updated.
+    /// \todo I force to have at least one symbol in the context cache, such
+    /// \todo that caches can be updated.
 
 /*     if (ppist->symsst.symst.iTop == -1) */
 /*     { */
-/* 	//t how can we possibly find out the root here ? */
+/* 	/// \todo how can we possibly find out the root here ? */
 
-/* 	//t actually this should not happen, so we make the caller */
-/* 	//t responsible for giving an appropriate ppist, this will */
-/* 	//t generate a SEGV to force this behaviour. */
+/* 	/// \todo actually this should not happen, so we make the caller */
+/* 	/// \todo responsible for giving an appropriate ppist, this will */
+/* 	/// \todo generate a SEGV to force this behaviour. */
 
 /* 	struct symtab_HSolveListElement *phsleRoot = NULL; */
 
@@ -418,7 +395,7 @@ SymbolFindCachedParameter
 
 /*     if (PidinStackIsRooted(ppist)) */
 /*     { */
-/* 	//! skip root, cannot cache parameters */
+/* 	/// \note skip root, cannot cache parameters */
 
 /* 	struct symtab_HSolveListElement *phsleRootChild */
 /* 	    = PSymbolSerialStackElementSymbol(&ppist->symsst, 0); */
@@ -438,7 +415,7 @@ SymbolFindCachedParameter
     {
 	//- get caching symbol
 
-	//t more hacking to be removed
+	/// \todo more hacking to be removed
 
 	struct symtab_HSolveListElement *phsleCache
 	    = PSymbolSerialStackElementSymbol(&ppist->symsst, i);
@@ -489,24 +466,19 @@ SymbolFindCachedParameter
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolFindParameter()
-///
-/// ARGS.:
-///
-///	phsle..: symbol to find parameter of.
-///	pcName.: name of parameter.
-///	ppist..: context of symbol.
-///
-/// RTN..: struct symtab_Parameters * : parameter structure
-///
-/// DESCR:
-///
+/// 
+/// 
+/// \arg phsle symbol to find parameter of.
+/// \arg pcName name of parameter.
+/// \arg ppist context of symbol.
+/// 
+/// \return struct symtab_Parameters * : parameter structure
+/// 
+/// \details 
+/// 
 ///	Find parameter of symbol, consulting caches as appropriate for
 ///	the given context.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_Parameters *
 SymbolFindParameter
@@ -539,21 +511,17 @@ SymbolFindParameter
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolFree()
-///
-/// ARGS.:
-///
-///	phsle..: symbol to free.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg phsle symbol to free.
+/// 
+/// \return int
+/// 
 ///	Success of operation.
-///
-/// DESCR: Free memory of a symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Free memory of a symbol table element
+/// \details 
+/// 
 
 int SymbolFree(struct symtab_HSolveListElement *phsle)
 {
@@ -587,19 +555,15 @@ int SymbolFree(struct symtab_HSolveListElement *phsle)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolGetAlgorithmInstanceInfo()
-///
-/// ARGS.:
-///
-///	phsle.: symbol to get algorithm info for
-///
-/// RTN..: struct AlgorithmInstance * : algorithm instance
-///
-/// DESCR: Get algorithm info for symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to get algorithm info for
+/// 
+/// \return struct AlgorithmInstance * : algorithm instance
+/// 
+/// \brief Get algorithm info for symbol
+/// \details 
+/// 
 
 struct AlgorithmInstance *
 SymbolGetAlgorithmInstanceInfo(struct symtab_HSolveListElement *phsle)
@@ -610,23 +574,19 @@ SymbolGetAlgorithmInstanceInfo(struct symtab_HSolveListElement *phsle)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolGetWorkloadIndividual()
-///
-/// ARGS.:
-///
-///	phsle.: symbol to get individual workload for.
-///	ppist.: context of symbol
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg phsle symbol to get individual workload for.
+/// \arg ppist context of symbol
+/// 
+/// \return int
+/// 
 ///	Workload for this symbol (not including descendants) expressed
 ///	in workload units, -1 for failure.
-///
-/// DESCR: Get workload for this symbol.
-///
-/// **************************************************************************
+/// 
+/// \brief Get workload for this symbol.
+/// \details 
+/// 
 
 int
 SymbolGetWorkloadIndividual
@@ -692,19 +652,15 @@ SymbolGetWorkloadIndividual
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolInit()
-///
-/// ARGS.:
-///
-///	phsle.: symbol to init.
-///
-/// RTN..: void
-///
-/// DESCR: Init a new symbol table element
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to init.
+/// 
+/// \return void
+/// 
+/// \brief Init a new symbol table element
+/// \details 
+/// 
 
 void SymbolInit(struct symtab_HSolveListElement * phsle)
 {
@@ -718,31 +674,27 @@ void SymbolInit(struct symtab_HSolveListElement * phsle)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolParameterResolveCoordinateValue()
-///
-/// ARGS.:
-///
-///	phsle......: symbol container
-///	ppist......: context of symbol
-///	ppistCoord.: context to get coordinate for
+/// 
+/// 
+/// \arg phsle symbol container
+/// \arg ppist context of symbol
+/// \arg ppistCoord context to get coordinate for
 ///	pD3Coord...: coordinate receiving result (may be uninitialized)
-///
-/// RTN..: int : success of operation
-///
+/// 
+/// \return int : success of operation
+/// 
 ///	pD3Coord...: coordinate receiving result
-///
-/// DESCR: Resolve coordinates for symbol.
-///
+/// 
+/// \brief Resolve coordinates for symbol.
+/// \details 
+/// 
 ///	Coordinate values are by default relative to parent.  
 ///	This functions (and related) recalculates the coordinate values
 ///	to make them relative to the given context.  ppistCoord must
 ///	be part of ppist, otherwise this function will give faulty 
 ///	results without errors.  Coordinates are 'X', 'Y', 'Z' symbol
 ///	parameters.
-///
-/// **************************************************************************
+/// 
 
 int
 SymbolParameterResolveCoordinateValue
@@ -765,11 +717,11 @@ SymbolParameterResolveCoordinateValue
     pD3Coord->dy = 0.0;
     pD3Coord->dz = 0.0;
 
-    //t I'm also not sure if I should check here the parameter type,
-    //t it's also done by SymbolParameterTransformValue().  
-    //t I think the default parameter handler (where this function is
-    //t is supposed to be part of that default handler), should not
-    //t test, so commented out for the moment.
+    /// \todo I'm also not sure if I should check here the parameter type,
+    /// \todo it's also done by SymbolParameterTransformValue().  
+    /// \todo I think the default parameter handler (where this function is
+    /// \todo is supposed to be part of that default handler), should not
+    /// \todo test, so commented out for the moment.
 
 /*     //- if non coordinate parameter */
 
@@ -908,28 +860,24 @@ SymbolParameterResolveCoordinateValue
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolParameterResolveTransformedValue()
-///
-/// ARGS.:
-///
-///	phsle......: symbol container
-///	ppist......: context of symbol
-///	ppistCoord.: context to get coordinate for
+/// 
+/// 
+/// \arg phsle symbol container
+/// \arg ppist context of symbol
+/// \arg ppistCoord context to get coordinate for
 ///	pcName.....: name of parameter ("X", "Y", "Z")
-///
-/// RTN..: double : coordinate parameter value, FLT_MAX if some error occured
-///
-/// DESCR: Resolve coordinate value of parameter
-///
+/// 
+/// \return double : coordinate parameter value, FLT_MAX if some error occured
+/// 
+/// \brief Resolve coordinate value of parameter
+/// \details 
+/// 
 ///	Coordinate values are by default relative to parent.  
 ///	This functions (and related) recalculates the coordinate values
 ///	to make them relative to the given context.  ppistCoord must
 ///	be part of ppist, otherwise this function will give faulty 
 ///	results without errors.
-///
-/// **************************************************************************
+/// 
 
 double
 SymbolParameterResolveTransformedValue
@@ -955,11 +903,11 @@ SymbolParameterResolveTransformedValue
 
     struct PidinStack *ppistWorking = PidinStackDuplicate(ppistCoord);
 
-    //t I'm also not sure if I should check here the parameter type,
-    //t it's also done by SymbolParameterTransformValue().  
-    //t I think the default parameter handler (where this function is
-    //t is supposed to be part of that default handler), should not
-    //t test, so commented out for the moment.
+    /// \todo I'm also not sure if I should check here the parameter type,
+    /// \todo it's also done by SymbolParameterTransformValue().  
+    /// \todo I think the default parameter handler (where this function is
+    /// \todo is supposed to be part of that default handler), should not
+    /// \todo test, so commented out for the moment.
 
 /*     //- if non coordinate parameter */
 
@@ -1080,21 +1028,17 @@ SymbolParameterResolveTransformedValue
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolParameterResolveScaledValue()
-///
-/// ARGS.:
-///
-///	phsle..: symbol to get parameter for
-///	ppist..: context of symbol
-///	pcName.: name of parameter
-///
-/// RTN..: double : scaled parameter value, FLT_MAX if some error occured
-///
-/// DESCR: Resolve scaled value of parameter
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to get parameter for
+/// \arg ppist context of symbol
+/// \arg pcName name of parameter
+/// 
+/// \return double : scaled parameter value, FLT_MAX if some error occured
+/// 
+/// \brief Resolve scaled value of parameter
+/// \details 
+/// 
 
 double
 SymbolParameterResolveScaledValue
@@ -1125,24 +1069,20 @@ SymbolParameterResolveScaledValue
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolParameterTransformValue()
-///
-/// ARGS.:
-///
-///	phsle.....: symbol to calculate absolute value
-///	ppist.....: context of given element
-///	ppar......: parameter that specifies type of transformation
+/// 
+/// 
+/// \arg phsle symbol to calculate absolute value
+/// \arg ppist context of given element
+/// \arg ppar parameter that specifies type of transformation
 ///	pD3.......: coordinate to make transform
-///
-/// RTN..: int : success of operation
-///
+/// 
+/// \return int : success of operation
+/// 
 ///	pD3.......: transformed coordinate
-///
-/// DESCR: Calculate transformation on value for given parameter.
-///
-/// **************************************************************************
+/// 
+/// \brief Calculate transformation on value for given parameter.
+/// \details 
+/// 
 
 static 
 void cross_prd
@@ -1200,18 +1140,18 @@ SymbolParameterTransformValue
 
 	if (InstanceOfMovable(phsle))
 	{
-	    //t
-	    //t what is really needed :
-	    //t
-	    //t 3 angles : theta, phi ,rho
-	    //t 2 offsets : {x,y,z}1, {x,y,z}2
-	    //t     one applied before rotation, one after rotation
-	    //t     both default to origin
-	    //t     this allows to do fancy things like 
-	    //t         x1 = soma->X, x2 = - soma->X
-	    //t
-	    //t can be done with one matrix multiplication ?
-	    //t 
+	    ///
+	    /// \todo what is really needed :
+	    ///
+	    /// \todo 3 angles : theta, phi ,rho
+	    /// \todo 2 offsets : {x,y,z}1, {x,y,z}2
+	    /// \todo     one applied before rotation, one after rotation
+	    /// \todo     both default to origin
+	    /// \todo     this allows to do fancy things like 
+	    /// \todo         x1 = soma->X, x2 = - soma->X
+	    ///
+	    /// \todo can be done with one matrix multiplication ?
+	    /// \todo 
 
 	    //- get position parameters
 
@@ -1409,36 +1349,32 @@ SymbolParameterTransformValue
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolPrincipalSerial2Context()
-///
-/// ARGS.:
-///
-///	phsle......: symbol container.
-///	ppist......: context of given element
+/// 
+/// 
+/// \arg phsle symbol container.
+/// \arg ppist context of given element
 ///	iPrincipal.: principal serial ID for sub-symbol.
-///
-/// RTN..: struct PidinStack *
-///
+/// 
+/// \return struct PidinStack *
+/// 
 ///	symbol corresponding to iPrincipal, NULL for failure
-///
-/// DESCR: Convert principal serial ID to symbol info.
-///
-/// **************************************************************************
+/// 
+/// \brief Convert principal serial ID to symbol info.
+/// \details 
+/// 
 
 struct SymbolPrincipal2ContextData
 {
-    //m result of operation: uninitialized means result context
-    //m will be based on the given context
+    /// result of operation: uninitialized means result context
+    /// will be based on the given context
 
     struct PidinStack *ppistResult;
 
-    //m number of skipped successors
+    /// number of skipped successors
 
     int iSkippedSuccessors;
 
-    //m relative principal ID
+    /// relative principal ID
 
     int iPrincipal;
 };
@@ -1651,30 +1587,30 @@ SymbolPrincipalSerial2Context
 
     struct PidinStack *ppistResult = NULL;
 
-    //v treespace traversal to go over successors
+    /// treespace traversal to go over successors
 
     struct TreespaceTraversal *ptstr = NULL;
 
     int iTraversal = 0;
 
-    //v number of successors for top of solved symbol tree
+    /// number of successors for top of solved symbol tree
 
     int iSuccessors = 0;
 
-    //v traversal user data
+    /// traversal user data
 
     struct SymbolPrincipal2ContextData sip2c =
     {
-	//m result of operation: uninitialized means result context
-	//m will be based on the given context
+	/// result of operation: uninitialized means result context
+	/// will be based on the given context
 
 	NULL,
 
-	//m number of skipped successors
+	/// number of skipped successors
 
 	0,
 
-	//m relative principal ID
+	/// relative principal ID
 
 	iPrincipal,
     };
@@ -1750,30 +1686,30 @@ SymbolPrincipalSerial2RelativeContext
 
     struct PidinStack *ppistResult = NULL;
 
-    //v treespace traversal to go over successors
+    /// treespace traversal to go over successors
 
     struct TreespaceTraversal *ptstr = NULL;
 
     int iTraversal = 0;
 
-    //v number of successors for top of solved symbol tree
+    /// number of successors for top of solved symbol tree
 
     int iSuccessors = 0;
 
-    //v traversal user data
+    /// traversal user data
 
     struct SymbolPrincipal2ContextData sip2c =
     {
-	//m result of operation: uninitialized means result context
-	//m will be based on the given context
+	/// result of operation: uninitialized means result context
+	/// will be based on the given context
 
 	NULL,
 
-	//m number of skipped successors
+	/// number of skipped successors
 
 	0,
 
-	//m relative principal ID
+	/// relative principal ID
 
 	iPrincipal,
     };
@@ -1837,51 +1773,47 @@ SymbolPrincipalSerial2RelativeContext
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolRecalcAllSerials()
-///
-/// ARGS.:
-///
-///	phsle....: symbol to resolve input for
+/// 
+/// 
+/// \arg phsle symbol to resolve input for
 ///	ppist....: context of given element, may be NULL
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Recalculate all serial mappings of given symbol
-///
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Recalculate all serial mappings of given symbol
+/// \details 
+/// 
 ///	For the given symbol only #SU is updated, the serial to parent is
 ///	not touched (it's not known here).
-///
-/// **************************************************************************
+/// 
 
 struct SerialRecalculationData
 {
-    //m next invisible ID
+    /// next invisible ID
 
     int iInvisible;
 
-    //m next principal ID
+    /// next principal ID
 
     int iPrincipal;
 
 #ifdef TREESPACES_SUBSET_MECHANISM
-    //m next mechanism ID
+    /// next mechanism ID
 
     int iMechanism;
 #endif
 
 #ifdef TREESPACES_SUBSET_SEGMENT
-    //m next segment ID
+    /// next segment ID
 
     int iSegment;
 #endif
 
-/*     //m successors for each depth */
+/*     /// successors for each depth */
 
 /*     int iSuccessors[20]; */
 
-/*     //m serial to parent for each depth */
+/*     /// serial to parent for each depth */
 
 /*     int iSerial[20]; */
 };
@@ -1953,8 +1885,8 @@ SymbolSerialInitializerSelector
 
     //- if -1
 
-    //t must choose exactly one of those two, not sure which one, but
-    //t is harmless to use both of them (I think).
+    /// \todo must choose exactly one of those two, not sure which one, but
+    /// \todo is harmless to use both of them (I think).
 
     if (iInvisible == -1 || iPrincipal == -1)
     {
@@ -2141,15 +2073,15 @@ SymbolSerialRecalcPreProcessor
 
     int iResult = TSTR_PROCESSOR_SUCCESS;
 
-    //t if left child
-    //t     serial for left child is known
-    //t     number of successors for left child
-    //t     set serial for current child
-    //t
-    //t else
-    //t     set serial for current child to one/instanceof(mapping)
-    //t
-    //t set #SU to zero
+    /// \todo if left child
+    /// \todo     serial for left child is known
+    /// \todo     number of successors for left child
+    /// \todo     set serial for current child
+    ///
+    /// \todo else
+    /// \todo     set serial for current child to one/instanceof(mapping)
+    ///
+    /// \todo set #SU to zero
 
     //- set actual symbol
 
@@ -2435,9 +2367,9 @@ SymbolSerialRecalcPostProcessor
     //- set successors : 
     //- subtract absolute id with what is already cached
 
-    //! #SU of child have been set during pre order (first visit).
-    //! psrd->.* has been further updated for each SU(child) during pre order.
-    //! difference (now during post order) is #SU contributed by this child.
+    /// \note #SU of child have been set during pre order (first visit).
+    /// \note psrd->.* has been further updated for each SU(child) during pre order.
+    /// \note difference (now during post order) is #SU contributed by this child.
 
     SymbolAllSuccessorsSet
 	(phsleChild
@@ -2453,8 +2385,8 @@ SymbolSerialRecalcPostProcessor
 
     //- set (relative) serial for child
 
-    //! the absolute serials have been set correctly during pre order.
-    //! subtract to get serials relative to parent.
+    /// \note the absolute serials have been set correctly during pre order.
+    /// \note subtract to get serials relative to parent.
 
     SymbolAllSerialsToParentSet
 	(phsleChild
@@ -2487,22 +2419,22 @@ int SymbolRecalcAllSerials
 
     struct SerialRecalculationData srd =
     {
-	//m next invisible ID
+	/// next invisible ID
 
 	0,
 
-	//m next principal ID
+	/// next principal ID
 
 	0,
 
 #ifdef TREESPACES_SUBSET_MECHANISM
-	//m next mechanism ID
+	/// next mechanism ID
 
 	0,
 #endif
 
 #ifdef TREESPACES_SUBSET_SEGMENT
-	//m next segment ID
+	/// next segment ID
 
 	0,
 #endif
@@ -2525,8 +2457,8 @@ int SymbolRecalcAllSerials
 
     //- create treespace traversal to initialize
 
-    //! initializes successors for all spaces with -1 as a way of 
-    //! tagging the symbols.
+    /// \note initializes successors for all spaces with -1 as a way of 
+    /// \note tagging the symbols.
 
     ptstr
 	= TstrNew
@@ -2552,12 +2484,12 @@ int SymbolRecalcAllSerials
 	= TstrNew
 	  (ppistSerials,
 
-	   //t the SymbolSerialRecalcSelector()
-	   //t recalculates the number of successors in an illegal way,
-	   //t I can't figure it out at the moment.
-	   //t It seems to be fast enough without this boost,
-	   //t so let as is for the moment,
-	   //t worth an extra check.
+	   /// \todo the SymbolSerialRecalcSelector()
+	   /// \todo recalculates the number of successors in an illegal way,
+	   /// \todo I can't figure it out at the moment.
+	   /// \todo It seems to be fast enough without this boost,
+	   /// \todo so let as is for the moment,
+	   /// \todo worth an extra check.
 
 /* 	   SymbolSerialRecalcSelector, */
 /* 	   (void *)&srd, */
@@ -2600,20 +2532,16 @@ int SymbolRecalcAllSerials
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolSetAlgorithmInstanceInfo()
-///
-/// ARGS.:
-///
-///	phsle.: symbol to add algorithm info to
-///	palgi.: algorithm instance
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Add algorithm info to symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to add algorithm info to
+/// \arg palgi algorithm instance
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Add algorithm info to symbol
+/// \details 
+/// 
 
 int
 SymbolSetAlgorithmInstanceInfo
@@ -2644,30 +2572,25 @@ SymbolSetAlgorithmInstanceInfo
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolSetParameterFixedDouble()
-///
-/// ARGS.:
-///
-///	phsle..: symbol to get parameter for
-///	ppist..: context of symbol.
-///	pcName.: name of parameter
-///	dNumber: parameter value
-///
-/// RTN..: struct symtab_Parameters * : parameter structure
-///
-/// DESCR:
-///
+/// 
+/// 
+/// \arg phsle symbol to get parameter for
+/// \arg ppist context of symbol.
+/// \arg pcName name of parameter
+/// \arg dNumber: parameter value
+/// 
+/// \return struct symtab_Parameters *  parameter structure
+/// 
+/// \details 
+/// 
 ///	High-level set / update parameter of symbol.
-///
+/// 
 ///	This function operates at treespace level, i.e. if you change
 ///	a parameter with this function, only this symbol
 ///	will have the given parameter value.  Note that references to
 ///	to the root of the given context will still share the
 ///	parameter value.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_Parameters *
 SymbolSetParameterFixedDouble
@@ -2698,27 +2621,22 @@ SymbolSetParameterFixedDouble
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolTraverseBioLevels()
-///
-/// ARGS.:
-///
-///	phsle.......: symbol to traverse spike generators for
+/// 
+/// 
+/// \arg phsle symbol to traverse spike generators for
 ///	ppist.......: context of symbol, symbol assumed to be on top
-///	pbls........: level specification of levels to traverse
-///	pfProcesor..: processor
-///	pfFinalizer.: finalizer
-///	pvUserdata..: any user data
-///
-/// RTN..: int : see TstrGo().
-///
-/// DESCR:
-///
+/// \arg pbls level specification of levels to traverse
+/// \arg pfProcesor processor
+/// \arg pfFinalizer finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return int : see TstrGo().
+/// 
+/// \details 
+/// 
 ///	Traverse all symbols above or within the indicated biolevel,
 ///	call pfProcessor and pfFinalizer on each of them.
-///
-/// **************************************************************************
+/// 
 
 static int 
 BiolevelSelector
@@ -2739,8 +2657,8 @@ BiolevelSelector
 
     //- if running in inclusive mode
 
-    //! four way fork, depending on selection mode and relation
-    //! between current and selected level.
+    /// \note four way fork, depending on selection mode and relation
+    /// \note between current and selected level.
 
     if (pbls->iMode == SELECTOR_BIOLEVEL_INCLUSIVE)
     {
@@ -2788,10 +2706,10 @@ BiolevelSelector
 
 	else
 	{
-	    //t should optimize somewhat : e.g. depending on the
-	    //t selected levels, we could return
-	    //t SYMBOL_SELECTOR_PROCESS_SIBLING,
-	    //t skipping entire subtrees.
+	    /// \todo should optimize somewhat : e.g. depending on the
+	    /// \todo selected levels, we could return
+	    /// \todo SYMBOL_SELECTOR_PROCESS_SIBLING,
+	    /// \todo skipping entire subtrees.
 
 	    //- do not process, continue with selection of children
 
@@ -2847,25 +2765,20 @@ int SymbolTraverseBioLevels
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolTraverseDescendants()
-///
-/// ARGS.:
-///
-///	phsle........: symbol to traverse wildcard for.
+/// 
+/// 
+/// \arg phsle symbol to traverse wildcard for.
 ///	ppist........: context of symbol, symbol assumed to be on top.
-///	pfProcesor...: processor.
-///	pfFinalizer..: finalizer.
-///	pvUserdata...: any user data.
-///
-/// RTN..: int : see TstrGo().
-///
-/// DESCR:
-///
+/// \arg pfProcesor processor.
+/// \arg pfFinalizer finalizer.
+/// \arg pvUserdata any user data.
+/// 
+/// \return int : see TstrGo().
+/// 
+/// \details 
+/// 
 ///	Traverse all symbols using the default selector.
-///
-/// **************************************************************************
+/// 
 
 int
 SymbolTraverseDescendants
@@ -2905,26 +2818,21 @@ SymbolTraverseDescendants
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolTraverseTagged()
-///
-/// ARGS.:
-///
-///	phsle.......: symbol to traverse spike generators for.
+/// 
+/// 
+/// \arg phsle symbol to traverse spike generators for.
 ///	ppist.......: context of symbol, symbol assumed to be on top.
-///	pfProcesor..: processor.
-///	pfFinalizer.: finalizer.
-///	pvUserdata..: any user data.
-///
-/// RTN..: int : see TstrGo().
-///
-/// DESCR:
-///
+/// \arg pfProcesor processor.
+/// \arg pfFinalizer finalizer.
+/// \arg pvUserdata any user data.
+/// 
+/// \return int : see TstrGo().
+/// 
+/// \details 
+/// 
 ///	Traverse all tagged symbols, call pfProcessor and pfFinalizer
 ///	on each of them.
-///
-/// **************************************************************************
+/// 
 
 static int 
 TaggedSelector
@@ -3004,26 +2912,21 @@ SymbolTraverseTagged
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolTraverseWildcard()
-///
-/// ARGS.:
-///
-///	phsle........: symbol to traverse wildcard for
+/// 
+/// 
+/// \arg phsle symbol to traverse wildcard for
 ///	ppist........: context of symbol, symbol assumed to be on top
-///	ppistWildcard: wildcard selector
-///	pfProcesor...: processor
-///	pfFinalizer..: finalizer
-///	pvUserdata...: any user data
-///
-/// RTN..: int : see TstrGo().
-///
-/// DESCR:
-///
+/// \arg ppistWildcard: wildcard selector
+/// \arg pfProcesor processor
+/// \arg pfFinalizer finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return int : see TstrGo().
+/// 
+/// \details 
+/// 
 ///	Traverse all symbols that match the given wildcard.
-///
-/// **************************************************************************
+/// 
 
 static int 
 WildcardSelector
@@ -3042,8 +2945,8 @@ WildcardSelector
     struct PidinStack *ppistWildcard
 	= (struct PidinStack *)pvUserdata;
 
-    //t process siblings, or process only children, or process with
-    //t children, or process and skip children
+    /// \todo process siblings, or process only children, or process with
+    /// \todo children, or process and skip children
 
     //- if pidinstacks match
 
@@ -3111,336 +3014,255 @@ SymbolTraverseWildcard
 #include "hierarchy/output/symbols/all_callees_implementations.c"
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolAddChild()
-///
-/// ARGS.:
-///
-///	phsle......: symbol container.
-///	phsleChild.: child to add.
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Add a child to the children of given symbol container.
-///
+/// 
+/// 
+/// \arg phsle symbol container.
+/// \arg phsleChild child to add.
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Add a child to the children of given symbol container.
+/// \details 
+/// 
 ///	Updates (sub)?space indices if symbol type has mappings.
-///
-/// **************************************************************************
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolAssignBindableIO()
-///
-/// ARGS.:
-///
-///	phsle.: symbol.
-///	pioc..: IO relations.
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Assign bindable relations to symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol.
+/// \arg pioc IO relations.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Assign bindable relations to symbol.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolAssignInputs()
-///
-/// ARGS.:
-///
-///	phsle.: symbol.
-///	pio...: inputs.
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Assign inputs to symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol.
+/// \arg pio inputs.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Assign inputs to symbol.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolAssignParameters()
-///
-/// ARGS.:
-///
-///	phsle.: symbol.
-///	ppar..: parameters.
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Assign bindable relations to symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol.
+/// \arg ppar parameters.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Assign bindable relations to symbol.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolCountCells()
-///
-/// ARGS.:
-///
-///	phsle.: symbol to count cells for.
-///	ppist.: context of symbol
-///
-/// RTN..: int : number of cells in symbol, -1 for failure.
-///
-/// DESCR: Count cells of symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to count cells for.
+/// \arg ppist context of symbol
+/// 
+/// \return int : number of cells in symbol, -1 for failure.
+/// 
+/// \brief Count cells of symbol.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolCountConnections()
-///
-/// ARGS.:
-///
-///	phsle.: symbol to count connections for.
-///	ppist.: context of symbol
-///
-/// RTN..: int : number of connections in symbol, -1 for failure.
-///
-/// DESCR: Count connections of symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to count connections for.
+/// \arg ppist context of symbol
+/// 
+/// \return int : number of connections in symbol, -1 for failure.
+/// 
+/// \brief Count connections of symbol.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolCountSegments()
-///
-/// ARGS.:
-///
-///	phsle.......: symbol to count segments for
+/// 
+/// 
+/// \arg phsle symbol to count segments for
 ///	ppist.......: context of symbol, symbol assumed to be on top
-///
-/// RTN..: int
-///
+/// 
+/// \return int
+/// 
 ///	Number of segments, -1 for failure.
-///
-/// DESCR: Count segments.
-///
-/// **************************************************************************
+/// 
+/// \brief Count segments.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolCountSpikeGenerators()
-///
-/// ARGS.:
-///
-///	phsle.......: symbol to count spike generators for
+/// 
+/// 
+/// \arg phsle symbol to count spike generators for
 ///	ppist.......: context of symbol, symbol assumed to be on top
-///
-/// RTN..: int
-///
+/// 
+/// \return int
+/// 
 ///	Number of spike generators, -1 for failure.
-///
-/// DESCR: Count spike generators.
-///
-/// **************************************************************************
+/// 
+/// \brief Count spike generators.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolCountSpikeReceivers()
-///
-/// ARGS.:
-///
-///	phsle.......: symbol to count spike receivers for
+/// 
+/// 
+/// \arg phsle symbol to count spike receivers for
 ///	ppist.......: context of symbol, symbol assumed to be on top
-///
-/// RTN..: int : success of operation
-///
+/// 
+/// \return int : success of operation
+/// 
 ///	Number of spike receivers, -1 for failure.
-///
-/// DESCR: Count spike receivers.
-///
-/// **************************************************************************
+/// 
+/// \brief Count spike receivers.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolCreateAlias()
-///
-/// ARGS.:
-///
-///	pbio..: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_BioComponent * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pbio symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_BioComponent * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolGetChildFromInput()
-///
-/// ARGS.:
-///
-///	phsle.: symbol that receives given input
-///	pio...: input to search
-///
-/// RTN..: struct symtab_HSolveListElement * : symbol generating given input
-///
-/// DESCR: Look for symbol that generates given input
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol that receives given input
+/// \arg pio input to search
+/// 
+/// \return struct symtab_HSolveListElement * : symbol generating given input
+/// 
+/// \brief Look for symbol that generates given input
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolGetChildren()
-///
-/// ARGS.:
-///
-///	phsle....: symbol to get children from.
-///
-/// RTN..: IOHContainer * : symbol container.
-///
-/// DESCR: Get children from given symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to get children from.
+/// 
+/// \return IOHContainer * : symbol container.
+/// 
+/// \brief Get children from given symbol.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolGetInputs()
-///
-/// ARGS.:
-///
-///	piol....: symbol to get inputs from.
-///
-/// RTN..: struct symtab_IOContainer * 
-///
+/// 
+/// 
+/// \arg piol symbol to get inputs from.
+/// 
+/// \return struct symtab_IOContainer * 
+/// 
 ///	input container of symbol.
-///
-/// DESCR: Find inputs of symbol.
-///
-/// **************************************************************************
+/// 
+/// \brief Find inputs of symbol.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolGetModifiableParameter()
-///
-/// ARGS.:
-///
-///	phsle..: symbol to get parameter for
-///	pcName.: name of parameter
-///	ppist..: context of symbol
-///
-/// RTN..: struct symtab_Parameters * : parameter structure
-///
-/// DESCR: Get parameter of symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to get parameter for
+/// \arg pcName name of parameter
+/// \arg ppist context of symbol
+/// 
+/// \return struct symtab_Parameters * : parameter structure
+/// 
+/// \brief Get parameter of symbol
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolGetName()
-///
-/// ARGS.:
-///
-///	phsle....: symbol to get name for.
-///
-/// RTN..: char * : name of symbol.
-///
-/// DESCR: Get name of symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to get name for.
+/// 
+/// \return char * : name of symbol.
+/// 
+/// \brief Get name of symbol.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolGetOptions()
-///
-/// ARGS.:
-///
-///	phsle....: symbol to get options for.
-///
-/// RTN..: int : options.
-///
-/// DESCR: Get options of symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to get options for.
+/// 
+/// \return int : options.
+/// 
+/// \brief Get options of symbol.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolGetParameter()
-///
-/// ARGS.:
-///
-///	phsle..: symbol to get parameter for.
-///	ppist..: context of symbol.
-///	pcName.: name of parameter.
-///
-/// RTN..: struct symtab_Parameters * : parameter structure
-///
-/// DESCR: Get parameter of symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to get parameter for.
+/// \arg ppist context of symbol.
+/// \arg pcName name of parameter.
+/// 
+/// \return struct symtab_Parameters * : parameter structure
+/// 
+/// \brief Get parameter of symbol
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolGetPidin()
-///
-/// ARGS.:
-///
-///	phsle....: symbol to get pidin for
-///
-/// RTN..: struct symtab_IdentifierIndex * : pidin of symbol
-///
-/// DESCR: Get pidin for symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to get pidin for
+/// 
+/// \return struct symtab_IdentifierIndex * : pidin of symbol
+/// 
+/// \brief Get pidin for symbol
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolGetPrototype()
-///
-/// ARGS.:
-///
-///	phsle......: symbol to get prototype for.
-///
-/// RTN..: struct symtab_HSolveListElement *
-///
+/// 
+/// 
+/// \arg phsle symbol to get prototype for.
+/// 
+/// \return struct symtab_HSolveListElement *
+/// 
 ///	Prototype, NULL if none.
-///
-/// DESCR:
-///
+/// 
+/// \details 
+/// 
 ///	Get prototype of symbol.
-///
-/// **************************************************************************
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolGetType()
-///
-/// ARGS.:
-///
-///	phsle......: symbol to get type for.
-///
-/// RTN..: int : type of symbol.
-///
-/// DESCR:
-///
+/// 
+/// 
+/// \arg phsle symbol to get type for.
+/// 
+/// \return int : type of symbol.
+/// 
+/// \details 
+/// 
 ///	Get type of symbol.  See also SymbolSetType().
-///
-/// NOTE:
-///
+/// 
+/// \note 
+/// 
 ///	1. The exact semantics of this function is dependent on the
 ///	location of the type of the symbol in the symbol derivation
 ///	hierarchy.  Use or specific implementation of this function in
@@ -3449,362 +3271,282 @@ SymbolTraverseWildcard
 ///	derivation at first.  If that is not enough for you, contact
 ///	the author of Neurospaces (you probably need role based
 ///	derivation or meta object protocols.
-///
+/// 
 ///	2. This function is used at a very restricted set of places in
 ///	the code.  But that is not an encouragement to use this
 ///	function even more, read above, point (1).
-///
-/// **************************************************************************
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolHasBindableIO()
-///
-/// ARGS.:
-///
-///	phsle.: symbol to check.
-///	pc....: name of input.
-///	i.....: location of input.
-///
-/// RTN..: int : TRUE if symbol has bindable IO relations.
-///
-/// DESCR: Check if symbol has bindable IO relations.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to check.
+/// \arg pc name of input.
+/// \arg i location of input.
+/// 
+/// \return int : TRUE if symbol has bindable IO relations.
+/// 
+/// \brief Check if symbol has bindable IO relations.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolHasEquation()
-///
-/// ARGS.:
-///
-///	phsle.: symbol to check
-///	ppist.: context of channel
-///
-/// RTN..: int : TRUE if symbol contains an equation.
-///
-/// DESCR: Check if symbol contains an equation.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to check
+/// \arg ppist context of channel
+/// 
+/// \return int : TRUE if symbol contains an equation.
+/// 
+/// \brief Check if symbol contains an equation.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolHasMGBlockGMAX()
-///
-/// ARGS.:
-///
-///	phsle.: channel to check
-///
-/// RTN..: int : TRUE if symbol has MG blocking
-///
-/// DESCR: Check if symbol G is MG blocked.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle channel to check
+/// 
+/// \return int : TRUE if symbol has MG blocking
+/// 
+/// \brief Check if symbol G is MG blocked.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolHasNernstErev()
-///
-/// ARGS.:
-///
-///	phsle.: channel to check
-///
-/// RTN..: int : TRUE if symbol has nernst
-///
-/// DESCR: Check if symbol Erev nernst-equation controlled
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle channel to check
+/// 
+/// \return int : TRUE if symbol has nernst
+/// 
+/// \brief Check if symbol Erev nernst-equation controlled
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolParameterLinkAtEnd()
-///
-/// ARGS.:
-///
-///	phsle..: symbol to get parameter for.
-///	ppars..: new list of parameters.
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Add new paramaters, not overriding existing ones.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to get parameter for.
+/// \arg ppars new list of parameters.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Add new paramaters, not overriding existing ones.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolLookupHierarchical()
-///
-/// ARGS.:
-///
-///	phsle..: symbol container.
-///	ppist..: element to search.
+/// 
+/// 
+/// \arg phsle symbol container.
+/// \arg ppist element to search.
 ///	iLevel.: active level of ppist,
 ///		0 <= iLevel < PidinStackNumberOfEntries().
-///	bAll...: set TRUE if all names in ppist should be searched.
-///
-/// RTN..: struct symtab_HSolveListElement * : searched symbol.
-///
-/// DESCR: lookup a hierarchical symbol name in another symbol.
-///
-/// **************************************************************************
+/// \arg bAll set TRUE if all names in ppist should be searched.
+/// 
+/// \return struct symtab_HSolveListElement * : searched symbol.
+/// 
+/// \brief lookup a hierarchical symbol name in another symbol.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolLookupSerialID()
-///
-/// ARGS.:
-///
-///	phsleCont..: symbol container
-///	ppistCont..: context of container
-///	phsleSerial: element to search
-///	ppistSerial: context of element to search
-///
-/// RTN..: int : serial ID of symbol with respect to container, -1 for failure
-///
-/// DESCR: Get a serial unique ID for symbol with respect to container
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsleCont symbol container
+/// \arg ppistCont context of container
+/// \arg phsleSerial: element to search
+/// \arg ppistSerial: context of element to search
+/// 
+/// \return int : serial ID of symbol with respect to container, -1 for failure
+/// 
+/// \brief Get a serial unique ID for symbol with respect to container
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolParameterResolveValue()
-///
-/// ARGS.:
-///
-///	phsle..: symbol to get parameter for
-///	pcName.: name of parameter
-///	ppist..: context of symbol
-///
-/// RTN..: double : parameter value, FLT_MAX if some error occured
-///
-/// DESCR: Resolve value of parameter
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to get parameter for
+/// \arg pcName name of parameter
+/// \arg ppist context of symbol
+/// 
+/// \return double : parameter value, FLT_MAX if some error occured
+/// 
+/// \brief Resolve value of parameter
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolParameterScaleValue()
-///
-/// ARGS.:
-///
-///	phsle...: symbol to do scaling
-///	ppist...: context of given element
-///	dValue..: value to scale
-///	ppar....: parameter that specifies type of scaling
-///
-/// RTN..: double : scaled value, FLT_MAX for failure
-///
-/// DESCR: Scale value according to parameter type and symbol type
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to do scaling
+/// \arg ppist context of given element
+/// \arg dValue value to scale
+/// \arg ppar parameter that specifies type of scaling
+/// 
+/// \return double : scaled value, FLT_MAX for failure
+/// 
+/// \brief Scale value according to parameter type and symbol type
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolPrint()
-///
-/// ARGS.:
-///
-///	phsle....: symbol to print
-///	iIndent..: number of indentation spaces
-///	pfile....: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Pretty print symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to print
+/// \arg iIndent number of indentation spaces
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Pretty print symbol
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolResolveInput()
-///
-/// ARGS.:
-///
-///	phsle....: symbol to resolve input for
-///	ppist....: context of given element
-///	pcName...: name of input to resolve
-///	iPosition: number of inputs with given name to skip
-///
-/// RTN..: struct symtab_HSolveListElement *
-///
+/// 
+/// 
+/// \arg phsle symbol to resolve input for
+/// \arg ppist context of given element
+/// \arg pcName name of input to resolve
+/// \arg iPosition: number of inputs with given name to skip
+/// 
+/// \return struct symtab_HSolveListElement *
+/// 
 ///	symbol table element generating input, NULL for non-existent
-///
-/// DESCR: Find input with given name
-///
-/// **************************************************************************
+/// 
+/// \brief Find input with given name
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolResolveParameterFunctionalInput()
-///
-/// ARGS.:
-///
-///	phsle......: symbol to resolve input for
-///	ppist......: context of given element
-///	pcParameter: name of parameter with function
-///	pcInput....: name of input on function of parameter
-///	iPosition..: input identifier in instantiation
-///
-/// RTN..: struct symtab_HSolveListElement * : symbol that gives input
-///
-/// DESCR: Find input to functional parameter
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to resolve input for
+/// \arg ppist context of given element
+/// \arg pcParameter: name of parameter with function
+/// \arg pcInput name of input on function of parameter
+/// \arg iPosition input identifier in instantiation
+/// 
+/// \return struct symtab_HSolveListElement * : symbol that gives input
+/// 
+/// \brief Find input to functional parameter
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolSetAtXYZ()
-///
-/// ARGS.:
-///
-///	phsle.: symbol to set coordinates for.
-///	x.....:
-///	y.....:
-///	z.....:
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Set coordinates for symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to set coordinates for.
+/// \arg x.....:
+/// \arg y.....:
+/// \arg z.....:
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Set coordinates for symbol.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolSetName()
-///
-/// ARGS.:
-///
-///	phsle.: symbol to set name of
-///	pidin.: name.
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Set name of symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to set name of
+/// \arg pidin name.
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Set name of symbol.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolSetOptions()
-///
-/// ARGS.:
-///
-///	phsle....: symbol to set parameter for.
-///	iOptions.: options for symbol.
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Set options of symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle symbol to set parameter for.
+/// \arg iOptions options for symbol.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Set options of symbol.
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolSetParameterDouble()
-///
-/// ARGS.:
-///
-///	phsle..: symbol to get parameter for
-///	pcName.: name of parameter
-///	dNumber: parameter value
-///	ppist..: context of symbol (not used at the moment, can be changed)
-///
-/// RTN..: struct symtab_Parameters * : parameter structure
-///
-/// DESCR:
-///
+/// 
+/// 
+/// \arg phsle symbol to get parameter for
+/// \arg pcName name of parameter
+/// \arg dNumber: parameter value
+///	ppist context of symbol (not used at the moment, can be changed)
+/// 
+/// \return struct symtab_Parameters * : parameter structure
+/// 
+/// \details 
+/// 
 ///	Low-level set / update parameter of symbol.
-///
+/// 
 ///	This function operates at forestspace level, i.e. if you
 ///	change a parameter with this function, all references to this
 ///	symbol will share that value, unless they have a value that
 ///	overwrites the one given to this function.  To set a parameter
 ///	at treespace level, use one of the SymbolSetParameterFixed.*()
 ///	functions.
-///
-/// **************************************************************************
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolSetParameterString()
-///
-/// ARGS.:
-///
-///	phsle..: symbol to get parameter for
-///	pcName.: name of parameter
-///	pcValue: parameter value
-///	ppist..: context of symbol (not used at the moment, can be changed)
-///
-/// RTN..: struct symtab_Parameters * : parameter structure
-///
-/// DESCR:
-///
+/// 
+/// 
+/// \arg phsle symbol to get parameter for
+/// \arg pcName name of parameter
+/// \arg pcValue: parameter value
+///	ppist context of symbol (not used at the moment, can be changed)
+/// 
+/// \return struct symtab_Parameters * : parameter structure
+/// 
+/// \details 
+/// 
 ///	Low-level set / update parameter of symbol.
-///
+/// 
 ///	This function operates at forestspace level, i.e. if you
 ///	change a parameter with this function, all references to this
 ///	symbol will share that value, unless they have a value that
 ///	overwrites the one given to this function.  To set a parameter
 ///	at treespace level, use one of the SymbolSetParameterFixed.*()
 ///	functions.
-///
-/// **************************************************************************
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolSetPrototype()
-///
-/// ARGS.:
-///
-///	phsle......: symbol to set prototype for.
-///	phsleProto.: prototype symbol.
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR:
-///
+/// 
+/// 
+/// \arg phsle symbol to set prototype for.
+/// \arg phsleProto prototype symbol.
+/// 
+/// \return int : success of operation.
+/// 
+/// \details 
+/// 
 ///	Set prototype of symbol.
-///
+/// 
 ///	The symbol uses the prototype symbol for inferences when needed.
-///
-/// **************************************************************************
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolSetType()
-///
-/// ARGS.:
-///
-///	phsle......: symbol to get type for.
-///	iType......: type of symbol.
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR:
-///
+/// 
+/// 
+/// \arg phsle symbol to get type for.
+/// \arg iType type of symbol.
+/// 
+/// \return int : success of operation.
+/// 
+/// \details 
+/// 
 ///	Set type of symbol.  See also SymbolGetType().
-///
-/// NOTE:
-///
+/// 
+/// \note 
+/// 
 ///	1. The exact semantics of this function is dependent on the
 ///	location of the type of the symbol in the symbol derivation
 ///	hierarchy.  Use or specific implementation of this function in
@@ -3813,105 +3555,88 @@ SymbolTraverseWildcard
 ///	derivation at first.  If that is not enough for you, contact
 ///	the author of Neurospaces (you probably need role based
 ///	derivation or meta object protocols.
-///
+/// 
 ///	2. This function is used at a very restricted set of places in
 ///	the code.  But that is not an encouragement to use this
 ///	function even more, read above, point (1).
-///
-/// **************************************************************************
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolTraverse()
-///
-/// ARGS.:
-///
-///	ptstr.: initialized treespace traversal
-///	phsle.: symbol to traverse
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg ptstr initialized treespace traversal
+/// \arg phsle symbol to traverse
+/// 
+/// \return int
+/// 
 ///	1  : success
 ///	0  : no success, failure
 ///	-1 : immediate abort
-///
-/// DESCR: Traverse symbols in tree manner.
-///
-/// NOTE.: See IOHierarchyTraverse()
-///
+/// 
+/// \brief Traverse symbols in tree manner.
+/// \details 
+/// 
+/// \note  See IOHierarchyTraverse()
+/// 
 ///	Note that not all symbols are required to have a pidin.
 ///	Interfaces with Tstr{Prepare,Traverse,Repair}() :
-///
+/// 
 ///	Loops over children of top symbol
 ///		1. Calls TstrPrepare()
 ///		2. Calls TstrTraverse()
 ///		3. Calls TstrRepair()
-///
+/// 
 ///	Use Tstr.*() to obtain info on serial IDs and contexts
 ///	during traversals.
-///
-/// **************************************************************************
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolTraverseSegments()
-///
-/// ARGS.:
-///
-///	phsle.......: symbol to traverse segments for
+/// 
+/// 
+/// \arg phsle symbol to traverse segments for
 ///	ppist.......: context of symbol, symbol assumed to be on top
-///	pfProcesor..: segment processor
-///	pfFinalizer.: segment finalizer
-///	pvUserdata..: any user data
-///
-/// RTN..: int
-///
+/// \arg pfProcesor segment processor
+/// \arg pfFinalizer segment finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return int
+/// 
 ///	1  : success
 ///	0  : no success, failure
 ///	-1 : immediate abort
-///
-/// DESCR: Traverse segments, call pfProcessor on each of them
-///
-/// **************************************************************************
+/// 
+/// \brief Traverse segments, call pfProcessor on each of them
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolTraverseSpikeGenerators()
-///
-/// ARGS.:
-///
-///	phsle.......: symbol to traverse spike generators for
+/// 
+/// 
+/// \arg phsle symbol to traverse spike generators for
 ///	ppist.......: context of symbol, symbol assumed to be on top
-///	pfProcesor..: spike generator processor
-///	pfFinalizer.: spike generator finalizer
-///	pvUserdata..: any user data
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Traverse spike generators, call pfProcessor on each of them
-///
-/// **************************************************************************
+/// \arg pfProcesor spike generator processor
+/// \arg pfFinalizer spike generator finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Traverse spike generators, call pfProcessor on each of them
+/// \details 
+/// 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolTraverseSpikeReceivers()
-///
-/// ARGS.:
-///
-///	phsle.......: symbol to traverse spike receivers for
+/// 
+/// 
+/// \arg phsle symbol to traverse spike receivers for
 ///	ppist.......: context of symbol, symbol assumed to be on top
-///	pfProcesor..: spike receiver processor
-///	pfFinalizer.: spike receiver finalizer
-///	pvUserdata..: any user data
-///
-/// RTN..: int : see TstrGo()
-///
-/// DESCR: Traverse spike receivers, call pfProcessor on each of them
-///
-/// **************************************************************************
+/// \arg pfProcesor spike receiver processor
+/// \arg pfFinalizer spike receiver finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return int : see TstrGo()
+/// 
+/// \brief Traverse spike receivers, call pfProcessor on each of them
+/// \details 
+/// 
 
 

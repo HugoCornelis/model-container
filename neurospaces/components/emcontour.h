@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_EMContour;
 struct symtab_EMContour;
@@ -34,7 +34,6 @@ struct symtab_EMContour;
 #include "neurospaces/idin.h"
 
 
-//f exported functions
 
 struct symtab_EMContour * EMContourCalloc(void);
 
@@ -49,29 +48,29 @@ void EMContourInit(struct symtab_EMContour *pemc);
 #include "biocomp.h"
 
 
-//s
-//s EM contour description
-//s
+/// \struct
+/// \struct EM contour description
+/// \struct
 
 struct descr_EMContour
 {
-    //m compiler happy
+    /// compiler happy
 
     int iHappy;
 };
 
 
-//s
-//s struct symtab_EMContour
-//s
+/// \struct
+/// \struct struct symtab_EMContour
+/// \struct
 
 struct symtab_EMContour
 {
-    //m base struct : bio component
+    /// base struct : bio component
 
     struct symtab_BioComponent bio;
 
-    //m EM contour description
+    /// EM contour description
 
     struct descr_EMContour degatk;
 };

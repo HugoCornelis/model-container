@@ -49,19 +49,15 @@
 #include "neurospaces/symbols.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: PSymbolStackCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct PSymbolStack * 
-///
+/// 
+/// 
+/// \return struct PSymbolStack * 
+/// 
 ///	Newly allocated symbol stack, NULL for failure
-///
-/// DESCR: Allocate a new symbol stack symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new symbol stack symbol table element
+/// \details 
+/// 
 
 struct PSymbolStack * PSymbolStackCalloc(void)
 {
@@ -85,19 +81,15 @@ struct PSymbolStack * PSymbolStackCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PSymbolStackInit()
-///
-/// ARGS.:
-///
-///	psymst.: symbol stack to clear
-///
-/// RTN..: void
-///
-/// DESCR: Initialize a symbol stack
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psymst symbol stack to clear
+/// 
+/// \return void
+/// 
+/// \brief Initialize a symbol stack
+/// \details 
+/// 
 
 void PSymbolStackInit(struct PSymbolStack *psymst)
 {
@@ -107,21 +99,17 @@ void PSymbolStackInit(struct PSymbolStack *psymst)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PSymbolStackNewFromPidinStack()
-///
-/// ARGS.:
-///
-///	ppist.: pidin stack to convert
-///
-/// RTN..: struct PSymbolStack * : new symbol stack
-///
-/// DESCR: Create symbol stack correspoonding to ppist
-///
-/// TODO.: Optimize, function to get #pidins on stack
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppist pidin stack to convert
+/// 
+/// \return struct PSymbolStack * : new symbol stack
+/// 
+/// \brief Create symbol stack correspoonding to ppist
+/// \details 
+/// 
+/// \todo  Optimize, function to get #pidins on stack
+/// 
 
 struct PSymbolStack * 
 PSymbolStackNewFromPidinStack(struct PidinStack *ppist)
@@ -134,16 +122,16 @@ PSymbolStackNewFromPidinStack(struct PidinStack *ppist)
 
     if (psymstResult)
     {
-	//v symbol to lookup
+	/// symbol to lookup
 
 	struct symtab_HSolveListElement *phsle;
 
-	//v loop var
+	/// loop var
 
 	int i;
 	int j;
 
-	//v number of entries in compressed pidin stack
+	/// number of entries in compressed pidin stack
 
 	int iEntries;
 
@@ -222,19 +210,15 @@ PSymbolStackNewFromPidinStack(struct PidinStack *ppist)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PSymbolStackPop()
-///
-/// ARGS.:
-///
-///	psymst.: symbol stack to pop
-///
-/// RTN..: struct symtab_IdentifierIndex * : popped idin, NULL for failure
-///
-/// DESCR: Pop symbol from stack
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psymst symbol stack to pop
+/// 
+/// \return struct symtab_IdentifierIndex * : popped idin, NULL for failure
+/// 
+/// \brief Pop symbol from stack
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * PSymbolStackPop(struct PSymbolStack *psymst)
 {
@@ -265,20 +249,16 @@ struct symtab_HSolveListElement * PSymbolStackPop(struct PSymbolStack *psymst)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PSymbolStackPush()
-///
-/// ARGS.:
-///
-///	psymst.: symbol stack to push onto
-///	phsle..: phsle to push
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Push phsle onto stack
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psymst symbol stack to push onto
+/// \arg phsle phsle to push
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Push phsle onto stack
+/// \details 
+/// 
 
 int PSymbolStackPush
 (struct PSymbolStack *psymst,struct symtab_HSolveListElement *phsle)

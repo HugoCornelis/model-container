@@ -41,7 +41,7 @@
 #include "replacerinstance.h"
 
 
-//s replacer algorithm private data
+/// \struct replacer algorithm private data
 
 /*s */
 /*s struct with replacer options */
@@ -61,35 +61,35 @@ struct ReplacerOptions_type
 typedef struct ReplacerOptions_type ReplacerOptions;
 
 
-//s
-//s replacer variables
-//s
+/// \struct
+/// \struct replacer variables
+/// \struct
 
 struct ReplacerVariables_type
 {
-    //m base symbol, start of traversal
+    /// base symbol, start of traversal
 
     struct symtab_HSolveListElement *phsleBase;
 
     struct PidinStack *ppistBase;
 
-    //m number of replaced symbols
+    /// number of replaced symbols
 
     int iReplacedSymbols;
 
-    //m number of tries
+    /// number of tries
 
     int iReplacerTries;
 
-    //m number of failures
+    /// number of failures
 
     int iReplacerFailures;
 
-    //m current parser context
+    /// current parser context
 
     struct ParserContext *pacContext;
 
-    //m prototype to work with
+    /// prototype to work with
 
     struct symtab_HSolveListElement *phslePrototype;
 };
@@ -97,19 +97,19 @@ struct ReplacerVariables_type
 typedef struct ReplacerVariables_type ReplacerVariables;
 
 
-//s replacer instance, derives from algorithm instance
+/// \struct replacer instance, derives from algorithm instance
 
 struct ReplacerInstance
 {
-    //m base struct
+    /// base struct
 
     struct AlgorithmInstance algi;
 
-    //m options for this instance
+    /// options for this instance
 
     ReplacerOptions ro;
 
-    //m variables for this instance
+    /// variables for this instance
 
     ReplacerVariables rv;
 };
@@ -138,21 +138,17 @@ ReplacerInstanceSymbolHandler
 (struct AlgorithmInstance *palgi, struct ParserContext *pac);
 
 
-/// **************************************************************************
-///
-/// SHORT: ReplacerInstanceInsert()
-///
-/// ARGS.:
-///
-///	pri...: replacer algorithm instance.
-///	ptstr.: active traversal.
-///	phsle.: top symbol to consider.
-///
-/// RTN..: int : number of added symbols, -1 for failure.
-///
-/// DESCR: Insert symbols.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pri replacer algorithm instance.
+/// \arg ptstr active traversal.
+/// \arg phsle top symbol to consider.
+/// 
+/// \return int : number of added symbols, -1 for failure.
+/// 
+/// \brief Insert symbols.
+/// \details 
+/// 
 
 static
 int
@@ -221,7 +217,7 @@ ReplacerInstanceInsert
 	{
 	    //- link symbol to segment
 
-	    //t a todo
+	    /// \todo a todo
 
 	    SymbolReplaceChild(phsle, phsleNew);
     
@@ -269,21 +265,17 @@ ReplacerInstanceInsert
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ReplacerInstanceNew()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: struct AlgorithmInstance * : 
-///
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return struct AlgorithmInstance *  
+/// 
 ///	created algorithm instance, NULL for failure
-///
-/// DESCR: Algorithm handler to create instance of replacer algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief Algorithm handler to create instance of replacer algorithm.
+/// \details 
+/// 
 
 struct AlgorithmInstance *
 ReplacerInstanceNew
@@ -372,19 +364,15 @@ ReplacerInstanceNew
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ReplacerInstancePrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on replacer instance.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int  std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on replacer instance.
+/// \details 
+/// 
 
 static int ReplacerInstancePrintInfo
 (struct AlgorithmInstance *palgi, FILE *pfile)
@@ -427,21 +415,17 @@ static int ReplacerInstancePrintInfo
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ReplacerInstanceProcessor()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	SymbolProcessor args
-///
-/// RTN..: int : 
-///
+/// 
+/// \return int : 
+/// 
 ///	SymbolProcessor return value, always SYMBOL_PROCESSOR_SUCCESS
-///
-/// DESCR: Obtain coordinates from encountered symbols.
-///
-/// **************************************************************************
+/// 
+/// \brief Obtain coordinates from encountered symbols.
+/// \details 
+/// 
 
 static
 int
@@ -504,21 +488,17 @@ ReplacerInstanceProcessor
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ReplacerInstanceSymbolHandler()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	AlgorithmInstanceSymbolHandler args.
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to add replacer on given symbol
-///
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to add replacer on given symbol
+/// \details 
+/// 
 ///	Does it do a clean update of serials ?
-///
-/// **************************************************************************
+/// 
 
 static 
 int

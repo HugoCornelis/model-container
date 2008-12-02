@@ -41,7 +41,7 @@
 #include "projectionrandomizedinstance.h"
 
 
-//s projection algorithm private data
+/// \struct projection algorithm private data
 
 /*s */
 /*s struct with projection options */
@@ -75,52 +75,52 @@ struct ProjectionRandomizedOptions_type
 typedef struct ProjectionRandomizedOptions_type ProjectionRandomizedOptions;
 
 
-//s
-//s projection variables
-//s
+/// \struct
+/// \struct projection variables
+/// \struct
 
 struct ProjectionRandomizedVariables_type
 {
-    //m symbol that points to network where algorithm is instantiated
+    /// symbol that points to network where algorithm is instantiated
 
     struct symtab_HSolveListElement *phsleNetwork;
 
-    //m context of network (parser context)
+    /// context of network (parser context)
 
     struct PidinStack *ppistNetwork;
 
-    //m symbol attached to
+    /// symbol attached to
 
     struct symtab_HSolveListElement *phsleProjection;
     struct PidinStack *ppistProjection;
 
-    //m reference to projection (not owned by projection)
+    /// reference to projection (not owned by projection)
 
     struct PidinStack *ppistArgument;
 
-    //m source population / cell
+    /// source population / cell
 
     struct symtab_HSolveListElement *phsleSource;
     struct PidinStack *ppistSource;
 
-    //m target population / cell
+    /// target population / cell
 
     struct symtab_HSolveListElement *phsleTarget;
     struct PidinStack *ppistTarget;
 
-    //m number of added connection groups
+    /// number of added connection groups
 
     int iConnectionGroups;
 
-    //m total number of added connections
+    /// total number of added connections
 
     int iConnections;
 
-    //m number of failures when adding connections
+    /// number of failures when adding connections
 
     int iConnectionFailures;
 
-    //m number of tries adding connections
+    /// number of tries adding connections
 
     int iConnectionTries;
 };
@@ -128,25 +128,25 @@ struct ProjectionRandomizedVariables_type
 typedef struct ProjectionRandomizedVariables_type ProjectionRandomizedVariables;
 
 
-//s projectionRandomized instance, derives from algorithm instance
+/// \struct projectionRandomized instance, derives from algorithm instance
 
 struct ProjectionRandomizedInstance
 {
-    //m base struct
+    /// base struct
 
     struct AlgorithmInstance algi;
 
-    //m options for this instance
+    /// options for this instance
 
     ProjectionRandomizedOptions pro;
 
-    //m variables for this instance
+    /// variables for this instance
 
     ProjectionRandomizedVariables prv;
 };
 
 
-//s number of symbol that have been modified
+/// \struct number of symbol that have been modified
 
 /* static int iModified = 0; */
 
@@ -185,21 +185,17 @@ ProjectionRandomizedSpikeReceiverProcessor
 (struct TreespaceTraversal *ptstr,void *pvUserdata);
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionRandomizedInstanceNew()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: struct AlgorithmInstance * : 
-///
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return struct AlgorithmInstance *  
+/// 
 ///	created algorithm instance, NULL for failure
-///
-/// DESCR: Algorithm handler to create instance of projectionRandomized algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief Algorithm handler to create instance of projectionRandomized algorithm.
+/// \details 
+/// 
 
 struct AlgorithmInstance *
 ProjectionRandomizedInstanceNew
@@ -231,7 +227,7 @@ ProjectionRandomizedInstanceNew
 
 	struct symtab_HSolveListElement *phsle = PidinStackLookupTopSymbol(ppist);
 
-	//t should use ParameterResolveSymbol()
+	/// \todo should use ParameterResolveSymbol()
 
 	struct symtab_Parameters *pparProjection
 	    = SymbolFindParameter(&palgs->hsle, ppist, "PROJECTION_NAME");
@@ -280,62 +276,58 @@ ProjectionRandomizedInstanceNew
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionRandomizedInstanceAddConnectionGroups()
-///
-/// ARGS.:
-///
-///	ppri............: projectionRandomized instance.
-///	pproj...........: projection symbol to add connection groups to.
-///	ppistProjection.: 
+/// 
+/// 
+/// \arg ppri projectionRandomized instance.
+/// \arg pproj projection symbol to add connection groups to.
+/// \arg ppistProjection 
 ///	phsleSource.....: source population / cell of projection.
-///	ppistSource.....: 
+/// \arg ppistSource 
 ///	phsleTarget.....: target population / cell of projection.
 ///	ppistTarget.....: 
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Adds connection groups with connections to projection.
-///
-/// **************************************************************************
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Adds connection groups with connections to projection.
+/// \details 
+/// 
 
 struct ProjectionRandomizedInstanceAddConnectionGroups_data
 {
-    //m projection randomized algorithm instance
+    /// projection randomized algorithm instance
 
     struct ProjectionRandomizedInstance *ppri;
 
-    //m network we are handling
+    /// network we are handling
 
     struct symtab_HSolveListElement *phsleNetwork;
     struct PidinStack *ppistNetwork;
 
-    //m projection to add to
+    /// projection to add to
 
     struct symtab_Projection *pproj;
     struct PidinStack *ppistProjection;
 
-    //m active connection group
+    /// active connection group
 
     struct symtab_VConnection *pvconn;
 
-    //m current spike generator
+    /// current spike generator
 
     struct symtab_Attachment *pattaGenerator;
     struct PidinStack *ppistGenerator;
 
-    //m current spike receiver
+    /// current spike receiver
 
     struct symtab_Attachment *pattaReceiver;
     struct PidinStack *ppistReceiver;
 
-    //m source population
+    /// source population
 
     struct symtab_HSolveListElement *phsleSource;
     struct PidinStack *ppistSource;
 
-    //m target population
+    /// target population
 
     struct symtab_HSolveListElement *phsleTarget;
     struct PidinStack *ppistTarget;
@@ -462,7 +454,7 @@ ProjectionRandomizedSpikeReceiverProcessor
 	int iPreRelative = iPre - iSource;
 	int iPostRelative = iPost - iTarget;
 
-	//! check serial principals from treespace traversals, should match.
+	/// \note check serial principals from treespace traversals, should match.
 
 	//- construct connection between pre- and post-synaptic sites
 
@@ -480,7 +472,7 @@ ProjectionRandomizedSpikeReceiverProcessor
 	ppiac->ppri->prv.iConnectionTries++;
 	ppiac->ppri->prv.iConnections++;
 
-	//t should this be SymbolAddChild() ?
+	/// \todo should this be SymbolAddChild() ?
 
 /* 	IOHierarchyAddChild(&ppiac->pvconsy->vect.bio.ioh, &pconn->hsle); */
 
@@ -510,40 +502,40 @@ ProjectionRandomizedInstanceAddConnectionGroups
 
     struct ProjectionRandomizedInstanceAddConnectionGroups_data piac =
     {
-	//m projection randomized algorithm instance
+	/// projection randomized algorithm instance
 
 	ppri,
 
-	//m network we are handling
+	/// network we are handling
 
 	ppri->prv.phsleNetwork,
 	ppri->prv.ppistNetwork,
 
-	//m projection to add to
+	/// projection to add to
 
 	pproj,
 	ppistProjection,
 
-	//m active connection group
+	/// active connection group
 
 	NULL,
 
-	//m current spike generator
-
-	NULL,
-	NULL,
-
-	//m current spike receiver
+	/// current spike generator
 
 	NULL,
 	NULL,
 
-	//m source population
+	/// current spike receiver
+
+	NULL,
+	NULL,
+
+	/// source population
 
 	phsleSource,
 	ppistSource,
 
-	//m target population
+	/// target population
 
 	phsleTarget,
 	ppistTarget,
@@ -571,9 +563,9 @@ ProjectionRandomizedInstanceAddConnectionGroups
 
 /*     //- get zero context for source and target populations */
 
-/*     //! this enables the symbol cache on the context which */
-/*     //! can then be used to calculate pre- and post-synaptic */
-/*     //! serials. */
+/*     /// \note this enables the symbol cache on the context which */
+/*     /// \note can then be used to calculate pre- and post-synaptic */
+/*     /// \note serials. */
 
 /*     piac.ppistSource = PidinStackCalloc(); */
 /*     piac.ppistTarget = PidinStackCalloc(); */
@@ -615,19 +607,15 @@ ProjectionRandomizedInstanceAddConnectionGroups
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionRandomizedInstancePrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on projectionRandomized instance.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int  std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on projectionRandomized instance.
+/// \details 
+/// 
 
 static int ProjectionRandomizedInstancePrintInfo
 (struct AlgorithmInstance *palgi, FILE *pfile)
@@ -706,21 +694,17 @@ static int ProjectionRandomizedInstancePrintInfo
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionRandomizedInstanceSymbolHandler()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	AlgorithmInstanceSymbolHandler args.
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to add projectionRandomized on given symbol
-///
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to add projectionRandomized on given symbol
+/// \details 
+/// 
 ///	Does it do a clean update of serials ?
-///
-/// **************************************************************************
+/// 
 
 static 
 int
@@ -776,7 +760,7 @@ ProjectionRandomizedInstanceSymbolHandler
 
 	    //- get source and target population
 
-	    //t need to check performance issues in these routines
+	    /// \todo need to check performance issues in these routines
 
 	    pparSource
 		= SymbolFindParameter

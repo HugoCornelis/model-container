@@ -39,29 +39,28 @@
 
 struct PSymbolSerialStack
 {
-    //m base : symbol stack
+    /// base : symbol stack
 
     struct PSymbolStack symst;
 
-    //m serial index in principal space,
-    //m should be summation of serial indexes of symbols pointed to
-    //m by ->ppidin[], pointed to by symbol stack (->symst).
-    //m 
-    //m value of INT_MAX means serial is unknown, but that should in fact
-    //m only happen after initialization of the pidin stack.
+    /// serial index in principal space,
+    /// should be summation of serial indexes of symbols pointed to
+    /// by ->ppidin[], pointed to by symbol stack (->symst).
+    /// 
+    /// value of INT_MAX means serial is unknown, but that should in fact
+    /// only happen after initialization of the pidin stack.
 
     int iPrincipalSerial;
 
-    //m 0 means no entries of symbol stack contribute to serial mapping
-    //m == PSymbolStackNumberOfEntries() after init
-    //m == PSymbolStackNumberOfEntries() is valid test for serial mapping
-    //m     in sync with symbol stack
+    /// 0 means no entries of symbol stack contribute to serial mapping
+    /// == PSymbolStackNumberOfEntries() after init
+    /// == PSymbolStackNumberOfEntries() is valid test for serial mapping
+    ///     in sync with symbol stack
 
     int iPrincipalEntries;
 };
 
 
-//f static inline prototypes
 
 static inline 
 struct symtab_HSolveListElement *
@@ -91,9 +90,9 @@ struct symtab_HSolveListElement *
 PSymbolSerialStackTop(struct PSymbolSerialStack *psymsst);
 
 
-///
+/// 
 /// get base element
-///
+/// 
 
 static inline 
 struct symtab_HSolveListElement *
@@ -105,9 +104,9 @@ PSymbolSerialStackBase(struct PSymbolSerialStack *psymsst)
 }
 
 
-///
+/// 
 /// get cached number of entries
-///
+/// 
 
 static inline
 int PSymbolSerialStackCachedEntries(struct PSymbolSerialStack *psymsst)
@@ -118,9 +117,9 @@ int PSymbolSerialStackCachedEntries(struct PSymbolSerialStack *psymsst)
 }
 
 
-///
+/// 
 /// get cached principal serial
-///
+/// 
 
 static inline
 int PSymbolSerialStackCachedSerial(struct PSymbolSerialStack *psymsst)
@@ -131,9 +130,9 @@ int PSymbolSerialStackCachedSerial(struct PSymbolSerialStack *psymsst)
 }
 
 
-///
+/// 
 /// register symbol serial stack is not rooted
-///
+/// 
 
 static inline
 void PSymbolSerialStackClearRooted(struct PSymbolSerialStack *psymsst)
@@ -144,9 +143,9 @@ void PSymbolSerialStackClearRooted(struct PSymbolSerialStack *psymsst)
 }
 
 
-///
+/// 
 /// get element at given place
-///
+/// 
 
 static inline
 struct symtab_HSolveListElement *
@@ -163,9 +162,9 @@ PSymbolSerialStackElementSymbol(struct PSymbolSerialStack *psymsst,int i)
 }
 
 
-///
+/// 
 /// get number of entries in symbol serial stack
-///
+/// 
 
 static inline
 int PSymbolSerialStackNumberOfEntries(struct PSymbolSerialStack *psymsst)
@@ -176,9 +175,9 @@ int PSymbolSerialStackNumberOfEntries(struct PSymbolSerialStack *psymsst)
 }
 
 
-///
+/// 
 /// register symbol serial stack is rooted
-///
+/// 
 
 static inline 
 void PSymbolSerialStackSetRooted(struct PSymbolSerialStack *psymsst)
@@ -189,9 +188,9 @@ void PSymbolSerialStackSetRooted(struct PSymbolSerialStack *psymsst)
 }
 
 
-///
+/// 
 /// get topmost element
-///
+/// 
 
 static inline 
 struct symtab_HSolveListElement *
@@ -203,9 +202,9 @@ PSymbolSerialStackTop(struct PSymbolSerialStack *psymsst)
 }
 
 
-//d
-//d free given symbol serial stack
-//d
+/// \def
+/// \def free given symbol serial stack
+/// \def
 
 #define PSymbolSerialStackFree(psymsst)					\
 do {									\

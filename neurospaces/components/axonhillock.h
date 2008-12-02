@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_AxonHillock;
 struct symtab_AxonHillock;
@@ -36,7 +36,6 @@ struct symtab_AxonHillock;
 #include "segmenter.h"
 
 
-//f exported functions
 
 struct symtab_AxonHillock * AxonHillockCalloc(void);
 
@@ -51,29 +50,29 @@ void AxonHillockInit(struct symtab_AxonHillock *paxhi);
 #include "biocomp.h"
 
 
-//s
-//s axon hillock description
-//s
+/// \struct
+/// \struct axon hillock description
+/// \struct
 
 struct descr_AxonHillock
 {
-    //m the happy compiler
+    /// the happy compiler
 
     int iHappy;
 };
 
 
-//s
-//s struct symtab_AxonHillock
-//s
+/// \struct
+/// \struct struct symtab_AxonHillock
+/// \struct
 
 struct symtab_AxonHillock
 {
-    //m base struct : segmenter
+    /// base struct : segmenter
 
     struct symtab_Segmenter segr;
 
-    //m axon hillock description
+    /// axon hillock description
 
     struct descr_AxonHillock deaxhi;
 };

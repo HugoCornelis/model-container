@@ -28,19 +28,15 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: EMContourCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_EMContour * 
-///
+/// 
+/// 
+/// \return struct symtab_EMContour * 
+/// 
 ///	Newly allocated EM contour, NULL for failure
-///
-/// DESCR: Allocate a new EM contour symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new EM contour symbol table element
+/// \details 
+/// 
 
 struct symtab_EMContour * EMContourCalloc(void)
 {
@@ -68,20 +64,16 @@ struct symtab_EMContour * EMContourCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: EMContourCreateAlias()
-///
-/// ARGS.:
-///
-///	pemc.: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pemc symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 EMContourCreateAlias
@@ -107,19 +99,15 @@ EMContourCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: EMContourInit()
-///
-/// ARGS.:
-///
-///	pemc.: EM contour to init
-///
-/// RTN..: void
-///
-/// DESCR: init EM contour
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pemc EM contour to init
+/// 
+/// \return void
+/// 
+/// \brief init EM contour
+/// \details 
+/// 
 
 void EMContourInit(struct symtab_EMContour *pemc)
 {

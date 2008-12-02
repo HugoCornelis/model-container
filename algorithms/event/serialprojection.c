@@ -37,18 +37,18 @@
 #include "algorithms/event/serialprojection.h"
 
 
-//s event associations for serial projection algorithm
+/// \struct event associations for serial projection algorithm
 
 static ParserEventListener SerialProjectionParserEventListener;
 
 static ParserEventAssociation pevasSerialProjection[] = 
 {
     {
-	//m listens to any projection event
+	/// listens to any projection event
 
 	EVENT_TYPE_PROJECTION,
 
-	//m function to call
+	/// function to call
 
 	SerialProjectionParserEventListener,
     }
@@ -57,17 +57,17 @@ static ParserEventAssociation pevasSerialProjection[] =
 
 static ParserEventAssociationTable evatSerialProjection =
 {
-    //m number of entries
+    /// number of entries
 
     sizeof(*pevasSerialProjection) / sizeof(ParserEventAssociation),
 
-    //m event associations
+    /// event associations
 
     pevasSerialProjection,
 };
 
 
-//s algorithm handlers for serial projection algorithm
+/// \struct algorithm handlers for serial projection algorithm
 
 static AlgorithmHandler SerialProjectionInitAlgorithm;
 
@@ -75,48 +75,48 @@ static AlgorithmHandler SerialProjectionPrintInfo;
 
 static struct AlgorithmHandlerLibrary pfSerialProjectionHandlers =
 {
-    //m after constructor, global is parser context, data is init string
+    /// after constructor, global is parser context, data is init string
 
     SerialProjectionInitAlgorithm,
 
-    //m after init, before destruct
+    /// after init, before destruct
 
     NULL,
 
-    //m print info handler
+    /// print info handler
 
     SerialProjectionPrintInfo,
 };
 
 
-//s algorithm description
+/// \struct algorithm description
 
 static struct symtab_Algorithm modSerialProjection =
 {
-    //m link
+    /// link
 
     {
 	NULL,
 	NULL,
     },
 
-    //m type
+    /// type
 
     0,
 
-    //m flags
+    /// flags
 
     0,
 
-    //m name
+    /// name
 
     "SerialProjection",
 
-    //m algorithm handlers
+    /// algorithm handlers
 
     &pfSerialProjectionHandlers,
 
-    //m event association table
+    /// event association table
 
     &evatSerialProjection
 };
@@ -124,35 +124,31 @@ static struct symtab_Algorithm modSerialProjection =
 struct symtab_Algorithm *palgSerialProjection = &modSerialProjection;
 
 
-//d default number of serial projections
+/// \def default number of serial projections
 
 #define ENTRIES_SERIAL_PROJECTIONS	10000
 
 
-//v serial projection array
+/// serial projection array
 
 struct SerialProjectionVariables serprojVariables;
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialProjectionParserEventListener()
-///
-/// ARGS.:
-///
-///	std ParserEventListener args
-///
-/// RTN..: int : std ParserEventListener return value
-///
-/// DESCR: ParserEvent listener to put projections in a serial array
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std ParserEventListener args
+/// 
+/// \return int : std ParserEventListener return value
+/// 
+/// \brief ParserEvent listener to put projections in a serial array
+/// \details 
+/// 
 
 static int SerialProjectionParserEventListener
 (struct ParserEvent *pev,
  struct symtab_Algorithm *palg)
 {
-    //- set default result : ok
+    //- set default result  ok
 
     int bResult = TRUE;
 
@@ -236,24 +232,20 @@ static int SerialProjectionParserEventListener
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialProjectionInitAlgorithm()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to init serial projection algorithm
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to init serial projection algorithm
+/// \details 
+/// 
 
 static int SerialProjectionInitAlgorithm
     (struct symtab_Algorithm *palgSelf,char *pcName,void *pvGlobal,void *pvData)
 {
-    //- set default result : ok
+    //- set default result  ok
 
     int bResult = TRUE;
 
@@ -284,19 +276,15 @@ static int SerialProjectionInitAlgorithm
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialProjectionPrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on serial projection algorithm
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on serial projection algorithm
+/// \details 
+/// 
 
 static int SerialProjectionPrintInfo
 (struct symtab_Algorithm *palgSelf,char *pcName,void *pvGlobal,void *pvData)
@@ -305,7 +293,7 @@ static int SerialProjectionPrintInfo
 
     int bResult = TRUE;
 
-    //v loop var
+    /// loop var
 
     int i;
 
@@ -320,7 +308,7 @@ static int SerialProjectionPrintInfo
 	 "\n\n"
 	 "SerProjAlgorithm : \n"
 	 "---------------\n"
-	 "Number of created/added projections : %i/%i\n",
+	 "Number of created/added projections  %i/%i\n",
 	 serprojVariables.iProjectionsCreated,
 	 serprojVariables.iProjectionsAdded);
 

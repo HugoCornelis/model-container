@@ -25,13 +25,12 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_VSegment;
 struct symtab_VSegment;
 
 
-//f exported functions
 
 int
 VSegmentRelative2Absolute
@@ -61,9 +60,9 @@ int VSegmentTraverseSegments
 #include "vector.h"
 
 
-//s
-//s vector description
-//s
+/// \struct
+/// \struct vector description
+/// \struct
 
 struct descr_VSegment
 {
@@ -71,17 +70,17 @@ struct descr_VSegment
 };
 
 
-//s
-//s struct symtab_VSegment
-//s
+/// \struct
+/// \struct struct symtab_VSegment
+/// \struct
 
 struct symtab_VSegment
 {
-    //m base struct : vector
+    /// base struct : vector
 
     struct symtab_Vector vect;
 
-    //m enumeration container
+    /// enumeration container
 
     struct descr_VSegment devsegm;
 };

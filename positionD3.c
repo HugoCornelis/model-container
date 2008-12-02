@@ -27,19 +27,15 @@
 /// nothing at the moment
 
 
-/// **************************************************************************
-///
-/// SHORT: D3PositionInit()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pD3.: D3 position to init
-///
-/// RTN..: void
-///
-/// DESCR: init D3 position
-///
-/// **************************************************************************
+/// 
+/// \return void
+/// 
+/// \brief init D3 position
+/// \details 
+/// 
 
 void D3PositionInit(struct D3Position *pD3)
 {

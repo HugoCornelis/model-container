@@ -22,7 +22,7 @@
 #define ATTACHMENT_H
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_Attachment;
 struct symtab_Attachment;
@@ -31,7 +31,6 @@ struct symtab_Attachment;
 #include "neurospaces/idin.h"
 
 
-//f exported functions
 
 struct symtab_Attachment * AttachmentCalloc(void);
 
@@ -53,48 +52,47 @@ int AttachmentSetType(struct symtab_Attachment *patta, int iType);
 #include "neurospaces/symboltable.h"
 
 
-//s
-//s attachment description
-//s
+/// \struct
+/// \struct attachment description
+/// \struct
 
 struct descr_Attachment
 {
-    //m type of data that flows through the medium
+    /// type of data that flows through the medium
 
     char *pcDataType;
 
-    //m type of attachment data
+    /// type of attachment data
 
     int iType;
 };
 
 
-//s
-//s struct symtab_Attachment
-//s
+/// \struct
+/// \struct struct symtab_Attachment
+/// \struct
 
 struct symtab_Attachment
 {
-    //m base struct : bio component
+    /// base struct : bio component
 
     struct symtab_BioComponent bio;
 
-    //m candidate description
+    /// candidate description
 
     struct descr_Attachment deatta;
 };
 
 
-//d incoming connection type
+/// \def incoming connection type
 
 #define TYPE_ATTACHMENT_INCOMING		1
 
-//d outgoing connection type
+/// \def outgoing connection type
 
 #define TYPE_ATTACHMENT_OUTGOING		2
 
 
-//f exported inlines
 
 #ifndef SWIG
 static inline

@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_Population;
 struct symtab_Population;
@@ -35,7 +35,6 @@ struct symtab_Population;
 #include "segmenter.h"
 
 
-//f exported functions
 
 struct symtab_Population * PopulationCalloc(void);
 
@@ -79,33 +78,33 @@ int PopulationTraverseCells
 #include "neurospaces/symboltable.h"
 
 
-//s
-//s population description
-//s
+/// \struct
+/// \struct population description
+/// \struct
 
 struct descr_Population
 {
-    //m type of population data
+    /// type of population data
 
     int iType;
 
-    //m population specific flags (OPTIONS keyword)
+    /// population specific flags (OPTIONS keyword)
 
     int iFlags;
 };
 
 
-//s
-//s struct symtab_Population
-//s
+/// \struct
+/// \struct struct symtab_Population
+/// \struct
 
 struct symtab_Population
 {
-    //m base struct : segmenter
+    /// base struct : segmenter
 
     struct symtab_Segmenter segr;
 
-    //m population description
+    /// population description
 
     struct descr_Population depopu;
 };

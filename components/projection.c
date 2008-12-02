@@ -94,19 +94,15 @@ ProjectionSpikeRecSelector
 
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Projection * 
-///
+/// 
+/// 
+/// \return struct symtab_Projection * 
+/// 
 ///	Newly allocated projection, NULL for failure
-///
-/// DESCR: Allocate a new projection symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new projection symbol table element
+/// \details 
+/// 
 
 struct symtab_Projection * ProjectionCalloc(void)
 {
@@ -134,20 +130,16 @@ struct symtab_Projection * ProjectionCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionConnectionForPostSerialSelector()
-///
-/// ARGS.:
-///
-///	ptstr.......: treespace traversal
-///	pvUserdata..: any user data
-///
-/// RTN..: int : treespace traversal callback return value
-///
-/// DESCR: Selects connections if they come from a registered spikerec.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ptstr treespace traversal
+/// \arg pvUserdata any user data
+/// 
+/// \return int : treespace traversal callback return value
+/// 
+/// \brief Selects connections if they come from a registered spikerec.
+/// \details 
+/// 
 
 static int 
 ProjectionConnectionForPostSerialSelector
@@ -182,7 +174,7 @@ ProjectionConnectionForPostSerialSelector
 
 	//- if match
 
-	//! iPost is absolute, ppqr->iPost is relative, cannot match
+	/// \note iPost is absolute, ppqr->iPost is relative, cannot match
 
 	if (iPost == ppqr->iPost)
 	{
@@ -198,20 +190,16 @@ ProjectionConnectionForPostSerialSelector
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionConnectionForPreSerialSelector()
-///
-/// ARGS.:
-///
-///	ptstr.......: treespace traversal
-///	pvUserdata..: any user data
-///
-/// RTN..: int : treespace traversal callback return value
-///
-/// DESCR: Selects connections if they come from a registered spikegen.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ptstr treespace traversal
+/// \arg pvUserdata any user data
+/// 
+/// \return int : treespace traversal callback return value
+/// 
+/// \brief Selects connections if they come from a registered spikegen.
+/// \details 
+/// 
 
 static int 
 ProjectionConnectionForPreSerialSelector
@@ -240,8 +228,8 @@ ProjectionConnectionForPreSerialSelector
 
 	//- get pre serial
 
-	//t needs target population, available from projection
-	//t ProjectionGetSourceSerial()
+	/// \todo needs target population, available from projection
+	/// \todo ProjectionGetSourceSerial()
 
 	int iSource = ProjectionGetSourceSerial(ppqr->pproj, ppqr->ppistProjection);
 
@@ -263,27 +251,23 @@ ProjectionConnectionForPreSerialSelector
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionConnectionSourceProcessor()
-///
-/// ARGS.:
-///
-///	ptstr.......: treespace traversal
-///	pvUserdata..: any user data
-///
-/// RTN..: int : treespace traversal callback return value
-///
-/// DESCR: Translate vector traversal to traversal over connection sources.
-///
+/// 
+/// 
+/// \arg ptstr treespace traversal
+/// \arg pvUserdata any user data
+/// 
+/// \return int : treespace traversal callback return value
+/// 
+/// \brief Translate vector traversal to traversal over connection sources.
+/// \details 
+/// 
 ///	The user data is supposed to have registered preprocesor and 
 ///	postprocessor. For vectors encountered in this traversal (which are
 ///	supposed to be connection vectors), a new traversal is created and
 ///	used to do traversal with the registered preprocessor and 
 ///	postprocessor.
 ///	Only spikegens are traversed (due to hardcoded selector).
-///
-/// **************************************************************************
+/// 
 
 static int 
 ProjectionConnectionSourceProcessor
@@ -356,26 +340,22 @@ ProjectionConnectionSourceProcessor
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionConnectionTargetProcessor()
-///
-/// ARGS.:
-///
-///	ptstr.......: treespace traversal
-///	pvUserdata..: any user data
-///
-/// RTN..: int : treespace traversal callback return value
-///
-/// DESCR: Translate vector traversal to traversal over connection targets.
-///
+/// 
+/// 
+/// \arg ptstr treespace traversal
+/// \arg pvUserdata any user data
+/// 
+/// \return int : treespace traversal callback return value
+/// 
+/// \brief Translate vector traversal to traversal over connection targets.
+/// \details 
+/// 
 ///	The user data is supposed to have registered procesor and 
 ///	finalizer. For vectors encountered in this traversal (which are
 ///	supposed to be connection vectors), a new traversal is created and
 ///	used to do traversal with the registered processor and finalizer.
 ///	Only spikerecs are traversed (due to hardcoded selector).
-///
-/// **************************************************************************
+/// 
 
 static int 
 ProjectionConnectionTargetProcessor
@@ -448,22 +428,18 @@ ProjectionConnectionTargetProcessor
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionCountConnections()
-///
-/// ARGS.:
-///
-///	pproj...: projection
-///	ppist...: context of projection
-///
-/// RTN..: int : number of connections, -1 for failure
-///
-/// DESCR: Get number of connections in projection
-///
+/// 
+/// 
+/// \arg pproj projection
+/// \arg ppist context of projection
+/// 
+/// \return int : number of connections, -1 for failure
+/// 
+/// \brief Get number of connections in projection
+/// \details 
+/// 
 ///	connections == synapses
-///
-/// **************************************************************************
+/// 
 
 int ProjectionCountConnections
 (struct symtab_Projection *pproj,struct PidinStack *ppist)
@@ -492,20 +468,16 @@ int ProjectionCountConnections
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionCreateAlias()
-///
-/// ARGS.:
-///
-///	pproj.: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pproj symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 ProjectionCreateAlias
@@ -531,23 +503,19 @@ ProjectionCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionGetNumberOfConnectionsForSpikeGenerator()
-///
-/// ARGS.:
-///
-///	pproj.........: projection
-///	ppist.........: context of projection
-///	ppistSpikeGen.: spike generator
-///
-/// RTN..: int : number of connections, -1 for failure
-///
-/// DESCR: Get number of connections for a single spikegen
-///
+/// 
+/// 
+/// \arg pproj projection
+/// \arg ppist context of projection
+/// \arg ppistSpikeGen spike generator
+/// 
+/// \return int : number of connections, -1 for failure
+/// 
+/// \brief Get number of connections for a single spikegen
+/// \details 
+/// 
 ///	connections == affected synapses attached to a spikegen
-///
-/// **************************************************************************
+/// 
 
 int
 ProjectionGetNumberOfConnectionsForSpikeGenerator
@@ -581,23 +549,19 @@ ProjectionGetNumberOfConnectionsForSpikeGenerator
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionGetNumberOfConnectionsForSpikeReceiver()
-///
-/// ARGS.:
-///
-///	pproj.........: projection
-///	ppist.........: context of projection
-///	ppistSpikeRec.: spike receiver (attachment point)
-///
-/// RTN..: int : number of connections, -1 for failure
-///
-/// DESCR: Get number of connections for a single spike receiver
-///
+/// 
+/// 
+/// \arg pproj projection
+/// \arg ppist context of projection
+/// \arg ppistSpikeRec spike receiver (attachment point)
+/// 
+/// \return int : number of connections, -1 for failure
+/// 
+/// \brief Get number of connections for a single spike receiver
+/// \details 
+/// 
 ///	connections == affected synapses attached to a spike receiver
-///
-/// **************************************************************************
+/// 
 
 int
 ProjectionGetNumberOfConnectionsForSpikeReceiver
@@ -641,13 +605,14 @@ ProjectionGetNumberOfConnectionsForSpikeReceiver
 /* ///	ppist.......: context of projection */
 /* ///	ppistTarget.: population target */
 /* /// */
-/* /// RTN..: int : number of connections, -1 for failure */
+/* /// \return int : number of connections, -1 for failure */
 /* /// */
-/* /// DESCR: Get number of connections for given target population */
+/* /// \brief Get number of connections for given target population */
+/// \details 
 /* /// */
 /* ///	#connections == #affected synapses in the target population */
 /* /// */
-/* /// NOTE.: DO NOT USE, will be removed */
+/* /// \note  DO NOT USE, will be removed */
 /* /// */
 /* /// ************************************************************************** */
 
@@ -793,20 +758,16 @@ ProjectionGetNumberOfConnectionsForSpikeReceiver
 /* } */
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionGetSourceSerial()
-///
-/// ARGS.:
-///
-///	pproj.: projection.
-///	ppist.: context of projection.
-///
-/// RTN..: int : Serial for source population, -1 for failure.
-///
-/// DESCR: Calculate serial for source population.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pproj projection.
+/// \arg ppist context of projection.
+/// 
+/// \return int : Serial for source population, -1 for failure.
+/// 
+/// \brief Calculate serial for source population.
+/// \details 
+/// 
 
 int
 ProjectionGetSourceSerial
@@ -850,20 +811,16 @@ ProjectionGetSourceSerial
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionGetTargetSerial()
-///
-/// ARGS.:
-///
-///	pproj.: projection.
-///	ppist.: context of projection.
-///
-/// RTN..: int : Serial for target population, -1 for failure.
-///
-/// DESCR: Calculate serial for target population.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pproj projection.
+/// \arg ppist context of projection.
+/// 
+/// \return int : Serial for target population, -1 for failure.
+/// 
+/// \brief Calculate serial for target population.
+/// \details 
+/// 
 
 int
 ProjectionGetTargetSerial
@@ -907,19 +864,15 @@ ProjectionGetTargetSerial
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionInit()
-///
-/// ARGS.:
-///
-///	pproj.: projection to init
-///
-/// RTN..: void
-///
-/// DESCR: init projection
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pproj projection to init
+/// 
+/// \return void
+/// 
+/// \brief init projection
+/// \details 
+/// 
 
 void ProjectionInit(struct symtab_Projection *pproj)
 {
@@ -943,9 +896,10 @@ void ProjectionInit(struct symtab_Projection *pproj)
 /* ///	ppist..: context of projection */
 /* ///	pconn..: connection to lookup serial ID for */
 /* /// */
-/* /// RTN..: int : serial ID, -1 for failure */
+/* /// \return int : serial ID, -1 for failure */
 /* /// */
-/* /// DESCR: Lookup serial ID for a connection */
+/* /// \brief Lookup serial ID for a connection */
+/// \details 
 /* /// */
 /* /// ************************************************************************** */
 
@@ -970,7 +924,7 @@ void ProjectionInit(struct symtab_Projection *pproj)
 
 /* 	//- count connections for target of this connection */
 
-/* 	//! this caches the serial ID for this target in the connections */
+/* 	/// \note this caches the serial ID for this target in the connections */
 
 /* 	ProjectionGetNumberOfConnectionsForSpikeReceiver */
 /* 	    (pproj,ppist,ppistTarget); */
@@ -990,20 +944,16 @@ void ProjectionInit(struct symtab_Projection *pproj)
 /* } */
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionSpikeGenConnectionCounter()
-///
-/// ARGS.:
-///
-///	ptstr.......: treespace traversal
-///	pvUserdata..: any user data
-///
-/// RTN..: int : treespace traversal callback return value
-///
-/// DESCR: Increments (int *)ppqr->pvUserdata.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ptstr treespace traversal
+/// \arg pvUserdata any user data
+/// 
+/// \return int : treespace traversal callback return value
+/// 
+/// \brief Increments (int *)ppqr->pvUserdata.
+/// \details 
+/// 
 
 static int 
 ProjectionSpikeGenConnectionCounter
@@ -1035,20 +985,16 @@ ProjectionSpikeGenConnectionCounter
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionSpikeGenSelector()
-///
-/// ARGS.:
-///
-///	ptstr.......: treespace traversal
-///	pvUserdata..: any user data
-///
-/// RTN..: int : treespace traversal callback return value
-///
-/// DESCR: Selects connections if they come from a registered spikegen.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ptstr treespace traversal
+/// \arg pvUserdata any user data
+/// 
+/// \return int : treespace traversal callback return value
+/// 
+/// \brief Selects connections if they come from a registered spikegen.
+/// \details 
+/// 
 
 static int 
 ProjectionSpikeGenSelector
@@ -1134,20 +1080,16 @@ ProjectionSpikeGenSelector
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionSpikeRecConnectionCounter()
-///
-/// ARGS.:
-///
-///	ptstr.......: treespace traversal
-///	pvUserdata..: any user data
-///
-/// RTN..: int : treespace traversal callback return value
-///
-/// DESCR: Increments (int *)ppqr->pvUserdata.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ptstr treespace traversal
+/// \arg pvUserdata any user data
+/// 
+/// \return int : treespace traversal callback return value
+/// 
+/// \brief Increments (int *)ppqr->pvUserdata.
+/// \details 
+/// 
 
 static int 
 ProjectionSpikeRecConnectionCounter
@@ -1177,20 +1119,16 @@ ProjectionSpikeRecConnectionCounter
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionSpikeRecSelector()
-///
-/// ARGS.:
-///
-///	ptstr.......: treespace traversal
-///	pvUserdata..: any user data
-///
-/// RTN..: int : treespace traversal callback return value
-///
-/// DESCR: Selects connections if they come from a given spikerec.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ptstr treespace traversal
+/// \arg pvUserdata any user data
+/// 
+/// \return int : treespace traversal callback return value
+/// 
+/// \brief Selects connections if they come from a given spikerec.
+/// \details 
+/// 
 
 static int 
 ProjectionSpikeRecSelector
@@ -1276,28 +1214,24 @@ ProjectionSpikeRecSelector
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionTraverseConnections()
-///
-/// ARGS.:
-///
-///	pproj.......: projection to traverse connections for
+/// 
+/// 
+/// \arg pproj projection to traverse connections for
 ///	ppist.......: context of projection, projection assumed to be on top
-///	pfProcessor.: mechanism processor
-///	pfFinalizer.: finalizer
-///	pvUserdata..: any user data
-///
-/// RTN..: see TstrTraverse()
-///
-/// DESCR: Traverse connections, call pfProcesor on each of them
-///
+/// \arg pfProcessor mechanism processor
+/// \arg pfFinalizer finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return see TstrTraverse()
+/// 
+/// \brief Traverse connections, call pfProcesor on each of them
+/// \details 
+/// 
 ///	Does not use a selector to select connections yet, so calls 
 ///	pfProcesor on connection vectors also. Test with 
 ///	InstanceOfVConnection() and InstanceOfConnection() to make 
 ///	distinction between the two.
-///
-/// **************************************************************************
+/// 
 
 int
 ProjectionTraverseConnections
@@ -1337,26 +1271,22 @@ ProjectionTraverseConnections
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionTraverseConnectionsForPostSerial()
-///
-/// ARGS.:
-///
-///	pproj.........: projection
-///	ppist.........: context of projection
-///	iReceiver.....: rooted serial of spike receiver
-///	pfProcessor...: processor to be called on matching connections
-///	pfFinalizer...: finalizer
-///	pvUserdata....: any user data
-///
-/// RTN..: see TstrTraverse()
-///
-/// DESCR: Call processor on connections attached to spikerec.
-///
+/// 
+/// 
+/// \arg pproj projection
+/// \arg ppist context of projection
+/// \arg iReceiver rooted serial of spike receiver
+/// \arg pfProcessor processor to be called on matching connections
+/// \arg pfFinalizer finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return see TstrTraverse()
+/// 
+/// \brief Call processor on connections attached to spikerec.
+/// \details 
+/// 
 ///	If ppistSpikerec is rooted, ppist must be rooted to.
-///
-/// **************************************************************************
+/// 
 
 int
 ProjectionTraverseConnectionsForPostSerial
@@ -1417,8 +1347,8 @@ ProjectionTraverseConnectionsForPostSerial
 
     TstrDelete(ptstr);
 
-    //! obsolete : ProjectionTraverseConnections() now has its own
-    //! connection selector.
+    /// \note obsolete : ProjectionTraverseConnections() now has its own
+    /// \note connection selector.
 
 /*     struct PQ_ConnsForSpikerec_Result pqr = */
 /*     { */
@@ -1446,25 +1376,21 @@ ProjectionTraverseConnectionsForPostSerial
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionTraverseConnectionsForSpikeGenerator()
-///
-/// ARGS.:
-///
-///	ppq...........: projection query
-///	ppistSpikeGen.: spike generator
-///	pfProcessor...: processor to be called on matching connections
-///	pfFinalizer...: finalizer
-///	pvUserdata....: any user data
-///
-/// RTN..: see TstrTraverse()
-///
-/// DESCR: Call processor on connections attached to spikegen.
-///
+/// 
+/// 
+/// \arg ppq projection query
+/// \arg ppistSpikeGen spike generator
+/// \arg pfProcessor processor to be called on matching connections
+/// \arg pfFinalizer finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return see TstrTraverse()
+/// 
+/// \brief Call processor on connections attached to spikegen.
+/// \details 
+/// 
 ///	If ppistSpikeGen is rooted, ppist must be rooted to.
-///
-/// **************************************************************************
+/// 
 
 int
 ProjectionTraverseConnectionsForSpikeGenerator
@@ -1526,8 +1452,8 @@ ProjectionTraverseConnectionsForSpikeGenerator
 
     TstrDelete(ptstr);
 
-    //! obsolete : ProjectionTraverseConnections() now has its own
-    //! connection selector.
+    /// \note obsolete : ProjectionTraverseConnections() now has its own
+    /// \note connection selector.
 
 /*     struct PQ_ConnsForSpikegen_Result pqr = */
 /*     { */
@@ -1569,9 +1495,10 @@ ProjectionTraverseConnectionsForSpikeGenerator
 /* ///	pfFinalizer...: finalizer */
 /* ///	pvUserdata....: any user data */
 /* /// */
-/* /// RTN..: int : success of operation */
+/* /// \return int : success of operation */
 /* /// */
-/* /// DESCR: Traverse connections attached to spikegen and solver. */
+/* /// \brief Traverse connections attached to spikegen and solver. */
+/// \details 
 /* /// */
 /* ///	Call processor on connections attached to spikegen, but only if  */
 /* ///	the spikerecs of the connections are solved by the solver given */
@@ -1721,26 +1648,22 @@ ProjectionTraverseConnectionsForSpikeGenerator
 /* } */
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionTraverseConnectionsForSpikeReceiver()
-///
-/// ARGS.:
-///
-///	pproj.........: projection
-///	ppist.........: context of projection
-///	ppistSpikerec.: spike receiver
-///	pfProcessor...: processor to be called on matching connections
-///	pfFinalizer...: finalizer
-///	pvUserdata....: any user data
-///
-/// RTN..: see TstrTraverse()
-///
-/// DESCR: Call processor on connections attached to spikerec.
-///
+/// 
+/// 
+/// \arg pproj projection
+/// \arg ppist context of projection
+/// \arg ppistSpikerec spike receiver
+/// \arg pfProcessor processor to be called on matching connections
+/// \arg pfFinalizer finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return see TstrTraverse()
+/// 
+/// \brief Call processor on connections attached to spikerec.
+/// \details 
+/// 
 ///	If ppistSpikerec is rooted, ppist must be rooted to.
-///
-/// **************************************************************************
+/// 
 
 int
 ProjectionTraverseConnectionsForSpikeReceiver
@@ -1802,8 +1725,8 @@ ProjectionTraverseConnectionsForSpikeReceiver
 
     TstrDelete(ptstr);
 
-    //! obsolete : ProjectionTraverseConnections() now has its own
-    //! connection selector.
+    /// \note obsolete : ProjectionTraverseConnections() now has its own
+    /// \note connection selector.
 
 /*     struct PQ_ConnsForSpikerec_Result pqr = */
 /*     { */
@@ -1845,9 +1768,10 @@ ProjectionTraverseConnectionsForSpikeReceiver
 /* ///	pfFinalizer...: finalizer */
 /* ///	pvUserdata....: any user data */
 /* /// */
-/* /// RTN..: int : success of operation */
+/* /// \return int : success of operation */
 /* /// */
-/* /// DESCR: Traverse connections attached to spikerec and solver. */
+/* /// \brief Traverse connections attached to spikerec and solver. */
+/// \details 
 /* /// */
 /* ///	Call processor on connections attached to spikerec, but only if  */
 /* ///	the spikegens of the connections are solved by the solver given */

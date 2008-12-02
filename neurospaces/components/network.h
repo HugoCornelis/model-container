@@ -32,13 +32,12 @@
 #include "segmenter.h"
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_Network;
 struct symtab_Network;
 
 
-//f exported functions
 
 struct symtab_Network * NetworkCalloc(void);
 
@@ -79,29 +78,29 @@ NetworkTraverseConnections
 #include "neurospaces/symboltable.h"
 
 
-//s
-//s network description
-//s
+/// \struct
+/// \struct network description
+/// \struct
 
 struct descr_Network
 {
-    //m dummy
+    /// dummy
 
     int iDummy;
 };
 
 
-//s
-//s struct symtab_Network
-//s
+/// \struct
+/// \struct struct symtab_Network
+/// \struct
 
 struct symtab_Network
 {
-    //m base struct : segmenter
+    /// base struct : segmenter
 
     struct symtab_Segmenter segr;
 
-    //m network description
+    /// network description
 
     struct descr_Network denetw;
 };

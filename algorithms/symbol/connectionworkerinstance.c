@@ -23,19 +23,15 @@
 #include "connectionworkerinstance.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionWorkerInstanceGetNetwork()
-///
-/// ARGS.:
-///
-/// RTN..: struct PidinStack * : 
-///
+/// 
+/// 
+/// \return struct PidinStack * : 
+/// 
 ///	Network context.
-///
-/// DESCR: Get network context.
-///
-/// **************************************************************************
+/// 
+/// \brief Get network context.
+/// \details 
+/// 
 
 struct PidinStack *
 ConnectionWorkerInstanceGetParameterContext
@@ -72,19 +68,15 @@ ConnectionWorkerInstanceGetNetwork
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionWorkerInstanceGetProjection()
-///
-/// ARGS.:
-///
-/// RTN..: struct PidinStack * : 
-///
+/// 
+/// 
+/// \return struct PidinStack * : 
+/// 
 ///	Projection context.
-///
-/// DESCR: Get projection context.
-///
-/// **************************************************************************
+/// 
+/// \brief Get projection context.
+/// \details 
+/// 
 
 struct PidinStack *
 ConnectionWorkerInstanceGetProjection
@@ -133,19 +125,15 @@ ConnectionWorkerInstanceGetProjection
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionWorkerInstanceGetSource()
-///
-/// ARGS.:
-///
-/// RTN..: struct PidinStack * : 
-///
+/// 
+/// 
+/// \return struct PidinStack * : 
+/// 
 ///	Network context.
-///
-/// DESCR: Get source context.
-///
-/// **************************************************************************
+/// 
+/// \brief Get source context.
+/// \details 
+/// 
 
 struct PidinStack *
 ConnectionWorkerInstanceGetSource

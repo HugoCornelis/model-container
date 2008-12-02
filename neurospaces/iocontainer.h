@@ -34,21 +34,21 @@
 #endif
 
 
-//s
-//s gives transparant access to I/O structures
-//s
+/// \struct
+/// \struct gives transparant access to I/O structures
+/// \struct
 
 struct symtab_IOContainer
 {
-    //m input/output relations
+    /// input/output relations
 
     struct symtab_InputOutput *pio;
 };
 
 
-//d
-//d test type(pio) == struct symtab_InputOutput * at compile time
-//d
+/// \def
+/// \def test type(pio) == struct symtab_InputOutput * at compile time
+/// \def
 
 #define CompileTimeTestInputOutput(pio)					\
 do {									\
@@ -57,9 +57,9 @@ do {									\
 } while (0)
 
 
-//d
-//d get info for next iteration
-//d
+/// \def
+/// \def get info for next iteration
+/// \def
 
 #define IOContainerNextRelation(pio)					\
 ({									\
@@ -107,7 +107,7 @@ IOContainerResolvePosition
 #include "inputoutput.h"
 
 
-/* //f static inline prototypes */
+//f static inline prototypes
 
 #ifndef SWIG
 static inline
@@ -141,9 +141,9 @@ struct symtab_IOContainer *
 IOContainerNewFromIO(struct symtab_InputOutput *pio);
 
 
-///
+/// 
 /// assign I/O list from container
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -176,9 +176,9 @@ IOContainerAssignRelations
 }
 
 
-///
+/// 
 /// get I/O list from container
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -190,9 +190,9 @@ IOContainerGetRelations(struct symtab_IOContainer *pioc)
 }
 
 
-///
+/// 
 /// check if named relation present
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -204,9 +204,9 @@ IOContainerHasRelation(struct symtab_IOContainer *pioc, char *pc, int i)
 }
 
 
-///
+/// 
 /// start iterate over all I/O's
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -227,9 +227,9 @@ IOContainerIterateRelations(struct symtab_IOContainer *pioc)
 }
 
 
-///
+/// 
 /// construct I/O container from I/O relations
-///
+/// 
 
 #ifndef SWIG
 static inline

@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_ConnectionSymbol;
 struct symtab_ConnectionSymbol;
@@ -34,7 +34,6 @@ struct symtab_ConnectionSymbol;
 #include "neurospaces/treespacetraversal.h"
 
 
-//f exported functions
 
 struct symtab_ConnectionSymbol * ConnectionSymbolCalloc(void);
 
@@ -71,30 +70,30 @@ ConnectionSymbolGetWeight(struct symtab_ConnectionSymbol *pconsy);
 #include "biocomp.h"
 
 
-//s
-//s connectionsymbol description
-//s
+/// \struct
+/// \struct connectionsymbol description
+/// \struct
 
 struct descr_ConnectionSymbol
 {
-    //m compiler happy
+    /// compiler happy
 
     int iHappy;
 
 };
 
 
-//s
-//s struct symtab_ConnectionSymbol
-//s
+/// \struct
+/// \struct struct symtab_ConnectionSymbol
+/// \struct
 
 struct symtab_ConnectionSymbol
 {
-    //m base struct : bio component
+    /// base struct : bio component
 
     struct symtab_BioComponent bio;
 
-    //m connectionSymbol description
+    /// connectionSymbol description
 
     struct descr_ConnectionSymbol de;
 };

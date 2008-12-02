@@ -34,38 +34,34 @@
 
 struct ChildPositionData
 {
-    //m current position, is serial ID
+    /// current position, is serial ID
 
     int iPosition;
 
-    //m symbol to search for
+    /// symbol to search for
 
     struct symtab_HSolveListElement *phsle;
 
-    //m context of symbol to look for
+    /// context of symbol to look for
 
     struct PidinStack *ppist;
 
-    //m found flag
+    /// found flag
 
     int bFound;
 };
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentCountSpikeGenerators()
-///
-/// ARGS.:
-///
-///	pbio..: biocomponent to count spike generators for
+/// 
+/// 
+/// \arg pbio biocomponent to count spike generators for
 ///	ppist.: context, biocomponent on top
-///
-/// RTN..: int : number of spike generators in biocomponent, -1 for failure
-///
-/// DESCR: count spike generators in biocomponent
-///
-/// **************************************************************************
+/// 
+/// \return int : number of spike generators in biocomponent, -1 for failure
+/// 
+/// \brief count spike generators in biocomponent
+/// \details 
+/// 
 
 static int 
 BioComponentSpikeGeneratorCounter
@@ -121,20 +117,16 @@ int BioComponentCountSpikeGenerators
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentCountSpikeReceivers()
-///
-/// ARGS.:
-///
-///	pbio..: biocomponent to count spike receivers for
+/// 
+/// 
+/// \arg pbio biocomponent to count spike receivers for
 ///	ppist.: context, biocomponent on top
-///
-/// RTN..: int : number of spike receivers in biocomponent, -1 for failure
-///
-/// DESCR: count spike receivers in biocomponent
-///
-/// **************************************************************************
+/// 
+/// \return int : number of spike receivers in biocomponent, -1 for failure
+/// 
+/// \brief count spike receivers in biocomponent
+/// \details 
+/// 
 
 static int 
 BioComponentSpikeReceiverCounter
@@ -190,20 +182,16 @@ int BioComponentCountSpikeReceivers
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentCreateAlias()
-///
-/// ARGS.:
-///
-///	pbio..: bio component to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pbio bio component to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 BioComponentCreateAlias
@@ -225,7 +213,7 @@ BioComponentCreateAlias
 
 /*     //- increment number of created aliases */
 
-     //! this is left here in a comment for the code consistency checkers.
+     /// \note this is left here in a comment for the code consistency checkers.
 
 /*     SymbolIncrementAliases(HIERARCHY_TYPE_symbols_bio_comp); */
 
@@ -235,29 +223,25 @@ BioComponentCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentCreateAliasses()
-///
-/// ARGS.:
-///
-///	pbio.......: bio component to replace.
-///	iCount.....: replacement count.
-///	phslResult.: created aliasses (must be empty).
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pbio bio component to replace.
+/// \arg iCount replacement count.
+/// \arg phslResult created aliasses (must be empty).
+/// 
+/// \return int
+/// 
 ///	Success of operation, if failed, you still have to empty the
 ///	result list.
-///
+/// 
 ///	phslResult.: created aliasses (must be empty).
-///
-/// DESCR: Create aliasses for a biocomponent.
-///
+/// 
+/// \brief Create aliasses for a biocomponent.
+/// \details 
+/// 
 ///	The names of the created aliasses are a concatenation of the
 ///	original name, underscore, count, where count is 0 .. iCount.
-///
-/// **************************************************************************
+/// 
 
 int
 BioComponentCreateAliasses
@@ -287,7 +271,7 @@ BioComponentCreateAliasses
 
 	    if (!phsleAlias)
 	    {
-		//! memory leak: pcIdentifier of idin.
+		/// \note memory leak: pcIdentifier of idin.
 
 		IdinFree(pidinAlias);
 
@@ -310,20 +294,16 @@ BioComponentCreateAliasses
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentGetChildFromInput()
-///
-/// ARGS.:
-///
-///	pbio.: segment to get Cm for
-///	pio..: input to search
-///
-/// RTN..: struct symtab_HSolveListElement * : symbol generating given input
-///
-/// DESCR: Look for symbol that generates given input
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pbio segment to get Cm for
+/// \arg pio input to search
+/// 
+/// \return struct symtab_HSolveListElement * : symbol generating given input
+/// 
+/// \brief Look for symbol that generates given input
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 BioComponentGetChildFromInput
@@ -364,8 +344,8 @@ BioComponentGetChildFromInput
 	phsleResult
 	    = SymbolLookupHierarchical(&pbio->ioh.iol.hsle, &pist, 0, TRUE);
 
-	//t not sure why this is necessary and where it could be used.
-	//t it is not used by the neurospaces-hsolve bridge (checked).
+	/// \todo not sure why this is necessary and where it could be used.
+	/// \todo it is not used by the neurospaces-hsolve bridge (checked).
 
 /* 	//- register the input symbol */
 
@@ -378,21 +358,17 @@ BioComponentGetChildFromInput
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentGetModifiableParameter()
-///
-/// ARGS.:
-///
-///	pbio....: component to get parameter for
-///	pcName..: name of parameter to search for
-///	ppist...: context of symbol
-///
-/// RTN..: struct symtab_Parameters * : parameter, NULL for failure
-///
-/// DESCR: Get parameter with given name, guaranteed to be writable.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pbio component to get parameter for
+/// \arg pcName name of parameter to search for
+/// \arg ppist context of symbol
+/// 
+/// \return struct symtab_Parameters * : parameter, NULL for failure
+/// 
+/// \brief Get parameter with given name, guaranteed to be writable.
+/// \details 
+/// 
 
 struct symtab_Parameters * 
 BioComponentGetModifiableParameter
@@ -415,14 +391,14 @@ BioComponentGetModifiableParameter
     {
 	//- return failure
 
-	//! auto vivification of parameters must not be handled here
+	/// \note auto vivification of parameters must not be handled here
 
 	return(NULL);
     }
 
     //- if parameter read-only
 
-    //! this check does not allow to interfere with parameter caches.
+    /// \note this check does not allow to interfere with parameter caches.
 
     if (ParameterIsReadOnly(ppar))
     {
@@ -452,21 +428,17 @@ BioComponentGetModifiableParameter
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentGetParameter()
-///
-/// ARGS.:
-///
-///	pbio....: component to get parameter for
-///	ppist...: context of symbol
-///	pcName..: name of parameter to search for
-///
-/// RTN..: struct symtab_Parameters * : parameter, NULL for failure
-///
-/// DESCR: Get parameter with given name
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pbio component to get parameter for
+/// \arg ppist context of symbol
+/// \arg pcName name of parameter to search for
+/// 
+/// \return struct symtab_Parameters * : parameter, NULL for failure
+/// 
+/// \brief Get parameter with given name
+/// \details 
+/// 
 
 struct symtab_Parameters * 
 BioComponentGetParameter
@@ -517,9 +489,9 @@ BioComponentGetParameter
 
     if (!pparResult)
     {
-	//t default values should be implemented in parcontainer or in
-	//t parameter.  if done so, symbols without parameters can still
-	//t obtain default values using static calls.
+	/// \todo default values should be implemented in parcontainer or in
+	/// \todo parameter.  if done so, symbols without parameters can still
+	/// \todo obtain default values using static calls.
 
 	//- if coordinate parameter
 
@@ -528,27 +500,27 @@ BioComponentGetParameter
 	{
 	    static struct symtab_Parameters parX =
 	    {
-		//m link structures into list
+		/// link structures into list
 
 		NULL,
 
-		//m first parameter of list
+		/// first parameter of list
 
 		NULL,
 
-		//m type of parameter
+		/// type of parameter
 
 		TYPE_PARA_NUMBER,
 
-		//m flags
+		/// flags
 
 		FLAG_PARA_READONLY,
 
-		//m name of parameter
+		/// name of parameter
 
 		"X",
 
-		//m value : number, identifier or function for parameter
+		/// value : number, identifier or function for parameter
 
 		{
 		    0.0,
@@ -557,27 +529,27 @@ BioComponentGetParameter
 
 	    static struct symtab_Parameters parY =
 	    {
-		//m link structures into list
+		/// link structures into list
 
 		NULL,
 
-		//m first parameter of list
+		/// first parameter of list
 
 		NULL,
 
-		//m type of parameter
+		/// type of parameter
 
 		TYPE_PARA_NUMBER,
 
-		//m flags
+		/// flags
 
 		FLAG_PARA_READONLY,
 
-		//m name of parameter
+		/// name of parameter
 
 		"Y",
 
-		//m value : number, identifier or function for parameter
+		/// value : number, identifier or function for parameter
 
 		{
 		    0.0,
@@ -586,27 +558,27 @@ BioComponentGetParameter
 
 	    static struct symtab_Parameters parZ =
 	    {
-		//m link structures into list
+		/// link structures into list
 
 		NULL,
 
-		//m first parameter of list
+		/// first parameter of list
 
 		NULL,
 
-		//m type of parameter
+		/// type of parameter
 
 		TYPE_PARA_NUMBER,
 
-		//m flags
+		/// flags
 
 		FLAG_PARA_READONLY,
 
-		//m name of parameter
+		/// name of parameter
 
 		"Z",
 
-		//m value : number, identifier or function for parameter
+		/// value : number, identifier or function for parameter
 
 		{
 		    0.0,
@@ -630,19 +602,15 @@ BioComponentGetParameter
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentInit()
-///
-/// ARGS.:
-///
-///	pbio.: biological component to init
-///
-/// RTN..: void
-///
-/// DESCR: Init biological component
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pbio biological component to init
+/// 
+/// \return void
+/// 
+/// \brief Init biological component
+/// \details 
+/// 
 
 void BioComponentInit(struct symtab_BioComponent * pbio)
 {
@@ -660,24 +628,20 @@ void BioComponentInit(struct symtab_BioComponent * pbio)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentLookupBindableIO()
-///
-/// ARGS.:
-///
-///	pbio.....: biological container to search
-///	pcInput..: name of input to search
-///	i........: sequential input number
-///
-/// RTN..: struct symtab_InputOutput * : input, NULL if not found
-///
-/// DESCR: Get element attached to named input
-///
+/// 
+/// 
+/// \arg pbio biological container to search
+/// \arg pcInput name of input to search
+/// \arg i sequential input number
+/// 
+/// \return struct symtab_InputOutput * : input, NULL if not found
+/// 
+/// \brief Get element attached to named input
+/// \details 
+/// 
 ///	Only one element is searched. No mixing of inputs from elements
 ///	and prototypes allowed yet.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_InputOutput *
 BioComponentLookupBindableIO
@@ -692,7 +656,7 @@ BioComponentLookupBindableIO
 
     if (!pioResult)
     {
-	//t count number of I/O relations, subtract from i
+	/// \todo count number of I/O relations, subtract from i
 
 	//- if prototype
 
@@ -713,29 +677,25 @@ BioComponentLookupBindableIO
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentLookupHierarchical()
-///
-/// ARGS.:
-///
-///	pbio.....: biological container to search
-///	ppist....: name(s) to search
-///	iLevel...: active level of ppist
-///	bAll.....: set TRUE if next entries in ppist have to be searched
-///
-/// RTN..: struct symtab_HSolveListElement * :
-///
+/// 
+/// 
+/// \arg pbio biological container to search
+/// \arg ppist name(s) to search
+/// \arg iLevel active level of ppist
+/// \arg bAll set TRUE if next entries in ppist have to be searched
+/// 
+/// \return struct symtab_HSolveListElement * :
+/// 
 ///	found symbol, NULL for not found
-///
-/// DESCR: Hierarchical lookup in subsymbols
-///
+/// 
+/// \brief Hierarchical lookup in subsymbols
+/// \details 
+/// 
 ///	First tries to match with container itself, if fails, returns failure
 ///	If match and subsymbols requested (bAll), tries to match next names
 ///	with subsymbols of container. Subsymbols come from IO hierarchy or
 ///	from prototype.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_HSolveListElement *
 BioComponentLookupHierarchical
@@ -770,22 +730,18 @@ BioComponentLookupHierarchical
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentPrint()
-///
-/// ARGS.:
-///
-///	pbio.....: biological component to print symbols for
+/// 
+/// 
+/// \arg pbio biological component to print symbols for
 ///	bAll.....: TRUE == full list of symbols, FALSE == only given comp
-///	iIndent..: number of indentation spaces
-///	pfile....: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Print symbol info for biological component
-///
-/// **************************************************************************
+/// \arg iIndent number of indentation spaces
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Print symbol info for biological component
+/// \details 
+/// 
 
 int BioComponentPrint
 (struct symtab_BioComponent *pbio, int bAll, int iIndent, FILE *pfile)
@@ -794,11 +750,11 @@ int BioComponentPrint
 
     int bResult = TRUE;
 
-    //v section element
+    /// section element
 
     struct symtab_HSolveListElement *phsle = NULL;
 
-    //v algorithm info
+    /// algorithm info
 
     struct AlgorithmInstance *palgi = NULL;
 
@@ -816,8 +772,8 @@ int BioComponentPrint
 	 : "Undefined",
 	 -1);
 
-    //t I/O relations
-    //t type/flags
+    /// \todo I/O relations
+    /// \todo type/flags
 
     //- algorithm info
 
@@ -888,23 +844,19 @@ int BioComponentPrint
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentResolveParameterFunctionalInput()
-///
-/// ARGS.:
-///
-///	pbio.......: biological component to resolve input for
-///	ppist......: context of given element
-///	pcParameter: name of parameter with function
-///	pcInput....: name of input on function of parameter
-///	iPosition..: input identifier in instantiation
-///
-/// RTN..: struct symtab_HSolveListElement * : symbol that gives input
-///
-/// DESCR: Find input to functional parameter
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pbio biological component to resolve input for
+/// \arg ppist context of given element
+/// \arg pcParameter: name of parameter with function
+/// \arg pcInput name of input on function of parameter
+/// \arg iPosition input identifier in instantiation
+/// 
+/// \return struct symtab_HSolveListElement * : symbol that gives input
+/// 
+/// \brief Find input to functional parameter
+/// \details 
+/// 
 
 struct symtab_HSolveListElement *
 BioComponentResolveParameterFunctionalInput
@@ -936,29 +888,25 @@ BioComponentResolveParameterFunctionalInput
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentLookupSerialID()
-///
-/// ARGS.:
-///
-///	pbio..........: symbol with phsleSearched as subsymbol
-///	ppist.........: context of given element
+/// 
+/// 
+/// \arg pbio symbol with phsleSearched as subsymbol
+/// \arg ppist context of given element
 ///	phsleSearched.: symbol to look for, must be NULL
-///	ppistSearched.: context of symbol to look for
-///
-/// RTN..: int : serial ID of given child, -1 for not found
-///
-/// DESCR: Obtain a serial ID for given child
-///
+/// \arg ppistSearched context of symbol to look for
+/// 
+/// \return int : serial ID of given child, -1 for not found
+/// 
+/// \brief Obtain a serial ID for given child
+/// \details 
+/// 
 ///	Serial ID's start at 1 for the children. pbio is supposed to have
 ///	serial ID 0, this allows simple arithmetic operations on the serial
 ///	IDs.
 ///	e.g. if pbio has serial ID 4 relative to pbioRoot and phsleSearched
 ///	has serial ID 5 relative to pbio, then phsleSearched has serial
 ///	ID 9 relative to pbioRoot.
-///
-/// **************************************************************************
+/// 
 
 static 
 int
@@ -1074,22 +1022,18 @@ int BioComponentLookupSerialID
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentSetParameterContext()
-///
-/// ARGS.:
-///
-///	pbio.......: symbol to get parameter for.
-///	pcName.....: name of parameter.
-///	ppistValue.: parameter value.
+/// 
+/// 
+/// \arg pbio symbol to get parameter for.
+/// \arg pcName name of parameter.
+/// \arg ppistValue parameter value.
 ///	ppist......: context of symbol (not used at the moment, can be changed).
-///
-/// RTN..: struct symtab_Parameters * : parameter structure.
-///
-/// DESCR: Set parameter with given name.
-///
-/// **************************************************************************
+/// 
+/// \return struct symtab_Parameters * : parameter structure.
+/// 
+/// \brief Set parameter with given name.
+/// \details 
+/// 
 
 struct symtab_Parameters * 
 BioComponentSetParameterContext
@@ -1121,7 +1065,7 @@ BioComponentSetParameterContext
 
 	if (!pparResult)
 	{
-	    //! note that a pidinQueue is allocated as one block
+	    /// \note note that a pidinQueue is allocated as one block
 
 	    free(pidinQueue);
 
@@ -1148,22 +1092,18 @@ BioComponentSetParameterContext
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentSetParameterDouble()
-///
-/// ARGS.:
-///
-///	pbio...: symbol to get parameter for.
-///	pcName.: name of parameter.
-///	dNumber: parameter value.
+/// 
+/// 
+/// \arg pbio symbol to get parameter for.
+/// \arg pcName name of parameter.
+/// \arg dNumber parameter value.
 ///	ppist..: context of symbol (not used at the moment, can be changed).
-///
-/// RTN..: struct symtab_Parameters * : parameter structure.
-///
-/// DESCR: Set parameter with given name.
-///
-/// **************************************************************************
+/// 
+/// \return struct symtab_Parameters * : parameter structure.
+/// 
+/// \brief Set parameter with given name.
+/// \details 
+/// 
 
 struct symtab_Parameters * 
 BioComponentSetParameterDouble
@@ -1213,22 +1153,18 @@ BioComponentSetParameterDouble
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentSetParameterString()
-///
-/// ARGS.:
-///
-///	pbio...: symbol to get parameter for.
-///	pcName.: name of parameter.
-///	pcValue: parameter value.
+/// 
+/// 
+/// \arg pbio symbol to get parameter for.
+/// \arg pcName name of parameter.
+/// \arg pcValue parameter value.
 ///	ppist..: context of symbol (not used at the moment, can be changed).
-///
-/// RTN..: struct symtab_Parameters * : parameter structure.
-///
-/// DESCR: Set parameter with given name.
-///
-/// **************************************************************************
+/// 
+/// \return struct symtab_Parameters * : parameter structure.
+/// 
+/// \brief Set parameter with given name.
+/// \details 
+/// 
 
 struct symtab_Parameters * 
 BioComponentSetParameterString
@@ -1278,24 +1214,20 @@ BioComponentSetParameterString
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentTraverse()
-///
-/// ARGS.:
-///
-///	ptstr.: initialized treespace traversal
-///	pbio..: symbol to traverse
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg ptstr initialized treespace traversal
+/// \arg pbio symbol to traverse
+/// 
+/// \return int
+/// 
 ///	1  : success
 ///	0  : no success, failure
 ///	-1 : immediate abort
-///
-/// DESCR: Traverse biological symbols in tree manner
-///
-/// **************************************************************************
+/// 
+/// \brief Traverse biological symbols in tree manner
+/// \details 
+/// 
 
 int
 BioComponentTraverse
@@ -1358,7 +1290,7 @@ BioComponentTraverse
 
 	pbio = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
 
-	//t add proto bio #SU to serial mappings in treespace traversal
+	/// \todo add proto bio #SU to serial mappings in treespace traversal
     }
     while (pbio);
 
@@ -1377,23 +1309,19 @@ BioComponentTraverse
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentTraverseSpikeGenerators()
-///
-/// ARGS.:
-///
-///	phsle.......: symbol to traverse spike generators for
+/// 
+/// 
+/// \arg phsle symbol to traverse spike generators for
 ///	ppist.......: context of symbol, symbol assumed to be on top
-///	pfProcesor..: spike generator processor
-///	pfFinalizer.: spike receiver finalizer
-///	pvUserdata..: any user data
-///
-/// RTN..: see TstrTraverse()
-///
-/// DESCR: Traverse spike generators, call pfProcessor on each of them
-///
-/// **************************************************************************
+/// \arg pfProcesor spike generator processor
+/// \arg pfFinalizer spike receiver finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return see TstrTraverse()
+/// 
+/// \brief Traverse spike generators, call pfProcessor on each of them
+/// \details 
+/// 
 
 static int 
 SymbolSpikeGeneratorSelector
@@ -1461,23 +1389,19 @@ BioComponentTraverseSpikeGenerators
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentTraverseSpikeReceivers()
-///
-/// ARGS.:
-///
-///	phsle.......: symbol to traverse spike receivers for
+/// 
+/// 
+/// \arg phsle symbol to traverse spike receivers for
 ///	ppist.......: context of symbol, symbol assumed to be on top
-///	pfProcesor..: spike receiver processor
-///	pfFinalizer.: spike receiver finalizer
-///	pvUserdata..: any user data
-///
-/// RTN..: see TstrTraverse()
-///
-/// DESCR: Traverse spike receivers, call pfProcessor on each of them
-///
-/// **************************************************************************
+/// \arg pfProcesor spike receiver processor
+/// \arg pfFinalizer spike receiver finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return see TstrTraverse()
+/// 
+/// \brief Traverse spike receivers, call pfProcessor on each of them
+/// \details 
+/// 
 
 static int 
 SymbolSpikeReceiverSelector

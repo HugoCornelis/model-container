@@ -43,7 +43,7 @@
 #include "projectionvolumeinstance.h"
 
 
-//s projection algorithm private data
+/// \struct projection algorithm private data
 
 /*s */
 /*s struct with projection options */
@@ -114,72 +114,72 @@ struct ProjectionVolumeOptions_type
 typedef struct ProjectionVolumeOptions_type ProjectionVolumeOptions;
 
 
-//s
-//s projection variables
-//s
+/// \struct
+/// \struct projection variables
+/// \struct
 
 struct ProjectionVolumeVariables_type
 {
-    //m symbol that points to network where algorithm is instantiated
+    /// symbol that points to network where algorithm is instantiated
 
     struct symtab_HSolveListElement *phsleNetwork;
 
-    //m context of network (parser context)
+    /// context of network (parser context)
 
     struct PidinStack *ppistNetwork;
 
-    //m symbol attached to
+    /// symbol attached to
 
     struct symtab_HSolveListElement *phsleProjection;
     struct PidinStack *ppistProjection;
 
-    //m reference to projection (not owned by projection)
+    /// reference to projection (not owned by projection)
 
     struct PidinStack *ppistArgument;
 
-    //m source population / cell
+    /// source population / cell
 
     struct symtab_HSolveListElement *phsleSource;
     struct PidinStack *ppistSource;
 
-    //m target population / cell
+    /// target population / cell
 
     struct symtab_HSolveListElement *phsleTarget;
     struct PidinStack *ppistTarget;
 
-    //m coordinate cache to speedup coordinate lookups
+    /// coordinate cache to speedup coordinate lookups
 
     struct CoordinateCache *pcc;
 
-    //m number of added connection groups
+    /// number of added connection groups
 
     int iConnectionGroups;
 
-    //m total number of added connections
+    /// total number of added connections
 
     int iConnections;
 
-    //m number of failures when adding connections
+    /// number of failures when adding connections
 
     int iConnectionFailures;
 
-    //m number of tries adding connections
+    /// number of tries adding connections
 
     int iConnectionTries;
 
-    //m number of generators processed
+    /// number of generators processed
 
     int iGenerators;
 
-    //m number of failures for coordinates of generators
+    /// number of failures for coordinates of generators
 
     int iGeneratorFailures;
 
-    //m number of receivers processed
+    /// number of receivers processed
 
     int iReceivers;
 
-    //m number of failures for coordinates of receivers
+    /// number of failures for coordinates of receivers
 
     int iReceiverFailures;
 };
@@ -187,25 +187,25 @@ struct ProjectionVolumeVariables_type
 typedef struct ProjectionVolumeVariables_type ProjectionVolumeVariables;
 
 
-//s projectionVolume instance, derives from algorithm instance
+/// \struct projectionVolume instance, derives from algorithm instance
 
 struct ProjectionVolumeInstance
 {
-    //m base struct
+    /// base struct
 
     struct AlgorithmInstance algi;
 
-    //m options for this instance
+    /// options for this instance
 
     ProjectionVolumeOptions pro;
 
-    //m variables for this instance
+    /// variables for this instance
 
     ProjectionVolumeVariables prv;
 };
 
 
-//s number of symbol that have been modified
+/// \struct number of symbol that have been modified
 
 /* static int iModified = 0; */
 
@@ -245,21 +245,17 @@ ProjectionVolumeSpikeReceiverProcessor
 (struct TreespaceTraversal *ptstr,void *pvUserdata);
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionVolumeInstanceNew()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: struct AlgorithmInstance * : 
-///
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return struct AlgorithmInstance *  
+/// 
 ///	created algorithm instance, NULL for failure
-///
-/// DESCR: Algorithm handler to create instance of projectionVolume algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief Algorithm handler to create instance of projectionVolume algorithm.
+/// \details 
+/// 
 
 struct AlgorithmInstance *
 ProjectionVolumeInstanceNew
@@ -290,7 +286,7 @@ ProjectionVolumeInstanceNew
 
 	struct symtab_HSolveListElement *phsle = PidinStackLookupTopSymbol(ppist);
 
-	//t should use ParameterResolveSymbol()
+	/// \todo should use ParameterResolveSymbol()
 
 	struct symtab_Parameters *pparProjection
 	    = SymbolFindParameter(&palgs->hsle, ppist, "PROJECTION_NAME");
@@ -436,74 +432,70 @@ ProjectionVolumeInstanceNew
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionVolumeInstanceAddConnectionGroups()
-///
-/// ARGS.:
-///
-///	ppvi............: projectionVolume instance.
-///	pproj...........: projection symbol to add connection groups to.
-///	ppistProjection.: 
+/// 
+/// 
+/// \arg ppvi projectionVolume instance.
+/// \arg pproj projection symbol to add connection groups to.
+/// \arg ppistProjection 
 ///	phsleSource.....: source population / cell of projection.
-///	ppistSource.....: 
+/// \arg ppistSource 
 ///	phsleTarget.....: target population / cell of projection.
 ///	ppistTarget.....: 
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Adds connection groups with connections to projection.
-///
-/// **************************************************************************
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Adds connection groups with connections to projection.
+/// \details 
+/// 
 
 struct ProjectionVolumeInstanceAddConnectionGroups_data
 {
-    //m projection volume algorithm instance
+    /// projection volume algorithm instance
 
     struct ProjectionVolumeInstance *ppvi;
 
-    //m network we are handling
+    /// network we are handling
 
     struct symtab_HSolveListElement *phsleNetwork;
     struct PidinStack *ppistNetwork;
 
-    //m projection to add to
+    /// projection to add to
 
     struct symtab_Projection *pproj;
     struct PidinStack *ppistProjection;
 
-    //m coordinate cache
+    /// coordinate cache
 
     struct CoordinateCache *pcc;
 
-    //m active connection group
+    /// active connection group
 
     struct symtab_VConnection *pvconn;
 
-    //m current spike generator
+    /// current spike generator
 
     struct symtab_Attachment *pattaGenerator;
     struct PidinStack *ppistGenerator;
 
-    //m spike generator position
+    /// spike generator position
 
     struct D3Position D3Generator;
 
-    //m current spike receiver
+    /// current spike receiver
 
     struct symtab_Attachment *pattaReceiver;
     struct PidinStack *ppistReceiver;
 
-    //m spike receiver position
+    /// spike receiver position
 
     struct D3Position D3Receiver;
 
-    //m source population
+    /// source population
 
     struct symtab_HSolveListElement *phsleSource;
     struct PidinStack *ppistSource;
 
-    //m target population
+    /// target population
 
     struct symtab_HSolveListElement *phsleTarget;
     struct PidinStack *ppistTarget;
@@ -606,7 +598,7 @@ ProjectionVolumeSpikeGeneratorProcessor
     {
 	//- if position in boundaries
 
-	//t query speed up using index on generators
+	/// \todo query speed up using index on generators
 
 	if (ppiac->ppvi->pro.D3Source1.dx < ppiac->D3Generator.dx 
 	    && ppiac->D3Generator.dx <= ppiac->ppvi->pro.D3Source2.dx
@@ -622,7 +614,7 @@ ProjectionVolumeSpikeGeneratorProcessor
 
 	    //- traverse spike receivers for target population
 
-	    //t use the index on the receivers
+	    /// \todo use the index on the receivers
 
 	    if (SymbolTraverseSpikeReceivers
 		(ppiac->phsleTarget,
@@ -680,8 +672,8 @@ ProjectionVolumeSpikeReceiverProcessor
 
     //- get name of channel
 
-    //t don't use PidinStackElementPidin() here, or at least the -2
-    //t should be an additional parameter.
+    /// \todo don't use PidinStackElementPidin() here, or at least the -2
+    /// \todo should be an additional parameter.
 
     struct symtab_IdentifierIndex *pidinChannel
 	= PidinStackElementPidin
@@ -750,7 +742,7 @@ ProjectionVolumeSpikeReceiverProcessor
     {
 	//- if diff with presynaptic part in receiving volume
 
-	//t query speed up using index on receivers
+	/// \todo query speed up using index on receivers
 
 	struct D3Position D3Diff;
 
@@ -799,7 +791,7 @@ ProjectionVolumeSpikeReceiverProcessor
 		int iPreRelative = iPre - iSource;
 		int iPostRelative = iPost - iTarget;
 
-		//t check serial principals from treespace traversals, should match ?
+		/// \todo check serial principals from treespace traversals, should match ?
 
 		//- calculate connection delay
 
@@ -839,7 +831,7 @@ ProjectionVolumeSpikeReceiverProcessor
 		ppiac->ppvi->prv.iConnectionTries++;
 		ppiac->ppvi->prv.iConnections++;
 
-		//t should this be SymbolAddChild() ?
+		/// \todo should this be SymbolAddChild() ?
 
 /* 		IOHierarchyAddChild(&ppiac->pvconsy->vect.bio.ioh, &pconn->hsle); */
 
@@ -887,34 +879,34 @@ ProjectionVolumeInstanceAddConnectionGroups
 
     struct ProjectionVolumeInstanceAddConnectionGroups_data piac =
     {
-	//m projection volume algorithm instance
+	/// projection volume algorithm instance
 
 	ppvi,
 
-	//m network we are handling
+	/// network we are handling
 
 	ppvi->prv.phsleNetwork,
 	ppvi->prv.ppistNetwork,
 
-	//m projection to add to
+	/// projection to add to
 
 	pproj,
 	ppistProjection,
 
-	//m coordinate cache
+	/// coordinate cache
 
 	ppvi->prv.pcc,
 
-	//m active connection group
+	/// active connection group
 
 	NULL,
 
-	//m current spike generator
+	/// current spike generator
 
 	NULL,
 	NULL,
 
-	//m spike generator position
+	/// spike generator position
 
 	{
 	    0.0,
@@ -922,12 +914,12 @@ ProjectionVolumeInstanceAddConnectionGroups
 	    0.0,
 	},
 
-	//m current spike receiver
+	/// current spike receiver
 
 	NULL,
 	NULL,
 
-	//m spike receiver position
+	/// spike receiver position
 
 	{
 	    0.0,
@@ -935,12 +927,12 @@ ProjectionVolumeInstanceAddConnectionGroups
 	    0.0,
 	},
 
-	//m source population
+	/// source population
 
 	phsleSource,
 	ppistSource,
 
-	//m target population
+	/// target population
 
 	phsleTarget,
 	ppistTarget,
@@ -967,7 +959,7 @@ ProjectionVolumeInstanceAddConnectionGroups
 
     piac.pvconn = pvconn;
 
-    //t use the index on the generators
+    /// \todo use the index on the generators
 
     if (SymbolTraverseSpikeGenerators
 	(phsleSource,
@@ -980,7 +972,7 @@ ProjectionVolumeInstanceAddConnectionGroups
 
 	ppvi->prv.iConnectionGroups++;
 
-	//t should this be SymbolAddChild() ?
+	/// \todo should this be SymbolAddChild() ?
 
 	IOHierarchyAddChild(&pproj->bio.ioh, &pvconn->vect.bio.ioh.iol.hsle);
 
@@ -1006,19 +998,15 @@ ProjectionVolumeInstanceAddConnectionGroups
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionVolumeInstancePrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on projectionVolume instance.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int  std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on projectionVolume instance.
+/// \details 
+/// 
 
 static int ProjectionVolumeInstancePrintInfo
 (struct AlgorithmInstance *palgi, FILE *pfile)
@@ -1106,21 +1094,17 @@ static int ProjectionVolumeInstancePrintInfo
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionVolumeInstanceSymbolHandler()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	AlgorithmInstanceSymbolHandler args.
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to add projectionVolume on given symbol
-///
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to add projectionVolume on given symbol
+/// \details 
+/// 
 ///	Does it do a clean update of serials ?
-///
-/// **************************************************************************
+/// 
 
 static 
 int
@@ -1178,7 +1162,7 @@ ProjectionVolumeInstanceSymbolHandler
 
 	    //- get source and target population
 
-	    //t need to check performance issues in these routines
+	    /// \todo need to check performance issues in these routines
 
 	    pparSource
 		= SymbolFindParameter
@@ -1223,7 +1207,7 @@ ProjectionVolumeInstanceSymbolHandler
 
 		struct CacheRegistry *pcr = pneuro->pcr;
 
-		//t the cache identifier does not make sense yet
+		/// \todo the cache identifier does not make sense yet
 
 		struct RegisteredCache *prc
 		    = CacheRegistryLookup(pcr, (int)pac);
@@ -1246,14 +1230,14 @@ ProjectionVolumeInstanceSymbolHandler
 
 		    //- build caches
 
-		    //t it would speed up if the selector would only select generators and receivers ?
+		    /// \todo it would speed up if the selector would only select generators and receivers ?
 
-		    //t ppiac->ppvi->pro.pcPre
-		    //t ppiac->ppvi->pro.pcPost
+		    /// \todo ppiac->ppvi->pro.pcPre
+		    /// \todo ppiac->ppvi->pro.pcPost
 
 		    struct CoordinateCache *pcc = CoordinateCacheNewForTraversal(ptstr);
 
-		    //t then from the coordinate cache, build an index
+		    /// \todo then from the coordinate cache, build an index
 
 		    if (pcc && CoordinateCacheBuildCaches(pcc))
 		    {

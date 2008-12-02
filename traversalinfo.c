@@ -33,12 +33,13 @@
 /* /// */
 /* ///	pti.: traversal info. */
 /* /// */
-/* /// RTN..: */
+/* /// \return */
 /* /// */
 /* ///	int : see TstrTraverse(), memory failures is covered with */
 /* ///	a immediate abort error return. */
 /* /// */
-/* /// DESCR: */
+/* /// \brief */
+/// \details 
 /* /// */
 /* ///	Collect traversal info, as specified by pti. */
 /* /// */
@@ -74,22 +75,17 @@
 /* } */
 
 
-/// **************************************************************************
-///
-/// SHORT: TraversalInfoCollectorProcessor()
-///
-/// ARGS.:
-///
-///	std. SymbolProcessor args.
-///
-/// RTN..: int : SymbolProcessor return value.
-///
-/// DESCR:
-///
+/// 
+/// 
+/// \arg std. SymbolProcessor args.
+/// 
+/// \return int : SymbolProcessor return value.
+/// 
+/// \details 
+/// 
 ///	Collect information about traversed symbols, see
 ///	TRAVERSAL_INFO_* defines.
-///
-/// **************************************************************************
+/// 
 
 int 
 TraversalInfoCollectorProcessor
@@ -149,7 +145,7 @@ TraversalInfoCollectorProcessor
 	{
 	    pti->ppD3CoordsAbsoluteParent = malloc(1000 * sizeof(struct D3Position *));
 
-	    //! assume we are going to draw things
+	    /// \note assume we are going to draw things
 
 	    pti->pdDia = malloc(1000 * sizeof(double));
 	}
@@ -466,7 +462,7 @@ TraversalInfoCollectorProcessor
 		{
 		    //- mark as if the parameter was not found
 
-		    //! e.g. soma has parent 'none'
+		    /// \note e.g. soma has parent 'none'
 
 		    pparParentSegment = NULL;
 		}
@@ -567,7 +563,7 @@ TraversalInfoCollectorProcessor
 	    pti->ppD3CoordsLocal[pti->iChildren]->dz = 0;
 	}
 
-	//t this should be inherited from the parent
+	/// \todo this should be inherited from the parent
 
 	if (pti->iFlagsInfo & TRAVERSAL_INFO_COORDS_ABSOLUTE)
 	{
@@ -640,22 +636,17 @@ TraversalInfoCollectorProcessor
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: TraversalInfoCumulativeInfoCollectorProcessor()
-///
-/// ARGS.:
-///
-///	std. SymbolProcessor args.
-///
-/// RTN..: int : SymbolProcessor return value.
-///
-/// DESCR:
-///
+/// 
+/// 
+/// \arg std. SymbolProcessor args.
+/// 
+/// \return int : SymbolProcessor return value.
+/// 
+/// \details 
+/// 
 ///	Collect cumulative information about children, see
 ///	TRAVERSAL_INFO_* defines.
-///
-/// **************************************************************************
+/// 
 
 int 
 TraversalInfoCumulativeInfoCollectorProcessor
@@ -709,19 +700,15 @@ TraversalInfoCumulativeInfoCollectorProcessor
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: TraversalInfoFree()
-///
-/// ARGS.:
-///
-///	pti.: traversal info.
-///
-/// RTN..: void
-///
-/// DESCR: Free traversal info, NULL pointers left alone.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pti traversal info.
+/// 
+/// \return void
+/// 
+/// \brief Free traversal info, NULL pointers left alone.
+/// \details 
+/// 
 
 void TraversalInfoFree(struct traversal_info *pti)
 {

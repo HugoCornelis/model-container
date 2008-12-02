@@ -40,7 +40,7 @@
 #include "randomizeinstance.h"
 
 
-//s Randomize algorithm private data
+/// \struct Randomize algorithm private data
 
 /*s */
 /*s struct with Randomize options */
@@ -76,17 +76,17 @@ struct RandomizeOptions_type
 typedef struct RandomizeOptions_type RandomizeOptions;
 
 
-//s
-//s Randomize variables
-//s
+/// \struct
+/// \struct Randomize variables
+/// \struct
 
 struct RandomizeVariables_type
 {
-    //m current symbol to randomize
+    /// current symbol to randomize
 
     struct symtab_BioComponent *pbio;
 
-    //m target for symbolic parameter to add
+    /// target for symbolic parameter to add
 
     struct PidinStack *ppistTarget;
 
@@ -94,11 +94,11 @@ struct RandomizeVariables_type
 
     int iRandomized;
 
-    //m count on number of non-randomized symbols, expected */
+    /// count on number of non-randomized symbols, expected */
 
     int iNonRandomizedExpected;
 
-    //m count on number of non-randomized symbols, unexpected */
+    /// count on number of non-randomized symbols, unexpected */
 
     int iNonRandomizedUnexpected;
 };
@@ -106,19 +106,19 @@ struct RandomizeVariables_type
 typedef struct RandomizeVariables_type RandomizeVariables;
 
 
-//s Randomize instance, derives from algorithm instance
+/// \struct Randomize instance, derives from algorithm instance
 
 struct RandomizeInstance
 {
-    //m base struct
+    /// base struct
 
     struct AlgorithmInstance algi;
 
-    //m options for this instance
+    /// options for this instance
 
     RandomizeOptions rio;
 
-    //m variables for this instance
+    /// variables for this instance
 
     RandomizeVariables riv;
 };
@@ -153,21 +153,17 @@ RandomizeInstanceSymbolHandler
 
 
 
-/// **************************************************************************
-///
-/// SHORT: RandomizeInstanceNew()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: struct AlgorithmInstance * : 
-///
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return struct AlgorithmInstance *  
+/// 
 ///	created algorithm instance, NULL for failure
-///
-/// DESCR: Algorithm handler to create instance of Randomize algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief Algorithm handler to create instance of Randomize algorithm.
+/// \details 
+/// 
 
 struct AlgorithmInstance *
 RandomizeInstanceNew
@@ -199,7 +195,7 @@ RandomizeInstanceNew
 
 	struct symtab_HSolveListElement *phsle = PidinStackLookupTopSymbol(ppist);
 
-	//t should use ParameterResolveSymbol()
+	/// \todo should use ParameterResolveSymbol()
 
 	struct symtab_Parameters *pparSymbol
 	    = SymbolFindParameter(&palgs->hsle, ppist, "SYMBOL_NAME");
@@ -251,21 +247,17 @@ RandomizeInstanceNew
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RandomizeComponents()
-///
-/// ARGS.:
-///
-///	palg..: randomize algorithm.
-///	phsle.: symbol with components to randomize.
-///	ppist.: current parser context.
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Randomizecomponents as specified by options and variables.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg palg randomize algorithm.
+/// \arg phsle symbol with components to randomize.
+/// \arg ppist current parser context.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Randomizecomponents as specified by options and variables.
+/// \details 
+/// 
 
 static
 int
@@ -444,19 +436,15 @@ RandomizeComponents
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RandomizeInstancePrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on randomization algorithm
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on randomization algorithm
+/// \details 
+/// 
 
 static int RandomizeInstancePrintInfo
 (struct AlgorithmInstance *palgi, FILE *pfile)
@@ -465,7 +453,7 @@ static int RandomizeInstancePrintInfo
 
     int bResult = TRUE;
 
-    //v loop var
+    /// loop var
 
     int i;
 
@@ -514,19 +502,15 @@ static int RandomizeInstancePrintInfo
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RandomizeInstanceSymbolHandler()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	AlgorithmSymbolHandler args.
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to randomize children of given symbol.
-///
-/// **************************************************************************
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to randomize children of given symbol.
+/// \details 
+/// 
 
 static
 int

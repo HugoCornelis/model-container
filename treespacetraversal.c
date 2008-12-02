@@ -29,19 +29,15 @@
 
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolCellCounter()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pvUserdata.: int * : count on cells.
-///
-/// RTN..: int : SymbolProcessor return value.
-///
-/// DESCR: Count cells during traversal.
-///
-/// **************************************************************************
+/// 
+/// \return int : SymbolProcessor return value.
+/// 
+/// \brief Count cells during traversal.
+/// \details 
+/// 
 
 int SymbolCellCounter(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
@@ -72,19 +68,15 @@ int SymbolCellCounter(struct TreespaceTraversal *ptstr, void *pvUserdata)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolCellSelector()
-///
-/// ARGS.:
-///
-///	std. SymbolSelector args.
-///
-/// RTN..: int : SymbolSelector return value.
-///
-/// DESCR: Forbid to process anything below the cell level.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. SymbolSelector args.
+/// 
+/// \return int : SymbolSelector return value.
+/// 
+/// \brief Forbid to process anything below the cell level.
+/// \details 
+/// 
 
 int SymbolCellSelector(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
@@ -111,22 +103,18 @@ int SymbolCellSelector(struct TreespaceTraversal *ptstr, void *pvUserdata)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolConnectionCounter()
-///
-/// ARGS.:
-///
-///	ptstr.......: treespace traversal.
+/// 
+/// 
+/// \arg ptstr treespace traversal.
 ///	pvUserdata..: int * : connection count.
-///
-/// RTN..: int : treespace traversal callback return value.
-///
-/// DESCR: Increments (*(int *)pvUserdata) for traversed connection symbols.
-///
+/// 
+/// \return int : treespace traversal callback return value.
+/// 
+/// \brief Increments (*(int *)pvUserdata) for traversed connection symbols.
+/// \details 
+/// 
 ///	This function must not be called on vectors of connections.
-///
-/// **************************************************************************
+/// 
 
 int SymbolConnectionCounter(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
@@ -146,7 +134,7 @@ int SymbolConnectionCounter(struct TreespaceTraversal *ptstr, void *pvUserdata)
     {
 	//- do nothing
 
-	//! in fact we have an internal error here.
+	/// \note in fact we have an internal error here.
     }
 
     //- if connection
@@ -165,7 +153,7 @@ int SymbolConnectionCounter(struct TreespaceTraversal *ptstr, void *pvUserdata)
 
     else
     {
-	//t give some diag's : must not be part of network
+	/// \todo give some diag's : must not be part of network
     }
 
     //- return result : remember won't go any deeper to traverse connections
@@ -174,19 +162,15 @@ int SymbolConnectionCounter(struct TreespaceTraversal *ptstr, void *pvUserdata)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolConnectionSelector()
-///
-/// ARGS.:
-///
-///	std. SymbolSelector args.
-///
-/// RTN..: int : SymbolSelector return value.
-///
-/// DESCR: Select connections in a treespace traversal.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. SymbolSelector args.
+/// 
+/// \return int : SymbolSelector return value.
+/// 
+/// \brief Select connections in a treespace traversal.
+/// \details 
+/// 
 
 int SymbolConnectionSelector(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
@@ -227,19 +211,15 @@ int SymbolConnectionSelector(struct TreespaceTraversal *ptstr, void *pvUserdata)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolGateKineticSelector()
-///
-/// ARGS.:
-///
-///	std. SymbolSelector args.
-///
-/// RTN..: int : SymbolSelector return value.
-///
-/// DESCR: Select only gate kinetics (includes concentration gate kinetics).
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. SymbolSelector args.
+/// 
+/// \return int : SymbolSelector return value.
+/// 
+/// \brief Select only gate kinetics (includes concentration gate kinetics).
+/// \details 
+/// 
 
 int SymbolGateKineticSelector(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
@@ -267,19 +247,15 @@ int SymbolGateKineticSelector(struct TreespaceTraversal *ptstr, void *pvUserdata
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolProjectionSelector()
-///
-/// ARGS.:
-///
-///	std. SymbolSelector args.
-///
-/// RTN..: int : SymbolSelector return value.
-///
-/// DESCR: Forbid to process anything below the projection level.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. SymbolSelector args.
+/// 
+/// \return int : SymbolSelector return value.
+/// 
+/// \brief Forbid to process anything below the projection level.
+/// \details 
+/// 
 
 int SymbolProjectionSelector(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
@@ -306,22 +282,17 @@ int SymbolProjectionSelector(struct TreespaceTraversal *ptstr, void *pvUserdata)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolTableValueCollector()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pvUserdata.: int * : number of table entries for each gate kinetic.
-///
-/// RTN..: int : SymbolProcessor return value.
-///
-/// DESCR:
-///
+/// 
+/// \return int : SymbolProcessor return value.
+/// 
+/// \details 
+/// 
 ///	Determine the unique number of table entries for all gate
 ///	kinetics.
-///
-/// **************************************************************************
+/// 
 
 int
 SymbolTableValueCollector
@@ -384,17 +355,13 @@ SymbolTableValueCollector
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: TstrCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct TreespaceTraversal * : newly allocated treespace traversal.
-///
-/// DESCR: Allocate treespace traversal.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return struct TreespaceTraversal * : newly allocated treespace traversal.
+/// 
+/// \brief Allocate treespace traversal.
+/// \details 
+/// 
 
 struct TreespaceTraversal * TstrCalloc(void)
 {
@@ -404,19 +371,15 @@ struct TreespaceTraversal * TstrCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: TstrDelete()
-///
-/// ARGS.:
-///
-///	ptstr..: allocated treespace traversal.
-///
-/// RTN..: void
-///
-/// DESCR: Delete & free treespace traversal.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ptstr allocated treespace traversal.
+/// 
+/// \return void
+/// 
+/// \brief Delete & free treespace traversal.
+/// \details 
+/// 
 
 void TstrDelete(struct TreespaceTraversal *ptstr)
 {
@@ -432,21 +395,17 @@ void TstrDelete(struct TreespaceTraversal *ptstr)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: TstrGetActual()
-///
-/// ARGS.:
-///
-///	ptstr..: initialized treespace traversal
-///
-/// RTN..: struct CoreRoot *
-///
+/// 
+/// 
+/// \arg ptstr initialized treespace traversal
+/// 
+/// \return struct CoreRoot *
+/// 
 ///	actual symbol.
-///
-/// DESCR: Get actual symbol during traversal.
-///
-/// **************************************************************************
+/// 
+/// \brief Get actual symbol during traversal.
+/// \details 
+/// 
 
 struct CoreRoot * TstrGetActual(struct TreespaceTraversal *ptstr)
 {
@@ -456,21 +415,17 @@ struct CoreRoot * TstrGetActual(struct TreespaceTraversal *ptstr)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: TstrGetActualType()
-///
-/// ARGS.:
-///
-///	ptstr..: initialized treespace traversal
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg ptstr initialized treespace traversal
+/// 
+/// \return int
+/// 
 ///	actual type.
-///
-/// DESCR: Get actual type during traversal.
-///
-/// **************************************************************************
+/// 
+/// \brief Get actual type during traversal.
+/// \details 
+/// 
 
 int TstrGetActualType(struct TreespaceTraversal *ptstr)
 {
@@ -480,26 +435,22 @@ int TstrGetActualType(struct TreespaceTraversal *ptstr)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: TstrGetActualParent()
-///
-/// ARGS.:
-///
-///	ptstr..: initialized treespace traversal
-///
-/// RTN..: struct symtab_HSolveListElement * : actual parent symbol
-///
-/// DESCR: Get actual parent symbol, parent of actual.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ptstr initialized treespace traversal
+/// 
+/// \return struct symtab_HSolveListElement * : actual parent symbol
+/// 
+/// \brief Get actual parent symbol, parent of actual.
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 TstrGetActualParent(struct TreespaceTraversal *ptstr)
 {
     //- return symbol from cache
 
-    //! (#entries - 1) is top, (#entries - 2) is parent
+    /// \note (#entries - 1) is top, (#entries - 2) is parent
 
     return(PSymbolStackElementSymbol
 	   (ptstr->psymst, PSymbolStackNumberOfEntries(ptstr->psymst) - 2));
@@ -514,9 +465,10 @@ TstrGetActualParent(struct TreespaceTraversal *ptstr)
 /* /// */
 /* ///	ptstr..: initialized treespace traversal */
 /* /// */
-/* /// RTN..: struct PidinStack * : original context of treespace traversal */
+/* /// \return struct PidinStack * : original context of treespace traversal */
 /* /// */
-/* /// DESCR: Get original context of treespace traversal */
+/* /// \brief Get original context of treespace traversal */
+/// \details 
 /* /// */
 /* /// ************************************************************************** */
 
@@ -526,8 +478,8 @@ TstrGetActualParent(struct TreespaceTraversal *ptstr)
 
 /*     struct PidinStack *ppistResult = PidinStackDuplicate(ptstr->ppist); */
 
-/*     //t if this doesn't get optimized in decent way, perhaps it is better */
-/*     //t to directly set the stack top. Needs additional PidinStack operation */
+/*     /// \todo if this doesn't get optimized in decent way, perhaps it is better */
+/*     /// \todo to directly set the stack top. Needs additional PidinStack operation */
 
 /*     //- while number of entries in context different from origin */
 
@@ -544,46 +496,42 @@ TstrGetActualParent(struct TreespaceTraversal *ptstr)
 /* } */
 
 
-/// **************************************************************************
-///
-/// SHORT: TstrGo()
-///
-/// ARGS.:
-///
-///	ptstr..: initialized treespace traversal
-///	phsle..: symbol to traverse
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg ptstr initialized treespace traversal
+/// \arg phsle symbol to traverse
+/// 
+/// \return int
+/// 
 ///	1  : success
 ///	0  : no success, failure
 ///	-1 : immediate abort
-///
-/// DESCR: Traverse symbols, process with registered processors
-///
+/// 
+/// \brief Traverse symbols, process with registered processors
+/// \details 
+/// 
 /// EXAMPLE:
-///
+/// 
 ///    //- init treespace traversal
-///
+/// 
 ///    memset(&tstr,0,sizeof(tstr));
-///
+/// 
 ///    tstr.pfPreSelector = SegmentMechanismSelector;
 ///    tstr.pfProcesor = pfProcesor;
 ///    tstr.pvUserdata = pvUserdata;
-///
+/// 
 ///    //- allocate symbol stack
-///
+/// 
 ///    tstr.ppist = PidinStackDuplicate(ppist);
-///
+/// 
 ///    //- traverse segment symbol
-///
+/// 
 ///    iResult = TstrGo(&tstr,&psegment->bio.ioh.iol.hsle);
-///
+/// 
 ///    //- free symbol stack
-///
+/// 
 ///    PidinStackFree(tstr.ppist);
-///
-/// **************************************************************************
+/// 
 
 int
 TstrGo
@@ -632,25 +580,21 @@ TstrGo
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: TstrNew()
-///
-/// ARGS.:
-///
-///	ppist.........: context to traverse
-///	pfPreSelector.: 
-///	pvPreSelector.: 
-///	pfProcesor....: all the same
-///	pvProcessor...: 
-///	pfFinalizer...: 
+/// 
+/// 
+/// \arg ppist context to traverse
+/// \arg pfPreSelector 
+/// \arg pvPreSelector 
+/// \arg pfProcesor all the same
+/// \arg pvProcessor 
+/// \arg pfFinalizer 
 ///	pvFinalizer...: 
-///
-/// RTN..: struct TreespaceTraversal * : new treespace traversal
-///
-/// DESCR: Allocate treespace traversal
-///
-/// **************************************************************************
+/// 
+/// \return struct TreespaceTraversal * : new treespace traversal
+/// 
+/// \brief Allocate treespace traversal
+/// \details 
+/// 
 
 struct TreespaceTraversal *
 TstrNew
@@ -714,20 +658,16 @@ TstrNew
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: TstrPrepare()
-///
-/// ARGS.:
-///
-///	ptstr..: treespace traversal in traverse
-///	phsle..: symbol to traverse
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Prepare for traversing the given symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ptstr treespace traversal in traverse
+/// \arg phsle symbol to traverse
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Prepare for traversing the given symbol.
+/// \details 
+/// 
 
 int 
 TstrPrepare
@@ -778,22 +718,18 @@ TstrPrepare
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: TstrPrepareForSerial()
-///
-/// ARGS.:
-///
-///	ptstr............: treespace traversal in traverse
-///	iSerialPrincipal.: serial of symbol to traverse
-///	iSerialMechanism.: serial of symbol to traverse
-///	iSerialSegment...: serial of symbol to traverse
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Prepare for traversing the given serial.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ptstr treespace traversal in traverse
+/// \arg iSerialPrincipal serial of symbol to traverse
+/// \arg iSerialMechanism serial of symbol to traverse
+/// \arg iSerialSegment serial of symbol to traverse
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Prepare for traversing the given serial.
+/// \details 
+/// 
 
 int 
 TstrPrepareForSerial
@@ -838,19 +774,15 @@ TstrPrepareForSerial
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: TstrRepair()
-///
-/// ARGS.:
-///
-///	ptstr..: treespace traversal in traverse
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Repair a treespace traversal after visiting it with TstrPrepare()
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ptstr treespace traversal in traverse
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Repair a treespace traversal after visiting it with TstrPrepare()
+/// \details 
+/// 
 
 int TstrRepair(struct TreespaceTraversal *ptstr)
 {
@@ -911,23 +843,19 @@ int TstrRepair(struct TreespaceTraversal *ptstr)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: TstrRepairForSerial()
-///
-/// ARGS.:
-///
-///	ptstr............: treespace traversal in traverse
-///	iSerialPrincipal.: serial of symbol to traverse
-///	iSerialMechanism.: serial of symbol to traverse
-///	iSerialSegment...: serial of symbol to traverse
-///
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Repair a treespace traversal after visiting the given serial.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ptstr treespace traversal in traverse
+/// \arg iSerialPrincipal serial of symbol to traverse
+/// \arg iSerialMechanism serial of symbol to traverse
+/// \arg iSerialSegment serial of symbol to traverse
+/// 
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Repair a treespace traversal after visiting the given serial.
+/// \details 
+/// 
 
 int
 TstrRepairForSerial
@@ -972,28 +900,24 @@ TstrRepairForSerial
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: TstrSetActual()
-///
-/// ARGS.:
-///
-///	ptstr..: initialized treespace traversal
-///	pcr....: actual symbol.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg ptstr initialized treespace traversal
+/// \arg pcr actual symbol.
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR: Set actual symbol.
-///
+/// 
+/// \brief Set actual symbol.
+/// \details 
+/// 
 ///	This function and TstrSetActualType() delegate typing and data
 ///	visibility to an external party, instead of to the symbol
 ///	itself.  This separation of concern increases flexibility.
 ///	Look at the implementation of efficient connections for an
 ///	example.
-///
-/// **************************************************************************
+/// 
 
 int TstrSetActual(struct TreespaceTraversal *ptstr, struct CoreRoot *pcr)
 {
@@ -1005,28 +929,24 @@ int TstrSetActual(struct TreespaceTraversal *ptstr, struct CoreRoot *pcr)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: TstrSetActualType()
-///
-/// ARGS.:
-///
-///	ptstr..: initialized treespace traversal
-///	iType..: actual symbol type.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg ptstr initialized treespace traversal
+/// \arg iType actual symbol type.
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR: Set actual symbol type.
-///
+/// 
+/// \brief Set actual symbol type.
+/// \details 
+/// 
 ///	This function and TstrSetActualType() delegate typing and data
 ///	visibility to an external party, instead of to the symbol
 ///	itself.  This separation of concern increases flexibility.
 ///	Look at the implementation of efficient connections for an
 ///	example.
-///
-/// **************************************************************************
+/// 
 
 int TstrSetActualType(struct TreespaceTraversal *ptstr, int iType)
 {

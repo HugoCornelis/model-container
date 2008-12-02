@@ -35,7 +35,6 @@ struct AlgorithmInstanceHandlerLibrary;
 struct AlgorithmInstance;
 
 
-//f static inline prototypes
 
 #ifndef SWIG
 static inline 
@@ -61,7 +60,6 @@ void AlgorithmInstanceSetName(struct AlgorithmInstance *palgi, char *pc);
 
 
 //f
-//f algorithm instance handler
 //f
 
 /* typedef */
@@ -73,17 +71,17 @@ void AlgorithmInstanceSetName(struct AlgorithmInstance *palgi, char *pc);
 /*     (struct AlgorithmInstance *palgi, struct ParserContext *pac); */
 
 
-//s
-//s algorithm handler library
-//s
+/// \struct
+/// \struct algorithm handler library
+/// \struct
 
 /* struct AlgorithmInstanceHandlerLibrary */
 /* { */
-/*     //m print info handler */
+/*     /// print info handler */
 
 /*     AlgorithmInstanceHandler *pfPrintInfo; */
 
-/*     //m symbol handler to call for symbol to which algorithm has been attached */
+/*     /// symbol handler to call for symbol to which algorithm has been attached */
 
 /*     AlgorithmInstanceSymbolHandler *pfSymbolHandler; */
 /* }; */
@@ -94,33 +92,33 @@ void AlgorithmInstanceSetName(struct AlgorithmInstance *palgi, char *pc);
 #include "algorithminstance_vtable.h"
 
 
-//s
-//s gives transparant access to all algorithm instances, links into hsolve list
-//s
+/// \struct
+/// \struct gives transparant access to all algorithm instances, links into hsolve list
+/// \struct
 
 struct AlgorithmInstance
 {
-    //m link elements into list
+    /// link elements into list
 
     HSolveListElement hsleLink;
 
-    //m points to class from which this is an instance
+    /// points to class from which this is an instance
 
     struct AlgorithmClass *palgc;
 
-    //m flags
+    /// flags
 
     int iFlags;
 
-    //m identifier of algorithm instance
+    /// identifier of algorithm instance
 
     char *pcIdentifier;
 
-/*     //m algorithm handlers */
+/*     /// algorithm handlers */
 
 /*     struct AlgorithmInstanceHandlerLibrary *ppfHandlers; */
 
-/*     //m event association table with event listeners */
+/*     /// event association table with event listeners */
 
 /*     ParserEventAssociationTable *pevatListeners; */
 };
@@ -153,7 +151,6 @@ int AlgorithmInstanceSymbolHandler
 (struct AlgorithmInstance *palgi, struct ParserContext *pac);
 
 
-//f static inline functions
 
 #ifndef SWIG
 static inline 

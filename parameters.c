@@ -66,19 +66,15 @@ char *ppcParameterStructShort[] =
 };
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Parameters * 
-///
+/// 
+/// 
+/// \return struct symtab_Parameters * 
+/// 
 ///	Newly allocated parameters, NULL for failure
-///
-/// DESCR: Allocate a new parameters symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new parameters symbol table element
+/// \details 
+/// 
 
 struct symtab_Parameters * ParameterCalloc(void)
 {
@@ -98,23 +94,19 @@ struct symtab_Parameters * ParameterCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterContextGetFunctionContext()
-///
-/// ARGS.:
-///
-///	ppar...: parameter.
-///	ppist..: context.
-///
-/// RTN..: struct PidinStack *
-///
+/// 
+/// 
+/// \arg ppar parameter.
+/// \arg ppist context.
+/// 
+/// \return struct PidinStack *
+/// 
 ///	Context attached to this function parameter in this context,
 ///	NULL for none.
-///
-/// DESCR: Get context attached to this function parameter.
-///
-/// **************************************************************************
+/// 
+/// \brief Get context attached to this function parameter.
+/// \details 
+/// 
 
 struct PidinStack *
 ParameterContextGetFunctionContext
@@ -183,23 +175,19 @@ ParameterContextGetFunctionContext
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterContextGetFunction()
-///
-/// ARGS.:
-///
-///	ppar...: parameter.
-///	ppist..: context.
-///
-/// RTN..: struct symtab_Function *
-///
+/// 
+/// 
+/// \arg ppar parameter.
+/// \arg ppist context.
+/// 
+/// \return struct symtab_Function *
+/// 
 ///	Function attached to this parameter in this context, NULL for
 ///	none.
-///
-/// DESCR: Get function attached to this parameter.
-///
-/// **************************************************************************
+/// 
+/// \brief Get function attached to this parameter.
+/// \details 
+/// 
 
 struct symtab_Function *
 ParameterContextGetFunction
@@ -263,19 +251,15 @@ ParameterContextGetFunction
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterFree()
-///
-/// ARGS.:
-///
-///	ppar...: parameter
-///
-/// RTN..: void
-///
-/// DESCR: Free memory of given parameters.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppar parameter
+/// 
+/// \return void
+/// 
+/// \brief Free memory of given parameters.
+/// \details 
+/// 
 
 void ParameterFree(struct symtab_Parameters *ppar)
 {
@@ -287,7 +271,7 @@ void ParameterFree(struct symtab_Parameters *ppar)
 
     case TYPE_PARA_SYMBOLIC:
     {
-	//t free idin set
+	/// \todo free idin set
 
 /* 	    IdinFree(ppar->uValue.pidin); */
 
@@ -307,7 +291,7 @@ void ParameterFree(struct symtab_Parameters *ppar)
 
     case TYPE_PARA_FUNCTION:
     {
-	//t free function set
+	/// \todo free function set
 
 /* 	    FunctionFree(ppar->uValue.pfun); */
 
@@ -318,7 +302,7 @@ void ParameterFree(struct symtab_Parameters *ppar)
 
     case TYPE_PARA_ATTRIBUTE:
     {
-	//t free idin set
+	/// \todo free idin set
 
 /* 	    if (ppar->uValue.pidin) IdinFree(ppar->uValue.pidin); */
 
@@ -339,19 +323,15 @@ void ParameterFree(struct symtab_Parameters *ppar)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterGetFieldPidin()
-///
-/// ARGS.:
-///
-///	ppar...: parameter
-///
-/// RTN..: char * : name of referenced field, NULL for none
-///
-/// DESCR: Get field name of referenced field
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppar parameter
+/// 
+/// \return char * : name of referenced field, NULL for none
+/// 
+/// \brief Get field name of referenced field
+/// \details 
+/// 
 
 struct symtab_IdentifierIndex *
 ParameterGetFieldPidin(struct symtab_Parameters *ppar)
@@ -382,21 +362,17 @@ ParameterGetFieldPidin(struct symtab_Parameters *ppar)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterGetString()
-///
-/// ARGS.:
-///
-///	ppar.....: parameter to obtain string from.
-///
-/// RTN..: char *
-///
+/// 
+/// 
+/// \arg ppar parameter to obtain string from.
+/// 
+/// \return char *
+/// 
 ///	string value, NULL for failure.
-///
-/// DESCR: Get string from parameter.
-///
-/// **************************************************************************
+/// 
+/// \brief Get string from parameter.
+/// \details 
+/// 
 
 char * ParameterGetString(struct symtab_Parameters *ppar)
 {
@@ -419,20 +395,16 @@ char * ParameterGetString(struct symtab_Parameters *ppar)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterLookup()
-///
-/// ARGS.:
-///
-///	ppar...: parameter list to search
-///	pcName.: name of parameter to lookup
-///
-/// RTN..: struct symtab_Parameters * : parameter, NULL for failure
-///
-/// DESCR: Search for named parameter
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppar parameter list to search
+/// \arg pcName name of parameter to lookup
+/// 
+/// \return struct symtab_Parameters * : parameter, NULL for failure
+/// 
+/// \brief Search for named parameter
+/// \details 
+/// 
 
 struct symtab_Parameters * ParameterLookup
 (struct symtab_Parameters * ppar, char *pcName)
@@ -469,22 +441,18 @@ struct symtab_Parameters * ParameterLookup
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterNewFromFunction()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pcName..: name of parameter, will be copied.
-///	pfun....: function that generates the parameter value.
-///
-/// RTN..: struct symtab_Parameters *
-///
+/// \arg pfun function that generates the parameter value.
+/// 
+/// \return struct symtab_Parameters *
+/// 
 ///	New parameter, NULL for failure.
-///
-/// DESCR: Allocate parameter that depends on the given function.
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate parameter that depends on the given function.
+/// \details 
+/// 
 
 struct symtab_Parameters *
 ParameterNewFromFunction
@@ -520,22 +488,18 @@ ParameterNewFromFunction
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterNewFromNumber()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pcName..: name of parameter, will be copied.
-///	dNumber.: value.
-///
-/// RTN..: struct symtab_Parameters *
-///
+/// \arg dNumber value.
+/// 
+/// \return struct symtab_Parameters *
+/// 
 ///	New parameter.
-///
-/// DESCR: Allocate parameter for double value and initialize.
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate parameter for double value and initialize.
+/// \details 
+/// 
 
 struct symtab_Parameters * 
 ParameterNewFromNumber
@@ -571,23 +535,19 @@ ParameterNewFromNumber
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterNewFromPidinQueue()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pcName..: name of parameter, will be copied.
 ///	pidin...: pidin queue, list used as queue.
-///	iType...: type of parameter (symbolic or field).
-///
-/// RTN..: struct symtab_Parameters *
-///
+/// \arg iType type of parameter (symbolic or field).
+/// 
+/// \return struct symtab_Parameters *
+/// 
 ///	New parameter
-///
-/// DESCR: Allocate symbolic parameter for given pidin queue (list).
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate symbolic parameter for given pidin queue (list).
+/// \details 
+/// 
 
 struct symtab_Parameters * 
 ParameterNewFromPidinQueue
@@ -624,22 +584,18 @@ ParameterNewFromPidinQueue
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterNewFromString()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pcName..: name of parameter, will be copied.
-///	pcValue.: value
-///
-/// RTN..: struct symtab_Parameters *
-///
+/// \arg pcValue value
+/// 
+/// \return struct symtab_Parameters *
+/// 
 ///	New parameter.
-///
-/// DESCR: Allocate parameter for string value and initialize.
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate parameter for string value and initialize.
+/// \details 
+/// 
 
 struct symtab_Parameters * 
 ParameterNewFromString
@@ -675,22 +631,18 @@ ParameterNewFromString
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterPrintInfo()
-///
-/// ARGS.:
-///
-///	ppar..: parameter.
-///	ppist.: context.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg ppar parameter.
+/// \arg ppist context.
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR: Print parameter info.
-///
-/// **************************************************************************
+/// 
+/// \brief Print parameter info.
+/// \details 
+/// 
 
 int
 ParameterPrintInfo
@@ -762,7 +714,7 @@ ParameterPrintInfo
 
     if (ParameterIsField(ppar))
     {
-	//double d = ParameterResolveValue(ppar, ppist);
+	/// \defouble d = ParameterResolveValue(ppar, ppist);
 
 	char *pcFieldName = ParameterGetFieldName(ppar);
       
@@ -819,23 +771,19 @@ ParameterPrintInfo
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterPrintInfoRecursive()
-///
-/// ARGS.:
-///
-///	ppar..: parameter.
-///	ppist.: context.
-///	iLevel: indentation depth.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg ppar parameter.
+/// \arg ppist context.
+/// \arg iLevel indentation depth.
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR: Print parameter info, following symbolic references.
-///
-/// **************************************************************************
+/// 
+/// \brief Print parameter info, following symbolic references.
+/// \details 
+/// 
 
 int
 ParameterPrintInfoRecursive
@@ -864,7 +812,7 @@ ParameterPrintInfoRecursive
     {
     
 
-	//double d = ParameterResolveValue(ppar, ppist);
+	/// \defouble d = ParameterResolveValue(ppar, ppist);
 
 	char *pcFieldName = ParameterGetFieldName(ppar);
 
@@ -981,22 +929,18 @@ ParameterPrintInfoRecursive
 
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterPrint()
-///
-/// ARGS.:
-///
-///	ppar.....: parameter to print symbols for
+/// 
+/// 
+/// \arg ppar parameter to print symbols for
 ///	bAll.....: TRUE print full list, FALSE print only given parameter
-///	iIndent..: number of indentation spaces
-///	pfile....: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Print symbol info for parameter
-///
-/// **************************************************************************
+/// \arg iIndent number of indentation spaces
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Print symbol info for parameter
+/// \details 
+/// 
 
 #define PrintParameterIndent(iIndent,pfile)				\
 do									\
@@ -1014,7 +958,7 @@ ParameterPrint
 
     int bResult = TRUE;
 
-    //v section element
+    /// section element
 
     struct symtab_HSolveListElement *phsle = NULL;
 
@@ -1104,22 +1048,18 @@ ParameterPrint
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterResolveFunctionalInput()
-///
-/// ARGS.:
-///
-///	ppar.......: parameter to resolve input for
-///	ppist......: context of parameter
-///	pcInput....: name of input on function of parameter
-///	iPosition..: input identifier in instantiation
-///
-/// RTN..: struct symtab_HSolveListElement * : symbol that gives input
-///
-/// DESCR: Find symbol that gives input to functional parameter
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppar parameter to resolve input for
+/// \arg ppist context of parameter
+/// \arg pcInput name of input on function of parameter
+/// \arg iPosition input identifier in instantiation
+/// 
+/// \return struct symtab_HSolveListElement * : symbol that gives input
+/// 
+/// \brief Find symbol that gives input to functional parameter
+/// \details 
+/// 
 
 struct symtab_HSolveListElement *
 ParameterResolveFunctionalInput
@@ -1155,31 +1095,27 @@ ParameterResolveFunctionalInput
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterResolveScaledValue()
-///
-/// ARGS.:
-///
-///	ppar.......: parameter to scale value for
-///	ppist......: context of parameter
-///
-/// RTN..: double : scaled parameter value
-///
-/// DESCR: Resolve & scale value of parameter in given context
-///
+/// 
+/// 
+/// \arg ppar parameter to scale value for
+/// \arg ppist context of parameter
+/// 
+/// \return double : scaled parameter value
+/// 
+/// \brief Resolve & scale value of parameter in given context
+/// \details 
+/// 
 ///	Scaling means taking volume or surface of an ancestor symbol into
 ///	account to get the actual value for the parameter.
 ///	e.g. for a channel means multiplying conductance density with 
 ///	surface of segment, for a segment could mean dividing axial 
 ///	resistance by volume of segment and multiplying with length of
 ///	segment.
-///
-/// NOTE:
-///
+/// 
+/// \note 
+/// 
 ///	See notes of ParameterResolveValue() 
-///
-/// **************************************************************************
+/// 
 
 double
 ParameterResolveScaledValue
@@ -1238,20 +1174,16 @@ ParameterResolveScaledValue
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterResolveSymbol()
-///
-/// ARGS.:
-///
-///	ppar.......: parameter to resolve input for
-///	ppist......: context of parameter
-///
-/// RTN..: struct symtab_HSolveListElement * : symbol pointed to by parameter
-///
-/// DESCR: Resolve (symbolic) parameter
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppar parameter to resolve input for
+/// \arg ppist context of parameter
+/// 
+/// \return struct symtab_HSolveListElement * : symbol pointed to by parameter
+/// 
+/// \brief Resolve (symbolic) parameter
+/// \details 
+/// 
 
 struct symtab_HSolveListElement *
 ParameterResolveSymbol
@@ -1281,10 +1213,10 @@ ParameterResolveSymbol
 
 	    char *pcFieldname = ParameterGetFieldName(ppar); 
 
-	    //! if pcFieldname is an IO, ppar will become NULL, that seems ok ?
+	    /// \note if pcFieldname is an IO, ppar will become NULL, that seems ok ?
 
-	    //! Since this is a pointer to the parameter argument I'm not certain
-	    //! changing this value is always safe. 
+	    /// \note Since this is a pointer to the parameter argument I'm not certain
+	    /// \note changing this value is always safe. 
 
 	    ppar = SymbolFindParameter(phsleResult, ppistPar2, pcFieldname);
 
@@ -1320,28 +1252,24 @@ ParameterResolveSymbol
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterResolveToPidinStack()
-///
-/// ARGS.:
-///
-///	ppar.......: parameter to resolve input for
-///	ppist......: context of parameter
-///
-/// RTN..: struct PidinStack *
-///
+/// 
+/// 
+/// \arg ppar parameter to resolve input for
+/// \arg ppist context of parameter
+/// 
+/// \return struct PidinStack *
+/// 
 ///	Context pointed to by parameter
-///
-/// DESCR: Resolve a parameter to a context.
-///
+/// 
+/// \brief Resolve a parameter to a context.
+/// \details 
+/// 
 ///	The symbolic parameter is dereferenced, a number parameter is
 ///	left alone, a copy is returned.
-///
+/// 
 ///	The resulting context looses the field specification from the
 ///	given parameter (if any).
-///
-/// **************************************************************************
+/// 
 
 struct PidinStack *
 ParameterResolveToPidinStack
@@ -1361,10 +1289,10 @@ ParameterResolveToPidinStack
 
 /* 	ppistResult = PidinStackDuplicate(ppist); */
 
-	//t rewrite using only one allocation :
-	//t 
-	//t means we need something like 
-	//t PidinStackAppendCompactFromParameterSymbols()
+	/// \todo rewrite using only one allocation :
+	/// \todo 
+	/// \todo means we need something like 
+	/// \todo PidinStackAppendCompactFromParameterSymbols()
 
 	//- get pidinstack from parameter elements
 
@@ -1401,10 +1329,10 @@ ParameterResolveToPidinStack
 
 /* 	ppistResult = PidinStackDuplicate(ppist); */
 
-	//t rewrite using only one allocation :
-	//t 
-	//t means we need something like 
-	//t PidinStackAppendCompactFromParameterSymbols()
+	/// \todo rewrite using only one allocation :
+	/// \todo 
+	/// \todo means we need something like 
+	/// \todo PidinStackAppendCompactFromParameterSymbols()
 
 	//- get pidinstack from parameter elements
 
@@ -1465,7 +1393,7 @@ ParameterResolveToPidinStack
 
 		ppistResult = ParameterResolveToPidinStack(pparInit, ppistResult);
 
-		//t memory leak: fist ppistResult
+		/// \todo memory leak: fist ppistResult
 	    }
 
 	    //- else
@@ -1489,7 +1417,7 @@ ParameterResolveToPidinStack
 
 			ppistResult = ParameterResolveToPidinStack(pparField, ppistResult);
 
-			//t memory leak: fist ppistResult
+			/// \todo memory leak: fist ppistResult
 
 			iCount--;
 		    }
@@ -1504,7 +1432,7 @@ ParameterResolveToPidinStack
 			     " values that depend back on this parameter value.\n",
 			     ParameterGetName(ppar));
 
-			//! count gets reset by getting out of the recursion
+			/// \note count gets reset by getting out of the recursion
 
 			iCount--;
 
@@ -1541,32 +1469,28 @@ ParameterResolveToPidinStack
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterResolveValue()
-///
-/// ARGS.:
-///
-///	ppar.......: parameter to resolve input for
-///	ppist......: context of parameter
-///
-/// RTN..: double : parameter value, FLT_MAX if failure
-///
-/// DESCR: Resolve value of parameter in given context
-///
-/// NOTE:
-///
+/// 
+/// 
+/// \arg ppar parameter to resolve input for
+/// \arg ppist context of parameter
+/// 
+/// \return double : parameter value, FLT_MAX if failure
+/// 
+/// \brief Resolve value of parameter in given context
+/// \details 
+/// 
+/// \note 
+/// 
 ///	Field name of parameter must match bindable I/O relation of symbol
 ///	pointed to by parameter. First I/O relation is matched, this could 
 ///	be an architectural mistake ?
 ///	Second try is made : match against parameter as referenced. 
-///
+/// 
 ///	Symbols may not have same parameter names and I/O relation names.
 ///	To disambiguate this we could invent another symbol to make 
 ///	difference between field names and I/O relation names.
 ///	See TODO.txt.
-///
-/// **************************************************************************
+/// 
 
 double
 ParameterResolveValue
@@ -1588,7 +1512,7 @@ ParameterResolveValue
 
     //- if constant value
 
-    //t ParameterValue() also checks for ParameterIsNumber().
+    /// \todo ParameterValue() also checks for ParameterIsNumber().
 
     else if (ParameterIsNumber(ppar))
     {
@@ -1631,9 +1555,9 @@ ParameterResolveValue
 	    if (!phsle
 		|| !instanceof_bio_comp(phsle))
 	    {
-		//! e.g. searching for 'none' as the somatopetal of a segment.
+		/// \note e.g. searching for 'none' as the somatopetal of a segment.
 
-		//! e.g. resolving beta for an isolated pool
+		/// \note e.g. resolving beta for an isolated pool
 
 		//- free allocated memory
 
@@ -1687,8 +1611,8 @@ ParameterResolveValue
 		{
 		    //- try to find referenced parameter
 
-		    //! note that this will fail for symbolic parameters that
-		    //! point to a symbol instead of a field.
+		    /// \note note that this will fail for symbolic parameters that
+		    /// \note point to a symbol instead of a field.
 
 		    struct symtab_Parameters *pparReferenced
 			= SymbolFindParameter(phsle, ppistPar, pcField);
@@ -1720,7 +1644,7 @@ ParameterResolveValue
 				 " values that depend back on this parameter value.\n",
 				 ParameterGetName(ppar));
 
-			    //! count gets reset by getting out of the recursion
+			    /// \note count gets reset by getting out of the recursion
 
 			    iCount--;
 
@@ -1788,19 +1712,15 @@ ParameterResolveValue
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterTo_stdout()
-///
-/// ARGS.:
-///
-///	ppar.: parameter to print.
-///
-/// RTN..: void
-///
-/// DESCR: Print parameter to stdout.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppar parameter to print.
+/// 
+/// \return void
+/// 
+/// \brief Print parameter to stdout.
+/// \details 
+/// 
 
 void ParameterTo_stdout(struct symtab_Parameters *ppar)
 {
@@ -1810,19 +1730,15 @@ void ParameterTo_stdout(struct symtab_Parameters *ppar)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParameterValue()
-///
-/// ARGS.:
-///
-///	ppar.....: parameter to obtain value for
-///
-/// RTN..: double : value, FLT_MAX for failure
-///
-/// DESCR: Get value from parameter
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppar parameter to obtain value for
+/// 
+/// \return double : value, FLT_MAX for failure
+/// 
+/// \brief Get value from parameter
+/// \details 
+/// 
 
 double ParameterValue(struct symtab_Parameters *ppar)
 {

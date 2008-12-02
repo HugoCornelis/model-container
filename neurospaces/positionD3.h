@@ -25,13 +25,13 @@
 #include "double.h"
 
 
-//s
-//s 3D position
-//s
+/// \struct
+/// \struct 3D position
+/// \struct
 
 struct D3Position
 {
-    //m x,y,z coordinates
+    /// x,y,z coordinates
 
     double dx;
     double dy;
@@ -39,9 +39,9 @@ struct D3Position
 };
 
 
-//d
-//d test type(pD3) == struct D3Position * at compile time
-//d
+/// \def
+/// \def test type(pD3) == struct D3Position * at compile time
+/// \def
 
 #define CompileTimeTestD3Type(pD3)					\
 do {									\
@@ -50,9 +50,9 @@ do {									\
 } while (0)
 
 
-//d
-//d set X coordinate of pD3
-//d
+/// \def
+/// \def set X coordinate of pD3
+/// \def
 
 #define D3SetX(pD3,dX)							\
 do {									\
@@ -62,9 +62,9 @@ do {									\
 } while (0)
 
 
-//d
-//d set Y coordinate of pD3
-//d
+/// \def
+/// \def set Y coordinate of pD3
+/// \def
 
 #define D3SetY(pD3,dY)							\
 do {									\
@@ -74,9 +74,9 @@ do {									\
 } while (0)
 
 
-//d
-//d set Z coordinate of pD3
-//d
+/// \def
+/// \def set Z coordinate of pD3
+/// \def
 
 #define D3SetZ(pD3,dZ)							\
 do {									\
@@ -86,9 +86,9 @@ do {									\
 } while (0)
 
 
-//d
-//d set coordinates of pD3 to dX,dY,dZ
-//d
+/// \def
+/// \def set coordinates of pD3 to dX,dY,dZ
+/// \def
 
 #define D3Set(pD3,dX,dY,dZ)						\
 do {									\
@@ -102,11 +102,11 @@ do {									\
 } while (0)
 
 
-//! following only works with GNU cc
+/// \note following only works with GNU cc
 
-//d
-//d get X
-//d
+/// \def
+/// \def get X
+/// \def
 
 #define D3GetX(pD3)							\
 ({									\
@@ -115,9 +115,9 @@ do {									\
 })
 
 
-//d
-//d get Y
-//d
+/// \def
+/// \def get Y
+/// \def
 
 #define D3GetY(pD3)							\
 ({									\
@@ -126,9 +126,9 @@ do {									\
 })
 
 
-//d
-//d get Z
-//d
+/// \def
+/// \def get Z
+/// \def
 
 #define D3GetZ(pD3)							\
 ({									\

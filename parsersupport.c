@@ -37,52 +37,51 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-//v current parser context
+/// current parser context
 
 static PARSERCONTEXT *pacCurrentContext = NULL;
 
 
-//v root parser context
+/// root parser context
 
 static PARSERCONTEXT *pacRootContext = NULL;
 
 
-//v index to data
+/// index to data
 
 static int iParserContextData = -1;
 
-//v void data
+/// void data
 
 static void **ppvParserContextData = NULL;
 
-//d default size of parser context void data stack
+/// \def default size of parser context void data stack
 
 #define SIZE_PARSERCONTEXTSTACK	100
 
 
-//v index to container data
+/// index to container data
 
 static int iParserContainerData = -1;
 
-//v container element
+/// container element
 
 static struct symtab_Vector **ppvectParserContainerData = NULL;
 
 #define SIZE_PARSERCONTAINERSTACK	100
 
 
-//v index to algorithm data
+/// index to algorithm data
 
 static int iParserAlgorithmData = -1;
 
-//v algorithm data
+/// algorithm data
 
 static void **ppvParserAlgorithmData = NULL;
 
 #define SIZE_PARSERALGORITHMSTACK	100
 
 
-//f local functions
 
 static void ParserChangeContext(PARSERCONTEXT *pac);
 
@@ -93,23 +92,19 @@ ParserContextPrepare
 static int ParserContextRepair(PARSERCONTEXT *pac);
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserAddModel()
-///
-/// ARGS.:
-///
-///	pacContext.: parser context
-///	phsle......: symbol table element
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Add symbol to private or public model list.
-///
+/// 
+/// 
+/// \arg pacContext parser context
+/// \arg phsle symbol table element
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Add symbol to private or public model list.
+/// \details 
+/// 
 ///	Depending on parser state, a call is made ParserAddPrivateModel()
 ///	or ParserAddPublicModel().
-///
-/// **************************************************************************
+/// 
 
 int ParserAddModel
 (PARSERCONTEXT *pacContext,
@@ -157,20 +152,16 @@ int ParserAddModel
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserAddPrivateModel()
-///
-/// ARGS.:
-///
-///	pacContext.: parser context
-///	phsle......: symbol table element
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Add symbol to current private model list
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pacContext parser context
+/// \arg phsle symbol table element
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Add symbol to current private model list
+/// \details 
+/// 
 
 /* static */
 int ParserAddPrivateModel
@@ -225,24 +216,20 @@ int ParserAddPrivateModel
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserAddPublicModel()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pacContext.: parser context, may be NULL
-///	phsle......: symbol table element
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Add symbol to current public model list
-///
+/// \arg phsle symbol table element
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Add symbol to current public model list
+/// \details 
+/// 
 ///	Generates events for TYPE_HSLE_D3SEGMENT, TYPE_HSLE_CELL
-///
+/// 
 ///	If no parser context is given, it defaults to the current context.
-///
-/// **************************************************************************
+/// 
 
 /* static */
 int ParserAddPublicModel
@@ -253,11 +240,11 @@ int ParserAddPublicModel
 
     int bResult = 1;
 
-    //v currently parsed file
+    /// currently parsed file
 
     struct ImportedFile *pif = NULL;
 
-    //v currently defined symbols
+    /// currently defined symbols
 
     struct DefinedSymbols *pdefsym = NULL;
 
@@ -500,17 +487,13 @@ int ParserAddPublicModel
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: PARSERCONTEXT * : allocated parser context, NULL for failure
-///
-/// DESCR: Allocate new parser context
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return PARSERCONTEXT * : allocated parser context, NULL for failure
+/// 
+/// \brief Allocate new parser context
+/// \details 
+/// 
 
 PARSERCONTEXT *ParserContextCalloc(void)
 {
@@ -532,17 +515,13 @@ PARSERCONTEXT *ParserContextCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserClearContext()
-///
-/// ARGS.:
-///
-/// RTN..: void
-///
-/// DESCR: Clear parser context
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return void
+/// 
+/// \brief Clear parser context
+/// \details 
+/// 
 
 void ParserClearContext(void)
 {
@@ -565,17 +544,13 @@ void ParserClearContext(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserClearRootContext()
-///
-/// ARGS.:
-///
-/// RTN..: void
-///
-/// DESCR: Clear root parser context
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return void
+/// 
+/// \brief Clear root parser context
+/// \details 
+/// 
 
 void ParserClearRootContext(void)
 {
@@ -602,19 +577,15 @@ void ParserClearRootContext(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserChangeContext()
-///
-/// ARGS.:
-///
-///	pac...: new parser context
-///
-/// RTN..: void
-///
-/// DESCR: Set new parser context
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pac new parser context
+/// 
+/// \return void
+/// 
+/// \brief Set new parser context
+/// \details 
+/// 
 
 static void ParserChangeContext(PARSERCONTEXT *pac)
 {
@@ -624,17 +595,13 @@ static void ParserChangeContext(PARSERCONTEXT *pac)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextActualContainer()
-///
-/// ARGS.:
-///
-/// RTN..: symtab_Vector *  : popped container element
-///
-/// DESCR: Pop container element
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return symtab_Vector *  : popped container element
+/// 
+/// \brief Pop container element
+/// \details 
+/// 
 
 struct symtab_Vector * ParserContextActualContainer(void)
 {
@@ -649,17 +616,13 @@ struct symtab_Vector * ParserContextActualContainer(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextActualState()
-///
-/// ARGS.:
-///
-/// RTN..: void * : popped data
-///
-/// DESCR: Pop data
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return void * : popped data
+/// 
+/// \brief Pop data
+/// \details 
+/// 
 
 void * ParserContextActualState(void)
 {
@@ -677,19 +640,15 @@ void * ParserContextActualState(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextGetActual()
-///
-/// ARGS.:
-///
-///	pac.: parser context
-///
-/// RTN..: struct symtab_HSolveListElement * : actually defined symbol
-///
-/// DESCR: Get symbol being defined
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pac parser context
+/// 
+/// \return struct symtab_HSolveListElement * : actually defined symbol
+/// 
+/// \brief Get symbol being defined
+/// \details 
+/// 
 
 struct symtab_HSolveListElement *ParserContextGetActual(PARSERCONTEXT *pac)
 {
@@ -703,19 +662,15 @@ struct symtab_HSolveListElement *ParserContextGetActual(PARSERCONTEXT *pac)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextInit()
-///
-/// ARGS.:
-///
-///	pac...: parser context to initialize
-///
-/// RTN..: void
-///
-/// DESCR: Initialize parser context
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pac parser context to initialize
+/// 
+/// \return void
+/// 
+/// \brief Initialize parser context
+/// \details 
+/// 
 
 void ParserContextInit(PARSERCONTEXT *pac)
 {
@@ -733,17 +688,13 @@ void ParserContextInit(PARSERCONTEXT *pac)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextPopContainer()
-///
-/// ARGS.:
-///
-/// RTN..: symtab_Vector *  : popped container element
-///
-/// DESCR: Pop container element
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return symtab_Vector *  : popped container element
+/// 
+/// \brief Pop container element
+/// \details 
+/// 
 
 struct symtab_Vector * ParserContextPopContainer(void)
 {
@@ -765,17 +716,13 @@ struct symtab_Vector * ParserContextPopContainer(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextPopAlgorithmState()
-///
-/// ARGS.:
-///
-/// RTN..: void *  : popped algorithm state
-///
-/// DESCR: Pop algorithm state
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return void *  : popped algorithm state
+/// 
+/// \brief Pop algorithm state
+/// \details 
+/// 
 
 void * ParserContextPopAlgorithmState(void)
 {
@@ -797,17 +744,13 @@ void * ParserContextPopAlgorithmState(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextPopState()
-///
-/// ARGS.:
-///
-/// RTN..: void * : popped data
-///
-/// DESCR: Pop data
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return void * : popped data
+/// 
+/// \brief Pop data
+/// \details 
+/// 
 
 void * ParserContextPopState(void)
 {
@@ -829,19 +772,15 @@ void * ParserContextPopState(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextPushContainer()
-///
-/// ARGS.:
-///
-///	pvect..: (generic) container element
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Push container element
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pvect (generic) container element
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Push container element
+/// \details 
+/// 
 
 int ParserContextPushContainer(struct symtab_Vector * pvect)
 {
@@ -874,19 +813,15 @@ int ParserContextPushContainer(struct symtab_Vector * pvect)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextPushAlgorithmState()
-///
-/// ARGS.:
-///
-///	pv..: algorithm state info
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Push algorithm state
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pv algorithm state info
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Push algorithm state
+/// \details 
+/// 
 
 int ParserContextPushAlgorithmState(void *pv)
 {
@@ -916,19 +851,15 @@ int ParserContextPushAlgorithmState(void *pv)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextPushState()
-///
-/// ARGS.:
-///
-///	pv..: date to push
-///
-/// RTN..: void
-///
-/// DESCR: Push data
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pv date to push
+/// 
+/// \return void
+/// 
+/// \brief Push data
+/// \details 
+/// 
 
 int ParserContextPushState(void *pv)
 {
@@ -958,25 +889,21 @@ int ParserContextPushState(void *pv)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextQualifyFilename()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pac.: parser context to use for qualification, may be NULL
-///	pc..: filename to qualify
-///
-/// RTN..: char * : qualified filename, NULL for failure
-///
-/// DESCR: qualify a filename suitable for import functions
-///
+/// \arg pc filename to qualify
+/// 
+/// \return char * : qualified filename, NULL for failure
+/// 
+/// \brief qualify a filename suitable for import functions
+/// \details 
+/// 
 ///	Return value is obtained using malloc() and should be free()d.
 ///	Qualification means checking for directories and environment.
 ///	if no parser context is given, qualification with directories of
 ///	previous parsed files will not be done.
-///
-/// **************************************************************************
+/// 
 
 char *ParserContextQualifyFilename(PARSERCONTEXT *pac,char *pc)
 {
@@ -1022,22 +949,18 @@ char *ParserContextQualifyFilename(PARSERCONTEXT *pac,char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextQualifyToConfiguration()
-///
-/// ARGS.:
-///
-///	pac.: parser context to use for qualification
-///	pc..: filename to qualify
-///
-/// RTN..: char * : qualified filename, NULL for failure
-///
-/// DESCR: qualify a filename using parser context configuration.
-///
+/// 
+/// 
+/// \arg pac parser context to use for qualification
+/// \arg pc filename to qualify
+/// 
+/// \return char * : qualified filename, NULL for failure
+/// 
+/// \brief qualify a filename using parser context configuration.
+/// \details 
+/// 
 ///	See NeurospacesQualifyToConfiguration().
-///
-/// **************************************************************************
+/// 
 
 char *ParserContextQualifyToConfiguration(PARSERCONTEXT *pac, char *pc)
 {
@@ -1051,24 +974,20 @@ char *ParserContextQualifyToConfiguration(PARSERCONTEXT *pac, char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextQualifyToParsingDirectory()
-///
-/// ARGS.:
-///
-///	pac.: parser context to use for qualification
-///	pc..: filename to qualify
-///
-/// RTN..: char * : qualified filename, NULL for failure
-///
-/// DESCR: qualify a filename using parser contexts to get intended dir
-///
+/// 
+/// 
+/// \arg pac parser context to use for qualification
+/// \arg pc filename to qualify
+/// 
+/// \return char * : qualified filename, NULL for failure
+/// 
+/// \brief qualify a filename using parser contexts to get intended dir
+/// \details 
+/// 
 ///	Return value is obtained using malloc() and should be free()d.
 ///	Qualification means checking for directories, if file not found,
 ///	returns NULL.
-///
-/// **************************************************************************
+/// 
 
 char *ParserContextQualifyToParsingDirectory(PARSERCONTEXT *pac, char *pc)
 {
@@ -1084,12 +1003,12 @@ char *ParserContextQualifyToParsingDirectory(PARSERCONTEXT *pac, char *pc)
 
     iDirectory = 0;
 
-    //! should not be dependent on root context ?
+    /// \note should not be dependent on root context ?
 
-    //! root context can still be NULL here, meaning that 
-    //! the given pac is the first import.
-    //! We must not depend on this knowledge, but it is
-    //! necessary to do a safety check.
+    /// \note root context can still be NULL here, meaning that 
+    /// \note the given pac is the first import.
+    /// \note We must not depend on this knowledge, but it is
+    /// \note necessary to do a safety check.
 
     pacLoop = pacRootContext;
 
@@ -1117,12 +1036,12 @@ char *ParserContextQualifyToParsingDirectory(PARSERCONTEXT *pac, char *pc)
 
 	//- loop over parser context from root to this
 
-	//! should not be dependent on root context ?
+	/// \note should not be dependent on root context ?
 
-	//! root context can still be NULL here, meaning that 
-	//! the given pac is the first import.
-	//! We must not depend on this knowledge, but it is
-	//! necessary to do a safety check.
+	/// \note root context can still be NULL here, meaning that 
+	/// \note the given pac is the first import.
+	/// \note We must not depend on this knowledge, but it is
+	/// \note necessary to do a safety check.
 
 	pacLoop = pacRootContext;
 
@@ -1183,25 +1102,21 @@ char *ParserContextQualifyToParsingDirectory(PARSERCONTEXT *pac, char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextQualifyToEnvironment()
-///
-/// ARGS.:
-///
-///	pac.: parser context to use for qualification
-///	pc..: filename to qualify
-///
-/// RTN..: char * : qualified filename, NULL for failure
-///
-/// DESCR: qualify a filename using current environment.
-///
+/// 
+/// 
+/// \arg pac parser context to use for qualification
+/// \arg pc filename to qualify
+/// 
+/// \return char * : qualified filename, NULL for failure
+/// 
+/// \brief qualify a filename using current environment.
+/// \details 
+/// 
 ///	Return value is obtained using malloc() and should be free()d.
 ///	Qualification means checking for environment variables and
 ///	current directory (where application was started, 
 ///	if in all these cases file not found, returns NULL.
-///
-/// **************************************************************************
+/// 
 
 char *ParserContextQualifyToEnvironment(char *pc)
 {
@@ -1303,22 +1218,18 @@ char *ParserContextQualifyToEnvironment(char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextSetActual()
-///
-/// ARGS.:
-///
-///	pac....: parser context
-///	phsle..: symbol being defined
-///
-/// RTN..: struct symtab_HSolveListElement * :
-///
+/// 
+/// 
+/// \arg pac parser context
+/// \arg phsle symbol being defined
+/// 
+/// \return struct symtab_HSolveListElement * :
+/// 
 ///	Previous actual symbol
-///
-/// DESCR: Set symbol being defined.
-///
-/// **************************************************************************
+/// 
+/// \brief Set symbol being defined.
+/// \details 
+/// 
 
 struct symtab_HSolveListElement *
 ParserContextSetActual
@@ -1339,20 +1250,16 @@ ParserContextSetActual
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextSetImportedFile()
-///
-/// ARGS.:
-///
-///	pac....: parser context
-///	pif....: imported file
-///
-/// RTN..: void
-///
-/// DESCR: Set imported file attached to parser context
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pac parser context
+/// \arg pif imported file
+/// 
+/// \return void
+/// 
+/// \brief Set imported file attached to parser context
+/// \details 
+/// 
 
 void ParserContextSetImportedFile(PARSERCONTEXT *pac,struct ImportedFile *pif)
 {
@@ -1417,21 +1324,17 @@ void ParserContextSetImportedFile(PARSERCONTEXT *pac,struct ImportedFile *pif)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserCurrentElementPop()
-///
-/// ARGS.:
-///
-///	pac....: parser context
-///
-/// RTN..: struct symtab_IdentifierIndex * :
-///
+/// 
+/// 
+/// \arg pac parser context
+/// 
+/// \return struct symtab_IdentifierIndex * :
+/// 
 ///	name of popped element, NULL for failure
-///
-/// DESCR: Pop current element name
-///
-/// **************************************************************************
+/// 
+/// \brief Pop current element name
+/// \details 
+/// 
 
 struct symtab_IdentifierIndex * 
 ParserCurrentElementPop
@@ -1448,21 +1351,17 @@ ParserCurrentElementPop
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserCurrentElementPopAll()
-///
-/// ARGS.:
-///
-///	pac....: parser context
-///
-/// RTN..: void
-///
-/// DESCR: Pop all current element names (empties element stack)
-///
-/// NOTE.: See ParserContextPrepare() for more info on this function.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pac parser context
+/// 
+/// \return void
+/// 
+/// \brief Pop all current element names (empties element stack)
+/// \details 
+/// 
+/// \note  See ParserContextPrepare() for more info on this function.
+/// 
 
 void ParserCurrentElementPopAll(PARSERCONTEXT *pac)
 {
@@ -1472,22 +1371,18 @@ void ParserCurrentElementPopAll(PARSERCONTEXT *pac)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserCurrentElementPush()
-///
-/// ARGS.:
-///
-///	pac.......: parser context
-///	pidinName.: new current element name
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Set new current element name.
-///
-/// NOTE.: See ParserContextPrepare() for more info on this function.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pac parser context
+/// \arg pidinName new current element name
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Set new current element name.
+/// \details 
+/// 
+/// \note  See ParserContextPrepare() for more info on this function.
+/// 
 
 int ParserCurrentElementPush
 (PARSERCONTEXT *pac,struct symtab_IdentifierIndex *pidinName)
@@ -1502,17 +1397,13 @@ int ParserCurrentElementPush
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserFinish()
-///
-/// ARGS.:
-///
-/// RTN..: void
-///
-/// DESCR: Finish parsing, clean up
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return void
+/// 
+/// \brief Finish parsing, clean up
+/// \details 
+/// 
 
 void ParserFinish(void)
 {
@@ -1522,27 +1413,24 @@ void ParserFinish(void)
     {
 /* 	//- generate finish event */
 
-/* 	//! current context should contain root here */
+/* 	/// \note current context should contain root here */
 
 /* 	ParserEventGenerate(EVENT_ACTION_FINISH,NULL,&pacCurrentContext->pist); */
     }
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserImport()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pac.........: parser context, NULL for default root context.
-///	pcFilename..: file to parse
-///	pcNameSpace.: name space for imported models
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: import file, parse if necessary
-///
+/// \arg pcFilename file to parse
+/// \arg pcNameSpace name space for imported models
+/// 
+/// \return int : success of operation
+/// 
+/// \brief import file, parse if necessary
+/// \details 
+/// 
 ///	Import the given file, if it is not yet imported, parse it with the
 ///	given parse() function via a call to ParserParse().
 ///	Link the parsed file (newly parsed or cached) as a dependency file
@@ -1550,8 +1438,7 @@ void ParserFinish(void)
 ///	pcNameSpace is the name space for the imported models, it is linked
 ///	into the structure of defined symbols. It must not be freed 
 ///	afterwards.
-///
-/// **************************************************************************
+/// 
 
 int
 ParserImport
@@ -1595,8 +1482,8 @@ ParserImport
 
     if (!pifToParse)
     {
-	//! I first add the file to the symbol table, this also gets around
-	//! circular dependencies. 
+	/// \note I first add the file to the symbol table, this also gets around
+	/// \note circular dependencies. 
 
 	//- if add file to symbol table
 
@@ -1652,7 +1539,7 @@ ParserImport
 	{
 	    //- register error : unable to import given file
 
-	    //! this is also an internal error
+	    /// \note this is also an internal error
 
 	    NeurospacesError
 		(pac,
@@ -1724,26 +1611,22 @@ ParserImport
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserLookupDependencyModel()
-///
-/// ARGS.:
-///
-///	pacContext.: parser context to search for symbol
-///	pidin......: namespaced hierarchical name to search for
-///
-/// RTN..: struct symtab_HSolveListElement *
-///
+/// 
+/// 
+/// \arg pacContext parser context to search for symbol
+/// \arg pidin namespaced hierarchical name to search for
+/// 
+/// \return struct symtab_HSolveListElement *
+/// 
 ///	source of dependency, NULL if not found.
-///
-/// DESCR: lookup a dependency symbol
-///
+/// 
+/// \brief lookup a dependency symbol
+/// \details 
+/// 
 ///	Gives pointer into another pif struct its public model symbols,
 ///	Structure returned is read-only.
 ///	This function is a wrapper around SymbolLookup().
-///
-/// **************************************************************************
+/// 
 
 struct symtab_HSolveListElement *
 ParserLookupDependencyModel
@@ -1776,23 +1659,19 @@ ParserLookupDependencyModel
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserLookupPrivateModel()
-///
-/// ARGS.:
-///
-///	pcIdentifier..: name of private model to search
-///
-/// RTN..: struct symtab_HSolveListElement * : 
-///
+/// 
+/// 
+/// \arg pcIdentifier name of private model to search
+/// 
+/// \return struct symtab_HSolveListElement * : 
+/// 
 ///	private, NULL for failure
-///
-/// DESCR: lookup a private model
-///
+/// 
+/// \brief lookup a private model
+/// \details 
+/// 
 ///	Lookup a private in current active private models
-///
-/// **************************************************************************
+/// 
 
 struct symtab_HSolveListElement *ParserLookupPrivateModel(char *pcIdentifier)
 {
@@ -1830,9 +1709,10 @@ struct symtab_HSolveListElement *ParserLookupPrivateModel(char *pcIdentifier)
 /* ///	ppist.........: element context, may be NULL */
 /* ///	pidin.........: idin describing symbol to lookup, may be NULL */
 /* /// */
-/* /// RTN..: struct symtab_HSolveListElement * : symbol, NULL for failure */
+/* /// \return struct symtab_HSolveListElement * : symbol, NULL for failure */
 /* /// */
-/* /// DESCR: lookup a symbol */
+/* /// \brief lookup a symbol */
+/// \details 
 /* /// */
 /* ///	ppist gives current element context, if not given (NULL), the current */
 /* ///	parser context is used as current element context. */
@@ -1916,29 +1796,25 @@ struct symtab_HSolveListElement *ParserLookupPrivateModel(char *pcIdentifier)
 /* } */
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserMessage()
-///
-/// ARGS.:
-///
-///	pacContext.: parser context
-///	iPriority..: priority of given message
-///	pcContext..: descriptive string for parsing context (unused)
-///	pcMessage..: stdargs message to log
-///
-/// RTN..: int :  0 : continue parsing, msg logged
+/// 
+/// 
+/// \arg pacContext parser context
+/// \arg iPriority priority of given message
+/// \arg pcContext descriptive string for parsing context (unused)
+/// \arg pcMessage stdargs message to log
+/// 
+/// \return int :  0 : continue parsing, msg logged
 ///		  1 : continue parsing, no msg logged
 ///		 -1 : stop parsing
-///
-/// DESCR: log a message from any of the parsing functions
-///
+/// 
+/// \brief log a message from any of the parsing functions
+/// \details 
+/// 
 ///	iPriority is compared with the verbosity option given on the command
 ///	line, if higher, the message is written to stdout.
-///
+/// 
 ///	Does some parsing logging, calls NeurospacesMessage()
-///
-/// **************************************************************************
+/// 
 
 int ParserMessage
 (PARSERCONTEXT *pacContext,
@@ -1950,11 +1826,11 @@ int ParserMessage
 
     int bResult = 0;
 
-    //v tmp var
+    /// tmp var
 
     char pc[100];
 
-    //v stdargs list
+    /// stdargs list
 
     va_list vaList;
 
@@ -1969,7 +1845,7 @@ int ParserMessage
 	pacContext = pacCurrentContext;
     }
 
-    //t neurospaces should not be accessed here
+    /// \todo neurospaces should not be accessed here
 
     //- if exclusive priority on
 
@@ -2035,25 +1911,21 @@ int ParserMessage
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserAlgorithmDisable()
-///
-/// ARGS.:
-///
-///	pacContext.: parser context
-///	palgi......: algorithm instance to disable.
-///	pcName.....: name of algorithm to import
-///	pcInstance.: name of algorithm instance to create
+/// 
+/// 
+/// \arg pacContext parser context
+/// \arg palgi algorithm instance to disable.
+/// \arg pcName name of algorithm to import
+/// \arg pcInstance name of algorithm instance to create
 ///	pcInit.....: init string of algorithm, only for diag's
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: disable a loadable algorithm
-///
+/// 
+/// \return int : success of operation
+/// 
+/// \brief disable a loadable algorithm
+/// \details 
+/// 
 ///	Does some parsing logging, calls AlgorithmDisable()
-///
-/// **************************************************************************
+/// 
 
 int ParserAlgorithmDisable
 (PARSERCONTEXT *pacContext,
@@ -2104,24 +1976,20 @@ int ParserAlgorithmDisable
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserAlgorithmHandle()
-///
-/// ARGS.:
-///
-///	pac........: parser context
-///	phsle......: symbol to handle
-///	palgi......: algorithm instance that should handle given symbol.
-///	pcName.....: name of algorithm to import
-///	pcInstance.: name of algorithm instance to create
-///	pcInit.....: init string of algorithm
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Call algorithm instance handler on given symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pac parser context
+/// \arg phsle symbol to handle
+/// \arg palgi algorithm instance that should handle given symbol.
+/// \arg pcName name of algorithm to import
+/// \arg pcInstance name of algorithm instance to create
+/// \arg pcInit init string of algorithm
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Call algorithm instance handler on given symbol.
+/// \details 
+/// 
 
 int
 ParserAlgorithmHandle
@@ -2160,7 +2028,7 @@ ParserAlgorithmHandle
 	iResult = FALSE;
     }
 
-    //t register outcome of instance symbol handler in instance symbol
+    /// \todo register outcome of instance symbol handler in instance symbol
 
     //- repair the parser context stack
 
@@ -2171,8 +2039,8 @@ ParserAlgorithmHandle
 
     //- give diagnostics : handle of symbol by algorithm
 
-    //t we do no the context here, right ?
-    //t its symbolic name is in pac I assume, have to double check.
+    /// \todo we do no the context here, right ?
+    /// \todo its symbolic name is in pac I assume, have to double check.
 
     ParserMessage
 	(pac,
@@ -2188,28 +2056,24 @@ ParserAlgorithmHandle
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserAlgorithmImport()
-///
-/// ARGS.:
-///
-///	pacContext.: parser context
-///	pcName.....: name of algorithm class to import
-///	pcInstance.: name of algorithm instance to create
-///	pcInit.....: init string of algorithm
-///	ppar.......: algorithm instantiation parameters.
-///	palgs......: algorithm symbol.
-///
-/// RTN..: struct AlgorithmInstance * 
-///
+/// 
+/// 
+/// \arg pacContext parser context
+/// \arg pcName name of algorithm class to import
+/// \arg pcInstance name of algorithm instance to create
+/// \arg pcInit init string of algorithm
+/// \arg ppar algorithm instantiation parameters.
+/// \arg palgs algorithm symbol.
+/// 
+/// \return struct AlgorithmInstance * 
+/// 
 ///	instance of imported algorithm, NULL for failure.
-///
-/// DESCR: import a algorithm
-///
+/// 
+/// \brief import a algorithm
+/// \details 
+/// 
 ///	Does some parsing logging, calls AlgorithmImport()
-///
-/// **************************************************************************
+/// 
 
 struct AlgorithmInstance *
 ParserAlgorithmImport
@@ -2285,22 +2149,19 @@ ParserAlgorithmImport
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserParse()
-///
-/// ARGS.:
-///
-///	pacParserContext.: parser context
-///	pifToParse.......: parse request
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: serve a new parse request
-///
+/// 
+/// 
+/// \arg pacParserContext parser context
+/// \arg pifToParse parse request
+/// 
+/// \return int : success of operation
+/// 
+/// \brief serve a new parse request
+/// \details 
+/// 
 ///	Filename of file to parse and parsing function must both be given in
 ///	pifToParse.
-///
+/// 
 ///	1. associate current lexical state with the given parser context
 ///	2. open file (in pifToParse)
 ///	3. construct and link new parser context
@@ -2308,8 +2169,7 @@ ParserAlgorithmImport
 ///	5. parse file with parse function in pifToParse
 ///	6. unswitch to old lexical state
 ///	7. restore to old parse context
-///
-/// **************************************************************************
+/// 
 
 int ParserParse
 (PARSERCONTEXT *pacParserContext,
@@ -2371,7 +2231,7 @@ int ParserParse
 
 /* 	bResult = pifToParse->parseMethod(pacContext); */
 
-	//! note: one global parse function here
+	/// \note note: one global parse function here
 
 	bResult = parserparse(pacContext);
 
@@ -2423,21 +2283,17 @@ int ParserParse
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextPrepare()
-///
-/// ARGS.:
-///
-///	pac...: parser context.
-///	phsle.: symbol needed for preparation.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pac parser context.
+/// \arg phsle symbol needed for preparation.
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR:
-///
+/// 
+/// \details 
+/// 
 ///	Prepare the context stack of the parser, such that regular
 ///	context operations can be done with the stack
 ///	(PidinStackLookupTopSymbol() etc.).  You must call
@@ -2450,19 +2306,18 @@ int ParserParse
 ///	such that you can use that function to keep context (perhaps
 ///	the symbols are not defined or complete yet at the time the
 ///	function is called).
-///
+/// 
 ///	This function is called as a preparation before calling symbol
 ///	algorithm handlers.
-///
-/// NOTE.:
-///
+/// 
+/// \note 
+/// 
 ///	This function does some dirty things in the most clean way
 ///	possible...
-///
+/// 
 ///	You must call ParserContextRepair() after calling this
 ///	function.
-///
-/// **************************************************************************
+/// 
 
 static int
 ParserContextPrepare
@@ -2495,23 +2350,18 @@ ParserContextPrepare
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserContextRepair()
-///
-/// ARGS.:
-///
-///	pacContext.: parser context
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pacContext parser context
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR:
-///
+/// 
+/// \details 
+/// 
 ///	Repair a parser context stack after algorithm handling.
-///
-/// **************************************************************************
+/// 
 
 static int ParserContextRepair(PARSERCONTEXT *pac)
 {
@@ -2543,19 +2393,15 @@ static int ParserContextRepair(PARSERCONTEXT *pac)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserSetContext()
-///
-/// ARGS.:
-///
-///	pac...: new parser context
-///
-/// RTN..: void
-///
-/// DESCR: Set new parser context
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pac new parser context
+/// 
+/// \return void
+/// 
+/// \brief Set new parser context
+/// \details 
+/// 
 
 void ParserSetContext(PARSERCONTEXT *pac)
 {
@@ -2578,19 +2424,15 @@ void ParserSetContext(PARSERCONTEXT *pac)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserSetRootContext()
-///
-/// ARGS.:
-///
-///	pac...: new root parser context
-///
-/// RTN..: void
-///
-/// DESCR: Set new root parser context
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pac new root parser context
+/// 
+/// \return void
+/// 
+/// \brief Set new root parser context
+/// \details 
+/// 
 
 void ParserSetRootContext(PARSERCONTEXT *pac)
 {
@@ -2619,17 +2461,13 @@ void ParserSetRootContext(PARSERCONTEXT *pac)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserStart()
-///
-/// ARGS.:
-///
-/// RTN..: void
-///
-/// DESCR: Initialize parsing
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return void
+/// 
+/// \brief Initialize parsing
+/// \details 
+/// 
 
 void ParserStart(void)
 {
@@ -2639,7 +2477,7 @@ void ParserStart(void)
     {
 /* 	//- generate start event */
 
-/* 	//! current context should contain root here */
+/* 	/// \note current context should contain root here */
 
 /* 	ParserEventGenerate(EVENT_ACTION_START,NULL,&pacCurrentContext->pist); */
     }

@@ -36,65 +36,65 @@
 #include "inserterinstance.h"
 
 
-//s algorithm handlers for spine algorithm
+/// \struct algorithm handlers for spine algorithm
 
 static AlgorithmClassInstanceCreator InserterClassCreateInstance;
 
 static AlgorithmClassHandler InserterClassPrintInfo;
 
 
-//s algorithm class method table
+/// \struct algorithm class method table
 
 static struct AlgorithmClassHandlerLibrary pfInserterClassHandlers =
 {
-    //m class info handler
+    /// class info handler
 
     InserterClassPrintInfo,
 
-    //m create instance from class (self, name, context, init string)
+    /// create instance from class (self, name, context, init string)
 
     InserterClassCreateInstance,
 };
 
 
-//s inserter class derives from algorithm class
+/// \struct inserter class derives from algorithm class
 
 struct InserterClass
 {
-    //m base struct : algorithm class
+    /// base struct : algorithm class
 
     struct AlgorithmClass algc;
 
-    //m number of created instances
+    /// number of created instances
 
     int iInstances;
 };
 
 
-//s algorithm class description
+/// \struct algorithm class description
 
 static struct InserterClass icInserter =
 {
-    //m base struct : algorithm class
+    /// base struct : algorithm class
 
     {
-	//m link
+	/// link
 
 	{
 	    NULL,
 	    NULL,
 	},
 
-	//m name
+	/// name
 
 	"Inserter",
 
-	//m algorithm handlers
+	/// algorithm handlers
 
 	&pfInserterClassHandlers,
     },
 
-    //m number of instances
+    /// number of instances
 
     0,
 };
@@ -103,21 +103,17 @@ static struct InserterClass icInserter =
 struct AlgorithmClass *palgcInserter = &icInserter.algc;
 
 
-/// **************************************************************************
-///
-/// SHORT: InserterClassCreateInstance()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: struct AlgorithmInstance * : 
-///
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return struct AlgorithmInstance *  
+/// 
 ///	created algorithm instance, NULL for failure
-///
-/// DESCR: Algorithm handler to create instance of inserter algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief Algorithm handler to create instance of inserter algorithm.
+/// \details 
+/// 
 
 static
 struct AlgorithmInstance *
@@ -149,19 +145,15 @@ InserterClassCreateInstance
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: InserterClassPrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on inserter algorithm class.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int  std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on inserter algorithm class.
+/// \details 
+/// 
 
 static int InserterClassPrintInfo
 (struct AlgorithmClass *palgc,char *pcName,void *pvGlobal,void *pvData)

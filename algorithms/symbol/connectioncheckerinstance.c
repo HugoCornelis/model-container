@@ -41,7 +41,7 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-//s connection checker algorithm private data
+/// \struct connection checker algorithm private data
 
 /*s */
 /*s struct with connection checker options */
@@ -111,79 +111,79 @@ struct ConnectionCheckerOptions_type
 typedef struct ConnectionCheckerOptions_type ConnectionCheckerOptions;
 
 
-//s
-//s connection checker variables
-//s
+/// \struct
+/// \struct connection checker variables
+/// \struct
 
 struct ConnectionCheckerVariables_type
 {
-    //m symbol that points to network where algorithm is instantiated
+    /// symbol that points to network where algorithm is instantiated
 
     struct symtab_HSolveListElement *phsleNetwork;
 
-    //m context of network (parser context)
+    /// context of network (parser context)
 
     struct PidinStack *ppistNetwork;
 
-    //m symbol attached to
+    /// symbol attached to
 
     struct symtab_HSolveListElement *phsleProjection;
     struct PidinStack *ppistProjection;
 
-    //m pidin pointing to projection (not owned by projection)
+    /// pidin pointing to projection (not owned by projection)
 
     struct PidinStack *ppistArgument;
 
-    //m source population / cell
+    /// source population / cell
 
     struct symtab_HSolveListElement *phsleSource;
     struct PidinStack *ppistSource;
 
-    //m target population / cell
+    /// target population / cell
 
     struct symtab_HSolveListElement *phsleTarget;
     struct PidinStack *ppistTarget;
 
-    //m number of sources
+    /// number of sources
 
     int iSources;
 
-    //m number of destinations
+    /// number of destinations
 
     int iDestinations;
 
-    //m average delay
+    /// average delay
 
     double dAverageDelay;
 
-    //m average weight
+    /// average weight
 
     double dAverageWeight;
 
-    //m number of added connection groups
+    /// number of added connection groups
 
     int iConnectionGroups;
 
-    //m total number of added connections
+    /// total number of added connections
 
     int iConnections;
 
     /*m below is not used, left in place if needed e.g. to store
      *m average values. */
 
-    //m number of failures when adding connections
+    /// number of failures when adding connections
 
     int iConnectionFailures;
 
-    //m number of tries adding connections
+    /// number of tries adding connections
 
     int iConnectionTries;
 
-    //m number of failures for coordinates of generators
+    /// number of failures for coordinates of generators
 
     int iGeneratorFailures;
 
-    //m number of failures for coordinates of receivers
+    /// number of failures for coordinates of receivers
 
     int iReceiverFailures;
 };
@@ -191,25 +191,25 @@ struct ConnectionCheckerVariables_type
 typedef struct ConnectionCheckerVariables_type ConnectionCheckerVariables;
 
 
-//s ConnectionChecker instance, derives from algorithm instance
+/// \struct ConnectionChecker instance, derives from algorithm instance
 
 struct ConnectionCheckerInstance
 {
-    //m base struct
+    /// base struct
 
     struct AlgorithmInstance algi;
 
-    //m options for this instance
+    /// options for this instance
 
     ConnectionCheckerOptions cco;
 
-    //m variables for this instance
+    /// variables for this instance
 
     ConnectionCheckerVariables ccv;
 };
 
 
-//s number of symbol that have been modified
+/// \struct number of symbol that have been modified
 
 /* static int iModified = 0; */
 
@@ -248,21 +248,17 @@ ConnectionCheckerInstanceSymbolHandler
 /* (struct TreespaceTraversal *ptstr,void *pvUserdata); */
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionCheckerInstanceNew()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: struct AlgorithmInstance * : 
-///
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return struct AlgorithmInstance *  
+/// 
 ///	created algorithm instance, NULL for failure
-///
-/// DESCR: Algorithm handler to create instance of connection checker algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief Algorithm handler to create instance of connection checker algorithm.
+/// \details 
+/// 
 
 struct AlgorithmInstance *
 ConnectionCheckerInstanceNew
@@ -294,7 +290,7 @@ ConnectionCheckerInstanceNew
 
 	struct symtab_HSolveListElement *phsle = PidinStackLookupTopSymbol(ppist);
 
-	//t should use ParameterResolveSymbol()
+	/// \todo should use ParameterResolveSymbol()
 
 	struct symtab_Parameters *pparProjection
 	    = SymbolFindParameter(&palgs->hsle, ppist, "PROJECTION_NAME");
@@ -314,70 +310,66 @@ ConnectionCheckerInstanceNew
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionCheckerInstanceCheckConnectionGroups()
-///
-/// ARGS.:
-///
-///	pcci............: connection checker instance.
-///	pproj...........: projection symbol to check connections for.
-///	ppistProjection.: 
+/// 
+/// 
+/// \arg pcci connection checker instance.
+/// \arg pproj projection symbol to check connections for.
+/// \arg ppistProjection 
 ///	phsleSource.....: source population / cell of projection.
-///	ppistSource.....: 
+/// \arg ppistSource 
 ///	phsleTarget.....: target population / cell of projection.
 ///	ppistTarget.....: 
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Checks connection groups with connections in projection.
-///
-/// **************************************************************************
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Checks connection groups with connections in projection.
+/// \details 
+/// 
 
 struct ConnectionCheckerInstanceCheckConnectionGroups_data
 {
-    //m connection checker algorithm instance
+    /// connection checker algorithm instance
 
     struct ConnectionCheckerInstance *pcci;
 
-    //m network we are handling
+    /// network we are handling
 
     struct symtab_HSolveListElement *phsleNetwork;
     struct PidinStack *ppistNetwork;
 
-    //m projection to check
+    /// projection to check
 
     struct symtab_Projection *pproj;
     struct PidinStack *ppistProjection;
 
-    //m active connection group
+    /// active connection group
 
     struct symtab_VConnectionSymbol *pvconsy;
 
-/*     //m current spike generator */
+/*     /// current spike generator */
 
 /*     struct symtab_Attachment *pattaGenerator; */
 /*     struct PidinStack *ppistGenerator; */
 
-/*     //m spike generator position */
+/*     /// spike generator position */
 
 /*     struct D3Position D3Generator; */
 
-/*     //m current spike receiver */
+/*     /// current spike receiver */
 
 /*     struct symtab_Attachment *pattaReceiver; */
 /*     struct PidinStack *ppistReceiver; */
 
-/*     //m spike receiver position */
+/*     /// spike receiver position */
 
 /*     struct D3Position D3Receiver; */
 
-    //m source population
+    /// source population
 
     struct symtab_HSolveListElement *phsleSource;
     struct PidinStack *ppistSource;
 
-    //m target population
+    /// target population
 
     struct symtab_HSolveListElement *phsleTarget;
     struct PidinStack *ppistTarget;
@@ -553,7 +545,7 @@ struct ConnectionCheckerInstanceCheckConnectionGroups_data
 /* 		int iPreRelative = iPre - iSource; */
 /* 		int iPostRelative = iPost - iTarget; */
 
-/* 		//t check serial principals from treespace traversals, should match ? */
+/* 		/// \todo check serial principals from treespace traversals, should match ? */
 
 /* 		//- calculate connection delay */
 
@@ -582,8 +574,8 @@ struct ConnectionCheckerInstanceCheckConnectionGroups_data
 
 /* 		//- add connection component to container */
 
-/* 		//t wrong cast here : pconn does not derive from iohier. */
-/* 		//t see related comments of SymbolEntailChild(). */
+/* 		/// \todo wrong cast here : pconn does not derive from iohier. */
+/* 		/// \todo see related comments of SymbolEntailChild(). */
 
 /* 		ppiac->pcci->ccv.iConnectionTries++; */
 /* 		ppiac->pcci->ccv.iConnections++; */
@@ -675,30 +667,30 @@ ConnectionCheckerInstanceCheckConnectionGroups
 
     struct ConnectionCheckerInstanceCheckConnectionGroups_data piac =
     {
-	//m connection checker algorithm instance
+	/// connection checker algorithm instance
 
 	pcci,
 
-	//m network we are handling
+	/// network we are handling
 
 	pcci->ccv.phsleNetwork,
 	pcci->ccv.ppistNetwork,
 
-	//m projection to check
+	/// projection to check
 
 	pproj,
 	ppistProjection,
 
-	//m active connection group
+	/// active connection group
 
 	NULL,
 
-/* 	//m current spike generator */
+/* 	/// current spike generator */
 
 /* 	NULL, */
 /* 	NULL, */
 
-/* 	//m spike generator position */
+/* 	/// spike generator position */
 
 /* 	{ */
 /* 	    0.0, */
@@ -706,12 +698,12 @@ ConnectionCheckerInstanceCheckConnectionGroups
 /* 	    0.0, */
 /* 	}, */
 
-/* 	//m current spike receiver */
+/* 	/// current spike receiver */
 
 /* 	NULL, */
 /* 	NULL, */
 
-/* 	//m spike receiver position */
+/* 	/// spike receiver position */
 
 /* 	{ */
 /* 	    0.0, */
@@ -719,12 +711,12 @@ ConnectionCheckerInstanceCheckConnectionGroups
 /* 	    0.0, */
 /* 	}, */
 
-	//m source population
+	/// source population
 
 	phsleSource,
 	ppistSource,
 
-	//m target population
+	/// target population
 
 	phsleTarget,
 	ppistTarget,
@@ -754,9 +746,9 @@ ConnectionCheckerInstanceCheckConnectionGroups
 
 /*     //- get zero context for source and target populations */
 
-/*     //! this enables the symbol cache on the context which */
-/*     //! can then be used to calculate pre- and post-synaptic */
-/*     //! serials. */
+/*     /// \note this enables the symbol cache on the context which */
+/*     /// \note can then be used to calculate pre- and post-synaptic */
+/*     /// \note serials. */
 
 /*     piac.ppistSource = PidinStackCalloc(); */
 /*     piac.ppistTarget = PidinStackCalloc(); */
@@ -798,19 +790,15 @@ ConnectionCheckerInstanceCheckConnectionGroups
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionCheckerInstancePrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on connection checker instance.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int  std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on connection checker instance.
+/// \details 
+/// 
 
 static int ConnectionCheckerInstancePrintInfo
 (struct AlgorithmInstance *palgi, FILE *pfile)
@@ -865,19 +853,15 @@ static int ConnectionCheckerInstancePrintInfo
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionCheckerInstanceSymbolHandler()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	AlgorithmInstanceSymbolHandler args.
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to check connections of given symbol
-///
-/// **************************************************************************
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to check connections of given symbol
+/// \details 
+/// 
 
 static 
 int
@@ -933,7 +917,7 @@ ConnectionCheckerInstanceSymbolHandler
 
 	    //- get source and target population
 
-	    //t need to check performance issues in these routines
+	    /// \todo need to check performance issues in these routines
 
 	    pparSource
 		= SymbolFindParameter

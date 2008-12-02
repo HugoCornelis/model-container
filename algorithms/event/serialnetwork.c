@@ -40,18 +40,18 @@
 #include "algorithms/event/serialprojection.h"
 
 
-//s event associations for serial network algorithm
+/// \struct event associations for serial network algorithm
 
 static ParserEventListener SerialNetworkParserEventListener;
 
 static ParserEventAssociation pevasSerialNetwork[] = 
 {
     {
-	//m listens to any network event
+	/// listens to any network event
 
 	EVENT_TYPE_NETWORK,
 
-	//m function to call
+	/// function to call
 
 	SerialNetworkParserEventListener,
     }
@@ -60,17 +60,17 @@ static ParserEventAssociation pevasSerialNetwork[] =
 
 static ParserEventAssociationTable evatSerialNetwork =
 {
-    //m number of entries
+    /// number of entries
 
     sizeof(*pevasSerialNetwork) / sizeof(ParserEventAssociation),
 
-    //m event associations
+    /// event associations
 
     pevasSerialNetwork,
 };
 
 
-//s algorithm handlers for serial network algorithm
+/// \struct algorithm handlers for serial network algorithm
 
 static AlgorithmHandler SerialNetworkInitAlgorithm;
 
@@ -78,48 +78,48 @@ static AlgorithmHandler SerialNetworkPrintInfo;
 
 static struct AlgorithmHandlerLibrary pfSerialNetworkHandlers =
 {
-    //m after constructor, global is parser context, data is init string
+    /// after constructor, global is parser context, data is init string
 
     SerialNetworkInitAlgorithm,
 
-    //m after init, before destruct
+    /// after init, before destruct
 
     NULL,
 
-    //m print info handler
+    /// print info handler
 
     SerialNetworkPrintInfo,
 };
 
 
-//s algorithm description
+/// \struct algorithm description
 
 static struct symtab_Algorithm modSerialNetwork =
 {
-    //m link
+    /// link
 
     {
 	NULL,
 	NULL,
     },
 
-    //m type
+    /// type
 
     0,
 
-    //m flags
+    /// flags
 
     0,
 
-    //m name
+    /// name
 
     "SerialNetwork",
 
-    //m algorithm handlers
+    /// algorithm handlers
 
     &pfSerialNetworkHandlers,
 
-    //m event association table
+    /// event association table
 
     &evatSerialNetwork
 };
@@ -127,35 +127,31 @@ static struct symtab_Algorithm modSerialNetwork =
 struct symtab_Algorithm *palgSerialNetwork = &modSerialNetwork;
 
 
-//d default number of serial networks
+/// \def default number of serial networks
 
 #define ENTRIES_SERIAL_NETWORKS		10000
 
 
-//v serial network array
+/// serial network array
 
 struct SerialNetworkVariables sernetwVariables;
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialNetworkParserEventListener()
-///
-/// ARGS.:
-///
-///	std ParserEventListener args
-///
-/// RTN..: int : std ParserEventListener return value
-///
-/// DESCR: ParserEvent listener to put networks in a serial array
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std ParserEventListener args
+/// 
+/// \return int : std ParserEventListener return value
+/// 
+/// \brief ParserEvent listener to put networks in a serial array
+/// \details 
+/// 
 
 static int SerialNetworkParserEventListener
 (struct ParserEvent *pev,
  struct symtab_Algorithm *palg)
 {
-    //- set default result : ok
+    //- set default result  ok
 
     int bResult = TRUE;
 
@@ -280,24 +276,20 @@ static int SerialNetworkParserEventListener
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialNetworkInitAlgorithm()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to init serial network algorithm
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to init serial network algorithm
+/// \details 
+/// 
 
 static int SerialNetworkInitAlgorithm
     (struct symtab_Algorithm *palgSelf,char *pcName,void *pvGlobal,void *pvData)
 {
-    //- set default result : ok
+    //- set default result  ok
 
     int bResult = TRUE;
 
@@ -328,19 +320,15 @@ static int SerialNetworkInitAlgorithm
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialNetworkPrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on serial network algorithm
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on serial network algorithm
+/// \details 
+/// 
 
 static int SerialNetworkPrintInfo
 (struct symtab_Algorithm *palgSelf,char *pcName,void *pvGlobal,void *pvData)
@@ -349,7 +337,7 @@ static int SerialNetworkPrintInfo
 
     int bResult = TRUE;
 
-    //v loop var
+    /// loop var
 
     int i;
 
@@ -364,7 +352,7 @@ static int SerialNetworkPrintInfo
 	 "\n\n"
 	 "SerNetwAlgorithm : \n"
 	 "---------------\n"
-	 "Number of created/added networks : %i/%i\n",
+	 "Number of created/added networks  %i/%i\n",
 	 sernetwVariables.iNetworksCreated,
 	 sernetwVariables.iNetworksAdded);
 

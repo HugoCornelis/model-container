@@ -36,17 +36,13 @@
 #include "algorithms/symbol/spines.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSetCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: AlgorithmSet * : Set of algorithms.
-///
-/// DESCR: Allocate algorithm set, init with default algorithm classes.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return AlgorithmSet * : Set of algorithms.
+/// 
+/// \brief Allocate algorithm set, init with default algorithm classes.
+/// \details 
+/// 
 
 AlgorithmSet * AlgorithmSetCalloc(void)
 {
@@ -73,25 +69,21 @@ AlgorithmSet * AlgorithmSetCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSetFree()
-///
-/// ARGS.:
-///
-///	pas..: set of algorithms
-///
-/// RTN..: void
-///
-/// DESCR: Free algorithms list.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pas set of algorithms
+/// 
+/// \return void
+/// 
+/// \brief Free algorithms list.
+/// \details 
+/// 
 
 void AlgorithmSetFree(AlgorithmSet *pas)
 {
-    //t remove all algorithm instances
-    //t remove all algorithm classes
-    //t free algorithm set
+    /// \todo remove all algorithm instances
+    /// \todo remove all algorithm classes
+    /// \todo free algorithm set
 
     // free set
 
@@ -99,26 +91,22 @@ void AlgorithmSetFree(AlgorithmSet *pas)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSetInstantiateAlgorithm()
-///
-/// ARGS.:
-///
-///	pas........: set of algorithms
-///	pcName.....: name of algorithm class to import
-///	pcInstance.: name of algorithm instance to create
-///	pcInit.....: init string for algorithm
-///	ppar.......: algorithm instantiation parameters.
-///	palgs......: algorithm symbol.
-///
-/// RTN..: struct AlgorithmInstance * 
-///
+/// 
+/// 
+/// \arg pas set of algorithms
+/// \arg pcName name of algorithm class to import
+/// \arg pcInstance name of algorithm instance to create
+/// \arg pcInit init string for algorithm
+/// \arg ppar algorithm instantiation parameters.
+/// \arg palgs algorithm symbol.
+/// 
+/// \return struct AlgorithmInstance * 
+/// 
 ///	Instantiated algorithm, NULL for failure.
-///
-/// DESCR: Instantiat an algorithm from given algorithm class.
-///
-/// **************************************************************************
+/// 
+/// \brief Instantiat an algorithm from given algorithm class.
+/// \details 
+/// 
 
 struct AlgorithmInstance *
 AlgorithmSetInstantiateAlgorithm
@@ -163,7 +151,7 @@ AlgorithmSetInstantiateAlgorithm
 
 /* 	    palgiResult->iFlags |= ALGORITHM_FLAG_MODELACTIVE; */
 
-	    //t check event types, register event listeners
+	    /// \todo check event types, register event listeners
 
 	    //- link algorithm instance into instance list
 
@@ -188,21 +176,17 @@ AlgorithmSetInstantiateAlgorithm
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSetInit()
-///
-/// ARGS.:
-///
-///	pas..: set of algorithms
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pas set of algorithms
+/// 
+/// \return int
+/// 
 ///	success of operation
-///
-/// DESCR: init algorithms
-///
-/// **************************************************************************
+/// 
+/// \brief init algorithms
+/// \details 
+/// 
 
 int AlgorithmSetInit(AlgorithmSet *pas)
 {
@@ -294,7 +278,7 @@ int AlgorithmSetInit(AlgorithmSet *pas)
 
 /*     //- add spines_with_events algorithm */
 
-/*     //! spines algorithm at front of list, gives fast lookup */
+/*     /// \note spines algorithm at front of list, gives fast lookup */
 
 /*     HSolveListEnqueue(&pas->hslClasses,&palgSpinesEvents->hsleLink); */
 
@@ -364,22 +348,18 @@ int AlgorithmSetInit(AlgorithmSet *pas)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSetLoadAlgorithmClass()
-///
-/// ARGS.:
-///
-///	pas....: algorithm set
-///	pcName.: name of algorithm class to load
-///
-/// RTN..: struct AlgorithmClass * 
-///
+/// 
+/// 
+/// \arg pas algorithm set
+/// \arg pcName name of algorithm class to load
+/// 
+/// \return struct AlgorithmClass * 
+/// 
 ///	Newly loaded algorithm class, NULL for failure
-///
-/// DESCR: Load algorithm class with given name
-///
-/// **************************************************************************
+/// 
+/// \brief Load algorithm class with given name
+/// \details 
+/// 
 
 struct AlgorithmClass * AlgorithmSetLoadAlgorithmClass(AlgorithmSet *pas,char *pcName)
 {
@@ -399,8 +379,8 @@ struct AlgorithmClass * AlgorithmSetLoadAlgorithmClass(AlgorithmSet *pas,char *p
 
 	palgcResult = AlgorithmClassCalloc();
 
-	//t load algorithm
-	//t link into algorithm list
+	/// \todo load algorithm
+	/// \todo link into algorithm list
     }
 
     //- return result
@@ -409,22 +389,18 @@ struct AlgorithmClass * AlgorithmSetLoadAlgorithmClass(AlgorithmSet *pas,char *p
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSetLookupAlgorithmClass()
-///
-/// ARGS.:
-///
-///	pas....: algorithm set
-///	pcName.: name of algorithm to search for
-///
-/// RTN..: struct AlgorithmClass * 
-///
+/// 
+/// 
+/// \arg pas algorithm set
+/// \arg pcName name of algorithm to search for
+/// 
+/// \return struct AlgorithmClass * 
+/// 
 ///	algorithm class with given name, NULL for not found
-///
-/// DESCR: search for a algorithm class in the class list
-///
-/// **************************************************************************
+/// 
+/// \brief search for a algorithm class in the class list
+/// \details 
+/// 
 
 struct AlgorithmClass * AlgorithmSetLookupAlgorithmClass(AlgorithmSet *pas,char *pcName)
 {
@@ -463,23 +439,19 @@ struct AlgorithmClass * AlgorithmSetLookupAlgorithmClass(AlgorithmSet *pas,char 
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSetClassPrint()
-///
-/// ARGS.:
-///
-///	pas...: set of algorithms
-///	pfile.: file to print algorithm info to
-///	pc....: name of classes to print
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pas set of algorithms
+/// \arg pfile file to print algorithm info to
+/// \arg pc name of classes to print
+/// 
+/// \return int
+/// 
 ///	success of operation
-///
-/// DESCR: print algorithm class info.
-///
-/// **************************************************************************
+/// 
+/// \brief print algorithm class info.
+/// \details 
+/// 
 
 int AlgorithmSetClassPrint(AlgorithmSet *pas, char *pc, FILE *pfile)
 {
@@ -529,23 +501,19 @@ int AlgorithmSetClassPrint(AlgorithmSet *pas, char *pc, FILE *pfile)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSetInstancePrint()
-///
-/// ARGS.:
-///
-///	pas...: set of algorithms
-///	pfile.: file to print algorithm info to
-///	pc....: name of instances to print
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pas set of algorithms
+/// \arg pfile file to print algorithm info to
+/// \arg pc name of instances to print
+/// 
+/// \return int
+/// 
 ///	success of operation
-///
-/// DESCR: print algorithm info for algorithm classes and instances.
-///
-/// **************************************************************************
+/// 
+/// \brief print algorithm info for algorithm classes and instances.
+/// \details 
+/// 
 
 int AlgorithmSetInstancePrint(AlgorithmSet *pas, char *pc, FILE *pfile)
 {
@@ -587,22 +555,18 @@ int AlgorithmSetInstancePrint(AlgorithmSet *pas, char *pc, FILE *pfile)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSetPrint()
-///
-/// ARGS.:
-///
-///	pas...: set of algorithms
-///	pfile.: file to print algorithm info to
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pas set of algorithms
+/// \arg pfile file to print algorithm info to
+/// 
+/// \return int
+/// 
 ///	success of operation
-///
-/// DESCR: print algorithm info for algorithm classes and instances.
-///
-/// **************************************************************************
+/// 
+/// \brief print algorithm info for algorithm classes and instances.
+/// \details 
+/// 
 
 int AlgorithmSetPrint(AlgorithmSet *pas,FILE *pfile)
 {
@@ -669,22 +633,18 @@ int AlgorithmSetPrint(AlgorithmSet *pas,FILE *pfile)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSetPropagateParserEvent()
-///
-/// ARGS.:
-///
-///	pas...: algorithm set
-///	pev...: event to propagate
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pas algorithm set
+/// \arg pev event to propagate
+/// 
+/// \return int
+/// 
 ///	success of operation
-///
-/// DESCR: propagate event through algorithms registered for this event type
-///
-/// **************************************************************************
+/// 
+/// \brief propagate event through algorithms registered for this event type
+/// \details 
+/// 
 
 /* int AlgorithmSetPropagateParserEvent(AlgorithmSet *pas,ParserEvent *pev) */
 /* { */
@@ -722,7 +682,7 @@ int AlgorithmSetPrint(AlgorithmSet *pas,FILE *pfile)
 /* 	{ */
 /* 	    //- call connection array organizer */
 
-/* 	    //! hard coded */
+/* 	    /// \note hard coded */
 
 /* 	    bResult */
 /* 		= palgSerialConnection */
@@ -747,7 +707,7 @@ int AlgorithmSetPrint(AlgorithmSet *pas,FILE *pfile)
 
 /* 	//- call segmental array organizer */
 
-/* 	//! hard coded */
+/* 	/// \note hard coded */
 
 /* 	bResult */
 /* 	    = palgSerialSegment->pevatListeners->pevas[0].pfParserEventListener */
@@ -760,7 +720,7 @@ int AlgorithmSetPrint(AlgorithmSet *pas,FILE *pfile)
 /* 	{ */
 /* 	    //- call spine segment listener */
 
-/* 	    //! a bit less hardcoded */
+/* 	    /// \note a bit less hardcoded */
 
 /* 	    bResult */
 /* 		= palgSpinesEvents->pevatListeners->pevas[0].pfParserEventListener */
@@ -776,7 +736,7 @@ int AlgorithmSetPrint(AlgorithmSet *pas,FILE *pfile)
 /*     { */
 /* 	//- call cell array organizer */
 
-/* 	//! hard coded */
+/* 	/// \note hard coded */
 
 /* 	bResult */
 /* 	    = palgSerialCell->pevatListeners->pevas[0].pfParserEventListener */
@@ -789,7 +749,7 @@ int AlgorithmSetPrint(AlgorithmSet *pas,FILE *pfile)
 /* /* 	{ * */
 /* /* 	    //- call spine cell listener * */
 
-/* /* 	    //! a bit less hardcoded * */
+/* /* 	    /// \note a bit less hardcoded * */
 
 /* /* 	    bResult * */
 /* /* 		= palgSpinesEvents->pevatListeners->pevas[1].pfParserEventListener * */
@@ -805,7 +765,7 @@ int AlgorithmSetPrint(AlgorithmSet *pas,FILE *pfile)
 /*     { */
 /* 	//- call population array organizer */
 
-/* 	//! hard coded */
+/* 	/// \note hard coded */
 
 /* 	bResult */
 /* 	    = palgSerialPopulation->pevatListeners->pevas[0].pfParserEventListener */
@@ -820,7 +780,7 @@ int AlgorithmSetPrint(AlgorithmSet *pas,FILE *pfile)
 /*     { */
 /* 	//- call connection array organizer */
 
-/* 	//! hard coded */
+/* 	/// \note hard coded */
 
 /* 	bResult */
 /* 	    = palgSerialConnection->pevatListeners->pevas[0].pfParserEventListener */
@@ -835,7 +795,7 @@ int AlgorithmSetPrint(AlgorithmSet *pas,FILE *pfile)
 /*     { */
 /* 	//- call projection array organizer */
 
-/* 	//! hard coded */
+/* 	/// \note hard coded */
 
 /* 	bResult */
 /* 	    = palgSerialProjection->pevatListeners->pevas[0].pfParserEventListener */
@@ -855,7 +815,7 @@ int AlgorithmSetPrint(AlgorithmSet *pas,FILE *pfile)
 
 /* 	//- call network array organizer */
 
-/* 	//! hard coded */
+/* 	/// \note hard coded */
 
 /* 	bResult */
 /* 	    = palgSerialNetwork->pevatListeners->pevas[0].pfParserEventListener */
@@ -868,7 +828,7 @@ int AlgorithmSetPrint(AlgorithmSet *pas,FILE *pfile)
 /* 	{ */
 /* 	    //- call cerebellar connection listener */
 
-/* 	    //! a bit less hardcoded */
+/* 	    /// \note a bit less hardcoded */
 
 /* 	    bResult */
 /* 		= palgCerebellumConnections */

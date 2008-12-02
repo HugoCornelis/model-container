@@ -36,65 +36,65 @@
 #include "spinesinstance.h"
 
 
-//s algorithm handlers for spine algorithm
+/// \struct algorithm handlers for spine algorithm
 
 static AlgorithmClassInstanceCreator SpinesClassCreateInstance;
 
 static AlgorithmClassHandler SpinesClassPrintInfo;
 
 
-//s algorithm class method table
+/// \struct algorithm class method table
 
 static struct AlgorithmClassHandlerLibrary pfSpinesClassHandlers =
 {
-    //m class info handler
+    /// class info handler
 
     SpinesClassPrintInfo,
 
-    //m create instance from class (self, name, context, init string)
+    /// create instance from class (self, name, context, init string)
 
     SpinesClassCreateInstance,
 };
 
 
-//s spines class derives from algorithm class
+/// \struct spines class derives from algorithm class
 
 struct SpinesClass
 {
-    //m base struct : algorithm class
+    /// base struct : algorithm class
 
     struct AlgorithmClass algc;
 
-    //m number of created instances
+    /// number of created instances
 
     int iInstances;
 };
 
 
-//s algorithm class description
+/// \struct algorithm class description
 
 static struct SpinesClass scSpines =
 {
-    //m base struct : algorithm class
+    /// base struct : algorithm class
 
     {
-	//m link
+	/// link
 
 	{
 	    NULL,
 	    NULL,
 	},
 
-	//m name
+	/// name
 
 	"Spines",
 
-	//m algorithm handlers
+	/// algorithm handlers
 
 	&pfSpinesClassHandlers,
     },
 
-    //m number of instances
+    /// number of instances
 
     0,
 };
@@ -103,21 +103,17 @@ static struct SpinesClass scSpines =
 struct AlgorithmClass *palgcSpines = &scSpines.algc;
 
 
-/// **************************************************************************
-///
-/// SHORT: SpinesClassCreateInstance()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: struct AlgorithmInstance * : 
-///
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return struct AlgorithmInstance *  
+/// 
 ///	created algorithm instance, NULL for failure
-///
-/// DESCR: Algorithm handler to create instance of spines algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief Algorithm handler to create instance of spines algorithm.
+/// \details 
+/// 
 
 static
 struct AlgorithmInstance *
@@ -149,19 +145,15 @@ SpinesClassCreateInstance
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SpinesClassPrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on spines algorithm class.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int  std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on spines algorithm class.
+/// \details 
+/// 
 
 static int SpinesClassPrintInfo
 (struct AlgorithmClass *palgc,char *pcName,void *pvGlobal,void *pvData)

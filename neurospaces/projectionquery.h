@@ -23,12 +23,11 @@
 #define PROJECTIONQUERY_H
 
 
-//d declarations
+/// \def declarations
 
 struct ProjectionQuery;
 
 
-//f static inlines
 
 static inline
 int ProjectionQueryGetCurrentSourceSerial(struct ProjectionQuery *ppq);
@@ -60,59 +59,59 @@ void ProjectionQuerySetCaching(struct ProjectionQuery *ppq, int bCaching);
 
 struct ProjectionQuery
 {
-    //m memory used by this projection query, with caches etc.
+    /// memory used by this projection query, with caches etc.
 
     int iMemoryUsed;
 
-    //m number of projections involved
+    /// number of projections involved
 
     int iProjections;
 
-    //m active entry
+    /// active entry
 
     int iCursor;
 
-    //m caching allowed ?
+    /// caching allowed ?
 
     int bCaching;
 
-    //m how many times has projectionquery been cloned
+    /// how many times has projectionquery been cloned
 
     int iCloned;
 
-    //m if cloned, original projectionquery.
+    /// if cloned, original projectionquery.
 
     struct ProjectionQuery *ppqCloned;
 
-    //m context of projections
+    /// context of projections
 
     struct PidinStack **pppist;
 
-    //m projection symbols
+    /// projection symbols
 
     struct symtab_Projection **ppproj;
 
-    //m projection sources
+    /// projection sources
 
     int *piSource;
 
     struct PidinStack **pppistSource;
 
-    //m projection targets
+    /// projection targets
 
     int *piTarget;
 
     struct PidinStack **pppistTarget;
 
-    //m connection cache
+    /// connection cache
 
     struct ConnectionCache *pcc;
 
-    //m connection cache sorted on pre synaptic principal
+    /// connection cache sorted on pre synaptic principal
 
     struct OrderedConnectionCache *poccPre;
 
-    //m connection cache sorted on post synaptic principal
+    /// connection cache sorted on post synaptic principal
 
     struct OrderedConnectionCache *poccPost;
 };
@@ -229,11 +228,10 @@ ProjectionQueryTraverseConnectionsForSpikeReceiver
 /* (struct ProjectionQuery *ppq,struct PidinStack *ppistCell); */
 
 
-//f static inlines
 
-///
+/// 
 /// set caching for projection query
-///
+/// 
 
 static inline
 void ProjectionQuerySetCaching(struct ProjectionQuery *ppq, int bCaching)
@@ -242,9 +240,9 @@ void ProjectionQuerySetCaching(struct ProjectionQuery *ppq, int bCaching)
 }
 
 
-///
+/// 
 /// get current source serial for projection query
-///
+/// 
 
 static inline
 int ProjectionQueryGetCurrentSourceSerial(struct ProjectionQuery *ppq)
@@ -253,9 +251,9 @@ int ProjectionQueryGetCurrentSourceSerial(struct ProjectionQuery *ppq)
 }
 
 
-///
+/// 
 /// get current target serial for projection query
-///
+/// 
 
 static inline
 int ProjectionQueryGetCurrentTargetSerial(struct ProjectionQuery *ppq)
@@ -264,9 +262,9 @@ int ProjectionQueryGetCurrentTargetSerial(struct ProjectionQuery *ppq)
 }
 
 
-///
+/// 
 /// get memory size taken by projection query.
-///
+/// 
 
 static inline 
 int ProjectionQueryGetMemorySize(struct ProjectionQuery *ppq)
@@ -275,10 +273,10 @@ int ProjectionQueryGetMemorySize(struct ProjectionQuery *ppq)
 }
 
 
-///
+/// 
 /// Get source for a projection in the query.  NULL means the
 /// projection is not being used.
-///
+/// 
 
 static inline
 struct PidinStack *
@@ -295,10 +293,10 @@ ProjectionQueryGetSource(struct ProjectionQuery *ppq, int iCursor)
 }
 
 
-///
+/// 
 /// Get source serial for a projection in the query.  -1 means the
 /// projection is not being used.
-///
+/// 
 
 static inline
 int ProjectionQueryGetSourceSerial(struct ProjectionQuery *ppq, int iCursor)
@@ -314,10 +312,10 @@ int ProjectionQueryGetSourceSerial(struct ProjectionQuery *ppq, int iCursor)
 }
 
 
-///
+/// 
 /// Get target for a projection in the query.  NULL means the
 /// projection is not being used.
-///
+/// 
 
 static inline
 struct PidinStack *
@@ -334,10 +332,10 @@ ProjectionQueryGetTarget(struct ProjectionQuery *ppq, int iCursor)
 }
 
 
-///
+/// 
 /// Get target serial for a projection in the query.  -1 means the
 /// projection is not being used.
-///
+/// 
 
 static inline
 int ProjectionQueryGetTargetSerial(struct ProjectionQuery *ppq, int iCursor)

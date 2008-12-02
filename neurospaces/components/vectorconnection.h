@@ -28,13 +28,12 @@
 #include "connection.h"
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_VConnection;
 struct symtab_VConnection;
 
 
-//f exported functions
 
 int
 VConnectionAddConnection
@@ -52,39 +51,39 @@ VConnectionTraverse
 #include "vector.h"
 
 
-//s
-//s vector description
-//s
+/// \struct
+/// \struct vector description
+/// \struct
 
 struct descr_VConnection
 {
-    //m number of connections
+    /// number of connections
 
     int iConnections;
 
     int iConnectionsAllocated;
 
-    //m number of reallocations done, for optimization purposes during compile time
+    /// number of reallocations done, for optimization purposes during compile time
 
     int iReallocations;
 
-    //m allocated connections
+    /// allocated connections
 
     struct symtab_Connection *pconn;
 };
 
 
-//s
-//s struct symtab_VConnection
-//s
+/// \struct
+/// \struct struct symtab_VConnection
+/// \struct
 
 struct symtab_VConnection
 {
-    //m base struct : vector
+    /// base struct : vector
 
     struct symtab_Vector vect;
 
-    //m enumeration container
+    /// enumeration container
 
     struct descr_VConnection devconn;
 };

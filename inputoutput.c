@@ -29,24 +29,19 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-//f local prototypes
 
 static struct symtab_InputOutput * InputOutputCalloc(void);
 
 
-/// **************************************************************************
-///
-/// SHORT: InputOutputCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_InputOutput * 
-///
+/// 
+/// 
+/// \return struct symtab_InputOutput * 
+/// 
 ///	Newly allocated input, NULL for failure
-///
-/// DESCR: Allocate a new input/output symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new input/output symbol table element
+/// \details 
+/// 
 
 static struct symtab_InputOutput * InputOutputCalloc(void)
 {
@@ -70,26 +65,22 @@ static struct symtab_InputOutput * InputOutputCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: InputOutputFieldName()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pio.: input/output to get field name for
-///
-/// RTN..: char * : name of input/output field, NULL for failure
-///
-/// DESCR: get name of input/output field
-///
+/// 
+/// \return char * : name of input/output field, NULL for failure
+/// 
+/// \brief get name of input/output field
+/// \details 
+/// 
 ///	Return value is pointer to symbol table read only data.
-///
-/// NOTE: 
-///
+/// 
+/// \note  
+/// 
 ///	Use InputOutputHierarchicalName() to get a complete input/output 
 ///	description, this function only returns the field name.
-///
-/// **************************************************************************
+/// 
 
 char * InputOutputFieldName(struct symtab_InputOutput *pio)
 {
@@ -97,7 +88,7 @@ char * InputOutputFieldName(struct symtab_InputOutput *pio)
 
     char *pcResult = NULL;
 
-    //v last found idin
+    /// last found idin
 
     struct symtab_IdentifierIndex *pidinLast = NULL;
 
@@ -128,19 +119,15 @@ char * InputOutputFieldName(struct symtab_InputOutput *pio)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: InputOutputInit()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pio.: input/output to init
-///
-/// RTN..: void
-///
-/// DESCR: init input
-///
-/// **************************************************************************
+/// 
+/// \return void
+/// 
+/// \brief init input
+/// \details 
+/// 
 
 void InputOutputInit(struct symtab_InputOutput *pio)
 {
@@ -150,21 +137,17 @@ void InputOutputInit(struct symtab_InputOutput *pio)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: InputOutputNewForType()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	iType..: type to allocate, INPUT_TYPE_INPUT or INPUT_TYPE_OUTPUT
-///
-/// RTN..: struct symtab_InputOutput * 
-///
+/// 
+/// \return struct symtab_InputOutput * 
+/// 
 ///	Newly allocated input, NULL for failure
-///
-/// DESCR: Allocate a new input/output symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new input/output symbol table element
+/// \details 
+/// 
 
 struct symtab_InputOutput * InputOutputNewForType(int iType)
 {
@@ -184,22 +167,18 @@ struct symtab_InputOutput * InputOutputNewForType(int iType)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: InputOutputResolve()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pio....: input/output
-///	ppist..: stack with context
-///
-/// RTN..: struct PidinStack *
-///
+/// \arg ppist stack with context
+/// 
+/// \return struct PidinStack *
+/// 
 ///	Context attached to this input.
-///
-/// DESCR: find element that is attached to the given input
-///
-/// **************************************************************************
+/// 
+/// \brief find element that is attached to the given input
+/// \details 
+/// 
 
 struct PidinStack * 
 InputOutputResolve
@@ -271,10 +250,10 @@ InputOutputResolve
 
     ppistResult = ppistDupl;
 
-    //t I need to check here what should happen if the returned symbol
-    //t has input redirection to another symbol, e.g. for grouped symbols.
-    //t
-    //t can probably be solved with a recursive call ?
+    /// \todo I need to check here what should happen if the returned symbol
+    /// \todo has input redirection to another symbol, e.g. for grouped symbols.
+    ///
+    /// \todo can probably be solved with a recursive call ?
 
     //- return result
 

@@ -25,20 +25,16 @@
 #include "neurospaces/parcontainer.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: ParContainerCalloc()
-///
-/// ARGS.:
-///
-///	pparc..: parameter container.
-///	ppar...: new parameters.
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Assign parameters.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pparc parameter container.
+/// \arg ppar new parameters.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Assign parameters.
+/// \details 
+/// 
 
 int
 ParContainerAssignParameters
@@ -50,19 +46,15 @@ ParContainerAssignParameters
 };
 
 
-/// **************************************************************************
-///
-/// SHORT: ParContainerCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_ParContainer * 
-///
+/// 
+/// 
+/// \return struct symtab_ParContainer * 
+/// 
 ///	Newly allocated parameter container, NULL for failure
-///
-/// DESCR: Allocate a parameter container
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a parameter container
+/// \details 
+/// 
 
 struct symtab_ParContainer * ParContainerCalloc(void)
 {
@@ -86,19 +78,15 @@ struct symtab_ParContainer * ParContainerCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParContainerInit()
-///
-/// ARGS.:
-///
-///	pparc..: container to init
-///
-/// RTN..: void
-///
-/// DESCR: Init a parameter container
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pparc container to init
+/// 
+/// \return void
+/// 
+/// \brief Init a parameter container
+/// \details 
+/// 
 
 void ParContainerInit(struct symtab_ParContainer * pparc)
 {
@@ -108,30 +96,26 @@ void ParContainerInit(struct symtab_ParContainer * pparc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParContainerInsert()
-///
-/// ARGS.:
-///
-///	pparc..: container
-///	ppar...: parameter to link
-///
-/// RTN..: void
-///
-/// DESCR: Insert new parameter at head of parameter list
-///
+/// 
+/// 
+/// \arg pparc container
+/// \arg ppar parameter to link
+/// 
+/// \return void
+/// 
+/// \brief Insert new parameter at head of parameter list
+/// \details 
+/// 
 ///	This function scales with the size of the parameter list,
 ///	use it with caution.
-///
-/// **************************************************************************
+/// 
 
 void ParContainerInsert
 (struct symtab_ParContainer *pparc,struct symtab_Parameters *ppar)
 {
     //- insert
 
-/*     //! this cannot work : ->pparFirst needs update for entire list */
+/*     /// \note this cannot work : ->pparFirst needs update for entire list */
 
     ppar->pparNext = pparc->ppars;
     pparc->ppars = ppar;
@@ -153,20 +137,16 @@ void ParContainerInsert
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParContainerLinkAtEnd()
-///
-/// ARGS.:
-///
-///	pparc..: container
-///	ppar...: parameter list to link
-///
-/// RTN..: void
-///
-/// DESCR: Link new parameter at end of parameter list
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pparc container
+/// \arg ppar parameter list to link
+/// 
+/// \return void
+/// 
+/// \brief Link new parameter at end of parameter list
+/// \details 
+/// 
 
 void ParContainerLinkAtEnd
 (struct symtab_ParContainer *pparc,struct symtab_Parameters *ppar)

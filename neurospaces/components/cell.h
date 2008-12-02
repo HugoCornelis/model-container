@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_Cell;
 struct symtab_Cell;
@@ -36,7 +36,6 @@ struct symtab_Cell;
 #include "neurospaces/treespacetraversal.h"
 
 
-//f exported functions
 
 struct symtab_Cell * CellCalloc(void);
 
@@ -53,33 +52,33 @@ struct symtab_Cell * CellNewAtXYZ(double dx, double dy, double dz);
 #include "biocomp.h"
 
 
-//s
-//s cell description
-//s
+/// \struct
+/// \struct cell description
+/// \struct
 
 struct descr_Cell
 {
-    //m type of cell data
+    /// type of cell data
 
     int iType;
 
-    //m cell specific flags (OPTIONS keyword)
+    /// cell specific flags (OPTIONS keyword)
 
     int iFlags;
 };
 
 
-//s
-//s struct symtab_Cell
-//s
+/// \struct
+/// \struct struct symtab_Cell
+/// \struct
 
 struct symtab_Cell
 {
-    //m base struct : segmenter
+    /// base struct : segmenter
 
     struct symtab_Segmenter segr;
 
-    //m cell description
+    /// cell description
 
     struct descr_Cell decell;
 };

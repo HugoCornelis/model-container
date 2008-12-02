@@ -26,14 +26,13 @@
 #include <stdlib.h>
 
 
-//d declarations
+/// \def declarations
 
 struct CachedParameter;
 struct ParameterCache;
 struct symtab_Parameters;
 
 
-//f exported functions
 
 struct CachedParameter *
 ParameterCacheAddDouble
@@ -50,7 +49,6 @@ ParameterCacheInsert
 (struct ParameterCache *pparcac, struct CachedParameter *pcacpar);
 
 
-//f exported inlines
 
 static inline 
 void ParameterCacheFree(struct ParameterCache *pparcac);
@@ -72,26 +70,25 @@ int ParameterCacheGetNumberOfParameters(struct ParameterCache *pparcac);
 
 struct ParameterCache
 {
-    //m memory used by this parameter cache.
+    /// memory used by this parameter cache.
 
     int iMemoryUsed;
 
-    //m number of parameters involved
+    /// number of parameters involved
 
     int iParameters;
 
-    //m cached parameters
+    /// cached parameters
 
     struct CachedParameter *pcacpar;
 };
 
 
 
-//f exported inlines
 
-///
+/// 
 /// free parameter cache.
-///
+/// 
 
 static inline 
 void ParameterCacheFree(struct ParameterCache *pparcac)
@@ -102,9 +99,9 @@ void ParameterCacheFree(struct ParameterCache *pparcac)
 }
 
 
-///
+/// 
 /// lookup a parameter in the cache
-///
+/// 
 
 static inline
 struct symtab_Parameters *
@@ -149,9 +146,9 @@ ParameterCacheLookup(struct ParameterCache *pparcac, int iSerial, char *pc)
 }
 
 
-///
+/// 
 /// get memory size taken by cache.
-///
+/// 
 
 static inline 
 int ParameterCacheGetMemorySize(struct ParameterCache *pparcac)
@@ -160,9 +157,9 @@ int ParameterCacheGetMemorySize(struct ParameterCache *pparcac)
 }
 
 
-///
+/// 
 /// get number of parameters in cache.
-///
+/// 
 
 static inline 
 int ParameterCacheGetNumberOfParameters(struct ParameterCache *pparcac)

@@ -35,103 +35,103 @@
 #include <string.h>
 
 
-//s
-//s identifier with optional index
-//s
+/// \struct
+/// \struct identifier with optional index
+/// \struct
 
 struct symtab_IdentifierIndex
 {
-    //m link structures in list
+    /// link structures in list
 
     struct symtab_IdentifierIndex *pidinNext;
 
-    //m give each idin pointer to root for hierarchical idins
+    /// give each idin pointer to root for hierarchical idins
 
     struct symtab_IdentifierIndex *pidinRoot;
 
-    //m flags, see FLAG_IDENTINDEX_*
+    /// flags, see FLAG_IDENTINDEX_*
 
     int iFlags;
 
-    //m name of identifier
+    /// name of identifier
 
     char *pcIdentifier;
 
-    //m index value
+    /// index value
 
     int iIndex;
 
-    //m value of e.g. parameter
+    /// value of e.g. parameter
 
     double dValue;
 };
 
 
-//! some if these should be done via inheritance :
-//! function ?
-//! wildcards ?
+/// \note some if these should be done via inheritance :
+/// \note function ?
+/// \note wildcards ?
 
-//d no index given
+/// \def no index given
 
 #define FLAG_IDENTINDEX_NOINDEX		1
 
-//d is pointer to parent
+/// \def is pointer to parent
 
 #define FLAG_IDENTINDEX_PARENT		2
 
-//d is field name
+/// \def is field name
 
 #define FLAG_IDENTINDEX_FIELD		4
 
-//d contains converted value
+/// \def contains converted value
 
 #define FLAG_IDENTINDEX_VALUE		8
 
-//d identifier is not given
+/// \def identifier is not given
 
 #define FLAG_IDENTINDEX_NOIDENTIFIER	16
 
-//d identifier of function
+/// \def identifier of function
 
 #define FLAG_IDENTINDEX_FUNCTION	32
 
-//d pidinNext is pointer to function parameters
+/// \def pidinNext is pointer to function parameters
 
 #define FLAG_IDENTINDEX_NEXTPARAMETERS	64
 
-//d idin is root item of INPUT relation
+/// \def idin is root item of INPUT relation
 
 #define FLAG_IDENTINDEX_INPUTROOT	128
 
-//d idin contains IO relation
+/// \def idin contains IO relation
 
 #define FLAG_IDENTINDEX_IO		256
 
-//d idin is rooted
+/// \def idin is rooted
 
 #define FLAG_IDENTINDEX_ROOTED		512
 
-//d idin is namespaced
+/// \def idin is namespaced
 
 #define FLAG_IDENTINDEX_NAMESPACED	1024
 
-//d idin is unique generated
+/// \def idin is unique generated
 
 #define FLAG_IDENTINDEX_UNIQUE		2048
 
-//d is pointer to current
+/// \def is pointer to current
 
 #define FLAG_IDENTINDEX_CURRENT		4096
 
 
-//d idin contains range
+/// \def idin contains range
 
 /* #define FLAG_IDENTINDEX_RANGE		256 */
 
 
-//d
-//d test type(pidin) == struct symtab_IdentifierIndex * at compile time
-//d
+/// \def
+/// \def test type(pidin) == struct symtab_IdentifierIndex * at compile time
+/// \def
 
 #define CompileTimeTestIdin(pidin)					\
 do {									\
@@ -140,9 +140,9 @@ do {									\
 } while (0)
 
 
-//d
-//d set flags for idin
-//d
+/// \def
+/// \def set flags for idin
+/// \def
 
 #define IdinSetFlags(pidin,iF)						\
 do {									\
@@ -151,9 +151,9 @@ do {									\
 } while (0)
 
 
-//d
-//d set index of idin
-//d
+/// \def
+/// \def set index of idin
+/// \def
 
 #define IdinSetIndex(pidin,i)						\
 do {									\
@@ -162,9 +162,9 @@ do {									\
 } while (0)
 
 
-//d
-//d set name of idin
-//d
+/// \def
+/// \def set name of idin
+/// \def
 
 #define IdinSetName(pidin,pc)						\
 do {									\
@@ -173,9 +173,9 @@ do {									\
 } while (0)
 
 
-//d
-//d remember idin is namespaced
-//d
+/// \def
+/// \def remember idin is namespaced
+/// \def
 
 #define IdinSetNamespaced(pidin)					\
 do {									\
@@ -184,9 +184,9 @@ do {									\
 } while (0)
 
 
-//d
-//d remember idin is rooted
-//d
+/// \def
+/// \def remember idin is rooted
+/// \def
 
 #define IdinSetRooted(pidin)						\
 do {									\
@@ -195,7 +195,6 @@ do {									\
 } while (0)
 
 
-//f exported functions
 
 struct symtab_IdentifierIndex * IdinCalloc(void);
 
@@ -215,7 +214,6 @@ struct symtab_IdentifierIndex *IdinNewFromChars(char *pc);
 void IdinPrint(struct symtab_IdentifierIndex *pidin, FILE *pfile);
 
 
-//f static inlines
 
 #ifndef SWIG
 static inline
@@ -273,9 +271,9 @@ static inline
 int IdinPointsToParent(struct symtab_IdentifierIndex *pidin);
 
 
-///
+/// 
 /// check if two idins are equal
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -297,9 +295,9 @@ int IdinEqual(struct symtab_IdentifierIndex *pidin1, struct symtab_IdentifierInd
 }
 
 
-///
+/// 
 /// free idin
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -310,9 +308,9 @@ void IdinFree(struct symtab_IdentifierIndex *pidin)
 }
 
 
-///
+/// 
 /// check if given flags set for idin
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -326,9 +324,9 @@ int IdinGetFlag(struct symtab_IdentifierIndex *pidin, int iFlag)
 }
 
 
-///
+/// 
 /// check if idin points to field
-///
+/// 
 
 #ifndef SWIG
 static inline 
@@ -346,9 +344,9 @@ int IdinIsField(struct symtab_IdentifierIndex *pidin)
 }
 
 
-///
+/// 
 /// check if idin is namespaced
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -366,9 +364,9 @@ int IdinIsNamespaced(struct symtab_IdentifierIndex *pidin)
 }
 
 
-///
+/// 
 /// check if idin is printable
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -377,8 +375,8 @@ int IdinIsPrintable(struct symtab_IdentifierIndex *pidin)
 {
 // > 0x80000
 
-    //t this gives a warning on 64bit architectures.
-    //t I might need to do a different cast here.
+    /// \todo this gives a warning on 64bit architectures.
+    /// \todo I might need to do a different cast here.
 
     if ((int)pidin & 1)
     {
@@ -391,9 +389,9 @@ int IdinIsPrintable(struct symtab_IdentifierIndex *pidin)
 }
 
 
-///
+/// 
 /// check if idin is recursive
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -411,9 +409,9 @@ int IdinIsRecursive(struct symtab_IdentifierIndex *pidin)
 }
 
 
-///
+/// 
 /// check if idin is rooted
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -424,9 +422,9 @@ int IdinIsRooted(struct symtab_IdentifierIndex *pidin)
 }
 
 
-///
+/// 
 /// check if idin matches given wildcard
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -437,16 +435,16 @@ int IdinIsWildCard(struct symtab_IdentifierIndex *pidin, char *pc)
 }
 
 
-///
+/// 
 /// check if two idins are match
-///
+/// 
 
 #ifndef SWIG
 static inline
 #endif
 int IdinMatch(struct symtab_IdentifierIndex *pidin1, struct symtab_IdentifierIndex *pidin2)
 {
-    //! this test is needed and sufficient for non printable idins
+    /// \note this test is needed and sufficient for non printable idins
 
     if (pidin1 == pidin2)
     {
@@ -469,7 +467,7 @@ int IdinMatch(struct symtab_IdentifierIndex *pidin1, struct symtab_IdentifierInd
 
 	    if (strncmp(pidin1->pcIdentifier, pidin2->pcIdentifier, sLength) == 0)
 	    {
-		//t this ignores anything after '*'
+		/// \todo this ignores anything after '*'
 
 		return(TRUE);
 	    }
@@ -489,9 +487,9 @@ int IdinMatch(struct symtab_IdentifierIndex *pidin1, struct symtab_IdentifierInd
 }
 
 
-///
+/// 
 /// check if idin points to current symbol
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -502,9 +500,9 @@ int IdinPointsToCurrent(struct symtab_IdentifierIndex *pidin)
 }
 
 
-///
+/// 
 /// check if idin points to parent symbol
-///
+/// 
 
 #ifndef SWIG
 static inline

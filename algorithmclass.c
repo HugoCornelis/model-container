@@ -26,19 +26,15 @@
 #include "neurospaces/algorithmclass.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmClassCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct AlgorithmClass * 
-///
+/// 
+/// 
+/// \return struct AlgorithmClass * 
+/// 
 ///	Newly allocated algorithm, NULL for failure
-///
-/// DESCR: Allocate a new algorithm symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new algorithm symbol table element
+/// \details 
+/// 
 
 struct AlgorithmClass * AlgorithmClassCalloc(void)
 {
@@ -62,21 +58,17 @@ struct AlgorithmClass * AlgorithmClassCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmClassGetName()
-///
-/// ARGS.:
-///
-///	palgc.: algorithm to get name for
-///
-/// RTN..: char * : name of algorithm, NULL for failure
-///
-/// DESCR: get name of algorithm
-///
+/// 
+/// 
+/// \arg palgc algorithm to get name for
+/// 
+/// \return char * : name of algorithm, NULL for failure
+/// 
+/// \brief get name of algorithm
+/// \details 
+/// 
 ///	Return value is pointer to symbol table read only data
-///
-/// **************************************************************************
+/// 
 
 char * AlgorithmClassGetName(struct AlgorithmClass *palgc)
 {
@@ -94,19 +86,15 @@ char * AlgorithmClassGetName(struct AlgorithmClass *palgc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmClassInit()
-///
-/// ARGS.:
-///
-///	palgc.: algorithm to init
-///
-/// RTN..: void
-///
-/// DESCR: init algorithm
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg palgc algorithm to init
+/// 
+/// \return void
+/// 
+/// \brief init algorithm
+/// \details 
+/// 
 
 void AlgorithmClassInit(struct AlgorithmClass *palgc)
 {
@@ -114,7 +102,7 @@ void AlgorithmClassInit(struct AlgorithmClass *palgc)
 
     memset(palgc,0,sizeof(*palgc));
 
-    //t init handlers
+    /// \todo init handlers
 }
 
 

@@ -32,19 +32,15 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: VContourCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_VContour * 
-///
+/// 
+/// 
+/// \return struct symtab_VContour * 
+/// 
 ///	Newly allocated contour vector, NULL for failure
-///
-/// DESCR: Allocate a new contour vector symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new contour vector symbol table element
+/// \details 
+/// 
 
 struct symtab_VContour * VContourCalloc(void)
 {
@@ -72,20 +68,16 @@ struct symtab_VContour * VContourCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: VContourCreateAlias()
-///
-/// ARGS.:
-///
-///	pvcont.: symbol vector to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pvcont symbol vector to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 VContourCreateAlias
@@ -111,19 +103,15 @@ VContourCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: VContourInit()
-///
-/// ARGS.:
-///
-///	pvcont.: contour vector to init
-///
-/// RTN..: void
-///
-/// DESCR: init contour vector
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pvcont contour vector to init
+/// 
+/// \return void
+/// 
+/// \brief init contour vector
+/// \details 
+/// 
 
 void VContourInit(struct symtab_VContour *pvcont)
 {

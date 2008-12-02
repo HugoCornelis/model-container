@@ -89,7 +89,7 @@
 /* #include "neurospaces/symbolvirtual_protos.h" */
 
 
-//d declarations
+/// \def declarations
 
 struct CachedConnection;
 struct ProjectionQuery;
@@ -97,14 +97,12 @@ struct symtab_Connection;
 struct symtab_HSolveListElement;
 
 
-//f regular functions
 
 int
 CachedConnectionPrint
 (struct CachedConnection *pcconn, int bAll, int iIndent, FILE *pfile);
 
 
-//f exported inlines
 
 #ifndef SWIG
 static inline
@@ -175,15 +173,15 @@ struct CachedConnection
 
     double dWeight;
 
-/*     //m cursor for projection query */
+/*     /// cursor for projection query */
 
 /*     int iProjection; */
 
-/*     //m alien type for the symbol below */
+/*     /// alien type for the symbol below */
 
 /*     int iType; */
 
-/*     //m referred connection */
+/*     /// referred connection */
 
 /*     struct symtab_HSolveListElement *phsle; */
 };
@@ -193,11 +191,10 @@ struct CachedConnection
 #include "projectionquery.h"
 
 
-//f exported inlines
 
-///
+/// 
 /// free cached connection.
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -238,9 +235,9 @@ void CachedConnectionFree(struct CachedConnection *pcconn)
 /* } */
 
 
-///
+/// 
 /// init cached connection.
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -267,9 +264,9 @@ CachedConnectionInit
 }
 
 
-///
+/// 
 /// get postsynaptic serial from cached connection.
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -281,9 +278,9 @@ CachedConnectionGetCachedDelay(struct CachedConnection *pcconn)
 }
 
 
-///
+/// 
 /// get postsynaptic serial from cached connection.
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -295,7 +292,7 @@ CachedConnectionGetCachedPost(struct CachedConnection *pcconn)
 
 /*     //- if the connection is stored in absolute mode */
 
-/*     //! e.g after loading from a cache file */
+/*     /// \note e.g after loading from a cache file */
 
 /*     if (pcconn->iProjection == -1) */
 /*     { */
@@ -317,7 +314,7 @@ CachedConnectionGetCachedPost(struct CachedConnection *pcconn)
 
 /*     //- return post serial */
 
-/*     //t alien call to SymbolGetPostPrincipalSerial(), using pcconn->iType */
+/*     /// \todo alien call to SymbolGetPostPrincipalSerial(), using pcconn->iType */
 
 /* #include "hierarchy/output/symbols/all_vtables.c" */
 
@@ -335,9 +332,9 @@ CachedConnectionGetCachedPost(struct CachedConnection *pcconn)
 }
 
 
-///
+/// 
 /// get presynaptic serial from cached connection.
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -349,13 +346,13 @@ CachedConnectionGetCachedPre(struct CachedConnection *pcconn)
 
 /*     //- if the connection is stored in absolute mode */
 
-/*     //! e.g after loading from a cache file */
+/*     /// \note e.g after loading from a cache file */
 
 /*     if (pcconn->iProjection == -1) */
 /*     { */
 /* 	//- return absolute serial */
 
-/* 	//t alien call to SymbolGetPrePrincipalSerial() ? */
+/* 	/// \todo alien call to SymbolGetPrePrincipalSerial() ? */
 
 /* 	return ConnectionGetPrePrincipalSerial((struct symtab_Connection *)pcconn->phsle, ppist); */
 /*     } */
@@ -373,7 +370,7 @@ CachedConnectionGetCachedPre(struct CachedConnection *pcconn)
 
 /*     //- return pre serial */
 
-/*     //t alien call to SymbolGetPrePrincipalSerial(), using pcconn->iType */
+/*     /// \todo alien call to SymbolGetPrePrincipalSerial(), using pcconn->iType */
 
 /* #include "hierarchy/output/symbols/all_vtables.c" */
 
@@ -390,9 +387,9 @@ CachedConnectionGetCachedPre(struct CachedConnection *pcconn)
 }
 
 
-///
+/// 
 /// get postsynaptic serial from cached connection.
-///
+/// 
 
 #ifndef SWIG
 static inline

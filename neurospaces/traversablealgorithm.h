@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_TraversableAlgorithm;
 struct symtab_TraversableAlgorithm;
@@ -36,7 +36,6 @@ struct symtab_TraversableAlgorithm;
 #include "treespacetraversal.h"
 
 
-//f exported functions
 
 struct symtab_TraversableAlgorithm *
 TraversableAlgorithmCalloc(void);
@@ -53,7 +52,6 @@ TraversableAlgorithmTraverse
 #include "symboltable.h"
 
 
-//f inline prototypes
 
 static inline
 char *
@@ -64,9 +62,9 @@ struct symtab_IdentifierIndex *
 TraversableAlgorithmGetPidin(struct symtab_TraversableAlgorithm *ptalg);
 
 
-//s
-//s traversable algorithm description
-//s
+/// \struct
+/// \struct traversable algorithm description
+/// \struct
 
 struct descr_TraversableAlgorithm
 {
@@ -74,13 +72,13 @@ struct descr_TraversableAlgorithm
 };
 
 
-//s
-//s struct symtab_TraversableAlgorithm
-//s
+/// \struct
+/// \struct struct symtab_TraversableAlgorithm
+/// \struct
 
 struct symtab_TraversableAlgorithm
 {
-    //m base struct: algorithm symbol
+    /// base struct: algorithm symbol
 
     struct symtab_AlgorithmSymbol algs;
 };

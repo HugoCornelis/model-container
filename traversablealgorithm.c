@@ -26,19 +26,15 @@
 #include "neurospaces/traversablealgorithm.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: TraversableAlgorithmCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_TraversableAlgorithm * 
-///
+/// 
+/// 
+/// \return struct symtab_TraversableAlgorithm * 
+/// 
 ///	Newly allocated traversable algorithm, NULL for failure
-///
-/// DESCR: Allocate a new cell symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new cell symbol table element
+/// \details 
+/// 
 
 struct symtab_TraversableAlgorithm * TraversableAlgorithmCalloc(void)
 {
@@ -66,19 +62,15 @@ struct symtab_TraversableAlgorithm * TraversableAlgorithmCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: TraversableAlgorithmInit()
-///
-/// ARGS.:
-///
-///	ptalg.: traversable algorithm to init
-///
-/// RTN..: void
-///
-/// DESCR: init traversable algorithm.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ptalg traversable algorithm to init
+/// 
+/// \return void
+/// 
+/// \brief init traversable algorithm.
+/// \details 
+/// 
 
 void TraversableAlgorithmInit(struct symtab_TraversableAlgorithm *ptalg)
 {
@@ -92,21 +84,17 @@ void TraversableAlgorithmInit(struct symtab_TraversableAlgorithm *ptalg)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: TraversableAlgorithmTraverse()
-///
-/// ARGS.:
-///
-///	ptalg.: traversable algorithm to init
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg ptalg traversable algorithm to init
+/// 
+/// \return int
+/// 
 ///	regular treespace traversal return value.
-///
-/// DESCR: init traversable algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief init traversable algorithm.
+/// \details 
+/// 
 
 int
 TraversableAlgorithmTraverse

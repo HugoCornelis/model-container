@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_Projection;
 struct symtab_Projection;
@@ -35,7 +35,6 @@ struct symtab_Projection;
 #include "neurospaces/treespacetraversal.h"
 
 
-//f exported functions
 
 struct symtab_Projection * ProjectionCalloc(void);
 
@@ -133,9 +132,9 @@ ProjectionTraverseConnectionsForSpikeReceiver
 #include "biocomp.h"
 
 
-//s
-//s projection description
-//s
+/// \struct
+/// \struct projection description
+/// \struct
 
 struct descr_Projection
 {
@@ -143,17 +142,17 @@ struct descr_Projection
 };
 
 
-//s
-//s struct symtab_Projection
-//s
+/// \struct
+/// \struct struct symtab_Projection
+/// \struct
 
 struct symtab_Projection
 {
-    //m base struct : biocomp
+    /// base struct : biocomp
 
     struct symtab_BioComponent bio;
 
-    //m projection description
+    /// projection description
 
     struct descr_Projection deproj;
 };
@@ -161,19 +160,19 @@ struct symtab_Projection
 
 struct PQ_ConnsForTarget_Result
 {
-    //m result : number of connections
+    /// result : number of connections
 
     int iConnections;
 
-    //m original projection
+    /// original projection
 
     struct symtab_Projection *pproj;
 
-    //m context of projection
+    /// context of projection
 
     struct PidinStack *ppistProjection;
 
-    //m context of target
+    /// context of target
 
     struct PidinStack *ppistTarget;
 };
@@ -181,28 +180,28 @@ struct PQ_ConnsForTarget_Result
 
 struct PQ_ConnsForSpikegen_Result
 {
-    //m original projection
+    /// original projection
 
     struct symtab_Projection *pproj;
 
-    //m context of projection
+    /// context of projection
 
     struct PidinStack *ppistProjection;
 
-    //m context of spikegen
+    /// context of spikegen
 
     struct PidinStack *ppistSpikegen;
 
-    //m processor to act on individual selected connections
-    //m ie connections that have the spike gen as source
+    /// processor to act on individual selected connections
+    /// ie connections that have the spike gen as source
 
     TreespaceTraversalProcessor *pfProcessor;
 
-    //m finalizer to act on individual selected connections
+    /// finalizer to act on individual selected connections
 
     TreespaceTraversalProcessor *pfFinalizer;
 
-    //m user data from caller
+    /// user data from caller
 
     void *pvUserdata;
 };
@@ -210,32 +209,32 @@ struct PQ_ConnsForSpikegen_Result
 
 struct PQ_ConnsForPreSerial_Result
 {
-    //m original projection
+    /// original projection
 
     struct symtab_Projection *pproj;
 
-    //m context of projection
+    /// context of projection
 
     struct PidinStack *ppistProjection;
 
-    //m context of spikegen
+    /// context of spikegen
 
     struct PidinStack *ppistSpikeGenerator;
 
-    //m serial of spikegen
+    /// serial of spikegen
 
     int iPre;
 
-    //m processor to act on individual selected connections
-    //m ie connections that have the spike gen as source
+    /// processor to act on individual selected connections
+    /// ie connections that have the spike gen as source
 
     TreespaceTraversalProcessor *pfProcessor;
 
-    //m finalizer to act on individual selected connections
+    /// finalizer to act on individual selected connections
 
     TreespaceTraversalProcessor *pfFinalizer;
 
-    //m user data from caller
+    /// user data from caller
 
     void *pvUserdata;
 };
@@ -243,32 +242,32 @@ struct PQ_ConnsForPreSerial_Result
 
 /* struct PQ_ConnsForSpikegenOfSolver_Result */
 /* { */
-/*     //m original projection */
+/*     /// original projection */
 
 /*     struct symtab_Projection *pproj; */
 
-/*     //m context of projection */
+/*     /// context of projection */
 
 /*     struct PidinStack *ppistProjection; */
 
-/*     //m context of spikegen */
+/*     /// context of spikegen */
 
 /*     struct PidinStack *ppistSpikegen; */
 
-/*     //m solver info to traverse connections for */
+/*     /// solver info to traverse connections for */
 
 /*     struct SolverInfo *psi; */
 
-/*     //m processor to act on individual selected connections */
-/*     //m ie connections that have the spike gen as source */
+/*     /// processor to act on individual selected connections */
+/*     /// ie connections that have the spike gen as source */
 
 /*     SymbolProcessor *pfProcessor; */
 
-/*     //m finalizer to act on individual selected connections */
+/*     /// finalizer to act on individual selected connections */
 
 /*     SymbolProcessor *pfFinalizer; */
 
-/*     //m user data from caller */
+/*     /// user data from caller */
 
 /*     void *pvUserdata; */
 /* }; */
@@ -276,28 +275,28 @@ struct PQ_ConnsForPreSerial_Result
 
 struct PQ_ConnsForSpikerec_Result
 {
-    //m original projection
+    /// original projection
 
     struct symtab_Projection *pproj;
 
-    //m context of projection
+    /// context of projection
 
     struct PidinStack *ppistProjection;
 
-    //m context of spikerec
+    /// context of spikerec
 
     struct PidinStack *ppistSpikerec;
 
-    //m processor to act on individual selected connections
-    //m ie connections that have the spike rec as post
+    /// processor to act on individual selected connections
+    /// ie connections that have the spike rec as post
 
     TreespaceTraversalProcessor *pfProcessor;
 
-    //m finalizer to act on individual selected connections
+    /// finalizer to act on individual selected connections
 
     TreespaceTraversalProcessor *pfFinalizer;
 
-    //m user data from caller
+    /// user data from caller
 
     void *pvUserdata;
 };
@@ -305,32 +304,32 @@ struct PQ_ConnsForSpikerec_Result
 
 struct PQ_ConnsForPostSerial_Result
 {
-    //m original projection
+    /// original projection
 
     struct symtab_Projection *pproj;
 
-    //m context of projection
+    /// context of projection
 
     struct PidinStack *ppistProjection;
 
-    //m context of spikerec
+    /// context of spikerec
 
     struct PidinStack *ppistSpikeReceiver;
 
-    //m serial of spikerec
+    /// serial of spikerec
 
     int iPost;
 
-    //m processor to act on individual selected connections
-    //m ie connections that have the spike gen as source
+    /// processor to act on individual selected connections
+    /// ie connections that have the spike gen as source
 
     TreespaceTraversalProcessor *pfProcessor;
 
-    //m finalizer to act on individual selected connections
+    /// finalizer to act on individual selected connections
 
     TreespaceTraversalProcessor *pfFinalizer;
 
-    //m user data from caller
+    /// user data from caller
 
     void *pvUserdata;
 };
@@ -338,32 +337,32 @@ struct PQ_ConnsForPostSerial_Result
 
 /* struct PQ_ConnsForSpikerecOfSolver_Result */
 /* { */
-/*     //m original projection query */
+/*     /// original projection query */
 
 /*     struct symtab_Projection *pproj; */
 
-/*     //m context of projection */
+/*     /// context of projection */
 
 /*     struct PidinStack *ppistProjection; */
 
-/*     //m context of spikerec */
+/*     /// context of spikerec */
 
 /*     struct PidinStack *ppistSpikerec; */
 
-/*     //m solver info to traverse connections for */
+/*     /// solver info to traverse connections for */
 
 /*     struct SolverInfo *psi; */
 
-/*     //m processor to act on individual selected connections */
-/*     //m ie connections that have the spike rec as post */
+/*     /// processor to act on individual selected connections */
+/*     /// ie connections that have the spike rec as post */
 
 /*     SymbolProcessor *pfProcessor; */
 
-/*     //m finalizer to act on individual selected connections */
+/*     /// finalizer to act on individual selected connections */
 
 /*     SymbolProcessor *pfFinalizer; */
 
-/*     //m user data from caller */
+/*     /// user data from caller */
 
 /*     void *pvUserdata; */
 /* }; */

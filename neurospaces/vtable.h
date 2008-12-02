@@ -65,7 +65,7 @@ struct _typeinfo_symbols
 
 // convenience defines for the above
 
-//d get pointer to ttable
+/// \def get pointer to ttable
 
 #define typeinfo_symbols(phsle) \
     ((struct _typeinfo_symbols *)&((struct _typeinfo_symbols *)phsle)[-1])

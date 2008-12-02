@@ -38,65 +38,65 @@
 #include "projectionrandomizedinstance.h"
 
 
-//s algorithm handlers for projection algorithm
+/// \struct algorithm handlers for projection algorithm
 
 static AlgorithmClassInstanceCreator ProjectionRandomizedClassCreateInstance;
 
 static AlgorithmClassHandler ProjectionRandomizedClassPrintInfo;
 
 
-//s algorithm class method table
+/// \struct algorithm class method table
 
 static struct AlgorithmClassHandlerLibrary pfProjectionRandomizedClassHandlers =
 {
-    //m class info handler
+    /// class info handler
 
     ProjectionRandomizedClassPrintInfo,
 
-    //m create instance from class (self, name, context, init string)
+    /// create instance from class (self, name, context, init string)
 
     ProjectionRandomizedClassCreateInstance,
 };
 
 
-//s projectionRandomized class derives from algorithm class
+/// \struct projectionRandomized class derives from algorithm class
 
 struct ProjectionRandomizedClass
 {
-    //m base struct : algorithm class
+    /// base struct : algorithm class
 
     struct AlgorithmClass algc;
 
-    //m number of created instances
+    /// number of created instances
 
     int iInstances;
 };
 
 
-//s algorithm class description
+/// \struct algorithm class description
 
 static struct ProjectionRandomizedClass scProjectionRandomized =
 {
-    //m base struct : algorithm class
+    /// base struct : algorithm class
 
     {
-	//m link
+	/// link
 
 	{
 	    NULL,
 	    NULL,
 	},
 
-	//m name
+	/// name
 
 	"ProjectionRandomized",
 
-	//m algorithm handlers
+	/// algorithm handlers
 
 	&pfProjectionRandomizedClassHandlers,
     },
 
-    //m number of instances
+    /// number of instances
 
     0,
 };
@@ -105,21 +105,17 @@ static struct ProjectionRandomizedClass scProjectionRandomized =
 struct AlgorithmClass *palgcProjectionRandomized = &scProjectionRandomized.algc;
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionRandomizedClassCreateInstance()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: struct AlgorithmInstance * : 
-///
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return struct AlgorithmInstance *  
+/// 
 ///	created algorithm instance, NULL for failure
-///
-/// DESCR: Algorithm handler to create instance of projectionRandomized algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief Algorithm handler to create instance of projectionRandomized algorithm.
+/// \details 
+/// 
 
 static
 struct AlgorithmInstance *
@@ -152,19 +148,15 @@ ProjectionRandomizedClassCreateInstance
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionRandomizedClassPrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on projectionRandomized algorithm class.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int  std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on projectionRandomized algorithm class.
+/// \details 
+/// 
 
 static int ProjectionRandomizedClassPrintInfo
 (struct AlgorithmClass *palgc,char *pcName,void *pvGlobal,void *pvData)

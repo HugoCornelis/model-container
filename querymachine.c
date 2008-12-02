@@ -93,7 +93,6 @@ static void QueryMachineInitReadLine();
 
 
 //f
-//f query handler
 //f
 
 typedef
@@ -101,30 +100,30 @@ int QueryHandler
     (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData);
 
 
-//s query association
+/// \struct query association
 
 typedef struct QueryHandlerAssociation
 {
-    //m enter command
+    /// enter command
 
     char *pcCommand;
 
-    //m query handler
+    /// query handler
 
     QueryHandler *pfQueryHandler;
 
 #ifdef USE_READLINE
 
-    //m completion type
-    //m
-    //m -1 : no completion
-    //m  0 : default completion (readline's filename completion)
-    //m  1 : completion with ->pfCompletor
-    //m
+    /// completion type
+    ///
+    /// -1 : no completion
+    ///  0 : default completion (readline's filename completion)
+    ///  1 : completion with ->pfCompletor
+    ///
 
     int iCompletionType;
 
-    //m completor
+    /// completor
 
     CPFunction *pfCompletor;
 
@@ -207,11 +206,11 @@ static QueryHandler QueryHandlerWriteModular;
 static QueryHandler QueryHandlerWriteSymbol;
 
 
-//v query association table
+/// query association table
 
 static QueryHandlerAssociation pquhasTable[] =
 {
-    //m algorithmclass
+    /// algorithmclass
 
     {
 	"algorithmclass",
@@ -222,7 +221,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m algorithminstance
+    /// algorithminstance
 
     {
 	"algorithminstance",
@@ -233,7 +232,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m algorithmset
+    /// algorithmset
 
     {
 	"algorithmset",
@@ -244,7 +243,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m allocation statistics
+    /// allocation statistics
 
     {
 	"allocations",
@@ -255,7 +254,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m biogroup2biolevel
+    /// biogroup2biolevel
 
     {
 	"biogroup2biolevel",
@@ -266,7 +265,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m biolevel2biogroup
+    /// biolevel2biogroup
 
     {
 	"biolevel2biogroup",
@@ -277,7 +276,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m cell count
+    /// cell count
 
     {
 	"cellcount",
@@ -288,7 +287,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m children info
+    /// children info
 
     {
 	"childreninfo",
@@ -299,7 +298,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m connection count
+    /// connection count
 
     {
 	"connectioncount",
@@ -310,7 +309,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m find out information about a context
+    /// find out information about a context
 
     {
 	"context-info",
@@ -321,7 +320,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m subtract two contexts
+    /// subtract two contexts
 
     {
 	"context-subtract",
@@ -332,7 +331,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m count number of aliases
+    /// count number of aliases
 
     {
 	"countaliases",
@@ -343,7 +342,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m count number of allocated symbols
+    /// count number of allocated symbols
 
     {
 	"countallocatedsymbols",
@@ -354,7 +353,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m delete a model component
+    /// delete a model component
 
     {
 	"delete",
@@ -365,7 +364,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m echo something to the terminal
+    /// echo something to the terminal
 
     {
 	"echo",
@@ -376,7 +375,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m expand a wildcard
+    /// expand a wildcard
 
     {
 	"expand",
@@ -387,7 +386,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m find out information about an input
+    /// find out information about an input
 
     {
 	"input-info",
@@ -398,7 +397,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m help
+    /// help
 
     {
 	"help",
@@ -409,7 +408,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m imported files
+    /// imported files
 
     {
 	"importedfiles",
@@ -420,7 +419,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m import a file
+    /// import a file
 
     {
 	"importfile",
@@ -431,7 +430,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m list symbols in namespace
+    /// list symbols in namespace
 
     {
 	"listsymbols",
@@ -442,7 +441,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m match of pidinstacks
+    /// match of pidinstacks
 
     {
 	"match",
@@ -453,7 +452,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m mesh a cell
+    /// mesh a cell
 
     {
 	"mesh",
@@ -464,7 +463,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m namespaces
+    /// namespaces
 
     {
 	"namespaces",
@@ -475,7 +474,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-/*     //m operate on two parameters */
+/*     /// operate on two parameters */
 
 /*     { */
 /* 	"parameteroperator", */
@@ -486,7 +485,7 @@ static QueryHandlerAssociation pquhasTable[] =
 /* #endif */
 /*     }, */
 
-    //m partition a model (and cache the result for later use)
+    /// partition a model (and cache the result for later use)
 
     {
 	"partition",
@@ -497,7 +496,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m global projection query : count
+    /// global projection query : count
 
     {
 	"pqcount",
@@ -508,7 +507,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m global projection query : get
+    /// global projection query : get
 
     {
 	"pqget",
@@ -519,7 +518,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m global projection query : load from file
+    /// global projection query : load from file
 
     {
 	"pqload",
@@ -530,7 +529,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m global projection query : save to file
+    /// global projection query : save to file
 
     {
 	"pqsave",
@@ -541,7 +540,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m global projection query : set
+    /// global projection query : set
 
     {
 	"pqset",
@@ -552,7 +551,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m global projection query : set for all projections
+    /// global projection query : set for all projections
 
     {
 	"pqsetall",
@@ -563,7 +562,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m global projection query : traverse
+    /// global projection query : traverse
 
     {
 	"pqtraverse",
@@ -574,7 +573,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m get coordinates
+    /// get coordinates
 
     {
 	"printcoordinates",
@@ -585,7 +584,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m print info
+    /// print info
 
     {
 	"printinfo",
@@ -596,7 +595,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m get parameter
+    /// get parameter
 
     {
 	"printparameter",
@@ -608,7 +607,7 @@ static QueryHandlerAssociation pquhasTable[] =
     },
 
 
-    //m get parameter info
+    /// get parameter info
 
     {
 	"printparameterinfo",
@@ -621,7 +620,7 @@ static QueryHandlerAssociation pquhasTable[] =
 
 
 
-    //m get function parameter input
+    /// get function parameter input
 
     {
 	"printparameterinput",
@@ -632,7 +631,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m get scaled parameter
+    /// get scaled parameter
 
     {
 	"printparameterscaled",
@@ -643,7 +642,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m get parameter set
+    /// get parameter set
 
     {
 	"printparameterset",
@@ -654,7 +653,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m query projections
+    /// query projections
 
     {
 	"projectionquery",
@@ -665,7 +664,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m count connections in projection query
+    /// count connections in projection query
 
     {
 	"projectionquerycount",
@@ -676,7 +675,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m print solver for a symbol
+    /// print solver for a symbol
 
     {
 	"resolvesolver",
@@ -687,7 +686,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m segment count
+    /// segment count
 
     {
 	"segmentcount",
@@ -698,7 +697,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m segmenter linearize
+    /// segmenter linearize
 
     {
 	"segmenterlinearize",
@@ -709,7 +708,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m segmenter parent count
+    /// segmenter parent count
 
     {
 	"segmenterparentcount",
@@ -720,7 +719,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m set segmenter base
+    /// set segmenter base
 
     {
 	"segmentersetbase",
@@ -731,7 +730,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m segmenter tips
+    /// segmenter tips
 
     {
 	"segmentertips",
@@ -742,7 +741,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m get serial ID
+    /// get serial ID
 
     {
 	"serialID",
@@ -753,7 +752,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m output forestspace structure to a file
+    /// output forestspace structure to a file
 
     {
 	"serializeforestspace",
@@ -764,7 +763,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m get serial mappings
+    /// get serial mappings
 
     {
 	"serialMapping",
@@ -775,7 +774,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m convert serial to context
+    /// convert serial to context
 
     {
 	"serial2context",
@@ -786,7 +785,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m set the value of a parameter
+    /// set the value of a parameter
 
     {
 	"setparameter",
@@ -797,7 +796,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m set the value of a parameter in the conceptual representation
+    /// set the value of a parameter in the conceptual representation
 
     {
 	"setparameterconcept",
@@ -808,7 +807,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m get solver registrations
+    /// get solver registrations
 
     {
 	"solverget",
@@ -819,7 +818,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m print solver registrations
+    /// print solver registrations
 
     {
 	"solverregistrations",
@@ -830,7 +829,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m set solver registrations
+    /// set solver registrations
 
     {
 	"solverset",
@@ -841,7 +840,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m spike receiver count
+    /// spike receiver count
 
     {
 	"spikereceivercount",
@@ -852,7 +851,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m spike receiver serial ID
+    /// spike receiver serial ID
 
     {
 	"spikereceiverserialID",
@@ -863,7 +862,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m spike sender count
+    /// spike sender count
 
     {
 	"spikesendercount",
@@ -874,7 +873,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m validate a segment group
+    /// validate a segment group
 
     {
 	"validatesegmentgroup",
@@ -885,7 +884,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m get version info
+    /// get version info
 
     {
 	"version",
@@ -896,7 +895,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m write library
+    /// write library
 
     {
 	"writelibrary",
@@ -907,7 +906,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m write modular
+    /// write modular
 
     {
 	"writemodular",
@@ -918,7 +917,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m write symbol
+    /// write symbol
 
     {
 	"writesymbol",
@@ -929,7 +928,7 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    //m end of table
+    /// end of table
 
     {
 	NULL,
@@ -943,12 +942,12 @@ static QueryHandlerAssociation pquhasTable[] =
 };
 
 
-//d size hack
+/// \def size hack
 
 #define SIZE_COMMANDLINE	1000
 
 
-//d some predefined commands
+/// \def some predefined commands
 
 #define QUERY_COMMAND_CORE		"core"
 
@@ -994,19 +993,15 @@ timeval_subtract
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerAllocations()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle allocation info query
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle allocation info query
+/// \details 
+/// 
 
 static int QueryHandlerAllocations
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -1070,19 +1065,15 @@ static int QueryHandlerAllocations
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerBiogroup2Biolevel()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Bio group 2 bio level conversion.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Bio group 2 bio level conversion.
+/// \details 
+/// 
 
 static int QueryHandlerBiogroup2Biolevel
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -1166,19 +1157,15 @@ static int QueryHandlerBiogroup2Biolevel
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerBiolevel2Biogroup()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Bio level 2 bio group conversion.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Bio level 2 bio group conversion.
+/// \details 
+/// 
 
 static int QueryHandlerBiolevel2Biogroup
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -1262,19 +1249,15 @@ static int QueryHandlerBiolevel2Biogroup
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerContextInfo()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle context info query.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle context info query.
+/// \details 
+/// 
 
 static int QueryHandlerContextInfo
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -1289,7 +1272,7 @@ static int QueryHandlerContextInfo
 
     //- lookup child symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     struct symtab_HSolveListElement *phsle1
 	= SymbolsLookupHierarchical(pneuro->psym, ppist);
@@ -1327,19 +1310,15 @@ static int QueryHandlerContextInfo
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerContextSubtract()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle context subtraction query.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle context subtraction query.
+/// \details 
+/// 
 
 static int QueryHandlerContextSubtract
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -1358,7 +1337,7 @@ static int QueryHandlerContextSubtract
 
     //- get second pidinstack
 
-    //! will core for invalid command lines
+    /// \note will core for invalid command lines
 
     struct PidinStack *ppist2
 	= PidinStackParse(strpbrk(&pcLine[iLength + 1], " \t"));
@@ -1396,19 +1375,15 @@ static int QueryHandlerContextSubtract
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerCountAliases()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle aliases query
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle aliases query
+/// \details 
+/// 
 
 static int QueryHandlerCountAliases
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -1449,19 +1424,15 @@ static int QueryHandlerCountAliases
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerCountAllocatedSymbols()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle allocated symbols query
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle allocated symbols query
+/// \details 
+/// 
 
 static int QueryHandlerCountAllocatedSymbols
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -1480,21 +1451,17 @@ static int QueryHandlerCountAllocatedSymbols
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerDelete()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Delete a component
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Delete a component
+/// \details 
+/// 
 ///	delete <component>
-///
-/// **************************************************************************
+/// 
 
 static
 int
@@ -1513,7 +1480,7 @@ QueryHandlerDelete
 
     //- lookup child symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     struct symtab_HSolveListElement *phsleChild
 	= SymbolsLookupHierarchical(pneuro->psym, ppist);
@@ -1522,7 +1489,7 @@ QueryHandlerDelete
 
     PidinStackPop(ppist);
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     struct symtab_HSolveListElement *phsleParent
 	= SymbolsLookupHierarchical(pneuro->psym, ppist);
@@ -1569,21 +1536,17 @@ QueryHandlerDelete
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerEcho()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Echo args to the terminal.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Echo args to the terminal.
+/// \details 
+/// 
 ///	echo <something>
-///
-/// **************************************************************************
+/// 
 
 static
 int
@@ -1604,21 +1567,17 @@ QueryHandlerEcho
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerExpand()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Expand a wildcard.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Expand a wildcard.
+/// \details 
+/// 
 ///	expand <wildcard>
-///
-/// **************************************************************************
+/// 
 
 static
 int 
@@ -1699,7 +1658,7 @@ QueryHandlerExpand
     struct symtab_HSolveListElement *phsleRoot
 	= PidinStackLookupTopSymbol(ppistRoot);
 
-    //! so phsleRoot can be NULL if the model description file was not found
+    /// \note so phsleRoot can be NULL if the model description file was not found
 
     if (phsleRoot)
     {
@@ -1740,21 +1699,17 @@ QueryHandlerExpand
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerInputInfo()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Print information about an input.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print information about an input.
+/// \details 
+/// 
 ///	input-info <wildcard>
-///
-/// **************************************************************************
+/// 
 
 static
 int
@@ -1771,7 +1726,7 @@ QueryHandlerInputInfo
 
     //- lookup child symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     struct symtab_HSolveListElement *phsle1
 	= SymbolsLookupHierarchical(pneuro->psym, ppist);
@@ -1809,19 +1764,15 @@ QueryHandlerInputInfo
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerImportedFiles()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle print query
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle print query
+/// \details 
+/// 
 
 static int QueryHandlerImportedFiles
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -1836,8 +1787,8 @@ static int QueryHandlerImportedFiles
 
     //- find namespace
 
-    //! remember if ppist is zero length, root namespace ('::') is default.
-    //! this lookup is neglected in the rest of this function.
+    /// \note remember if ppist is zero length, root namespace ('::') is default.
+    /// \note this lookup is neglected in the rest of this function.
 
     struct ImportedFile *pif = SymbolsLookupNameSpace(pneuro->psym, ppist);
 
@@ -1851,19 +1802,15 @@ static int QueryHandlerImportedFiles
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerImportFile()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle print query
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle print query
+/// \details 
+/// 
 
 static
 int
@@ -1924,17 +1871,13 @@ QueryHandlerImportFile
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerHelpCommands()
-///
-/// ARGS.:
-///
-/// RTN..: void
-///
-/// DESCR: print info on commands
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return void
+/// 
+/// \brief print info on commands
+/// \details 
+/// 
 
 static int QueryHandlerHelpCommands
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -1955,19 +1898,15 @@ static int QueryHandlerHelpCommands
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerListSymbols()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle print query
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle print query
+/// \details 
+/// 
 
 static int QueryHandlerListSymbols
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -2008,19 +1947,15 @@ static int QueryHandlerListSymbols
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerMesh()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Mesh a cell or group of segments.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Mesh a cell or group of segments.
+/// \details 
+/// 
 
 static int QueryHandlerMesh
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -2059,7 +1994,7 @@ static int QueryHandlerMesh
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     struct symtab_HSolveListElement *phsle
 	= SymbolsLookupHierarchical(pneuro->psym, ppist);
@@ -2100,19 +2035,15 @@ static int QueryHandlerMesh
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerNameSpaces()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle namespaces query.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle namespaces query.
+/// \details 
+/// 
 
 static int QueryHandlerNameSpaces
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -2157,19 +2088,15 @@ static int QueryHandlerNameSpaces
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerAlgorithmClass()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Print algorithm info.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print algorithm info.
+/// \details 
+/// 
 
 static int QueryHandlerAlgorithmClass
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -2193,19 +2120,15 @@ static int QueryHandlerAlgorithmClass
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerAlgorithmInstance()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Print algorithm info.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print algorithm info.
+/// \details 
+/// 
 
 static int QueryHandlerAlgorithmInstance
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -2229,19 +2152,15 @@ static int QueryHandlerAlgorithmInstance
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerAlgorithmSet()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Print algorithm info.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print algorithm info.
+/// \details 
+/// 
 
 static int QueryHandlerAlgorithmSet
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -2256,21 +2175,17 @@ static int QueryHandlerAlgorithmSet
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPartition()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Partition a model (and cache the result for later use).
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Partition a model (and cache the result for later use).
+/// \details 
+/// 
 ///	partition <context> <partitions> <this-node>
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerPartition
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -2319,7 +2234,7 @@ static int QueryHandlerPartition
 
     //- lookup symbol
 
-/*     //! allows namespacing, yet incompatible with parameter caches. */
+/*     /// \note allows namespacing, yet incompatible with parameter caches. */
 
 /*     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist); */
 
@@ -2376,19 +2291,15 @@ static int QueryHandlerPartition
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPidinStackMatch()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Match of two contexts ?
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Match of two contexts ?
+/// \details 
+/// 
 
 static int QueryHandlerPidinStackMatch
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -2403,7 +2314,7 @@ static int QueryHandlerPidinStackMatch
 
     //- get second pidinstack
 
-    //! will core for invalid command lines
+    /// \note will core for invalid command lines
 
     struct PidinStack *ppist2
 	= PidinStackParse(strpbrk(&pcLine[iLength + 1], " \t"));
@@ -2430,31 +2341,27 @@ static int QueryHandlerPidinStackMatch
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPQCount()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Count connections in projection query.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Count connections in projection query.
+/// \details 
+/// 
 
 struct QM_neuro_pq_traversal_data
 {
-    //m set first serial ID : 0
+    /// set first serial ID : 0
 
     int iSerial;
 
-    //m projection query
+    /// projection query
 
     struct ProjectionQuery *ppq;
 
-    //m file to write to
+    /// file to write to
 
     FILE *pfile;
 };
@@ -2517,7 +2424,7 @@ static int QueryHandlerPQCount
     struct symtab_HSolveListElement *phsleAttachment = NULL;
     int bCaching = FALSE;
 
-    //v time taken to execute query
+    /// time taken to execute query
 
     struct timeval tvUser;
     struct timeval tvSystem;
@@ -2550,7 +2457,7 @@ static int QueryHandlerPQCount
 
 	//- lookup attachment symbol
 
-	//! allows namespacing, yet incompatible with parameter caches.
+	/// \note allows namespacing, yet incompatible with parameter caches.
 
 	phsleAttachment
 	    = SymbolsLookupHierarchical(pneuro->psym, ppistAttachment);
@@ -2574,7 +2481,7 @@ static int QueryHandlerPQCount
 
 	if (ppq)
 	{
-	    //v resources used before and after command executed
+	    /// resources used before and after command executed
 
 	    struct rusage ruBefore, ruAfter;
 
@@ -2582,11 +2489,11 @@ static int QueryHandlerPQCount
 
 	    struct QM_neuro_pq_traversal_data qtd =
 	    {
-		//m set count : 0
+		/// set count : 0
 
 		0,
 
-		//m projection query
+		/// projection query
 
 		ppq2,
 	    };
@@ -2733,19 +2640,15 @@ static int QueryHandlerPQCount
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPQGet()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Print some info on registered projection query.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print some info on registered projection query.
+/// \details 
+/// 
 
 static int QueryHandlerPQGet
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -2807,19 +2710,15 @@ static int QueryHandlerPQGet
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPQLoad()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Load a projection query from a file.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Load a projection query from a file.
+/// \details 
+/// 
 
 static int QueryHandlerPQLoad
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -2978,7 +2877,7 @@ static int QueryHandlerPQLoad
 
     fclose(pfile);
 
-    //! following code nicely copied from projectionquery.c
+    /// \note following code nicely copied from projectionquery.c
 
     //- allocate projection query
 
@@ -3028,21 +2927,17 @@ static int QueryHandlerPQLoad
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPQSave()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Store connections in projection query in a file.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Store connections in projection query in a file.
+/// \details 
+/// 
 ///	pqsave <caching = c|n> <filename>
-///
-/// **************************************************************************
+/// 
 
 static int 
 QueryMachineNeuroConnectionStore
@@ -3187,15 +3082,15 @@ static int QueryHandlerPQSave
 
 	struct QM_neuro_pq_traversal_data qtd =
 	{
-	    //m set first serial ID : 0
+	    /// set first serial ID : 0
 
 	    0,
 
-	    //m projection query
+	    /// projection query
 
 	    ppq2,
 
-	    //m file to write to
+	    /// file to write to
 
 	    NULL,
 	};
@@ -3254,19 +3149,15 @@ static int QueryHandlerPQSave
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPQSet()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Define a projection query.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Define a projection query.
+/// \details 
+/// 
 
 static int QueryHandlerPQSet
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -3279,7 +3170,7 @@ static int QueryHandlerPQSet
     int iProjections = 0;
     int bCaching = FALSE;
 
-    //v time taken to execute query
+    /// time taken to execute query
 
     struct timeval tvUser;
     struct timeval tvSystem;
@@ -3334,7 +3225,7 @@ static int QueryHandlerPQSet
 
 	    if (ppq)
 	    {
-		//v resources used before and after command executed
+		/// resources used before and after command executed
 
 		struct rusage ruBefore, ruAfter;
 
@@ -3437,31 +3328,27 @@ static int QueryHandlerPQSet
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPQSetAll()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Select all projections in the model for the projection query.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Select all projections in the model for the projection query.
+/// \details 
+/// 
 
 struct QM_projection_collector_traversal_data
 {
-    //m start of traversal
+    /// start of traversal
 
     struct PidinStack *ppistStart;
 
-    //m number of projections found
+    /// number of projections found
 
     int iProjections;
 
-    //m contexts of projections
+    /// contexts of projections
 
     struct PidinStack *pppistProjections[1000];
 };
@@ -3535,7 +3422,7 @@ static int QueryHandlerPQSetAll
 
     int bCaching = FALSE;
 
-    //v time taken to execute query
+    /// time taken to execute query
 
     struct timeval tvUser;
     struct timeval tvSystem;
@@ -3570,15 +3457,15 @@ static int QueryHandlerPQSetAll
 
     struct QM_projection_collector_traversal_data pcd =
 	{
-	    //m start of traversal
+	    /// start of traversal
 
 	    ppistRoot,
 
-	    //m number of projections found
+	    /// number of projections found
 
 	    0,
 
-	    //m contexts of projections
+	    /// contexts of projections
 
 	    { NULL, },
 	};
@@ -3627,7 +3514,7 @@ static int QueryHandlerPQSetAll
 
 	    if (ppq)
 	    {
-		//v resources used before and after command executed
+		/// resources used before and after command executed
 
 		struct rusage ruBefore, ruAfter;
 
@@ -3732,19 +3619,15 @@ static int QueryHandlerPQSetAll
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPQTraverse()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Print info on connections in global projection query.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print info on connections in global projection query.
+/// \details 
+/// 
 
 static int 
 QueryMachineNeuroConnectionTraverser
@@ -3835,7 +3718,7 @@ static int QueryHandlerPQTraverse
     struct symtab_HSolveListElement *phsleAttachment = NULL;
     int bCaching = FALSE;
 
-    //v time taken to execute query
+    /// time taken to execute query
 
     struct timeval tvUser;
     struct timeval tvSystem;
@@ -3866,7 +3749,7 @@ static int QueryHandlerPQTraverse
 
     //- lookup attachment symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsleAttachment
 	= SymbolsLookupHierarchical(pneuro->psym, ppistAttachment);
@@ -3887,11 +3770,11 @@ static int QueryHandlerPQTraverse
 
 	    struct QM_neuro_pq_traversal_data qtd =
 	    {
-		//m set first serial ID : 0
+		/// set first serial ID : 0
 
 		0,
 
-		//m projection query
+		/// projection query
 
 		ppq2,
 	    };
@@ -3904,7 +3787,7 @@ static int QueryHandlerPQTraverse
 
 	    if (instanceof_attachment(phsleAttachment))
 	    {
-		//v resources used before and after command executed
+		/// resources used before and after command executed
 
 		struct rusage ruBefore, ruAfter;
 
@@ -4024,19 +3907,15 @@ static int QueryHandlerPQTraverse
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPrintCellCount()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle print query
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle print query
+/// \details 
+/// 
 
 static int QueryHandlerPrintCellCount
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -4053,7 +3932,7 @@ static int QueryHandlerPrintCellCount
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
 
@@ -4089,19 +3968,15 @@ static int QueryHandlerPrintCellCount
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPrintChildren()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle print query
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle print query
+/// \details 
+/// 
 
 static int QueryHandlerPrintChildren
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -4118,7 +3993,7 @@ static int QueryHandlerPrintChildren
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
 
@@ -4134,9 +4009,9 @@ static int QueryHandlerPrintChildren
 
 	//- if children info
 
-	//!
-	//! never use this to do a traversal, use std traversals instead.
-	//!
+	///
+	/// \note never use this to do a traversal, use std traversals instead.
+	///
 
 	piohcChildren = SymbolGetChildren((struct symtab_IOHierarchy *)phsle);
 
@@ -4234,21 +4109,17 @@ static int QueryHandlerPrintChildren
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPrintConnectionCount()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Print number of connections in given projection.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print number of connections in given projection.
+/// \details 
+/// 
 ///	connectioncount <projection symbol>
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerPrintConnectionCount
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -4257,7 +4128,7 @@ static int QueryHandlerPrintConnectionCount
 
     int bResult = TRUE;
 
-    //v time taken to execute query
+    /// time taken to execute query
 
     struct timeval tvUser;
     struct timeval tvSystem;
@@ -4270,7 +4141,7 @@ static int QueryHandlerPrintConnectionCount
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
 
@@ -4280,7 +4151,7 @@ static int QueryHandlerPrintConnectionCount
     {
 	int iConnections = -1;
 
-	//v resources used before and after command executed
+	/// resources used before and after command executed
 
 	struct rusage ruBefore, ruAfter;
 
@@ -4346,21 +4217,17 @@ static int QueryHandlerPrintConnectionCount
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPrintCoordinates()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle coordinate query
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle coordinate query
+/// \details 
+/// 
 ///	printcoordinates <caching = c|n> <ancestor> <descendant>
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerPrintCoordinates
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -4371,7 +4238,7 @@ static int QueryHandlerPrintCoordinates
 
     int bCaching = FALSE;
 
-    //v time taken to execute query
+    /// time taken to execute query
 
     struct timeval tvUser;
     struct timeval tvSystem;
@@ -4418,13 +4285,13 @@ static int QueryHandlerPrintCoordinates
 
     //- lookup symbol
 
-    //! need serial here
+    /// \note need serial here
 
     phsle = PidinStackLookupTopSymbol(ppist);
 
     //- lookup coordinate symbol
 
-    //! loads cache, ie cache is passed with parameter.
+    /// \note loads cache, ie cache is passed with parameter.
 
     phsleCoord = PidinStackLookupTopSymbol(ppistCoord);
 
@@ -4436,7 +4303,7 @@ static int QueryHandlerPrintCoordinates
 
 	if (bCaching)
 	{
-	    //v resources used before and after command executed
+	    /// resources used before and after command executed
 
 	    struct rusage ruBefore, ruAfter;
 
@@ -4590,19 +4457,15 @@ static int QueryHandlerPrintCoordinates
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPrintInfo()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle print query
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle print query
+/// \details 
+/// 
 
 static int QueryHandlerPrintInfo
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -4619,7 +4482,7 @@ static int QueryHandlerPrintInfo
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
 
@@ -4647,21 +4510,17 @@ static int QueryHandlerPrintInfo
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPrintParameter()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle parameter query
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle parameter query
+/// \details 
+/// 
 ///	printparameter <context> <parameter-name>
-///
-/// **************************************************************************
+/// 
 
 static int
 QueryMachineWildcardParameterTraverser
@@ -4758,21 +4617,17 @@ QueryMachineWildcardParameterTraverser
 
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPrintParameter()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle parameter query
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle parameter query
+/// \details 
+/// 
 ///	printparameter <context> <parameter1-name> <parameter2-name>
-///
-/// **************************************************************************
+/// 
 static int QueryHandlerPrintParameter
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
 {
@@ -4819,7 +4674,7 @@ static int QueryHandlerPrintParameter
 	struct symtab_HSolveListElement *phsleRoot
 	    = PidinStackLookupTopSymbol(ppistRoot);
 
-	//! so phsleRoot can be NULL if the model description file was not found
+	/// \note so phsleRoot can be NULL if the model description file was not found
 
 	if (phsleRoot)
 	{
@@ -4857,11 +4712,11 @@ static int QueryHandlerPrintParameter
     {
 	//- lookup symbol
 
-/* 	//! allows namespacing, yet incompatible with parameter caches. */
+/* 	/// \note allows namespacing, yet incompatible with parameter caches. */
 
 /* 	phsle = SymbolsLookupHierarchical(pneuro->psym, ppist); */
 
-	//! does not allow namespacing
+	/// \note does not allow namespacing
 
 	phsle = PidinStackLookupTopSymbol(ppist);
 
@@ -4966,21 +4821,17 @@ static int QueryHandlerPrintParameter
 
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPrintParameterInfo()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle parameter query
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle parameter query
+/// \details 
+/// 
 ///	printparameter <context> <parameter1-name> <parameter2-name>
-///
-/// **************************************************************************
+/// 
 static int QueryHandlerPrintParameterInfo
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
 {
@@ -5027,7 +4878,7 @@ static int QueryHandlerPrintParameterInfo
 	struct symtab_HSolveListElement *phsleRoot
 	    = PidinStackLookupTopSymbol(ppistRoot);
 
-	//! so phsleRoot can be NULL if the model description file was not found
+	/// \note so phsleRoot can be NULL if the model description file was not found
 
 	if (phsleRoot)
 	{
@@ -5065,11 +4916,11 @@ static int QueryHandlerPrintParameterInfo
     {
 	//- lookup symbol
 
-/* 	//! allows namespacing, yet incompatible with parameter caches. */
+/* 	/// \note allows namespacing, yet incompatible with parameter caches. */
 
 /* 	phsle = SymbolsLookupHierarchical(pneuro->psym, ppist); */
 
-	//! does not allow namespacing
+	/// \note does not allow namespacing
 
 	phsle = PidinStackLookupTopSymbol(ppist);
 
@@ -5129,21 +4980,17 @@ static int QueryHandlerPrintParameterInfo
 
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPrintParameterInput()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle parameter query
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle parameter query
+/// \details 
+/// 
 ///	printparameter <context> <parameter1-name> <parameter2-name>
-///
-/// **************************************************************************
+/// 
 
 static int
 QueryHandlerPrintParameterInput
@@ -5222,11 +5069,11 @@ QueryHandlerPrintParameterInput
 
     //- lookup symbol
 
-/*     //! allows namespacing, yet incompatible with parameter caches. */
+/*     /// \note allows namespacing, yet incompatible with parameter caches. */
 
 /*     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist); */
 
-    //! does not allow namespacing
+    /// \note does not allow namespacing
 
     phsle = PidinStackLookupTopSymbol(ppist);
 
@@ -5277,19 +5124,15 @@ QueryHandlerPrintParameterInput
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPrintParameterScaled()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle scaled parameter query
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle scaled parameter query
+/// \details 
+/// 
 
 static int QueryHandlerPrintParameterScaled
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -5321,11 +5164,11 @@ static int QueryHandlerPrintParameterScaled
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
 /*     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist); */
 
-    //! does not allow namespacing
+    /// \note does not allow namespacing
 
     phsle = PidinStackLookupTopSymbol(ppist);
 
@@ -5380,35 +5223,31 @@ static int QueryHandlerPrintParameterScaled
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPrintParameterSet()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Handle parameter set query
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle parameter set query
+/// \details 
+/// 
 ///	printparameterset <context>
-///
-/// TODO.:
-///
+/// 
+/// \todo 
+/// 
 ///	This function should also be able to get the parameters from
 ///	functions.  First functions must be included in the principal
 ///	set before that can happen.
-///
-/// **************************************************************************
+/// 
 
 struct VectorParameters
 {
-    //m number of parameters
+    /// number of parameters
 
     int iParameters;
 
-    //m parameters
+    /// parameters
 
     struct symtab_Parameters *ppparameters[100];
 };
@@ -5417,8 +5256,8 @@ static int
 ParameterNameComparator
 (const void * pvParameter1, const void * pvParameter2)
 {
-    //! never saw this construct, but I got it right from the first
-    //! time, I 'understand' this code, and it _does_ makes sense
+    /// \note never saw this construct, but I got it right from the first
+    /// \note time, I 'understand' this code, and it _does_ makes sense
 
     struct symtab_Parameters * const * pppar1 = pvParameter1;
     struct symtab_Parameters * const * pppar2 = pvParameter2;
@@ -5451,8 +5290,8 @@ QueryMachineWildcardParameterSetTraverser
 
     if (subsetof_bio_comp(iType))
     {
-	//t this code is one more reason to implement traversals that are
-	//t orthogonal to the model's axis.
+	/// \todo this code is one more reason to implement traversals that are
+	/// \todo orthogonal to the model's axis.
 
 	//- loop over all prototypes including self
 
@@ -5562,7 +5401,7 @@ static int QueryHandlerPrintParameterSet
     struct symtab_HSolveListElement *phsleRoot
 	= PidinStackLookupTopSymbol(ppistRoot);
 
-    //! so phsleRoot can be NULL if the model description file was not found
+    /// \note so phsleRoot can be NULL if the model description file was not found
 
     if (phsleRoot)
     {
@@ -5570,11 +5409,11 @@ static int QueryHandlerPrintParameterSet
 
 	struct VectorParameters vpars =
 	    {
-		//m number of parameters
+		/// number of parameters
 
 		0,
 
-		//m parameters
+		/// parameters
 
 		{
 		    NULL,
@@ -5638,19 +5477,15 @@ static int QueryHandlerPrintParameterSet
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPrintSegmentCount()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Print number of segments.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print number of segments.
+/// \details 
+/// 
 
 static int QueryHandlerPrintSegmentCount
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -5667,7 +5502,7 @@ static int QueryHandlerPrintSegmentCount
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
 
@@ -5703,21 +5538,17 @@ static int QueryHandlerPrintSegmentCount
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPrintSpikeReceiverCount()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Print number of connections for a spikereceiver in a projection.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print number of connections for a spikereceiver in a projection.
+/// \details 
+/// 
 ///	spikereceivercount <projection> <spike-receiver>
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerPrintSpikeReceiverCount
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -5726,7 +5557,7 @@ static int QueryHandlerPrintSpikeReceiverCount
 
     int bResult = TRUE;
 
-    //v time taken to execute query
+    /// time taken to execute query
 
     struct timeval tvUser;
     struct timeval tvSystem;
@@ -5752,7 +5583,7 @@ static int QueryHandlerPrintSpikeReceiverCount
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppistProjection);
 
@@ -5767,7 +5598,7 @@ static int QueryHandlerPrintSpikeReceiverCount
 	    struct symtab_Projection *pproj = NULL;
 	    int iConnections = -1;
 
-	    //v resources used before and after command executed
+	    /// resources used before and after command executed
 
 	    struct rusage ruBefore, ruAfter;
 
@@ -5849,21 +5680,17 @@ static int QueryHandlerPrintSpikeReceiverCount
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPrintSpikeReceiverSerialID()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Print unique ID for symbol with respect to container.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print unique ID for symbol with respect to container.
+/// \details 
+/// 
 ///	spikereceiverserialID <population> <spike-receiver>
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerPrintSpikeReceiverSerialID
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -5894,11 +5721,11 @@ static int QueryHandlerPrintSpikeReceiverSerialID
 
     //- lookup symbols
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phslePopulation = SymbolsLookupHierarchical(pneuro->psym, ppistPopulation);
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsleReceiver = SymbolsLookupHierarchical(pneuro->psym, ppistReceiver);
 
@@ -5954,21 +5781,17 @@ static int QueryHandlerPrintSpikeReceiverSerialID
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerPrintSpikeSenderCount()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Print number of connections for a spikesender in a projection.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print number of connections for a spikesender in a projection.
+/// \details 
+/// 
 ///	spikesendercount <projection> <spike-sender>
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerPrintSpikeSenderCount
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -5977,7 +5800,7 @@ static int QueryHandlerPrintSpikeSenderCount
 
     int bResult = TRUE;
 
-    //v time taken to execute query
+    /// time taken to execute query
 
     struct timeval tvUser;
     struct timeval tvSystem;
@@ -6003,7 +5826,7 @@ static int QueryHandlerPrintSpikeSenderCount
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppistProjection);
 
@@ -6018,7 +5841,7 @@ static int QueryHandlerPrintSpikeSenderCount
 	    struct symtab_Projection *pproj = NULL;
 	    int iConnections = -1;
 
-	    //v resources used before and after command executed
+	    /// resources used before and after command executed
 
 	    struct rusage ruBefore, ruAfter;
 
@@ -6098,30 +5921,26 @@ static int QueryHandlerPrintSpikeSenderCount
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerProjectionQuery()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Print info on spikesender or receiver for a given set of
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print info on spikesender or receiver for a given set of
+/// \details 
 /// projections.
-///
+/// 
 ///	projectionquery <caching = c|n> <attachment-path> <projection-path> ...
-///
-/// **************************************************************************
+/// 
 
 struct QM_pq_traversal_data
 {
-    //m set first serial ID : 0
+    /// set first serial ID : 0
 
     int iSerial;
 
-    //m projection query
+    /// projection query
 
     struct ProjectionQuery *ppq;
 };
@@ -6218,7 +6037,7 @@ static int QueryHandlerProjectionQuery
     int iProjections = 0;
     int bCaching = FALSE;
 
-    //v time taken to execute query
+    /// time taken to execute query
 
     struct timeval tvUser;
     struct timeval tvSystem;
@@ -6249,7 +6068,7 @@ static int QueryHandlerProjectionQuery
 
     //- lookup attachment symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsleAttachment
 	= SymbolsLookupHierarchical(pneuro->psym, ppistAttachment);
@@ -6292,11 +6111,11 @@ static int QueryHandlerProjectionQuery
 	{
 	    struct QM_pq_traversal_data qtd =
 	    {
-		//m set first serial ID : 0
+		/// set first serial ID : 0
 
 		0,
 
-		//m projection query
+		/// projection query
 
 		ppq,
 	    };
@@ -6309,7 +6128,7 @@ static int QueryHandlerProjectionQuery
 
 	    if (instanceof_attachment(phsleAttachment))
 	    {
-		//v resources used before and after command executed
+		/// resources used before and after command executed
 
 		struct rusage ruBefore, ruAfter;
 
@@ -6436,25 +6255,21 @@ static int QueryHandlerProjectionQuery
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerProjectionQueryCount()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Print number of connections optionally on spikesender or
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print number of connections optionally on spikesender or
+/// \details 
 /// receiver for a given set of projections.
-///
+/// 
 ///	projectionquerycount \
 ///		<caching = c|n> \
 ///		<attachment-path>? \
 ///		<projection-path> ...
-///
-/// **************************************************************************
+/// 
 
 static int 
 QueryMachineConnectionCounter
@@ -6515,7 +6330,7 @@ static int QueryHandlerProjectionQueryCount
     int iProjections = 0;
     int bCaching = FALSE;
 
-    //v time taken to execute query
+    /// time taken to execute query
 
     struct timeval tvUser;
     struct timeval tvSystem;
@@ -6546,7 +6361,7 @@ static int QueryHandlerProjectionQueryCount
 
     //- lookup attachment symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsleAttachment
 	= SymbolsLookupHierarchical(pneuro->psym, ppistAttachment);
@@ -6622,17 +6437,17 @@ static int QueryHandlerProjectionQueryCount
 
 	if (ppq)
 	{
-	    //v resources used before and after command executed
+	    /// resources used before and after command executed
 
 	    struct rusage ruBefore, ruAfter;
 
 	    struct QM_pq_traversal_data qtd =
 	    {
-		//m set count : 0
+		/// set count : 0
 
 		0,
 
-		//m projection query
+		/// projection query
 
 		ppq,
 	    };
@@ -6792,21 +6607,17 @@ static int QueryHandlerProjectionQueryCount
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerResolveSolverID()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Get solver info for symbol.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Get solver info for symbol.
+/// \details 
+/// 
 ///	resolvesolver <solved-context>
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerResolveSolverID
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -6823,7 +6634,7 @@ static int QueryHandlerResolveSolverID
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
 
@@ -6925,19 +6736,15 @@ static int QueryHandlerResolveSolverID
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerSegmenterLinearize()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Linearize the segments in a segmenter in an internal cache.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Linearize the segments in a segmenter in an internal cache.
+/// \details 
+/// 
 
 static
 int
@@ -6956,7 +6763,7 @@ QueryHandlerSegmenterLinearize
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
 
@@ -7013,19 +6820,15 @@ QueryHandlerSegmenterLinearize
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerSegmenterParentCount()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Report the parent count in a segmenter.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Report the parent count in a segmenter.
+/// \details 
+/// 
 
 static
 int
@@ -7044,7 +6847,7 @@ QueryHandlerSegmenterParentCount
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
 
@@ -7094,21 +6897,17 @@ QueryHandlerSegmenterParentCount
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerSegmenterSetBase()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Set the segmenter base for a group of segments.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Set the segmenter base for a group of segments.
+/// \details 
+/// 
 ///	segmentersetbase <segmenter-base-context>
-///
-/// **************************************************************************
+/// 
 
 static
 int
@@ -7127,7 +6926,7 @@ QueryHandlerSegmenterSetBase
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
 
@@ -7177,19 +6976,15 @@ QueryHandlerSegmenterSetBase
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerSegmenterTips()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Report the segment tips in a segmenter.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Report the segment tips in a segmenter.
+/// \details 
+/// 
 
 static
 int
@@ -7208,7 +7003,7 @@ QueryHandlerSegmenterTips
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
 
@@ -7258,21 +7053,17 @@ QueryHandlerSegmenterTips
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerSerialID()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Report biocomp serial ID.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Report biocomp serial ID.
+/// \details 
+/// 
 ///	serialID <context> <child-context>
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerSerialID
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -7302,7 +7093,7 @@ static int QueryHandlerSerialID
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
 
@@ -7366,33 +7157,29 @@ static int QueryHandlerSerialID
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerSerializeForestspace()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Output forestspace structure to a file.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Output forestspace structure to a file.
+/// \details 
+/// 
 ///	serializeforestspace <type=a|x> <context> <filename>
-///
-/// **************************************************************************
+/// 
 
 struct QM_fs_traversal_data
 {
-    //m file to write to
+    /// file to write to
 
     FILE *pfile;
 
-    //m type of output
+    /// type of output
 
     char *pcType;
 
-    //m symbol last visited
+    /// symbol last visited
 
     char *pcLast;
 };
@@ -7565,7 +7352,7 @@ static int QueryHandlerSerializeForestspace
 
     //- get type of output
 
-    //! will core for invalid command lines
+    /// \note will core for invalid command lines
 
     pcArg = strpbrk(&pcLine[iLength + 1], " \t");
 
@@ -7581,7 +7368,7 @@ static int QueryHandlerSerializeForestspace
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
 
@@ -7595,15 +7382,15 @@ static int QueryHandlerSerializeForestspace
 	{
 	    struct QM_fs_traversal_data fsd =
 		{
-		    //m file to write to
+		    /// file to write to
 
 		    NULL,
 
-		    //m type of output
+		    /// type of output
 
 		    NULL,
 
-		    //m symbol last visited
+		    /// symbol last visited
 
 		    NULL,
 
@@ -7704,21 +7491,17 @@ static int QueryHandlerSerializeForestspace
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerSerialMapping()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Get serial mappings for a symbol relative to another symbol.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Get serial mappings for a symbol relative to another symbol.
+/// \details 
+/// 
 ///	serialMapping <context> <child-context>
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerSerialMapping
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -7735,7 +7518,7 @@ static int QueryHandlerSerialMapping
 
     //- get child context
 
-    //! will core for invalid command lines
+    /// \note will core for invalid command lines
 
     char * pcSearched = strpbrk(&pcLine[iLength + 1], " \t");
 
@@ -7753,10 +7536,10 @@ static int QueryHandlerSerialMapping
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
-    //! note : can be lookup for root, so PidinStackLookupTopSymbol()
-    //! does not work, should be fixed ?
+    /// \note note : can be lookup for root, so PidinStackLookupTopSymbol()
+    /// \note does not work, should be fixed ?
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
 
@@ -7803,8 +7586,8 @@ static int QueryHandlerSerialMapping
 
 		iPrincipalSerial = 0;
 
-		//! note additional protection on NULL phsle necessary
-		//! for case that namespace operators are being used.
+		/// \note note additional protection on NULL phsle necessary
+		/// \note for case that namespace operators are being used.
 
 		while (phsle && phsle != phsleDuplicate)
 		{
@@ -7846,8 +7629,8 @@ static int QueryHandlerSerialMapping
 
 		    iMechanismSerial = 0;
 
-		    //! note additional protection on NULL phsle necessary
-		    //! for case that namespace operators are being used.
+		    /// \note note additional protection on NULL phsle necessary
+		    /// \note for case that namespace operators are being used.
 
 		    while (phsle && phsle != phsleDuplicate)
 		    {
@@ -7879,8 +7662,8 @@ static int QueryHandlerSerialMapping
 
 		    iSegmentSerial = 0;
 
-		    //! note additional protection on NULL phsle necessary
-		    //! for case that namespace operators are being used.
+		    /// \note note additional protection on NULL phsle necessary
+		    /// \note for case that namespace operators are being used.
 
 		    while (phsle && phsle != phsleDuplicate)
 		    {
@@ -7945,21 +7728,17 @@ static int QueryHandlerSerialMapping
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerSerialToContext()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Print context of serial relative to another context.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print context of serial relative to another context.
+/// \details 
+/// 
 ///	serial2context <path> <serial>
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerSerialToContext
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -7989,7 +7768,7 @@ static int QueryHandlerSerialToContext
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
 
@@ -8046,21 +7825,17 @@ static int QueryHandlerSerialToContext
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerSetParameter()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Set the value of a parameter.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Set the value of a parameter.
+/// \details 
+/// 
 ///	setparameter <parameter-base> <parameter-context> <parameter-name> <parameter-type> <parameter-value>
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerSetParameter
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -8069,7 +7844,7 @@ static int QueryHandlerSetParameter
 
     int bResult = TRUE;
 
-    //v argument separator
+    /// argument separator
 
     char pcSeparator[] = " \t,;\n";
 
@@ -8081,7 +7856,7 @@ static int QueryHandlerSetParameter
 
     //- get parameter context
 
-    //! will core for invalid command lines
+    /// \note will core for invalid command lines
 
     pcArg = strpbrk(pcArg, pcSeparator);
 
@@ -8089,7 +7864,7 @@ static int QueryHandlerSetParameter
 
     //- lookup base symbol
 
-/*     //! allows namespacing, yet incompatible with parameter caches. */
+/*     /// \note allows namespacing, yet incompatible with parameter caches. */
 
 /*     struct symtab_HSolveListElement *phsleBase */
 /* 	= SymbolsLookupHierarchical(pneuro->psym, ppistBase); */
@@ -8149,7 +7924,7 @@ static int QueryHandlerSetParameter
 
 	char *pcInit = &pcArg[1];
 
-	//! will core for invalid command lines
+	/// \note will core for invalid command lines
 
 	pcArg = strpbrk(pcInit, pcSeparator);
 
@@ -8163,7 +7938,7 @@ static int QueryHandlerSetParameter
 
 	pcInit = &pcArg[1];
 
-	//! will core for invalid command lines
+	/// \note will core for invalid command lines
 
 	pcArg = strpbrk(pcInit, pcSeparator);
 
@@ -8177,7 +7952,7 @@ static int QueryHandlerSetParameter
 
 	pcInit = &pcArg[1];
 
-	//! will core for invalid command lines
+	/// \note will core for invalid command lines
 
 	pcArg = strpbrk(pcInit, pcSeparator);
 
@@ -8215,9 +7990,9 @@ static int QueryHandlerSetParameter
 
 	else if (strcmp("symbolic", pcType) == 0)
 	{
-	    //t convert to list of pidins
+	    /// \todo convert to list of pidins
 
-	    //t use list of pidins to store the parameter
+	    /// \todo use list of pidins to store the parameter
 
 	    fprintf(stdout, "parameter type %s not supported yet\n", pcType);
 	}
@@ -8226,7 +8001,7 @@ static int QueryHandlerSetParameter
 
 	else if (strcmp("function", pcType) == 0)
 	{
-	    //t do some additional parsing
+	    /// \todo do some additional parsing
 
 	    fprintf(stdout, "parameter type %s not supported yet\n", pcType);
 	}
@@ -8266,21 +8041,17 @@ static int QueryHandlerSetParameter
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerSetParameterConcept()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Set the value of a parameter.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Set the value of a parameter.
+/// \details 
+/// 
 ///	setparameterconcept <namespaced-symbol> <parameter-name> <parameter-type> <parameter-value>
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerSetParameterConcept
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -8289,7 +8060,7 @@ static int QueryHandlerSetParameterConcept
 
     int bResult = TRUE;
 
-    //v argument separator
+    /// argument separator
 
     char pcSeparator[] = " \t,;\n";
 
@@ -8301,7 +8072,7 @@ static int QueryHandlerSetParameterConcept
 
     //- lookup base symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     struct symtab_HSolveListElement *phsleBase
 	= SymbolsLookupHierarchical(pneuro->psym, ppistBase);
@@ -8325,7 +8096,7 @@ static int QueryHandlerSetParameterConcept
 
 	char *pcInit = &pcArg[1];
 
-	//! will core for invalid command lines
+	/// \note will core for invalid command lines
 
 	pcArg = strpbrk(pcInit, pcSeparator);
 
@@ -8346,7 +8117,7 @@ static int QueryHandlerSetParameterConcept
 
 	pcInit = &pcArg[1];
 
-	//! will core for invalid command lines
+	/// \note will core for invalid command lines
 
 	pcArg = strpbrk(pcInit, pcSeparator);
 
@@ -8367,11 +8138,11 @@ static int QueryHandlerSetParameterConcept
 
 	pcInit = &pcArg[1];
 
-	//! will core for invalid command lines
+	/// \note will core for invalid command lines
 
 	pcArg = strpbrk(pcInit, pcSeparator);
 
-	//! pcArg can be NULL
+	/// \note pcArg can be NULL
 
 	char pcValue[1000];
 
@@ -8405,9 +8176,9 @@ static int QueryHandlerSetParameterConcept
 
 	else if (strcmp("symbolic", pcType) == 0)
 	{
-	    //t convert to list of pidins
+	    /// \todo convert to list of pidins
 
-	    //t use list of pidins to store the parameter
+	    /// \todo use list of pidins to store the parameter
 
 	    fprintf(stdout, "parameter type %s not supported yet\n", pcType);
 	}
@@ -8416,7 +8187,7 @@ static int QueryHandlerSetParameterConcept
 
 	else if (strcmp("function", pcType) == 0)
 	{
-	    //t do some additional parsing
+	    /// \todo do some additional parsing
 
 	    fprintf(stdout, "parameter type %s not supported yet\n", pcType);
 	}
@@ -8451,21 +8222,17 @@ static int QueryHandlerSetParameterConcept
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerSolverGet()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Print solver registration for a context.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print solver registration for a context.
+/// \details 
+/// 
 ///	solverget <solved-context>
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerSolverGet
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -8524,19 +8291,15 @@ static int QueryHandlerSolverGet
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerSolverRegistrations()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value.
-///
-/// DESCR: Print all solver registrations.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value.
+/// 
+/// \brief Print all solver registrations.
+/// \details 
+/// 
 
 static int QueryHandlerSolverRegistrations
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -8555,21 +8318,17 @@ static int QueryHandlerSolverRegistrations
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerSolverSet()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Add solver registration
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Add solver registration
+/// \details 
+/// 
 ///	solverset <symbol-path> <solver-path>
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerSolverSet
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -8586,7 +8345,7 @@ static int QueryHandlerSolverSet
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
 
@@ -8640,19 +8399,15 @@ static int QueryHandlerSolverSet
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerValidateSegmentGroup()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Give version information.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Give version information.
+/// \details 
+/// 
 
 struct QM_SegmentValidator_data
 {
@@ -8759,7 +8514,7 @@ SegmentValidator
 	}
 	else
 	{
-	    //! not sure if this is ok.
+	    /// \note not sure if this is ok.
 
 	    fprintf(stderr, "Warning: cannot find parent symbols in SegmentValidator()\n");
 	}
@@ -8787,7 +8542,7 @@ QueryHandlerValidateSegmentGroup
 
     //- lookup symbol
 
-    //! allows namespacing, yet incompatible with parameter caches.
+    /// \note allows namespacing, yet incompatible with parameter caches.
 
     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
 
@@ -8853,19 +8608,15 @@ QueryHandlerValidateSegmentGroup
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerVersion()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Give version information.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Give version information.
+/// \details 
+/// 
 
 static int QueryHandlerVersion
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -8886,20 +8637,17 @@ static int QueryHandlerVersion
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerWriteLibrary()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Write library of symbols.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Write library of symbols.
+/// \details 
+/// 
 ///	writelibrary <nesting-depth> <file.nld> symbol symbol
-///
+/// 
 ///	For every given symbol on command line
 ///		Traverse in-symbol until nesting-depth reached,
 ///			tag used symbols at nesting-depth,
@@ -8911,8 +8659,7 @@ static int QueryHandlerVersion
 ///		Writes in-symbol until nesting-depth reached,
 ///			afterwards makes references to used symbols.
 ///	Write library file of given symbols.
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerWriteLibrary
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -8927,27 +8674,23 @@ static int QueryHandlerWriteLibrary
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerWriteModular()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Write modular description of symbol.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Write modular description of symbol.
+/// \details 
+/// 
 ///	writemodular \
 ///		<public-nesting-depth> \
 ///		<private-nesting-depth> \
 ///		<file-prefix> \
 ///		<symbols>
-///
+/// 
 ///	writes <file-prefix>_<symbol-label>.nsd file for each symbol.
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerWriteModular
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -8962,31 +8705,27 @@ static int QueryHandlerWriteModular
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryHandlerWriteSymbol()
-///
-/// ARGS.:
-///
-///	std. QueryHandler args
-///
-/// RTN..: int : QueryHandler return value
-///
-/// DESCR: Write selfcontained symbol description.
-///
+/// 
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Write selfcontained symbol description.
+/// \details 
+/// 
 ///	writesymbol \
 ///		<public-nesting-depth> \
 ///		<private-nesting-depth> \
 ///		<file-name.nsd> \
 ///		<symbols>
-///
+/// 
 ///	Nesting depths are used as maximum nesting depths in the
 ///	respective section of the description file before references are 
 ///	used, '-1' means infinite.
 ///	Writes file without any external dependencies on model description
 ///	files for a nesting depth of '-1'.  
-///
-/// **************************************************************************
+/// 
 
 static int QueryHandlerWriteSymbol
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -9001,20 +8740,16 @@ static int QueryHandlerWriteSymbol
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryMachineHandle()
-///
-/// ARGS.:
-///
-///	pcLine.: command line.
-///	pneuro.: neurospaces.
-///
-/// RTN..: int : TRUE means user wants to stop
-///
-/// DESCR: Handle given command line
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pcLine command line.
+/// \arg pneuro neurospaces.
+/// 
+/// \return int : TRUE means user wants to stop
+/// 
+/// \brief Handle given command line
+/// \details 
+/// 
 
 int QueryMachineHandle(struct Neurospaces *pneuro, char *pcLine)
 {
@@ -9022,7 +8757,7 @@ int QueryMachineHandle(struct Neurospaces *pneuro, char *pcLine)
 
     int bResult = FALSE;
 
-    //v loop var
+    /// loop var
 
     int i;
 
@@ -9030,15 +8765,15 @@ int QueryMachineHandle(struct Neurospaces *pneuro, char *pcLine)
 
     char *pcInit = &pcLine[0];
 
-    //v argument separator
+    /// argument separator
 
     char pcSeparator[] = " \t,;/\n";
 
-    //v next arg
+    /// next arg
 
     char *pcArg = NULL;
 
-    //v length of arg
+    /// length of arg
 
     int iLength = -1;
 
@@ -9083,7 +8818,7 @@ int QueryMachineHandle(struct Neurospaces *pneuro, char *pcLine)
 
 	//- return to quit
 
-	//! normally not reached
+	/// \note normally not reached
 
 	return(TRUE);
     }
@@ -9125,17 +8860,13 @@ int QueryMachineHandle(struct Neurospaces *pneuro, char *pcLine)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryMachineInitReadLine()
-///
-/// ARGS.:
-///
-/// RTN..: void
-///
-/// DESCR: Init readline specific things.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return void
+/// 
+/// \brief Init readline specific things.
+/// \details 
+/// 
 
 static char *
 QueryMachineCommandGenerator(text,state)
@@ -9146,11 +8877,11 @@ QueryMachineCommandGenerator(text,state)
 
     char *pcResult = NULL;
 
-    //v current index in command array
+    /// current index in command array
 
     static int iIndex;
 
-    //v current length of command
+    /// current length of command
 
     static int iLength;
 
@@ -9211,19 +8942,19 @@ QueryMachineEmptyGenerator(text,state)
 
 struct QM_sg_traversal_data
 {
-    //m current child index to look for
+    /// current child index to look for
 
     int iLookup;
 
-    //m chars to match against
+    /// chars to match against
 
     char *pcSymbol;
 
-    //m current child index
+    /// current child index
 
     int iChild;
 
-    //m current child
+    /// current child
 
     struct symtab_HSolveListElement *phsleChild;
 };
@@ -9290,29 +9021,29 @@ QueryMachineSymbolGenerator(text,state)
 
     char *pcResult = NULL;
 
-    //v current index in command array
+    /// current index in command array
 
     static int iIndex;
 
-    //v current length of symbol
+    /// current length of symbol
 
     static int iLength;
 
-    //v ambiguation state
+    /// ambiguation state
 
-    //! ambiguation logic :
-    //! if there is only one possible completion, 
-    //! we ambiguate that completion by catting a '/'
-    //! otherwise readline automatically cats a ' ' to the single 
-    //! completion, which is very annoying.
+    /// \note ambiguation logic :
+    /// \note if there is only one possible completion, 
+    /// \note we ambiguate that completion by catting a '/'
+    /// \note otherwise readline automatically cats a ' ' to the single 
+    /// \note completion, which is very annoying.
 
     static char *pcAmbiguate;
 
-    //v number of completions returned for current context
+    /// number of completions returned for current context
 
     static int iCompletions;
 
-    //v start characters of symbol we are looking for
+    /// start characters of symbol we are looking for
 
     char *pcSymbol = NULL;
 
@@ -9396,7 +9127,7 @@ QueryMachineSymbolGenerator(text,state)
 	{
 	    //- end context at slash char
 
-	    //! perhaps I need [1 + pcEnd - text]
+	    /// \note perhaps I need [1 + pcEnd - text]
 
 	    pcText[pcEnd - text] = '\0';
 	}
@@ -9415,7 +9146,7 @@ QueryMachineSymbolGenerator(text,state)
 
 	//- lookup symbol
 
-	//! allows namespacing, yet incompatible with parameter caches.
+	/// \note allows namespacing, yet incompatible with parameter caches.
 
 	phsle = SymbolsLookupHierarchical(/* pneuro->psym */NULL, ppist);
 
@@ -9423,19 +9154,19 @@ QueryMachineSymbolGenerator(text,state)
 	{
 	    struct QM_sg_traversal_data sgd =
 		{
-		    //m current child index to look for
+		    /// current child index to look for
 
 		    iIndex,
 
-		    //m chars to match against
+		    /// chars to match against
 
 		    pcSymbol,
 
-		    //m current child index
+		    /// current child index
 
 		    0,
 
-		    //m current child
+		    /// current child
 
 		    NULL,
 		};
@@ -9515,8 +9246,8 @@ QueryMachineSymbolGenerator(text,state)
 
     if (iIndex == 0)
     {
-	//t add space to previously available items somehow ?
-	//t perhaps that's what is in the line buffer ?
+	/// \todo add space to previously available items somehow ?
+	/// \todo perhaps that's what is in the line buffer ?
     }
 
     //- if only one completion till now
@@ -9529,7 +9260,7 @@ QueryMachineSymbolGenerator(text,state)
 	{
 	    //- ambiguate the previous match
 
-	    //! readline will do free(pcAmbiguate)
+	    /// \note readline will do free(pcAmbiguate)
 
 	    pcResult = pcAmbiguate;
 
@@ -9542,7 +9273,7 @@ QueryMachineSymbolGenerator(text,state)
 	{
 	    //- free the ambiguated symbol
 
-	    //! we free the first ambiguation
+	    /// \note we free the first ambiguation
 
 	    if (pcAmbiguate)
 	    {
@@ -9559,7 +9290,7 @@ QueryMachineSymbolGenerator(text,state)
     {
 	//- free the ambiguated symbol
 
-	//! we free all follow-up ambiguations
+	/// \note we free all follow-up ambiguations
 
 	if (pcAmbiguate)
 	{
@@ -9714,15 +9445,15 @@ static void QueryMachineInitReadLine()
 
     //- set readline application name
 
-    //! to allow conditional parsing of the ~/.inputrc file.
+    /// \note to allow conditional parsing of the ~/.inputrc file.
 
     rl_readline_name = "neurospaces";
 
     //- set the completor selector
 
-    //! we use different completors, so we need to get around the default 
-    //! readline mechanism
-    //! (which uses rl_completion_entry_function as documented).
+    /// \note we use different completors, so we need to get around the default 
+    /// \note readline mechanism
+    /// \note (which uses rl_completion_entry_function as documented).
 
     rl_attempted_completion_function
 	= (CPPFunction *)QueryMachineCompletorSelector;
@@ -9739,20 +9470,16 @@ static void QueryMachineInitReadLine()
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryMachineInput()
-///
-/// ARGS.:
-///
-///	pcLine....: command line
+/// 
+/// 
+/// \arg pcLine command line
 ///	iReadline.: use readline ?
-///
-/// RTN..: void
-///
-/// DESCR: Print prompt, get input from user
-///
-/// **************************************************************************
+/// 
+/// \return void
+/// 
+/// \brief Print prompt, get input from user
+/// \details 
+/// 
 
 void QueryMachineInput(char *pcLine, int iReadline)
 {
@@ -9842,17 +9569,13 @@ void QueryMachineInput(char *pcLine, int iReadline)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryMachinePrompt()
-///
-/// ARGS.:
-///
-/// RTN..: void
-///
-/// DESCR: print prompt
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return void
+/// 
+/// \brief print prompt
+/// \details 
+/// 
 
 static void QueryMachinePrompt(void)
 {
@@ -9864,28 +9587,24 @@ static void QueryMachinePrompt(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: QueryMachineStart()
-///
-/// ARGS.:
-///
-///	pneuro....: neurospaces.
+/// 
+/// 
+/// \arg pneuro neurospaces.
 ///	iReadline.: use readline ?
-///
-/// RTN..: void
-///
-/// DESCR: Iface to query machine
-///
-/// **************************************************************************
+/// 
+/// \return void
+/// 
+/// \brief Iface to query machine
+/// \details 
+/// 
 
 void QueryMachineStart(struct Neurospaces *pneuro, int iReadline)
 {
-    //v user command line
+    /// user command line
 
     char pcCommandLine[SIZE_COMMANDLINE];
 
-    //v end of user input
+    /// end of user input
 
     int bEOF = FALSE;
 

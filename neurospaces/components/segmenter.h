@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_Segmenter;
 struct symtab_Segmenter;
@@ -36,9 +36,9 @@ struct symtab_Segmenter;
 #include "neurospaces/treespacetraversal.h"
 
 
-//d
-//d test type(psegr) == struct symtab_Segmenter * at compile time
-//d
+/// \def
+/// \def test type(psegr) == struct symtab_Segmenter * at compile time
+/// \def
 
 #define CompileTimeTestSegmenter(psegr)					\
 do {									\
@@ -47,11 +47,11 @@ do {									\
 } while (0)
 
 
-//d
-//d test if segment is cylindrical
-//d
+/// \def
+/// \def test if segment is cylindrical
+/// \def
 
-//t this function is called for pool parameter calculation.
+/// \todo this function is called for pool parameter calculation.
 
 #define SegmenterIsCylindrical(psegr)					\
 ({									\
@@ -60,11 +60,11 @@ do {									\
 })
 
 
-//d
-//d test if segment is spherical
-//d
+/// \def
+/// \def test if segment is spherical
+/// \def
 
-//t this function is called for pool parameter calculation.
+/// \todo this function is called for pool parameter calculation.
 
 #define SegmenterIsSpherical(psegr)					\
 ({									\
@@ -75,12 +75,11 @@ do {									\
 })
 
 
-//d segment is spherical
+/// \def segment is spherical
 
 #define FLAG_SEGMENTER_SPHERICAL		1
 
 
-//f exported functions
 
 struct symtab_Segmenter * SegmenterCalloc(void);
 
@@ -139,21 +138,21 @@ SegmenterTraverseSegments
 #include "biocomp.h"
 
 
-//s
-//s segmenter description
-//s
+/// \struct
+/// \struct segmenter description
+/// \struct
 
 struct cable_structure
 {
-    //m serial of this segment
+    /// serial of this segment
 
     int iSerial;
 
-    //m serial of parent segment, -1 if none
+    /// serial of parent segment, -1 if none
 
     int iParentSerial;
 
-    //m index of parent segment, -1 if none
+    /// index of parent segment, -1 if none
 
     int iParentIndex;
 };
@@ -161,46 +160,46 @@ struct cable_structure
 
 struct descr_Segmenter
 {
-    //m number of segments in the structural indices if allocated, -1 means not initialized
+    /// number of segments in the structural indices if allocated, -1 means not initialized
 
     int iSegments;
 
-    //m number of segments without parents
+    /// number of segments without parents
 
     int iNoParents;
 
-    //m number of terminals
+    /// number of terminals
 
     int iTips;
 
-    //m cable and morphology structure
+    /// cable and morphology structure
 
-    //! note that this can encode the structure for entire networks,
-    //! yet without gap junctions.
+    /// \note note that this can encode the structure for entire networks,
+    /// \note yet without gap junctions.
 
     struct cable_structure *pcs;
 
-    //m number of children
+    /// number of children
 
     int *piChildren;
 
-    //m children indices
+    /// children indices
 
     int **ppiChildren;
 };
 
 
-//s
-//s struct symtab_Segmenter
-//s
+/// \struct
+/// \struct struct symtab_Segmenter
+/// \struct
 
 struct symtab_Segmenter
 {
-    //m base struct : bio component
+    /// base struct : bio component
 
     struct symtab_BioComponent bio;
 
-    //m segmenter description
+    /// segmenter description
 
     struct descr_Segmenter desegmenter;
 };

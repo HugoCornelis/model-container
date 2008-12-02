@@ -49,7 +49,6 @@ struct symtab_Algorithm;
 
 
 //f
-//f algorithm handler
 //f
 
 typedef
@@ -63,59 +62,59 @@ int AlgorithmSymbolHandler
      void *pvGlobal);
 
 
-//s
-//s algorithm handler library
-//s
+/// \struct
+/// \struct algorithm handler library
+/// \struct
 
 struct AlgorithmHandlerLibrary
 {
-    //m after constructor, global is parser context, data is init string
+    /// after constructor, global is parser context, data is init string
 
     AlgorithmHandler *pfInit;
 
-    //m after init, before destruct
+    /// after init, before destruct
 
     AlgorithmHandler *pfCleanup;
 
-    //m print info handler
+    /// print info handler
 
     AlgorithmHandler *pfPrintInfo;
 
-    //m serial query handler
+    /// serial query handler
 
     AlgorithmHandler *pfSerialHandler;
 
-    //m symbol handler to call for symbol to which algorithm has been attached
+    /// symbol handler to call for symbol to which algorithm has been attached
 
     AlgorithmSymbolHandler *pfSymbolHandler;
 };
 
 
-//s
-//s gives transparant access to all algorithms, links algorithms into hsolve list
-//s
+/// \struct
+/// \struct gives transparant access to all algorithms, links algorithms into hsolve list
+/// \struct
 
 struct symtab_Algorithm
 {
-    //m link elements into list
+    /// link elements into list
 
     HSolveListElement hsleLink;
 
-    //m gives type of algorithm
+    /// gives type of algorithm
 
     int iType;
 
-    //m flags
+    /// flags
 
     int iFlags;
 
-    //m principal name of entity (-1 for none)
+    /// principal name of entity (-1 for none)
 
-    //! I'm wondering if it is usefull to put the index ascii encoded into
-    //! the name. This can be very usefull for regex's or be contraproductive.
-    //! Best to wait and see, but try to be compatible, use
-    //! SymbolName() and SymbolIndex() to get the name (with or without index)
-    //! and the index of the structure.
+    /// \note I'm wondering if it is usefull to put the index ascii encoded into
+    /// \note the name. This can be very usefull for regex's or be contraproductive.
+    /// \note Best to wait and see, but try to be compatible, use
+    /// \note SymbolName() and SymbolIndex() to get the name (with or without index)
+    /// \note and the index of the structure.
 
     char *pcIdentifier;
 
@@ -123,11 +122,11 @@ struct symtab_Algorithm
 
     //int iIndex;
 
-    //m algorithm handlers
+    /// algorithm handlers
 
     struct AlgorithmHandlerLibrary *ppfAlgorithmHandlers;
 
-    //m event association table with event listeners
+    /// event association table with event listeners
 
     ParserEventAssociationTable *pevatListeners;
 };

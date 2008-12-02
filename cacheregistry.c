@@ -25,21 +25,17 @@
 #include "neurospaces/cacheregistry.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: CacheRegistryCalloc()
-///
-/// ARGS.:
-///
-///	iSize...: Initial size.
-///
-/// RTN..: struct CacheRegistry *
-///
+/// 
+/// 
+/// \arg iSize Initial size.
+/// 
+/// \return struct CacheRegistry *
+/// 
 ///	Newly allocated cache registry, NULL for failure.
-///
-/// DESCR: Allocate a cache registry.
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a cache registry.
+/// \details 
+/// 
 
 struct CacheRegistry *
 CacheRegistryCalloc(int iSize)
@@ -79,22 +75,18 @@ CacheRegistryCalloc(int iSize)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: CacheRegistryLookup()
-///
-/// ARGS.:
-///
-///	pcr.........: cache registry.
-///	iIdentifier.: cache identifier for lookup.
-///
-/// RTN..: struct RegisteredCache *
-///
+/// 
+/// 
+/// \arg pcr cache registry.
+/// \arg iIdentifier cache identifier for lookup.
+/// 
+/// \return struct RegisteredCache *
+/// 
 ///	New registered cache entry, NULL for failure.
-///
-/// DESCR: Register a new cache, duplicate identifiers not allowed.
-///
-/// **************************************************************************
+/// 
+/// \brief Register a new cache, duplicate identifiers not allowed.
+/// \details 
+/// 
 
 struct RegisteredCache *
 CacheRegistryLookup(struct CacheRegistry *pcr, int iIdentifier)
@@ -129,25 +121,21 @@ CacheRegistryLookup(struct CacheRegistry *pcr, int iIdentifier)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: CacheRegistryRegisterCache()
-///
-/// ARGS.:
-///
-///	pcr.........: cache registry.
-///	iType.......: cache type.
-///	iIdentifier.: cache identifier for lookup.
-///	iSize.......: cache size.
-///	pvCache.....: cache data.
-///
-/// RTN..: struct RegisteredCache *
-///
+/// 
+/// 
+/// \arg pcr cache registry.
+/// \arg iType cache type.
+/// \arg iIdentifier cache identifier for lookup.
+/// \arg iSize cache size.
+/// \arg pvCache cache data.
+/// 
+/// \return struct RegisteredCache *
+/// 
 ///	New registered cache entry, NULL for failure.
-///
-/// DESCR: Register a new cache, duplicate identifiers not allowed.
-///
-/// **************************************************************************
+/// 
+/// \brief Register a new cache, duplicate identifiers not allowed.
+/// \details 
+/// 
 
 struct RegisteredCache *
 CacheRegistryRegisterCache

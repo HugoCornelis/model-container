@@ -29,25 +29,25 @@
 #include "hines_list.h"
 
 
-//s
-//s algorithm set
-//s
+/// \struct
+/// \struct algorithm set
+/// \struct
 
 struct AlgorithmSet
 {
-    //m list of loaded algorithm classes
+    /// list of loaded algorithm classes
 
     HSolveList hslClasses;
 
-    //m number of available classes
+    /// number of available classes
 
     int iClasses;
 
-    //m list of algorithm instances
+    /// list of algorithm instances
 
     HSolveList hslInstances;
 
-    //m number of available instances
+    /// number of available instances
 
     int iInstances;
 };

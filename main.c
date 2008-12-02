@@ -24,22 +24,18 @@
 #include "neurospaces/neurospaces.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: main()
-///
-/// ARGS.:
-///
-///	std. ANSI main() args
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Construct neurospaces from given command line.
-///
+/// 
+/// 
+/// \arg std. ANSI main() args
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Construct neurospaces from given command line.
+/// \details 
+/// 
 ///	Constructs a struct NeuroSpaces {} with NeuroSpacesNewFromCmdLine()
 ///	from given command line.
-///
-/// **************************************************************************
+/// 
 
 int main(int argc,char *argv[])
 {

@@ -25,22 +25,18 @@
 #include "neurospaces/cachedconnection.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: CachedConnectionPrint()
-///
-/// ARGS.:
-///
-///	pcconn...: cached connection to print symbols for
+/// 
+/// 
+/// \arg pcconn cached connection to print symbols for
 ///	bAll.....: TRUE == full list of symbols, FALSE == only given conn
-///	iIndent..: number of indentation spaces
-///	pfile....: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Print symbol info for connection
-///
-/// **************************************************************************
+/// \arg iIndent number of indentation spaces
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Print symbol info for connection
+/// \details 
+/// 
 
 #define PrintCachedConnectionIndent(iIndent,pfile)			\
 do									\

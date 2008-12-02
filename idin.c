@@ -30,19 +30,15 @@
 #include "neurospaces/components/vectorconnection.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: VConnectionCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_VConnection * 
-///
+/// 
+/// 
+/// \return struct symtab_VConnection * 
+/// 
 ///	Newly allocated connection vector, NULL for failure
-///
-/// DESCR: Allocate a new connection vector symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new connection vector symbol table element
+/// \details 
+/// 
 
 struct symtab_VConnection * VConnectionCalloc(void)
 {
@@ -70,19 +66,15 @@ struct symtab_VConnection * VConnectionCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IdinCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_IdentifierIndex * 
-///
+/// 
+/// 
+/// \return struct symtab_IdentifierIndex * 
+/// 
 ///	Newly allocated idin, NULL for failure
-///
-/// DESCR: Allocate a new idin symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new idin symbol table element
+/// \details 
+/// 
 
 struct symtab_IdentifierIndex * IdinCalloc(void)
 {
@@ -102,24 +94,20 @@ struct symtab_IdentifierIndex * IdinCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IdinCallocUnique()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pc...: sprintf format, NULL for a default, %i gets count.
-///
-/// RTN..: struct symtab_IdentifierIndex * 
-///
+/// 
+/// \return struct symtab_IdentifierIndex * 
+/// 
 ///	Newly allocated idin with a count in the name, NULL for
 ///	failure.
-///
-/// DESCR: Allocate a new idin, give unique name using a counter.
-///
-/// NOTE.: Do not exceed 50 chars with format.
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new idin, give unique name using a counter.
+/// \details 
+/// 
+/// \note  Do not exceed 50 chars with format.
+/// 
 
 struct symtab_IdentifierIndex * IdinCallocUnique(char *pcFormat)
 {
@@ -162,24 +150,20 @@ struct symtab_IdentifierIndex * IdinCallocUnique(char *pcFormat)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IdinCreateAlias()
-///
-/// ARGS.:
-///
-///	pidin.: original id to create alias for.
-///	iCount: count to make the created id unique.
-///
-/// RTN..: struct symtab_IdentifierIndex * 
-///
+/// 
+/// 
+/// \arg pidin original id to create alias for.
+/// \arg iCount count to make the created id unique.
+/// 
+/// \return struct symtab_IdentifierIndex * 
+/// 
 ///	Newly allocated idin, NULL for failure.
-///
-/// DESCR: Create an alias id.
-///
-/// NOTE.: not sure what to do with flags.
-///
-/// **************************************************************************
+/// 
+/// \brief Create an alias id.
+/// \details 
+/// 
+/// \note  not sure what to do with flags.
+/// 
 
 struct symtab_IdentifierIndex *
 IdinCreateAlias(struct symtab_IdentifierIndex *pidin, int iCount)
@@ -190,7 +174,7 @@ IdinCreateAlias(struct symtab_IdentifierIndex *pidin, int iCount)
 
     //- create a useful name, hopefully unique
 
-    //! client needs to check for uniqueness
+    /// \note client needs to check for uniqueness
 
     char pc[1000];
 
@@ -221,22 +205,18 @@ IdinCreateAlias(struct symtab_IdentifierIndex *pidin, int iCount)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IdinFullName()
-///
-/// ARGS.:
-///
-///	pidin.: IdentifierIndex list to get name for
+/// 
+/// 
+/// \arg pidin IdentifierIndex list to get name for
+/// \arg pcName: string receiving result
+/// 
+/// \return void
+/// 
 ///	pcName: string receiving result
-///
-/// RTN..: void
-///
-///	pcName: string receiving result
-///
-/// DESCR: get name of IdentifierIndex list
-///
-/// **************************************************************************
+/// 
+/// \brief get name of IdentifierIndex list
+/// \details 
+/// 
 
 void IdinFullName(struct symtab_IdentifierIndex *pidin, char *pcName)
 {
@@ -281,21 +261,17 @@ void IdinFullName(struct symtab_IdentifierIndex *pidin, char *pcName)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IdinName()
-///
-/// ARGS.:
-///
-///	pidin.: IdentifierIndex struct to get name for
-///
-/// RTN..: char * : name of IdentifierIndex struct, NULL for failure
-///
-/// DESCR: get name of IdentifierIndex struct
-///
+/// 
+/// 
+/// \arg pidin IdentifierIndex struct to get name for
+/// 
+/// \return char * : name of IdentifierIndex struct, NULL for failure
+/// 
+/// \brief get name of IdentifierIndex struct
+/// \details 
+/// 
 ///	Return value is pointer to symbol table read only data
-///
-/// **************************************************************************
+/// 
 
 char * IdinName(struct symtab_IdentifierIndex *pidin)
 {
@@ -337,15 +313,15 @@ char * IdinName(struct symtab_IdentifierIndex *pidin)
     {
 /* 	//- check if this code is triggered */
 
-/* 	//! triggered during complete traversals. */
+/* 	/// \note triggered during complete traversals. */
 
 /* 	*(int *)0 = 0; */
 
-	//! the lesser this code is triggered, the better.
+	/// \note the lesser this code is triggered, the better.
 
 	static char pcName[30] = "";
 
-	//t gives a warning on 64bit machines.
+	/// \todo gives a warning on 64bit machines.
 
 	sprintf(pcName,"CONN %i",(int)pidin);
 
@@ -360,19 +336,15 @@ char * IdinName(struct symtab_IdentifierIndex *pidin)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IdinNewFromChars()
-///
-/// ARGS.:
-///
-///	pc..: name of idin
-///
-/// RTN..: struct symtab_IdentifierIndex * : new idin
-///
-/// DESCR: Create idin with given name (no copy).
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pc name of idin
+/// 
+/// \return struct symtab_IdentifierIndex * : new idin
+/// 
+/// \brief Create idin with given name (no copy).
+/// \details 
+/// 
 
 struct symtab_IdentifierIndex *IdinNewFromChars(char *pc)
 {
@@ -395,20 +367,16 @@ struct symtab_IdentifierIndex *IdinNewFromChars(char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IdinPrint()
-///
-/// ARGS.:
-///
-///	pidin..: a pidin.
+/// 
+/// 
+/// \arg pidin a pidin.
 ///	pfile..: file to print to, NULL is stdout.
-///
-/// RTN..: void.
-///
-/// DESCR: print pidin to a file.
-///
-/// **************************************************************************
+/// 
+/// \return void.
+/// 
+/// \brief print pidin to a file.
+/// \details 
+/// 
 
 void IdinPrint(struct symtab_IdentifierIndex *pidin, FILE *pfile)
 {

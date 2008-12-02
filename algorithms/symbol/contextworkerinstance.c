@@ -23,19 +23,15 @@
 #include "contextworkerinstance.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: ContextWorkerInstanceGetContext()
-///
-/// ARGS.:
-///
-/// RTN..: struct PidinStack * : 
-///
+/// 
+/// 
+/// \return struct PidinStack * : 
+/// 
 ///	Context.
-///
-/// DESCR: Get context.
-///
-/// **************************************************************************
+/// 
+/// \brief Get context.
+/// \details 
+/// 
 
 struct PidinStack *
 ContextWorkerInstanceGetContext

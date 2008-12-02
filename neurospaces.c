@@ -31,7 +31,7 @@ static char *pcVersionTime="(08/06/15) Sunday, June 15, 2008 22:02:17 hugo";
 #include <EXTERN.h>
 #include <perl.h>
 
-//! perl.h defines YYSTYPE, redefine it to void
+/// \note perl.h defines YYSTYPE, redefine it to void
 
 #define YYSTYPE void
 
@@ -89,7 +89,7 @@ ConfigCalloc(int argc, char *argv[])
 
 static int ConfigParse(struct NeurospacesConfig *pnsc, int argc, char *argv[])
 {
-    //v loop var
+    /// loop var
 
     int i;
 
@@ -138,7 +138,7 @@ static int ConfigParse(struct NeurospacesConfig *pnsc, int argc, char *argv[])
 
 		    pnsc->nso.pfileDebug = fopen(argv[i],"w");
 
-		    //t test for success
+		    /// \todo test for success
 
 		    break;
 		}
@@ -171,7 +171,7 @@ static int ConfigParse(struct NeurospacesConfig *pnsc, int argc, char *argv[])
 
 		    pnsc->nso.pcModelLibrary = argv[i];
 
-		    //t test for success
+		    /// \todo test for success
 
 		    break;
 		}
@@ -231,10 +231,10 @@ static int ConfigParse(struct NeurospacesConfig *pnsc, int argc, char *argv[])
 
 		    //- parse verbosity number
 
-		    //t could do a ascii->int mapping here to allow ascii
-		    //t command line options
+		    /// \todo could do a ascii->int mapping here to allow ascii
+		    /// \todo command line options
 
-		    //t use strtol() to detect errors
+		    /// \todo use strtol() to detect errors
 
 		    pnsc->nso.iVerbosity = atoi(argv[i]);
 
@@ -306,10 +306,10 @@ static int ConfigParse(struct NeurospacesConfig *pnsc, int argc, char *argv[])
 
 		    //- parse timing type
 
-		    //t could do a ascii->int mapping here to allow ascii
-		    //t command line options
+		    /// \todo could do a ascii->int mapping here to allow ascii
+		    /// \todo command line options
 
-		    //t use strtol() to detect errors
+		    /// \todo use strtol() to detect errors
 
 		    pnsc->nso.iTiming = atoi(argv[i]);
 
@@ -328,10 +328,10 @@ static int ConfigParse(struct NeurospacesConfig *pnsc, int argc, char *argv[])
 
 		    //- parse verbosity number
 
-		    //t could do a ascii->int mapping here to allow ascii
-		    //t command line options
+		    /// \todo could do a ascii->int mapping here to allow ascii
+		    /// \todo command line options
 
-		    //t use strtol() to detect errors
+		    /// \todo use strtol() to detect errors
 
 		    pnsc->nso.iVerbosity = atoi(argv[i]);
 
@@ -505,19 +505,15 @@ static int ConfigProcess(struct NeurospacesConfig *pnsc, struct Neurospaces *pne
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NeurospacesHelp()
-///
-/// ARGS.:
-///
-///	std. ANSI main() args
-///
-/// RTN..: int : TRUE
-///
-/// DESCR: Give help message
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std. ANSI main() args
+/// 
+/// \return int : TRUE
+/// 
+/// \brief Give help message
+/// \details 
+/// 
 
 int NeurospacesHelp(int argc, char *argv[])
 {
@@ -572,23 +568,18 @@ int NeurospacesHelp(int argc, char *argv[])
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NeurospacesLogFileTree()
-///
-/// ARGS.:
-///
-///	pacContext.: parser context
-///	pcError....: stdargs descriptive string for error that occurred
-///
-/// RTN..: int : 0
-///
-/// DESCR:
-///
+/// 
+/// 
+/// \arg pacContext parser context
+/// \arg pcError stdargs descriptive string for error that occurred
+/// 
+/// \return int : 0
+/// 
+/// \details 
+/// 
 ///	Log file tree from dependencies for parser position in
 ///	pacContext.
-///
-/// **************************************************************************
+/// 
 
 int
 NeurospacesLogFileTree
@@ -598,7 +589,7 @@ NeurospacesLogFileTree
 
     int bResult = 0;
 
-    //v stdargs list
+    /// stdargs list
 
     va_list vaList;
 
@@ -635,21 +626,17 @@ NeurospacesLogFileTree
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NeurospacesError()
-///
-/// ARGS.:
-///
-///	pacContext.: parser context.
-///	pcContext..: descriptive string for parsing context.
-///	pcError....: stdargs descriptive string for error that occurred.
-///
-/// RTN..: int : 0 : continue parsing
-///
-/// DESCR: log an error message from any of the parsing functions
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pacContext parser context.
+/// \arg pcContext descriptive string for parsing context.
+/// \arg pcError stdargs descriptive string for error that occurred.
+/// 
+/// \return int : 0 : continue parsing
+/// 
+/// \brief log an error message from any of the parsing functions
+/// \details 
+/// 
 
 int
 NeurospacesError(PARSERCONTEXT *pacContext, char *pcContext, char *pcError, ...)
@@ -658,7 +645,7 @@ NeurospacesError(PARSERCONTEXT *pacContext, char *pcContext, char *pcError, ...)
 
     int bResult = 0;
 
-    //v stdargs list
+    /// stdargs list
 
     va_list vaList;
 
@@ -708,31 +695,27 @@ NeurospacesError(PARSERCONTEXT *pacContext, char *pcContext, char *pcError, ...)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NeurospacesImport()
-///
-/// ARGS.:
-///
-///	pneuro..: neurospaces.
-///	pcAppl..: application name.
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Import neurospaces description files.
-///
-/// NOTE.:
-///
+/// 
+/// 
+/// \arg pneuro neurospaces.
+/// \arg pcAppl application name.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Import neurospaces description files.
+/// \details 
+/// 
+/// \note 
+/// 
 ///	Errors are reported by incrementing the error variable,
 ///	ie. basic error handling only.
-///
-/// TODO.:
-///
+/// 
+/// \todo 
+/// 
 ///	This function is the result of a refactoring and needs more
 ///	refactoring.  The fundamental problem for the hacky code is
 ///	interfacing with lex and yacc.
-///
-/// **************************************************************************
+/// 
 
 int
 NeurospacesImport
@@ -743,7 +726,7 @@ NeurospacesImport
 
     int bResult = TRUE;
 
-    //! following allocators do not do error checking
+    /// \note following allocators do not do error checking
 
     //- allocate and/or register symbol table
 
@@ -784,8 +767,8 @@ NeurospacesImport
 
     int iFilePos = 0;
 
-    //v total number of file read by all instances, should get rid of
-    //v this somehow, but flex is difficult to manage.
+    /// total number of file read by all instances, should get rid of
+    /// this somehow, but flex is difficult to manage.
 
     static int iFileNumber = 0;
 
@@ -795,7 +778,7 @@ NeurospacesImport
 
     while (pnsc->pcFiles[iFilePos] != 0)
     {
-	//v main inputfile
+	/// main inputfile
 
 	FILE *inputfile = NULL;
 
@@ -808,7 +791,7 @@ NeurospacesImport
 
 	//- set input filename
 
-	//t why again was this one static ?
+	/// \todo why again was this one static ?
 
 	/* static */ char *pcInputName = NULL;
 
@@ -873,15 +856,15 @@ NeurospacesImport
 
 	    pneuro->iErrorCount++;
 
-	    //! huge memory leak.
+	    /// \note huge memory leak.
 
 	    return(FALSE);
 	}
 
 	//- set input for lexical analyzer
 
-	//! lexical analyzer will automatically allocate
-	//! one parser_buffer for parserin
+	/// \note lexical analyzer will automatically allocate
+	/// \note one parser_buffer for parserin
 
 	parserin = inputfile;
 
@@ -897,10 +880,10 @@ NeurospacesImport
 
 	//- parse the description file
 
-	//! I should call ParserParse() here, but because of bad design of 
-	//! (f)lex, I would need to give the Neurospaces struct every time as
-	//! a parameter, this induces a (very small) performance penalty
-	//! and is not clean either
+	/// \note I should call ParserParse() here, but because of bad design of 
+	/// \note (f)lex, I would need to give the Neurospaces struct every time as
+	/// \note a parameter, this induces a (very small) performance penalty
+	/// \note and is not clean either
 
 	int bFail = parserparse(pacRootContext);
 
@@ -958,32 +941,28 @@ NeurospacesImport
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NeurospacesMessage()
-///
-/// ARGS.:
-///
-///	iPriority........: priority of given message
-///	iContext.........: message context
-///	pcFormat.........: vfprintf() format string.
-///	vaList...........: stdarg list with messages to log
-///
-/// RTN..: int :  0 : continue parsing, msg logged
+/// 
+/// 
+/// \arg iPriority priority of given message
+/// \arg iContext message context
+/// \arg pcFormat vfprintf() format string.
+/// \arg vaList stdarg list with messages to log
+/// 
+/// \return int :  0 : continue parsing, msg logged
 ///		  1 : continue parsing, no msg logged
 ///		 -1 : stop parsing
-///
-/// DESCR: log a message
-///
+/// 
+/// \brief log a message
+/// \details 
+/// 
 ///	iPriority is compared with the verbosity option given on the 
 ///	command line, if higher, the message is written to stdout.
-///
+/// 
 ///	 iContext is important for timing reports. Flags are :
 ///		0 == no flags, in run message
 ///		1 == start message
 ///		2 == end message
-///
-/// **************************************************************************
+/// 
 
 int
 NeurospacesMessage
@@ -1028,7 +1007,7 @@ NeurospacesMessage
 
     if (pnscGlobal->nso.iTiming == 2
 
-	//t or timings report for this message level
+	/// \todo or timings report for this message level
 	)
     {
 	//- report start timing
@@ -1054,7 +1033,7 @@ NeurospacesMessage
 
     if (pnscGlobal->nso.iTiming == 2
 
-	//t or timings report for this message level
+	/// \todo or timings report for this message level
 	)
     {
 	//- report end timing
@@ -1071,22 +1050,18 @@ NeurospacesMessage
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NeurospacesQualifyFilename()
-///
-/// ARGS.:
-///
-///	pneuro..: neurospaces object.
-///	pc......: a filename.
-///
-/// RTN..: char *
-///
+/// 
+/// 
+/// \arg pneuro neurospaces object.
+/// \arg pc a filename.
+/// 
+/// \return char *
+/// 
 ///	qualified malloc()ed filename, or NULL if not found.
-///
-/// DESCR: Qualify a filename.
-///
-/// **************************************************************************
+/// 
+/// \brief Qualify a filename.
+/// \details 
+/// 
 
 char *
 NeurospacesQualifyFilename(struct Neurospaces *pneuro, char *pc)
@@ -1097,8 +1072,8 @@ NeurospacesQualifyFilename(struct Neurospaces *pneuro, char *pc)
 
     //- let the current parser context do the work
 
-    //t this is due to the double linking of heccer and neurospaces,
-    //t should figure out how to use libtool.
+    /// \todo this is due to the double linking of heccer and neurospaces,
+    /// \todo should figure out how to use libtool.
 
     struct ParserContext *pac = pneuro->pacRootContext;
 
@@ -1107,7 +1082,7 @@ NeurospacesQualifyFilename(struct Neurospaces *pneuro, char *pc)
 	pac = pac->pacNext;
     }
 
-    //!  will call back if necessary.
+    /// \note  will call back if necessary.
 
     pcResult = ParserContextQualifyFilename(pac, pc);
 
@@ -1117,22 +1092,18 @@ NeurospacesQualifyFilename(struct Neurospaces *pneuro, char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NeurospacesQualifyToConfiguration()
-///
-/// ARGS.:
-///
-///	pneuro.: neurospaces object to use for qualification
-///	pc.....: filename to qualify
-///
-/// RTN..: char * : qualified filename, NULL for failure
-///
-/// DESCR: qualify a filename using parser context configuration.
-///
+/// 
+/// 
+/// \arg pneuro neurospaces object to use for qualification
+/// \arg pc filename to qualify
+/// 
+/// \return char * : qualified filename, NULL for failure
+/// 
+/// \brief qualify a filename using parser context configuration.
+/// \details 
+/// 
 ///	See NeurospacesQualifyToConfiguration().
-///
-/// **************************************************************************
+/// 
 
 char *NeurospacesQualifyToConfiguration(struct Neurospaces *pneuro, char *pc)
 {
@@ -1185,23 +1156,19 @@ char *NeurospacesQualifyToConfiguration(struct Neurospaces *pneuro, char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NeurospacesRead()
-///
-/// ARGS.:
-///
-///	pneuro..: neurospaces.
-///	argc....: std main() argument.
-///	argv....: std main() argument.
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Instantiate neurospaces with a cmd like interface.
-///
+/// 
+/// 
+/// \arg pneuro neurospaces.
+/// \arg argc std main() argument.
+/// \arg argv std main() argument.
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Instantiate neurospaces with a cmd like interface.
+/// \details 
+/// 
 ///	Std. neurospaces configuration options are recognized.
-///
-/// **************************************************************************
+/// 
 
 int NeurospacesRead(struct Neurospaces *pneuro, int argc, char *argv[])
 {
@@ -1259,19 +1226,15 @@ int NeurospacesRead(struct Neurospaces *pneuro, int argc, char *argv[])
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NeurospacesRemoveProjectionQuery()
-///
-/// ARGS.:
-///
-///	pneuro..: neurospaces.
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Remove projection query.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pneuro neurospaces.
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Remove projection query.
+/// \details 
+/// 
 
 int NeurospacesRemoveProjectionQuery(struct Neurospaces *pneuro)
 {
@@ -1294,20 +1257,16 @@ int NeurospacesRemoveProjectionQuery(struct Neurospaces *pneuro)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NeurospacesSetProjectionQuery()
-///
-/// ARGS.:
-///
-///	pneuro..: neurospaces.
-///	ppq.....: projection query to register.
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Register projection query.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pneuro neurospaces.
+/// \arg ppq projection query to register.
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Register projection query.
+/// \details 
+/// 
 
 int
 NeurospacesSetProjectionQuery
@@ -1336,19 +1295,16 @@ NeurospacesSetProjectionQuery
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NeurospacesSetSolverMapper()
-///
-/// ARGS.:
-///
-///	pneuro..: neurospaces.
-///	psm.....: solver mapper array.
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Register solver mapper array.
-///
+/// 
+/// 
+/// \arg pneuro neurospaces.
+/// \arg psm solver mapper array.
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Register solver mapper array.
+/// \details 
+/// 
 ///	psm ends with 
 ///		{
 ///		    NULL,	
@@ -1356,8 +1312,7 @@ NeurospacesSetProjectionQuery
 ///		    NULL,
 ///		    NULL,
 ///		}
-///
-/// **************************************************************************
+/// 
 
 int
 NeurospacesSetSolverMapper
@@ -1386,21 +1341,17 @@ NeurospacesSetSolverMapper
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NeurospacesSetupSolverInstance()
-///
-/// ARGS.:
-///
-///	pneuro..: neurospaces.
-///	pcName..: name of solver class.
-///	ppist...: context of symbol to setup.
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Setup a solution engine.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pneuro neurospaces.
+/// \arg pcName name of solver class.
+/// \arg ppist context of symbol to setup.
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Setup a solution engine.
+/// \details 
+/// 
 
 int
 NeurospacesSetupSolverInstance
@@ -1414,7 +1365,7 @@ NeurospacesSetupSolverInstance
 
     int iSolver = -1;
 
-    //v indicates mismatch between symbol type and registered type
+    /// indicates mismatch between symbol type and registered type
 
     int bMismatch = FALSE;
 
@@ -1541,17 +1492,13 @@ NeurospacesSetupSolverInstance
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: Neurospaces{End,Start}TimingReport()
-///
-/// ARGS.:
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Report timing as a log message.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Report timing as a log message.
+/// \details 
+/// 
 
 // copied from GNU libc.
 // modified : 
@@ -1598,7 +1545,7 @@ static int NeurospacesEndTimingReport(void)
 
     int bResult = TRUE;
 
-    //v non-offset timing
+    /// non-offset timing
 
     struct timeval tvReport;
 
@@ -1635,15 +1582,15 @@ static int NeurospacesStartTimingReport(void)
 
     int bResult = TRUE;
 
-    //v non-offset timing
+    /// non-offset timing
 
     struct timeval tvReport;
 
-    //v resources
+    /// resources
 
     struct rusage ru;
 
-    //v time of day
+    /// time of day
 
     struct timeval tv;
 
@@ -1685,12 +1632,12 @@ static int NeurospacesStartTimingReport(void)
 	 ru.ru_utime.tv_usec);
     fprintf(stdout, "</getrusage>");
 
-    //t other possibilities :
-    //t time()
-    //t localtime()
-    //t gmtime()
-    //t asctime(), ctime()
-    //t strftime()
+    /// \todo other possibilities :
+    /// \todo time()
+    /// \todo localtime()
+    /// \todo gmtime()
+    /// \todo asctime(), ctime()
+    /// \todo strftime()
 
     //- return result
 
@@ -1698,19 +1645,15 @@ static int NeurospacesStartTimingReport(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NeurospacesGetVersion()
-///
-/// ARGS.:
-///
-/// RTN..: char *
-///
+/// 
+/// 
+/// \return char *
+/// 
 ///	Version identifier.
-///
-/// DESCR: Obtain version identifier.
-///
-/// **************************************************************************
+/// 
+/// \brief Obtain version identifier.
+/// \details 
+/// 
 
 char * NeurospacesGetVersion(void)
 {
@@ -1721,23 +1664,19 @@ char * NeurospacesGetVersion(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NeurospacesNew()
-///
-/// ARGS.:
-///
-/// RTN..: struct Neurospaces *
-///
+/// 
+/// 
+/// \return struct Neurospaces *
+/// 
 ///	Empty neurospaces.
-///
-/// DESCR: Construct a neurospaces object.
-///
-/// **************************************************************************
+/// 
+/// \brief Construct a neurospaces object.
+/// \details 
+/// 
 
-//v hacker variable
+/// hacker variable
 
-//! this prevents diving to deeply into perl xs.
+/// \note this prevents diving to deeply into perl xs.
 
 struct Neurospaces *pneuroGlobal;
 
@@ -1772,22 +1711,19 @@ struct Neurospaces *NeurospacesNew(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NeurospacesNewFromCmdLine()
-///
-/// ARGS.:
-///
-///	std. ANSI main() args
-///
+/// 
+/// 
+/// \arg std. ANSI main() args
+/// 
 ///	argv[].: files to parse or options
-///
-/// RTN..: struct Neurospaces *
-///
+/// 
+/// \return struct Neurospaces *
+/// 
 ///	Result of given command line.
-///
-/// DESCR: parse given files
-///
+/// 
+/// \brief parse given files
+/// \details 
+/// 
 ///	options :
 ///		-d <filename> : debug output to given file
 ///		-h : give help and exit
@@ -1804,10 +1740,9 @@ struct Neurospaces *NeurospacesNew(void)
 ///		-R : disable readline
 ///		-T <level> : set timing report level
 ///		-V <level> : set exclusive verbosity level
-///
+/// 
 ///	Options on command line are to appear first
-///
-/// **************************************************************************
+/// 
 
 struct Neurospaces *
 NeurospacesNewFromCmdLine(int argc, char *argv[])

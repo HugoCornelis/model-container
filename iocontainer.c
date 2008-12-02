@@ -26,19 +26,15 @@
 #include "neurospaces/inputoutput.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: IOContainerInit()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pioc.: list element with I/O to init
-///
-/// RTN..: void
-///
-/// DESCR: Init list element with I/O
-///
-/// **************************************************************************
+/// 
+/// \return void
+/// 
+/// \brief Init list element with I/O
+/// \details 
+/// 
 
 struct symtab_IOContainer * IOContainerCalloc(void)
 {
@@ -57,19 +53,15 @@ struct symtab_IOContainer * IOContainerCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IOContainerCountIOs()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pioc.: list element with I/O to count
-///
-/// RTN..: int : number of elements in the container
-///
-/// DESCR: Count element in I/O container
-///
-/// **************************************************************************
+/// 
+/// \return int : number of elements in the container
+/// 
+/// \brief Count element in I/O container
+/// \details 
+/// 
 
 int IOContainerCountIOs(struct symtab_IOContainer * pioc)
 {
@@ -100,19 +92,15 @@ int IOContainerCountIOs(struct symtab_IOContainer * pioc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IOContainerInit()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pioc.: I/O container to init
-///
-/// RTN..: void
-///
-/// DESCR: Init list element with I/O
-///
-/// **************************************************************************
+/// 
+/// \return void
+/// 
+/// \brief Init list element with I/O
+/// \details 
+/// 
 
 void IOContainerInit(struct symtab_IOContainer * pioc)
 {
@@ -122,21 +110,17 @@ void IOContainerInit(struct symtab_IOContainer * pioc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IOContainerLookupRelation()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pioc...: I/O container to search
-///	pc.....: relation to search for
+/// \arg pc relation to search for
 ///	iCount.: relation number with that name (starting at 0)
-///
-/// RTN..: struct symtab_InputOutput * : matching relation, NULL if not found
-///
-/// DESCR: Search for specified relation
-///
-/// **************************************************************************
+/// 
+/// \return struct symtab_InputOutput * : matching relation, NULL if not found
+/// 
+/// \brief Search for specified relation
+/// \details 
+/// 
 
 struct symtab_InputOutput *
 IOContainerLookupRelation
@@ -187,30 +171,25 @@ IOContainerLookupRelation
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IOContainerNewFromList()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	ppcParameters: Strings indicating parameters, NULL terminated.
-///     piTypes......: Integers indicating parameters are input or output. 
-///
-/// RTN..: struct symtab_IOContainer
-///
+/// \arg piTypes Integers indicating parameters are input or output. 
+/// 
+/// \return struct symtab_IOContainer
+/// 
 ///	IO Container, NULL for failure.
-///
-/// DESCR:
-///
+/// 
+/// \details 
+/// 
 ///	 Creates an IOContainer from two arrays composed of strings of
 ///	 the parameters and a corresponding Type value.
-///
-/// NOTE.:
-///
+/// 
+/// \note 
+/// 
 ///	It is recommended that piTypes is terminated by
 ///	INPUT_TYPE_INVALID.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_IOContainer *
 IOContainerNewFromList(char *ppcParameters[], int piTypes[])
@@ -223,7 +202,7 @@ IOContainerNewFromList(char *ppcParameters[], int piTypes[])
 
     //- allocate IO structs memory
 
-    //! allocated in one block.
+    /// \note allocated in one block.
 
     struct symtab_InputOutput ** pios
 	= (struct symtab_InputOutput **)
@@ -238,13 +217,13 @@ IOContainerNewFromList(char *ppcParameters[], int piTypes[])
 	struct symtab_InputOutput *pio
 	    = InputOutputNewForType( piTypes[i] );
 
-	//! set the pidin in the pidinField
+	/// \note set the pidin in the pidinField
 	pio->pidinField = pidin;
 
-	//! put this pio into our pios array
+	/// \note put this pio into our pios array
 	pios[i] = pio;
 
-	//! go ahead and set this to point at element 0
+	/// \note go ahead and set this to point at element 0
 	pios[i]->pioFirst = pios[0];
     }
 
@@ -262,24 +241,20 @@ IOContainerNewFromList(char *ppcParameters[], int piTypes[])
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IOContainerResolve()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pioc.....: I/O relations
-///	ppist....: symbol stack with context
-///	pc.......: name of input
-///	iPosition: number of inputs with given name to skip
-///
-/// RTN..: struct PidinStack *
-///
+/// \arg ppist symbol stack with context
+/// \arg pc name of input
+/// \arg iPosition number of inputs with given name to skip
+/// 
+/// \return struct PidinStack *
+/// 
 ///	Context attached to this input.
-///
-/// DESCR: find element that is attached to the given input
-///
-/// **************************************************************************
+/// 
+/// \brief find element that is attached to the given input
+/// \details 
+/// 
 
 struct PidinStack *
 IOContainerResolve
@@ -335,21 +310,17 @@ IOContainerResolve
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IOContainerResolvePosition()
-///
-/// ARGS.:
-///
-///	piocTarget.: bio with children
-///	ppist......: symbol stack with context
-///	piocSource.: element generating input
-///
-/// RTN..: int : position of child in input list (starts at zero)
-///
-/// DESCR: calculate position of given input element
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg piocTarget bio with children
+/// \arg ppist symbol stack with context
+/// \arg piocSource element generating input
+/// 
+/// \return int : position of child in input list (starts at zero)
+/// 
+/// \brief calculate position of given input element
+/// \details 
+/// 
 
 int 
 IOContainerResolvePosition
@@ -361,7 +332,7 @@ IOContainerResolvePosition
 
     int iResult = -1;
 
-    //v counter
+    /// counter
 
     int i = 0;
 

@@ -26,45 +26,45 @@
 #define ALGORITHM_SERIALPOPULATION_H
 
 
-//s
-//s population array entry
-//s
+/// \struct
+/// \struct population array entry
+/// \struct
 
 struct SymbolSerialPopulation
 {
-    //m population symbol
+    /// population symbol
 
     struct symtab_Population *ppopu;
 
-    //m first cell, -1 for none
+    /// first cell, -1 for none
 
     int iFirstCell;
 
-    //m number of cells
+    /// number of cells
 
     int iCells;
 };
 
 
-//s serial population struct
+/// \struct serial population struct
 
 struct SerialPopulationVariables
 {
-    //m number of serialized created populations
+    /// number of serialized created populations
 
     int iPopulationsCreated;
 
-    //m number of serialized added populations
+    /// number of serialized added populations
 
     int iPopulationsAdded;
 
-    //m array of all populations
+    /// array of all populations
 
     struct SymbolSerialPopulation *psymserpopu;
 };
 
 
-//v serial population array
+/// serial population array
 
 extern struct SerialPopulationVariables serpopuVariables;
 

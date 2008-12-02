@@ -26,40 +26,40 @@
 #define NAMESPACE_H
 
 
-//d define symbolic resolution of parent in symbol hierarchy
+/// \def define symbolic resolution of parent in symbol hierarchy
 
 #define IDENTIFIER_SYMBOL_PARENT		..
 #define IDENTIFIER_SYMBOL_PARENT_CHAR		'.' '.'
 #define IDENTIFIER_SYMBOL_PARENT_STRING		".."
 
 
-//d define symbolic resolution of current in symbol hierarchy
+/// \def define symbolic resolution of current in symbol hierarchy
 
 #define IDENTIFIER_SYMBOL_CURRENT		.
 #define IDENTIFIER_SYMBOL_CURRENT_CHAR		'.'
 #define IDENTIFIER_SYMBOL_CURRENT_STRING	"."
 
 
-//d define symbolic resolution of name space in symbol hierarchy
+/// \def define symbolic resolution of name space in symbol hierarchy
 
 #define IDENTIFIER_NAMESPACE			::
 #define IDENTIFIER_NAMESPACE_CHAR		':' ':'
 #define IDENTIFIER_NAMESPACE_STRING		"::"
 
 
-//d define symbolic resolution of dereference to field in symbol hierarchy
+/// \def define symbolic resolution of dereference to field in symbol hierarchy
 
 #define IDENTIFIER_DEREFERENCE			->
 #define IDENTIFIER_DEREFERENCE_CHAR		'-' '>'
 #define IDENTIFIER_DEREFERENCE_STRING		"->"
 
-//d define symbolic resolution of dereference to field in symbol hierarchy
+/// \def define symbolic resolution of dereference to field in symbol hierarchy
 
 #define IDENTIFIER_IOSELECT			@
 #define IDENTIFIER_IOSELECT_CHAR		'@'
 #define IDENTIFIER_IOSELECT_STRING		"@"
 
-//d define symbolic resolution of child in symbol hierarchy
+/// \def define symbolic resolution of child in symbol hierarchy
 
 #define IDENTIFIER_CHILD			/
 #define IDENTIFIER_CHILD_CHAR			'/'
@@ -71,22 +71,21 @@
 /* extern char *ppcSeperators[]; */
 
 
-//d root symbol
+/// \def root symbol
 
 #define SYMBOL_ROOT			SYMBOL_CHAR_SEPERATOR
 
 
-//d hierarchical symbol seperator
+/// \def hierarchical symbol seperator
 
 #define SYMBOL_CHAR_SEPERATOR		IDENTIFIER_CHILD_STRING
 
 
-//d maximal depth of nested elements
+/// \def maximal depth of nested elements
 
 #define MAX_ELEMENT_DEPTH		30
 
 
-//f exported functions
 
 int NameSpaceEndThisToken(char *pc);
 

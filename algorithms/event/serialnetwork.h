@@ -26,69 +26,69 @@
 #define ALGORITHM_SERIALNETWORK_H
 
 
-//s
-//s network array entry
-//s
+/// \struct
+/// \struct network array entry
+/// \struct
 
 struct SymbolSerialNetwork
 {
-    //m network symbol
+    /// network symbol
 
     struct symtab_Network *pnetw;
 
-    //m first cell, -1 for none
+    /// first cell, -1 for none
 
     int iFirstCell;
 
-    //m number of cells
+    /// number of cells
 
     int iCells;
 
-    //m first population, -1 for none
+    /// first population, -1 for none
 
     int iFirstPopulation;
 
-    //m number of populations
+    /// number of populations
 
     int iPopulations;
 
-    //m first connection, -1 for none
+    /// first connection, -1 for none
 
     int iFirstConnection;
 
-    //m number of connections
+    /// number of connections
 
     int iConnections;
 
-    //m first projection, -1 for none
+    /// first projection, -1 for none
 
     int iFirstProjection;
 
-    //m number of projections
+    /// number of projections
 
     int iProjections;
 };
 
 
-//s serial network struct
+/// \struct serial network struct
 
 struct SerialNetworkVariables
 {
-    //m number of serialized created networks
+    /// number of serialized created networks
 
     int iNetworksCreated;
 
-    //m number of serialized added networks
+    /// number of serialized added networks
 
     int iNetworksAdded;
 
-    //m array of all networks
+    /// array of all networks
 
     struct SymbolSerialNetwork *psymsernetw;
 };
 
 
-//v serial network array
+/// serial network array
 
 extern struct SerialNetworkVariables sernetwVariables;
 

@@ -30,21 +30,17 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: IOListGetInputs()
-///
-/// ARGS.:
-///
-///	piol....: symbol to get inputs from.
-///
-/// RTN..: struct symtab_IOContainer * 
-///
+/// 
+/// 
+/// \arg piol symbol to get inputs from.
+/// 
+/// \return struct symtab_IOContainer * 
+/// 
 ///	input container of symbol.
-///
-/// DESCR: Find inputs of symbol.
-///
-/// **************************************************************************
+/// 
+/// \brief Find inputs of symbol.
+/// \details 
+/// 
 
 struct symtab_IOContainer *
 IOListGetInputs
@@ -62,19 +58,15 @@ IOListGetInputs
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IOListInit()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	piol.: list element with I/O to init
-///
-/// RTN..: void
-///
-/// DESCR: Init list element with I/O
-///
-/// **************************************************************************
+/// 
+/// \return void
+/// 
+/// \brief Init list element with I/O
+/// \details 
+/// 
 
 void IOListInit(struct symtab_IOList * piol)
 {

@@ -44,33 +44,29 @@
 #include "algorithms/symbol/spines.h"
 
 
-//v list of algorithms
+/// list of algorithms
 
 static HSolveList * phslAlgorithmsList = NULL;
 
 
-//d algorithm is active
+/// \def algorithm is active
 
 #define ALGORITHM_FLAG_ACTIVE		1
 
-//d algorithm is active in current model section
+/// \def algorithm is active in current model section
 
 #define ALGORITHM_FLAG_MODELACTIVE		2
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Algorithm * 
-///
+/// 
+/// 
+/// \return struct symtab_Algorithm * 
+/// 
 ///	Newly allocated algorithm, NULL for failure
-///
-/// DESCR: Allocate a new algorithm symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new algorithm symbol table element
+/// \details 
+/// 
 
 struct symtab_Algorithm * AlgorithmCalloc(void)
 {
@@ -94,20 +90,16 @@ struct symtab_Algorithm * AlgorithmCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmDisable()
-///
-/// ARGS.:
-///
-///	pcName.: name of algorithm to import
-///	pcInit.: init string for algorithm
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: disable algorithm with given name
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pcName name of algorithm to import
+/// \arg pcInit init string for algorithm
+/// 
+/// \return int : success of operation
+/// 
+/// \brief disable algorithm with given name
+/// \details 
+/// 
 
 int
 AlgorithmDisable
@@ -150,9 +142,10 @@ AlgorithmDisable
 /* ///	phsle.: symbol to handle */
 /* ///	pv....: user data */
 /* /// */
-/* /// RTN..: int : success of operation */
+/* /// \return int : success of operation */
 /* /// */
-/* /// DESCR: Ask algorithm to handle a symbol. */
+/* /// \brief Ask algorithm to handle a symbol. */
+/// \details 
 /* /// */
 /* /// ************************************************************************** */
 
@@ -173,27 +166,23 @@ AlgorithmDisable
 /* } */
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmImport()
-///
-/// ARGS.:
-///
-///	pcName.: name of algorithm to import
-///	pcInit.: init string for algorithm
-///
-/// RTN..: struct symtab_Algorithm * 
-///
+/// 
+/// 
+/// \arg pcName name of algorithm to import
+/// \arg pcInit init string for algorithm
+/// 
+/// \return struct symtab_Algorithm * 
+/// 
 ///	Imported & inited algorithm, NULL for failure
-///
-/// DESCR: import algorithm with given name
-///
+/// 
+/// \brief import algorithm with given name
+/// \details 
+/// 
 ///	Look for algorithm in imported algorithm list, if not already loaded,
 ///	load algorithm
 ///	Algorithm is linked into algorithm list and initialized with given init
 ///	string.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_Algorithm *
 AlgorithmImport
@@ -229,7 +218,7 @@ AlgorithmImport
 
 	    palgResult->iFlags |= ALGORITHM_FLAG_MODELACTIVE;
 
-	    //t check event types, register event listeners
+	    /// \todo check event types, register event listeners
 	}
 
 	//- else
@@ -248,19 +237,15 @@ AlgorithmImport
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmInit()
-///
-/// ARGS.:
-///
-///	palg.: algorithm to init
-///
-/// RTN..: void
-///
-/// DESCR: init algorithm
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg palg algorithm to init
+/// 
+/// \return void
+/// 
+/// \brief init algorithm
+/// \details 
+/// 
 
 void AlgorithmInit(struct symtab_Algorithm *palg)
 {
@@ -270,19 +255,15 @@ void AlgorithmInit(struct symtab_Algorithm *palg)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmLoad()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Algorithm * 
-///
+/// 
+/// 
+/// \return struct symtab_Algorithm * 
+/// 
 ///	Newly loaded algorithm, NULL for failure
-///
-/// DESCR: Load algorithm with given name
-///
-/// **************************************************************************
+/// 
+/// \brief Load algorithm with given name
+/// \details 
+/// 
 
 struct symtab_Algorithm * AlgorithmLoad(HSolveList *phsl,char *pcName)
 {
@@ -302,8 +283,8 @@ struct symtab_Algorithm * AlgorithmLoad(HSolveList *phsl,char *pcName)
 
 	palgResult = AlgorithmCalloc();
 
-	//t load algorithm
-	//t link into algorithm list
+	/// \todo load algorithm
+	/// \todo link into algorithm list
     }
 
     //- return result
@@ -312,22 +293,18 @@ struct symtab_Algorithm * AlgorithmLoad(HSolveList *phsl,char *pcName)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmLookup()
-///
-/// ARGS.:
-///
-///	phsl...: list of algorithms
-///	pcName.: name of algorithm to search for
-///
-/// RTN..: struct symtab_Algorithm * 
-///
+/// 
+/// 
+/// \arg phsl list of algorithms
+/// \arg pcName name of algorithm to search for
+/// 
+/// \return struct symtab_Algorithm * 
+/// 
 ///	algorithm with given name, NULL for not found
-///
-/// DESCR: search for a algorithm in the algorithm list
-///
-/// **************************************************************************
+/// 
+/// \brief search for a algorithm in the algorithm list
+/// \details 
+/// 
 
 struct symtab_Algorithm * AlgorithmLookup(HSolveList *phsl,char *pcName)
 {
@@ -366,21 +343,17 @@ struct symtab_Algorithm * AlgorithmLookup(HSolveList *phsl,char *pcName)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmName()
-///
-/// ARGS.:
-///
-///	palg.: algorithm to get name for
-///
-/// RTN..: char * : name of algorithm, NULL for failure
-///
-/// DESCR: get name of algorithm
-///
+/// 
+/// 
+/// \arg palg algorithm to get name for
+/// 
+/// \return char * : name of algorithm, NULL for failure
+/// 
+/// \brief get name of algorithm
+/// \details 
+/// 
 ///	Return value is pointer to symbol table read only data
-///
-/// **************************************************************************
+/// 
 
 char * AlgorithmName(struct symtab_Algorithm *palg)
 {
@@ -398,21 +371,17 @@ char * AlgorithmName(struct symtab_Algorithm *palg)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmsInit()
-///
-/// ARGS.:
-///
-///	phslAlgorithms.: algorithm list to initialize
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg phslAlgorithms algorithm list to initialize
+/// 
+/// \return int
+/// 
 ///	success of operation
-///
-/// DESCR: init algorithms
-///
-/// **************************************************************************
+/// 
+/// \brief init algorithms
+/// \details 
+/// 
 
 int AlgorithmsInit(HSolveList *phslAlgorithms,struct Symbols *pisSymbols)
 {
@@ -454,19 +423,19 @@ int AlgorithmsInit(HSolveList *phslAlgorithms,struct Symbols *pisSymbols)
 
     //- add regular grid 3D algorithm
 
-    //! grid 3D algorithm at front of list, gives fast lookup
+    /// \note grid 3D algorithm at front of list, gives fast lookup
 
 /*     HSolveListEnqueue(phslAlgorithms,&palgGrid3D->hsleLink); */
 
     //- add regular spines algorithm
 
-    //! spines algorithm at front of list, gives fast lookup
+    /// \note spines algorithm at front of list, gives fast lookup
 
 /*     HSolveListEnqueue(phslAlgorithms,&palgSpines->hsleLink); */
 
 /*     //- add spines_with_events algorithm */
 
-/*     //! spines algorithm at front of list, gives fast lookup */
+/*     /// \note spines algorithm at front of list, gives fast lookup */
 
 /*     HSolveListEnqueue(phslAlgorithms,&palgSpinesEvents->hsleLink); */
 
@@ -540,22 +509,18 @@ int AlgorithmsInit(HSolveList *phslAlgorithms,struct Symbols *pisSymbols)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmsPrint()
-///
-/// ARGS.:
-///
-///	phsl..: list of algorithms
-///	pfile.: file to print algorithm info to
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg phsl list of algorithms
+/// \arg pfile file to print algorithm info to
+/// 
+/// \return int
+/// 
 ///	success of operation
-///
-/// DESCR: print algorithm info for registered algorithms
-///
-/// **************************************************************************
+/// 
+/// \brief print algorithm info for registered algorithms
+/// \details 
+/// 
 
 int AlgorithmsPrint(HSolveList *phsl,FILE *pfile)
 {
@@ -593,21 +558,17 @@ int AlgorithmsPrint(HSolveList *phsl,FILE *pfile)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmsPropagateParserEvent()
-///
-/// ARGS.:
-///
-///	pev...: event to propagate
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pev event to propagate
+/// 
+/// \return int
+/// 
 ///	success of operation
-///
-/// DESCR: propagate event through registered algorithms for this event type
-///
-/// **************************************************************************
+/// 
+/// \brief propagate event through registered algorithms for this event type
+/// \details 
+/// 
 
 int AlgorithmsPropagateParserEvent(ParserEvent *pev)
 {
@@ -641,7 +602,7 @@ int AlgorithmsPropagateParserEvent(ParserEvent *pev)
 	{
 	    //- call connection array organizer
 
-	    //! hard coded
+	    /// \note hard coded
 
 	    bResult
 		= palgSerialConnection
@@ -666,7 +627,7 @@ int AlgorithmsPropagateParserEvent(ParserEvent *pev)
 
 	//- call segmental array organizer
 
-	//! hard coded
+	/// \note hard coded
 
 	bResult
 	    = palgSerialSegment->pevatListeners->pevas[0].pfParserEventListener
@@ -679,7 +640,7 @@ int AlgorithmsPropagateParserEvent(ParserEvent *pev)
 	{
 	    //- call spine segment listener
 
-	    //! a bit less hardcoded
+	    /// \note a bit less hardcoded
 
 	    bResult
 		= palgSpinesEvents->pevatListeners->pevas[0].pfParserEventListener
@@ -695,7 +656,7 @@ int AlgorithmsPropagateParserEvent(ParserEvent *pev)
     {
 	//- call cell array organizer
 
-	//! hard coded
+	/// \note hard coded
 
 	bResult
 	    = palgSerialCell->pevatListeners->pevas[0].pfParserEventListener
@@ -708,7 +669,7 @@ int AlgorithmsPropagateParserEvent(ParserEvent *pev)
 /* 	{ */
 /* 	    //- call spine cell listener */
 
-/* 	    //! a bit less hardcoded */
+/* 	    /// \note a bit less hardcoded */
 
 /* 	    bResult */
 /* 		= palgSpinesEvents->pevatListeners->pevas[1].pfParserEventListener */
@@ -724,7 +685,7 @@ int AlgorithmsPropagateParserEvent(ParserEvent *pev)
     {
 	//- call population array organizer
 
-	//! hard coded
+	/// \note hard coded
 
 	bResult
 	    = palgSerialPopulation->pevatListeners->pevas[0].pfParserEventListener
@@ -739,7 +700,7 @@ int AlgorithmsPropagateParserEvent(ParserEvent *pev)
     {
 	//- call connection array organizer
 
-	//! hard coded
+	/// \note hard coded
 
 	bResult
 	    = palgSerialConnection->pevatListeners->pevas[0].pfParserEventListener
@@ -754,7 +715,7 @@ int AlgorithmsPropagateParserEvent(ParserEvent *pev)
     {
 	//- call projection array organizer
 
-	//! hard coded
+	/// \note hard coded
 
 	bResult
 	    = palgSerialProjection->pevatListeners->pevas[0].pfParserEventListener
@@ -774,7 +735,7 @@ int AlgorithmsPropagateParserEvent(ParserEvent *pev)
 
 	//- call network array organizer
 
-	//! hard coded
+	/// \note hard coded
 
 	bResult
 	    = palgSerialNetwork->pevatListeners->pevas[0].pfParserEventListener
@@ -787,7 +748,7 @@ int AlgorithmsPropagateParserEvent(ParserEvent *pev)
 	{
 	    //- call cerebellar connection listener
 
-	    //! a bit less hardcoded
+	    /// \note a bit less hardcoded
 
 	    bResult
 		= palgCerebellumConnections

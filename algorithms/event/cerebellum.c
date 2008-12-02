@@ -36,18 +36,18 @@
 #include "neurospaces/parsersupport.h"
 
 
-//s event associations for cerebellum algorithm
+/// \struct event associations for cerebellum algorithm
 
 static ParserEventListener CerebellumParserEventListener;
 
 static ParserEventAssociation pevasCerebellum[] = 
 {
     {
-	//m listens to any segment event
+	/// listens to any segment event
 
 	EVENT_TYPE_NETWORK,
 
-	//m function to call
+	/// function to call
 
 	CerebellumParserEventListener,
     },
@@ -56,64 +56,64 @@ static ParserEventAssociation pevasCerebellum[] =
 
 static ParserEventAssociationTable evatCerebellum =
 {
-    //m number of entries
+    /// number of entries
 
     sizeof(*pevasCerebellum) / sizeof(ParserEventAssociation),
 
-    //m event associations
+    /// event associations
 
     pevasCerebellum,
 };
 
 
-//s algorithm handlers for cerebellum algorithm
+/// \struct algorithm handlers for cerebellum algorithm
 
 static AlgorithmHandler CerebellumInitAlgorithm;
 
 static struct AlgorithmHandlerLibrary pfCerebellumHandlers =
 {
-    //m after constructor, global is parser context, data is init string
+    /// after constructor, global is parser context, data is init string
 
     CerebellumInitAlgorithm,
 
-    //m after init, before destruct
+    /// after init, before destruct
 
     NULL,
 
-    //m print info handler
+    /// print info handler
 
     NULL,
 };
 
 
-//s algorithm description
+/// \struct algorithm description
 
 static struct symtab_Algorithm modCerebellum =
 {
-    //m link
+    /// link
 
     {
 	NULL,
 	NULL,
     },
 
-    //m type
+    /// type
 
     0,
 
-    //m flags
+    /// flags
 
     0,
 
-    //m name
+    /// name
 
     "CerebellumConnections",
 
-    //m algorithm handlers
+    /// algorithm handlers
 
     &pfCerebellumHandlers,
 
-    //m event association table
+    /// event association table
 
     &evatCerebellum
 };
@@ -121,7 +121,7 @@ static struct symtab_Algorithm modCerebellum =
 struct symtab_Algorithm *palgCerebellum = &modCerebellum;
 
 
-//s cerebellum algorithm private data
+/// \struct cerebellum algorithm private data
 
 /*s */
 /*s struct with cerebellum options */
@@ -137,9 +137,9 @@ typedef struct CerebellumOptions_type CerebellumOptions;
 static CerebellumOptions coCerebellumOptions;
 
 
-//s
-//s cerebellum variables
-//s
+/// \struct
+/// \struct cerebellum variables
+/// \struct
 
 struct CerebellumVariables_type
 {
@@ -151,20 +151,16 @@ typedef struct CerebellumVariables_type CerebellumVariables;
 static CerebellumVariables cvCerebellumVariables;
 
 
-/// **************************************************************************
-///
-/// SHORT: CerebellumCheck()
-///
-/// ARGS.:
-///
-///	ppist..: context of network
-///	pnetw..: network candidate for additional connections
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Check if network needs cerebellum like connections
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppist context of network
+/// \arg pnetw network candidate for additional connections
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Check if network needs cerebellum like connections
+/// \details 
+/// 
 
 static int CerebellumCheck
 (struct PidinStack *ppist,struct symtab_Network *pnetw)
@@ -183,23 +179,19 @@ static int CerebellumCheck
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: CerebellumParserEventListener()
-///
-/// ARGS.:
-///
-///	std ParserEventListener args
-///
-/// RTN..: int : std ParserEventListener return value
-///
-/// DESCR: ParserEvent listener to attach spines
-///
+/// 
+/// 
+/// \arg std ParserEventListener args
+/// 
+/// \return int  std ParserEventListener return value
+/// 
+/// \brief ParserEvent listener to attach spines
+/// \details 
+/// 
 ///	For cell type events, a new cell is registered, 
 ///	For segment type events, spines are attached to the 
 ///	registered cell.
-///
-/// **************************************************************************
+/// 
 
 static int CerebellumParserEventListener
 (struct ParserEvent *pev,
@@ -226,7 +218,7 @@ static int CerebellumParserEventListener
 
 	case EVENT_ACTION_CREATE:
 	{
-	    //t can we ever get here ?
+	    /// \todo can we ever get here ?
 
 	    break;
 	}
@@ -272,24 +264,20 @@ static int CerebellumParserEventListener
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: CerebellumInitAlgorithm()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to init spine algorithm
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to init spine algorithm
+/// \details 
+/// 
 
 static int CerebellumInitAlgorithm
     (struct symtab_Algorithm *palgSelf,char *pcName,void *pvGlobal,void *pvData)
 {
-    //- set default result : ok
+    //- set default result  ok
 
     int bResult = TRUE;
 
@@ -301,15 +289,15 @@ static int CerebellumInitAlgorithm
 
     char *pcInit = &((char *)pvData)[1];
 
-    //v argument seperator
+    /// argument seperator
 
     char pcSeperator[] = " \t,;/}";
 
-    //v next arg
+    /// next arg
 
     char *pcArg = NULL;
 
-    //v length of arg
+    /// length of arg
 
     int iLength = -1;
 
@@ -345,7 +333,7 @@ static int CerebellumInitAlgorithm
 
     //- scan min dia
 
-    //soCerebellumOptions.fRandomDendrDiaMin = strtod(pcInit,&pcArg);
+    /// \structoCerebellumOptions.fRandomDendrDiaMin = strtod(pcInit,&pcArg);
 
     //- go to next arg
 
@@ -353,7 +341,7 @@ static int CerebellumInitAlgorithm
 
     //- scan max dia
 
-    //soCerebellumOptions.fRandomDendrDiaMax = strtod(pcInit,&pcArg);
+    /// \structoCerebellumOptions.fRandomDendrDiaMax = strtod(pcInit,&pcArg);
 
     //- go to next arg
 
@@ -361,7 +349,7 @@ static int CerebellumInitAlgorithm
 
     //- scan min dia
 
-    //soCerebellumOptions.fSpineDensity = strtod(pcInit,&pcArg);
+    /// \structoCerebellumOptions.fSpineDensity = strtod(pcInit,&pcArg);
 
     //- go to next arg
 
@@ -369,7 +357,7 @@ static int CerebellumInitAlgorithm
 
     //- scan max dia
 
-    //soCerebellumOptions.fSpineFrequency = strtod(pcInit,&pcArg);
+    /// \structoCerebellumOptions.fSpineFrequency = strtod(pcInit,&pcArg);
 
     // go to next arg
 

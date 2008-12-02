@@ -39,39 +39,35 @@
 
 struct PopulationSerialSpikeReceiver
 {
-    //m original population
+    /// original population
 
     struct symtab_HSolveListElement *phslePopulation;
     struct PidinStack *ppistPopulation;
 
-    //m spike receiver to lookup
+    /// spike receiver to lookup
 
     struct symtab_HSolveListElement *phsleReceiver;
     struct PidinStack *ppistReceiver;
 
-    //m number of spike receivers encountered so far
+    /// number of spike receivers encountered so far
 
     int iReceivers;
 
-    //m flag : found or not found
+    /// flag : found or not found
 
     int bFound;
 };
 
 
-/// **************************************************************************
-///
-/// SHORT: PopulationCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Population * 
-///
+/// 
+/// 
+/// \return struct symtab_Population * 
+/// 
 ///	Newly allocated population, NULL for failure
-///
-/// DESCR: Allocate a new population symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new population symbol table element
+/// \details 
+/// 
 
 struct symtab_Population * PopulationCalloc(void)
 {
@@ -99,19 +95,15 @@ struct symtab_Population * PopulationCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PopulationCountCells()
-///
-/// ARGS.:
-///
-///	ppopu.: population to count cells for
-///
-/// RTN..: int : number of cells in population, -1 for failure
-///
-/// DESCR: count cells in population
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppopu population to count cells for
+/// 
+/// \return int : number of cells in population, -1 for failure
+/// 
+/// \brief count cells in population
+/// \details 
+/// 
 
 int PopulationCountCells
 (struct symtab_Population *ppopu, struct PidinStack *ppist)
@@ -139,20 +131,16 @@ int PopulationCountCells
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PopulationCreateAlias()
-///
-/// ARGS.:
-///
-///	ppopu.: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppopu symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 PopulationCreateAlias
@@ -178,21 +166,17 @@ PopulationCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PopulationGetParameter()
-///
-/// ARGS.:
-///
-///	ppopu..: symbol to get parameter for.
-///	ppist..: context of population.
-///	pcName.: name of parameter.
-///
-/// RTN..: struct symtab_Parameters * : parameter structure
-///
-/// DESCR: Get parameter of symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppopu symbol to get parameter for.
+/// \arg ppist context of population.
+/// \arg pcName name of parameter.
+/// 
+/// \return struct symtab_Parameters * : parameter structure
+/// 
+/// \brief Get parameter of symbol
+/// \details 
+/// 
 
 struct symtab_Parameters * 
 PopulationGetParameter
@@ -429,19 +413,15 @@ PopulationGetParameter
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PopulationInit()
-///
-/// ARGS.:
-///
-///	ppopu.: population to init
-///
-/// RTN..: void
-///
-/// DESCR: init population
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppopu population to init
+/// 
+/// \return void
+/// 
+/// \brief init population
+/// \details 
+/// 
 
 void PopulationInit(struct symtab_Population *ppopu)
 {
@@ -455,22 +435,18 @@ void PopulationInit(struct symtab_Population *ppopu)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PopulationLookupSpikeReceiverSerialID()
-///
-/// ARGS.:
-///
-///	ppopu......: symbol container
-///	ppist......: context of container
-///	phsleSerial: element to search
-///	ppistSerial: context of element to search
-///
-/// RTN..: int : serial ID of symbol with respect to container, -1 for failure
-///
-/// DESCR: Get a serial unique ID for symbol with respect to container
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppopu symbol container
+/// \arg ppist context of container
+/// \arg phsleSerial: element to search
+/// \arg ppistSerial: context of element to search
+/// 
+/// \return int : serial ID of symbol with respect to container, -1 for failure
+/// 
+/// \brief Get a serial unique ID for symbol with respect to container
+/// \details 
+/// 
 
 static int 
 PopulationSpikeReceiverCompare
@@ -529,7 +505,7 @@ int PopulationLookupSpikeReceiverSerialID
  struct symtab_HSolveListElement *phsleSerial,
  struct PidinStack *ppistSerial)
 {
-    //- set default result : failure
+    //- set default result  failure
 
     int iResult = -1;
 
@@ -580,23 +556,19 @@ int PopulationLookupSpikeReceiverSerialID
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PopulationTraverseCells()
-///
-/// ARGS.:
-///
-///	phsle.......: population to traverse cells for
+/// 
+/// 
+/// \arg phsle population to traverse cells for
 ///	ppist.......: context of population, population assumed to be on top
-///	pfProcesor..: cell processor
-///	pfFinalizer.: cell finalizer
-///	pvUserdata..: any user data
-///
-/// RTN..: see TstrTraverse()
-///
-/// DESCR: Traverse cells, call pfProcessor on each of them
-///
-/// **************************************************************************
+/// \arg pfProcesor cell processor
+/// \arg pfFinalizer cell finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return see TstrTraverse()
+/// 
+/// \brief Traverse cells, call pfProcessor on each of them
+/// \details 
+/// 
 
 int PopulationTraverseCells
 (struct symtab_HSolveListElement *phsle,

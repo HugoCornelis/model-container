@@ -43,36 +43,36 @@
 #endif
 
 
-//s
-//s gives transparant access to hierarchical structures with input/output
-//s and parameters, inherits from hierarchical structure
-//s
-//s supposed to be base bio component
-//s
+/// \struct
+/// \struct gives transparant access to hierarchical structures with input/output
+/// \struct and parameters, inherits from hierarchical structure
+/// \struct
+/// \struct supposed to be base bio component
+/// \struct
 
 struct symtab_BioComponent
 {
-    //m base symbol
+    /// base symbol
 
     struct symtab_IOHierarchy ioh;
 
-    //m optional identifier with index for name of segment
+    /// optional identifier with index for name of segment
 
     struct symtab_IdentifierIndex *pidinName;
 
-/*     //m optional name of prototype */
+/*     /// optional name of prototype */
 
 /*     char *pcPrototype; */
 
-    //m prototype symbol
+    /// prototype symbol
 
     struct symtab_HSolveListElement *phslePrototype;
 
-    //m parameters
+    /// parameters
 
     struct symtab_ParContainer *pparc;
 
-    //m generic option container
+    /// generic option container
 
     int iOptions;
 };
@@ -191,7 +191,7 @@ BioComponentTraverseSpikeReceivers
 #include "neurospaces/parameters.h"
 
 
-/* //f static inline prototypes */
+//f static inline prototypes
 
 #ifndef SWIG
 static inline
@@ -282,20 +282,16 @@ BioComponentSetPrototype
 (struct symtab_BioComponent *pbio, struct symtab_BioComponent *pbioProto);
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentAssignParameters()
-///
-/// ARGS.:
-///
-///	pbio...: symbol to assign parameters to.
-///	ppar...: new parameters.
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Assign parameter to symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pbio symbol to assign parameters to.
+/// \arg ppar new parameters.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Assign parameter to symbol.
+/// \details 
+/// 
 
 #ifndef SWIG
 static inline
@@ -308,27 +304,23 @@ BioComponentAssignParameters
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: BioComponentChangeParameter()
-///
-/// ARGS.:
-///
-///	pbio...: symbol to get parameter for.
-///	ppar...: new parameter.
-///
-/// RTN..: struct symtab_Parameters * : new parameter, NULL for failure.
-///
-/// DESCR: Set parameter with given name.
-///
-/// NOTE.:
-///
+/// 
+/// 
+/// \arg pbio symbol to get parameter for.
+/// \arg ppar new parameter.
+/// 
+/// \return struct symtab_Parameters * : new parameter, NULL for failure.
+/// 
+/// \brief Set parameter with given name.
+/// \details 
+/// 
+/// \note 
+/// 
 ///	After calling this function, you must use the return value for
 ///	the new parameter.  What can happen internally, is that an
 ///	existing parameter structure gets changed, and is returned as
 ///	result, while the ppar argument is freed.
-///
-/// **************************************************************************
+/// 
 
 #ifndef SWIG
 static inline
@@ -351,10 +343,10 @@ BioComponentChangeParameter
 }
 
 
-///
+/// 
 /// get a unique string representation identifying this symbol
 /// content.
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -367,12 +359,12 @@ BioComponentGetID
 
     char *pcResult = NULL;
 
-    //t check for availability of parameters in parameter caches
-    //t if none found,
-    //t   loop over prototypes,
-    //t     check for parameters in this symbol
-    //t     if found,
-    //t       return this symbol string representation
+    /// \todo check for availability of parameters in parameter caches
+    /// \todo if none found,
+    /// \todo   loop over prototypes,
+    /// \todo     check for parameters in this symbol
+    /// \todo     if found,
+    /// \todo       return this symbol string representation
 
     //- define result
 
@@ -389,9 +381,9 @@ BioComponentGetID
 }
 
 
-///
+/// 
 /// get name of biocomponent
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -403,9 +395,9 @@ BioComponentGetName(struct symtab_BioComponent *pbio)
 }
 
 
-///
+/// 
 /// get options for a bio component
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -418,9 +410,9 @@ BioComponentGetOptions
 }
 
 
-///
+/// 
 /// get count of created aliases by type.
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -432,9 +424,9 @@ BioComponentGetPidin(struct symtab_BioComponent *pbio)
 }
 
 
-///
+/// 
 /// get prototype of component
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -446,9 +438,9 @@ BioComponentGetPrototype(struct symtab_BioComponent *pbio)
 }
 
 
-///
+/// 
 /// link parameters at end of parameters list
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -463,9 +455,9 @@ BioComponentParameterLinkAtEnd
 }
 
 
-///
+/// 
 /// resolve parameter value.
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -488,9 +480,9 @@ BioComponentParameterResolveValue
 
     //- else
 
-    //t SymbolFindParameter() also uses SymbolGetParameter(), and that
-    //t seems a conflict to me, not sure, have to check out what exactly
-    //t the consequences are.
+    /// \todo SymbolFindParameter() also uses SymbolGetParameter(), and that
+    /// \todo seems a conflict to me, not sure, have to check out what exactly
+    /// \todo the consequences are.
 
     else
     {
@@ -508,9 +500,9 @@ BioComponentParameterResolveValue
 }
 
 
-///
+/// 
 /// set options of component
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -528,9 +520,9 @@ BioComponentSetOptions
 }
 
 
-///
+/// 
 /// set prototype of component
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -574,9 +566,9 @@ BioComponentSetPrototype
 
 #error BioComponents only supports PRE_PROTO_TRAVERSAL for now.
 
-//t #defines to maintain prototype links
-//t 
-//t do nothing for #SU ?
+/// \todo #defines to maintain prototype links
+/// \todo 
+/// \todo do nothing for #SU ?
 
 #endif
 
@@ -586,9 +578,9 @@ BioComponentSetPrototype
 }
 
 
-///
+/// 
 /// set coordinates.
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -631,9 +623,9 @@ BioComponentSetAtXYZ
 }
 
 
-///
+/// 
 /// set name of component
-///
+/// 
 
 #ifndef SWIG
 static inline

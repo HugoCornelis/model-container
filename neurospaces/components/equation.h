@@ -25,13 +25,12 @@
 #include "neurospaces/pidinstack.h"
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_Equation;
 struct symtab_Equation;
 
 
-//f exported functions
 
 struct symtab_Equation * EquationCalloc(void);
 
@@ -53,43 +52,43 @@ int EquationSetType(struct symtab_Equation *peq, int iType);
 #include "neurospaces/parcontainer.h"
 
 
-//s
-//s equation description
-//s
+/// \struct
+/// \struct equation description
+/// \struct
 
 struct descr_Equation
 {
-    //m type of equation
+    /// type of equation
 
     int iType;
 };
 
 
-//s
-//s HH and alike equations
-//s
+/// \struct
+/// \struct HH and alike equations
+/// \struct
 
 struct symtab_Equation
 {
-    //m base struct : symbol
+    /// base struct : symbol
 
     struct symtab_BioComponent bio;
 
-    //m type of equation, see TYPE_EQUATION_*
+    /// type of equation, see TYPE_EQUATION_*
 
     struct descr_Equation deeq;
 };
 
 
-/* //d Hodgkin-Huxley type of equation */
+/* /// \def Hodgkin-Huxley type of equation */
 
 /* #define TYPE_EQUATION_HH		1 */
 
-/* //d alpha equation */
+/* /// \def alpha equation */
 
 /* #define TYPE_EQUATION_ALPHA		2 */
 
-//d dual exponential equation
+/// \def dual exponential equation
 
 #define TYPE_EQUATION_EXPONENTIAL	3
 

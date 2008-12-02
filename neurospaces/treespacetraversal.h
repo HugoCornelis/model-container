@@ -23,7 +23,6 @@
 
 
 //f
-//f function that processes symbols
 //f
 
 struct TreespaceTraversal;
@@ -34,111 +33,110 @@ int TreespaceTraversalProcessor
      void *pvUserdata);
 
 
-//d processor failure : continue with siblings, no postprocessing
+/// \def processor failure : continue with siblings, no postprocessing
 
 #define TSTR_PROCESSOR_FAILURE			1
 
-//d processor success : continue with children, then post processing
+/// \def processor success : continue with children, then post processing
 
 #define TSTR_PROCESSOR_SUCCESS			2
 
-//d processor success : continue with children, no post processing
+/// \def processor success : continue with children, no post processing
 
 #define TSTR_PROCESSOR_SUCCESS_NO_FINALIZE	3
 
-//d processor success : abort, no siblings, no children, no post processing
+/// \def processor success : abort, no siblings, no children, no post processing
 
 #define TSTR_PROCESSOR_ABORT			4
 
 
 //f
-//f function that selects symbols
 //f
 
 typedef TreespaceTraversalProcessor TreespaceTraversalSelector;
 
 
-//d selector failure
+/// \def selector failure
 
 #define TSTR_SELECTOR_FAILURE			TSTR_PROCESSOR_FAILURE
 
-//d selector success
+/// \def selector success
 
 //#define TSTR_SELECTOR_SUCCESS			SYMBOL_PROCESSOR_SUCCESS
 
-//d selector abort
+/// \def selector abort
 
 //#define TSTR_SELECTOR_ABORT			SYMBOL_PROCESSOR_ABORT
 
-//d selector : continue with next sibling
+/// \def selector : continue with next sibling
 
 #define TSTR_SELECTOR_PROCESS_SIBLING		16
 
-//d selector : process and descend into children
+/// \def selector : process and descend into children
 
 #define TSTR_SELECTOR_PROCESS_CHILDREN		17
 
-//d selector : descend into children, but do not process current
+/// \def selector : descend into children, but do not process current
 
 #define TSTR_SELECTOR_PROCESS_ONLY_CHILDREN	18
 
-//d selector : go to parent
+/// \def selector : go to parent
 
 //#define TSTR_SELECTOR_PROCESS_PARENT		19
 
 
-//s
-//s structure needed to run through part of the symbol table
-//s
+/// \struct
+/// \struct structure needed to run through part of the symbol table
+/// \struct
 
 struct TreespaceTraversal
 {
-    //m actual status, return status
-    //m for now initialized to zero externally, afterwards read only
+    /// actual status, return status
+    /// for now initialized to zero externally, afterwards read only
 
     int iStatus;
 
-    //m number of entries in context stack at initialization
+    /// number of entries in context stack at initialization
 
     int iFirstEntry;
 
-    //m actual processed element
+    /// actual processed element
 
     struct CoreRoot *pcrActual;
 
     int iType;
 
-    //m symbol path
+    /// symbol path
 
     struct PidinStack *ppist;
 
     struct PSymbolStack *psymst;
 
-    //m principal serial ID of actual
+    /// principal serial ID of actual
 
     int iSerialPrincipal;
 
-    //m serial ID in segment subspace
+    /// serial ID in segment subspace
 
     int iSerialSegment;
 
-    //m serial ID in mechanism subspace
+    /// serial ID in mechanism subspace
 
     int iSerialMechanism;
 
-    //m pre selector (prepares)
+    /// pre selector (prepares)
 
     TreespaceTraversalSelector *pfPreSelector;
 
-    //m actual symbol processor
+    /// actual symbol processor
 
     TreespaceTraversalProcessor *pfProcessor;
 
-    //m post selector (finishes)
+    /// post selector (finishes)
 
     TreespaceTraversalProcessor *pfFinalizer;
 
-    //m user defined data for above procedures
+    /// user defined data for above procedures
 
     void *pvPreSelector;
     void *pvProcessor;
@@ -146,7 +144,7 @@ struct TreespaceTraversal
 };
 
 
-//d treespace traversal status : 
+/// \def treespace traversal status : 
 
 #define TSTR_STATUS_NEW				1
 #define TSTR_STATUS_INITIALIZED			2
@@ -229,7 +227,6 @@ int TstrSetActual(struct TreespaceTraversal *ptstr, struct CoreRoot *pcr);
 int TstrSetActualType(struct TreespaceTraversal *ptstr, int iType);
 
 
-//f inline prototypes
 
 #ifndef SWIG
 static inline
@@ -237,21 +234,16 @@ static inline
 int TstrGetPrincipalSerial(struct TreespaceTraversal *ptstr);
 
 
-//f inlines
 
-/// **************************************************************************
-///
-/// SHORT: TstrGetPrincipalSerial()
-///
-/// ARGS.:
-///
-///	ptstr..: initialized treespace traversal
-///
-/// RTN..: int : principal serial, INT_MAX for failure.
-///
-/// DESCR: Get the actual principal serial.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ptstr initialized treespace traversal
+/// 
+/// \return int : principal serial, INT_MAX for failure.
+/// 
+/// \brief Get the actual principal serial.
+/// \details 
+/// 
 
 #ifndef SWIG
 static inline

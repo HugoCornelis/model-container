@@ -38,21 +38,21 @@
 extern int iTotalAllocatedSymbols;
 
 
-//d give description of type of HSLE struct
+/// \def give description of type of HSLE struct
 
 #define SymbolHSLETypeDescribe(iType)					\
     (ppc_symbols_long_descriptions[(iType)])
 
 
-//d give 6 letter description of type of HSLE struct
+/// \def give 6 letter description of type of HSLE struct
 
 #define SymbolHSLETypeDescribeWith6Letters(iType)			\
     (ppc_symbols_short_descriptions[(iType)])
 
 
-//d
-//d test type(phsle) == struct symtab_HSolveListElement * at compile time
-//d
+/// \def
+/// \def test type(phsle) == struct symtab_HSolveListElement * at compile time
+/// \def
 
 #define CompileTimeTestSymbol(phsle)					\
 do {									\
@@ -61,9 +61,9 @@ do {									\
 } while (0)
 
 
-//d
-//d get next symbol in list
-//d
+/// \def
+/// \def get next symbol in list
+/// \def
 
 #define SymbolContainerNext(phsle)					\
 ({									\
@@ -72,9 +72,9 @@ do {									\
 })
 
 
-//d
-//d test if valid result after iteration
-//d
+/// \def
+/// \def test if valid result after iteration
+/// \def
 
 #define SymbolIterateValid(phsle)					\
 ({									\
@@ -83,9 +83,9 @@ do {									\
 })
 
 
-//d
-//d set solver info
-//d
+/// \def
+/// \def set solver info
+/// \def
 
 #define SymbolSetFlags(phsle,iF)					\
 ({									\
@@ -94,8 +94,8 @@ do {									\
 })
 
 
-/* //d give index of HSLE struct, should always be -1, 0 now for */
-/* //d compatibility, but will be changed some time. */
+/* /// \def give index of HSLE struct, should always be -1, 0 now for */
+/* /// \def compatibility, but will be changed some time. */
 
 /* #define SymbolIndex(phsle) (-1) */
 
@@ -107,7 +107,7 @@ do {									\
 /* }) */
 
 
-//d give name of HSLE struct, NULL for none
+/// \def give name of HSLE struct, NULL for none
 
 #define SymbolName SymbolGetName
 
@@ -119,7 +119,6 @@ do {									\
 /* }) */
 
 
-//f static inline prototypes
 
 #ifndef SWIG
 static inline
@@ -135,11 +134,10 @@ int SymbolGetFlags(struct symtab_HSolveListElement *phsle);
 #include "vtable.h"
 
 
-//f static inlines
 
-///
+/// 
 /// get flags of symbol.
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -153,9 +151,8 @@ int SymbolGetFlags(struct symtab_HSolveListElement *phsle)
 #include "inputoutput.h"
 
 
-//f exported functions
 
-//t should go to the library of selectors and processors.
+/// \todo should go to the library of selectors and processors.
 
 int SymbolDeleter(struct TreespaceTraversal *ptstr, void *pvUserdata);
 

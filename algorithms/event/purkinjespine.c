@@ -40,18 +40,18 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-//s event associations for spine algorithm
+/// \struct event associations for spine algorithm
 
 static ParserEventListener SpineSegmentParserEventListener;
 
 static ParserEventAssociation pevasSpines[] = 
 {
     {
-	//m listens to any segment event
+	/// listens to any segment event
 
 	EVENT_TYPE_SEGMENT,
 
-	//m function to call
+	/// function to call
 
 	SpineSegmentParserEventListener,
     },
@@ -64,17 +64,17 @@ static ParserEventAssociation pevasSpines[] =
 
 static ParserEventAssociationTable evatSpines =
 {
-    //m number of entries
+    /// number of entries
 
     sizeof(*pevasSpines) / sizeof(ParserEventAssociation),
 
-    //m event associations
+    /// event associations
 
     pevasSpines,
 };
 
 
-//s algorithm handlers for spine algorithm
+/// \struct algorithm handlers for spine algorithm
 
 static AlgorithmHandler SpineInitAlgorithm;
 
@@ -82,48 +82,48 @@ static AlgorithmHandler SpinePrintInfo;
 
 static struct AlgorithmHandlerLibrary pfSpineHandlers =
 {
-    //m after constructor, global is parser context, data is init string
+    /// after constructor, global is parser context, data is init string
 
     SpineInitAlgorithm,
 
-    //m after init, before destruct
+    /// after init, before destruct
 
     NULL,
 
-    //m print info handler
+    /// print info handler
 
     SpinePrintInfo,
 };
 
 
-//s algorithm description
+/// \struct algorithm description
 
 static struct symtab_Algorithm modSpinesEvents =
 {
-    //m link
+    /// link
 
     {
 	NULL,
 	NULL,
     },
 
-    //m type
+    /// type
 
     0,
 
-    //m flags
+    /// flags
 
     0,
 
-    //m name
+    /// name
 
     "Spines_with_events",
 
-    //m algorithm handlers
+    /// algorithm handlers
 
     &pfSpineHandlers,
 
-    //m event association table
+    /// event association table
 
     &evatSpines
 };
@@ -131,7 +131,7 @@ static struct symtab_Algorithm modSpinesEvents =
 struct symtab_Algorithm *palgSpinesEvents = &modSpinesEvents;
 
 
-//s spine algorithm private data
+/// \struct spine algorithm private data
 
 /*s */
 /*s struct with spine options */
@@ -178,17 +178,17 @@ typedef struct SpineOptions_type SpineOptions;
 static SpineOptions soSpineOptions;
 
 
-//s
-//s spine variables
-//s
+/// \struct
+/// \struct spine variables
+/// \struct
 
 struct SpineVariables_type
 {
-    //m current cell to add spines to
+    /// current cell to add spines to
 
     struct symtab_Cell *pcell;
 
-    //m symbol of prototype for random spines
+    /// symbol of prototype for random spines
 
     struct symtab_HSolveListElement *phsleSpineProto;
 
@@ -196,17 +196,17 @@ struct SpineVariables_type
 
     double dSpineSurface;
 
-    //m number of added spines for this cell
+    /// number of added spines for this cell
 
     int iPhysicalSpines;
 
-    //m number of (physical + virtual) spines for this cell
+    /// number of (physical + virtual) spines for this cell
 
     double dAllSpines;
 
-    //m flags event generation for creation of spines
+    /// flags event generation for creation of spines
 
-    //! prevents infinite loops
+    /// \note prevents infinite loops
 
     int iParserEventSpineCreation;
 };
@@ -219,7 +219,7 @@ static SpineVariables svSpineVariables;
 
 // local functions
 
-//static int SpineAdd(struct symtab_HSolveListElement *phsle);
+/// \structtatic int SpineAdd(struct symtab_HSolveListElement *phsle);
 
 static int SpineCreateAndAdd
 (struct symtab_HSolveListElement *phsle,
@@ -231,25 +231,21 @@ static int SpineDoAdjustments
 (struct PidinStack *ppist,struct symtab_D3Segment *pD3segm);
 
 
-/// **************************************************************************
-///
-/// SHORT: SpineCreateAndAdd()
-///
-/// ARGS.:
-///
-///	phsle...: spine prototype to use for created spines
-///	dSpines.: number of virtual spines
+/// 
+/// 
+/// \arg phsle spine prototype to use for created spines
+/// \arg dSpines number of virtual spines
 ///	pD3segm.: segment to add spines to
-///	ppist...: context of segment
-///
-/// RTN..: int : number of created spines
-///
-/// DESCR: Create spines and link them into a list
-///
+/// \arg ppist context of segment
+/// 
+/// \return int : number of created spines
+/// 
+/// \brief Create spines and link them into a list
+/// \details 
+/// 
 ///	dSpines is the number of spines that influence the surface of the
 ///	segment if no physical spines would be added.
-///
-/// **************************************************************************
+/// 
 
 static int SpineCreateAndAdd
 (struct symtab_HSolveListElement *phsle,
@@ -261,16 +257,16 @@ static int SpineCreateAndAdd
 
     int iResult = 0;
 
-    //v segment
+    /// segment
 
     char *pcSegment = NULL;
 /*     int iSegment = -1; */
 
-    //v name of segment
+    /// name of segment
 
     struct symtab_IdentifierIndex * pidinName = NULL;
 
-    //v proxy for new spine symbol table element
+    /// proxy for new spine symbol table element
 
     struct symtab_Proxy *pproxSpine = NULL;
 
@@ -302,7 +298,7 @@ static int SpineCreateAndAdd
     ProxySetName(pproxSpine,pidinName);
 
     {
-	//v prototype symbol with spine segments
+	/// prototype symbol with spine segments
 
 	struct symtab_HSolveListElement *phsleSegms = phsle;
 
@@ -314,7 +310,7 @@ static int SpineCreateAndAdd
 
 	if (instanceof_v_segment(phsleSegms))
 	{
-	    //v sections in spine segment container
+	    /// sections in spine segment container
 
 	    struct symtab_HSolveListElement *phsleSection = NULL;
 
@@ -331,7 +327,7 @@ static int SpineCreateAndAdd
 
 	    //- add container element to context
 
-	    //! still using private data here
+	    /// \note still using private data here
 
 	    PidinStackPush(&pistContainer,pidinName);
 
@@ -356,8 +352,8 @@ static int SpineCreateAndAdd
 
 		    //- generate segment event
 
-		    //! because we generate a parser event here,
-		    //! this algorithm should be derived from a parser algorithm
+		    /// \note because we generate a parser event here,
+		    /// \note this algorithm should be derived from a parser algorithm
 
 		    ParserEventGenerate
 			(EVENT_TYPE_SEGMENT | EVENT_ACTION_CREATE,
@@ -379,7 +375,7 @@ static int SpineCreateAndAdd
 	(&pD3segm->segment.bio.ioh.iohc,&pproxSpine->alia.hsle.hsleLink);
 
     {
-	//v prototype symbol with spine segments
+	/// prototype symbol with spine segments
 
 	struct symtab_HSolveListElement *phsleSegms = phsle;
 
@@ -392,7 +388,7 @@ static int SpineCreateAndAdd
 
 	if (instanceof_v_segment(phsleSegms))
 	{
-	    //v sections in spine segment container
+	    /// sections in spine segment container
 
 	    struct symtab_HSolveListElement *phsleSection = NULL;
 
@@ -409,7 +405,7 @@ static int SpineCreateAndAdd
 
 	    //- add container element to context
 
-	    //! still using private data here
+	    /// \note still using private data here
 
 	    PidinStackPush(&pistContainer,pidinName);
 
@@ -434,8 +430,8 @@ static int SpineCreateAndAdd
 
 		    //- generate segment event
 
-		    //! add event because parent segment is already added,
-		    //! thus the spine is now already part of the model
+		    /// \note add event because parent segment is already added,
+		    /// \note thus the spine is now already part of the model
 
 		    ParserEventGenerate
 			(EVENT_TYPE_SEGMENT | EVENT_ACTION_ADD,
@@ -465,22 +461,18 @@ static int SpineCreateAndAdd
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SpineSegmentCheck()
-///
-/// ARGS.:
-///
-///	ppist..: context of segment
-///	psegment..: segment candidate for spines
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Check if segment needs spines
-///
+/// 
+/// 
+/// \arg ppist context of segment
+/// \arg psegment segment candidate for spines
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Check if segment needs spines
+/// \details 
+/// 
 ///	See hines_read.c
-///
-/// **************************************************************************
+/// 
 
 static int SpineSegmentCheck
 (struct PidinStack *ppist,struct symtab_Segment *psegment)
@@ -489,20 +481,20 @@ static int SpineSegmentCheck
 
     int bResult = TRUE;
 
-    //v segment parameters
+    /// segment parameters
 
     double dDia;
     double dLength;
 
-    //v surface of all spines
+    /// surface of all spines
 
     double dSpines = 0.0;
 
     //- cast segment to positioned segment
 
-    //t this hack should disappear if struct symtab_D3Segment is split
-    //t into D3 segment and segment enumeration
-    //t the code below still need adjustements
+    /// \todo this hack should disappear if struct symtab_D3Segment is split
+    /// \todo into D3 segment and segment enumeration
+    /// \todo the code below still need adjustements
 
     struct symtab_D3Segment * pD3segm = (struct symtab_D3Segment *)psegment;
 
@@ -559,22 +551,18 @@ static int SpineSegmentCheck
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SpineDoAdjustments()
-///
-/// ARGS.:
-///
-///	ppist..: context of segment
+/// 
+/// 
+/// \arg ppist context of segment
 ///	pD3segm: segment candidate for spines
-///
-/// RTN..: int : TRUE : spines added, FALSE : no spines added
-///
-/// DESCR: Do spine adjustment on segment : add spines, update surface
-///
+/// 
+/// \return int : TRUE : spines added, FALSE : no spines added
+/// 
+/// \brief Do spine adjustment on segment : add spines, update surface
+/// \details 
+/// 
 ///	See hines_read.c
-///
-/// **************************************************************************
+/// 
 
 static int SpineDoAdjustments
 (struct PidinStack *ppist,struct symtab_D3Segment *pD3segm)
@@ -605,10 +593,10 @@ static int SpineDoAdjustments
 
     //- calculate surface for virtual spines and physical spines
 
-    //! here we assume fSpineDensity has units spines/m
-    //! probably better to get this into spines/m^2
-    //!
-    //! for now this is a compatibility issue with the old reader
+    /// \note here we assume fSpineDensity has units spines/m
+    /// \note probably better to get this into spines/m^2
+    ///
+    /// \note for now this is a compatibility issue with the old reader
 
     dSpines = dLength * soSpineOptions.fSpineDensity * 1e6;
 
@@ -671,23 +659,19 @@ static int SpineDoAdjustments
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SpineSegmentParserEventListener()
-///
-/// ARGS.:
-///
-///	std ParserEventListener args
-///
-/// RTN..: int : std ParserEventListener return value
-///
-/// DESCR: ParserEvent listener to attach spines
-///
+/// 
+/// 
+/// \arg std ParserEventListener args
+/// 
+/// \return int  std ParserEventListener return value
+/// 
+/// \brief ParserEvent listener to attach spines
+/// \details 
+/// 
 ///	For cell type events, a new cell is registered, 
 ///	For segment type events, spines are attached to the 
 ///	registered cell.
-///
-/// **************************************************************************
+/// 
 
 static int SpineSegmentParserEventListener
 (struct ParserEvent *pev,
@@ -714,7 +698,7 @@ static int SpineSegmentParserEventListener
 
 	case EVENT_ACTION_CREATE:
 	{
-	    //t can we ever get here ?
+	    /// \todo can we ever get here ?
 
 	    break;
 	}
@@ -768,7 +752,7 @@ static int SpineSegmentParserEventListener
 
 	    // unregister the cell as spine candidate
 
-	    //svSpineVariables.pcell = NULL;
+	    /// \structvSpineVariables.pcell = NULL;
 
 	    //printf("%i spines added\n",svSpineVariables.iPhysicalSpines);
 
@@ -804,24 +788,20 @@ static int SpineSegmentParserEventListener
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SpineInitAlgorithm()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to init spine algorithm
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to init spine algorithm
+/// \details 
+/// 
 
 static int SpineInitAlgorithm
     (struct symtab_Algorithm *palgSelf,char *pcName,void *pvGlobal,void *pvData)
 {
-    //- set default result : ok
+    //- set default result  ok
 
     int bResult = TRUE;
 
@@ -833,15 +813,15 @@ static int SpineInitAlgorithm
 
     char *pcInit = &((char *)pvData)[1];
 
-    //v argument seperator
+    /// argument seperator
 
     char pcSeperator[] = " \t,;/}";
 
-    //v next arg
+    /// next arg
 
     char *pcArg = NULL;
 
-    //v length of arg
+    /// length of arg
 
     int iLength = -1;
 
@@ -917,7 +897,7 @@ static int SpineInitAlgorithm
 
     if (svSpineVariables.phsleSpineProto)
     {
-	//v loops over sections
+	/// loops over sections
 
 	struct symtab_HSolveListElement * phsleSection = NULL;
 
@@ -971,19 +951,15 @@ static int SpineInitAlgorithm
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SpinePrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on serial segment algorithm
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int  std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on serial segment algorithm
+/// \details 
+/// 
 
 static int SpinePrintInfo
 (struct symtab_Algorithm *palgSelf,char *pcName,void *pvGlobal,void *pvData)
@@ -992,7 +968,7 @@ static int SpinePrintInfo
 
     int bResult = TRUE;
 
-    //v loop var
+    /// loop var
 
     int i;
 
@@ -1025,17 +1001,17 @@ static int SpinePrintInfo
 	 "\tSpine surface : %g\n",
 	 svSpineVariables.dSpineSurface);
 
-/* //s */
-/* //s spine variables */
-/* //s */
+/* /// \struct */
+/* /// \struct spine variables */
+/* /// \struct */
 
 /* struct SpineVariables_type */
 /* { */
-/*     //m current cell to add spines to */
+/*     /// current cell to add spines to */
 
 /*     struct symtab_Cell *pcell; */
 
-/*     //m symbol of prototype for random spines */
+/*     /// symbol of prototype for random spines */
 
 /*     struct symtab_HSolveListElement *phsleSpineProto; */
 
@@ -1043,17 +1019,17 @@ static int SpinePrintInfo
 
 /*     double dSpineSurface; */
 
-/*     //m number of added spines for this cell */
+/*     /// number of added spines for this cell */
 
 /*     int iPhysicalSpines; */
 
-/*     //m number of (physical + virtual) spines for this cell */
+/*     /// number of (physical + virtual) spines for this cell */
 
 /*     double dAllSpines; */
 
-/*     //m flags event generation for creation of spines */
+/*     /// flags event generation for creation of spines */
 
-/*     //! prevents infinite loops */
+/*     /// \note prevents infinite loops */
 
 /*     int iParserEventSpineCreation; */
 /* }; */

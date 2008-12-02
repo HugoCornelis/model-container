@@ -28,13 +28,12 @@
 #include "neurospaces/pidinstack.h"
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_Pool;
 struct symtab_Pool;
 
 
-//f exported functions
 
 struct symtab_Pool * PoolCalloc(void);
 
@@ -72,25 +71,25 @@ PoolParameterScaleValue
 #include "neurospaces/parameters.h"
 
 
-//s
-//s pool description
-//s
+/// \struct
+/// \struct pool description
+/// \struct
 
 struct descr_Pool
 {
-    //m type of pool data
+    /// type of pool data
 
     int iType;
 
-    //m actual data : should still be changed
+    /// actual data : should still be changed
 
     union 
     {
-	//m equation describing pool
+	/// equation describing pool
 
 	struct symtab_Equation *peq;
 
-	//m file with table describing pool
+	/// file with table describing pool
 
 	char *pcFilename;
     }
@@ -98,35 +97,35 @@ struct descr_Pool
 };
 
 
-//s
-//s struct symtab_Pool
-//s
+/// \struct
+/// \struct struct symtab_Pool
+/// \struct
 
 struct symtab_Pool
 {
-    //m base struct : bio component
+    /// base struct : bio component
 
     struct symtab_BioComponent bio;
 
-    //m pool description
+    /// pool description
 
     struct descr_Pool depool;
 };
 
 
-//d equation type
+/// \def equation type
 
 #define TYPE_POOL_EQUATION		1
 
-//d table in file
+/// \def table in file
 
 #define TYPE_POOL_TABLEFILE		2
 
-//d attachment point data
+/// \def attachment point data
 
 #define TYPE_POOL_VIRTUALCONNECTION	4
 
-//d additional pool parameters
+/// \def additional pool parameters
 
 #define TYPE_POOL_PARAMETERS		5
 

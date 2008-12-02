@@ -49,7 +49,6 @@ struct AlgorithmClass;
 
 
 //f
-//f algorithm class handler
 //f
 
 typedef
@@ -65,45 +64,45 @@ AlgorithmClassInstanceCreator
  struct symtab_AlgorithmSymbol *palgs);
 
 
-//s
-//s algorithm class handler library
-//s
+/// \struct
+/// \struct algorithm class handler library
+/// \struct
 
 struct AlgorithmClassHandlerLibrary
 {
-    //m print info handler
+    /// print info handler
 
     AlgorithmClassHandler *pfPrintInfo;
 
-    //m create instance from class (self, name, context, init string)
+    /// create instance from class (self, name, context, init string)
 
     AlgorithmClassInstanceCreator *pfCreateInstance;
 };
 
 
-//s
-//s gives transparant access to all algorithm classes, links into hsolve list
-//s
+/// \struct
+/// \struct gives transparant access to all algorithm classes, links into hsolve list
+/// \struct
 
 struct AlgorithmClass
 {
-    //m link elements into list
+    /// link elements into list
 
     HSolveListElement hsleLink;
 
-/*     //m gives type of algorithm */
+/*     /// gives type of algorithm */
 
 /*     int iType; */
 
-/*     //m flags */
+/*     /// flags */
 
 /*     int iFlags; */
 
-    //m name algorithm class
+    /// name algorithm class
 
     char *pcIdentifier;
 
-    //m algorithm handlers
+    /// algorithm handlers
 
     struct AlgorithmClassHandlerLibrary *ppfHandlers;
 };

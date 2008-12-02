@@ -32,19 +32,15 @@
 #include "neurospaces/symbols.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: FunctionAllowsScaling()
-///
-/// ARGS.:
-///
-///	pfun..: function
-///
-/// RTN..: int : TRUE if function allows scaling.
-///
-/// DESCR: Check if function allows scaling.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pfun function
+/// 
+/// \return int : TRUE if function allows scaling.
+/// 
+/// \brief Check if function allows scaling.
+/// \details 
+/// 
 
 int FunctionAllowsScaling(struct symtab_Function *pfun)
 {
@@ -72,20 +68,16 @@ int FunctionAllowsScaling(struct symtab_Function *pfun)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: FunctionAssignParameters()
-///
-/// ARGS.:
-///
-///	pfun..: function.
-///	ppar..: new parameters.
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Assign parameters.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pfun function.
+/// \arg ppar new parameters.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Assign parameters.
+/// \details 
+/// 
 
 int
 FunctionAssignParameters
@@ -95,19 +87,15 @@ FunctionAssignParameters
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: FunctionCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Function * 
-///
+/// 
+/// 
+/// \return struct symtab_Function * 
+/// 
 ///	Newly allocated input, NULL for failure
-///
-/// DESCR: Allocate a new function symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new function symbol table element
+/// \details 
+/// 
 
 struct symtab_Function * FunctionCalloc(void)
 {
@@ -131,21 +119,17 @@ struct symtab_Function * FunctionCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: FunctionGetName()
-///
-/// ARGS.:
-///
-///	pfun.: function.
-///
-/// RTN..: char *
-///
+/// 
+/// 
+/// \arg pfun function.
+/// 
+/// \return char *
+/// 
 ///	Name of the function.
-///
-/// DESCR: Get name of function.
-///
-/// **************************************************************************
+/// 
+/// \brief Get name of function.
+/// \details 
+/// 
 
 char *
 FunctionGetName(struct symtab_Function *pfun)
@@ -154,22 +138,18 @@ FunctionGetName(struct symtab_Function *pfun)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: FunctionGetParameter()
-///
-/// ARGS.:
-///
-///	pfun.: function.
-///	pc...: name of parameter.
-///
-/// RTN..: struct symtab_Parameters *
-///
+/// 
+/// 
+/// \arg pfun function.
+/// \arg pc name of parameter.
+/// 
+/// \return struct symtab_Parameters *
+/// 
 ///	Searched parameter, NULL for not found.
-///
-/// DESCR: Get name function parameter.
-///
-/// **************************************************************************
+/// 
+/// \brief Get name function parameter.
+/// \details 
+/// 
 
 struct symtab_Parameters *
 FunctionGetParameter(struct symtab_Function *pfun, char *pc)
@@ -178,19 +158,15 @@ FunctionGetParameter(struct symtab_Function *pfun, char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: FunctionInit()
-///
-/// ARGS.:
-///
-///	pfun.: function to init
-///
-/// RTN..: void
-///
-/// DESCR: init input
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pfun function to init
+/// 
+/// \return void
+/// 
+/// \brief init input
+/// \details 
+/// 
 
 void FunctionInit(struct symtab_Function *pfun)
 {
@@ -204,22 +180,18 @@ void FunctionInit(struct symtab_Function *pfun)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: FunctionPrint()
-///
-/// ARGS.:
-///
-///	pfun.....: function to print symbols for
+/// 
+/// 
+/// \arg pfun function to print symbols for
 ///	bAll.....: TRUE print full list of symbols, FALSE print only given cell
-///	iIndent..: number of indentation spaces
-///	pfile....: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Print symbol info for function
-///
-/// **************************************************************************
+/// \arg iIndent number of indentation spaces
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Print symbol info for function
+/// \details 
+/// 
 
 #define PrintFunctionIndent(iIndent, pfile)				\
 do									\
@@ -236,7 +208,7 @@ int FunctionPrint
 
     int bResult = TRUE;
 
-    //v section element
+    /// section element
 
     struct symtab_HSolveListElement *phsle = NULL;
 
@@ -258,28 +230,24 @@ int FunctionPrint
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: FunctionResolveInput()
-///
-/// ARGS.:
-///
-///	pfun.......: function to resolve input for
-///	ppist......: context of function
-///	pcInput....: name of input to function
-///	iPosition..: input identifier in instantiation
-///
-/// RTN..: struct symtab_HSolveListElement * : symbol that gives input
-///
-/// DESCR: Find input to function
-///
+/// 
+/// 
+/// \arg pfun function to resolve input for
+/// \arg ppist context of function
+/// \arg pcInput name of input to function
+/// \arg iPosition input identifier in instantiation
+/// 
+/// \return struct symtab_HSolveListElement * : symbol that gives input
+/// 
+/// \brief Find input to function
+/// \details 
+/// 
 ///	Function parameters are searched for a parameter with fieldname
 ///	'pcInput' with position 'iPosition' of parameters with that 
 ///	fieldname. The symbol to which the field belongs pointed to by the
 ///	matched parameter, is returned (so the returned symbol has an output
 ///	named 'pcInput' that is attached to the function parameter).
-///
-/// **************************************************************************
+/// 
 
 struct symtab_HSolveListElement *
 FunctionResolveInput
@@ -292,7 +260,7 @@ FunctionResolveInput
 
     struct symtab_HSolveListElement *phsleResult = NULL;
 
-    //v parameter iterator
+    /// parameter iterator
 
     struct symtab_Parameters *ppar = NULL;
 
@@ -378,20 +346,16 @@ FunctionResolveInput
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: FunctionSetName()
-///
-/// ARGS.:
-///
-///	pfun.......: function to set name of.
-///	pcName.....: new name.
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Set name of function.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pfun function to set name of.
+/// \arg pcName new name.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Set name of function.
+/// \details 
+/// 
 
 int
 FunctionSetName
@@ -411,21 +375,18 @@ FunctionSetName
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: FunctionValue()
-///
-/// ARGS.:
-///
-///	pfun.......: function to resolve input for
-///	ppist......: context of function
-///
-/// RTN..: double : value of function, FLT_MAX if failure.
-///
-/// DESCR: Resolve value for given function in given context.
-///
-/// TODO.: 
-///
+/// 
+/// 
+/// \arg pfun function to resolve input for
+/// \arg ppist context of function
+/// 
+/// \return double : value of function, FLT_MAX if failure.
+/// 
+/// \brief Resolve value for given function in given context.
+/// \details 
+/// 
+/// \todo  
+/// 
 ///	For a function like NORMALIZE() to do normalization on the 
 ///	number of synapses, a query manager could be used to ask for 
 ///	the number of connections on ppist + (function parameter) and 
@@ -433,8 +394,7 @@ FunctionSetName
 ///	known projection query.
 ///	The same technique can be used for delay and weights of 
 ///	synapses, for position dependent distribution of a parameter etc.
-///
-/// **************************************************************************
+/// 
 
 double
 FunctionValue
@@ -469,8 +429,8 @@ FunctionValue
 
 	//- set result
 
-	//t take dStart and dStop into account,
-	//t what were they supposed to do ?
+	/// \todo take dStart and dStop into account,
+	/// \todo what were they supposed to do ?
 
 	dResult = PidinStackToSerial(ppist);
     }
@@ -659,7 +619,7 @@ FunctionValue
 
 	//- if not zero
 
-	//! mm, how to check for zero here ?
+	/// \note mm, how to check for zero here ?
 
 	if (dArg2 != 0.0)
 	{

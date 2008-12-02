@@ -37,65 +37,65 @@
 #include "grid3dinstance.h"
 
 
-//s algorithm handlers for Grid3D algorithm
+/// \struct algorithm handlers for Grid3D algorithm
 
 static AlgorithmClassInstanceCreator Grid3DClassCreateInstance;
 
 static AlgorithmClassHandler Grid3DClassPrintInfo;
 
 
-//s algorithm class method table
+/// \struct algorithm class method table
 
 static struct AlgorithmClassHandlerLibrary pfGrid3DClassHandlers =
 {
-    //m class info handler
+    /// class info handler
 
     Grid3DClassPrintInfo,
 
-    //m symbol handler
+    /// symbol handler
 
     Grid3DClassCreateInstance,
 };
 
 
-//s spines class derives from algorithm class
+/// \struct spines class derives from algorithm class
 
 struct Grid3DClass
 {
-    //m base struct : algorithm class
+    /// base struct : algorithm class
 
     struct AlgorithmClass algc;
 
-    //m number of created instances
+    /// number of created instances
 
     int iInstances;
 };
 
 
-//s algorithm class description
+/// \struct algorithm class description
 
 static struct Grid3DClass g3Grid3D =
 {
-    //m base struct : algorithm class
+    /// base struct : algorithm class
 
     {
-	//m link
+	/// link
 
 	{
 	    NULL,
 	    NULL,
 	},
 
-	//m name
+	/// name
 
 	"Grid3D",
 
-	//m algorithm handlers
+	/// algorithm handlers
 
 	&pfGrid3DClassHandlers,
     },
 
-    //m number of instances
+    /// number of instances
 
     0,
 };
@@ -104,21 +104,17 @@ static struct Grid3DClass g3Grid3D =
 struct AlgorithmClass *palgcGrid3D = &g3Grid3D.algc;
 
 
-/// **************************************************************************
-///
-/// SHORT: Grid3DClassCreateInstance()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: struct AlgorithmInstance * : 
-///
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return struct AlgorithmInstance *  
+/// 
 ///	created algorithm instance, NULL for failure
-///
-/// DESCR: Algorithm handler to create instance of Grid3D algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief Algorithm handler to create instance of Grid3D algorithm.
+/// \details 
+/// 
 
 static
 struct AlgorithmInstance *
@@ -150,19 +146,15 @@ Grid3DClassCreateInstance
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: Grid3DClassPrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on grid 3d algorithm class.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int  std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on grid 3d algorithm class.
+/// \details 
+/// 
 
 static
 int

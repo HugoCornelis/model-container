@@ -29,26 +29,26 @@
 
 struct OrderedConnectionCache
 {
-    //m memory used by this connection cache.
+    /// memory used by this connection cache.
 
     int iMemoryUsed;
 
-    //m number of connections involved
+    /// number of connections involved
 
     int iConnections;
 
-    //m flag indicating pre or post ordering
+    /// flag indicating pre or post ordering
 
     int iPost;
 
-    //m array of ordered connections
+    /// array of ordered connections
 
     int *piOrdered;
 
-    //m array of referred connections
+    /// array of referred connections
 
-    //! this one is given to the constructor,
-    //! it is never part of the allocated memory.
+    /// \note this one is given to the constructor,
+    /// \note it is never part of the allocated memory.
 
     struct ConnectionCache *pcc;
 };
@@ -64,7 +64,6 @@ OrderedConnectionCacheGetFirstIndexForSerial
 (struct OrderedConnectionCache *pocc,struct ProjectionQuery *ppq,int iSerial);
 
 
-//f exported inlines
 
 static inline 
 void OrderedConnectionCacheFree(struct OrderedConnectionCache *pocc);
@@ -75,11 +74,10 @@ OrderedConnectionCacheGetEntry
 (struct OrderedConnectionCache *pocc,int iEntry);
 
 
-//f exported inlines
 
-///
+/// 
 /// free ordered connection cache.
-///
+/// 
 
 static inline 
 void OrderedConnectionCacheFree(struct OrderedConnectionCache *pocc)
@@ -90,9 +88,9 @@ void OrderedConnectionCacheFree(struct OrderedConnectionCache *pocc)
 }
 
 
-///
+/// 
 /// get entry from connection cache.
-///
+/// 
 
 static inline
 struct CachedConnection *
@@ -103,9 +101,9 @@ OrderedConnectionCacheGetEntry
 }
 
 
-///
+/// 
 /// get memory size taken by cache.
-///
+/// 
 
 static inline 
 int OrderedConnectionCacheGetMemorySize(struct OrderedConnectionCache *pocc)

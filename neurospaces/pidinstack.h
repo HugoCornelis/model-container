@@ -26,16 +26,16 @@
 #define PIDINSTACK_H
 
 
-//d If following two are combined, the #define PIDINSTACK_SMART_CACHE
-//d is defined, which gives a good implementation (and is the only one
-//d available at the time of this writing).
+/// \def If following two are combined, the #define PIDINSTACK_SMART_CACHE
+/// \def is defined, which gives a good implementation (and is the only one
+/// \def available at the time of this writing).
 
-//d have serials associated with a pidin stack
+/// \def have serials associated with a pidin stack
 
 #define USE_PIDINSTACK_WITH_SERIAL_INDEX_CACHE
 
 
-//d have a cache of symbol references to do fast lookups
+/// \def have a cache of symbol references to do fast lookups
 
 #define USE_PIDINSTACK_WITH_SYMBOL_CACHE
 
@@ -101,11 +101,11 @@ struct PidinStack;
 
 struct PidinStack
 {
-    //m stack top
+    /// stack top
 
     int iTop;
 
-    //m flags
+    /// flags
 
     int iFlags;
 
@@ -113,20 +113,20 @@ struct PidinStack
 
 #ifndef USE_PIDINSTACK_WITH_SYMBOL_CACHE
 
-    //! these are the same as for the symbol serial stack
-    //! use that in place of these hardcoded ones.
+    /// \note these are the same as for the symbol serial stack
+    /// \note use that in place of these hardcoded ones.
 
-    //m serial index in principal space,
-    //m should be summation of serial indexes of symbols pointed to
-    //m by ->ppidin[], pointed to by symbol stack cache (->symst).
-    //m 
-    //m value of INT_MAX means serial is unknown, but that should in fact
-    //m only happen after initialization of the pidin stack.
+    /// serial index in principal space,
+    /// should be summation of serial indexes of symbols pointed to
+    /// by ->ppidin[], pointed to by symbol stack cache (->symst).
+    /// 
+    /// value of INT_MAX means serial is unknown, but that should in fact
+    /// only happen after initialization of the pidin stack.
 
     int iPrincipalSerial;
 
-    //m number of entries in ->ppidin[] that contribute to principal serial
-    //m same use as ->iTop, -1 means no entries in use.
+    /// number of entries in ->ppidin[] that contribute to principal serial
+    /// same use as ->iTop, -1 means no entries in use.
 
     int iPrincipalEntries;
 
@@ -134,13 +134,13 @@ struct PidinStack
 
 #endif
 
-    //m array of stacked pidins
-    //m
-    //m silent assumption :
-    //m
-    //m always pointers to other's data
-    //m never privately allocated, should never be freed
-    //m
+    /// array of stacked pidins
+    ///
+    /// silent assumption :
+    ///
+    /// always pointers to other's data
+    /// never privately allocated, should never be freed
+    ///
 
     struct symtab_IdentifierIndex *ppidin[MAX_ELEMENT_DEPTH];
 
@@ -148,23 +148,23 @@ struct PidinStack
 
 #ifdef USE_PIDINSTACK_WITH_SERIAL_INDEX_CACHE
 
-    //m private symbol cache with serial support if possible
+    /// private symbol cache with serial support if possible
 
-    //! prefered to the one below
+    /// \note prefered to the one below
 
     struct PSymbolSerialStack symsst;
 
 #else
 
-    //m private symbol cache if possible
+    /// private symbol cache if possible
 
-    //! if change to pointer : modify accordingly
-    //!     PidinStackDuplicate()
-    //!     PidinStackAppendCompact()
-    //!     PidinStackFree()
-    //! and copy operation in various place,
-    //! look for them with something like
-    //!     'grep "=.*\*p\?pist" *.[ch]'
+    /// \note if change to pointer : modify accordingly
+    /// \note     PidinStackDuplicate()
+    /// \note     PidinStackAppendCompact()
+    /// \note     PidinStackFree()
+    /// \note and copy operation in various place,
+    /// \note look for them with something like
+    /// \note     'grep "=.*\*p\?pist" *.[ch]'
 
     struct PSymbolStack symst;
 
@@ -175,12 +175,12 @@ struct PidinStack
 };
 
 
-//d rooted pidin stack
+/// \def rooted pidin stack
 
 #define FLAG_PIST_ROOTED		1
 
 
-/* //d pidinstack with valid symbol stack cache */
+/* /// \def pidinstack with valid symbol stack cache */
 
 /* #define FLAG_PIST_SYMBOLSTACK_CACHE	2 */
 
@@ -259,7 +259,6 @@ PidinStackToPidinQueue(struct PidinStack *ppist);
 void PidinStackTo_stdout(struct PidinStack *ppist);
 
 
-//f static inline prototypes
 
 #ifndef SWIG
 static inline 
@@ -348,9 +347,9 @@ int PidinStackUpdateCaches(struct PidinStack *ppist);
 #include "symbolvirtual_protos.h"
 
 
-///
+/// 
 /// clear flags
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -363,9 +362,9 @@ void PidinStackClearFlag(struct PidinStack *ppist, int iFlags)
 }
 
 
-///
+/// 
 /// register pidin stack is not rooted
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -386,9 +385,9 @@ void PidinStackClearRooted(struct PidinStack *ppist)
 }
 
 
-///
+/// 
 /// compress pidin stack
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -428,9 +427,9 @@ void PidinStackCompress(struct PidinStack *ppist)
 }
 
 
-///
+/// 
 /// duplicate pidin stack
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -449,9 +448,9 @@ PidinStackDuplicate(struct PidinStack *ppist)
 }
 
 
-///
+/// 
 /// get element at given place
-///
+/// 
 
 #ifndef SWIG
 static inline 
@@ -470,9 +469,9 @@ PidinStackElementPidin(struct PidinStack *ppist, int i)
 }
 
 
-///
+/// 
 /// free pidin stack
-///
+/// 
 
 #ifndef SWIG
 static inline 
@@ -486,9 +485,9 @@ PidinStackFree(struct PidinStack *ppist)
 }
 
 
-///
+/// 
 /// get flag
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -500,9 +499,9 @@ PidinStackGetFlag(struct PidinStack *ppist, int iF)
 }
 
 
-///
+/// 
 /// check if a pidin stack is namespaced
-///
+/// 
 
 #ifndef SWIG
 static inline 
@@ -516,9 +515,9 @@ PidinStackIsNamespaced(struct PidinStack *ppist)
 }
 
 
-///
+/// 
 /// check if pidin stack is rooted
-///
+/// 
 
 #ifndef SWIG
 static inline 
@@ -530,9 +529,9 @@ PidinStackIsRooted(struct PidinStack *ppist)
 }
 
 
-///
+/// 
 /// get number of entries in pidin stack
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -543,9 +542,9 @@ int PidinStackNumberOfEntries(struct PidinStack *ppist)
 }
 
 
-///
+/// 
 /// set flag
-///
+/// 
 
 #ifndef SWIG
 static inline 
@@ -558,9 +557,9 @@ void PidinStackSetFlag(struct PidinStack *ppist, int iFlags)
 }
 
 
-///
+/// 
 /// register pidin stack is rooted
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -581,9 +580,9 @@ void PidinStackSetRooted(struct PidinStack *ppist)
 }
 
 
-///
+/// 
 /// get topmost element
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -595,9 +594,9 @@ PidinStackTop(struct PidinStack *ppist)
 }
 
 
-///
+/// 
 /// convert pidin stack to corresponding serial id
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -656,9 +655,9 @@ int PidinStackToSerial(struct PidinStack *ppist)
 }
 
 
-///
+/// 
 /// update caches for given context
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -690,7 +689,7 @@ int PidinStackUpdateCaches(struct PidinStack *ppist)
 
 	&& PidinStackIsRooted(ppist))
     {
-	//t this looks like to much overhead
+	/// \todo this looks like to much overhead
 
 	//- allocate pidin stack pointing to root
 

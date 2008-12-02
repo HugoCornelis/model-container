@@ -32,19 +32,15 @@ static double ContourPointGetThickness
 (struct symtab_ContourPoint *pcpnt, struct PidinStack *ppist);
 
 
-/// **************************************************************************
-///
-/// SHORT: ContourPointCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_ContourPoint * 
-///
+/// 
+/// 
+/// \return struct symtab_ContourPoint * 
+/// 
 ///	Newly allocated contour point, NULL for failure
-///
-/// DESCR: Allocate a new contour point symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new contour point symbol table element
+/// \details 
+/// 
 
 struct symtab_ContourPoint * ContourPointCalloc(void)
 {
@@ -72,20 +68,16 @@ struct symtab_ContourPoint * ContourPointCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ContourPointCreateAlias()
-///
-/// ARGS.:
-///
-///	pcpnt.: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pcpnt symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 ContourPointCreateAlias
@@ -111,23 +103,19 @@ ContourPointCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ContourPointGetParameter()
-///
-/// ARGS.:
-///
-///	pcpnt.....: symbol to get parameter for
-///	ppist.....: context.
-///	pcName....: name of parameter
-///
-/// RTN..: struct symtab_Parameters *
-///
+/// 
+/// 
+/// \arg pcpnt symbol to get parameter for
+/// \arg ppist context.
+/// \arg pcName name of parameter
+/// 
+/// \return struct symtab_Parameters *
+/// 
 ///	Parameter structure, NULL for failure.
-///
-/// DESCR: Get specific parameter of symbol.
-///
-/// **************************************************************************
+/// 
+/// \brief Get specific parameter of symbol.
+/// \details 
+/// 
 
 struct symtab_Parameters * 
 ContourPointGetParameter
@@ -169,22 +157,18 @@ ContourPointGetParameter
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ContourPointGetThickness()
-///
-/// ARGS.:
-///
-///	pcpnt...: contour point.
-///	ppist...: context.
-///
-/// RTN..: double
-///
+/// 
+/// 
+/// \arg pcpnt contour point.
+/// \arg ppist context.
+/// 
+/// \return double
+/// 
 ///	thickness for contour to which the contour point belongs.
-///
-/// DESCR: Obtain thickness for contour to which the point belongs.
-///
-/// **************************************************************************
+/// 
+/// \brief Obtain thickness for contour to which the point belongs.
+/// \details 
+/// 
 
 static
 double
@@ -223,19 +207,15 @@ ContourPointGetThickness
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ContourPointInit()
-///
-/// ARGS.:
-///
-///	pcpnt.: contour point to init
-///
-/// RTN..: void
-///
-/// DESCR: init contour point
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pcpnt contour point to init
+/// 
+/// \return void
+/// 
+/// \brief init contour point
+/// \details 
+/// 
 
 void ContourPointInit(struct symtab_ContourPoint *pcpnt)
 {

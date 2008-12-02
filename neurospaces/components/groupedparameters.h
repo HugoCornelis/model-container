@@ -22,7 +22,7 @@
 #define GROUPEDPARAMETERS_H
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct symtab_GroupedParameters;
 
@@ -33,7 +33,6 @@ struct symtab_GroupedParameters;
 #include "neurospaces/treespacetraversal.h"
 
 
-//f exported functions
 
 struct symtab_GroupedParameters * GroupedParametersCalloc(void);
 
@@ -43,13 +42,13 @@ void GroupedParametersInit(struct symtab_GroupedParameters *pgrpp);
 #include "neurospaces/components/biocomp.h"
 
 
-//s
-//s struct symtab_GroupedParameters
-//s
+/// \struct
+/// \struct struct symtab_GroupedParameters
+/// \struct
 
 struct symtab_GroupedParameters
 {
-    //m base struct: bio component
+    /// base struct: bio component
 
     struct symtab_BioComponent bio;
 

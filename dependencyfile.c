@@ -36,23 +36,19 @@
 //o
 //////////////////////////////////////////////////////////////////////////////
 
-/// **************************************************************************
-///
-/// SHORT: DependencyFileCallocNameSpaceImportedFile()
-///
-/// ARGS.:
-///
-///	pc...: associated namespace
-///	pif..: associated imported file
-///
-/// RTN..: struct DependencyFile * :
-///
+/// 
+/// 
+/// \arg pc associated namespace
+/// \arg pif associated imported file
+/// 
+/// \return struct DependencyFile * :
+/// 
 ///	allocated dependency file, NULL for failure
-///
-/// DESCR: Allocate a dependency file associated with given namespace and 
+/// 
+/// \brief Allocate a dependency file associated with given namespace and 
+/// \details 
 ///	imported file.
-///
-/// **************************************************************************
+/// 
 
 struct DependencyFile * 
 DependencyFileCallocNameSpaceImportedFile(char *pc, struct ImportedFile *pif)
@@ -80,21 +76,17 @@ DependencyFileCallocNameSpaceImportedFile(char *pc, struct ImportedFile *pif)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: DependencyFileGetImportedFile()
-///
-/// ARGS.:
-///
-///	pdf..: dependency file.
-///
-/// RTN..: struct ImportedFile *
-///
+/// 
+/// 
+/// \arg pdf dependency file.
+/// 
+/// \return struct ImportedFile *
+/// 
 ///	imported file.
-///
-/// DESCR: Get imported file attached to this dependency file.
-///
-/// **************************************************************************
+/// 
+/// \brief Get imported file attached to this dependency file.
+/// \details 
+/// 
 
 struct ImportedFile *
 DependencyFileGetImportedFile(struct DependencyFile *pdf)
@@ -103,21 +95,17 @@ DependencyFileGetImportedFile(struct DependencyFile *pdf)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: DependencyFileGetNameSpace()
-///
-/// ARGS.:
-///
-///	pdf..: dependency file.
-///
-/// RTN..: char *
-///
+/// 
+/// 
+/// \arg pdf dependency file.
+/// 
+/// \return char *
+/// 
 ///	namespace.
-///
-/// DESCR: Get namespace attached to this dependency file.
-///
-/// **************************************************************************
+/// 
+/// \brief Get namespace attached to this dependency file.
+/// \details 
+/// 
 
 char *
 DependencyFileGetNameSpace(struct DependencyFile *pdf)
@@ -126,21 +114,17 @@ DependencyFileGetNameSpace(struct DependencyFile *pdf)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: DependencyFilePrint()
-///
-/// ARGS.:
-///
-///	pdf......: dependency file to print
-///	iIndent..: number of indentation spaces
-///	pfile....: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Pretty print dependency file
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pdf dependency file to print
+/// \arg iIndent number of indentation spaces
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Pretty print dependency file
+/// \details 
+/// 
 
 int DependencyFilePrint(struct DependencyFile *pdf, int iIndent, FILE *pfile)
 {
@@ -167,22 +151,18 @@ int DependencyFilePrint(struct DependencyFile *pdf, int iIndent, FILE *pfile)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: DependencyFileSetImportedFile()
-///
-/// ARGS.:
-///
-///	pdf..: dependency file.
-///	pif..: associated imported file.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pdf dependency file.
+/// \arg pif associated imported file.
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR: Set imported file attached to this dependency file.
-///
-/// **************************************************************************
+/// 
+/// \brief Set imported file attached to this dependency file.
+/// \details 
+/// 
 
 int
 DependencyFileSetImportedFile
@@ -194,22 +174,18 @@ DependencyFileSetImportedFile
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: DependencyFileSetNameSpace()
-///
-/// ARGS.:
-///
-///	pdf..: dependency file.
-///	pc...: associated namespace.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pdf dependency file.
+/// \arg pc associated namespace.
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR: Set namespace attached to this dependency file.
-///
-/// **************************************************************************
+/// 
+/// \brief Set namespace attached to this dependency file.
+/// \details 
+/// 
 
 int
 DependencyFileSetNameSpace

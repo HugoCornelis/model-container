@@ -26,45 +26,45 @@
 #define ALGORITHM_SERIALPROJECTION_H
 
 
-//s
-//s projection array entry
-//s
+/// \struct
+/// \struct projection array entry
+/// \struct
 
 struct SymbolSerialProjection
 {
-    //m projection symbol
+    /// projection symbol
 
     struct symtab_Projection *pproj;
 
-    //m first connection, -1 for none
+    /// first connection, -1 for none
 
     int iFirstConnection;
 
-    //m number of connections
+    /// number of connections
 
     int iConnections;
 };
 
 
-//s serial projection struct
+/// \struct serial projection struct
 
 struct SerialProjectionVariables
 {
-    //m number of serialized created projections
+    /// number of serialized created projections
 
     int iProjectionsCreated;
 
-    //m number of serialized added projections
+    /// number of serialized added projections
 
     int iProjectionsAdded;
 
-    //m array of all projections
+    /// array of all projections
 
     struct SymbolSerialProjection *psymserproj;
 };
 
 
-//v serial projection array
+/// serial projection array
 
 extern struct SerialProjectionVariables serprojVariables;
 

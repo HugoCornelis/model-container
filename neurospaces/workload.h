@@ -33,54 +33,54 @@
 
 struct workload_symbol_config
 {
-    //m attachment workload
+    /// attachment workload
 
     int iAttachment;
 
-    //m axon hillock workload
+    /// axon hillock workload
 
     int iAxonHillock;
 
-    //m cell workload
+    /// cell workload
 
     int iCell;
 
-    //m connection workload
+    /// connection workload
 
     int iConnection;
 
-    //m mechanism workload
+    /// mechanism workload
 
     struct workload_mechanism_config
     {
-	//m channel workload
+	/// channel workload
 
 	int iChannel;
 
-	//m pool workload
+	/// pool workload
 
 	int iPool;
 
     }
 	mechanisms;
 
-    //m network workload
+    /// network workload
 
     int iNetwork;
 
-    //m population workload
+    /// population workload
 
     int iPopulation;
 
-    //m projection workload
+    /// projection workload
 
     int iProjection;
 
-    //m randomvalue workload
+    /// randomvalue workload
 
     int iRandomvalue;
 
-    //m segment workload
+    /// segment workload
 
     int iSegment;
 
@@ -92,27 +92,27 @@ extern struct workload_symbol_config wsc;
 
 struct workload_info
 {
-    //m original traversal info
+    /// original traversal info
 
     struct traversal_info *pti;
 
-    //m number of partitions
+    /// number of partitions
 
     int iPartitions;
 
-    //m total workload
+    /// total workload
 
     int iWorkloadTotal;
 
-    //m load for each partition
+    /// load for each partition
 
     double dWorkloadPartition;
 
-    //m partitions
+    /// partitions
 
     int *piPartitions;
 
-    //m workload of each partition
+    /// workload of each partition
 
     int *piWorkloads;
 };

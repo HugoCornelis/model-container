@@ -22,7 +22,7 @@
 #define FIBER_H
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_Fiber;
 struct symtab_Fiber;
@@ -35,7 +35,6 @@ struct symtab_Fiber;
 #include "segmenter.h"
 
 
-//f exported functions
 
 struct symtab_Fiber * FiberCalloc(void);
 
@@ -56,9 +55,9 @@ struct symtab_Fiber * FiberNewAtXYZ(double dx,double dy,double dz);
 #include "neurospaces/inputoutput.h"
 
 
-//s
-//s fiber
-//s
+/// \struct
+/// \struct fiber
+/// \struct
 
 struct descr_Fiber
 {
@@ -66,17 +65,17 @@ struct descr_Fiber
 };
 
 
-//s
-//s struct symtab_Fiber
-//s
+/// \struct
+/// \struct struct symtab_Fiber
+/// \struct
 
 struct symtab_Fiber
 {
-    //m base struct : segmenter
+    /// base struct : segmenter
 
     struct symtab_Segmenter segr;
 
-    //m fiber description
+    /// fiber description
 
     struct descr_Fiber defibr;
 };

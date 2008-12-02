@@ -18,7 +18,6 @@
 //////////////////////////////////////////////////////////////////////////////
 
 
-/// **************************************************************************
 //o
 //o namespace seperators :
 //o ----------------------
@@ -45,7 +44,6 @@
 //o
 //o	2. 
 //o
-/// **************************************************************************
 
 #include <limits.h>
 #include <stdlib.h>
@@ -89,19 +87,15 @@ static char *ppcTokens[] =
 };
 
 
-/// **************************************************************************
-///
-/// SHORT: NameSpaceEndThisToken()
-///
-/// ARGS.:
-///
-///	pc..: char string to parse
-///
-/// RTN..: int : offset of next non identifier char, -1 for failure
-///
-/// DESCR: Parse char stream and stop at non identifier char
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pc char string to parse
+/// 
+/// \return int : offset of next non identifier char, -1 for failure
+/// 
+/// \brief Parse char stream and stop at non identifier char
+/// \details 
+/// 
 
 int NameSpaceEndThisToken(char *pc)
 {
@@ -166,19 +160,15 @@ int NameSpaceEndThisToken(char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NameSpaceIsChildOperator()
-///
-/// ARGS.:
-///
-///	pc..: char string to check
-///
-/// RTN..: int : TRUE if child operator
-///
-/// DESCR: Check for child operator
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pc char string to check
+/// 
+/// \return int : TRUE if child operator
+/// 
+/// \brief Check for child operator
+/// \details 
+/// 
 
 int NameSpaceIsChildOperator(char *pc)
 {
@@ -208,19 +198,15 @@ int NameSpaceIsChildOperator(char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NameSpaceIsChildToken()
-///
-/// ARGS.:
-///
-///	pc..: char string to check
-///
-/// RTN..: int : TRUE if can be child token
-///
-/// DESCR: Check if child token
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pc char string to check
+/// 
+/// \return int : TRUE if can be child token
+/// 
+/// \brief Check if child token
+/// \details 
+/// 
 
 int NameSpaceIsChildToken(char *pc)
 {
@@ -247,19 +233,15 @@ int NameSpaceIsChildToken(char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NameSpaceIsNameSpaceOperator()
-///
-/// ARGS.:
-///
-///	pc..: char string to check
-///
-/// RTN..: int : TRUE if namespace operator
-///
-/// DESCR: Check for namespace operator
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pc char string to check
+/// 
+/// \return int : TRUE if namespace operator
+/// 
+/// \brief Check for namespace operator
+/// \details 
+/// 
 
 int NameSpaceIsNameSpaceOperator(char *pc)
 {
@@ -289,19 +271,15 @@ int NameSpaceIsNameSpaceOperator(char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NameSpaceIsNameSpaceToken()
-///
-/// ARGS.:
-///
-///	pc..: char string to check
-///
-/// RTN..: int : TRUE if namespace operator found
-///
-/// DESCR: Check for namespace operator
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pc char string to check
+/// 
+/// \return int : TRUE if namespace operator found
+/// 
+/// \brief Check for namespace operator
+/// \details 
+/// 
 
 int NameSpaceIsNameSpaceToken(char *pc)
 {
@@ -328,19 +306,15 @@ int NameSpaceIsNameSpaceToken(char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NameSpaceStartNextToken()
-///
-/// ARGS.:
-///
-///	pc..: char string to parse
-///
-/// RTN..: int : offset of next identifier char, -1 for failure
-///
-/// DESCR: Parse char stream and stop at identifier char
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pc char string to parse
+/// 
+/// \return int : offset of next identifier char, -1 for failure
+/// 
+/// \brief Parse char stream and stop at identifier char
+/// \details 
+/// 
 
 int NameSpaceStartNextToken(char *pc)
 {

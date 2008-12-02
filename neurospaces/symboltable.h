@@ -47,50 +47,50 @@ struct symtab_String;
 
 struct symtab_String
 {
-    //m actual string
+    /// actual string
 
     char *pcString;
 
-    //m length of string
+    /// length of string
 
     int iLength;
 };
 
 
-//s
-//s structure to do serial mappings
-//s
-//s contains serial relative to different symbols
-//s
+/// \struct
+/// \struct structure to do serial mappings
+/// \struct
+/// \struct contains serial relative to different symbols
+/// \struct
 
 struct SerialMapper
 {
-    //m #SU for *this
+    /// #SU for *this
 
     int iSuccessors;
 
-    //m serial relative to parent
-    //m 
-    //m reflect ordering only, will be same as previous
-    //m if symbol does not belong to this subspace
+    /// serial relative to parent
+    /// 
+    /// reflect ordering only, will be same as previous
+    /// if symbol does not belong to this subspace
 
     int iParent;
 
-    //! we could add more here :
-    //! child number
-    //! number of children
-    //! post order serial (usefull to init iParent above)
-    //! post order ...
-    //! more...
-    //!
-    //! Do we need a SerialMapper per space, or a single one
-    //! for all spaces ?
+    /// \note we could add more here :
+    /// \note child number
+    /// \note number of children
+    /// \note post order serial (usefull to init iParent above)
+    /// \note post order ...
+    /// \note more...
+    ///
+    /// \note Do we need a SerialMapper per space, or a single one
+    /// \note for all spaces ?
 };
 
-//d
-//d some quick defines to give access to the serial ID's
-//d subject to change
-//d
+/// \def
+/// \def some quick defines to give access to the serial ID's
+/// \def subject to change
+/// \def
 
 #define SerialMapClearToParent(psmap)	\
 	SerialMapSetToParent((psmap),0)
@@ -110,52 +110,52 @@ struct symtab_HSolveListElement;
 /* #include "algorithminstance.h" */
 
 
-//s
-//s gives transparant access to all other structures and links them into
-//s a symbol table list.
-//s
+/// \struct
+/// \struct gives transparant access to all other structures and links them into
+/// \struct a symbol table list.
+/// \struct
 
 struct symtab_HSolveListElement
 {
-    //m link elements into list
+    /// link elements into list
 
     HSolveListElement hsleLink;
 
-/*     //m solver information */
+/*     /// solver information */
 
 /*     struct SolverInfo *psiSolverInfo; */
 
-    //m allocation symbol identifier
+    /// allocation symbol identifier
 
     int iAllocationIdentifier;
 
-    //m algorithm instance info
+    /// algorithm instance info
 
     struct AlgorithmInstance *palgi;
 
-    //m parameter cache
+    /// parameter cache
 
     struct ParameterCache *pparcac;
 
-    //m gives type of element
+    /// gives type of element
 
     int iType;
 
-    //m flags
+    /// flags
 
     int iFlags;
 
-    //m struct to do invisible serial mappings
+    /// struct to do invisible serial mappings
 
     struct SerialMapper smapInvisible;
 
-    //m struct to do principal serial mappings
+    /// struct to do principal serial mappings
 
     struct SerialMapper smapPrincipal;
 
 #ifdef TREESPACES_SUBSET_MECHANISM
 
-    //m struct to do mechanism space serial mappings
+    /// struct to do mechanism space serial mappings
 
     struct SerialMapper smapMechanism;
 
@@ -163,7 +163,7 @@ struct symtab_HSolveListElement
 
 #ifdef TREESPACES_SUBSET_SEGMENT
 
-    //m struct to do segment space serial mappings
+    /// struct to do segment space serial mappings
 
     struct SerialMapper smapSegment;
 
@@ -175,25 +175,25 @@ struct symtab_HSolveListElement
 #include "hierarchy/output/symbols/type_defines.h"
 
 
-//d flags
+/// \def flags
 
-/* //d is private model */
+/* /// \def is private model */
 
 /* #define FLAGS_HSLE_PRIVATE		1 */
 
-/* //d is public model */
+/* /// \def is public model */
 
 /* #define FLAGS_HSLE_PUBLIC		2 */
 
-//d solver information present
+/// \def solver information present
 
 /* #define FLAGS_HSLE_SOLVER_INFO		4 */
 
-/* //d symbol has been created by algorithm */
+/* /// \def symbol has been created by algorithm */
 
 /* #define FLAGS_HSLE_ALGORITHM		8 */
 
-//d is tagged by a traversal (do not forget to untag)
+/// \def is tagged by a traversal (do not forget to untag)
 
 #define FLAGS_HSLE_TRAVERSAL		16
 
@@ -212,10 +212,10 @@ struct symtab_HSolveListElement
 #include "hierarchy/output/symbols/instanceof_relationships.h"
 
 
-//d
-//d some quick defines to give access to the serial ID's
-//d subject to change
-//d
+/// \def
+/// \def some quick defines to give access to the serial ID's
+/// \def subject to change
+/// \def
 
 #ifdef PRE_PROTO_TRAVERSAL
 
@@ -284,8 +284,6 @@ struct symtab_HSolveListElement
 
 
 //f
-//f following functions are supposed to maintain all information for all known
-//f subspaces.
 //f
 
 #ifndef SWIG
@@ -396,9 +394,9 @@ int
 SymbolIncrementAliases(int iType);
 
 
-///
+/// 
 /// clear all known spaces
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -424,9 +422,9 @@ SymbolAllSerialsClear(struct symtab_HSolveListElement *phsle)
 }
 
 
-///
+/// 
 /// calculate mappings after entail of a child
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -560,9 +558,9 @@ SymbolAllSerialsEntailChild
 /* } */
 
 
-///
+/// 
 /// get serials in all known spaces
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -591,9 +589,9 @@ BaseSymbolAllSerialsToParentGet
 }
 
 
-///
+/// 
 /// set serials in all known spaces
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -622,9 +620,9 @@ BaseSymbolAllSerialsToParentSet
 }
 
 
-///
+/// 
 /// get successors in all known spaces
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -653,9 +651,9 @@ BaseSymbolAllSuccessorsGet
 }
 
 
-///
+/// 
 /// set successors in all known spaces
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -684,9 +682,9 @@ BaseSymbolAllSuccessorsSet
 }
 
 
-///
+/// 
 /// return a pointer to this symbol.
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -700,9 +698,9 @@ BaseSymbolGetSymbol(struct symtab_HSolveListElement *phsle)
 }
 
 
-///
+/// 
 /// get count of created aliases by type.
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -718,9 +716,9 @@ SymbolGetArrayOfNumberOfAliases()
 }
 
 
-///
+/// 
 /// get total count of created aliases.
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -736,9 +734,9 @@ SymbolGetNumberOfAliases()
 }
 
 
-///
+/// 
 /// increment count of created aliases by type.
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -766,10 +764,10 @@ SymbolIncrementAliases(int iType)
 
 #error Symbols only supports PRE_PROTO_TRAVERSAL for now.
 
-//t #defines to do mappings for POST_PROTO_TRAVERSAL
-//t 
-//t mapping must loop over references for prototypes,
-//t and sum up #SU for each prototype
+/// \todo #defines to do mappings for POST_PROTO_TRAVERSAL
+/// \todo 
+/// \todo mapping must loop over references for prototypes,
+/// \todo and sum up #SU for each prototype
 
 #endif
 

@@ -25,23 +25,18 @@
 #include "neurospaces/cachedparameter.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: CachedParameterNewFromNumber()
-///
-/// ARGS.:
-///
-///	ppar..: parameter
-///
-/// RTN..: struct CachedParameter *
-///
+/// 
+/// 
+/// \arg ppar parameter
+/// 
+/// \return struct CachedParameter *
+/// 
 ///	New cached parameter, NULL for failure.
-///
-/// DESCR:
-///
+/// 
+/// \details 
+/// 
 ///	Create a new cached parameter for the given parameter.
-///
-/// **************************************************************************
+/// 
 
 static struct CachedParameter *
 CachedParameterNew(struct symtab_Parameters *ppar)
@@ -57,26 +52,21 @@ CachedParameterNew(struct symtab_Parameters *ppar)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: CachedParameterNewFromNumber()
-///
-/// ARGS.:
-///
-///	iSerial.: context of parameter value.
-///	pcName..: name of parameter value.
-///	dNumber.: parameter value.
-///
-/// RTN..: struct CachedParameter *
-///
+/// 
+/// 
+/// \arg iSerial context of parameter value.
+/// \arg pcName name of parameter value.
+/// \arg dNumber parameter value.
+/// 
+/// \return struct CachedParameter *
+/// 
 ///	New cached parameter, NULL for failure.
-///
-/// DESCR:
-///
+/// 
+/// \details 
+/// 
 ///	Create a new cached parameter with the given value for the
 ///	given context
-///
-/// **************************************************************************
+/// 
 
 struct CachedParameter *
 CachedParameterNewFromNumber
@@ -99,8 +89,8 @@ CachedParameterNewFromNumber
 
     //- set serial
 
-    //! flags are not used for cached parameters, or a small redesign
-    //! is needed.
+    /// \note flags are not used for cached parameters, or a small redesign
+    /// \note is needed.
 
     pcacparResult->par.iFlags = iSerial;
 
@@ -110,34 +100,29 @@ CachedParameterNewFromNumber
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: CachedParameterNewFromString()
-///
-/// ARGS.:
-///
-///	iSerial.: context of parameter value.
-///	pcName..: name of parameter value.
-///	pcValue.: parameter value.
-///
-/// RTN..: struct CachedParameter *
-///
+/// 
+/// 
+/// \arg iSerial context of parameter value.
+/// \arg pcName name of parameter value.
+/// \arg pcValue parameter value.
+/// 
+/// \return struct CachedParameter *
+/// 
 ///	New cached parameter, NULL for failure.
-///
-/// DESCR:
-///
+/// 
+/// \details 
+/// 
 ///	Create a new cached parameter with the given value for the
 ///	given context.
-///
-/// NOTE.:
-///
+/// 
+/// \note 
+/// 
 ///	Parameter caches have a notion of independence, so they do
 ///	their own memory allocation when appropriate.  For this
 ///	function it means that pcValue is duplicated using strdup().
 ///	Note again that this is very different from pidinstacks and
 ///	regular parameters.
-///
-/// **************************************************************************
+/// 
 
 struct CachedParameter *
 CachedParameterNewFromString
@@ -167,8 +152,8 @@ CachedParameterNewFromString
 
     //- set serial
 
-    //! flags are not used for cached parameters, or a small redesign
-    //! is needed.
+    /// \note flags are not used for cached parameters, or a small redesign
+    /// \note is needed.
 
     pcacparResult->par.iFlags = iSerial;
 

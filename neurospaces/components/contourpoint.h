@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_ContourPoint;
 struct symtab_ContourPoint;
@@ -35,7 +35,6 @@ struct symtab_ContourPoint;
 #include "neurospaces/pidinstack.h"
 
 
-//f exported functions
 
 struct symtab_ContourPoint * ContourPointCalloc(void);
 
@@ -56,29 +55,29 @@ void ContourPointInit(struct symtab_ContourPoint *pcpnt);
 #include "biocomp.h"
 
 
-//s
-//s contour point description
-//s
+/// \struct
+/// \struct contour point description
+/// \struct
 
 struct descr_ContourPoint
 {
-    //m compiler happy
+    /// compiler happy
 
     int iHappy;
 };
 
 
-//s
-//s struct symtab_ContourPoint
-//s
+/// \struct
+/// \struct struct symtab_ContourPoint
+/// \struct
 
 struct symtab_ContourPoint
 {
-    //m base struct : bio component
+    /// base struct : bio component
 
     struct symtab_BioComponent bio;
 
-    //m contour point description
+    /// contour point description
 
     struct descr_ContourPoint degatk;
 };

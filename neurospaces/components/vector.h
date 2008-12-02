@@ -25,13 +25,12 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_Vector;
 struct symtab_Vector;
 
 
-//f exported functions
 
 void VectorInit(struct symtab_Vector *pvect);
 
@@ -45,9 +44,9 @@ void VectorInit(struct symtab_Vector *pvect);
 #include "neurospaces/symboltable.h"
 
 
-//s
-//s vector description
-//s
+/// \struct
+/// \struct vector description
+/// \struct
 
 struct descr_Vector
 {
@@ -55,17 +54,17 @@ struct descr_Vector
 };
 
 
-//s
-//s struct symtab_Vector
-//s
+/// \struct
+/// \struct struct symtab_Vector
+/// \struct
 
 struct symtab_Vector
 {
-    //m base struct : bio component
+    /// base struct : bio component
 
     struct symtab_BioComponent bio;
 
-    //m enumeration container
+    /// enumeration container
 
     struct descr_Vector devect;
 };

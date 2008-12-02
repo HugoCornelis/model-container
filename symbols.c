@@ -46,25 +46,21 @@
 //o
 //////////////////////////////////////////////////////////////////////////////
 
-/// **************************************************************************
-///
-/// SHORT: SymbolsAddImportedFile()
-///
-/// ARGS.:
-///
-///	pisSymbols..: symbol table
-///	pcFilename..: file to add
+/// 
+/// 
+/// \arg pisSymbols symbol table
+/// \arg pcFilename file to add
 ///	pac.........: current parser context, NULL for none
-///
-/// RTN..: struct ImportedFile * : new imported file struct, NULL for failure
-///
-/// DESCR: add an filename to the imported files
-///
+/// 
+/// \return struct ImportedFile * : new imported file struct, NULL for failure
+/// 
+/// \brief add an filename to the imported files
+/// \details 
+/// 
 ///	Qualifies pcFilename, allocates new imported file and adds to 
 ///	cache list.
 ///	No duplicate checking is done
-///
-/// **************************************************************************
+/// 
 
 struct ImportedFile *
 SymbolsAddImportedFile
@@ -76,7 +72,7 @@ SymbolsAddImportedFile
 
     struct ImportedFile *pifResult = NULL;
 
-    //v qualified filename to lookup
+    /// qualified filename to lookup
 
     char *pcQualified = NULL;
 
@@ -88,9 +84,9 @@ SymbolsAddImportedFile
 
     //- insert file (at head : gives good chance for early match)
 
-    //! list is in order traversal of dependency tree
-    //! dependency tree can be a graph : shared dependencies
-    //! shared dependencies give worse performance
+    /// \note list is in order traversal of dependency tree
+    /// \note dependency tree can be a graph : shared dependencies
+    /// \note shared dependencies give worse performance
 
     HSolveListEnqueue(&pisSymbols->hslFiles, &pifResult->hsleLink);
 
@@ -100,17 +96,13 @@ SymbolsAddImportedFile
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolsCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct Symbols * : new symbol table, NULL for failure
-///
-/// DESCR: Allocate new symbol table
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return struct Symbols * : new symbol table, NULL for failure
+/// 
+/// \brief Allocate new symbol table
+/// \details 
+/// 
 
 struct Symbols * SymbolsCalloc(void)
 {
@@ -132,24 +124,20 @@ struct Symbols * SymbolsCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolsLookupImportedFile()
-///
-/// ARGS.:
-///
-///	pisSymbols..: symbol table
-///	pcFilename..: file to lookup
+/// 
+/// 
+/// \arg pisSymbols symbol table
+/// \arg pcFilename file to lookup
 ///	pac.........: current parser context, NULL for none
-///
-/// RTN..: struct ImportedFile * : imported file struct, NULL for failure
-///
-/// DESCR: find an imported file
-///
+/// 
+/// \return struct ImportedFile * : imported file struct, NULL for failure
+/// 
+/// \brief find an imported file
+/// \details 
+/// 
 ///	Qualifies pcFilename, checks if qualified filename is in 
 ///	cache list.
-///
-/// **************************************************************************
+/// 
 
 struct ImportedFile *
 SymbolsLookupImportedFile
@@ -163,7 +151,7 @@ SymbolsLookupImportedFile
 
     struct ImportedFile *pifLoop = NULL;
 
-    //v qualified filename to lookup
+    /// qualified filename to lookup
 
     char *pcQualified = NULL;
 
@@ -201,20 +189,16 @@ SymbolsLookupImportedFile
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolsPrintImportedFiles()
-///
-/// ARGS.:
-///
-///	pisSymbols..: symbol table
-///	pfile.......: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: print list of imported files
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pisSymbols symbol table
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief print list of imported files
+/// \details 
+/// 
 
 int SymbolsPrintImportedFiles(struct Symbols *pisSymbols,FILE *pfile)
 {
@@ -248,21 +232,17 @@ int SymbolsPrintImportedFiles(struct Symbols *pisSymbols,FILE *pfile)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolsInitialize()
-///
-/// ARGS.:
-///
-///	pisSymbols..: symbol table to initialize
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: initialize symbol table
-///
+/// 
+/// 
+/// \arg pisSymbols symbol table to initialize
+/// 
+/// \return int : success of operation
+/// 
+/// \brief initialize symbol table
+/// \details 
+/// 
 ///	Init imported file list, algorithms.
-///
-/// **************************************************************************
+/// 
 
 int SymbolsInitialize(struct Symbols *pisSymbols)
 {
@@ -297,25 +277,21 @@ int SymbolsInitialize(struct Symbols *pisSymbols)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolsLookupHierarchical()
-///
-/// ARGS.:
-///
-///	pisSymbols..: symbol table to search in
-///	ppist.......: element to search
-///
-/// RTN..: struct symtab_HSolveListElement * : matching symbol
-///
-/// DESCR: lookup a hierarchical symbol name in given symbol table
-///
-/// NOTE.:
-///
+/// 
+/// 
+/// \arg pisSymbols symbol table to search in
+/// \arg ppist element to search
+/// 
+/// \return struct symtab_HSolveListElement * : matching symbol
+/// 
+/// \brief lookup a hierarchical symbol name in given symbol table
+/// \details 
+/// 
+/// \note 
+/// 
 ///	The tail of the imported file list is assumed to be the main symbol
 ///	file.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_HSolveListElement *
 SymbolsLookupHierarchical
@@ -393,20 +369,16 @@ SymbolsLookupHierarchical
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolsLookupNameSpace()
-///
-/// ARGS.:
-///
-///	pisSymbols..: symbol table to search in
-///	ppist.......: namespace to search
-///
-/// RTN..: struct ImportedFile * : imported file associated to namespace
-///
-/// DESCR: lookup namespace, return defined symbols
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pisSymbols symbol table to search in
+/// \arg ppist namespace to search
+/// 
+/// \return struct ImportedFile * : imported file associated to namespace
+/// 
+/// \brief lookup namespace, return defined symbols
+/// \details 
+/// 
 
 struct ImportedFile *
 SymbolsLookupNameSpace
@@ -425,20 +397,16 @@ SymbolsLookupNameSpace
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolsPrint()
-///
-/// ARGS.:
-///
-///	pisSymbols..: symbol table to print
-///	pfile.......: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Pretty print symbol table to given file
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pisSymbols symbol table to print
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Pretty print symbol table to given file
+/// \details 
+/// 
 
 int SymbolsPrint(struct Symbols *pisSymbols,FILE *pfile)
 {
@@ -473,21 +441,17 @@ int SymbolsPrint(struct Symbols *pisSymbols,FILE *pfile)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SymbolsPrintModel()
-///
-/// ARGS.:
-///
-///	phsle....: model to print
-///	iIndent..: number of indentation spaces
-///	pfile....: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Pretty print model
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsle model to print
+/// \arg iIndent number of indentation spaces
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Pretty print model
+/// \details 
+/// 
 
 int SymbolsPrintModel
 (struct symtab_HSolveListElement *phsle,int iIndent,FILE *pfile)

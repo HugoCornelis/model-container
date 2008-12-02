@@ -23,7 +23,7 @@
 #define CONNECTIONCACHE_H
 
 
-//d declarations
+/// \def declarations
 
 struct CachedConnection;
 struct ConnectionCache;
@@ -31,12 +31,10 @@ struct symtab_Connection;
 struct symtab_HSolveListElement;
 
 
-//f exported functions
 
 struct ConnectionCache * ConnectionCacheNew(int iConnections);
 
 
-//f exported inlines
 
 static inline 
 void ConnectionCacheFree(struct ConnectionCache *pcc);
@@ -67,26 +65,25 @@ ConnectionCacheSetEntry
 
 struct ConnectionCache
 {
-    //m memory used by this connection cache.
+    /// memory used by this connection cache.
 
     int iMemoryUsed;
 
-    //m number of connections involved
+    /// number of connections involved
 
     int iConnections;
 
-    //m array of referred connections
+    /// array of referred connections
 
     struct CachedConnection *pcconn;
 };
 
 
 
-//f exported inlines
 
-///
+/// 
 /// free connection cache.
-///
+/// 
 
 static inline 
 void ConnectionCacheFree(struct ConnectionCache *pcc)
@@ -97,9 +94,9 @@ void ConnectionCacheFree(struct ConnectionCache *pcc)
 }
 
 
-///
+/// 
 /// get an entry in the cache.
-///
+/// 
 
 static inline
 struct CachedConnection *
@@ -109,9 +106,9 @@ ConnectionCacheGetEntry(struct ConnectionCache *pcc, int iEntry)
 }
 
 
-///
+/// 
 /// get memory size taken by cache.
-///
+/// 
 
 static inline 
 int ConnectionCacheGetMemorySize(struct ConnectionCache *pcc)
@@ -120,9 +117,9 @@ int ConnectionCacheGetMemorySize(struct ConnectionCache *pcc)
 }
 
 
-///
+/// 
 /// get number of connections in cache.
-///
+/// 
 
 static inline 
 int ConnectionCacheGetNumberOfConnections(struct ConnectionCache *pcc)
@@ -131,9 +128,9 @@ int ConnectionCacheGetNumberOfConnections(struct ConnectionCache *pcc)
 }
 
 
-///
+/// 
 /// set an entry in the cache.
-///
+/// 
 
 static inline
 int

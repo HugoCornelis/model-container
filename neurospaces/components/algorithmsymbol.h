@@ -26,7 +26,7 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_AlgorithmSymbol;
 struct symtab_AlgorithmSymbol;
@@ -37,7 +37,6 @@ struct symtab_AlgorithmSymbol;
 #include "neurospaces/treespacetraversal.h"
 
 
-//f exported functions
 
 struct symtab_AlgorithmSymbol *AlgorithmSymbolCalloc(void);
 
@@ -63,7 +62,6 @@ AlgorithmSymbolTraverse
 #include "neurospaces/symboltable.h"
 
 
-//f inline prototypes
 
 #ifndef SWIG
 static inline
@@ -108,37 +106,37 @@ AlgorithmSymbolParameterResolveValue
 (struct symtab_AlgorithmSymbol *palgs, struct PidinStack *ppist, char *pcName);
 
 
-//s
-//s algorithm symbol description
-//s
+/// \struct
+/// \struct algorithm symbol description
+/// \struct
 
 struct descr_AlgorithmSymbol
 {
-    //m algorithm instance
+    /// algorithm instance
 
     struct AlgorithmInstance *palgi;
 
-    //m symbol table identifier, should be same as name of the algorithm instance
+    /// symbol table identifier, should be same as name of the algorithm instance
 
     struct symtab_IdentifierIndex *pidin;
 };
 
 
-//s
-//s struct symtab_AlgorithmSymbol
-//s
+/// \struct
+/// \struct struct symtab_AlgorithmSymbol
+/// \struct
 
 struct symtab_AlgorithmSymbol
 {
-    //m base struct : symbol
+    /// base struct : symbol
 
     struct symtab_HSolveListElement hsle;
 
-    //m algorithm symbol description
+    /// algorithm symbol description
 
     struct descr_AlgorithmSymbol dealgs;
 
-    //m parameters
+    /// parameters
 
     struct symtab_ParContainer *pparc;
 
@@ -148,20 +146,16 @@ struct symtab_AlgorithmSymbol
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSymbolAssignParameters()
-///
-/// ARGS.:
-///
-///	palgs...: symbol to assign parameters to.
-///	ppar...: new parameters.
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Assign parameter to symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg palgs symbol to assign parameters to.
+/// \arg ppar new parameters.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Assign parameter to symbol.
+/// \details 
+/// 
 
 #ifndef SWIG
 static inline
@@ -174,20 +168,16 @@ AlgorithmSymbolAssignParameters
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSymbolChangeParameter()
-///
-/// ARGS.:
-///
-///	palgs...: symbol to get parameter for.
-///	ppar...: new parameter.
-///
-/// RTN..: struct symtab_Parameters * : new parameter.
-///
-/// DESCR: Set parameter with given name.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg palgs symbol to get parameter for.
+/// \arg ppar new parameter.
+/// 
+/// \return struct symtab_Parameters * : new parameter.
+/// 
+/// \brief Set parameter with given name.
+/// \details 
+/// 
 
 #ifndef SWIG
 static inline
@@ -210,9 +200,9 @@ AlgorithmSymbolChangeParameter
 }
 
 
-///
+/// 
 /// get name of algorithm symbol
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -224,21 +214,17 @@ AlgorithmSymbolGetName(struct symtab_AlgorithmSymbol *palgs)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSymbolGetParameter()
-///
-/// ARGS.:
-///
-///	palgs...: component to get parameter for
-///	ppist...: context of symbol
-///	pcName..: name of parameter to search for
-///
-/// RTN..: struct symtab_Parameters * : parameter, NULL for failure
-///
-/// DESCR: Get parameter with given name
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg palgs component to get parameter for
+/// \arg ppist context of symbol
+/// \arg pcName name of parameter to search for
+/// 
+/// \return struct symtab_Parameters * : parameter, NULL for failure
+/// 
+/// \brief Get parameter with given name
+/// \details 
+/// 
 
 #ifndef SWIG
 static inline
@@ -260,9 +246,9 @@ AlgorithmSymbolGetParameter
 }
 
 
-///
+/// 
 /// get identifier
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -274,9 +260,9 @@ AlgorithmSymbolGetPidin(struct symtab_AlgorithmSymbol *palgs)
 }
 
 
-///
+/// 
 /// resolve parameter value.
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -304,9 +290,9 @@ AlgorithmSymbolParameterResolveValue
 
     //- else
 
-    //t SymbolFindParameter() also uses SymbolGetParameter(), and that
-    //t seems a conflict to me, not sure, have to check out what exactly
-    //t the consequences are.
+    /// \todo SymbolFindParameter() also uses SymbolGetParameter(), and that
+    /// \todo seems a conflict to me, not sure, have to check out what exactly
+    /// \todo the consequences are.
 
     else
     {

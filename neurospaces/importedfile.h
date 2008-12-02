@@ -28,30 +28,30 @@
 #include "hines_list.h"
 
 
-//s
-//s one imported file
-//s
+/// \struct
+/// \struct one imported file
+/// \struct
 
 struct ImportedFile
 {
-    //m links elements in list
+    /// links elements in list
 
     HSolveListElement hsleLink;
 
-    //m name of imported file
+    /// name of imported file
 
     char *pcFilename;
 
-    //m flags (ao level type of file, file not found)
+    /// flags (ao level type of file, file not found)
 
     int iFlags;
 
-    //m defined symbols for this file
+    /// defined symbols for this file
 
     struct DefinedSymbols *pdefsym;
 
-    //t add kind dependency list ?
-    //t check NeurospacesImport() for this
+    /// \todo add kind dependency list ?
+    /// \todo check NeurospacesImport() for this
 };
 
 

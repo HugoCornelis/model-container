@@ -35,19 +35,15 @@
 
 
 
-/// **************************************************************************
-///
-/// SHORT: CellCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Cell * 
-///
+/// 
+/// 
+/// \return struct symtab_Cell * 
+/// 
 ///	Newly allocated cell, NULL for failure
-///
-/// DESCR: Allocate a new cell symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new cell symbol table element
+/// \details 
+/// 
 
 struct symtab_Cell * CellCalloc(void)
 {
@@ -75,20 +71,16 @@ struct symtab_Cell * CellCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: CellCreateAlias()
-///
-/// ARGS.:
-///
-///	pcell.: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pcell symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 CellCreateAlias
@@ -114,19 +106,15 @@ CellCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: CellInit()
-///
-/// ARGS.:
-///
-///	pcell.: cell to init
-///
-/// RTN..: void
-///
-/// DESCR: init cell
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pcell cell to init
+/// 
+/// \return void
+/// 
+/// \brief init cell
+/// \details 
+/// 
 
 void CellInit(struct symtab_Cell *pcell)
 {
@@ -140,23 +128,19 @@ void CellInit(struct symtab_Cell *pcell)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: CellNewAtXYZ()
-///
-/// ARGS.:
-///
-///	dx..: X coordinate
-///	dy..: Y coordinate
-///	dz..: Z coordinate
-///
-/// RTN..: struct symtab_Cell * : resulting cell, NULL for failure
-///
-/// DESCR: Allocate cell, put at specified position.
-///
+/// 
+/// 
+/// \arg dx X coordinate
+/// \arg dy Y coordinate
+/// \arg dz Z coordinate
+/// 
+/// \return struct symtab_Cell * : resulting cell, NULL for failure
+/// 
+/// \brief Allocate cell, put at specified position.
+/// \details 
+/// 
 ///	Contains memory leak.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_Cell * CellNewAtXYZ(double dx, double dy, double dz)
 {

@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_GateKinetic;
 struct symtab_GateKinetic;
@@ -34,7 +34,6 @@ struct symtab_GateKinetic;
 #include "neurospaces/pidinstack.h"
 
 
-//f exported functions
 
 struct symtab_GateKinetic * GateKineticCalloc(void);
 
@@ -55,29 +54,29 @@ void GateKineticInit(struct symtab_GateKinetic *pgatk);
 #include "biocomp.h"
 
 
-//s
-//s gate kinetic description
-//s
+/// \struct
+/// \struct gate kinetic description
+/// \struct
 
 struct descr_GateKinetic
 {
-    //m compiler happy
+    /// compiler happy
 
     int iHappy;
 };
 
 
-//s
-//s struct symtab_GateKinetic
-//s
+/// \struct
+/// \struct struct symtab_GateKinetic
+/// \struct
 
 struct symtab_GateKinetic
 {
-    //m base struct : bio component
+    /// base struct : bio component
 
     struct symtab_BioComponent bio;
 
-    //m gate kinetic description
+    /// gate kinetic description
 
     struct descr_GateKinetic degatk;
 };

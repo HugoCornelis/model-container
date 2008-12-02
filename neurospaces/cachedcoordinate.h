@@ -24,13 +24,12 @@
 
 
 
-//d declarations
+/// \def declarations
 
 struct CachedCoordinate;
 struct D3Position;
 
 
-//f exported inlines
 
 static inline 
 void CachedCoordinateFree(struct CachedCoordinate *pccrd);
@@ -56,22 +55,21 @@ CachedCoordinateInit
 
 struct CachedCoordinate
 {
-    //m serial of symbol
+    /// serial of symbol
 
     int iSerial;
 
-    //m referred coordinate
+    /// referred coordinate
 
     struct D3Position D3;
 };
 
 
 
-//f exported inlines
 
-///
+/// 
 /// free cached coordinate.
-///
+/// 
 
 static inline 
 void CachedCoordinateFree(struct CachedCoordinate *pccrd)
@@ -81,9 +79,9 @@ void CachedCoordinateFree(struct CachedCoordinate *pccrd)
 }
 
 
-///
+/// 
 /// get serial.
-///
+/// 
 
 static inline
 int
@@ -93,9 +91,9 @@ CachedCoordinateGetSerial(struct CachedCoordinate *pccrd)
 }
 
 
-///
+/// 
 /// get coordinate.
-///
+/// 
 
 static inline
 struct D3Position *
@@ -105,9 +103,9 @@ CachedCoordinateGetCoordinate(struct CachedCoordinate *pccrd)
 }
 
 
-///
+/// 
 /// init cached coordinate.
-///
+/// 
 
 static inline
 void

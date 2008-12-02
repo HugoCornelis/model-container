@@ -38,7 +38,6 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-//f static functions
 
 static
 double
@@ -76,19 +75,15 @@ SegmentGetVolume
 (struct symtab_Segment *psegment, struct PidinStack *ppist);
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmentCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Segment * 
-///
+/// 
+/// 
+/// \return struct symtab_Segment * 
+/// 
 ///	Newly allocated segment, NULL for failure
-///
-/// DESCR: Allocate a new segment symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new segment symbol table element
+/// \details 
+/// 
 
 struct symtab_Segment * SegmentCalloc(void)
 {
@@ -116,20 +111,16 @@ struct symtab_Segment * SegmentCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmentCreateAlias()
-///
-/// ARGS.:
-///
-///	psegment.: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psegment symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 SegmentCreateAlias
@@ -159,22 +150,18 @@ SegmentCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmentGetBranchpointFlag()
-///
-/// ARGS.:
-///
-///	psegment.: segment to get length for.
-///	ppist....: context of segment.
-///
-/// RTN..: double
-///
+/// 
+/// 
+/// \arg psegment segment to get length for.
+/// \arg ppist context of segment.
+/// 
+/// \return double
+/// 
 ///	1, 2, 3 ... if this is a branch point, 0 if not, FLT_MAX if unknown.
-///
-/// DESCR: Get branch point flag of this segment.
-///
-/// **************************************************************************
+/// 
+/// \brief Get branch point flag of this segment.
+/// \details 
+/// 
 
 static
 double
@@ -239,7 +226,7 @@ SegmentGetBranchpointFlag
 	    }
 	    else
 	    {
-		//! not found, this is an internal error
+		/// \note not found, this is an internal error
 
 		fprintf
 		    (stderr,
@@ -261,27 +248,24 @@ SegmentGetBranchpointFlag
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmentGetLength()
-///
-/// ARGS.:
-///
-///	psegment.: segment to get length for.
-///	ppist....: context of segment.
-///
-/// RTN..: double : segment length, FLT_MAX for failure.
-///
-/// DESCR: Get length of segment.
-///
-/// NOTE.:
-///
+/// 
+/// 
+/// \arg psegment segment to get length for.
+/// \arg ppist context of segment.
+/// 
+/// \return double : segment length, FLT_MAX for failure.
+/// 
+/// \brief Get length of segment.
+/// \details 
+/// 
+/// \note 
+/// 
 ///	This function assumes relative to the somatopetal neighbour
 ///	coordinates for all segments.  See also notes on that in
 ///	parser.rules.
-///
-/// TODO.: 
-///
+/// 
+/// \todo  
+/// 
 ///	To change the note mentioned above : use ppist and ->pidinSomatopetal
 ///	to go to somatopetal neighbour and get its coordinates, subtract to get relative
 ///	coordinates.  Since ->pidinSomatopetal is relative to the
@@ -289,8 +273,7 @@ SegmentGetBranchpointFlag
 ///	changed, with changes in the description files too.  See also
 ///	relevant note in the genesis implementation,
 ///	cellsolver_getsegments().
-///
-/// **************************************************************************
+/// 
 
 static
 double
@@ -332,23 +315,19 @@ SegmentGetLength
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmentGetParameter()
-///
-/// ARGS.:
-///
-///	psegment..: symbol to get parameter for
-///	ppist.....: context of symbol.
-///	pcName....: name of parameter
-///
-/// RTN..: struct symtab_Parameters *
-///
+/// 
+/// 
+/// \arg psegment symbol to get parameter for
+/// \arg ppist context of symbol.
+/// \arg pcName name of parameter
+/// 
+/// \return struct symtab_Parameters *
+/// 
 ///	Parameter structure, NULL for failure.
-///
-/// DESCR: Get specific parameter of symbol.
-///
-/// **************************************************************************
+/// 
+/// \brief Get specific parameter of symbol.
+/// \details 
+/// 
 
 struct symtab_Parameters * 
 SegmentGetParameter
@@ -490,20 +469,16 @@ SegmentGetParameter
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmentGetSomatopetalBranchpoints()
-///
-/// ARGS.:
-///
-///	psegment.: segment to get somatopetal branchpoints for.
-///	ppist....: context of segment.
-///
-/// RTN..: double : segment somatopetal branchpoints, FLT_MAX for failure.
-///
-/// DESCR: get somatopetal branchpoints of segment.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psegment segment to get somatopetal branchpoints for.
+/// \arg ppist context of segment.
+/// 
+/// \return double : segment somatopetal branchpoints, FLT_MAX for failure.
+/// 
+/// \brief get somatopetal branchpoints of segment.
+/// \details 
+/// 
 
 static
 double
@@ -528,7 +503,7 @@ SegmentGetSomatopetalBranchpoints
 
 	if (strncmp(SymbolGetName(phsle), "soma", strlen("soma")) == 0)
 	{
-	    //! should we add the soma branch point flag to ?
+	    /// \note should we add the soma branch point flag to ?
 
 	    //- done, break loop
 
@@ -613,20 +588,16 @@ SegmentGetSomatopetalBranchpoints
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmentGetSomatopetalDistance()
-///
-/// ARGS.:
-///
-///	psegment.: segment to get somatopetal distance for.
-///	ppist....: context of segment.
-///
-/// RTN..: double : segment somatopetal distance, FLT_MAX for failure.
-///
-/// DESCR: get somatopetal distance of segment.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psegment segment to get somatopetal distance for.
+/// \arg ppist context of segment.
+/// 
+/// \return double : segment somatopetal distance, FLT_MAX for failure.
+/// 
+/// \brief get somatopetal distance of segment.
+/// \details 
+/// 
 
 static
 double
@@ -740,20 +711,16 @@ SegmentGetSomatopetalDistance
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmentGetSurface()
-///
-/// ARGS.:
-///
-///	psegment.: segment to get surface for.
-///	ppist....: context of segment.
-///
-/// RTN..: double : segment surface, FLT_MAX for failure.
-///
-/// DESCR: get surface of segment.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psegment segment to get surface for.
+/// \arg ppist context of segment.
+/// 
+/// \return double : segment surface, FLT_MAX for failure.
+/// 
+/// \brief get surface of segment.
+/// \details 
+/// 
 
 static
 double
@@ -766,10 +733,10 @@ SegmentGetSurface
 
     //- if spherical segment
 
-    //! this must be a single segment, not a segmenter
+    /// \note this must be a single segment, not a segmenter
 
-    //t but the cast should not be here, there is a mismatch in the
-    //t derivation hierarchy here.
+    /// \todo but the cast should not be here, there is a mismatch in the
+    /// \todo derivation hierarchy here.
 
     if (SegmenterIsSpherical((struct symtab_Segmenter *)psegment))
     {
@@ -813,20 +780,16 @@ SegmentGetSurface
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmentGetTau()
-///
-/// ARGS.:
-///
-///	psegment.: segment to get time constant for.
-///	ppist....: context of segment.
-///
-/// RTN..: double : segment time constant, FLT_MAX for failure.
-///
-/// DESCR: Get time constant of segment.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psegment segment to get time constant for.
+/// \arg ppist context of segment.
+/// 
+/// \return double : segment time constant, FLT_MAX for failure.
+/// 
+/// \brief Get time constant of segment.
+/// \details 
+/// 
 
 static
 double
@@ -839,7 +802,7 @@ SegmentGetTau
 
     //- get capacitance and resistance
 
-    //! note that it does not matter if we use specific or actual values
+    /// \note note that it does not matter if we use specific or actual values
 
     double dCm
 	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "CM");
@@ -867,20 +830,16 @@ SegmentGetTau
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmentGetVolume()
-///
-/// ARGS.:
-///
-///	psegment.: segment to get volume for.
-///	ppist....: context of segment.
-///
-/// RTN..: double : segment volume, FLT_MAX for failure.
-///
-/// DESCR: get volume of segment.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psegment segment to get volume for.
+/// \arg ppist context of segment.
+/// 
+/// \return double : segment volume, FLT_MAX for failure.
+/// 
+/// \brief get volume of segment.
+/// \details 
+/// 
 
 static
 double
@@ -893,10 +852,10 @@ SegmentGetVolume
 
     //- if spherical segment
 
-    //! this must be a single segment, not a segmenter
+    /// \note this must be a single segment, not a segmenter
 
-    //t but the cast should not be here, there is a mismatch in the
-    //t derivation hierarchy here.
+    /// \todo but the cast should not be here, there is a mismatch in the
+    /// \todo derivation hierarchy here.
 
     if (SegmenterIsSpherical((struct symtab_Segmenter *)psegment))
     {
@@ -937,19 +896,15 @@ SegmentGetVolume
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmentInit()
-///
-/// ARGS.:
-///
-///	psegment.: segment to init
-///
-/// RTN..: void
-///
-/// DESCR: init segment
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psegment segment to init
+/// 
+/// \return void
+/// 
+/// \brief init segment
+/// \details 
+/// 
 
 void SegmentInit(struct symtab_Segment *psegment)
 {

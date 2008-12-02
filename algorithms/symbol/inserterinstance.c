@@ -41,7 +41,7 @@
 #include "inserterinstance.h"
 
 
-//s inserter algorithm private data
+/// \struct inserter algorithm private data
 
 /*s */
 /*s struct with inserter options */
@@ -67,99 +67,99 @@ typedef struct InserterOptions_type InserterOptions;
 
 #define ELEMENT_NAME_SIZE 100
 
-//s height record
+/// \struct height record
 
 struct HeightRecord
 {
-    //m height
+    /// height
 
     double dHeight;
 
-    //m prototype
+    /// prototype
 
     char pcPrototype[ELEMENT_NAME_SIZE];
 
     struct symtab_HSolveListElement *phslePrototype;
 
-    //m name of new symbol
+    /// name of new symbol
 
     char pcInstance[ELEMENT_NAME_SIZE];
 };
 
 
-//s heights array
+/// \struct heights array
 
 struct HeightsArray
 {
-    //m number allocated
+    /// number allocated
 
     int iAllocated;
 
-    //m number used
+    /// number used
 
     int iRead;
 
-    //s heights records
+    /// \struct heights records
 
     struct HeightRecord *phr;
 };
 
 
-//s
-//s inserter variables
-//s
+/// \struct
+/// \struct inserter variables
+/// \struct
 
 struct InserterVariables_type
 {
-    //m base symbol, start of traversal
+    /// base symbol, start of traversal
 
     struct symtab_HSolveListElement *phsleBase;
 
     struct PidinStack *ppistBase;
 
-    //m number of inserted symbols
+    /// number of inserted symbols
 
     int iInsertedSymbols;
 
-    //m number of tries
+    /// number of tries
 
     int iInserterTries;
 
-    //m number of failures
+    /// number of failures
 
     int iInserterFailures;
 
-    //m heights file
+    /// heights file
 
     FILE *pfileHeights;
 
-    //s heights array
+    /// \struct heights array
 
     struct HeightsArray *pha;
 
-    //m current parser context
+    /// current parser context
 
     struct ParserContext *pacContext;
 
-    //m number of segments receiving new symbols
+    /// number of segments receiving new symbols
 
     int iSegments;
 
-    //m segments receiving new symbols
+    /// segments receiving new symbols
 
 #define MAX_SEGMENTS 1000
 
     struct
     {
-	//m serial
+	/// serial
 
 	int iSerial;
 
-	//m symbol
+	/// symbol
 
 	struct symtab_HSolveListElement *phsle;
 
-	//m position
+	/// position
 
 	struct D3Position D3;
     }
@@ -169,19 +169,19 @@ struct InserterVariables_type
 typedef struct InserterVariables_type InserterVariables;
 
 
-//s inserter instance, derives from algorithm instance
+/// \struct inserter instance, derives from algorithm instance
 
 struct InserterInstance
 {
-    //m base struct
+    /// base struct
 
     struct AlgorithmInstance algi;
 
-    //m options for this instance
+    /// options for this instance
 
     InserterOptions io;
 
-    //m variables for this instance
+    /// variables for this instance
 
     InserterVariables iv;
 };
@@ -224,27 +224,23 @@ InserterInstanceSymbolHandler
 (struct AlgorithmInstance *palgi, struct ParserContext *pac);
 
 
-/// **************************************************************************
-///
-/// SHORT: InserterInstanceHeightsLookup()
-///
-/// ARGS.:
-///
-///	pii.......: inserter algorithm instance.
-///	pha.......: height array.
-///	dHeight...: height to search.
-///	dRange....: height range for matching.
-///	piRecords.: number of matching records.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pii inserter algorithm instance.
+/// \arg pha height array.
+/// \arg dHeight height to search.
+/// \arg dRange height range for matching.
+/// \arg piRecords number of matching records.
+/// 
+/// \return int
+/// 
 ///	index of first matching record, -1 if none.
-///
+/// 
 ///	piRecords.: number of matching records.
-///
-/// DESCR: Find first height record that matches with the given height.
-///
-/// **************************************************************************
+/// 
+/// \brief Find first height record that matches with the given height.
+/// \details 
+/// 
 
 static
 int
@@ -332,21 +328,17 @@ InserterInstanceHeightsLookup
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: InserterInstanceInsert()
-///
-/// ARGS.:
-///
-///	pii...: inserter algorithm instance.
-///	ptstr.: active traversal.
-///	phsle.: top symbol to consider.
-///
-/// RTN..: int : number of added symbols, -1 for failure.
-///
-/// DESCR: Insert symbols.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pii inserter algorithm instance.
+/// \arg ptstr active traversal.
+/// \arg phsle top symbol to consider.
+/// 
+/// \return int : number of added symbols, -1 for failure.
+/// 
+/// \brief Insert symbols.
+/// \details 
+/// 
 
 static
 int
@@ -399,9 +391,9 @@ InserterInstanceInsert
 
 	else if (pii->io.fInsertFrequency > 0)
 	{
-	    //! this algorithm tries to spread as uniformly as possible,
-	    //! by giving a guarantee that every dendrite receives at least
-	    //! one symbol if the frequency is greater than or equal to 1.
+	    /// \note this algorithm tries to spread as uniformly as possible,
+	    /// \note by giving a guarantee that every dendrite receives at least
+	    /// \note one symbol if the frequency is greater than or equal to 1.
 
 	    double dFrequency = pii->io.fInsertFrequency;
 
@@ -512,7 +504,7 @@ InserterInstanceInsert
 
 			    strcpy(pcName, pii->iv.pha->phr[iRecord + iHeight].pcInstance);
 
-			    //! memory leak
+			    /// \note memory leak
 
 			    pidinAlias = IdinCreateAlias(IdinNewFromChars(pcName), 0);
 
@@ -606,21 +598,17 @@ InserterInstanceInsert
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: InserterInstanceNew()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: struct AlgorithmInstance * : 
-///
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return struct AlgorithmInstance *  
+/// 
 ///	created algorithm instance, NULL for failure
-///
-/// DESCR: Algorithm handler to create instance of inserter algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief Algorithm handler to create instance of inserter algorithm.
+/// \details 
+/// 
 
 struct AlgorithmInstance *
 InserterInstanceNew
@@ -772,19 +760,15 @@ InserterInstanceNew
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: InserterInstancePrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on inserter instance.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int  std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on inserter instance.
+/// \details 
+/// 
 
 static int InserterInstancePrintInfo
 (struct AlgorithmInstance *palgi, FILE *pfile)
@@ -827,21 +811,17 @@ static int InserterInstancePrintInfo
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: InserterInstanceProcessor()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	SymbolProcessor args
-///
-/// RTN..: int : 
-///
+/// 
+/// \return int : 
+/// 
 ///	SymbolProcessor return value, always SYMBOL_PROCESSOR_SUCCESS
-///
-/// DESCR: Obtain coordinates from encountered symbols.
-///
-/// **************************************************************************
+/// 
+/// \brief Obtain coordinates from encountered symbols.
+/// \details 
+/// 
 
 static
 int
@@ -922,22 +902,18 @@ InserterInstanceProcessor
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: InserterInstanceReadHeights()
-///
-/// ARGS.:
-///
-///	pii..: inserter instance.
-///	pfile: heights file.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pii inserter instance.
+/// \arg pfile heights file.
+/// 
+/// \return int
+/// 
 ///	Success of operation.
-///
-/// DESCR: Parse a heights file.
-///
-/// **************************************************************************
+/// 
+/// \brief Parse a heights file.
+/// \details 
+/// 
 
 int HeightComparator(const void *a, const void *b);
 
@@ -999,7 +975,7 @@ InserterInstanceReadHeights
 	    {
 		//- if not an element of a yaml array
 
-		//! hardcoded indentation, 4 spaces required
+		/// \note hardcoded indentation, 4 spaces required
 
 		if (pc[0] == ' '
 		    && pc[1] == ' '
@@ -1085,21 +1061,17 @@ InserterInstanceReadHeights
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: InserterInstanceSymbolHandler()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	AlgorithmInstanceSymbolHandler args.
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to add inserter on given symbol
-///
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to add inserter on given symbol
+/// \details 
+/// 
 ///	Does it do a clean update of serials ?
-///
-/// **************************************************************************
+/// 
 
 static 
 int

@@ -34,41 +34,36 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: VSegmentRelative2Absolute()
-///
-/// ARGS.:
-///
-///	pvsegm.: vector to init.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pvsegm vector to init.
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR:
-///
+/// 
+/// \details 
+/// 
 ///	Convert relative coordinates in a vector of segments to
 ///	absolute coordinates by accounting for coordinates of parent
 ///	segments.  Of course, this procedure does not convert absolute
 ///	Neurospaces coordinates.  See differences between relative and
 ///	absolute coordinates in a Genesis .p file.
-///
-/// NOTE:
-///
+/// 
+/// \note 
+/// 
 ///	This procedure will only work if the parent segments are being
 ///	processed before their children.  This order currently comes
 ///	directly from the description file.
-///
-/// **************************************************************************
+/// 
 
 struct VSegmentRelative2Absolute_data
 {
-    //m base symbol
+    /// base symbol
 
     struct symtab_HSolveListElement *phsleBase;
 
-    //m number of entries in base context
+    /// number of entries in base context
 
     int iEntries;
 };
@@ -219,7 +214,7 @@ VSegmentSegmentRelocatorAbsolute
 	}
 	else
 	{
-	    //! not sure if this is ok.
+	    /// \note not sure if this is ok.
 
 	    fprintf(stderr, "Warning: cannot find parent symbols in VSegmentSegmentRelocatorAbsolute()\n");
 	}
@@ -239,11 +234,11 @@ int VSegmentRelative2Absolute(struct symtab_VSegment *pvsegm, struct PidinStack 
 
     struct VSegmentRelative2Absolute_data vrad =
     {
-	//m base symbol
+	/// base symbol
 
 	&pvsegm->vect.bio.ioh.iol.hsle,
 
-	//m number of entries in base context
+	/// number of entries in base context
 
 	PidinStackNumberOfEntries(ppist),
     };
@@ -265,19 +260,15 @@ int VSegmentRelative2Absolute(struct symtab_VSegment *pvsegm, struct PidinStack 
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: VSegmentCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_VSegment * 
-///
+/// 
+/// 
+/// \return struct symtab_VSegment * 
+/// 
 ///	Newly allocated vector, NULL for failure
-///
-/// DESCR: Allocate a new vector symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new vector symbol table element
+/// \details 
+/// 
 
 struct symtab_VSegment * VSegmentCalloc(void)
 {
@@ -305,19 +296,15 @@ struct symtab_VSegment * VSegmentCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: VSegmentCountSegments()
-///
-/// ARGS.:
-///
-///	pcell.: vector to count segments for
-///
-/// RTN..: int : number of segments in vector, -1 for failure
-///
-/// DESCR: count segments in vector
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pcell vector to count segments for
+/// 
+/// \return int : number of segments in vector, -1 for failure
+/// 
+/// \brief count segments in vector
+/// \details 
+/// 
 
 static int 
 VSegmentSegmentCounter
@@ -377,20 +364,16 @@ int VSegmentCountSegments
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: VSegmentCreateAlias()
-///
-/// ARGS.:
-///
-///	pvsegm.: symbol to alias.
-///	pidin..: name of new symbol.
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol.
-///
-/// DESCR: Create alias to given symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pvsegm symbol to alias.
+/// \arg pidin name of new symbol.
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol.
+/// 
+/// \brief Create alias to given symbol.
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 VSegmentCreateAlias
@@ -416,19 +399,15 @@ VSegmentCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: VSegmentInit()
-///
-/// ARGS.:
-///
-///	pvsegm.: vector to init.
-///
-/// RTN..: void.
-///
-/// DESCR: init vector.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pvsegm vector to init.
+/// 
+/// \return void.
+/// 
+/// \brief init vector.
+/// \details 
+/// 
 
 void VSegmentInit(struct symtab_VSegment *pvsegm)
 {
@@ -442,27 +421,23 @@ void VSegmentInit(struct symtab_VSegment *pvsegm)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: VSegmentTraverseSegments()
-///
-/// ARGS.:
-///
-///	phsle.......: vector to traverse segments for
+/// 
+/// 
+/// \arg phsle vector to traverse segments for
 ///	ppist.......: context of cell, cell assumed to be on top
-///	pfProcesor..: segment processor
-///	pfFinalizer.: segment finalizer
-///	pvUserdata..: any user data
-///
-/// RTN..: int
-///
+/// \arg pfProcesor segment processor
+/// \arg pfFinalizer segment finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return int
+/// 
 ///	1  : success
 ///	0  : no success, failure
 ///	-1 : immediate abort
-///
-/// DESCR: Traverse segments, call pfProcessor on each of them
-///
-/// **************************************************************************
+/// 
+/// \brief Traverse segments, call pfProcessor on each of them
+/// \details 
+/// 
 
 static int 
 VSegmentSegmentSelector

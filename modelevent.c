@@ -35,21 +35,17 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserEventCellGenerate()
-///
-/// ARGS.:
-///
-///	iParserEvent...: event actions to generate
-///	pcell....: symbol that generates this event
-///	ppist....: context element
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Generates event for cell symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg iParserEvent event actions to generate
+/// \arg pcell symbol that generates this event
+/// \arg ppist context element
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Generates event for cell symbol
+/// \details 
+/// 
 
 int ParserEventCellGenerate
 (int iParserEvent,
@@ -60,11 +56,11 @@ int ParserEventCellGenerate
 
     int bResult = TRUE;
 
-    //v event to fire
+    /// event to fire
 
     ParserEvent ev;
 
-    //v sections of cell
+    /// sections of cell
 
     struct symtab_HSolveListElement * phsleSection = NULL;
 
@@ -126,7 +122,7 @@ int ParserEventCellGenerate
 	{
 	    //- illegal section in cell, give diagnostics
 
-	    //! need parser context here
+	    /// \note need parser context here
 
 	    NeurospacesError
 		(NULL,
@@ -169,21 +165,17 @@ int ParserEventCellGenerate
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserEventSegmentGenerate()
-///
-/// ARGS.:
-///
-///	iParserEvent...: event actions to generate
-///	psegment....: symbol that generates this event
-///	ppist....: context element
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Generates event for single segment symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg iParserEvent event actions to generate
+/// \arg psegment symbol that generates this event
+/// \arg ppist context element
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Generates event for single segment symbol
+/// \details 
+/// 
 
 int ParserEventSegmentGenerate
 (int iParserEvent,
@@ -194,7 +186,7 @@ int ParserEventSegmentGenerate
 
     int bResult = TRUE;
 
-    //v event to fire
+    /// event to fire
 
     ParserEvent ev;
 
@@ -226,21 +218,17 @@ int ParserEventSegmentGenerate
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserEventConnectionGenerate()
-///
-/// ARGS.:
-///
-///	iParserEvent...: event actions to generate
-///	pconn....: symbol that generates this event
-///	ppist....: context element
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Generates event for connection symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg iParserEvent event actions to generate
+/// \arg pconn symbol that generates this event
+/// \arg ppist context element
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Generates event for connection symbol
+/// \details 
+/// 
 
 int ParserEventConnectionGenerate
 (int iParserEvent,
@@ -251,7 +239,7 @@ int ParserEventConnectionGenerate
 
     int bResult = TRUE;
 
-    //v event to fire
+    /// event to fire
 
     ParserEvent ev;
 
@@ -283,21 +271,17 @@ int ParserEventConnectionGenerate
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserEventNetworkGenerate()
-///
-/// ARGS.:
-///
-///	iParserEvent...: event actions to generate
-///	pnetw....: symbol that generates this event
-///	ppist....: context element
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Generates event for network symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg iParserEvent event actions to generate
+/// \arg pnetw symbol that generates this event
+/// \arg ppist context element
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Generates event for network symbol
+/// \details 
+/// 
 
 int ParserEventNetworkGenerate
 (int iParserEvent,
@@ -308,11 +292,11 @@ int ParserEventNetworkGenerate
 
     int bResult = TRUE;
 
-    //v event to fire
+    /// event to fire
 
     ParserEvent ev;
 
-    //v sections of network
+    /// sections of network
 
     struct symtab_HSolveListElement * phsleSection = NULL;
 
@@ -416,7 +400,7 @@ int ParserEventNetworkGenerate
 	{
 	    //- illegal section in network, give diagnostics
 
-	    //! need parser context here
+	    /// \note need parser context here
 
 	    NeurospacesError
 		(NULL,
@@ -454,21 +438,17 @@ int ParserEventNetworkGenerate
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserEventPopulationGenerate()
-///
-/// ARGS.:
-///
-///	iParserEvent...: event actions to generate
-///	ppopu....: symbol that generates this event
-///	ppist....: context element
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Generates event for population symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg iParserEvent event actions to generate
+/// \arg ppopu symbol that generates this event
+/// \arg ppist context element
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Generates event for population symbol
+/// \details 
+/// 
 
 int ParserEventPopulationGenerate
 (int iParserEvent,
@@ -479,7 +459,7 @@ int ParserEventPopulationGenerate
 
     int bResult = TRUE;
 
-    //v event to fire
+    /// event to fire
 
     ParserEvent ev;
 
@@ -511,21 +491,17 @@ int ParserEventPopulationGenerate
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserEventProjectionGenerate()
-///
-/// ARGS.:
-///
-///	iParserEvent...: event actions to generate
-///	pproj....: symbol that generates this event
-///	ppist....: context element
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Generates event for projection symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg iParserEvent event actions to generate
+/// \arg pproj symbol that generates this event
+/// \arg ppist context element
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Generates event for projection symbol
+/// \details 
+/// 
 
 int ParserEventProjectionGenerate
 (int iParserEvent,
@@ -536,11 +512,11 @@ int ParserEventProjectionGenerate
 
     int bResult = TRUE;
 
-    //v event to fire
+    /// event to fire
 
     ParserEvent ev;
 
-    //v sections of network
+    /// sections of network
 
     struct symtab_HSolveListElement * phsleSection = NULL;
 
@@ -602,7 +578,7 @@ int ParserEventProjectionGenerate
 /* 	{ */
 /* 	    //- generate new event */
 
-/* 	    //! enumeration logic in ParserEventGenerate() */
+/* 	    /// \note enumeration logic in ParserEventGenerate() */
 
 /* 	    ParserEventGenerate */
 /* 		((iParserEvent & EVENT_MASK_ACTIONS) */
@@ -620,7 +596,7 @@ int ParserEventProjectionGenerate
 	{
 	    //- illegal section in projection, give diagnostics
 
-	    //! need parser context here
+	    /// \note need parser context here
 
 	    NeurospacesError
 		(NULL,
@@ -658,21 +634,17 @@ int ParserEventProjectionGenerate
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserEventGenerate()
-///
-/// ARGS.:
-///
-///	iParserEvent...: event to generate
-///	phsle....: symbol that generates this event
-///	ppist....: context element
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Generates event for given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg iParserEvent event to generate
+/// \arg phsle symbol that generates this event
+/// \arg ppist context element
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Generates event for given symbol
+/// \details 
+/// 
 
 int ParserEventGenerate
 (int iParserEvent,
@@ -683,11 +655,11 @@ int ParserEventGenerate
 
     int bResult = TRUE;
 
-    //t could do a sanity check here on phsle, iParserEvent, type check
+    /// \todo could do a sanity check here on phsle, iParserEvent, type check
 
     //- if no enumeration event
 
-    //t should be a bit more generic (C++ or Java ?)
+    /// \todo should be a bit more generic (C++ or Java ?)
 
     if ((iParserEvent & EVENT_FLAG_ENUMERATION) == 0)
     {
@@ -700,7 +672,7 @@ int ParserEventGenerate
 
 	case 0:
 	{
-	    //v event to fire
+	    /// event to fire
 
 	    ParserEvent ev;
 
@@ -708,7 +680,7 @@ int ParserEventGenerate
 
 	    ev.iType = iParserEvent;
 
-	    //! phsle should be NULL here
+	    /// \note phsle should be NULL here
 
 	    ev.uInfo.phsle = phsle;
 
@@ -848,14 +820,14 @@ int ParserEventGenerate
 	{
 	    //- push groupname in context
 
-	    //! still need private data here
+	    /// \note still need private data here
 
 	    PidinStackPushAll(&pist,SymbolGetPidin(&pvect->bio.ioh.iol.hsle));
 	}
 
-	//! enumerate all subsymbols in the main symbol
-	//!
-	//! should be done with an iterator template
+	/// \note enumerate all subsymbols in the main symbol
+	///
+	/// \note should be done with an iterator template
 
 	{
 	    //- loop over sections in container element
@@ -888,19 +860,15 @@ int ParserEventGenerate
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ParserEventInit()
-///
-/// ARGS.:
-///
-///	pev..: event to init
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Init event
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pev event to init
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Init event
+/// \details 
+/// 
 
 int ParserEventInit(ParserEvent *pev)
 {

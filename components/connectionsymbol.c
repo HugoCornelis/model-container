@@ -34,19 +34,15 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionSymbolCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_ConnectionSymbol * 
-///
+/// 
+/// 
+/// \return struct symtab_ConnectionSymbol * 
+/// 
 ///	Newly allocated connection, NULL for failure
-///
-/// DESCR: Allocate a new connection symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new connection symbol table element
+/// \details 
+/// 
 
 struct symtab_ConnectionSymbol * ConnectionSymbolCalloc(void)
 {
@@ -74,26 +70,22 @@ struct symtab_ConnectionSymbol * ConnectionSymbolCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionSymbolGetSpikeGenerator()
-///
-/// ARGS.:
-///
-///	pconsy: connection with spike generator reference
-///	phsle.: symbol relative to which connection occurs (== population)
+/// 
+/// 
+/// \arg pconsy: connection with spike generator reference
+///	phsle symbol relative to which connection occurs (== population)
 ///	ppist.: context of connection (== population)
-///
-/// RTN..: struct PidinStack *
-///
+/// 
+/// \return struct PidinStack *
+/// 
 ///	spike generator, -1 for failure, NULL for none
-///
-/// DESCR: Get spike generator for connection
-///
+/// 
+/// \brief Get spike generator for connection
+/// \details 
+/// 
 ///	ppist is context of source of projection to which this connection
 ///	belongs, phsle is referred to by ppist.
-///
-/// **************************************************************************
+/// 
 
 struct PidinStack *
 ConnectionSymbolGetSpikeGenerator
@@ -137,26 +129,22 @@ ConnectionSymbolGetSpikeGenerator
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionSymbolGetSpikeReceiver()
-///
-/// ARGS.:
-///
-///	pconsy: connection with spike receiver reference
-///	phsle.: symbol relative to which connection occurs (== population)
+/// 
+/// 
+/// \arg pconsy: connection with spike receiver reference
+///	phsle symbol relative to which connection occurs (== population)
 ///	ppist.: context of connection (== population)
-///
-/// RTN..: struct PidinStack *
-///
+/// 
+/// \return struct PidinStack *
+/// 
 ///	spike receiver, -1 for failure, NULL for none
-///
-/// DESCR: Get spike receiver for connection
-///
+/// 
+/// \brief Get spike receiver for connection
+/// \details 
+/// 
 ///	ppist is context of target of projection to which this connection
 ///	belongs, phsle is referred to by ppist.
-///
-/// **************************************************************************
+/// 
 
 struct PidinStack *
 ConnectionSymbolGetSpikeReceiver
@@ -200,21 +188,17 @@ ConnectionSymbolGetSpikeReceiver
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionSymbolInit()
-///
-/// ARGS.:
-///
-///	pconsy.: connection to init
-///
-/// RTN..: void
-///
-/// DESCR: init connection
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pconsy connection to init
+/// 
+/// \return void
+/// 
+/// \brief init connection
+/// \details 
+/// 
 
-//v next identifier for any connection
+/// next identifier for any connection
 
 static int iStaticPidin = 1;
 
@@ -250,22 +234,18 @@ void ConnectionSymbolInit(struct symtab_ConnectionSymbol *pconsy)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionSymbolPrint()
-///
-/// ARGS.:
-///
-///	pconsy...: connection to print symbols for
+/// 
+/// 
+/// \arg pconsy connection to print symbols for
 ///	bAll.....: TRUE == full list of symbols, FALSE == only given conn
-///	iIndent..: number of indentation spaces
-///	pfile....: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Print symbol info for connection
-///
-/// **************************************************************************
+/// \arg iIndent number of indentation spaces
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Print symbol info for connection
+/// \details 
+/// 
 
 #define PrintConnectionSymbolIndent(iIndent,pfile)				\
 do									\
@@ -282,11 +262,11 @@ int ConnectionSymbolPrint
 
     int bResult = TRUE;
 
-    //v section element
+    /// section element
 
     struct symtab_HSolveListElement *phsle = NULL;
 
-    //t should call to biocomponent ?
+    /// \todo should call to biocomponent ?
 
     //- do indent
 
@@ -323,21 +303,17 @@ int ConnectionSymbolPrint
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionSymbolGetDelay()
-///
-/// ARGS.:
-///
-///	pconsy...: connection to print symbols for.
-///
-/// RTN..: double
-///
+/// 
+/// 
+/// \arg pconsy connection to print symbols for.
+/// 
+/// \return double
+/// 
 ///	Delay of connection, FLT_MAX for failure.
-///
-/// DESCR: Get delay of connection.
-///
-/// **************************************************************************
+/// 
+/// \brief Get delay of connection.
+/// \details 
+/// 
 
 double
 ConnectionSymbolGetDelay(struct symtab_ConnectionSymbol *pconsy)
@@ -348,12 +324,12 @@ ConnectionSymbolGetDelay(struct symtab_ConnectionSymbol *pconsy)
 
     //- get parameter
 
-    //! with parameter caches, relies on a valid context so commented out
+    /// \note with parameter caches, relies on a valid context so commented out
 
 /*     struct symtab_Parameters *pparPost */
 /* 	= SymbolFindParameter(&pconsy->bio.ioh.iol.hsle, ppist, "POST"); */
 
-    //! without parameter caches
+    /// \note without parameter caches
 
     struct symtab_Parameters *pparPost
 	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "POST");
@@ -373,21 +349,17 @@ ConnectionSymbolGetDelay(struct symtab_ConnectionSymbol *pconsy)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionSymbolGetPost()
-///
-/// ARGS.:
-///
-///	pconsy...: connection to print symbols for.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pconsy connection to print symbols for.
+/// 
+/// \return int
+/// 
 ///	Serial of post synaptic symbol, -1 for failure.
-///
-/// DESCR: Get serial of post synaptic symbol.
-///
-/// **************************************************************************
+/// 
+/// \brief Get serial of post synaptic symbol.
+/// \details 
+/// 
 
 int
 ConnectionSymbolGetPost(struct symtab_ConnectionSymbol *pconsy)
@@ -398,12 +370,12 @@ ConnectionSymbolGetPost(struct symtab_ConnectionSymbol *pconsy)
 
     //- get parameter
 
-    //! with parameter caches, relies on a valid context so commented out
+    /// \note with parameter caches, relies on a valid context so commented out
 
 /*     struct symtab_Parameters *pparPost */
 /* 	= SymbolFindParameter(&pconsy->bio.ioh.iol.hsle, ppist, "POST"); */
 
-    //! without parameter caches
+    /// \note without parameter caches
 
     struct symtab_Parameters *pparPost
 	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "POST");
@@ -423,21 +395,17 @@ ConnectionSymbolGetPost(struct symtab_ConnectionSymbol *pconsy)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionSymbolGetPre()
-///
-/// ARGS.:
-///
-///	pconsy...: connection to print symbols for.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pconsy connection to print symbols for.
+/// 
+/// \return int
+/// 
 ///	Serial of pre synaptic symbol, -1 for failure.
-///
-/// DESCR: Get serial of pre synaptic symbol.
-///
-/// **************************************************************************
+/// 
+/// \brief Get serial of pre synaptic symbol.
+/// \details 
+/// 
 
 int
 ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy)
@@ -448,7 +416,7 @@ ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy)
 
     //- get parameter
 
-    //! with parameter caches, relies on a valid context so commented out
+    /// \note with parameter caches, relies on a valid context so commented out
 
 /*     struct symtab_Parameters *pparPre */
 /* 	= SymbolFindParameter(&pconsy->bio.ioh.iol.hsle, ppist, "PRE"); */
@@ -458,7 +426,7 @@ ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy)
 /* (struct symtab_Parameters *ppar, */
 /*  struct PidinStack *ppist) */
 
-    //! without parameter caches
+    /// \note without parameter caches
 
     struct symtab_Parameters *pparPre
 	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "PRE");
@@ -478,21 +446,17 @@ ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionSymbolGetWeight()
-///
-/// ARGS.:
-///
-///	pconsy...: connection to print symbols for.
-///
-/// RTN..: double
-///
+/// 
+/// 
+/// \arg pconsy connection to print symbols for.
+/// 
+/// \return double
+/// 
 ///	Weight of connection, FLT_MAX for failure.
-///
-/// DESCR: Get weight of connection.
-///
-/// **************************************************************************
+/// 
+/// \brief Get weight of connection.
+/// \details 
+/// 
 
 double
 ConnectionSymbolGetWeight(struct symtab_ConnectionSymbol *pconsy)
@@ -503,12 +467,12 @@ ConnectionSymbolGetWeight(struct symtab_ConnectionSymbol *pconsy)
 
     //- get parameter
 
-    //! with parameter caches, relies on a valid context so commented out
+    /// \note with parameter caches, relies on a valid context so commented out
 
 /*     struct symtab_Parameters *pparPost */
 /* 	= SymbolFindParameter(&pconsy->bio.ioh.iol.hsle, ppist, "POST"); */
 
-    //! without parameter caches
+    /// \note without parameter caches
 
     struct symtab_Parameters *pparPost
 	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "POST");

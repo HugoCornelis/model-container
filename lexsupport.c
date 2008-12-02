@@ -18,10 +18,10 @@
 //////////////////////////////////////////////////////////////////////////////
 
 
-//d This hack is based on
-//d http://www.ethereal.com/lists/ethereal-dev/200307/msg00154.html
-//d it is a work around for a bug in the API of current versions
-//d of flex when using -P (if I got this wright).
+/// \def This hack is based on
+/// \def http://www.ethereal.com/lists/ethereal-dev/200307/msg00154.html
+/// \def it is a work around for a bug in the API of current versions
+/// \def of flex when using -P (if I got this wright).
 
 #ifndef yy_delete_buffer
 #define yy_delete_buffer parser_delete_buffer
@@ -43,7 +43,7 @@
 
 void LexAssociateRemove(struct yy_buffer_state **ppyyBuffer)
 {
-    //! *pyyBuffer should be same as YY_CURRENT_BUFFER
+    /// \note *pyyBuffer should be same as YY_CURRENT_BUFFER
 
     //- remove lexical buffer
 

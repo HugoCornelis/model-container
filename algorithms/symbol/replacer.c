@@ -36,65 +36,65 @@
 #include "replacerinstance.h"
 
 
-//s algorithm handlers for spine algorithm
+/// \struct algorithm handlers for spine algorithm
 
 static AlgorithmClassInstanceCreator ReplacerClassCreateInstance;
 
 static AlgorithmClassHandler ReplacerClassPrintInfo;
 
 
-//s algorithm class method table
+/// \struct algorithm class method table
 
 static struct AlgorithmClassHandlerLibrary pfReplacerClassHandlers =
 {
-    //m class info handler
+    /// class info handler
 
     ReplacerClassPrintInfo,
 
-    //m create instance from class (self, name, context, init string)
+    /// create instance from class (self, name, context, init string)
 
     ReplacerClassCreateInstance,
 };
 
 
-//s replacer class derives from algorithm class
+/// \struct replacer class derives from algorithm class
 
 struct ReplacerClass
 {
-    //m base struct : algorithm class
+    /// base struct : algorithm class
 
     struct AlgorithmClass algc;
 
-    //m number of created instances
+    /// number of created instances
 
     int iInstances;
 };
 
 
-//s algorithm class description
+/// \struct algorithm class description
 
 static struct ReplacerClass rcReplacer =
 {
-    //m base struct : algorithm class
+    /// base struct : algorithm class
 
     {
-	//m link
+	/// link
 
 	{
 	    NULL,
 	    NULL,
 	},
 
-	//m name
+	/// name
 
 	"Replacer",
 
-	//m algorithm handlers
+	/// algorithm handlers
 
 	&pfReplacerClassHandlers,
     },
 
-    //m number of instances
+    /// number of instances
 
     0,
 };
@@ -103,21 +103,17 @@ static struct ReplacerClass rcReplacer =
 struct AlgorithmClass *palgcReplacer = &rcReplacer.algc;
 
 
-/// **************************************************************************
-///
-/// SHORT: ReplacerClassCreateInstance()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: struct AlgorithmInstance * : 
-///
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return struct AlgorithmInstance *  
+/// 
 ///	created algorithm instance, NULL for failure
-///
-/// DESCR: Algorithm handler to create instance of replacer algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief Algorithm handler to create instance of replacer algorithm.
+/// \details 
+/// 
 
 static
 struct AlgorithmInstance *
@@ -149,19 +145,15 @@ ReplacerClassCreateInstance
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ReplacerClassPrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on replacer algorithm class.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int  std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on replacer algorithm class.
+/// \details 
+/// 
 
 static int ReplacerClassPrintInfo
 (struct AlgorithmClass *palgc,char *pcName,void *pvGlobal,void *pvData)

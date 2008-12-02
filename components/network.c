@@ -35,19 +35,15 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: NetworkCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Network * 
-///
+/// 
+/// 
+/// \return struct symtab_Network * 
+/// 
 ///	Newly allocated network, NULL for failure
-///
-/// DESCR: Allocate a new network symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new network symbol table element
+/// \details 
+/// 
 
 struct symtab_Network * NetworkCalloc(void)
 {
@@ -75,19 +71,15 @@ struct symtab_Network * NetworkCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NetworkCountCells()
-///
-/// ARGS.:
-///
-///	pnetw.: network to count cells for
-///
-/// RTN..: int : number of cells in network, -1 for failure
-///
-/// DESCR: count cells in network
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pnetw network to count cells for
+/// 
+/// \return int : number of cells in network, -1 for failure
+/// 
+/// \brief count cells in network
+/// \details 
+/// 
 
 int NetworkCountCells
 (struct symtab_Network *pnetw,struct PidinStack *ppist)
@@ -115,22 +107,18 @@ int NetworkCountCells
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NetworkCountConnections()
-///
-/// ARGS.:
-///
-///	pnetw...: network
-///	ppist...: context of network
-///
-/// RTN..: int : number of connections, -1 for failure
-///
-/// DESCR: Get number of connections in network
-///
+/// 
+/// 
+/// \arg pnetw network
+/// \arg ppist context of network
+/// 
+/// \return int : number of connections, -1 for failure
+/// 
+/// \brief Get number of connections in network
+/// \details 
+/// 
 ///	connections == synapses
-///
-/// **************************************************************************
+/// 
 
 int NetworkCountConnections
 (struct symtab_Network *pnetw,struct PidinStack *ppist)
@@ -159,20 +147,16 @@ int NetworkCountConnections
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NetworkCreateAlias()
-///
-/// ARGS.:
-///
-///	pnetw.: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pnetw symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 NetworkCreateAlias
@@ -198,19 +182,15 @@ NetworkCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NetworkInit()
-///
-/// ARGS.:
-///
-///	pnetw.: network to init
-///
-/// RTN..: void
-///
-/// DESCR: init network
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pnetw network to init
+/// 
+/// \return void
+/// 
+/// \brief init network
+/// \details 
+/// 
 
 void NetworkInit(struct symtab_Network *pnetw)
 {
@@ -224,23 +204,19 @@ void NetworkInit(struct symtab_Network *pnetw)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NetworkTraverseCells()
-///
-/// ARGS.:
-///
-///	phsle.......: network to traverse cells for
+/// 
+/// 
+/// \arg phsle network to traverse cells for
 ///	ppist.......: context of network, network assumed to be on top
-///	pfProcesor..: cell processor
-///	pfFinalizer.: cell finalizer
-///	pvUserdata..: any user data
-///
-/// RTN..: see TstrTraverse()
-///
-/// DESCR: Traverse cells, call pfProcessor on each of them
-///
-/// **************************************************************************
+/// \arg pfProcesor cell processor
+/// \arg pfFinalizer cell finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return see TstrTraverse()
+/// 
+/// \brief Traverse cells, call pfProcessor on each of them
+/// \details 
+/// 
 
 int NetworkTraverseCells
 (struct symtab_HSolveListElement *phsle,
@@ -279,28 +255,24 @@ int NetworkTraverseCells
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: NetworkTraverseConnections()
-///
-/// ARGS.:
-///
-///	pnetw.......: network to traverse connections for
+/// 
+/// 
+/// \arg pnetw network to traverse connections for
 ///	ppist.......: context of network, network assumed to be on top
-///	pfProcessor.: mechanism processor
-///	pfFinalizer.: finalizer
-///	pvUserdata..: any user data
-///
-/// RTN..: see TstrTraverse()
-///
-/// DESCR: Traverse connections, call pfProcesor on each of them
-///
+/// \arg pfProcessor mechanism processor
+/// \arg pfFinalizer finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return see TstrTraverse()
+/// 
+/// \brief Traverse connections, call pfProcesor on each of them
+/// \details 
+/// 
 ///	Does not use a selector to select connections yet, so calls 
 ///	pfProcesor on connection vectors also. Test with 
 ///	InstanceOfVConnection() and InstanceOfConnection() to make 
 ///	distinction between the two.
-///
-/// **************************************************************************
+/// 
 
 int
 NetworkTraverseConnections

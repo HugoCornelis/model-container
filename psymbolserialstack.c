@@ -48,19 +48,15 @@ PSymbolSerialStackPushed
 (struct PSymbolSerialStack *psymsst,struct symtab_HSolveListElement *phsle);
 
 
-/// **************************************************************************
-///
-/// SHORT: PSymbolSerialStackCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct PSymbolSerialStack * 
-///
+/// 
+/// 
+/// \return struct PSymbolSerialStack * 
+/// 
 ///	Newly allocated symbol serial stack, NULL for failure
-///
-/// DESCR: Allocate a new symbol serial stack symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new symbol serial stack symbol table element
+/// \details 
+/// 
 
 struct PSymbolSerialStack * PSymbolSerialStackCalloc(void)
 {
@@ -84,19 +80,15 @@ struct PSymbolSerialStack * PSymbolSerialStackCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PSymbolSerialStackInit()
-///
-/// ARGS.:
-///
-///	psymsst.: symbol serial stack to clear
-///
-/// RTN..: void
-///
-/// DESCR: Initialize a symbol serial stack
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psymsst symbol serial stack to clear
+/// 
+/// \return void
+/// 
+/// \brief Initialize a symbol serial stack
+/// \details 
+/// 
 
 void PSymbolSerialStackInit(struct PSymbolSerialStack *psymsst)
 {
@@ -112,21 +104,17 @@ void PSymbolSerialStackInit(struct PSymbolSerialStack *psymsst)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PSymbolSerialStackPop()
-///
-/// ARGS.:
-///
-///	psymsst.: symbol serial stack to pop
-///
-/// RTN..: struct symtab_HSolveListElement * 
-///
+/// 
+/// 
+/// \arg psymsst symbol serial stack to pop
+/// 
+/// \return struct symtab_HSolveListElement * 
+/// 
 ///	popped symbol, NULL for failure
-///
-/// DESCR: Pop symbol from stack
-///
-/// **************************************************************************
+/// 
+/// \brief Pop symbol from stack
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 PSymbolSerialStackPop(struct PSymbolSerialStack *psymsst)
@@ -160,23 +148,19 @@ PSymbolSerialStackPop(struct PSymbolSerialStack *psymsst)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PSymbolSerialStackPopped()
-///
-/// ARGS.:
-///
-///	psymsst.: popped symbol serial stack
-///	phsle...: symbol that has been popped
-///
-/// RTN..: void
-///
-/// DESCR: Repair a symbol serial stack that has been popped
-///
+/// 
+/// 
+/// \arg psymsst popped symbol serial stack
+/// \arg phsle symbol that has been popped
+/// 
+/// \return void
+/// 
+/// \brief Repair a symbol serial stack that has been popped
+/// \details 
+/// 
 ///	Updates serial after popping phsle from psymsst.
 ///	Serial must be in sync with base struct (symbol stack).
-///
-/// **************************************************************************
+/// 
 
 static inline void
 PSymbolSerialStackPopped
@@ -194,20 +178,16 @@ PSymbolSerialStackPopped
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PSymbolSerialStackPush()
-///
-/// ARGS.:
-///
-///	psymsst.: symbol serial stack to push onto
-///	phsle...: phsle to push
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Push phsle onto stack
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psymsst symbol serial stack to push onto
+/// \arg phsle phsle to push
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Push phsle onto stack
+/// \details 
+/// 
 
 int
 PSymbolSerialStackPush
@@ -242,23 +222,19 @@ PSymbolSerialStackPush
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PSymbolSerialStackPushed()
-///
-/// ARGS.:
-///
-///	psymsst.: symbol serial stack after push
-///	phsle...: symbol that has been pushed
-///
-/// RTN..: void
-///
-/// DESCR: Repair a symbol serial stack that has been pushed on
-///
+/// 
+/// 
+/// \arg psymsst symbol serial stack after push
+/// \arg phsle symbol that has been pushed
+/// 
+/// \return void
+/// 
+/// \brief Repair a symbol serial stack that has been pushed on
+/// \details 
+/// 
 ///	Updates serial after pushing phsle onto psymsst.
 ///	Serial must be in sync with base struct (symbol stack).
-///
-/// **************************************************************************
+/// 
 
 static inline void
 PSymbolSerialStackPushed

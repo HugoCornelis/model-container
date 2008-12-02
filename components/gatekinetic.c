@@ -28,7 +28,6 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-//f static functions
 
 static
 double
@@ -46,19 +45,15 @@ GateKineticGetTabulationFlag
 (struct symtab_GateKinetic *pgatk, struct PidinStack *ppist);
 
 
-/// **************************************************************************
-///
-/// SHORT: GateKineticCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_GateKinetic * 
-///
+/// 
+/// 
+/// \return struct symtab_GateKinetic * 
+/// 
 ///	Newly allocated gate kinetic, NULL for failure
-///
-/// DESCR: Allocate a new gate kinetic symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new gate kinetic symbol table element
+/// \details 
+/// 
 
 struct symtab_GateKinetic * GateKineticCalloc(void)
 {
@@ -86,20 +81,16 @@ struct symtab_GateKinetic * GateKineticCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: GateKineticCreateAlias()
-///
-/// ARGS.:
-///
-///	pgatk.: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pgatk symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 GateKineticCreateAlias
@@ -125,23 +116,19 @@ GateKineticCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: GateKineticGetParameter()
-///
-/// ARGS.:
-///
-///	pgatk...: symbol to get parameter for.
-///	ppist...: context of symbol.
-///	pcName..: name of parameter.
-///
-/// RTN..: struct symtab_Parameters *
-///
+/// 
+/// 
+/// \arg pgatk symbol to get parameter for.
+/// \arg ppist context of symbol.
+/// \arg pcName name of parameter.
+/// 
+/// \return struct symtab_Parameters *
+/// 
 ///	Parameter structure, NULL for failure.
-///
-/// DESCR: Get specific parameter of symbol.
-///
-/// **************************************************************************
+/// 
+/// \brief Get specific parameter of symbol.
+/// \details 
+/// 
 
 struct symtab_Parameters * 
 GateKineticGetParameter
@@ -282,25 +269,21 @@ GateKineticGetParameter
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: GateKineticGetHHOffset()
-///
-/// ARGS.:
-///
-///	pgatk.: gate kinetic symbol.
-///	ppist.: context of gate kinetic symbol.
-///
-/// RTN..: double : HH_AB_Offset, FLT_MAX for failure.
-///
-/// DESCR: Get HH_AB_Offset of gate kinetic.
-///
+/// 
+/// 
+/// \arg pgatk gate kinetic symbol.
+/// \arg ppist context of gate kinetic symbol.
+/// 
+/// \return double : HH_AB_Offset, FLT_MAX for failure.
+/// 
+/// \brief Get HH_AB_Offset of gate kinetic.
+/// \details 
+/// 
 ///	If the HH_AB_Offset parameter is not present, it is taken to
 ///	be the same as the HH_AB_Offset_E parameter.  Existence of the
 ///	HH_AB_Offset is not done in this function, must be done
 ///	elsewhere.
-///
-/// **************************************************************************
+/// 
 
 static
 double
@@ -318,22 +301,18 @@ GateKineticGetHHOffset
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: GateKineticGetNumTableEntries()
-///
-/// ARGS.:
-///
-///	pgatk.: gate kinetic to init
-///     ppist.: context of kinetic symbol
-///
-/// RTN..: double
-///
+/// 
+/// 
+/// \arg pgatk gate kinetic to init
+/// \arg ppist context of kinetic symbol
+/// 
+/// \return double
+/// 
 ///	Number of entries in the table, FLT_MAX for no table.
-///
-/// DESCR: Calculate the number of entries in the gate kinetic table.
-///
-/// **************************************************************************
+/// 
+/// \brief Calculate the number of entries in the gate kinetic table.
+/// \details 
+/// 
 
 static
 double
@@ -380,24 +359,20 @@ GateKineticGetNumTableEntries
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: GateKineticGetTabulationFlag()
-///
-/// ARGS.:
-///
-///	pgatk.: gate kinetic symbol.
-///	ppist.: context of gate kinetic symbol.
-///
-/// RTN..: int : TRUE if this table can be tabulated.
-///
-/// DESCR: Get tabulation flag of gate kinetic.
-///
+/// 
+/// 
+/// \arg pgatk gate kinetic symbol.
+/// \arg ppist context of gate kinetic symbol.
+/// 
+/// \return int : TRUE if this table can be tabulated.
+/// 
+/// \brief Get tabulation flag of gate kinetic.
+/// \details 
+/// 
 ///	A gate kinetic can be presented as a table if it contains a
 ///	table, or if there is a tabulation service that understands
 ///	the parameters defined in the gate kinetic.
-///
-/// **************************************************************************
+/// 
 
 static
 double
@@ -415,8 +390,8 @@ GateKineticGetTabulationFlag
 
     if (pparEntry0)
     {
-	//t should do something for range etc.
-	//t see also TODO comments below.
+	/// \todo should do something for range etc.
+	/// \todo see also TODO comments below.
 
 	//- set result: yes
 
@@ -427,22 +402,22 @@ GateKineticGetTabulationFlag
 
     else
     {
-	//t check for a tabulation service
+	/// \todo check for a tabulation service
 
-	//t ask the tabulation service to tabulate the gate kinetic
+	/// \todo ask the tabulation service to tabulate the gate kinetic
 
-	//t so here we have to link to the tabulation service of heccer
+	/// \todo so here we have to link to the tabulation service of heccer
 
-	//t heccer compilation of a model
-	//t should first ask for the tabulation flag
-	//t   if not present
-	//t     bail out
-	//t   else
-	//t     ask for tables, take over tables (stdized table representation).
-	//t
+	/// \todo heccer compilation of a model
+	/// \todo should first ask for the tabulation flag
+	/// \todo   if not present
+	/// \todo     bail out
+	/// \todo   else
+	/// \todo     ask for tables, take over tables (stdized table representation).
+	///
 
-	//t tabulation config should be mirrored as gate parameters ?
-	//t guess not, because is
+	/// \todo tabulation config should be mirrored as gate parameters ?
+	/// \todo guess not, because is
     }
 
     //- return result
@@ -451,19 +426,15 @@ GateKineticGetTabulationFlag
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: GateKineticInit()
-///
-/// ARGS.:
-///
-///	pgatk.: gate kinetic to init
-///
-/// RTN..: void
-///
-/// DESCR: init gate kinetic
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pgatk gate kinetic to init
+/// 
+/// \return void
+/// 
+/// \brief init gate kinetic
+/// \details 
+/// 
 
 void GateKineticInit(struct symtab_GateKinetic *pgatk)
 {

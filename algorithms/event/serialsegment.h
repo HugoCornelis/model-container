@@ -26,54 +26,54 @@
 #define ALGORITHM_SERIALSEGMENT_H
 
 
-//s
-//s segment array entry
-//s
+/// \struct
+/// \struct segment array entry
+/// \struct
 
 struct SymbolSerialSegment
 {
-    //m segment symbol
+    /// segment symbol
 
-    //struct symtab_HSolveListElement *phsle;
+    /// \structtruct symtab_HSolveListElement *phsle;
 
     struct symtab_Segment *psegment;
 
-    //m parent segment, NULL for none
+    /// parent segment, NULL for none
 
     struct SymbolSerialSegment *psymsersegmentParent;
 
-    //m index of parent segment in this array, -1 for none
+    /// index of parent segment in this array, -1 for none
 
     int iParent;
 
-    //m context of this segment
+    /// context of this segment
 
-    //! I should try to resolve this in a different manner
-    //! having a pist / segment is to much overhead
+    /// \note I should try to resolve this in a different manner
+    /// \note having a pist / segment is to much overhead
 
     struct PidinStack *ppist;
 };
 
 
-//s serial segment struct
+/// \struct serial segment struct
 
 struct SerialSegmentVariables
 {
-    //m number of serialized created segments
+    /// number of serialized created segments
 
     int iSegmentsCreated;
 
-    //m number of serialized added segments
+    /// number of serialized added segments
 
     int iSegmentsAdded;
 
-    //m array of all segments
+    /// array of all segments
 
     struct SymbolSerialSegment *psymsersegment;
 };
 
 
-//v serial segment array
+/// serial segment array
 
 extern struct SerialSegmentVariables sersegmentVariables;
 
@@ -81,7 +81,6 @@ extern struct SerialSegmentVariables sersegmentVariables;
 extern struct symtab_Algorithm *palgSerialSegment;
 
 
-//f exported functions
 
 struct symtab_Segment *
 SerialSegmentSetupStart

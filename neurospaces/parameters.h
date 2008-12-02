@@ -29,14 +29,14 @@
 /* #include "function.h" */
 
 
-//v for error signalling
+/// for error signalling
 
 extern int iINT_MAX;
 
 extern double dFLT_MAX;
 
 
-//v table with description of types
+/// table with description of types
 
 #ifndef SWIG
 extern char *ppcParameterStruct[];
@@ -47,33 +47,33 @@ extern char *ppcParameterStructShort[];
 #endif
 
 
-//s
-//s parameters
-//s
+/// \struct
+/// \struct parameters
+/// \struct
 
 struct symtab_Parameters
 {
-    //m link structures into list
+    /// link structures into list
 
     struct symtab_Parameters *pparNext;
 
-    //m first parameter of list
+    /// first parameter of list
 
     struct symtab_Parameters *pparFirst;
 
-    //m type of parameter
+    /// type of parameter
 
     int iType;
 
-    //m flags
+    /// flags
 
     int iFlags;
 
-    //m name of parameter
+    /// name of parameter
 
     char *pcIdentifier;
 
-    //m value : number, identifier or function for parameter
+    /// value : number, identifier or function for parameter
 
     union
     {
@@ -86,44 +86,44 @@ struct symtab_Parameters
 };
 
 
-//d parameter with symbolic value in idin (points to symbol, no numeric value)
+/// \def parameter with symbolic value in idin (points to symbol, no numeric value)
 
 #define TYPE_PARA_SYMBOLIC		1
 
-//d parameter with numeric value in dNumber
+/// \def parameter with numeric value in dNumber
 
 #define TYPE_PARA_NUMBER		2
 
-//d parameter with functional value in pidinFunction
+/// \def parameter with functional value in pidinFunction
 
 #define TYPE_PARA_FUNCTION		3
 
-//d parameter with field name in idin (points to field or IO, probably with a numeric value)
+/// \def parameter with field name in idin (points to field or IO, probably with a numeric value)
 
 #define TYPE_PARA_FIELD			4
 
-//d parameter for attribute, can have optionally a value in uValue
+/// \def parameter for attribute, can have optionally a value in uValue
 
 #define TYPE_PARA_ATTRIBUTE		5
 
-//d parameter with a string
+/// \def parameter with a string
 
 #define TYPE_PARA_STRING		6
 
 
-//d parameter is read-only
+/// \def parameter is read-only
 
 #define FLAG_PARA_READONLY		1
 
 
-//v table with description of types
+/// table with description of types
 
 #ifndef SWIG
 extern char *ppcParameterStruct[];
 #endif
 
 
-//d give description of type of HSLE struct
+/// \def give description of type of HSLE struct
 
 #define ParameterTypeDescribe(iType)				\
     (ppcParameterStruct[(iType)])
@@ -132,7 +132,6 @@ extern char *ppcParameterStruct[];
 
 
 
-//f static inline prototypes
 
 #ifndef SWIG
 static inline 
@@ -244,11 +243,10 @@ void
 ParameterSetType(struct symtab_Parameters *ppar, int iType);
 
 
-//f static inlines
 
-///
+/// 
 /// get first idin in field parameter
-///
+/// 
 
 #ifndef SWIG
 static inline 
@@ -262,9 +260,9 @@ ParameterFirstIdin(struct symtab_Parameters *ppar)
 }
 
 
-///
+/// 
 /// get field name from parameter
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -289,9 +287,9 @@ ParameterGetFieldName(struct symtab_Parameters *ppar)
 }
 
 
-///
+/// 
 /// get flags
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -302,9 +300,9 @@ int ParameterGetFlags(struct symtab_Parameters *ppar)
 }
 
 
-///
+/// 
 /// get name
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -315,9 +313,9 @@ char *ParameterGetName(struct symtab_Parameters *ppar)
 }
 
 
-///
+/// 
 /// get type
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -328,9 +326,9 @@ int ParameterGetType(struct symtab_Parameters *ppar)
 }
 
 
-///
+/// 
 /// get function from parameter
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -342,9 +340,9 @@ ParameterGetFunction(struct symtab_Parameters *ppar)
 }
 
 
-///
+/// 
 /// check if attribute
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -355,9 +353,9 @@ int ParameterIsAttribute(struct symtab_Parameters *ppar)
 }
 
 
-///
+/// 
 /// check if field
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -368,9 +366,9 @@ int ParameterIsField(struct symtab_Parameters *ppar)
 }
 
 
-///
+/// 
 /// check if function
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -384,9 +382,9 @@ int ParameterIsFunction(struct symtab_Parameters *ppar)
 
 
 
-///
+/// 
 /// check if number
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -397,9 +395,9 @@ int ParameterIsNumber(struct symtab_Parameters *ppar)
 }
 
 
-///
+/// 
 /// check if read only
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -410,9 +408,9 @@ int ParameterIsReadOnly(struct symtab_Parameters *ppar)
 }
 
 
-///
+/// 
 /// check if string
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -423,9 +421,9 @@ int ParameterIsString(struct symtab_Parameters *ppar)
 }
 
 
-///
+/// 
 /// check if symbolic
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -436,9 +434,9 @@ int ParameterIsSymbolic(struct symtab_Parameters *ppar)
 }
 
 
-///
+/// 
 /// flag parameter as attribute
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -451,9 +449,9 @@ ParameterSetAttribute
 }
 
 
-///
+/// 
 /// set field name
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -468,9 +466,9 @@ ParameterSetFieldName
 }
 
 
-///
+/// 
 /// set function
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -485,9 +483,9 @@ ParameterSetFunction
 }
 
 
-///
+/// 
 /// set name
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -498,9 +496,9 @@ void ParameterSetName(struct symtab_Parameters *ppar, char *pc)
 }
 
 
-///
+/// 
 /// set number value
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -515,9 +513,9 @@ ParameterSetNumber
 }
 
 
-///
+/// 
 /// set string value
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -532,9 +530,9 @@ ParameterSetString
 }
 
 
-///
+/// 
 /// set symbol name
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -549,9 +547,9 @@ ParameterSetSymbolName
 }
 
 
-///
+/// 
 /// set set parameter type
-///
+/// 
 
 #ifndef SWIG
 static inline
@@ -567,7 +565,6 @@ ParameterSetType(struct symtab_Parameters *ppar, int iType)
 struct PidinStack;
 
 
-//f exported functions
 
 
 struct symtab_Parameters * ParameterCalloc(void);

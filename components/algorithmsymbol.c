@@ -29,19 +29,15 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSymbolCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_AlgorithmSymbol * 
-///
+/// 
+/// 
+/// \return struct symtab_AlgorithmSymbol * 
+/// 
 ///	Newly allocated algorithm symbol, NULL for failure
-///
-/// DESCR: Allocate a new algorithm symbol symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new algorithm symbol symbol table element
+/// \details 
+/// 
 
 struct symtab_AlgorithmSymbol *AlgorithmSymbolCalloc(void)
 {
@@ -63,7 +59,7 @@ struct symtab_AlgorithmSymbol *AlgorithmSymbolCalloc(void)
 
     if (!AlgorithmSymbolInit(palgsResult))
     {
-	//t memory leak
+	/// \todo memory leak
 
 	return(NULL);
     }
@@ -74,20 +70,16 @@ struct symtab_AlgorithmSymbol *AlgorithmSymbolCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSymbolCreateAlias()
-///
-/// ARGS.:
-///
-///	palgs.: algorithm symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg palgs algorithm symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol.
+/// \details 
+/// 
 
 struct symtab_HSolveListElement *
 AlgorithmSymbolCreateAlias
@@ -113,21 +105,17 @@ AlgorithmSymbolCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSymbolInit()
-///
-/// ARGS.:
-///
-///	palgs.: algorithm symbol to init
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg palgs algorithm symbol to init
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR: init algorithm symbol
-///
-/// **************************************************************************
+/// 
+/// \brief init algorithm symbol
+/// \details 
+/// 
 
 int
 AlgorithmSymbolInit(struct symtab_AlgorithmSymbol *palgs)
@@ -146,22 +134,18 @@ AlgorithmSymbolInit(struct symtab_AlgorithmSymbol *palgs)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSymbolSetAlgorithmInstance()
-///
-/// ARGS.:
-///
-///	palgs.: algorithm symbol to init
-///	palgi.: algorithm instance
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg palgs algorithm symbol to init
+/// \arg palgi algorithm instance
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR: init algorithm symbol
-///
-/// **************************************************************************
+/// 
+/// \brief init algorithm symbol
+/// \details 
+/// 
 
 int
 AlgorithmSymbolSetAlgorithmInstance
@@ -170,8 +154,8 @@ AlgorithmSymbolSetAlgorithmInstance
 {
     //- allocate a name for use in the symbol table
 
-    //t perhaps should be just a reference to the name of palgi ?
-    //t Don't care actually.
+    /// \todo perhaps should be just a reference to the name of palgi ?
+    /// \todo Don't care actually.
 
     struct symtab_IdentifierIndex *pidin
 	= IdinNewFromChars(AlgorithmInstanceGetName(palgi));
@@ -188,37 +172,33 @@ AlgorithmSymbolSetAlgorithmInstance
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AlgorithmSymbolTraverse()
-///
-/// ARGS.:
-///
-///	ptstr.: initialized treespace traversal
-///	pconn.: symbol to traverse
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg ptstr initialized treespace traversal
+/// \arg pconn symbol to traverse
+/// 
+/// \return int
+/// 
 ///	1  : success
 ///	0  : no success, failure
 ///	-1 : immediate abort
-///
-/// DESCR: Traverse symbols in tree manner.
-///
-/// NOTE.: See IOHierarchyTraverse()
-///
+/// 
+/// \brief Traverse symbols in tree manner.
+/// \details 
+/// 
+/// \note  See IOHierarchyTraverse()
+/// 
 ///	Note that not all symbols are required to have a pidin.
 ///	Interfaces with Tstr{Prepare,Traverse,Repair}() :
-///
+/// 
 ///	Loops over children of top symbol
 ///		1. Calls TstrPrepare()
 ///		2. Calls TstrTraverse()
 ///		3. Calls TstrRepair()
-///
+/// 
 ///	Use Tstr.*() to obtain info on serial IDs and contexts
 ///	during traversals.
-///
-/// **************************************************************************
+/// 
 
 int
 AlgorithmSymbolTraverse

@@ -36,22 +36,18 @@
 //o
 //////////////////////////////////////////////////////////////////////////////
 
-/// **************************************************************************
-///
-/// SHORT: DefSymAddPublicModel()
-///
-/// ARGS.:
-///
-///	pdefsym...: defined symbols to add public models to
-///	phsle.....: model to add
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: add public model to defined symbols
-///
+/// 
+/// 
+/// \arg pdefsym defined symbols to add public models to
+/// \arg phsle model to add
+/// 
+/// \return int : success of operation
+/// 
+/// \brief add public model to defined symbols
+/// \details 
+/// 
 ///	No duplicate checking is done
-///
-/// **************************************************************************
+/// 
 
 int DefSymAddPublicModel
 (struct DefinedSymbols *pdefsym,
@@ -71,22 +67,18 @@ int DefSymAddPublicModel
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: DefSymAddPrivateModel()
-///
-/// ARGS.:
-///
-///	pdefsym...: defined symbols to add private models to
-///	phsle.....: private model to add
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: add private model to defined symbols
-///
+/// 
+/// 
+/// \arg pdefsym defined symbols to add private models to
+/// \arg phsle private model to add
+/// 
+/// \return int : success of operation
+/// 
+/// \brief add private model to defined symbols
+/// \details 
+/// 
 ///	No duplicate checking is done
-///
-/// **************************************************************************
+/// 
 
 int DefSymAddPrivateModel
 (struct DefinedSymbols *pdefsym,
@@ -106,17 +98,13 @@ int DefSymAddPrivateModel
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: DefSymCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct DefinedSymbols * : newly allocated defined symbols
-///
-/// DESCR: Allocate & initialize defined symbols struct.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return struct DefinedSymbols * : newly allocated defined symbols
+/// 
+/// \brief Allocate & initialize defined symbols struct.
+/// \details 
+/// 
 
 struct DefinedSymbols *DefSymCalloc(void)
 {
@@ -140,19 +128,15 @@ struct DefinedSymbols *DefSymCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: DefSymInit()
-///
-/// ARGS.:
-///
-/// 	pdefsym.: defined symbols to init
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Initialize defined symbols struct.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pdefsym defined symbols to init
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Initialize defined symbols struct.
+/// \details 
+/// 
 
 int DefSymInit(struct DefinedSymbols *pdefsym)
 {
@@ -197,21 +181,17 @@ int DefSymInit(struct DefinedSymbols *pdefsym)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: DefSymGetRootSymbol()
-///
-/// ARGS.:
-///
-///	pdefsym.: defined symbols of imported file
-///
-/// RTN..: struct symtab_HSolveListElement *
-///
+/// 
+/// 
+/// \arg pdefsym defined symbols of imported file
+/// 
+/// \return struct symtab_HSolveListElement *
+/// 
 ///	hypothetical root symbol, that exports all world visible symbols
-///
-/// DESCR: Get the world visible hypothetical root
-///
-/// **************************************************************************
+/// 
+/// \brief Get the world visible hypothetical root
+/// \details 
+/// 
 
 struct symtab_RootSymbol *
 DefSymGetRootSymbol(struct DefinedSymbols *pdefsym)
@@ -222,21 +202,17 @@ DefSymGetRootSymbol(struct DefinedSymbols *pdefsym)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: DefSymIncrementDependencyFiles()
-///
-/// ARGS.:
-///
-///	pdefsym.: defined symbols of imported file
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pdefsym defined symbols of imported file
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR: Increment count of number of dependencies.
-///
-/// **************************************************************************
+/// 
+/// \brief Increment count of number of dependencies.
+/// \details 
+/// 
 
 int
 DefSymIncrementDependencyFiles(struct DefinedSymbols *pdefsym)
@@ -247,27 +223,23 @@ DefSymIncrementDependencyFiles(struct DefinedSymbols *pdefsym)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: DefSymLookup()
-///
-/// ARGS.:
-///
-///	pdefsym.: defined symbols of imported file
-///	pcSpace.: name space to search in
-///	pcName..: name to lookup
-///	iFlags..: see DefSymLookup() in header
-///
-/// RTN..: struct symtab_HSolveListElement * : 
-///
+/// 
+/// 
+/// \arg pdefsym defined symbols of imported file
+/// \arg pcSpace name space to search in
+/// \arg pcName name to lookup
+/// \arg iFlags see DefSymLookup() in header
+/// 
+/// \return struct symtab_HSolveListElement * : 
+/// 
 ///	Matching symbol, NULL if not found
-///
-/// DESCR: lookup a symbol name in given defined symbols
-///
+/// 
+/// \brief lookup a symbol name in given defined symbols
+/// \details 
+/// 
 ///	If iFlags does not contain FLAG_SYMBOL_DEPENDENCY, pcSpace should be
 ///	NULL. If pcSpace is NULL, any FLAG_SYMBOL_DEPENDENCY is ignored.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_HSolveListElement *
 DefSymLookup
@@ -325,9 +297,9 @@ DefSymLookup
 		}
 		else
 		{
-		    //! we could continue searching the files that have the same namespace
-		    //! but that could lead to overwriting of symbols when multiple files
-		    //! are given the same namespace
+		    /// \note we could continue searching the files that have the same namespace
+		    /// \note but that could lead to overwriting of symbols when multiple files
+		    /// \note are given the same namespace
 
 		    return(phsleResult);
 		}
@@ -373,25 +345,21 @@ DefSymLookup
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: DefSymPrint()
-///
-/// ARGS.:
-///
-///	pdefsym..: defined symbols to print
-///	iFlags...: flags specifying which symbols to print
-///	iIndent..: number of indentation spaces
-///	pfile....: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Pretty print defined symbol
-///
+/// 
+/// 
+/// \arg pdefsym defined symbols to print
+/// \arg iFlags flags specifying which symbols to print
+/// \arg iIndent number of indentation spaces
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Pretty print defined symbol
+/// \details 
+/// 
 ///	iFlags is or'd from FLAG_SYMBOL_DEPENDENCY, FLAG_SYMBOL_PROTOTYPE,
 ///	FLAG_SYMBOL_MODEL or zero.
-///
-/// **************************************************************************
+/// 
 
 int DefSymPrint
 (struct DefinedSymbols *pdefsym,int iFlags,int iIndent,FILE *pfile)
@@ -482,21 +450,17 @@ int DefSymPrint
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: DefSymPrintNameSpaces()
-///
-/// ARGS.:
-///
-///	pdf......: defined symbols to print namespaces for
-///	iIndent..: number of indentation spaces
-///	pfile....: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Pretty print namespaces in set of defined symbols.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pdf defined symbols to print namespaces for
+/// \arg iIndent number of indentation spaces
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Pretty print namespaces in set of defined symbols.
+/// \details 
+/// 
 
 int DefSymPrintNameSpaces
 (struct DefinedSymbols *pdefsym,int iIndent,FILE *pfile)

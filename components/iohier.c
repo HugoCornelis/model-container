@@ -30,22 +30,18 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: IOHierarchyAddChild()
-///
-/// ARGS.:
-///
-///	pioh.......: symbol container
-///	phsleChild.: child to enqueue
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Add a child to the children of given symbol container.
-///
+/// 
+/// 
+/// \arg pioh symbol container
+/// \arg phsleChild child to enqueue
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Add a child to the children of given symbol container.
+/// \details 
+/// 
 ///	Updates (sub)?space indices if symbol type has mappings.
-///
-/// **************************************************************************
+/// 
 
 int
 IOHierarchyAddChild
@@ -76,22 +72,18 @@ IOHierarchyAddChild
 
 #ifdef DELETE_OPERATION
 
-/// **************************************************************************
-///
-/// SHORT: IOHierarchyDeleteChild()
-///
-/// ARGS.:
-///
-///	pioh.......: symbol container
-///	phsleChild.: child to delete
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Delete a child from the children of given symbol container.
-///
+/// 
+/// 
+/// \arg pioh symbol container
+/// \arg phsleChild child to delete
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Delete a child from the children of given symbol container.
+/// \details 
+/// 
 ///	Does not update (sub)?space indices.
-///
-/// **************************************************************************
+/// 
 
 int
 IOHierarchyDeleteChild
@@ -118,19 +110,15 @@ IOHierarchyDeleteChild
 #endif
 
 
-/// **************************************************************************
-///
-/// SHORT: IOHierarchyGetChildren()
-///
-/// ARGS.:
-///
-///	pioh....: symbol to get children from.
-///
-/// RTN..: IOHContainer * : symbol container.
-///
-/// DESCR: Get children from given symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pioh symbol to get children from.
+/// 
+/// \return IOHContainer * : symbol container.
+/// 
+/// \brief Get children from given symbol.
+/// \details 
+/// 
 
 IOHContainer *
 IOHierarchyGetChildren
@@ -150,19 +138,15 @@ IOHierarchyGetChildren
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IOHierarchyInit()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	pioh.: hierarchical I/O element to init
-///
-/// RTN..: void
-///
-/// DESCR: Init hierarchical I/O element
-///
-/// **************************************************************************
+/// 
+/// \return void
+/// 
+/// \brief Init hierarchical I/O element
+/// \details 
+/// 
 
 void IOHierarchyInit(struct symtab_IOHierarchy * pioh)
 {
@@ -176,28 +160,24 @@ void IOHierarchyInit(struct symtab_IOHierarchy * pioh)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IOHierarchyLookupHierarchical()
-///
-/// ARGS.:
-///
-///	pioh..: container
-///	ppist.: name(s) to search
-///	iLevel: active level of ppist
-///	bAll..: set TRUE if next entries in ppist have to be searched
-///
-/// RTN..: struct symtab_HSolveListElement * :
-///
+/// 
+/// 
+/// \arg pioh container
+/// \arg ppist name(s) to search
+/// \arg iLevel: active level of ppist
+/// \arg bAll set TRUE if next entries in ppist have to be searched
+/// 
+/// \return struct symtab_HSolveListElement * :
+/// 
 ///	found symbol, NULL for not found
-///
-/// DESCR: Hierarchical lookup in subsymbols
-///
+/// 
+/// \brief Hierarchical lookup in subsymbols
+/// \details 
+/// 
 ///	First tries to match with container itself, if fails, returns failure
 ///	If match and subsymbols requested (bAll), tries to match next names
 ///	with subsymbols of container.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_HSolveListElement *
 IOHierarchyLookupHierarchical
@@ -273,13 +253,13 @@ IOHierarchyLookupHierarchical
 
 	    if (phsleResult)
 	    {
-		//t we could register phsleResult in cache of ppist.
-		//t probably means we need something like
-		//t PidinStackLookupHierarchical
-		//t     (ppist,iLevel + 1,&piohSub->iol.hsle,TRUE);
-		//t
-		//t this makes pidin stack behave more like pidin queues
-		//t look for interference with java interfaces.
+		/// \todo we could register phsleResult in cache of ppist.
+		/// \todo probably means we need something like
+		/// \todo PidinStackLookupHierarchical
+		/// \todo     (ppist,iLevel + 1,&piohSub->iol.hsle,TRUE);
+		///
+		/// \todo this makes pidin stack behave more like pidin queues
+		/// \todo look for interference with java interfaces.
 
 		//- return result
 
@@ -300,22 +280,18 @@ IOHierarchyLookupHierarchical
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: IOHierarchyPrint()
-///
-/// ARGS.:
-///
-///	pioh.....: symbol to print symbols for
+/// 
+/// 
+/// \arg pioh symbol to print symbols for
 ///	bAll.....: TRUE == full list of symbols, FALSE == only given comp
-///	iIndent..: number of indentation spaces
-///	pfile....: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Print symbol info
-///
-/// **************************************************************************
+/// \arg iIndent number of indentation spaces
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Print symbol info
+/// \details 
+/// 
 
 int IOHierarchyPrint
 (struct symtab_IOHierarchy *pioh, int bAll, int iIndent, FILE *pfile)
@@ -324,7 +300,7 @@ int IOHierarchyPrint
 
     int bResult = TRUE;
 
-    //v section element
+    /// section element
 
     struct symtab_HSolveListElement *phsle = NULL;
 
@@ -395,9 +371,10 @@ int IOHierarchyPrint
 /* /// */
 /* ///	pioh.: symbol to recalculate serials for */
 /* /// */
-/* /// RTN..: int : success of operation */
+/* /// \return int : success of operation */
 /* /// */
-/* /// DESCR: Recalculate children serials relative to symbol (== parent). */
+/* /// \brief Recalculate children serials relative to symbol (== parent). */
+/// \details 
 /* /// */
 /* ///	Uses #SU in children to set serial to parent, #SU must be correct */
 /* ///	for this function to work. */
@@ -453,37 +430,33 @@ int IOHierarchyPrint
 /* } */
 
 
-/// **************************************************************************
-///
-/// SHORT: IOHierarchyTraverse()
-///
-/// ARGS.:
-///
-///	ptstr.: initialized treespace traversal
-///	pioh..: symbol to traverse
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg ptstr initialized treespace traversal
+/// \arg pioh symbol to traverse
+/// 
+/// \return int
+/// 
 ///	1  : success
 ///	0  : no success, failure
 ///	-1 : immediate abort
-///
-/// DESCR: Traverse IO symbols in tree manner.
-///
-/// NOTE.: 
-///
+/// 
+/// \brief Traverse IO symbols in tree manner.
+/// \details 
+/// 
+/// \note  
+/// 
 ///	Note that not all symbols are required to have a pidin.
 ///	Interfaces with Tstr{Prepare,Traverse,Repair}() :
-///
+/// 
 ///	Loops over children of top symbol
 ///		1. Calls TstrPrepare()
 ///		2. Calls TstrTraverse()
 ///		3. Calls TstrRepair()
-///
+/// 
 ///	Use Tstr.*() to obtain info on serial IDs and contexts
 ///	during traversals.
-///
-/// **************************************************************************
+/// 
 
 int IOHierarchyTraverse
 (struct TreespaceTraversal *ptstr, struct symtab_IOHierarchy *pioh)
@@ -571,10 +544,10 @@ int IOHierarchyTraverse
 	    iProcessorValue = TSTR_PROCESSOR_SUCCESS;
 	}
 
-	//t register next child, such that the current one can be removed
-	//t continue operating on the current child, the finalizer is allowed to remove it.
-	//t call the finalizer as usual
-	//t copy registered child to current child, continue loop
+	/// \todo register next child, such that the current one can be removed
+	/// \todo continue operating on the current child, the finalizer is allowed to remove it.
+	/// \todo call the finalizer as usual
+	/// \todo copy registered child to current child, continue loop
 
 	//- register next child
 

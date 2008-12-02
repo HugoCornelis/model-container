@@ -23,13 +23,12 @@
 #define CACHEREGISTRY_H
 
 
-//d declarations
+/// \def declarations
 
 struct CacheRegistry;
 struct RegisteredCache;
 
 
-//f exported functions
 
 struct CacheRegistry *
 CacheRegistryCalloc(int iSize);
@@ -46,7 +45,6 @@ CacheRegistryRegisterCache
  void *pvCache);
 
 
-//f exported inlines
 
 
 /* #include "cachedcoordinate.h" */
@@ -54,19 +52,19 @@ CacheRegistryRegisterCache
 
 struct RegisteredCache
 {
-    //m type: client specified
+    /// type: client specified
 
     int iType;
 
-    //m identifier: client specified
+    /// identifier: client specified
 
     int iIdentifier;
 
-    //m size: client specified
+    /// size: client specified
 
     int iSize;
 
-    //m cache payload
+    /// cache payload
 
     void *pvCache;
 };
@@ -74,22 +72,21 @@ struct RegisteredCache
 
 struct CacheRegistry
 {
-    //m size
+    /// size
 
     int iSize;
 
-    //m number of registered caches
+    /// number of registered caches
 
     int iRegistered;
 
-    //m registered caches
+    /// registered caches
 
     struct RegisteredCache *prc;
 };
 
 
 
-//f exported inlines
 
 #endif
 

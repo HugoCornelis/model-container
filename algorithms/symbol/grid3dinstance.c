@@ -41,7 +41,7 @@
 #include "grid3dinstance.h"
 
 
-//s Grid3D algorithm private data
+/// \struct Grid3D algorithm private data
 
 /*s */
 /*s struct with Grid3D options */
@@ -81,17 +81,17 @@ struct Grid3DOptions_type
 typedef struct Grid3DOptions_type Grid3DOptions;
 
 
-//s
-//s Grid3D variables
-//s
+/// \struct
+/// \struct Grid3D variables
+/// \struct
 
 struct Grid3DVariables_type
 {
-    //m current population to add something to
+    /// current population to add something to
 
     struct symtab_Population *ppopu;
 
-    //m symbol of prototype for random Grid3Ds
+    /// symbol of prototype for random Grid3Ds
 
     struct symtab_HSolveListElement *phsleProto;
 
@@ -103,19 +103,19 @@ struct Grid3DVariables_type
 typedef struct Grid3DVariables_type Grid3DVariables;
 
 
-//s Grid3D instance, derives from algorithm instance
+/// \struct Grid3D instance, derives from algorithm instance
 
 struct Grid3DInstance
 {
-    //m base struct
+    /// base struct
 
     struct AlgorithmInstance algi;
 
-    //m options for this instance
+    /// options for this instance
 
     Grid3DOptions g3o;
 
-    //m variables for this instance
+    /// variables for this instance
 
     Grid3DVariables g3v;
 };
@@ -138,21 +138,17 @@ Grid3DInstanceSymbolHandler
 (struct AlgorithmInstance *palgi, struct ParserContext *pac);
 
 
-/// **************************************************************************
-///
-/// SHORT: Grid3DInstanceNew()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: struct AlgorithmInstance * : 
-///
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return struct AlgorithmInstance *  
+/// 
 ///	created algorithm instance, NULL for failure
-///
-/// DESCR: Algorithm handler to create instance of Grid3D algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief Algorithm handler to create instance of Grid3D algorithm.
+/// \details 
+/// 
 
 struct AlgorithmInstance *
 Grid3DInstanceNew
@@ -186,7 +182,7 @@ Grid3DInstanceNew
 
 	struct symtab_HSolveListElement *phsle = PidinStackLookupTopSymbol(ppist);
 
-	//t should use ParameterResolveSymbol()
+	/// \todo should use ParameterResolveSymbol()
 
 	struct symtab_Parameters *pparProto
 	    = SymbolFindParameter(&palgs->hsle, ppist, "PROTOTYPE");
@@ -247,7 +243,7 @@ Grid3DInstanceNew
 	     "Private model %s not found\n",
 	     pg3i->g3o.pcGrid3DProto);
 
-	//t memory leak
+	/// \todo memory leak
 
 	//- return failure
 
@@ -264,11 +260,11 @@ Grid3DInstanceNew
 	    (pacContext,
 	     "Grid3D algorithm class",
 	     "Private model %s must be instance of biological component.\n",
-	     //t population, network,
-	     //t (every biocomponent that knows about 'X', 'Y', 'Z' ?)
+	     /// \todo population, network,
+	     /// \todo (every biocomponent that knows about 'X', 'Y', 'Z' ?)
 	     pg3i->g3o.pcGrid3DProto);
 
-	//t memory leak
+	/// \todo memory leak
 
 	//- return failure
 
@@ -281,24 +277,20 @@ Grid3DInstanceNew
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: Grid3DAddComponents()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	palg..: grid3d algorithm
-///	pioh..: symbol to add components to
-///	ppist.: current parser context
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Add components as specified by options and variables.
-///
+/// \arg pioh symbol to add components to
+/// \arg ppist current parser context
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Add components as specified by options and variables.
+/// \details 
+/// 
 ///	After adding, used to call SymbolRecalcAllSerials() on given 
 ///	symbol, not done anymore, could be changed.
-///
-/// **************************************************************************
+/// 
 
 static int 
 Grid3DAddComponents
@@ -314,11 +306,11 @@ Grid3DAddComponents
 
     //- loop over z direction
 
-    //t incorporate logic for invisible subset
+    /// \todo incorporate logic for invisible subset
 
-    //t take logarithm base 2 of pg3i->g3o.iz and add 1 ?
-    //t for every even incarnation of iz, have to add an invisible
-    //t node layer and descend ?
+    /// \todo take logarithm base 2 of pg3i->g3o.iz and add 1 ?
+    /// \todo for every even incarnation of iz, have to add an invisible
+    /// \todo node layer and descend ?
 
     for (iz = 0 ; iz < pg3i->g3o.iz ; iz++)
     {
@@ -326,7 +318,7 @@ Grid3DAddComponents
 
 	//- loop over y direction
 
-	//t incorporate logic for invisible subset
+	/// \todo incorporate logic for invisible subset
 
 	for (iy = 0 ; iy < pg3i->g3o.iy ; iy++)
 	{
@@ -334,7 +326,7 @@ Grid3DAddComponents
 
 	    //- loop over x direction
 
-	    //t incorporate logic for invisible subset
+	    /// \todo incorporate logic for invisible subset
 
 	    for (ix = 0 ; ix < pg3i->g3o.ix ; ix++)
 	    {
@@ -352,13 +344,13 @@ Grid3DAddComponents
 
 		//- create new name
 
-		//t this is contrary to the invisible subset implementation.
-		//t to solve this : use regular parameter for naming
-		//t (is also logical), and see further below regarding
-		//t positions.
-		//t
-		//t or perhaps by making the element pidin valid only
-		//t if the element belongs to the principal subset ?
+		/// \todo this is contrary to the invisible subset implementation.
+		/// \todo to solve this : use regular parameter for naming
+		/// \todo (is also logical), and see further below regarding
+		/// \todo positions.
+		///
+		/// \todo or perhaps by making the element pidin valid only
+		/// \todo if the element belongs to the principal subset ?
 
 		sprintf(pcTmp,"%i",pg3i->g3v.iAdded);
 
@@ -370,10 +362,10 @@ Grid3DAddComponents
 
 		IdinSetName(pidin,pc);
 
-		//t check if we need to manipulate the invisible subset :
-		//t
-		//t add invisible node (invisible is 1, principal is 0),
-		//t descend if needed.
+		/// \todo check if we need to manipulate the invisible subset :
+		///
+		/// \todo add invisible node (invisible is 1, principal is 0),
+		/// \todo descend if needed.
 
 		//- create alias
 
@@ -381,7 +373,7 @@ Grid3DAddComponents
 
 		//- set coordinates
 
-		//t have to use parameter caches in case we are using invible subsets ?
+		/// \todo have to use parameter caches in case we are using invible subsets ?
 
 		SymbolSetAtXYZ(phsleNew,x,y,z);
 
@@ -391,8 +383,8 @@ Grid3DAddComponents
 
 		//- increment count
 
-		//t take invisible subset compression into account, is
-		//t related to invisible layer depth.
+		/// \todo take invisible subset compression into account, is
+		/// \todo related to invisible layer depth.
 
 		pg3i->g3v.iAdded++;
 	    }
@@ -411,9 +403,9 @@ Grid3DAddComponents
 
     // recalculate serial ID's for affected symbols
 
-    //! not needed as long as we insert children of the given symbol
-    //! if we insert children of children of the given symbol,
-    //! then this is indeed needed.
+    /// \note not needed as long as we insert children of the given symbol
+    /// \note if we insert children of children of the given symbol,
+    /// \note then this is indeed needed.
 
     //SymbolRecalcAllSerials(phsle,ppist);
 
@@ -423,19 +415,15 @@ Grid3DAddComponents
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: Grid3DInstancePrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on grid 3d instance actions.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int  std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on grid 3d instance actions.
+/// \details 
+/// 
 
 static int Grid3DInstancePrintInfo
 (struct AlgorithmInstance *palgi, FILE *pfile)
@@ -444,7 +432,7 @@ static int Grid3DInstancePrintInfo
 
     int bResult = TRUE;
 
-    //v loop var
+    /// loop var
 
     int i;
 
@@ -490,21 +478,17 @@ static int Grid3DInstancePrintInfo
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: Grid3DInstanceSymbolHandler()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	AlgorithmSymbolHandler args.
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to add Grid3Ds on given symbol
-///
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to add Grid3Ds on given symbol
+/// \details 
+/// 
 ///	Does it do a clean update of serials ?
-///
-/// **************************************************************************
+/// 
 
 static
 int

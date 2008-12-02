@@ -30,74 +30,69 @@
 
 struct workload_symbol_config wsc =
 {
-    //m attachment workload
+    /// attachment workload
 
     1,
 
-    //m axon hillock workload
+    /// axon hillock workload
 
     0,
 
-    //m cell workload
+    /// cell workload
 
     0,
 
-    //m connection workload
+    /// connection workload
 
     0,
 
-    //m mechanism workload
+    /// mechanism workload
 
     {
-	//m channel workload
+	/// channel workload
 
 	6,
 
-	//m pool workload
+	/// pool workload
 
 	3,
     },
 
-    //m network workload
+    /// network workload
 
     0,
 
-    //m population workload
+    /// population workload
 
     0,
 
-    //m projection workload
+    /// projection workload
 
     0,
 
-    //m randomvalue workload
+    /// randomvalue workload
 
     3,
 
-    //m segment workload
+    /// segment workload
 
     4,
 
 };
 
 
-/// **************************************************************************
-///
-/// SHORT: WorkloadFree()
-///
-/// ARGS.:
-///
-///	pwi.: workload to free.
-///
+/// 
+/// 
+/// \arg pwi workload to free.
+/// 
 /// RTN..:
-///
+/// 
 ///	int : success of operation.
-///
-/// DESCR:
-///
+/// 
+/// \details 
+/// 
 ///	Free workload.
-///
-/// **************************************************************************
+/// 
 
 int WorkloadFree(struct workload_info *pwi)
 {
@@ -134,27 +129,22 @@ int WorkloadFree(struct workload_info *pwi)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: WorkloadNew()
-///
-/// ARGS.:
-///
-///	phsle...: symbol.
-///	ppist...: context.
-///	iLevel..: level of detail needed.
+/// 
+/// 
+/// \arg phsle symbol.
+/// \arg ppist context.
+/// \arg iLevel level of detail needed.
 ///	iFlags..: additional TRAVERSAL_INFO_* flags.
-///
+/// 
 /// RTN..:
-///
+/// 
 ///	struct traversal_info : children info with cumulative workload,
 ///	NULL for failure.
-///
-/// DESCR:
-///
+/// 
+/// \details 
+/// 
 ///	Constructs a cumulative workload report for the given symbol.
-///
-/// **************************************************************************
+/// 
 
 struct workload_info *
 WorkloadNew
@@ -168,87 +158,87 @@ WorkloadNew
 
     static struct traversal_info ti =
 	{
-	    //m information request flags
+	    /// information request flags
 
 	    (TRAVERSAL_INFO_TYPES
 	     | TRAVERSAL_INFO_WORKLOAD_INDIVIDUAL
 	     | TRAVERSAL_INFO_WORKLOAD_CUMULATIVE),
 
-	    //m traversal method flags
+	    /// traversal method flags
 
 	    CHILDREN_TRAVERSAL_FIXED_RETURN,
 
-	    //m traversal result for CHILDREN_TRAVERSAL_FIXED_RETURN
+	    /// traversal result for CHILDREN_TRAVERSAL_FIXED_RETURN
 
 	    TSTR_PROCESSOR_SUCCESS,
 
-	    //m current child index
+	    /// current child index
 
 	    0,
 
-	    //m pidinstack pointing to root
+	    /// pidinstack pointing to root
 
 	    NULL,
 
-	    //m serials of symbols
+	    /// serials of symbols
 
 	    NULL,
 
-	    //m types of symbols
+	    /// types of symbols
 
 	    NULL,
 
-	    //m chars with complete contexts
+	    /// chars with complete contexts
 
 	    NULL,
 
-	    //m chars with symbol names
+	    /// chars with symbol names
 
 	    NULL,
 
-	    //m chars with symbol types
+	    /// chars with symbol types
 
 	    NULL,
 
-	    //m local coordinates of symbols
+	    /// local coordinates of symbols
 
 	    NULL,
 
-	    //m absolute coordinates of symbols
+	    /// absolute coordinates of symbols
 
 	    NULL,
 
-	    //m absolute coordinates of parent segments
+	    /// absolute coordinates of parent segments
 
 	    NULL,
 
 	    NULL,
 
-	    //m non-cumulative workload for symbols
+	    /// non-cumulative workload for symbols
 
 	    NULL,
 
-	    //m cumulative workload for symbols
+	    /// cumulative workload for symbols
 
 	    NULL,
 
-	    //m current cumulative workload
+	    /// current cumulative workload
 
 	    0,
 
-	    //m stack top
+	    /// stack top
 
 	    -1,
 
-	    //m stack used for accumulation
+	    /// stack used for accumulation
 
 	    NULL,
 
-	    //m stack used to track the traversal index of visited symbols
+	    /// stack used to track the traversal index of visited symbols
 
 	    NULL,
 
-	    //m allocation count
+	    /// allocation count
 
 	    0,
 	};
@@ -257,19 +247,19 @@ WorkloadNew
 
     struct BiolevelSelection bls =
     {
-	//m chained user data
+	/// chained user data
 
 	NULL,
 
-	//m mode : exclusive, inclusive
+	/// mode : exclusive, inclusive
 
 	SELECTOR_BIOLEVEL_INCLUSIVE,
 
-	//m selected level
+	/// selected level
 
 	iLevel,
 
-	//m all levels follow, not used for now
+	/// all levels follow, not used for now
     };
 
     int iSuccess
@@ -281,7 +271,7 @@ WorkloadNew
 	   TraversalInfoCumulativeInfoCollectorProcessor,
 	   (void *)&ti);
 
-    //t extract workload info to disambiguate things
+    /// \todo extract workload info to disambiguate things
 
     //- return result
 
@@ -293,7 +283,7 @@ WorkloadNew
     {
 	pwiResult = calloc(1, sizeof(*pwiResult));
 
-	//t passing through a static struct
+	/// \todo passing through a static struct
 
 	pwiResult->pti = &ti;
 
@@ -302,24 +292,19 @@ WorkloadNew
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: WorkloadPartition()
-///
-/// ARGS.:
-///
-///	ptiWorkload.: cumulative workload report.
-///	iPartitions.: number of needed partitions.
-///
+/// 
+/// 
+/// \arg ptiWorkload cumulative workload report.
+/// \arg iPartitions number of needed partitions.
+/// 
 /// RTN..:
-///
+/// 
 ///	int : success of operation.
-///
-/// DESCR:
-///
+/// 
+/// \details 
+/// 
 ///	Construct a partitioning for the given workload report.
-///
-/// **************************************************************************
+/// 
 
 int WorkloadPartition(struct workload_info *pwi, int iPartitions)
 {
@@ -331,7 +316,7 @@ int WorkloadPartition(struct workload_info *pwi, int iPartitions)
 
     //- register total cumulative workload
 
-    //! always comes in first element, or we have an internal error
+    /// \note always comes in first element, or we have an internal error
 
     int iWorkloadTotal = pti->piWorkloadCumulative[0];
 
@@ -349,7 +334,7 @@ int WorkloadPartition(struct workload_info *pwi, int iPartitions)
 
     //- allocation partition info
 
-    //! add one because we will register one more serial and one more workload
+    /// \note add one because we will register one more serial and one more workload
 
     pwi->piPartitions = (int *)calloc(iPartitions + 1, sizeof(*pwi->piPartitions));
 
@@ -358,7 +343,7 @@ int WorkloadPartition(struct workload_info *pwi, int iPartitions)
 	return(FALSE);
     }
 
-    //! add one because we will register one more serial and one more workload
+    /// \note add one because we will register one more serial and one more workload
 
     pwi->piWorkloads = (int *)calloc(iPartitions + 1, sizeof(*pwi->piWorkloads));
 
@@ -440,24 +425,19 @@ int WorkloadPartition(struct workload_info *pwi, int iPartitions)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: WorkloadPrint()
-///
-/// ARGS.:
-///
-///	pwi...: cumulative workload report.
-///	pfile.: file to print workload report to.
-///
+/// 
+/// 
+/// \arg pwi cumulative workload report.
+/// \arg pfile file to print workload report to.
+/// 
 /// RTN..:
-///
+/// 
 ///	int : success of operation.
-///
-/// DESCR:
-///
+/// 
+/// \details 
+/// 
 ///	Print workload report to the given file.
-///
-/// **************************************************************************
+/// 
 
 int WorkloadPrint(struct workload_info *pwi, FILE *pfile)
 {

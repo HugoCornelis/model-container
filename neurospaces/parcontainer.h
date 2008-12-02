@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct symtab_ParContainer;
 
@@ -33,21 +33,21 @@ struct symtab_ParContainer;
 #include "parameters.h"
 
 
-//s
-//s parameter container
-//s
+/// \struct
+/// \struct parameter container
+/// \struct
 
 struct symtab_ParContainer
 {
-    //m link structures into list
+    /// link structures into list
 
     struct symtab_Parameters *ppars;
 };
 
 
-//d
-//d test type(ppar) == struct symtab_Parameters * at compile time
-//d
+/// \def
+/// \def test type(ppar) == struct symtab_Parameters * at compile time
+/// \def
 
 #define CompileTimeTestParameter(ppar)					\
 do {									\
@@ -56,9 +56,9 @@ do {									\
 } while (0)
 
 
-//d
-//d test type(pparc) == struct symtab_ParContainer * at compile time
-//d
+/// \def
+/// \def test type(pparc) == struct symtab_ParContainer * at compile time
+/// \def
 
 #define CompileTimeTestParContainer(pparc)				\
 do {									\
@@ -67,9 +67,9 @@ do {									\
 } while (0)
 
 
-//d
-//d get parameter list from container
-//d
+/// \def
+/// \def get parameter list from container
+/// \def
 
 #define ParContainerGetParameters(pparc)				\
 ({									\
@@ -78,9 +78,9 @@ do {									\
 })
 
 
-//d
-//d start iterate over all parameters
-//d
+/// \def
+/// \def start iterate over all parameters
+/// \def
 
 #define ParContainerIterateParameters(pparc)				\
 ({									\
@@ -89,9 +89,9 @@ do {									\
 })
 
 
-//d
-//d lookup parameter
-//d
+/// \def
+/// \def lookup parameter
+/// \def
 
 #define ParContainerLookupParameter(pparc,pc)				\
 ({									\
@@ -100,9 +100,9 @@ do {									\
 })
 
 
-//d
-//d get info for next iteration
-//d
+/// \def
+/// \def get info for next iteration
+/// \def
 
 #define ParContainerNextParameter(ppar)					\
 ({									\
@@ -111,9 +111,9 @@ do {									\
 })
 
 
-//d
-//d print parameters inside container
-//d
+/// \def
+/// \def print parameters inside container
+/// \def
 
 #define ParContainerPrint(pparc,bAll,iIndent,pfile)			\
 ({									\
@@ -122,9 +122,9 @@ do {									\
 })
 
 
-//d
-//d get element attached to named parameter input
-//d
+/// \def
+/// \def get element attached to named parameter input
+/// \def
 
 #define ParContainerResolveParameterFunctionalInput(pparc,ppist,pcParameter,pcInput,i)\
 ({									\
@@ -146,7 +146,6 @@ do {									\
 })
 
 
-//f exported functions
 
 int
 ParContainerAssignParameters

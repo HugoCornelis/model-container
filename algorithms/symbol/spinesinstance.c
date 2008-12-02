@@ -41,7 +41,7 @@
 #include "spinesinstance.h"
 
 
-//s spine algorithm private data
+/// \struct spine algorithm private data
 
 /*s */
 /*s struct with spine options */
@@ -77,29 +77,29 @@ struct SpinesOptions_type
 typedef struct SpinesOptions_type SpinesOptions;
 
 
-//s
-//s spine variables
-//s
+/// \struct
+/// \struct spine variables
+/// \struct
 
 struct SpinesVariables_type
 {
-    //m current cell to add spines to
+    /// current cell to add spines to
 
     struct symtab_Cell *pcell;
 
-    //m symbol of prototype for random spines
+    /// symbol of prototype for random spines
 
     struct symtab_HSolveListElement *phsleSpineProto;
 
-    //m segments to add spines to
+    /// segments to add spines to
 
     struct symtab_HSolveListElement **pphsleSegms;
 
-    //m allocated segments
+    /// allocated segments
 
     int iAllocatedSegments;
 
-    //m used segments
+    /// used segments
 
     int iSpinySegments;
 
@@ -107,19 +107,19 @@ struct SpinesVariables_type
 
     double dSpineSurface;
 
-    //m number of added spines for this cell
+    /// number of added spines for this cell
 
     int iPhysicalSpines;
 
-    //m number of failures when adding spines for this cell
+    /// number of failures when adding spines for this cell
 
     int iPhysicalSpinesFailures;
 
-    //m number of tries adding spines for this cell
+    /// number of tries adding spines for this cell
 
     int iPhysicalSpinesTries;
 
-    //m number of (physical + virtual) spines for this cell
+    /// number of (physical + virtual) spines for this cell
 
     double dAllSpines;
 };
@@ -127,25 +127,25 @@ struct SpinesVariables_type
 typedef struct SpinesVariables_type SpinesVariables;
 
 
-//s spines instance, derives from algorithm instance
+/// \struct spines instance, derives from algorithm instance
 
 struct SpinesInstance
 {
-    //m base struct
+    /// base struct
 
     struct AlgorithmInstance algi;
 
-    //m options for this instance
+    /// options for this instance
 
     SpinesOptions so;
 
-    //m variables for this instance
+    /// variables for this instance
 
     SpinesVariables sv;
 };
 
 
-//s number of symbol that have been modified
+/// \struct number of symbol that have been modified
 
 /* static int iModified = 0; */
 
@@ -222,21 +222,17 @@ SpinesSurfaceCalculator
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SpinesInstanceNew()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: struct AlgorithmInstance * : 
-///
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return struct AlgorithmInstance *  
+/// 
 ///	created algorithm instance, NULL for failure
-///
-/// DESCR: Algorithm handler to create instance of spines algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief Algorithm handler to create instance of spines algorithm.
+/// \details 
+/// 
 
 struct AlgorithmInstance *
 SpinesInstanceNew
@@ -270,7 +266,7 @@ SpinesInstanceNew
 
 	//- scan prototype name
 
-	//t should use ParameterResolveSymbol()
+	/// \todo should use ParameterResolveSymbol()
 
 	struct symtab_Parameters *pparProto
 	    = SymbolFindParameter(&palgs->hsle, ppist, "PROTOTYPE");
@@ -336,8 +332,8 @@ SpinesInstanceNew
 
 	psi->sv.dSpineSurface = 0.0;
 
-	//t this context does not make any sense for a private model,
-	//t but need something to work with.
+	/// \todo this context does not make any sense for a private model,
+	/// \todo but need something to work with.
 
 	struct PidinStack *ppist = ParserContextGetPidinContext(pacContext);
 
@@ -357,7 +353,7 @@ SpinesInstanceNew
 		 "Private model %s not found\n",
 		 psi->so.pcRandomSpineProto);
 
-	    //t memory leak
+	    /// \todo memory leak
 
 	    psi = NULL;
 	}
@@ -386,22 +382,18 @@ SpinesInstanceNew
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SpinesRegisterModified()
-///
-/// ARGS.:
-///
-///	pioh..: parent to which children have been added.
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Register that children have been added.
-///
+/// 
+/// 
+/// \arg pioh parent to which children have been added.
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Register that children have been added.
+/// \details 
+/// 
 ///	This is needed to recalculate the serial ID relative to parent
 ///	for all children for the given symbol.
-///
-/// **************************************************************************
+/// 
 
 static int SpinesRegisterModified(struct symtab_IOHierarchy *pioh)
 {
@@ -444,22 +436,18 @@ static int SpinesRegisterModified(struct symtab_IOHierarchy *pioh)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SpinesSegmentFinalizer()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	SymbolProcessor args
-///
-/// RTN..: int : SymbolProcessor return value
-///
-/// DESCR: Add physical to segment
-///
+/// 
+/// \return int : SymbolProcessor return value
+/// 
+/// \brief Add physical to segment
+/// \details 
+/// 
 ///	dSpines is the number of spines that influence the surface of the
 ///	segment if no physical spines would be added.
-///
-/// **************************************************************************
+/// 
 
 /* static int SpinesSegmentFinalizer */
 /* (struct TreespaceTraversal *ptstr,void *pvUserdata) */
@@ -468,15 +456,15 @@ static int SpinesRegisterModified(struct symtab_IOHierarchy *pioh)
 
 /*     int iResult = SYMBOL_PROCESSOR_SUCCESS; */
 
-/*     //v segment */
+/*     /// segment */
 
 /*     char *pcSegment = NULL; */
 
-/*     //v name of segment */
+/*     /// name of segment */
 
 /*     struct symtab_IdentifierIndex * pidinName = NULL; */
 
-/*     //v parent of symbol we are adding to */
+/*     /// parent of symbol we are adding to */
 
 /*     struct symtab_HSolveListElement *phsleParent = NULL; */
 
@@ -534,7 +522,7 @@ static int SpinesRegisterModified(struct symtab_IOHierarchy *pioh)
 
 /*     //- get parent symbol of current context */
 
-/*     //! top is at -1, parent is -2 */
+/*     /// \note top is at -1, parent is -2 */
 
 /*     phsleParent */
 /* 	= PSymbolStackElementSymbol */
@@ -553,21 +541,17 @@ static int SpinesRegisterModified(struct symtab_IOHierarchy *pioh)
 /* } */
 
 
-/// **************************************************************************
-///
-/// SHORT: SpinesSegmentProcessor()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	SymbolProcessor args
-///
-/// RTN..: int : 
-///
+/// 
+/// \return int : 
+/// 
 ///	SymbolProcessor return value, always SYMBOL_PROCESSOR_SUCCESS
-///
-/// DESCR: Dummy processor which always succeeds
-///
-/// **************************************************************************
+/// 
+/// \brief Dummy processor which always succeeds
+/// \details 
+/// 
 
 static int SpinesSegmentProcessor
 (struct TreespaceTraversal *ptstr,void *pvUserdata)
@@ -612,21 +596,17 @@ static int SpinesSegmentProcessor
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SpinesSegmentRecorder()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	SymbolProcessor args
-///
-/// RTN..: int : SymbolProcessor return value
-///
-/// DESCR: Record if segment needs spines
-///
+/// 
+/// \return int : SymbolProcessor return value
+/// 
+/// \brief Record if segment needs spines
+/// \details 
+/// 
 ///	See hines_read.c
-///
-/// **************************************************************************
+/// 
 
 static int SpinesSegmentRecorder
 (struct TreespaceTraversal *ptstr, void *pvUserdata)
@@ -635,7 +615,7 @@ static int SpinesSegmentRecorder
 
     int iResult = TSTR_PROCESSOR_ABORT;
 
-    //v segment parameters
+    /// segment parameters
 
     double dDia;
     double dLength;
@@ -652,7 +632,7 @@ static int SpinesSegmentRecorder
 
     struct symtab_Segmenter *psegr = (struct symtab_Segmenter *)phsle;
 
-    //v duplicate of actual context
+    /// duplicate of actual context
 
     struct PidinStack *ppist = NULL;
 
@@ -718,7 +698,7 @@ static int SpinesSegmentRecorder
 
 	    && psi->so.fSpineDensity != 0.0)
 	{
-	    //v number of physical spines added
+	    /// number of physical spines added
 
 	    int iSpines = 0;
 
@@ -762,22 +742,18 @@ static int SpinesSegmentRecorder
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SpinesDoPhysicalAdjustments()
-///
-/// ARGS.:
-///
-///	ppist..: context of segment
-///	psegr..: segmenter candidate for spines
-///
-/// RTN..: int : number of added physical spines, -1 for failure
-///
-/// DESCR: Do physical spine adjustment on segment
-///
+/// 
+/// 
+/// \arg ppist context of segment
+/// \arg psegr segmenter candidate for spines
+/// 
+/// \return int : number of added physical spines, -1 for failure
+/// 
+/// \brief Do physical spine adjustment on segment
+/// \details 
+/// 
 ///	See hines_read.c
-///
-/// **************************************************************************
+/// 
 
 static int SpinesDoPhysicalAdjustments
 (struct SpinesInstance *psi,
@@ -813,9 +789,9 @@ static int SpinesDoPhysicalAdjustments
 
     else if (psi->so.fSpineFrequency > 0)
     {
-	//! this algorithm tries to spread as uniformly as possible,
-	//! by giving a guarantee that every dendrite receives at least
-	//! one spine if the frequency is greater than or equal to 1.
+	/// \note this algorithm tries to spread as uniformly as possible,
+	/// \note by giving a guarantee that every dendrite receives at least
+	/// \note one spine if the frequency is greater than or equal to 1.
 
 	double dFrequency = psi->so.fSpineFrequency;
 
@@ -930,23 +906,19 @@ static int SpinesDoPhysicalAdjustments
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SpinesDoVirtualAdjustments()
-///
-/// ARGS.:
-///
-///	ppist..: context of segment
-///	psegr..: segment candidate for spines
-///	iSpines: number of physical spines added to this segment
-///
-/// RTN..: double : number of added virtual spines, -1 for failure
-///
-/// DESCR: Do virtual spine adjustment on segment
-///
+/// 
+/// 
+/// \arg ppist context of segment
+/// \arg psegr segment candidate for spines
+/// \arg iSpines: number of physical spines added to this segment
+/// 
+/// \return double  number of added virtual spines, -1 for failure
+/// 
+/// \brief Do virtual spine adjustment on segment
+/// \details 
+/// 
 ///	See hines_read.c
-///
-/// **************************************************************************
+/// 
 
 static
 double
@@ -971,10 +943,10 @@ SpinesDoVirtualAdjustments
 
     //- calculate total number of spines for this segment
 
-    //! here we assume fSpineDensity has units spines/m
-    //! probably better to get this into spines/m^2
-    //!
-    //! for now this is a compatibility issue with the old reader
+    /// \note here we assume fSpineDensity has units spines/m
+    /// \note probably better to get this into spines/m^2
+    ///
+    /// \note for now this is a compatibility issue with the old reader
 
     dSpines = dLength * psi->so.fSpineDensity * 1e6;
 
@@ -982,13 +954,13 @@ SpinesDoVirtualAdjustments
 
     if (dSpines > 0)
     {
-	//v segment surface
+	/// segment surface
 
 	double dSegment;
 
 	//- calculate number of spines to add
 
-	//! can get negative ...
+	/// \note can get negative ...
 
 	dSpines -= iSpines;
 
@@ -1014,7 +986,7 @@ SpinesDoVirtualAdjustments
 
 	//- recalculate segment surface
 
-	//! can be a subtraction ...
+	/// \note can be a subtraction ...
 
 	dSegment += dSpines * psi->sv.dSpineSurface;
 
@@ -1034,19 +1006,15 @@ SpinesDoVirtualAdjustments
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SpinesInstancePrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on spines instance.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int  std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on spines instance.
+/// \details 
+/// 
 
 static int SpinesInstancePrintInfo
 (struct AlgorithmInstance *palgi, FILE *pfile)
@@ -1098,21 +1066,17 @@ static int SpinesInstancePrintInfo
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SpinesInstanceSymbolHandler()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	AlgorithmInstanceSymbolHandler args.
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to add spines on given symbol
-///
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to add spines on given symbol
+/// \details 
+/// 
 ///	Does it do a clean update of serials ?
-///
-/// **************************************************************************
+/// 
 
 static 
 int

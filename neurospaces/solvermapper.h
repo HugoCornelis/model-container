@@ -32,8 +32,8 @@ struct solverMapping;
 
 
 /// function to call to do setup of solution engine.
-///
-/// RTN..: int : success of operation
+/// 
+/// \return int : success of operation
 
 typedef 
 int 
@@ -44,8 +44,8 @@ NeurospacesSetupSymbol
  struct PidinStack *ppist);
 
 
-//s create array of this one to map named solver classes to solution
-//s engines.
+/// \struct create array of this one to map named solver classes to solution
+/// \struct engines.
 
 struct SolverMapper
 {

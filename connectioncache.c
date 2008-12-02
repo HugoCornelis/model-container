@@ -25,21 +25,17 @@
 #include "neurospaces/connectioncache.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: ConnectionCacheNew()
-///
-/// ARGS.:
-///
-///	iConnections..: number of connections to go into cache.
-///
-/// RTN..: struct ConnectionCache * 
-///
+/// 
+/// 
+/// \arg iConnections number of connections to go into cache.
+/// 
+/// \return struct ConnectionCache * 
+/// 
 ///	New connection cache, NULL for failure.
-///
-/// DESCR: Initialize new connection cache.
-///
-/// **************************************************************************
+/// 
+/// \brief Initialize new connection cache.
+/// \details 
+/// 
 
 struct ConnectionCache * ConnectionCacheNew(int iConnections)
 {

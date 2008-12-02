@@ -37,18 +37,18 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-//s event associations for serial connection algorithm
+/// \struct event associations for serial connection algorithm
 
 static ParserEventListener SerialConnectionParserEventListener;
 
 static ParserEventAssociation pevasSerialConnection[] = 
 {
     {
-	//m listens to any connection event
+	/// listens to any connection event
 
 	EVENT_TYPE_CONNECTION,
 
-	//m function to call
+	/// function to call
 
 	SerialConnectionParserEventListener,
     }
@@ -57,17 +57,17 @@ static ParserEventAssociation pevasSerialConnection[] =
 
 static ParserEventAssociationTable evatSerialConnection =
 {
-    //m number of entries
+    /// number of entries
 
     sizeof(*pevasSerialConnection) / sizeof(ParserEventAssociation),
 
-    //m event associations
+    /// event associations
 
     pevasSerialConnection,
 };
 
 
-//s algorithm handlers for serial connection algorithm
+/// \struct algorithm handlers for serial connection algorithm
 
 static AlgorithmHandler SerialConnectionInitAlgorithm;
 
@@ -75,48 +75,48 @@ static AlgorithmHandler SerialConnectionPrintInfo;
 
 static struct AlgorithmHandlerLibrary pfSerialConnectionHandlers =
 {
-    //m after constructor, global is parser context, data is init string
+    /// after constructor, global is parser context, data is init string
 
     SerialConnectionInitAlgorithm,
 
-    //m after init, before destruct
+    /// after init, before destruct
 
     NULL,
 
-    //m print info handler
+    /// print info handler
 
     SerialConnectionPrintInfo,
 };
 
 
-//s algorithm description
+/// \struct algorithm description
 
 static struct symtab_Algorithm modSerialConnection =
 {
-    //m link
+    /// link
 
     {
 	NULL,
 	NULL,
     },
 
-    //m type
+    /// type
 
     0,
 
-    //m flags
+    /// flags
 
     0,
 
-    //m name
+    /// name
 
     "SerialConnection",
 
-    //m algorithm handlers
+    /// algorithm handlers
 
     &pfSerialConnectionHandlers,
 
-    //m event association table
+    /// event association table
 
     &evatSerialConnection
 };
@@ -124,12 +124,12 @@ static struct symtab_Algorithm modSerialConnection =
 struct symtab_Algorithm *palgSerialConnection = &modSerialConnection;
 
 
-//d default number of serial connections
+/// \def default number of serial connections
 
 #define ENTRIES_SERIAL_CONNECTIONS	10000
 
 
-//v serial connection array
+/// serial connection array
 
 struct SerialConnectionVariables serconnVariables;
 
@@ -139,25 +139,21 @@ struct SerialConnectionVariables serconnVariables;
 static int SerialConnectionFinish(void);
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialConnectionParserEventListener()
-///
-/// ARGS.:
-///
-///	std ParserEventListener args
-///
-/// RTN..: int : std ParserEventListener return value
-///
-/// DESCR: ParserEvent listener to put connections in a serial array
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std ParserEventListener args
+/// 
+/// \return int : std ParserEventListener return value
+/// 
+/// \brief ParserEvent listener to put connections in a serial array
+/// \details 
+/// 
 
 static int SerialConnectionParserEventListener
 (struct ParserEvent *pev,
  struct symtab_Algorithm *palg)
 {
-    //- set default result : ok
+    //- set default result  ok
 
     int bResult = TRUE;
 
@@ -261,17 +257,13 @@ static int SerialConnectionParserEventListener
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialConnectionFinish()
-///
-/// ARGS.:
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Resolve connections
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Resolve connections
+/// \details 
+/// 
 
 static int SerialConnectionFinish(void)
 {
@@ -279,7 +271,7 @@ static int SerialConnectionFinish(void)
 
     int bResult = TRUE;
 
-    //v loop var
+    /// loop var
 
     int i;
 
@@ -289,8 +281,8 @@ static int SerialConnectionFinish(void)
     {
 	// source & target of connection
 
-	//struct PidinStack pistSource;
-	//struct PidinStack pistTarget;
+	/// \structtruct PidinStack pistSource;
+	/// \structtruct PidinStack pistTarget;
 
 	//- get pointer to current connection symbol
 
@@ -321,24 +313,20 @@ static int SerialConnectionFinish(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialConnectionInitAlgorithm()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to init serial connection algorithm
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to init serial connection algorithm
+/// \details 
+/// 
 
 static int SerialConnectionInitAlgorithm
     (struct symtab_Algorithm *palgSelf,char *pcName,void *pvGlobal,void *pvData)
 {
-    //- set default result : ok
+    //- set default result  ok
 
     int bResult = TRUE;
 
@@ -369,19 +357,15 @@ static int SerialConnectionInitAlgorithm
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialConnectionPrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on serial connection algorithm
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on serial connection algorithm
+/// \details 
+/// 
 
 static int SerialConnectionPrintInfo
 (struct symtab_Algorithm *palgSelf,char *pcName,void *pvGlobal,void *pvData)
@@ -390,7 +374,7 @@ static int SerialConnectionPrintInfo
 
     int bResult = TRUE;
 
-    //v loop var
+    /// loop var
 
     int i;
 
@@ -405,7 +389,7 @@ static int SerialConnectionPrintInfo
 	 "\n\n"
 	 "SerConnAlgorithm : \n"
 	 "---------------\n"
-	 "Number of created/added connections : %i/%i\n",
+	 "Number of created/added connections  %i/%i\n",
 	 serconnVariables.iConnectionsCreated,
 	 serconnVariables.iConnectionsAdded);
 

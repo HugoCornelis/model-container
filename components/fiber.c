@@ -26,19 +26,15 @@
 #include "neurospaces/idin.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: FiberCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Fiber * 
-///
+/// 
+/// 
+/// \return struct symtab_Fiber * 
+/// 
 ///	Newly allocated fiber, NULL for failure
-///
-/// DESCR: Allocate a new fiber symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new fiber symbol table element
+/// \details 
+/// 
 
 struct symtab_Fiber * FiberCalloc(void)
 {
@@ -64,20 +60,16 @@ struct symtab_Fiber * FiberCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: FiberCountSpikeGenerators()
-///
-/// ARGS.:
-///
-///	pfibr.: fiber to count spike generators for
+/// 
+/// 
+/// \arg pfibr fiber to count spike generators for
 ///	ppist.: context, fiber on top
-///
-/// RTN..: int : number of spike generators in fiber, -1 for failure
-///
-/// DESCR: count all spike generators in fiber
-///
-/// **************************************************************************
+/// 
+/// \return int : number of spike generators in fiber, -1 for failure
+/// 
+/// \brief count all spike generators in fiber
+/// \details 
+/// 
 
 static int 
 FiberSpikeGeneratorCounter
@@ -132,20 +124,16 @@ int FiberCountSpikeGenerators
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: FiberCreateAlias()
-///
-/// ARGS.:
-///
-///	pfibr.: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pfibr symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 FiberCreateAlias
@@ -171,19 +159,15 @@ FiberCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: FiberInit()
-///
-/// ARGS.:
-///
-///	pfibr.: fiber to init
-///
-/// RTN..: void
-///
-/// DESCR: init fiber
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pfibr fiber to init
+/// 
+/// \return void
+/// 
+/// \brief init fiber
+/// \details 
+/// 
 
 void FiberInit(struct symtab_Fiber *pfibr)
 {
@@ -197,23 +181,19 @@ void FiberInit(struct symtab_Fiber *pfibr)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: FiberNewAtXYZ()
-///
-/// ARGS.:
-///
-///	dx..: X coordinate
-///	dy..: Y coordinate
-///	dz..: Z coordinate
-///
-/// RTN..: struct symtab_Fiber * : resulting cell, NULL for failure
-///
-/// DESCR: Allocate cell, put at specified position.
-///
+/// 
+/// 
+/// \arg dx X coordinate
+/// \arg dy Y coordinate
+/// \arg dz Z coordinate
+/// 
+/// \return struct symtab_Fiber * : resulting cell, NULL for failure
+/// 
+/// \brief Allocate cell, put at specified position.
+/// \details 
+/// 
 ///	Contains memory leak.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_Fiber * FiberNewAtXYZ(double dx,double dy,double dz)
 {

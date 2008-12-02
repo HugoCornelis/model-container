@@ -13,19 +13,15 @@
 #endif
 
 
-/// **************************************************************************
-///
-/// SHORT: HSolveListIsEmpty()
-///
-/// ARGS.:
-///
-///	phsllList.: list of lists
-///
-/// RTN..: int : TRUE if list is empty
-///
-/// DESCR: test if no elements in the lists of the list of lists
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg phsllList list of lists
+/// 
+/// \return int : TRUE if list is empty
+/// 
+/// \brief test if no elements in the lists of the list of lists
+/// \details 
+/// 
 
 int HSolveListListIsEmpty(HSolveListList *phsllList)
 {
@@ -33,7 +29,7 @@ int HSolveListListIsEmpty(HSolveListList *phsllList)
 
     int iResult = TRUE;
 
-    //v loop vars
+    /// loop vars
 
     HSolveListListElement *phsl = NULL;
 
@@ -69,25 +65,21 @@ int HSolveListListIsEmpty(HSolveListList *phsllList)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: main()
-///
-/// ARGS.:
-///
-///	std. ANSI main() args
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: test list of lists
-///
+/// 
+/// 
+/// \arg std. ANSI main() args
+/// 
+/// \return int : success of operation
+/// 
+/// \brief test list of lists
+/// \details 
+/// 
 ///	Options on command line are to appear first
-///
-/// **************************************************************************
+/// 
 
 #ifdef TEST_LISTLIST
 
-//v total number of errors
+/// total number of errors
 
 int errorcount = 0;
 

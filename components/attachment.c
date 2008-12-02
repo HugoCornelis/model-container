@@ -24,19 +24,15 @@
 #include "neurospaces/components/attachment.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: AttachmentCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Attachment * 
-///
+/// 
+/// 
+/// \return struct symtab_Attachment * 
+/// 
 ///	Newly allocated attachment point, NULL for failure
-///
-/// DESCR: Allocate a new attachment point symbol table element.
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new attachment point symbol table element.
+/// \details 
+/// 
 
 struct symtab_Attachment * AttachmentCalloc(void)
 {
@@ -64,20 +60,16 @@ struct symtab_Attachment * AttachmentCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AttachmentCreateAlias()
-///
-/// ARGS.:
-///
-///	patta.: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg patta symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 AttachmentCreateAlias
@@ -107,19 +99,15 @@ AttachmentCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AttachmentGetType()
-///
-/// ARGS.:
-///
-///	patta.: attachment to init
-///
-/// RTN..: int : type of attachment (incoming, outgoing).
-///
-/// DESCR: Get type of attachment.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg patta attachment to init
+/// 
+/// \return int : type of attachment (incoming, outgoing).
+/// 
+/// \brief Get type of attachment.
+/// \details 
+/// 
 
 int AttachmentGetType(struct symtab_Attachment *patta)
 {
@@ -127,19 +115,15 @@ int AttachmentGetType(struct symtab_Attachment *patta)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AttachmentInit()
-///
-/// ARGS.:
-///
-///	patta.: attachment to init
-///
-/// RTN..: void
-///
-/// DESCR: init attachment
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg patta attachment to init
+/// 
+/// \return void
+/// 
+/// \brief init attachment
+/// \details 
+/// 
 
 void AttachmentInit(struct symtab_Attachment *patta)
 {
@@ -153,20 +137,16 @@ void AttachmentInit(struct symtab_Attachment *patta)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: AttachmentSetType()
-///
-/// ARGS.:
-///
-///	patta.: attachment to set type for.
-///	iType.: type of attachment.
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Set type of attachment.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg patta attachment to set type for.
+/// \arg iType type of attachment.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Set type of attachment.
+/// \details 
+/// 
 
 int AttachmentSetType(struct symtab_Attachment *patta, int iType)
 {

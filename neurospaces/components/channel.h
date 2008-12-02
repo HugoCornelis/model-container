@@ -30,7 +30,7 @@
 #include "neurospaces/genesis/olf/olf_struct.h"
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_Channel;
 struct symtab_Channel;
@@ -40,7 +40,6 @@ struct symtab_Channel;
 #include "neurospaces/parsersupport.h"
 
 
-//f exported functions
 
 struct symtab_Channel * ChannelCalloc(void);
 
@@ -101,9 +100,9 @@ int ChannelSetup(struct symtab_Channel *pchan, struct ParserContext *pac);
 #include "neurospaces/inputoutput.h"
 
 
-//s
-//s link with genesis style object
-//s
+/// \struct
+/// \struct link with genesis style object
+/// \struct
 
 struct descr_genesis_object
 {
@@ -117,63 +116,63 @@ struct descr_genesis_object
     uElement;
 };
 
-//s
-//s channel description
-//s
+/// \struct
+/// \struct channel description
+/// \struct
 
 struct descr_Channel
 {
-    //m type of channel data
+    /// type of channel data
 
     int iType;
 
-/*     //m list of hardcoded equations */
+/*     /// list of hardcoded equations */
 
 /*     HSolveList hslEquations; */
 
-/*     //m list of hardcoded attachment points */
+/*     /// list of hardcoded attachment points */
 
 /*     HSolveList hslVirtuals; */
 
-    //m file with table describing channel
+    /// file with table describing channel
 
     char *pcFilename;
 
-    //m link with genesis style object
+    /// link with genesis style object
 
     struct descr_genesis_object genObject;
 };
 
 
-//s
-//s struct symtab_Channel
-//s
+/// \struct
+/// \struct struct symtab_Channel
+/// \struct
 
 struct symtab_Channel
 {
-    //m base struct : bio component
+    /// base struct : bio component
 
     struct symtab_BioComponent bio;
 
-    //m channel description
+    /// channel description
 
     struct descr_Channel dechan;
 };
 
 
-//d equation type
+/// \def equation type
 
 #define TYPE_CHANNEL_EQUATION		1
 
-//d table in file
+/// \def table in file
 
 #define TYPE_CHANNEL_TABLEFILE		2
 
-//d attachment point data
+/// \def attachment point data
 
 #define TYPE_CHANNEL_VIRTUALCONNECTION	4
 
-//d additional channel parameters
+/// \def additional channel parameters
 
 #define TYPE_CHANNEL_PARAMETERS		5
 

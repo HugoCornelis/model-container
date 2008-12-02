@@ -39,19 +39,15 @@ HHGateGetStateInit
 (struct symtab_HHGate *pgathh, struct PidinStack *ppist);
 
 
-/// **************************************************************************
-///
-/// SHORT: HHGateCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_HHGate * 
-///
+/// 
+/// 
+/// \return struct symtab_HHGate * 
+/// 
 ///	Newly allocated conceptual gate, NULL for failure
-///
-/// DESCR: Allocate a new conceptual gate symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new conceptual gate symbol table element
+/// \details 
+/// 
 
 struct symtab_HHGate * HHGateCalloc(void)
 {
@@ -79,20 +75,16 @@ struct symtab_HHGate * HHGateCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: HHGateCreateAlias()
-///
-/// ARGS.:
-///
-///	pgathh.: symbol to alias
-///	pidin..: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pgathh symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 HHGateCreateAlias
@@ -118,23 +110,19 @@ HHGateCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: HHGateGetParameter()
-///
-/// ARGS.:
-///
-///	pgathh..: symbol to get parameter for.
-///	ppist...: context of symbol.
-///	pcName..: name of parameter.
-///
-/// RTN..: struct symtab_Parameters *
-///
+/// 
+/// 
+/// \arg pgathh symbol to get parameter for.
+/// \arg ppist context of symbol.
+/// \arg pcName name of parameter.
+/// 
+/// \return struct symtab_Parameters *
+/// 
 ///	Parameter structure, NULL for failure.
-///
-/// DESCR: Get parameter of symbol.
-///
-/// **************************************************************************
+/// 
+/// \brief Get parameter of symbol.
+/// \details 
+/// 
 
 struct symtab_Parameters * 
 HHGateGetParameter
@@ -236,28 +224,24 @@ HHGateGetParameter
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: HHGateGetTableValue()
-///
-/// ARGS.:
-///
-///	pgathh.: conceptual gate.
-///	ppist..: context of conceptual gate.
-///	pc.....: name of parameter.
-///
-/// RTN..: double
-///
+/// 
+/// 
+/// \arg pgathh conceptual gate.
+/// \arg ppist context of conceptual gate.
+/// \arg pc name of parameter.
+/// 
+/// \return double
+/// 
 ///	Number of table entries of precalculated tables for all of the
 ///	kinetics inside the gate, FLT_MAX for inconsistent tables, 0
 ///	for no tables.
-///
-/// DESCR: Get number of table entries, or a similar parameter.
-///
+/// 
+/// \brief Get number of table entries, or a similar parameter.
+/// \details 
+/// 
 ///	Similar parameters are currently HH_TABLE_START_Y,
 ///	HH_TABLE_END_Y, and HH_TABLE_STEP_Y.
-///
-/// **************************************************************************
+/// 
 
 static
 double
@@ -270,13 +254,13 @@ HHGateGetTableValue
 
     struct table_parameter_collector_data tpcd =
 	{
-	    //m parameter under investigation
+	    /// parameter under investigation
 
 	    pc,
 
-	    //m current value
+	    /// current value
 
-	    //! must be initialized to zero for correct error processing
+	    /// \note must be initialized to zero for correct error processing
 
 	    0,
 	};
@@ -318,24 +302,20 @@ HHGateGetTableValue
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: HHGateGetStateInit()
-///
-/// ARGS.:
-///
-///	pgathh.: conceptual gate.
-///	ppist..: context of conceptual gate.
-///
-/// RTN..: double
-///
+/// 
+/// 
+/// \arg pgathh conceptual gate.
+/// \arg ppist context of conceptual gate.
+/// 
+/// \return double
+/// 
 ///	Initial state, FLT_MAX for unknown.  By default the initial
 ///	state is the steady state for the initial membrane potential
 ///	found in the parent compartment.
-///
-/// DESCR: Get initial state of this gate.
-///
-/// **************************************************************************
+/// 
+/// \brief Get initial state of this gate.
+/// \details 
+/// 
 
 static
 double
@@ -361,7 +341,7 @@ HHGateGetStateInit
 
 	if (dVm != FLT_MAX)
 	{
-	    //t need access to a gate kinetic calculator
+	    /// \todo need access to a gate kinetic calculator
 
 /* 	    A = TabInterp(channel->X_A,v); */
 /* 	    B = TabInterp(channel->X_B,v); */
@@ -375,19 +355,15 @@ HHGateGetStateInit
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: HHGateInit()
-///
-/// ARGS.:
-///
-///	pgathh.: conceptual gate to init
-///
-/// RTN..: void
-///
-/// DESCR: init conceptual gate
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pgathh conceptual gate to init
+/// 
+/// \return void
+/// 
+/// \brief init conceptual gate
+/// \details 
+/// 
 
 void HHGateInit(struct symtab_HHGate *pgathh)
 {

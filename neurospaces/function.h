@@ -26,17 +26,17 @@
 #include "parcontainer.h"
 
 
-//s
-//s function description
-//s
+/// \struct
+/// \struct function description
+/// \struct
 
 struct symtab_Function
 {
-    //m parameters
+    /// parameters
 
     struct symtab_ParContainer *pparc;
 
-    //m name of function
+    /// name of function
 
     char *pcName;
 };
@@ -45,7 +45,6 @@ struct symtab_Function
 #include "pidinstack.h"
 
 
-//f exported functions
 
 int
 FunctionAssignParameters

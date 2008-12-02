@@ -28,13 +28,12 @@
 #include "neurospaces/pidinstack.h"
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_Randomvalue;
 struct symtab_Randomvalue;
 
 
-//f exported functions
 
 struct symtab_Randomvalue * RandomvalueCalloc(void);
 
@@ -63,29 +62,29 @@ RandomvalueLookupHierarchical
 #include "neurospaces/parameters.h"
 
 
-//s
-//s randomvalue description
-//s
+/// \struct
+/// \struct randomvalue description
+/// \struct
 
 struct descr_Randomvalue
 {
-    //m dummy
+    /// dummy
 
     int iType;
 };
 
 
-//s
-//s struct symtab_Randomvalue
-//s
+/// \struct
+/// \struct struct symtab_Randomvalue
+/// \struct
 
 struct symtab_Randomvalue
 {
-    //m base struct : bio component
+    /// base struct : bio component
 
     struct symtab_BioComponent bio;
 
-    //m randomvalue description
+    /// randomvalue description
 
     struct descr_Randomvalue deranv;
 };

@@ -26,7 +26,7 @@
 #include "positionD3.h"
 
 
-//d traversal info collector flags
+/// \def traversal info collector flags
 
 #define TRAVERSAL_INFO_CONTEXTS			1
 #define TRAVERSAL_INFO_NAMES			2
@@ -44,85 +44,85 @@
 
 struct traversal_info
 {
-    //m information request flags
+    /// information request flags
 
     int iFlagsInfo;
 
-    //m traversal method flags
+    /// traversal method flags
 
     int iFlagsTraversal;
 
-    //m traversal result for CHILDREN_TRAVERSAL_FIXED_RETURN
+    /// traversal result for CHILDREN_TRAVERSAL_FIXED_RETURN
 
     int iTraversalResult;
 
-    //m current child index
+    /// current child index
 
     int iChildren;
 
-    //m pidinstack pointing to root
+    /// pidinstack pointing to root
 
     struct PidinStack *ppistRoot;
 
-    //m serials of symbols
+    /// serials of symbols
 
     int *piSerials;
 
-    //m types of symbols
+    /// types of symbols
 
     int *piTypes;
 
-    //m chars with complete contexts
+    /// chars with complete contexts
 
     char **ppcContexts;
 
-    //m chars with symbol names
+    /// chars with symbol names
 
     char **ppcNames;
 
-    //m chars with symbol types
+    /// chars with symbol types
 
     char **ppcTypes;
 
-    //m local coordinates of symbols
+    /// local coordinates of symbols
 
     struct D3Position **ppD3CoordsLocal;
 
-    //m absolute coordinates of symbols
+    /// absolute coordinates of symbols
 
     struct D3Position **ppD3CoordsAbsolute;
 
-    //m absolute coordinates of parent segments
+    /// absolute coordinates of parent segments
 
     struct D3Position **ppD3CoordsAbsoluteParent;
 
     double *pdDia;
 
-    //m non-cumulative workload for symbols
+    /// non-cumulative workload for symbols
 
     int *piWorkloadIndividual;
 
-    //m cumulative workload for symbols
+    /// cumulative workload for symbols
 
     int *piWorkloadCumulative;
 
-    //m current cumulative workload
+    /// current cumulative workload
 
     int iWorkloadCumulative;
 
-    //m stack top
+    /// stack top
 
     int iStackTop;
 
-    //m stack used for accumulation
+    /// stack used for accumulation
 
     int *piWorkloadStack;
 
-    //m stack used to track the traversal index of visited symbols
+    /// stack used to track the traversal index of visited symbols
 
     int *piCurrentSymbol;
 
-    //m allocation count
+    /// allocation count
 
     int iAllocated;
 };

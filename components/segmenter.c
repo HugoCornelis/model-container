@@ -53,19 +53,15 @@ SegmenterGetTotalVolume
 (struct symtab_Segmenter *psegr, struct PidinStack *ppist);
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmenterCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Segmenter * 
-///
+/// 
+/// 
+/// \return struct symtab_Segmenter * 
+/// 
 ///	Newly allocated segmenter, NULL for failure
-///
-/// DESCR: Allocate a new segmenter symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new segmenter symbol table element
+/// \details 
+/// 
 
 struct symtab_Segmenter * SegmenterCalloc(void)
 {
@@ -93,19 +89,15 @@ struct symtab_Segmenter * SegmenterCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmenterCountSegments()
-///
-/// ARGS.:
-///
-///	psegr.: segmenter to count segments for
-///
-/// RTN..: int : number of segments in segmenter, -1 for failure
-///
-/// DESCR: count segments in segmenter
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psegr segmenter to count segments for
+/// 
+/// \return int : number of segments in segmenter, -1 for failure
+/// 
+/// \brief count segments in segmenter
+/// \details 
+/// 
 
 static
 int 
@@ -166,20 +158,16 @@ SegmenterCountSegments
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmenterCountSpikeGenerators()
-///
-/// ARGS.:
-///
-///	psegr.: segmenter to count spike generators for
+/// 
+/// 
+/// \arg psegr segmenter to count spike generators for
 ///	ppist.: context, segmenter on top
-///
-/// RTN..: int : number of spike generators in segmenter, -1 for failure
-///
-/// DESCR: count spike generators in segmenter
-///
-/// **************************************************************************
+/// 
+/// \return int : number of spike generators in segmenter, -1 for failure
+/// 
+/// \brief count spike generators in segmenter
+/// \details 
+/// 
 
 static
 int 
@@ -236,21 +224,17 @@ int SegmenterCountSpikeGenerators
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmenterGetParameter()
-///
-/// ARGS.:
-///
-///	psegr..: symbol to get parameter for.
-///	ppist..: context of symbol.
-///	pcName.: name of parameter.
-///
-/// RTN..: struct symtab_Parameters * : parameter structure
-///
-/// DESCR: Get parameter of symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psegr symbol to get parameter for.
+/// \arg ppist context of symbol.
+/// \arg pcName name of parameter.
+/// 
+/// \return struct symtab_Parameters * : parameter structure
+/// 
+/// \brief Get parameter of symbol.
+/// \details 
+/// 
 
 struct symtab_Parameters * 
 SegmenterGetParameter
@@ -323,20 +307,16 @@ SegmenterGetParameter
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmenterGetTotalLength()
-///
-/// ARGS.:
-///
-///	psegr.: segment to get length for.
-///	ppist.: context of segment.
-///
-/// RTN..: double : segment length, FLT_MAX for failure.
-///
-/// DESCR: get total length of segmenter.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psegr segment to get length for.
+/// \arg ppist context of segment.
+/// 
+/// \return double : segment length, FLT_MAX for failure.
+/// 
+/// \brief get total length of segmenter.
+/// \details 
+/// 
 
 static
 int 
@@ -398,20 +378,16 @@ SegmenterGetTotalLength
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmenterGetTotalSurface()
-///
-/// ARGS.:
-///
-///	psegr.: segment to get surface for.
-///	ppist.: context of segment.
-///
-/// RTN..: double : segment surface, FLT_MAX for failure.
-///
-/// DESCR: get total surface of segmenter.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psegr segment to get surface for.
+/// \arg ppist context of segment.
+/// 
+/// \return double : segment surface, FLT_MAX for failure.
+/// 
+/// \brief get total surface of segmenter.
+/// \details 
+/// 
 
 static
 int 
@@ -473,20 +449,16 @@ SegmenterGetTotalSurface
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmenterGetTotalVolume()
-///
-/// ARGS.:
-///
-///	psegr.: segment to get volume for.
-///	ppist.: context of segment.
-///
-/// RTN..: double : segment volume, FLT_MAX for failure.
-///
-/// DESCR: get total volume of segmenter.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psegr segment to get volume for.
+/// \arg ppist context of segment.
+/// 
+/// \return double : segment volume, FLT_MAX for failure.
+/// 
+/// \brief get total volume of segmenter.
+/// \details 
+/// 
 
 static
 int 
@@ -548,19 +520,15 @@ SegmenterGetTotalVolume
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmenterInit()
-///
-/// ARGS.:
-///
-///	psegr.: segmenter to init
-///
-/// RTN..: void
-///
-/// DESCR: init segmenter
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psegr segmenter to init
+/// 
+/// \return void
+/// 
+/// \brief init segmenter
+/// \details 
+/// 
 
 void SegmenterInit(struct symtab_Segmenter *psegr)
 {
@@ -586,27 +554,23 @@ void SegmenterInit(struct symtab_Segmenter *psegr)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmenterLinearize()
-///
-/// ARGS.:
-///
-///	psegr.......: segmenter to traverse segments for
+/// 
+/// 
+/// \arg psegr segmenter to traverse segments for
 ///	ppist.......: context of segmenter, segmenter assumed to be on top
-///
-/// RTN..: int
-///
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR: Linearize the segments of the segmenter.
-///
+/// 
+/// \brief Linearize the segments of the segmenter.
+/// \details 
+/// 
 ///	If the linearization has already been done, return success.
-///
+/// 
 ///	See also ... building indices using the linearized segment
 ///	arrays.
-///
-/// **************************************************************************
+/// 
 
 static
 int 
@@ -634,15 +598,15 @@ SegmenterSegmentLinearizer
 	struct cable_structure *pcs
 	    = &psegr->desegmenter.pcs[psegr->desegmenter.iSegments];
 
-	//m initialize what we don't know
+	/// initialize what we don't know
 
 	pcs->iParentIndex = -1;
 
 	//- fill in serial
 
-	//! note: always use absolute serials,
-	//! ie. PidinStackLookupTopSymbol(), not
-	//! TstrGetPrincipalSerial().
+	/// \note note: always use absolute serials,
+	/// \note ie. PidinStackLookupTopSymbol(), not
+	/// \note TstrGetPrincipalSerial().
 
 	PidinStackLookupTopSymbol(ptstr->ppist);
 
@@ -664,7 +628,7 @@ SegmenterSegmentLinearizer
 
 		int iParent = PidinStackToSerial(ppistParent);
 
-		//t check for error
+		/// \todo check for error
 
 		if (iParent != INT_MAX)
 		{
@@ -672,9 +636,9 @@ SegmenterSegmentLinearizer
 		}
 		else
 		{
-		    //! parent does not exist
+		    /// \note parent does not exist
 
-		    //! makes sense if the user wants to examine only a part of the tree
+		    /// \note makes sense if the user wants to examine only a part of the tree
 
 		    char pc[1000];
 
@@ -697,9 +661,9 @@ SegmenterSegmentLinearizer
 	    }
 	    else
 	    {
-		//! parent does not exist
+		/// \note parent does not exist
 
-		//! makes sense if the user wants to examine only a part of the tree
+		/// \note makes sense if the user wants to examine only a part of the tree
 
 		char pc[1000];
 
@@ -789,7 +753,7 @@ static int SegmenterSegmentLinker(struct symtab_Segmenter *psegr)
 	    }
 	    else
 	    {
-		//! not found, this is an internal error
+		/// \note not found, this is an internal error
 
 		fprintf
 		    (stderr,
@@ -799,8 +763,8 @@ static int SegmenterSegmentLinker(struct symtab_Segmenter *psegr)
 	}
 	else
 	{
-	    //! no error, this is ok for populations, networks etc.
-	    //! note that we are not compiling like heccer does.
+	    /// \note no error, this is ok for populations, networks etc.
+	    /// \note note that we are not compiling like heccer does.
 
 	    psegr->desegmenter.iNoParents++;
 	}
@@ -850,9 +814,9 @@ static int SegmenterSegmentOffspringIndexer(struct symtab_Segmenter *psegr)
 	    if (pcs->iParentIndex == i
 		|| pcs->iParentIndex >= iSegments)
 	    {
-		//! the segment array does not describe a valid tree
-		//! structure, but that is ok for networks and
-		//! populations.
+		/// \note the segment array does not describe a valid tree
+		/// \note structure, but that is ok for networks and
+		/// \note populations.
 	    }
 
 	    //- increment number of children for the parent segment
@@ -986,57 +950,53 @@ SegmenterLinearize
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmenterMesherOnLength()
-///
-/// ARGS.:
-///
-///	psegr.....: segmenter to mesh.
-///	ppist...: context of given element.
-///	dLength.: maximum length of a segment.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg psegr segmenter to mesh.
+/// \arg ppist context of given element.
+/// \arg dLength maximum length of a segment.
+/// 
+/// \return int
+/// 
 ///	Number of generated segments, -1 for failure.
-///
-/// DESCR: Remesh a segmenter.
-///
-/// **************************************************************************
+/// 
+/// \brief Remesh a segmenter.
+/// \details 
+/// 
 
 struct SegmenterMesherOnLength_data
 {
-    //m maximal length
+    /// maximal length
 
     double dLength;
 
-    //m processor result
+    /// processor result
 
     HSolveList hslAliasses;
 
-    //m number of elements in result list
+    /// number of elements in result list
 
     int iAliasses;
 
-    //m total number of segments created
+    /// total number of segments created
 
     int iTotalSegments;
 
-    //m original segments that have been resegmented, including their names
+    /// original segments that have been resegmented, including their names
 
     int iSegmented;
 
     struct PidinStack **pppistSegmented;
 
-    //m count for resegmented symbols
+    /// count for resegmented symbols
 
     int *piSegmentCount;
 
-    //m pidinstack for result
+    /// pidinstack for result
 
     struct PidinStack *ppistResult;
 
-    //m root symbol for result
+    /// root symbol for result
 
     struct symtab_RootSymbol *prootResult;
 };
@@ -1101,7 +1061,7 @@ SegmenterMesherOnLengthProcessor
 
     if (!pparParent)
     {
-	//! e.g. the soma, don't touch
+	/// \note e.g. the soma, don't touch
 
 	//- set current context in result
 
@@ -1149,7 +1109,7 @@ SegmenterMesherOnLengthProcessor
 
 	int iCount = ceil(dLength / psmold->dLength);
 
-	//t set count for this segment
+	/// \todo set count for this segment
 
 	struct PidinStack *ppistSegment = PidinStackDuplicate(ptstr->ppist);
 
@@ -1171,7 +1131,7 @@ SegmenterMesherOnLengthProcessor
 
 	if (!iAliassed)
 	{
-	    //t free everything in hsl
+	    /// \todo free everything in hsl
 
 	    return(TSTR_PROCESSOR_ABORT);
 	}
@@ -1227,15 +1187,15 @@ SegmenterMesherOnLengthProcessor
 
 	    //- set parent parameter of new segments
 
-	    //t use PidinStackNewFromParameterSymbols() and PidinStackToPidinQueue() for this
-	    //t so probably I need PidinQueueNewFromParameterSymbols() ?
+	    /// \todo use PidinStackNewFromParameterSymbols() and PidinStackToPidinQueue() for this
+	    /// \todo so probably I need PidinQueueNewFromParameterSymbols() ?
 
 	    //- for the first alias in list
 
 	    if (iCounter == 0)
 	    {
-		//t inherits name from previous, but gets maximum count from previous
-		//t we need to keep a list of counts for each meshed segment
+		/// \todo inherits name from previous, but gets maximum count from previous
+		/// \todo we need to keep a list of counts for each meshed segment
 
 		//- lookup parent segment count
 
@@ -1272,9 +1232,9 @@ SegmenterMesherOnLengthProcessor
 		{
 		    //- construct name using parent segment count
 
-		    //t get a better identifier generation interface for this.
+		    /// \todo get a better identifier generation interface for this.
 
-		    //t perhaps using a varags constructor, args being strings ?
+		    /// \todo perhaps using a varags constructor, args being strings ?
 
 		    sprintf(pc, "%s_%i", SymbolGetName(phsleParent), iParentCount - 1);
 		}
@@ -1338,9 +1298,9 @@ SegmenterMesherOnLengthProcessor
 	    {
 		//- other ones are fixed here.
 
-		//t get a better identifier generation interface for this.
+		/// \todo get a better identifier generation interface for this.
 
-		//t perhaps using a varags constructor, args being strings ?
+		/// \todo perhaps using a varags constructor, args being strings ?
 
 		char pc[1000];
 
@@ -1505,7 +1465,7 @@ SegmenterMesherOnLengthFinalizer
 
 	HSolveListElement *phsleTo = HSolveListTail(&psmold->hslAliasses);
 
-	//t this one creates an infinite loop for /grouped_two_segments, meshing of main[0]_0 and main[0]_1
+	/// \todo this one creates an infinite loop for /grouped_two_segments, meshing of main[0]_0 and main[0]_1
 
 	HSolveListMergeWithSucc(phsleFrom, phsleTo, &phsle->hsleLink);
 
@@ -1539,51 +1499,51 @@ SegmenterMesherOnLength
 
     struct SegmenterMesherOnLength_data smold =
     {
-	//m maximal length
+	/// maximal length
 
 	dLength,
 
-	//m processor result
+	/// processor result
 
 	{
-	    //m two joint nodes (one for head, one for tail)
+	    /// two joint nodes (one for head, one for tail)
 
-	    //m pointer to head of list
-
-	    NULL,
-
-	    //m tail of list, always NULL
+	    /// pointer to head of list
 
 	    NULL,
 
-	    //m last entry in list
+	    /// tail of list, always NULL
+
+	    NULL,
+
+	    /// last entry in list
 
 	    NULL,
 	},
 
-	//m number of elements in result list
+	/// number of elements in result list
 
 	0,
 
-	//m total number of segments created
+	/// total number of segments created
 
 	0,
 
-	//m original segments that have been resegmented, including their names
+	/// original segments that have been resegmented, including their names
 
 	0,
 
 	NULL,
 
-	//m count for resegmented symbols
+	/// count for resegmented symbols
 
 	NULL,
 
-	//m pidinstack for result
+	/// pidinstack for result
 
 	NULL,
 
-	//m root symbol for result
+	/// root symbol for result
 
 	NULL,
     };
@@ -1666,22 +1626,18 @@ SegmenterMesherOnLength
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmenterParameterScaleValue()
-///
-/// ARGS.:
-///
-///	psegr...: segment to scale value for
-///	ppist...: context of given element
-///	dValue..: value to scale
-///	ppar....: parameter that specify type of scaling
-///
-/// RTN..: double : scaled value, FLT_MAX for failure
-///
-/// DESCR: Scale value according to parameter type and symbol type
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg psegr segment to scale value for
+/// \arg ppist context of given element
+/// \arg dValue value to scale
+/// \arg ppar parameter that specify type of scaling
+/// 
+/// \return double : scaled value, FLT_MAX for failure
+/// 
+/// \brief Scale value according to parameter type and symbol type
+/// \details 
+/// 
 
 double
 SegmenterParameterScaleValue
@@ -1694,7 +1650,7 @@ SegmenterParameterScaleValue
 
     double dResult = FLT_MAX;
 
-    //! safety and robustness first
+    /// \note safety and robustness first
 
     if (dValue == FLT_MAX)
     {
@@ -1823,22 +1779,18 @@ SegmenterParameterScaleValue
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmenterParentCount()
-///
-/// ARGS.:
-///
-///	psegr...: segmenter to check.
+/// 
+/// 
+/// \arg psegr segmenter to check.
 ///	ppist...: context of segmenter, segmenter assumed to be on top
-///
-/// RTN..: int
-///
+/// 
+/// \return int
+/// 
 ///	1 if segmenter has a tree structure, 0 otherwise.
-///
-/// DESCR: Check if a segmenter has a tree structure.
-///
-/// **************************************************************************
+/// 
+/// \brief Check if a segmenter has a tree structure.
+/// \details 
+/// 
 
 int
 SegmenterParentCount
@@ -1878,22 +1830,18 @@ SegmenterParentCount
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmenterSetBase()
-///
-/// ARGS.:
-///
-///	psegr...: segmenter to set as base container.
+/// 
+/// 
+/// \arg psegr segmenter to set as base container.
 ///	ppist...: context of segmenter, segmenter assumed to be on top
-///
-/// RTN..: int
-///
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR: Set this segmenter as base for all the segments it contains.
-///
-/// **************************************************************************
+/// 
+/// \brief Set this segmenter as base for all the segments it contains.
+/// \details 
+/// 
 
 static
 int 
@@ -1968,22 +1916,18 @@ SegmenterSetBase
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmenterTips()
-///
-/// ARGS.:
-///
-///	psegr...: segmenter to get tips for.
+/// 
+/// 
+/// \arg psegr segmenter to get tips for.
 ///	ppist...: context of segmenter, segmenter assumed to be on top
-///
-/// RTN..: int
-///
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR: Print tips of the segmenter to stdout.
-///
-/// **************************************************************************
+/// 
+/// \brief Print tips of the segmenter to stdout.
+/// \details 
+/// 
 
 int
 SegmenterTips
@@ -2080,27 +2024,23 @@ SegmenterTips
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SegmenterTraverseSegments()
-///
-/// ARGS.:
-///
-///	phsle.......: segmenter to traverse segments for
+/// 
+/// 
+/// \arg phsle segmenter to traverse segments for
 ///	ppist.......: context of segmenter, segmenter assumed to be on top
-///	pfProcesor..: segment processor
-///	pfFinalizer.: segment finalizer
-///	pvUserdata..: any user data
-///
-/// RTN..: int
-///
+/// \arg pfProcesor segment processor
+/// \arg pfFinalizer segment finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return int
+/// 
 ///	1  : success
 ///	0  : no success, failure
 ///	-1 : immediate abort
-///
-/// DESCR: Traverse segments, call pfProcessor on each of them
-///
-/// **************************************************************************
+/// 
+/// \brief Traverse segments, call pfProcessor on each of them
+/// \details 
+/// 
 
 static int 
 SegmenterSegmentSelector

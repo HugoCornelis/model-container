@@ -37,18 +37,18 @@
 #include "algorithms/event/serialpopulation.h"
 
 
-//s event associations for serial population algorithm
+/// \struct event associations for serial population algorithm
 
 static ParserEventListener SerialPopulationParserEventListener;
 
 static ParserEventAssociation pevasSerialPopulation[] = 
 {
     {
-	//m listens to any population event
+	/// listens to any population event
 
 	EVENT_TYPE_POPULATION,
 
-	//m function to call
+	/// function to call
 
 	SerialPopulationParserEventListener,
     }
@@ -57,17 +57,17 @@ static ParserEventAssociation pevasSerialPopulation[] =
 
 static ParserEventAssociationTable evatSerialPopulation =
 {
-    //m number of entries
+    /// number of entries
 
     sizeof(*pevasSerialPopulation) / sizeof(ParserEventAssociation),
 
-    //m event associations
+    /// event associations
 
     pevasSerialPopulation,
 };
 
 
-//s algorithm handlers for serial population algorithm
+/// \struct algorithm handlers for serial population algorithm
 
 static AlgorithmHandler SerialPopulationInitAlgorithm;
 
@@ -75,48 +75,48 @@ static AlgorithmHandler SerialPopulationPrintInfo;
 
 static struct AlgorithmHandlerLibrary pfSerialPopulationHandlers =
 {
-    //m after constructor, global is parser context, data is init string
+    /// after constructor, global is parser context, data is init string
 
     SerialPopulationInitAlgorithm,
 
-    //m after init, before destruct
+    /// after init, before destruct
 
     NULL,
 
-    //m print info handler
+    /// print info handler
 
     SerialPopulationPrintInfo,
 };
 
 
-//s algorithm description
+/// \struct algorithm description
 
 static struct symtab_Algorithm modSerialPopulation =
 {
-    //m link
+    /// link
 
     {
 	NULL,
 	NULL,
     },
 
-    //m type
+    /// type
 
     0,
 
-    //m flags
+    /// flags
 
     0,
 
-    //m name
+    /// name
 
     "SerialPopulation",
 
-    //m algorithm handlers
+    /// algorithm handlers
 
     &pfSerialPopulationHandlers,
 
-    //m event association table
+    /// event association table
 
     &evatSerialPopulation
 };
@@ -124,35 +124,31 @@ static struct symtab_Algorithm modSerialPopulation =
 struct symtab_Algorithm *palgSerialPopulation = &modSerialPopulation;
 
 
-//d default number of serial population
+/// \def default number of serial population
 
 #define ENTRIES_SERIAL_POPULATIONS	10000
 
 
-//v serial population array
+/// serial population array
 
 struct SerialPopulationVariables serpopuVariables;
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialPopulationParserEventListener()
-///
-/// ARGS.:
-///
-///	std ParserEventListener args
-///
-/// RTN..: int : std ParserEventListener return value
-///
-/// DESCR: ParserEvent listener to put populations in a serial array
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std ParserEventListener args
+/// 
+/// \return int : std ParserEventListener return value
+/// 
+/// \brief ParserEvent listener to put populations in a serial array
+/// \details 
+/// 
 
 static int SerialPopulationParserEventListener
 (struct ParserEvent *pev,
  struct symtab_Algorithm *palg)
 {
-    //- set default result : ok
+    //- set default result  ok
 
     int bResult = TRUE;
 
@@ -237,24 +233,20 @@ static int SerialPopulationParserEventListener
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialPopulationInitAlgorithm()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to init serial population algorithm
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to init serial population algorithm
+/// \details 
+/// 
 
 static int SerialPopulationInitAlgorithm
     (struct symtab_Algorithm *palgSelf,char *pcName,void *pvGlobal,void *pvData)
 {
-    //- set default result : ok
+    //- set default result  ok
 
     int bResult = TRUE;
 
@@ -285,19 +277,15 @@ static int SerialPopulationInitAlgorithm
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: SerialPopulationPrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on serial population algorithm
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int : std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on serial population algorithm
+/// \details 
+/// 
 
 static int SerialPopulationPrintInfo
 (struct symtab_Algorithm *palgSelf,char *pcName,void *pvGlobal,void *pvData)
@@ -306,7 +294,7 @@ static int SerialPopulationPrintInfo
 
     int bResult = TRUE;
 
-    //v loop var
+    /// loop var
 
     int i;
 
@@ -321,7 +309,7 @@ static int SerialPopulationPrintInfo
 	 "\n\n"
 	 "SerPopuAlgorithm : \n"
 	 "---------------\n"
-	 "Number of created/added populations : %i/%i\n",
+	 "Number of created/added populations  %i/%i\n",
 	 serpopuVariables.iPopulationsCreated,
 	 serpopuVariables.iPopulationsAdded);
 

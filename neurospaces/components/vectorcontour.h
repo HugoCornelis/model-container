@@ -25,13 +25,12 @@
 #include <stdio.h>
 
 
-//s structure declarations
+/// \struct structure declarations
 
 struct descr_VContour;
 struct symtab_VContour;
 
 
-//f exported functions
 
 struct symtab_VContour * VContourCalloc(void);
 
@@ -46,9 +45,9 @@ void VContourInit(struct symtab_VContour *pvcont);
 #include "vector.h"
 
 
-//s
-//s vector description
-//s
+/// \struct
+/// \struct vector description
+/// \struct
 
 struct descr_VContour
 {
@@ -56,17 +55,17 @@ struct descr_VContour
 };
 
 
-//s
-//s struct symtab_VContour
-//s
+/// \struct
+/// \struct struct symtab_VContour
+/// \struct
 
 struct symtab_VContour
 {
-    //m base struct : vector
+    /// base struct : vector
 
     struct symtab_Vector vect;
 
-    //m enumeration container
+    /// enumeration container
 
     struct descr_VContour devcont;
 };

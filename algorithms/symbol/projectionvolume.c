@@ -38,65 +38,65 @@
 #include "projectionvolumeinstance.h"
 
 
-//s algorithm handlers for projection algorithm
+/// \struct algorithm handlers for projection algorithm
 
 static AlgorithmClassInstanceCreator ProjectionVolumeClassCreateInstance;
 
 static AlgorithmClassHandler ProjectionVolumeClassPrintInfo;
 
 
-//s algorithm class method table
+/// \struct algorithm class method table
 
 static struct AlgorithmClassHandlerLibrary pfProjectionVolumeClassHandlers =
 {
-    //m class info handler
+    /// class info handler
 
     ProjectionVolumeClassPrintInfo,
 
-    //m create instance from class (self, name, context, init string)
+    /// create instance from class (self, name, context, init string)
 
     ProjectionVolumeClassCreateInstance,
 };
 
 
-//s projectionVolume class derives from algorithm class
+/// \struct projectionVolume class derives from algorithm class
 
 struct ProjectionVolumeClass
 {
-    //m base struct : algorithm class
+    /// base struct : algorithm class
 
     struct AlgorithmClass algc;
 
-    //m number of created instances
+    /// number of created instances
 
     int iInstances;
 };
 
 
-//s algorithm class description
+/// \struct algorithm class description
 
 static struct ProjectionVolumeClass pvcProjectionVolume =
 {
-    //m base struct : algorithm class
+    /// base struct : algorithm class
 
     {
-	//m link
+	/// link
 
 	{
 	    NULL,
 	    NULL,
 	},
 
-	//m name
+	/// name
 
 	"ProjectionVolume",
 
-	//m algorithm handlers
+	/// algorithm handlers
 
 	&pfProjectionVolumeClassHandlers,
     },
 
-    //m number of instances
+    /// number of instances
 
     0,
 };
@@ -105,21 +105,17 @@ static struct ProjectionVolumeClass pvcProjectionVolume =
 struct AlgorithmClass *palgcProjectionVolume = &pvcProjectionVolume.algc;
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionVolumeClassCreateInstance()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: struct AlgorithmInstance * : 
-///
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return struct AlgorithmInstance *  
+/// 
 ///	created algorithm instance, NULL for failure
-///
-/// DESCR: Algorithm handler to create instance of projectionVolume algorithm.
-///
-/// **************************************************************************
+/// 
+/// \brief Algorithm handler to create instance of projectionVolume algorithm.
+/// \details 
+/// 
 
 static
 struct AlgorithmInstance *
@@ -152,19 +148,15 @@ ProjectionVolumeClassCreateInstance
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ProjectionVolumeClassPrintInfo()
-///
-/// ARGS.:
-///
-///	std AlgorithmHandler args
-///
-/// RTN..: int : std AlgorithmHandler return value
-///
-/// DESCR: Algorithm handler to print info on projectionVolume algorithm class.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg std AlgorithmHandler args
+/// 
+/// \return int  std AlgorithmHandler return value
+/// 
+/// \brief Algorithm handler to print info on projectionVolume algorithm class.
+/// \details 
+/// 
 
 static int ProjectionVolumeClassPrintInfo
 (struct AlgorithmClass *palgc,char *pcName,void *pvGlobal,void *pvData)

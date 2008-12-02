@@ -27,22 +27,18 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: RootSymbolAddChild()
-///
-/// ARGS.:
-///
-///	proot.: root symbol
-///	phsle.: child to add
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Add child to root symbol.
-///
+/// 
+/// 
+/// \arg proot root symbol
+/// \arg phsle child to add
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Add child to root symbol.
+/// \details 
+/// 
 ///	Updates serial indices, see also SymbolInit(), SymbolEntailChild().
-///
-/// **************************************************************************
+/// 
 
 int
 RootSymbolAddChild
@@ -66,19 +62,15 @@ RootSymbolAddChild
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RootSymbolCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_RootSymbol * 
-///
+/// 
+/// 
+/// \return struct symtab_RootSymbol * 
+/// 
 ///	Newly allocated root symbol, NULL for failure
-///
-/// DESCR: Allocate a new root symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new root symbol table element
+/// \details 
+/// 
 
 struct symtab_RootSymbol * RootSymbolCalloc(void)
 {
@@ -106,19 +98,15 @@ struct symtab_RootSymbol * RootSymbolCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RootSymbolFree()
-///
-/// ARGS.:
-///
-///	proot.: root to free
-///
-/// RTN..: void
-///
-/// DESCR: Free a root symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg proot root to free
+/// 
+/// \return void
+/// 
+/// \brief Free a root symbol.
+/// \details 
+/// 
 
 void RootSymbolFree(struct symtab_RootSymbol *proot)
 {
@@ -128,21 +116,17 @@ void RootSymbolFree(struct symtab_RootSymbol *proot)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RootSymbolGetPidin()
-///
-/// ARGS.:
-///
-///	proot.: root to init
-///
-/// RTN..: struct symtab_IdentifierIndex *
-///
+/// 
+/// 
+/// \arg proot root to init
+/// 
+/// \return struct symtab_IdentifierIndex *
+/// 
 ///	Pidin of root, shared over all roots.
-///
-/// DESCR: Get pidin of root.
-///
-/// **************************************************************************
+/// 
+/// \brief Get pidin of root.
+/// \details 
+/// 
 
 struct symtab_IdentifierIndex *
 RootSymbolGetPidin(struct symtab_RootSymbol *proot)
@@ -151,27 +135,27 @@ RootSymbolGetPidin(struct symtab_RootSymbol *proot)
 
     static struct symtab_IdentifierIndex idinResult =
     {
-	//m link structures in list
+	/// link structures in list
 
 	NULL,
 
-	//m give each idin pointer to root for hierarchical idins
+	/// give each idin pointer to root for hierarchical idins
 
 	&idinResult,
 
-	//m flags, see FLAG_IDENTINDEX_*
+	/// flags, see FLAG_IDENTINDEX_*
 
 	FLAG_IDENTINDEX_ROOTED,
 
-	//m name of identifier
+	/// name of identifier
 
 	NULL,
 
-	//m index value
+	/// index value
 
 	-1,
 
-	//m value of e.g. parameter
+	/// value of e.g. parameter
 
 	FLT_MAX,
     };
@@ -182,19 +166,15 @@ RootSymbolGetPidin(struct symtab_RootSymbol *proot)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RootSymbolInit()
-///
-/// ARGS.:
-///
-///	proot.: root to init
-///
-/// RTN..: void
-///
-/// DESCR: init root
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg proot root to init
+/// 
+/// \return void
+/// 
+/// \brief init root
+/// \details 
+/// 
 
 void RootSymbolInit(struct symtab_RootSymbol *proot)
 {
@@ -216,22 +196,18 @@ void RootSymbolInit(struct symtab_RootSymbol *proot)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RootSymbolLookup()
-///
-/// ARGS.:
-///
-///	proot..: root to search in
-///	pcName.: name of symbol to lookup
-///
-/// RTN..: 
-///
+/// 
+/// 
+/// \arg proot root to search in
+/// \arg pcName name of symbol to lookup
+/// 
+/// \return 
+/// 
 ///	struct symtab_HSolveListElement * : found symbol, NULL for not found
-///
-/// DESCR: Look for child symbol
-///
-/// **************************************************************************
+/// 
+/// \brief Look for child symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement *
 RootSymbolLookup(struct symtab_RootSymbol *proot, char *pcName)
@@ -274,22 +250,18 @@ RootSymbolLookup(struct symtab_RootSymbol *proot, char *pcName)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RootSymbolLookupHierarchical()
-///
-/// ARGS.:
-///
-///	proot....: root to search in
-///	ppist....: element to search
-///
-/// RTN..: struct symtab_HSolveListElement * : matching symbol
-///
-/// DESCR: lookup a hierarchical symbol name in given root.
-///
-/// NOTE.: does not support lookup of current (this should never be needed).
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg proot root to search in
+/// \arg ppist element to search
+/// 
+/// \return struct symtab_HSolveListElement * : matching symbol
+/// 
+/// \brief lookup a hierarchical symbol name in given root.
+/// \details 
+/// 
+/// \note  does not support lookup of current (this should never be needed).
+/// 
 
 struct symtab_HSolveListElement *
 RootSymbolLookupHierarchical
@@ -328,21 +300,17 @@ RootSymbolLookupHierarchical
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RootSymbolPrint()
-///
-/// ARGS.:
-///
-///	proot....: root to search in
-///	iIndent..: number of indentation spaces
-///	pfile....: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Print children of a root
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg proot root to search in
+/// \arg iIndent number of indentation spaces
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Print children of a root
+/// \details 
+/// 
 
 int
 RootSymbolPrint
@@ -377,37 +345,33 @@ RootSymbolPrint
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RootSymbolTraverse()
-///
-/// ARGS.:
-///
-///	ptstr.: initialized treespace traversal
-///	proot.: symbol to traverse
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg ptstr initialized treespace traversal
+/// \arg proot symbol to traverse
+/// 
+/// \return int
+/// 
 ///	1  : success
 ///	0  : no success, failure
 ///	-1 : immediate abort
-///
-/// DESCR: Traverse symbols in tree manner.
-///
-/// NOTE.: See IOHierarchyTraverse()
-///
+/// 
+/// \brief Traverse symbols in tree manner.
+/// \details 
+/// 
+/// \note  See IOHierarchyTraverse()
+/// 
 ///	Note that not all symbols are required to have a pidin.
 ///	Interfaces with Tstr{Prepare,Traverse,Repair}() :
-///
+/// 
 ///	Loops over children of top symbol
 ///		1. Calls TstrPrepare()
 ///		2. Calls TstrTraverse()
 ///		3. Calls TstrRepair()
-///
+/// 
 ///	Use Tstr.*() to obtain info on serial IDs and contexts
 ///	during traversals.
-///
-/// **************************************************************************
+/// 
 
 int
 RootSymbolTraverse
@@ -578,23 +542,19 @@ RootSymbolTraverse
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RootSymbolTraverseSpikeGenerators()
-///
-/// ARGS.:
-///
-///	phsle.......: symbol to traverse spike generators for
+/// 
+/// 
+/// \arg phsle symbol to traverse spike generators for
 ///	ppist.......: context of symbol, symbol assumed to be on top
-///	pfProcesor..: spike generator processor
-///	pfFinalizer.: spike receiver finalizer
-///	pvUserdata..: any user data
-///
-/// RTN..: int : see TstrGo()
-///
-/// DESCR: Traverse spike generators, call pfProcessor on each of them
-///
-/// **************************************************************************
+/// \arg pfProcesor spike generator processor
+/// \arg pfFinalizer spike receiver finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return int : see TstrGo()
+/// 
+/// \brief Traverse spike generators, call pfProcessor on each of them
+/// \details 
+/// 
 
 static int 
 SymbolSpikeGeneratorSelector
@@ -662,23 +622,19 @@ RootSymbolTraverseSpikeGenerators
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: RootSymbolTraverseSpikeReceivers()
-///
-/// ARGS.:
-///
-///	phsle.......: symbol to traverse spike receivers for
+/// 
+/// 
+/// \arg phsle symbol to traverse spike receivers for
 ///	ppist.......: context of symbol, symbol assumed to be on top
-///	pfProcesor..: spike receiver processor
-///	pfFinalizer.: spike receiver finalizer
-///	pvUserdata..: any user data
-///
-/// RTN..: int : see TstrGo()
-///
-/// DESCR: Traverse spike receivers, call pfProcessor on each of them
-///
-/// **************************************************************************
+/// \arg pfProcesor spike receiver processor
+/// \arg pfFinalizer spike receiver finalizer
+/// \arg pvUserdata any user data
+/// 
+/// \return int : see TstrGo()
+/// 
+/// \brief Traverse spike receivers, call pfProcessor on each of them
+/// \details 
+/// 
 
 static int 
 SymbolSpikeReceiverSelector

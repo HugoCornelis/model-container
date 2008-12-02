@@ -32,19 +32,15 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: VConnectionSymbolCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_VConnection * 
-///
+/// 
+/// 
+/// \return struct symtab_VConnection * 
+/// 
 ///	Newly allocated connection vector, NULL for failure
-///
-/// DESCR: Allocate a new connection vector symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new connection vector symbol table element
+/// \details 
+/// 
 
 struct symtab_VConnectionSymbol * VConnectionSymbolCalloc(void)
 {
@@ -72,20 +68,16 @@ struct symtab_VConnectionSymbol * VConnectionSymbolCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: VConnectionSymbolCreateAlias()
-///
-/// ARGS.:
-///
-///	pvconsy.: symbol vector to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pvconsy symbol vector to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 VConnectionSymbolCreateAlias
@@ -111,19 +103,15 @@ VConnectionSymbolCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: VConnectionSymbolInit()
-///
-/// ARGS.:
-///
-///	pvconsy.: connection vector to init
-///
-/// RTN..: void
-///
-/// DESCR: init connection vector
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pvconsy connection vector to init
+/// 
+/// \return void
+/// 
+/// \brief init connection vector
+/// \details 
+/// 
 
 void VConnectionSymbolInit(struct symtab_VConnectionSymbol *pvconsy)
 {

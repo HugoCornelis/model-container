@@ -72,20 +72,16 @@
 #endif
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackAppend()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	ppistTarget..: target & first source context stack
-///	ppistSource..: stack to append
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Append two pidin stacks, flags unaffected, no compaction
-///
-/// **************************************************************************
+/// \arg ppistSource stack to append
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Append two pidin stacks, flags unaffected, no compaction
+/// \details 
+/// 
 
 int PidinStackAppend
 (struct PidinStack *ppistTarget, struct PidinStack *ppistSource)
@@ -115,20 +111,16 @@ int PidinStackAppend
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackAppendCompact()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	ppistTarget..: target & first source context stack
-///	ppistSource..: stack to append
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Append two pidin stacks, flags unaffected, with compaction
-///
-/// **************************************************************************
+/// \arg ppistSource stack to append
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Append two pidin stacks, flags unaffected, with compaction
+/// \details 
+/// 
 
 int
 PidinStackAppendCompact
@@ -155,12 +147,12 @@ PidinStackAppendCompact
     {
 #ifdef PIDINSTACK_SMART_CACHE
 
-	//! considered a hardcoded solution,
-	//!
-	//! nice solution : consists of pidinqueues and pidinstacks 
-	//! cooperation.
-	//! 1. convert ppistSource to ppiqu
-	//! 2. some cooperation between ppiqu and SymbolLookupHierarchical()
+	/// \note considered a hardcoded solution,
+	///
+	/// \note nice solution : consists of pidinqueues and pidinstacks 
+	/// \note cooperation.
+	/// \note 1. convert ppistSource to ppiqu
+	/// \note 2. some cooperation between ppiqu and SymbolLookupHierarchical()
 
 /* 	//- get main hypothetical root */
 
@@ -213,19 +205,19 @@ PidinStackAppendCompact
 	    else
 	    {
 
-		//t we could do something smart here :
-		//t maintain symbol cache and serial mapping as follows :
-		//t
-		//t lookup current symbol from ppistSource
-		//t if found
-		//t     push symbol with PidinStackPushSymbol()
-		//t else
-		//t     push current pidin from ppistSource
-		//t
+		/// \todo we could do something smart here :
+		/// \todo maintain symbol cache and serial mapping as follows :
+		///
+		/// \todo lookup current symbol from ppistSource
+		/// \todo if found
+		/// \todo     push symbol with PidinStackPushSymbol()
+		/// \todo else
+		/// \todo     push current pidin from ppistSource
+		///
 
 		//- get current symbol
 
-		//! the dirty solution, see comments above
+		/// \note the dirty solution, see comments above
 
 		struct symtab_HSolveListElement *phsleSource
 		    = PSymbolSerialStackElementSymbol(&ppistSource->symsst, i);
@@ -301,19 +293,15 @@ PidinStackAppendCompact
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct PidinStack * 
-///
+/// 
+/// 
+/// \return struct PidinStack * 
+/// 
 ///	Newly allocated pidin stack, NULL for failure
-///
-/// DESCR: Allocate a new pidin stack symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new pidin stack symbol table element
+/// \details 
+/// 
 
 struct PidinStack * PidinStackCalloc(void)
 {
@@ -336,25 +324,21 @@ struct PidinStack * PidinStackCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackEqual()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	ppist1: pidin stack to test
 ///	ppist2: pidin stack to test
-///
-/// RTN..: int : TRUE if equal
-///
-/// DESCR: check if two pidinstacks equal
-///
+/// 
+/// \return int : TRUE if equal
+/// 
+/// \brief check if two pidinstacks equal
+/// \details 
+/// 
 ///	equal defined to be all id's refer to same hierarchical symbols,
 ///	ie comparisons are done symbollicaly.
-///
+/// 
 ///	This function will only give valid results for rooted pidinstacks.
-///
-/// **************************************************************************
+/// 
 
 int PidinStackEqual
 (struct PidinStack *ppist1, struct PidinStack *ppist2)
@@ -363,7 +347,7 @@ int PidinStackEqual
 
     int iResult = TRUE;
 
-    //v loop var
+    /// loop var
 
     int i;
 
@@ -401,22 +385,22 @@ int PidinStackEqual
 
 #ifdef PIDINSTACK_SMART_CACHE
 
-    //t do something smart with serial IDs :
-    //t
-    //t if #(serial ID entries) different
-    //t     use serial ID of lowest number available entries
-    //t     since serial ID entries is direct consequence from 
-    //t         symbol serial cache, lowest number available entries
-    //t         can be calculated using symbol serial cache.
-    //t
-    //t if serial IDs equal
-    //t     start at #(serial ID entries)
-    //t else
-    //t     return unequal
-    //t
+    /// \todo do something smart with serial IDs :
+    ///
+    /// \todo if #(serial ID entries) different
+    /// \todo     use serial ID of lowest number available entries
+    /// \todo     since serial ID entries is direct consequence from 
+    /// \todo         symbol serial cache, lowest number available entries
+    /// \todo         can be calculated using symbol serial cache.
+    ///
+    /// \todo if serial IDs equal
+    /// \todo     start at #(serial ID entries)
+    /// \todo else
+    /// \todo     return unequal
+    ///
 
-    //! I should evaluate what speed change this gives
-    //! hopefully faster in the most common cases
+    /// \note I should evaluate what speed change this gives
+    /// \note hopefully faster in the most common cases
 
     //- if both pidinstacks rooted
 
@@ -527,9 +511,9 @@ int PidinStackEqual
 
 #endif
 
-    //t if result is TRUE :
-    //t update caches of poorest pidinstack
-    //t with the one of richest pidinstack
+    /// \todo if result is TRUE :
+    /// \todo update caches of poorest pidinstack
+    /// \todo with the one of richest pidinstack
 
     //- return result
 
@@ -537,19 +521,15 @@ int PidinStackEqual
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackInit()
-///
-/// ARGS.:
-///
-///	ppist.: pidin stack to clear
-///
-/// RTN..: void
-///
-/// DESCR: Initialize a pidin stack
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppist pidin stack to clear
+/// 
+/// \return void
+/// 
+/// \brief Initialize a pidin stack
+/// \details 
+/// 
 
 void PidinStackInit(struct PidinStack *ppist)
 {
@@ -586,21 +566,17 @@ void PidinStackInit(struct PidinStack *ppist)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackIsWildcard()
-///
-/// ARGS.:
-///
-///	ppist.: pidin stack
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg ppist pidin stack
+/// 
+/// \return int
+/// 
 ///	1 if pidinstack contains wildcards.
-///
-/// DESCR: Check if pidinstack contains wildcards.
-///
-/// **************************************************************************
+/// 
+/// \brief Check if pidinstack contains wildcards.
+/// \details 
+/// 
 
 int PidinStackIsWildcard(struct PidinStack *ppist)
 {
@@ -635,19 +611,15 @@ int PidinStackIsWildcard(struct PidinStack *ppist)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackLookupBaseSymbol()
-///
-/// ARGS.:
-///
-///	ppist.: pidin stack
-///
-/// RTN..: struct symtab_HSolveListElement * : base symbol, used by ppist.
-///
-/// DESCR: Lookup base symbol.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppist pidin stack
+/// 
+/// \return struct symtab_HSolveListElement * : base symbol, used by ppist.
+/// 
+/// \brief Lookup base symbol.
+/// \details 
+/// 
 
 struct symtab_HSolveListElement *
 PidinStackLookupBaseSymbol(struct PidinStack *ppist)
@@ -706,9 +678,9 @@ PidinStackLookupBaseSymbol(struct PidinStack *ppist)
 
     else
     {
-	//t we could do a sanity check here on symbol cache :
-	//t top symbol pidin == top pidin stack
-	//t etc.
+	/// \todo we could do a sanity check here on symbol cache :
+	/// \todo top symbol pidin == top pidin stack
+	/// \todo etc.
 
 	//- set result from cache
 
@@ -725,19 +697,15 @@ PidinStackLookupBaseSymbol(struct PidinStack *ppist)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackLookupTopSymbol()
-///
-/// ARGS.:
-///
-///	ppist.: pidin stack
-///
-/// RTN..: struct symtab_HSolveListElement * : symbol, referenced by ppist
-///
-/// DESCR: Lookup top symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppist pidin stack
+/// 
+/// \return struct symtab_HSolveListElement * : symbol, referenced by ppist
+/// 
+/// \brief Lookup top symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement *
 PidinStackLookupTopSymbol(struct PidinStack *ppist)
@@ -746,14 +714,14 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
     struct symtab_HSolveListElement *phsleResult = NULL;
 
-    //t we should to this with a pidin queue, but that's too much work 
-    //t at the moment
-    //t
-    //t SymbolLookupHierarchical() should do its job on a queue instead
-    //t of a pidinstack with an active level
-    //t by feeding all the entries of ppist one at a time to 
-    //t SymbolLookupHierarchical() and registering the result in the cache
-    //t of ppist, all this is nicer and more efficient.
+    /// \todo we should to this with a pidin queue, but that's too much work 
+    /// \todo at the moment
+    ///
+    /// \todo SymbolLookupHierarchical() should do its job on a queue instead
+    /// \todo of a pidinstack with an active level
+    /// \todo by feeding all the entries of ppist one at a time to 
+    /// \todo SymbolLookupHierarchical() and registering the result in the cache
+    /// \todo of ppist, all this is nicer and more efficient.
 
 #ifdef PIDINSTACK_SMART_CACHE
 
@@ -818,10 +786,10 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
 	else
 	{
-	    //t we could do a sanity check here on symbol cache :
-	    //t number of entries == 1
-	    //t top symbol pidin == top pidin stack
-	    //t etc.
+	    /// \todo we could do a sanity check here on symbol cache :
+	    /// \todo number of entries == 1
+	    /// \todo top symbol pidin == top pidin stack
+	    /// \todo etc.
 
 	    //- set result from cache
 
@@ -851,10 +819,10 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
 	//- lookup top for the minor
 
-	//t connections pidin are not found, so interferes with 
-	//t serial index maintenance (via PSymbolSerialStackPush() )
-	//t means connection lookup will not benefit from 
-	//t speed cache used by PidinStackLookupTopSymbol().
+	/// \todo connections pidin are not found, so interferes with 
+	/// \todo serial index maintenance (via PSymbolSerialStackPush() )
+	/// \todo means connection lookup will not benefit from 
+	/// \todo speed cache used by PidinStackLookupTopSymbol().
 
 	if (PidinStackLookupTopSymbol(ppistMinor))
 	{
@@ -880,10 +848,10 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
 	    //- do lookup on (non-)minor, in last symbol from minor
 
-	    //t connections pidin are not found, so interferes with 
-	    //t serial index maintenance (via PSymbolSerialStackPush() )
-	    //t means connection lookup will not benefit from 
-	    //t speed cache used by PidinStackLookupTopSymbol().
+	    /// \todo connections pidin are not found, so interferes with 
+	    /// \todo serial index maintenance (via PSymbolSerialStackPush() )
+	    /// \todo means connection lookup will not benefit from 
+	    /// \todo speed cache used by PidinStackLookupTopSymbol().
 
 	    phsle
 		= SymbolLookupHierarchical
@@ -963,10 +931,10 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
 	else
 	{
-	    //t we could do a sanity check here on symbol cache :
-	    //t number of entries == 1
-	    //t top symbol pidin == top pidin stack
-	    //t etc.
+	    /// \todo we could do a sanity check here on symbol cache :
+	    /// \todo number of entries == 1
+	    /// \todo top symbol pidin == top pidin stack
+	    /// \todo etc.
 
 	    //- set result from cache
 
@@ -1059,20 +1027,16 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackMatch()
-///
-/// ARGS.:
-///
+/// 
+/// 
 ///	ppist1: pidin stack to test
 ///	ppist2: pidin stack to test, wildcards recognized
-///
-/// RTN..: int : TRUE if match
-///
-/// DESCR: check if two pidinstacks match, wildcards allowed
-///
-/// **************************************************************************
+/// 
+/// \return int : TRUE if match
+/// 
+/// \brief check if two pidinstacks match, wildcards allowed
+/// \details 
+/// 
 
 int PidinStackMatch(struct PidinStack *ppist1, struct PidinStack *ppist2)
 {
@@ -1080,7 +1044,7 @@ int PidinStackMatch(struct PidinStack *ppist1, struct PidinStack *ppist2)
 
     int iResult = TRUE;
 
-    //v loop vars
+    /// loop vars
 
     int i1,i2;
 
@@ -1124,7 +1088,7 @@ int PidinStackMatch(struct PidinStack *ppist1, struct PidinStack *ppist2)
 	{
 	    //- if one of the next entries of wildcard stack is not a wildcard
 
-	    //! this says that /Purkinje matches with /Purkinje/**
+	    /// \note this says that /Purkinje matches with /Purkinje/**
 
 	    while (i2 < iTop2
 		   && IdinIsWildCard(PidinStackElementPidin(ppist2, i2), "**"))
@@ -1254,22 +1218,18 @@ int PidinStackMatch(struct PidinStack *ppist1, struct PidinStack *ppist2)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackNewFromParameterSymbols()
-///
-/// ARGS.:
-///
-///	ppar..: parameter referencing a field
-///
-/// RTN..: struct PidinStack * : resulting pidin stack
-///
-/// DESCR: Create pidin stack from pidins in parameter
-///
+/// 
+/// 
+/// \arg ppar parameter referencing a field
+/// 
+/// \return struct PidinStack * : resulting pidin stack
+/// 
+/// \brief Create pidin stack from pidins in parameter
+/// \details 
+/// 
 ///	The resulting pidin stack will not contain any referenced fields or
 ///	I/O relations.
-///
-/// **************************************************************************
+/// 
 
 struct PidinStack *
 PidinStackNewFromParameterSymbols(struct symtab_Parameters *ppar)
@@ -1327,9 +1287,10 @@ PidinStackNewFromParameterSymbols(struct symtab_Parameters *ppar)
 /* /// */
 /* ///	pidin..: pidin list */
 /* /// */
-/* /// RTN..: struct PidinStack * : resulting pidin stack */
+/* /// \return struct PidinStack * : resulting pidin stack */
 /* /// */
-/* /// DESCR: Create pidin stack from pidins */
+/* /// \brief Create pidin stack from pidins */
+/// \details 
 /* /// */
 /* /// ************************************************************************** */
 
@@ -1374,11 +1335,12 @@ PidinStackNewFromParameterSymbols(struct symtab_Parameters *ppar)
 /* /// */
 /* ///	psymst..: symbol stack */
 /* /// */
-/* /// RTN..: struct PidinStack * : resulting pidin stack */
+/* /// \return struct PidinStack * : resulting pidin stack */
 /* /// */
-/* /// DESCR: Create pidin stack from pidins in symbols in symbol stack */
+/* /// \brief Create pidin stack from pidins in symbols in symbol stack */
+/// \details 
 /* /// */
-/* /// NOTE.: should be optimized with respect to symbol cache. */
+/* /// \note  should be optimized with respect to symbol cache. */
 /* /// */
 /* /// ************************************************************************** */
 
@@ -1395,11 +1357,11 @@ PidinStackNewFromParameterSymbols(struct symtab_Parameters *ppar)
 
 /*     if (ppistResult) */
 /*     { */
-/* 	//v loop var */
+/* 	/// loop var */
 
 /* 	int i; */
 
-/* 	//v number of entries */
+/* 	/// number of entries */
 
 /* 	int iEntries = 0; */
 
@@ -1442,21 +1404,17 @@ PidinStackNewFromParameterSymbols(struct symtab_Parameters *ppar)
 /* } */
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackParse()
-///
-/// ARGS.:
-///
-///	pc....: string to parse
-///
-/// RTN..: struct PidinStack * : resulting pidin stack
-///
-/// DESCR: Parse string and fill in pidin
-///
+/// 
+/// 
+/// \arg pc string to parse
+/// 
+/// \return struct PidinStack * : resulting pidin stack
+/// 
+/// \brief Parse string and fill in pidin
+/// \details 
+/// 
 ///	Idins are calloc()'ed, identifiers are calloc()'ed.
-///
-/// **************************************************************************
+/// 
 
 struct PidinStack *
 PidinStackParse(char *pc)
@@ -1471,7 +1429,7 @@ PidinStackParse(char *pc)
 
     char *pcArg = NULL;
 
-    //v root marker
+    /// root marker
 
     int bRoot = FALSE;
 
@@ -1499,8 +1457,8 @@ PidinStackParse(char *pc)
 
     if (pc[iPos] && NameSpaceIsNameSpaceOperator(&pc[iPos]))
     {
-	//t note : only checks the first char, yet skips for the
-	//t length of the string
+	/// \todo note : only checks the first char, yet skips for the
+	/// \todo length of the string
 
 	iPos += strlen(IDENTIFIER_NAMESPACE_STRING);
     }
@@ -1717,19 +1675,15 @@ PidinStackParse(char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackPop()
-///
-/// ARGS.:
-///
-///	ppist.: pidin stack to pop
-///
-/// RTN..: struct symtab_IdentifierIndex * : popped idin, NULL for failure
-///
-/// DESCR: Pop pidin from stack
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppist pidin stack to pop
+/// 
+/// \return struct symtab_IdentifierIndex * : popped idin, NULL for failure
+/// 
+/// \brief Pop pidin from stack
+/// \details 
+/// 
 
 struct symtab_IdentifierIndex * PidinStackPop(struct PidinStack *ppist)
 {
@@ -1822,20 +1776,16 @@ struct symtab_IdentifierIndex * PidinStackPop(struct PidinStack *ppist)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackPrint()
-///
-/// ARGS.:
-///
-///	ppist.: pidin stack to print
+/// 
+/// 
+/// \arg ppist pidin stack to print
 ///	pfile.: file to print pidin stack to, NULL means stdout
-///
-/// RTN..: void
-///
-/// DESCR: Print pidinstack
-///
-/// **************************************************************************
+/// 
+/// \return void
+/// 
+/// \brief Print pidinstack
+/// \details 
+/// 
 
 void PidinStackPrint(struct PidinStack *ppist, FILE *pfile)
 {
@@ -1854,20 +1804,16 @@ void PidinStackPrint(struct PidinStack *ppist, FILE *pfile)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackPush()
-///
-/// ARGS.:
-///
-///	ppist.: pidin stack to push onto
-///	pidin.: pidin to push
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Push pidin onto stack
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppist pidin stack to push onto
+/// \arg pidin pidin to push
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Push pidin onto stack
+/// \details 
+/// 
 
 int PidinStackPush
 (struct PidinStack *ppist, struct symtab_IdentifierIndex *pidin)
@@ -1903,20 +1849,16 @@ int PidinStackPush
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackPushAll()
-///
-/// ARGS.:
-///
-///	ppist.: pidin stack to push onto
-///	pidin.: list of pidin to push
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Push list of pidin onto stack
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppist pidin stack to push onto
+/// \arg pidin list of pidin to push
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Push list of pidin onto stack
+/// \details 
+/// 
 
 int PidinStackPushAll
 (struct PidinStack *ppist, struct symtab_IdentifierIndex *pidin)
@@ -1950,20 +1892,16 @@ int PidinStackPushAll
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackPushCompact()
-///
-/// ARGS.:
-///
-///	ppist.: pidin stack to push onto
-///	pidin.: list of pidin to push
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Push onto pidin stack, flags unaffected, with compaction
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppist pidin stack to push onto
+/// \arg pidin list of pidin to push
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Push onto pidin stack, flags unaffected, with compaction
+/// \details 
+/// 
 
 int PidinStackPushCompact
 (struct PidinStack *ppist, struct symtab_IdentifierIndex *pidin)
@@ -2003,20 +1941,16 @@ int PidinStackPushCompact
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackPushCompactAll()
-///
-/// ARGS.:
-///
-///	ppist.: pidin stack to push onto
-///	pidin.: list of pidin to push
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Push list of pidin onto stack, compact
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppist pidin stack to push onto
+/// \arg pidin list of pidin to push
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Push list of pidin onto stack, compact
+/// \details 
+/// 
 
 int PidinStackPushCompactAll
 (struct PidinStack *ppist, struct symtab_IdentifierIndex *pidin)
@@ -2059,22 +1993,18 @@ int PidinStackPushCompactAll
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackPushString()
-///
-/// ARGS.:
-///
-///	ppist.: context.
-///	pc....: name of symbol to push.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg ppist context.
+/// \arg pc name of symbol to push.
+/// 
+/// \return int
+/// 
 ///	Success of operation.
-///
-/// DESCR: Push the name of a symbol.
-///
-/// **************************************************************************
+/// 
+/// \brief Push the name of a symbol.
+/// \details 
+/// 
 
 int PidinStackPushString(struct PidinStack *ppist, char *pc)
 {
@@ -2095,22 +2025,18 @@ int PidinStackPushString(struct PidinStack *ppist, char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackPushStringAndLookup()
-///
-/// ARGS.:
-///
-///	ppist.: context.
-///	pc....: name of symbol to push and lookup.
-///
-/// RTN..: struct symtab_HSolveListElement *
-///
+/// 
+/// 
+/// \arg ppist context.
+/// \arg pc name of symbol to push and lookup.
+/// 
+/// \return struct symtab_HSolveListElement *
+/// 
 ///	Symbol found, NULL for failure.
-///
-/// DESCR: Push the name of a symbol on the stack, lookup top symbol.
-///
-/// **************************************************************************
+/// 
+/// \brief Push the name of a symbol on the stack, lookup top symbol.
+/// \details 
+/// 
 
 struct symtab_HSolveListElement *
 PidinStackPushStringAndLookup(struct PidinStack *ppist, char *pc)
@@ -2133,20 +2059,16 @@ PidinStackPushStringAndLookup(struct PidinStack *ppist, char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackPushSymbol()
-///
-/// ARGS.:
-///
-///	ppist.: pidin stack to push onto
-///	phsle.: symbol pidin to push
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Push symbol's pidin onto stack
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppist pidin stack to push onto
+/// \arg phsle symbol pidin to push
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Push symbol's pidin onto stack
+/// \details 
+/// 
 
 int PidinStackPushSymbol
 (struct PidinStack *ppist,struct symtab_HSolveListElement *phsle)
@@ -2190,9 +2112,9 @@ int PidinStackPushSymbol
 
 #ifdef USE_PIDINSTACK_WITH_SERIAL_INDEX_CACHE
 
-    //t this is really implementation dependent (currently it's wrong, so
-    //t commented out).
-    //t add to principal-to-parents
+    /// \todo this is really implementation dependent (currently it's wrong, so
+    /// \todo commented out).
+    /// \todo add to principal-to-parents
 
 /*     ppist->iPrincipalSerial += SymbolGetPrincipalSerialToParent(phsle); */
 
@@ -2215,23 +2137,19 @@ int PidinStackPushSymbol
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackString()
-///
-/// ARGS.:
-///
-///	ppist.: pidin stack to print
+/// 
+/// 
+/// \arg ppist pidin stack to print
+/// \arg pc string to print pidin stack to.
+/// \arg iSize size of available space in pc (ignored).
+/// 
+/// \return int : success of operation.
+/// 
 ///	pc....: string to print pidin stack to.
-///	iSize.: size of available space in pc (ignored).
-///
-/// RTN..: int : success of operation.
-///
-///	pc....: string to print pidin stack to.
-///
-/// DESCR: Convert pidinstack to a string.
-///
-/// **************************************************************************
+/// 
+/// \brief Convert pidinstack to a string.
+/// \details 
+/// 
 
 int PidinStackString(struct PidinStack *ppist, char *pc, int iSize)
 {
@@ -2379,30 +2297,26 @@ int PidinStackString(struct PidinStack *ppist, char *pc, int iSize)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackSubtract()
-///
-/// ARGS.:
-///
-///	ppistA.: pidin stack.
-///	ppistB.: pidin stack.
-///
-/// RTN..: struct PidinStack *
-///
+/// 
+/// 
+/// \arg ppistA pidin stack.
+/// \arg ppistB pidin stack.
+/// 
+/// \return struct PidinStack *
+/// 
 ///	result context, NULL for failure.
-///
-/// DESCR: Subtract two contexts.
-///
+/// 
+/// \brief Subtract two contexts.
+/// \details 
+/// 
 ///	The result is a context that when append compacted to the
 ///	second context, results in the first context.
-///
-/// NOTE.:
-///
+/// 
+/// \note 
+/// 
 ///	The used algorithm depends on valid serials.  You might want
 ///	to call SymbolRecalcAllSerials() first.
-///
-/// **************************************************************************
+/// 
 
 struct PidinStack *
 PidinStackSubtract(struct PidinStack *ppistA, struct PidinStack *ppistB)
@@ -2586,31 +2500,27 @@ PidinStackSubtract(struct PidinStack *ppistA, struct PidinStack *ppistB)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackToPidinQueue()
-///
-/// ARGS.:
-///
-///	ppist.: pidin stack to convert.
-///
-/// RTN..: struct symtab_IdentifierIndex *
-///
+/// 
+/// 
+/// \arg ppist pidin stack to convert.
+/// 
+/// \return struct symtab_IdentifierIndex *
+/// 
 ///	NULL terminated pidin queue, NULL for failure.
-///
-/// DESCR: Convert a context to a pidin queue.
-///
-/// NOTE.:
-///
+/// 
+/// \brief Convert a context to a pidin queue.
+/// \details 
+/// 
+/// \note 
+/// 
 ///	A pidinQueue is allocated as one block, and must be freed as
 ///	one block.
-///
-/// TODO.:
-///
+/// 
+/// \todo 
+/// 
 ///	No difference is made between an rooted empty context and a
 ///	conversion failure (should return a pidin with the root flag set).
-///
-/// **************************************************************************
+/// 
 
 struct symtab_IdentifierIndex *
 PidinStackToPidinQueue(struct PidinStack *ppist)
@@ -2621,7 +2531,7 @@ PidinStackToPidinQueue(struct PidinStack *ppist)
 
     //- allocate entries
 
-    //! note that a pidinQueue is allocated as one block
+    /// \note note that a pidinQueue is allocated as one block
 
     pidinResult
 	= (
@@ -2675,19 +2585,15 @@ PidinStackToPidinQueue(struct PidinStack *ppist)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: PidinStackTo_stdout()
-///
-/// ARGS.:
-///
-///	ppist.: pidin stack to print.
-///
-/// RTN..: void
-///
-/// DESCR: Print pidin stack to stdout.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg ppist pidin stack to print.
+/// 
+/// \return void
+/// 
+/// \brief Print pidin stack to stdout.
+/// \details 
+/// 
 
 void PidinStackTo_stdout(struct PidinStack *ppist)
 {

@@ -25,7 +25,7 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-//v root imported file
+/// root imported file
 
 struct ImportedFile *pifRootImport = NULL;
 
@@ -42,19 +42,15 @@ struct ImportedFile *pifRootImport = NULL;
 //o
 //////////////////////////////////////////////////////////////////////////////
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFileCalloc()
-///
-/// ARGS.:
-///
-///	pc.: name of imported file
-///
-/// RTN..: struct ImportedFile * : new imported file struct
-///
-/// DESCR: Allocated new imported file struct.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pc name of imported file
+/// 
+/// \return struct ImportedFile * : new imported file struct
+/// 
+/// \brief Allocated new imported file struct.
+/// \details 
+/// 
 
 struct ImportedFile *ImportedFileCalloc(char *pc)
 {
@@ -86,17 +82,13 @@ struct ImportedFile *ImportedFileCalloc(char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFileClearRootImport()
-///
-/// ARGS.:
-///
-/// RTN..: void
-///
-/// DESCR: Clear root import file
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return void
+/// 
+/// \brief Clear root import file
+/// \details 
+/// 
 
 void ImportedFileClearRootImport(void)
 {
@@ -119,20 +111,16 @@ void ImportedFileClearRootImport(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFileFindDependencyFile()
-///
-/// ARGS.:
-///
-///	pif.: imported file to look in
+/// 
+/// 
+/// \arg pif imported file to look in
 ///	pc,.: namespace of dependency file to look for
-///
-/// RTN..: struct DependencyFile * : dependency file struct, NULL for failure
-///
-/// DESCR: find a dependency file
-///
-/// **************************************************************************
+/// 
+/// \return struct DependencyFile * : dependency file struct, NULL for failure
+/// 
+/// \brief find a dependency file
+/// \details 
+/// 
 
 struct DependencyFile *
 ImportedFileFindDependencyFile(struct ImportedFile *pif,char *pc)
@@ -178,19 +166,15 @@ ImportedFileFindDependencyFile(struct ImportedFile *pif,char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFileGetBaseRoot()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_HSolveListElement *
-///
+/// 
+/// 
+/// \return struct symtab_HSolveListElement *
+/// 
 ///	the absolute root symbol, that exports all models
-///
-/// DESCR: Get the absolute root symbol.
-///
-/// **************************************************************************
+/// 
+/// \brief Get the absolute root symbol.
+/// \details 
+/// 
 
 struct symtab_RootSymbol *ImportedFileGetBaseRootSymbol(void)
 {
@@ -205,21 +189,17 @@ struct symtab_RootSymbol *ImportedFileGetBaseRootSymbol(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFileGetDefinedSymbols()
-///
-/// ARGS.:
-///
-///	pif...: imported file
-///
-/// RTN..: struct DefinedSymbols *
-///
+/// 
+/// 
+/// \arg pif imported file
+/// 
+/// \return struct DefinedSymbols *
+/// 
 ///	symbols defined in this file.
-///
-/// DESCR: Get symbols defined in this file.
-///
-/// **************************************************************************
+/// 
+/// \brief Get symbols defined in this file.
+/// \details 
+/// 
 
 struct DefinedSymbols *
 ImportedFileGetDefinedSymbols(struct ImportedFile *pif)
@@ -234,21 +214,17 @@ ImportedFileGetDefinedSymbols(struct ImportedFile *pif)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFileGetFilename()
-///
-/// ARGS.:
-///
-///	pif...: imported file
-///
-/// RTN..: char *
-///
+/// 
+/// 
+/// \arg pif imported file
+/// 
+/// \return char *
+/// 
 ///	original filename.
-///
-/// DESCR: Get original filename of this imported file.
-///
-/// **************************************************************************
+/// 
+/// \brief Get original filename of this imported file.
+/// \details 
+/// 
 
 char *
 ImportedFileGetFilename(struct ImportedFile *pif)
@@ -257,21 +233,17 @@ ImportedFileGetFilename(struct ImportedFile *pif)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFileGetBaseRoot()
-///
-/// ARGS.:
-///
-///	pif...: imported file
-///
-/// RTN..: struct symtab_HSolveListElement *
-///
+/// 
+/// 
+/// \arg pif imported file
+/// 
+/// \return struct symtab_HSolveListElement *
+/// 
 ///	root symbol, that exports all models for imported file
-///
-/// DESCR: Get the root symbol.
-///
-/// **************************************************************************
+/// 
+/// \brief Get the root symbol.
+/// \details 
+/// 
 
 struct symtab_RootSymbol *
 ImportedFileGetRootSymbol(struct ImportedFile *pif)
@@ -287,17 +259,13 @@ ImportedFileGetRootSymbol(struct ImportedFile *pif)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFileGetRootImport()
-///
-/// ARGS.:
-///
-/// RTN..: struct ImportedFile * : root imported file
-///
-/// DESCR: Get main imported file.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \return struct ImportedFile * : root imported file
+/// 
+/// \brief Get main imported file.
+/// \details 
+/// 
 
 struct ImportedFile *ImportedFileGetRootImport(void)
 {
@@ -307,23 +275,19 @@ struct ImportedFile *ImportedFileGetRootImport(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFileLookupHierarchical()
-///
-/// ARGS.:
-///
-///	pif...: imported file to search in
-///	ppist.: element to search
-///	iLevel: active level of ppist
-///
-/// RTN..: struct symtab_HSolveListElement * : matching symbol
-///
-/// DESCR: lookup a hierarchical symbol name in imported file
-///
+/// 
+/// 
+/// \arg pif imported file to search in
+/// \arg ppist element to search
+/// \arg iLevel: active level of ppist
+/// 
+/// \return struct symtab_HSolveListElement *  matching symbol
+/// 
+/// \brief lookup a hierarchical symbol name in imported file
+/// \details 
+/// 
 ///	If pif is NULL, pifRootImport is used doing an absolute lookup.
-///
-/// **************************************************************************
+/// 
 
 struct symtab_HSolveListElement *
 ImportedFileLookupHierarchical
@@ -411,28 +375,24 @@ ImportedFileLookupHierarchical
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFileLookupNameSpace()
-///
-/// ARGS.:
-///
-///	pif.....: imported file to search in
-///	ppist...: element to search
+/// 
+/// 
+/// \arg pif imported file to search in
+/// \arg ppist element to search
+/// \arg piLevel active level of ppist
+/// 
+/// \return struct ImportedFile * : imported file associated with namespace
+/// 
 ///	piLevel.: active level of ppist
-///
-/// RTN..: struct ImportedFile * : imported file associated with namespace
-///
-///	piLevel.: active level of ppist
-///
-/// DESCR: lookup a namespace in imported file
-///
+/// 
+/// \brief lookup a namespace in imported file
+/// \details 
+/// 
 ///	If ppist is namespaced
 ///	    resolve all namespaced pidins
 ///	else
 ///	    return pif
-///
-/// **************************************************************************
+/// 
 
 struct ImportedFile *
 ImportedFileLookupNameSpace
@@ -526,21 +486,17 @@ ImportedFileLookupNameSpace
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFilePrint()
-///
-/// ARGS.:
-///
-///	pif......: imported file to print symbols of
-///	iIndent..: number of indentation spaces
-///	pfile....: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Pretty print symbol table of imported file
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pif imported file to print symbols of
+/// \arg iIndent number of indentation spaces
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Pretty print symbol table of imported file
+/// \details 
+/// 
 
 int ImportedFilePrint(struct ImportedFile *pif,int iIndent,FILE *pfile)
 {
@@ -559,8 +515,8 @@ int ImportedFilePrint(struct ImportedFile *pif,int iIndent,FILE *pfile)
 
     //- pretty print info about defined symbols
 
-    //! only print private & public models, assuming that
-    //! all dependencies will be printed too.
+    /// \note only print private & public models, assuming that
+    /// \note all dependencies will be printed too.
 
     bResult = DefSymPrint
 		(pdefsym,
@@ -576,21 +532,17 @@ int ImportedFilePrint(struct ImportedFile *pif,int iIndent,FILE *pfile)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFilePrintNameSpaces()
-///
-/// ARGS.:
-///
-///	pif......: imported file to print symbols of
-///	iIndent..: number of indentation spaces
-///	pfile....: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Pretty print symbol table of imported file
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pif imported file to print symbols of
+/// \arg iIndent number of indentation spaces
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Pretty print symbol table of imported file
+/// \details 
+/// 
 
 int
 ImportedFilePrintNameSpaces
@@ -615,21 +567,17 @@ ImportedFilePrintNameSpaces
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFilePrintRootImport()
-///
-/// ARGS.:
-///
-///	pif...: new root import file
-///
-/// RTN..: void
-///
-/// DESCR: Set new root import file
-///
+/// 
+/// 
+/// \arg pif new root import file
+/// 
+/// \return void
+/// 
+/// \brief Set new root import file
+/// \details 
+/// 
 ///	I use this function as an entry point for the debugger.
-///
-/// **************************************************************************
+/// 
 
 void ImportedFilePrintRootImport(void)
 {
@@ -637,21 +585,17 @@ void ImportedFilePrintRootImport(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFilePrintProperties()
-///
-/// ARGS.:
-///
-///	pif......: imported file to print symbols of
-///	iIndent..: number of indentation spaces
-///	pfile....: file to print output to
-///
-/// RTN..: int : success of operation
-///
-/// DESCR: Pretty print symbol table of imported file
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pif imported file to print symbols of
+/// \arg iIndent number of indentation spaces
+/// \arg pfile file to print output to
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Pretty print symbol table of imported file
+/// \details 
+/// 
 
 int ImportedFilePrintProperties
 (struct ImportedFile *pif, int iIndent, FILE *pfile)
@@ -713,21 +657,17 @@ int ImportedFilePrintProperties
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFileSetDefinedSymbols()
-///
-/// ARGS.:
-///
-///	pif...: imported file.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pif imported file.
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR: Set set of defined symbols for an imported file.
-///
-/// **************************************************************************
+/// 
+/// \brief Set set of defined symbols for an imported file.
+/// \details 
+/// 
 
 int
 ImportedFileSetDefinedSymbols
@@ -739,21 +679,17 @@ ImportedFileSetDefinedSymbols
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFileSetFilename()
-///
-/// ARGS.:
-///
-///	pif...: imported file.
-///
-/// RTN..: int
-///
+/// 
+/// 
+/// \arg pif imported file.
+/// 
+/// \return int
+/// 
 ///	success of operation.
-///
-/// DESCR: Set filename for an imported file.
-///
-/// **************************************************************************
+/// 
+/// \brief Set filename for an imported file.
+/// \details 
+/// 
 
 int ImportedFileSetFilename(struct ImportedFile *pif, char *pc)
 {
@@ -763,19 +699,15 @@ int ImportedFileSetFilename(struct ImportedFile *pif, char *pc)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: ImportedFileSetRootImport()
-///
-/// ARGS.:
-///
-///	pif...: new root import file
-///
-/// RTN..: void
-///
-/// DESCR: Set new root import file
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pif new root import file
+/// 
+/// \return void
+/// 
+/// \brief Set new root import file
+/// \details 
+/// 
 
 void ImportedFileSetRootImport(struct ImportedFile *pif)
 {

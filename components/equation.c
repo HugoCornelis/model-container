@@ -26,19 +26,15 @@
 #include "neurospaces/idin.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: EquationCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_Equation * 
-///
+/// 
+/// 
+/// \return struct symtab_Equation * 
+/// 
 ///	Newly allocated equation, NULL for failure
-///
-/// DESCR: Allocate a new equation symbol table element
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new equation symbol table element
+/// \details 
+/// 
 
 struct symtab_Equation * EquationCalloc(void)
 {
@@ -70,20 +66,16 @@ struct symtab_Equation * EquationCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: EquationCreateAlias()
-///
-/// ARGS.:
-///
-///	peq..: symbol to alias
-///	pidin.: name of new symbol
-///
-/// RTN..: struct symtab_HSolveListElement * : alias for original symbol
-///
-/// DESCR: Create alias to given symbol
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg peq symbol to alias
+/// \arg pidin name of new symbol
+/// 
+/// \return struct symtab_HSolveListElement * : alias for original symbol
+/// 
+/// \brief Create alias to given symbol
+/// \details 
+/// 
 
 struct symtab_HSolveListElement * 
 EquationCreateAlias
@@ -109,19 +101,15 @@ EquationCreateAlias
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: EquationGetType()
-///
-/// ARGS.:
-///
-///	peq.: equation to init
-///
-/// RTN..: int : type of equation (incoming, outgoing).
-///
-/// DESCR: Get type of equation.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg peq equation to init
+/// 
+/// \return int : type of equation (incoming, outgoing).
+/// 
+/// \brief Get type of equation.
+/// \details 
+/// 
 
 int EquationGetType(struct symtab_Equation *peq)
 {
@@ -129,19 +117,15 @@ int EquationGetType(struct symtab_Equation *peq)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: EquationInit()
-///
-/// ARGS.:
-///
-///	peq.: equation to init
-///
-/// RTN..: void
-///
-/// DESCR: Init equation
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg peq equation to init
+/// 
+/// \return void
+/// 
+/// \brief Init equation
+/// \details 
+/// 
 
 void EquationInit(struct symtab_Equation * peq)
 {
@@ -155,20 +139,16 @@ void EquationInit(struct symtab_Equation * peq)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: EquationSetType()
-///
-/// ARGS.:
-///
-///	peq...: equation to set type for.
-///	iType.: type of equation.
-///
-/// RTN..: int : success of operation.
-///
-/// DESCR: Set type of equation.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg peq equation to set type for.
+/// \arg iType type of equation.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Set type of equation.
+/// \details 
+/// 
 
 int EquationSetType(struct symtab_Equation *peq, int iType)
 {

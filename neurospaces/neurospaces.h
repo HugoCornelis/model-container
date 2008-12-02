@@ -52,27 +52,27 @@ struct ProjectionQuery;
 
 struct NeurospacesOptions
 {
-    //m option flags
+    /// option flags
 
     int iFlags;
 
-    //m verbosity level
+    /// verbosity level
 
     int iVerbosity;
 
-    //m debug file
+    /// debug file
 
     FILE *pfileDebug;
 
-    //m timing report level
+    /// timing report level
 
     int iTiming;
 
-    //m start of timings
+    /// start of timings
 
     struct timeval tvStart;
 
-    //m model library
+    /// model library
 
     char *pcModelLibrary;
 };
@@ -98,21 +98,21 @@ struct NeurospacesOptions
 
 struct NeurospacesConfig
 {
-    //m original command line
+    /// original command line
 
     int iArgc;
 
     char **ppcArgv;
 
-    //m options on command line
+    /// options on command line
 
     struct NeurospacesOptions nso;
 
-    //m \0 separated list of files to parse
+    /// \0 separated list of files to parse
 
     char pcFiles[10000];
 
-    //m \0 separated list of query machine commands to execute
+    /// \0 separated list of query machine commands to execute
 
     char pcQueries[10000];
 };
@@ -120,35 +120,35 @@ struct NeurospacesConfig
 
 struct Neurospaces
 {
-    //m symbol table
+    /// symbol table
 
     struct Symbols *psym;
 
-    //m current projection query
+    /// current projection query
 
     struct ProjectionQuery *ppq;
 
-    //m solver mappers
+    /// solver mappers
 
     struct SolverMapper *psm;
 
-    //m parsed command line
+    /// parsed command line
 
     struct NeurospacesConfig *pnsc;
 
-    //m root parser context
+    /// root parser context
 
     struct ParserContext *pacRootContext;
 
-    //m cumulative number of errors so far
+    /// cumulative number of errors so far
 
     int iErrorCount;
 
-    //m cumulative number of files parsed
+    /// cumulative number of files parsed
 
     int iFileParseCount;
 
-    //m cache registry
+    /// cache registry
 
     struct CacheRegistry *pcr;
 };
@@ -189,7 +189,7 @@ NeurospacesLogFileTree
 
 #ifndef SWIG
 
-//t I guess the va_list stuff gives problems on 64bit architectures.
+/// \todo I guess the va_list stuff gives problems on 64bit architectures.
 
 int
 NeurospacesMessage
@@ -199,29 +199,29 @@ NeurospacesMessage
  va_list vaList);
 #endif
 
-//d message priority levels
+/// \def message priority levels
 
-//d level for important messages
+/// \def level for important messages
 
 #define LEVEL_GLOBALMSG_IMPORTANT	(5)
 
-//d report import of files
+/// \def report import of files
 
 #define LEVEL_GLOBALMSG_FILEIMPORT	(-10)
 
-//d report import of algorithms
+/// \def report import of algorithms
 
 #define LEVEL_GLOBALMSG_ALGORITHMIMPORT	(-20)
 
-//d report actions taken on 'END {PRIVATE,PUBLIC}_MODELS' etc.
+/// \def report actions taken on 'END {PRIVATE,PUBLIC}_MODELS' etc.
 
 #define LEVEL_GLOBALMSG_SYMBOLREPORT	(-30)
 
-//d report add of symbols
+/// \def report add of symbols
 
 #define LEVEL_GLOBALMSG_SYMBOLADD	(-40)
 
-//d report creation of symbols
+/// \def report creation of symbols
 
 #define LEVEL_GLOBALMSG_SYMBOLCREATE	(-50)
 

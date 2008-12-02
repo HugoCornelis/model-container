@@ -25,19 +25,15 @@
 #include "neurospaces/idin.h"
 
 
-/// **************************************************************************
-///
-/// SHORT: GroupedParametersCalloc()
-///
-/// ARGS.:
-///
-/// RTN..: struct symtab_GroupedParameters * 
-///
+/// 
+/// 
+/// \return struct symtab_GroupedParameters * 
+/// 
 ///	Newly allocated parameter group, NULL for failure
-///
-/// DESCR: Allocate a new parameter group symbol table element.
-///
-/// **************************************************************************
+/// 
+/// \brief Allocate a new parameter group symbol table element.
+/// \details 
+/// 
 
 struct symtab_GroupedParameters * GroupedParametersCalloc(void)
 {
@@ -63,19 +59,15 @@ struct symtab_GroupedParameters * GroupedParametersCalloc(void)
 }
 
 
-/// **************************************************************************
-///
-/// SHORT: GroupedParametersInit()
-///
-/// ARGS.:
-///
-///	pgrpp.: parameter group to init.
-///
-/// RTN..: void
-///
-/// DESCR: init parameter group.
-///
-/// **************************************************************************
+/// 
+/// 
+/// \arg pgrpp parameter group to init.
+/// 
+/// \return void
+/// 
+/// \brief init parameter group.
+/// \details 
+/// 
 
 void GroupedParametersInit(struct symtab_GroupedParameters *pgrpp)
 {
