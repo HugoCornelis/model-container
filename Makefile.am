@@ -240,6 +240,7 @@ nobase_include_HEADERS = \
 	neurospaces/components/vectorconnectionsymbol.h \
 	neurospaces/components/vectorcontour.h \
 	neurospaces/components/vectorsegment.h \
+	neurospaces/config.h \
 	neurospaces/connectioncache.h \
 	neurospaces/coordinatecache.h \
 	neurospaces/defsym.h \

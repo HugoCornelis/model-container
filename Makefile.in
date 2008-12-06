@@ -47,9 +47,9 @@ DIST_COMMON = $(am__configure_deps) $(dist_bin_SCRIPTS) \
 	$(dist_lisp_DATA) $(nobase_dist_neurospacesmodel_DATA) \
 	$(nobase_dist_neurospacestest_DATA) $(nobase_include_HEADERS) \
 	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
-	$(srcdir)/config.h.in $(top_srcdir)/configure COPYING INSTALL \
-	acconfig.h analyzer.c depcomp elisp-comp install-sh missing \
-	parser.c
+	$(top_srcdir)/configure $(top_srcdir)/neurospaces/config.h.in \
+	COPYING INSTALL acconfig.h analyzer.c depcomp elisp-comp \
+	install-sh missing parser.c
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.in
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -57,7 +57,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno configure.status.lineno
 mkinstalldirs = $(install_sh) -d
-CONFIG_HEADER = config.h
+CONFIG_HEADER = $(top_builddir)/neurospaces/config.h
 CONFIG_CLEAN_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -115,7 +115,7 @@ am_neurospacesparse_OBJECTS = main.$(OBJEXT)
 neurospacesparse_OBJECTS = $(am_neurospacesparse_OBJECTS)
 dist_binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
 SCRIPTS = $(dist_bin_SCRIPTS)
-DEFAULT_INCLUDES = -I. -I$(srcdir) -I.
+DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/neurospaces
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
@@ -421,6 +421,7 @@ nobase_include_HEADERS = \
 	neurospaces/components/vectorconnectionsymbol.h \
 	neurospaces/components/vectorcontour.h \
 	neurospaces/components/vectorsegment.h \
+	neurospaces/config.h \
 	neurospaces/connectioncache.h \
 	neurospaces/coordinatecache.h \
 	neurospaces/defsym.h \
@@ -486,7 +487,7 @@ CLEANFILES = \
 TESTS = $(srcdir)/tests/neurospaces_harness
 instrumentordir = $(prefix)/neurospaces/instrumentor
 nobase_instrumentor_DATA = $(shell find $(srcdir)/hierarchy -type f)
-all: $(BUILT_SOURCES) config.h
+all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
 .SUFFIXES:
@@ -525,22 +526,22 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
 
-config.h: stamp-h1
+neurospaces/config.h: neurospaces/stamp-h1
 	@if test ! -f $@; then \
-	  rm -f stamp-h1; \
-	  $(MAKE) stamp-h1; \
+	  rm -f neurospaces/stamp-h1; \
+	  $(MAKE) neurospaces/stamp-h1; \
 	else :; fi
 
-stamp-h1: $(srcdir)/config.h.in $(top_builddir)/config.status
-	@rm -f stamp-h1
-	cd $(top_builddir) && $(SHELL) ./config.status config.h
-$(srcdir)/config.h.in:  $(am__configure_deps) $(top_srcdir)/acconfig.h
+neurospaces/stamp-h1: $(top_srcdir)/neurospaces/config.h.in $(top_builddir)/config.status
+	@rm -f neurospaces/stamp-h1
+	cd $(top_builddir) && $(SHELL) ./config.status neurospaces/config.h
+$(top_srcdir)/neurospaces/config.h.in:  $(am__configure_deps) $(top_srcdir)/acconfig.h
 	cd $(top_srcdir) && $(AUTOHEADER)
-	rm -f stamp-h1
+	rm -f neurospaces/stamp-h1
 	touch $@
 
 distclean-hdr:
-	-rm -f config.h stamp-h1
+	-rm -f neurospaces/config.h neurospaces/stamp-h1
 install-pkglibLIBRARIES: $(pkglib_LIBRARIES)
 	@$(NORMAL_INSTALL)
 	test -z "$(pkglibdir)" || $(mkdir_p) "$(DESTDIR)$(pkglibdir)"
@@ -1366,7 +1367,7 @@ ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	mkid -fID $$unique
 tags: TAGS
 
-TAGS: tags-recursive $(HEADERS) $(SOURCES) config.h.in $(TAGS_DEPENDENCIES) \
+TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
 		$(TAGS_FILES) $(LISP)
 	tags=; \
 	here=`pwd`; \
@@ -1383,7 +1384,7 @@ TAGS: tags-recursive $(HEADERS) $(SOURCES) config.h.in $(TAGS_DEPENDENCIES) \
 	      tags="$$tags $$include_option=$$here/$$subdir/TAGS"; \
 	  fi; \
 	done; \
-	list='$(SOURCES) $(HEADERS) config.h.in $(LISP) $(TAGS_FILES)'; \
+	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
 	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
 	  done | \
@@ -1395,11 +1396,11 @@ TAGS: tags-recursive $(HEADERS) $(SOURCES) config.h.in $(TAGS_DEPENDENCIES) \
 	    $$tags $$unique; \
 	fi
 ctags: CTAGS
-CTAGS: ctags-recursive $(HEADERS) $(SOURCES) config.h.in $(TAGS_DEPENDENCIES) \
+CTAGS: ctags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
 		$(TAGS_FILES) $(LISP)
 	tags=; \
 	here=`pwd`; \
-	list='$(SOURCES) $(HEADERS) config.h.in $(LISP) $(TAGS_FILES)'; \
+	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
 	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
 	  done | \
@@ -1641,7 +1642,7 @@ check-am: all-am
 check: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) check-recursive
 all-am: Makefile $(LIBRARIES) $(PROGRAMS) $(SCRIPTS) $(DATA) \
-		$(HEADERS) config.h
+		$(HEADERS)
 installdirs: installdirs-recursive
 installdirs-am:
 	for dir in "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(bindir)" "$(DESTDIR)$(bindir)" "$(DESTDIR)$(lispdir)" "$(DESTDIR)$(neurospacesmodeldir)" "$(DESTDIR)$(neurospacestestdir)" "$(DESTDIR)$(instrumentordir)" "$(DESTDIR)$(includedir)"; do \

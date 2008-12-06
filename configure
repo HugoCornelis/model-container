@@ -1331,7 +1331,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-          ac_config_headers="$ac_config_headers config.h"
+          ac_config_headers="$ac_config_headers neurospaces/config.h"
 
 
 
@@ -7438,7 +7438,7 @@ do
   # Handling of arguments.
   "Makefile" ) CONFIG_FILES="$CONFIG_FILES Makefile" ;;
   "depfiles" ) CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
-  "config.h" ) CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
+  "neurospaces/config.h" ) CONFIG_HEADERS="$CONFIG_HEADERS neurospaces/config.h" ;;
   *) { { echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
 echo "$as_me: error: invalid argument: $ac_config_target" >&2;}
    { (exit 1); exit 1; }; };;
