@@ -37,3 +37,6 @@ config.status$
 semantic.cache
 stamp-h1$
 tar.gz$
+docs/html
+docs/doxygen.tag$
+config.status.lineno

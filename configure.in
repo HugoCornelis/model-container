@@ -175,6 +175,8 @@ WARNED=yes
 dnl Check for some needed programs.
 AC_CHECK_PROGS(PERL, perl5 perl)
 
+AC_PATH_PROGS(DOXYGEN,doxygen,[NULL])
+
 
 
 # search lisp dir for installing the emacs major mode

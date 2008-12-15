@@ -139,6 +139,10 @@ dist-keywords:
 #
 # The variable EXTRA_DIST could also be used here.
 
+EXTRA_DIST = \
+	doxygen.cfg 
+
+
 am__tar = ${AMTAR} chf - --format=posix "$$tardir"
 
 dist-hook: dist-keywords
@@ -300,7 +304,8 @@ CLEANFILES = \
 	parser.output \
 	parser.rules.numbered \
 	parser.y \
-	xs_initialize.c
+	xs_initialize.c \
+	docs/doxygen.tag
 
 #! things below are obsoleted, but left here as a memo of how to do this kind of thing.
 
@@ -312,6 +317,7 @@ clean-local:
 	find $(srcdir) -type d -exec chmod -R u+w \{\} \;
 	$(RM) -fr `find $(srcdir) -name _Inline`
 	$(RM) -fr $(srcdir)/hierarchy/output
+	$(RM) -rf $(top_srcdir)/docs/html
 
 TESTS = $(srcdir)/tests/neurospaces_harness
 
@@ -437,3 +443,5 @@ libneurospacesread.so: libneurospacesread.a
 
 #nobase_perl_DATA = @PERL_EMBED_DATA@
 
+doxygen: doxygen.cfg
+	doxygen doxygen.cfg
