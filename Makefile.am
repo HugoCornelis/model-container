@@ -25,7 +25,7 @@ dist_bin_SCRIPTS = bin/model-container
 LEX_OUTPUT_ROOT = lex.parser
 LFLAGS=-i -l -Pparser
 YFLAGS=-dv -p parser
-AM_CFLAGS=-g3 -fPIC -Wmissing-prototypes -Wmissing-declarations -include config.h -DPRE_PROTO_TRAVERSAL @PERL_CCOPTS@ -I$(top_builddir)
+AM_CFLAGS=-g3 -fPIC -Wmissing-prototypes -Wmissing-declarations -include neurospaces/config.h -DPRE_PROTO_TRAVERSAL @PERL_CCOPTS@ -I$(top_builddir)
 CFLAGS = -O0
 
 pkglib_LIBRARIES = libneurospacesread.a
@@ -316,13 +316,13 @@ clean-local:
 
 TESTS = $(srcdir)/tests/neurospaces_harness
 
-hierarchy/output/symbols/.sentinel: $(srcdir)/hierarchy/symbols $(srcdir)/hierarchy/instrumentor config.h
+hierarchy/output/symbols/.sentinel: $(srcdir)/hierarchy/symbols $(srcdir)/hierarchy/instrumentor neurospaces/config.h
 	$(srcdir)/hierarchy/instrumentor --null-checks $(srcdir)/hierarchy/symbols --output hierarchy/output
 
-hierarchy/output/algorithm_instances/.sentinel: $(srcdir)/hierarchy/algorithminstances $(srcdir)/hierarchy/instrumentor config.h
+hierarchy/output/algorithm_instances/.sentinel: $(srcdir)/hierarchy/algorithminstances $(srcdir)/hierarchy/instrumentor neurospaces/config.h
 	$(srcdir)/hierarchy/instrumentor --null-checks $(srcdir)/hierarchy/algorithminstances --output hierarchy/output
 
-hierarchy/output/algorithmclasses/.sentinel: $(srcdir)/hierarchy/algorithmclasses $(srcdir)/hierarchy/instrumentor config.h
+hierarchy/output/algorithmclasses/.sentinel: $(srcdir)/hierarchy/algorithmclasses $(srcdir)/hierarchy/instrumentor neurospaces/config.h
 	$(srcdir)/hierarchy/instrumentor --null-checks $(srcdir)/hierarchy/algorithmclasses --output hierarchy/output
 
 instrumentordir = $(prefix)/neurospaces/instrumentor
