@@ -79,7 +79,7 @@ report:
 				command_tests => [
 						  {
 						   description => "Can we add query machine commands for simple processing of a model ?",
-						   read => (`cat $::config->{core_directory}/config.h` =~ /define DELETE_OPERATION 1/
+						   read => (`cat $::config->{core_directory}/neurospaces/config.h` =~ /define DELETE_OPERATION 1/
 							    ? "query: 'echo start'
  start
 query: 'expand /**'
@@ -210,7 +210,7 @@ query: 'echo end'
 						  },
 						 ],
 				description => "deleting components from the perl interface",
-				disabled => (`cat $::config->{core_directory}/config.h` =~ /define DELETE_OPERATION 1/ ? '' : 'neurospaces was not configured to include the delete operation'),
+				disabled => (`cat $::config->{core_directory}/neurospaces/config.h` =~ /define DELETE_OPERATION 1/ ? '' : 'neurospaces was not configured to include the delete operation'),
 			       },
 			       {
 				arguments => [

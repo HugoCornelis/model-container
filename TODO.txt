@@ -1,7 +1,5 @@
 -*- outline -*-
 
-* move the config.h header to the neurospaces/*.h directory
-
 * implement tests for parameter that cannot be resolved
 Bugs in the source can easily be found by browsing on
 SegmenterIsSpherical().

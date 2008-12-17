@@ -24,7 +24,7 @@ dnl AC_REVISION($Id: configure.in 1.40 Wed, 10 Oct 2007 16:57:00 -0500 hugo $)
 AC_INIT
 AC_CONFIG_SRCDIR([neurospaces.c])
 
-AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_HEADERS([neurospaces/config.h])
 
 dnl Determine whether symbols in prototypes have serial ID's lower or higher than in instances / references. 1 means lower (prototype symbols come first in regular traversals)
 
