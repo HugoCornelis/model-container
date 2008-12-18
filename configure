@@ -1774,13 +1774,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-<<<<<<< variant A
-ac_config_headers="$ac_config_headers config.h"
->>>>>>> variant B
-          ac_config_headers="$ac_config_headers neurospaces/config.h"
-####### Ancestor
-          ac_config_headers="$ac_config_headers config.h"
-======= end
+ac_config_headers="$ac_config_headers neurospaces/config.h"
 
 
 
@@ -8067,25 +8061,11 @@ cat >>$CONFIG_STATUS <<\_ACEOF
 # Handling of arguments.
 for ac_config_target in $ac_config_targets
 do
-<<<<<<< variant A
   case $ac_config_target in
-    "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
+    "neurospaces/config.h") CONFIG_HEADERS="$CONFIG_HEADERS neurospaces/config.h" ;;
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
 
->>>>>>> variant B
-  case "$ac_config_target" in
-  # Handling of arguments.
-  "Makefile" ) CONFIG_FILES="$CONFIG_FILES Makefile" ;;
-  "depfiles" ) CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
-  "neurospaces/config.h" ) CONFIG_HEADERS="$CONFIG_HEADERS neurospaces/config.h" ;;
-####### Ancestor
-  case "$ac_config_target" in
-  # Handling of arguments.
-  "Makefile" ) CONFIG_FILES="$CONFIG_FILES Makefile" ;;
-  "depfiles" ) CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
-  "config.h" ) CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
-======= end
   *) { { echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
 echo "$as_me: error: invalid argument: $ac_config_target" >&2;}
    { (exit 1); exit 1; }; };;

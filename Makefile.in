@@ -238,13 +238,6 @@ am__fastdepCXX_TRUE = @am__fastdepCXX_TRUE@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
 am__quote = @am__quote@
-#	release-expand neurospacesread des 10 0 des-10 hugo.cornelis@gmail.com --verbose
-
-# The file lexsupport.c is compiled as part of analyzer.l, but not as
-# a plain source file.  It is needed in the distribution.
-# Also the tests are copied overhere.
-#
-# The variable EXTRA_DIST could also be used here.
 am__tar = ${AMTAR} chf - --format=posix "$$tardir"
 am__untar = @am__untar@
 bindir = @bindir@
@@ -374,6 +367,16 @@ dist_lisp_DATA = \
 RELEASE_MAJOR = `release-extract --major`
 RELEASE_MINOR = `release-extract --minor`
 RELEASE_MICRO = `release-extract --micro`
+#	release-expand neurospacesread des 10 0 des-10 hugo.cornelis@gmail.com --verbose
+
+# The file lexsupport.c is compiled as part of analyzer.l, but not as
+# a plain source file.  It is needed in the distribution.
+# Also the tests are copied overhere.
+#
+# The variable EXTRA_DIST could also be used here.
+EXTRA_DIST = \
+	doxygen.cfg 
+
 check_SCRIPTS = $(srcdir)/glue/swig/perl/tests/neurospaces_test.pm $(srcdir)/glue/swig/perl/tests/neurospaces_test_traversal.pm $(srcdir)/glue/swig/perl/tests/neurospaces_test_algorithm.pm $(srcdir)/glue/swig/perl/tests/neurospaces_test_neuromorpho.pm $(srcdir)/tests/neurospaces_harness
 
 #EXTRA_DIST = `find hierarchy -type f -regex '.*[^~]$'` `find library -type f -regex '.*[^~]$'`
@@ -1826,6 +1829,8 @@ clean-local:
 	$(RM) -fr `find $(srcdir) -name _Inline`
 	$(RM) -fr $(srcdir)/hierarchy/output
 	$(RM) -rf $(top_srcdir)/docs/html
+	$(RM) -rf $(top_srcdir)/docs/laxtex
+	$(RM) -rf $(top_srcdir)/docs/rtf
 
 hierarchy/output/symbols/.sentinel: $(srcdir)/hierarchy/symbols $(srcdir)/hierarchy/instrumentor neurospaces/config.h
 	$(srcdir)/hierarchy/instrumentor --null-checks $(srcdir)/hierarchy/symbols --output hierarchy/output
@@ -1946,8 +1951,8 @@ libneurospacesread.so: libneurospacesread.a
 
 #nobase_perl_DATA = @PERL_EMBED_DATA@
 
-doxygen: doxygen.cfg
-	doxygen doxygen.cfg
+doxygen: neurospaces.dxgen
+	$(DOXYGEN) neurospaces.dxgen
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

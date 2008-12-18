@@ -17,6 +17,37 @@
 //'
 //////////////////////////////////////////////////////////////////////////////
 
+/*!
+ * \file pidinstack.c
+ * \author Hugo Cornelis
+ *
+ *
+ * pidin stacks are almost exactly what the word says : a stack of 
+ * (references to) pidins.  The interface mainly is concerned about
+ * stack operations, although sometimes more is needed (like getting 
+ * the number of elements in the stack).  It's primarily purpose is
+ * context association for symbols / parameters / functions.
+ * 
+ * If a context is valid (i.e. the symbol it referes to is present in 
+ * Neurospaces) a pidinstack will try to associated a serial mapping 
+ * with it.  The maintenance of the serial mapping comes mostly from
+ * PidinStackLookupTopSymbol() since pidinstacks are assumed to be
+ * give meaningfull serial mappings only for symbols present in 
+ * Neurospaces.  If you push 'simple pidins' on a pidin stack, you currently 
+ * force the cached serial mapping to be (partially) out of sync.  If you ask 
+ * for serials afterwards, they first have to be recalculated.  It is 
+ * probably good to remind that a principal serial index completely defines
+ *  the context.
+ *
+ * It is possible to push 'points to parent' pidin on a pidin stack.
+ * If you want to get rid of these, use compacting routines.
+ *
+ * There is some ambiguity about what to do when multiple rooted pidins
+ * are pushed.  At the moment this clears the pidin stack for some 
+ * compacting routines only.
+ *
+*/
+
 
 //////////////////////////////////////////////////////////////////////////////
 //o

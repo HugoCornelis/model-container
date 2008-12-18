@@ -319,6 +319,9 @@ clean-local:
 	$(RM) -fr `find $(srcdir) -name _Inline`
 	$(RM) -fr $(srcdir)/hierarchy/output
 	$(RM) -rf $(top_srcdir)/docs/html
+	$(RM) -rf $(top_srcdir)/docs/laxtex
+	$(RM) -rf $(top_srcdir)/docs/rtf
+
 
 TESTS = $(srcdir)/tests/neurospaces_harness
 
@@ -444,5 +447,5 @@ libneurospacesread.so: libneurospacesread.a
 
 #nobase_perl_DATA = @PERL_EMBED_DATA@
 
-doxygen: doxygen.cfg
-	doxygen doxygen.cfg
+doxygen: neurospaces.dxgen
+	$(DOXYGEN) neurospaces.dxgen
