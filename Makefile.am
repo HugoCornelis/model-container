@@ -445,4 +445,7 @@ libneurospacesread.so: libneurospacesread.a
 #nobase_perl_DATA = @PERL_EMBED_DATA@
 
 doxygen: doxygen.cfg
-	doxygen doxygen.cfg
+	$(DOXYGEN) doxygen.cfg
+
+docs: doxygen html-upload-prepare
+
