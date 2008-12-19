@@ -749,9 +749,9 @@ sub register_engine
 	{
 	    # register the engine name for the this model
 
-	    my $solver_info = SwiggableNeurospaces::SolverInfoRegistrationAddFromContext(undef, $context, $engine_name);
+	    my $solverinfo = SwiggableNeurospaces::SolverInfoRegistrationAddFromContext(undef, $context, $engine_name);
 
-	    if (defined $solver_info)
+	    if (defined $solverinfo)
 	    {
 		# set result
 

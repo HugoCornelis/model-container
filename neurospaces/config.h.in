@@ -1,4 +1,4 @@
-/* config.h.in.  Generated from configure.in by autoheader.  */
+/* neurospaces/config.h.in.  Generated from configure.in by autoheader.  */
 //
 // Neurospaces: a library which implements a global typed symbol table to
 // be used in neurobiological model maintenance and simulation.

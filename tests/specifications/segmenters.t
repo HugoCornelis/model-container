@@ -2093,7 +2093,7 @@ tips:
 						  },
 						 ],
 				description => "examination of the purkinje cell morphology without spines, after modifying the dendritic tree",
-				disabled => (`cat $::config->{core_directory}/config.h` =~ /define DELETE_OPERATION 1/ ? '' : 'neurospaces was not configured to include the delete operation'),
+				disabled => (`cat $::config->{core_directory}/neurospaces/config.h` =~ /define DELETE_OPERATION 1/ ? '' : 'neurospaces was not configured to include the delete operation'),
 				side_effects => 'segment linearization',
 			       },
 			       {
@@ -4050,7 +4050,7 @@ tips:
 						  },
 						 ],
 				description => "examination of the purkinje cell morphology without spines, after modifying the dendritic tree",
-				disabled => (`cat $::config->{core_directory}/config.h` =~ /define DELETE_OPERATION 1/ ? '' : 'neurospaces was not configured to include the delete operation'),
+				disabled => (`cat $::config->{core_directory}/neurospaces/config.h` =~ /define DELETE_OPERATION 1/ ? '' : 'neurospaces was not configured to include the delete operation'),
 				side_effects => 'segment linearization',
 			       },
 			       {
