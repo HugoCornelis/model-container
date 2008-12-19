@@ -311,7 +311,7 @@ ProjectionQueryBuildOrderedConnectionCaches(struct ProjectionQuery *ppq)
 /// \brief Construct a projection query for given projections
 /// \details 
 /// 
-/// SEE..: ProjectionQueryInit()
+/// \see ProjectionQueryInit()
 /// 
 
 struct ProjectionQuery *
@@ -1114,36 +1114,17 @@ ProjectionQueryLookupPostSerialID
 }
 
 
-/// 
-/// 
-/// \arg ppq projection query
-///	iPre...: rooted pre-synaptic serial
-///	iPost..: rooted post-synaptic serial
-/// 
-/// \return int : Serial ID for connection, -1 for failure
-/// 
-/// \brief Get synapse number on synaptic target.
-/// \details 
-/// 
-///	Get serial ID of specified connection, relative to the spike 
-///	receiver for the connection symbol.  This is the same as the
-///	synapse number for that spike receiver.  The connection, 
-///	given as a pre-,post-synaptic pair,
-///	is assumed to be part of the current active projection in the
-///	given projection query, meaning the post serial id of the 
-///	connection is assumed to be relative to the TARGET of that 
-///	projection.
-/// 
-
 struct ProjectionQueryPostSerialIDCounterData
 {
     /// serial id of connection on spike receiver
 
     int iSerialID;
 
-    /// connection {pre,post}synaptic pair
+    /// connection pre synaptic pair
 
     int iPre;
+
+    /// connection post synaptic pair
 
     int iPost;
 
@@ -1214,9 +1195,29 @@ ProjectionQueryPostSerialIDCounter
 }
 
 
+/// 
+/// \arg ppq projection query
+/// \arg iPre rooted pre-synaptic serial
+/// \arg iPost rooted post-synaptic serial
+/// 
+/// \return int : Serial ID for connection, -1 for failure
+/// 
+/// \brief Get synapse number on synaptic target.
+///
+/// \details 
+///
+///	Get serial ID of specified connection, relative to the spike
+///	receiver for the connection symbol.  This is the same as the
+///	synapse number for that spike receiver.  The connection, given
+///	as a pre-,post-synaptic pair, is assumed to be part of the
+///	current active projection in the given projection query,
+///	meaning the post serial id of the connection is assumed to be
+///	relative to the TARGET of that projection.
+/// 
+
 int
 ProjectionQueryLookupPostSerialIDForAbsoluteSerials
-(struct ProjectionQuery *ppq,int iPre,int iPost)
+(struct ProjectionQuery *ppq, int iPre, int iPost)
 {
     //- set default result : failure
 

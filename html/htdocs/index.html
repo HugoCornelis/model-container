@@ -18,14 +18,18 @@
       <font size="1">The logos are courtesy of Amanda Pasquali (thanks,  Amanda !)</font>
     </p>
 
-    <center>
-      <p>
+      <center>
+	<p>
 
 	Welcome to the home of the Neurospaces project.
 
-      <p>
+	<p>
 <!--       $Format: "This web page reflects the status as for project version ${label} of the Neurospaces project."$ -->
 This web page reflects the status as for project version python-2 of the Neurospaces project.
+
+	<p>
+	  <font size="1"><a href="#section-download">Download the
+	  software</a></font>
 
     </center>
 
@@ -122,8 +126,8 @@ This web page reflects the status as for project version python-2 of the Neurosp
 	<li>
 
 	  <a href="#section-neurospaces">Neurospaces Model
-	  Container</a>: provides a solver independent internal
-	  storage format for models.
+	  Container</a>: provides a solver independent internal and
+	  external storage format for models.
 
 	<li>
 
@@ -135,7 +139,8 @@ This web page reflects the status as for project version python-2 of the Neurosp
 	<li>
 
 	  <a href="#section-ssp">SSP</a>: a flexible scheduler written
-	  in perl, to run simulations with Neurospaces and Heccer.
+	  in perl, to run simulations with the Neurospaces model
+	  container and Heccer.
 
 	<li>
 
@@ -147,7 +152,7 @@ This web page reflects the status as for project version python-2 of the Neurosp
 	  The <a href="#section-genesis-sli">Genesis Script Language
 	  Interface</a>: a scripting component that reads <a
 	  href="http://www.genesis-sim.org">Genesis</a> scripts and
-	  feeds them to Neurospaces.
+	  feeds them to the Neurospaces model container.
 
 	<li>
 
@@ -216,17 +221,17 @@ This web page reflects the status as for project version python-2 of the Neurosp
 
     </p><h2><a name="section-download">Download:</a></h2>
 
-      The source code of the latest version of available packages is
-      accessible in a source code repository.  More information can be
-      found <a
-      href="http://code.google.com/p/neurospaces/wiki/NeurospacesRepository">here</a>.
-
-    <p>
-
       The model container, Heccer, SSP, the Studio, and the Installer
       can be downloaded
       <a href="http://sourceforge.net/project/showfiles.php?group_id=162899">
         here</a>.  Other packages will be available for download soon.
+
+      <p>
+
+	The source code of the latest version of available packages is
+	accessible in a source code repository.  More information can
+	be found <a
+	href="http://code.google.com/p/neurospaces/wiki/NeurospacesRepository">here</a>.
 
       <p>
 
@@ -315,8 +320,8 @@ This web page reflects the status as for project version python-2 of the Neurosp
 	Knows about specific parameters vs actual parameters,
 	e.g. specific membrane capacitance vs scaled membrane
 	capacitance.  Put more generally, the biological objects in
-	neurospaces rely on their parent, children and siblings to
-	infer a number of their own properties.
+	the model container rely on their parent, children and
+	siblings to infer a number of their own properties.
 
       <li>
 
@@ -386,8 +391,9 @@ This web page reflects the status as for project version python-2 of the Neurosp
 
       <p>
 
-	These tests give an idea of the detailed functionality of
-	Neurospaces as a data container.
+	These tests give an idea of the functionality of the model
+	container as an internal storage format for biologically
+	realistic models.
 
     </p><h2><a name="section-heccer">Heccer</a></h2>
 
@@ -669,29 +675,31 @@ This web page reflects the status as for project version python-2 of the Neurosp
 
     </p><h2><a name="section-ssp">SSP</a></h2>
 
-      Neurospaces, Heccer and DES are stand-alone components.  They
-      need to be glued together before they are useful.  Besides that,
-      they also need to be activated correctly, such that they can
-      work together on a single simulation.  This is exactly what the
-      <em>SSP</em> scheduler does.
+      The model container, Heccer and DES are stand-alone components.
+      They need to be glued together before they are useful.  Besides
+      that, they also need to be activated correctly, such that they
+      can work together on a single simulation.  This is exactly what
+      the <em>SSP</em> scheduler does.
 
       The <em>S</em>imple <em>S</em>cheduler in <em>P</em>erl,
       activates other software components according to a configurable
       schedule.  Because the SSP scheduler does not have any
       computational load, its implementation is very simple, and
-      configurable.  It is actually the configuration that connects
-      SSP to Neurospaces and Heccer.  Other configurations will
-      connect SSP to other modeling services or solvers.  SSP achieves
-      this by loading on the fly, the integration modules that are
-      referenced in its configuration.  Other modules are not loaded.
+      configurable.  It is actually the configuration that instructs
+      SSP to load the model container and Heccer, and to activate them
+      for a simulation.  Other configurations will connect SSP to
+      other modeling services or solvers.  SSP achieves this by
+      loading on the fly, the integration modules that are referenced
+      in its configuration.  Other modules are not loaded.
 
       <p>
 
 	Below is a typical configuration file for SSP.  It first
-	configures SSP to use Neurospaces as the modeling service.
-	Then, it instructs SSP to load a model called
-	'cells/tensizesp.ndf', and to instantiate a solver called
-	'Heccer' for a part of the model (namely '/tensizesp').
+	configures SSP to use the model container for internal storage
+	(called Neurospaces for legacy reasons).  Then, it instructs
+	SSP to load a model called 'cells/tensizesp.ndf', and to
+	instantiate a solver called 'Heccer' for a part of the model
+	(namely '/tensizesp').
 
 	The simulation of the model is run using the 'apply' entry in
 	the configuration file (note that the order in the
@@ -800,8 +808,9 @@ solverclasses:
       <li>
 
 	Integrates other components into a consistent API for user
-	interfaces.  SSP is not Neurospaces or Heccer aware, but loads
-	the external libraries on the fly, when needed.
+	interfaces.  SSP is not aware of the internal details of the
+	model container or Heccer aware, but loads their functions on
+	the fly, and only if needed.
 
       <li>
 
@@ -825,7 +834,7 @@ solverclasses:
       <p>
 
 	These tests are SSP stand-alone tests, and integration tests
-	with Neurospaces and Heccer.
+	with the Neurospaces model container and Heccer.
 
     </p><h2><a name="section-studio">Neurospaces Studio</a></h2>
 
@@ -851,7 +860,7 @@ solverclasses:
       <ul>
 	<li>
 
-	  Visualizes models stored by Neurospaces.
+	  Visualizes models stored by the model container.
 
 	<li>
 
@@ -873,7 +882,7 @@ solverclasses:
 	Below is an example of the command line tool to inspect the
 	delayed rectifier conductance after conversion of a passive
 	purkinje cell morphology to an active model.  Also note how
-	neurospaces does shrinkage correction on the fly.
+	shrinkage correction is done on the fly.
 
       <pre>
 $ neurospaces morphologies/genesis/gp_pc1.p --shrinkage 1.111111 --traversal-symbol / --reporting-field G_MAX --condition '$d->{context} =~ /kdr/i'
@@ -1127,7 +1136,7 @@ $ neurospaces cells/purkinje/edsjb1994.ndf --traversal-symbol / --reporting-fiel
 
 	<li>
 
-	  Neurospaces uses a mixture of XML indexing and node
+	  The Neurospaces model container uses XML indexing and node
 	  identification techniques.  I should give a pointer here to
 	  relevant background information.
 
@@ -1296,7 +1305,7 @@ $ neurospaces cells/purkinje/edsjb1994.ndf --traversal-symbol / --reporting-fiel
       <address><a href="mailto:hugo.cornelis@gmail.com"></a></address>
 <!-- Created: Thu Apr  6 11:31:32 CDT 2006 -->
 <!-- hhmts start -->
-Last modified: Fri Nov 28 17:59:24 CST 2008
+Last modified: Fri Dec 19 05:03:32 CST 2008
 <!-- hhmts end -->
       <script type="text/javascript">
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

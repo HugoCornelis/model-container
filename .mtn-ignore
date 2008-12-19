@@ -6,13 +6,9 @@ Makefile$
 ^convertors/des2xml$
 ^convertors/des2xml_comment$
 ^convertors/des2xml_comment.c$
-^docs/various.txt$
-^configure.lineno
 ^docs/latex
 ^docs/man
 ^docs/rtf
-^doxy$
-^doxygen/docs/
 ^elc-temp$
 ^glue/swig/perl/SwiggableNeurospaces.pm$
 ^glue/swig/perl/swiggable_neurospaces_wrap.c$
