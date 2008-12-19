@@ -288,7 +288,7 @@ SymbolCacheParameterString
 /// 
 /// 
 /// \arg std ANSI calloc() parameters.
-///	_vtable..: function table.
+/// \arg _vtable function table.
 /// \arg iType type of element.
 /// 
 /// \return struct symtab_HSolveListElement * 
@@ -679,11 +679,11 @@ void SymbolInit(struct symtab_HSolveListElement * phsle)
 /// \arg phsle symbol container
 /// \arg ppist context of symbol
 /// \arg ppistCoord context to get coordinate for
-///	pD3Coord...: coordinate receiving result (may be uninitialized)
+/// \arg pD3Coord coordinate receiving result (may be uninitialized)
 /// 
 /// \return int : success of operation
-/// 
-///	pD3Coord...: coordinate receiving result
+///
+/// \return pD3Coord coordinate receiving result
 /// 
 /// \brief Resolve coordinates for symbol.
 /// \details 
@@ -865,7 +865,7 @@ SymbolParameterResolveCoordinateValue
 /// \arg phsle symbol container
 /// \arg ppist context of symbol
 /// \arg ppistCoord context to get coordinate for
-///	pcName.....: name of parameter ("X", "Y", "Z")
+/// \arg pcName name of parameter ("X", "Y", "Z")
 /// 
 /// \return double : coordinate parameter value, FLT_MAX if some error occured
 /// 
@@ -1074,11 +1074,11 @@ SymbolParameterResolveScaledValue
 /// \arg phsle symbol to calculate absolute value
 /// \arg ppist context of given element
 /// \arg ppar parameter that specifies type of transformation
-///	pD3.......: coordinate to make transform
+/// \arg pD3 coordinate to make transform
 /// 
-/// \return int : success of operation
+/// \return int success of operation
 /// 
-///	pD3.......: transformed coordinate
+/// \return pD3 transformed coordinate
 /// 
 /// \brief Calculate transformation on value for given parameter.
 /// \details 
@@ -1774,17 +1774,16 @@ SymbolPrincipalSerial2RelativeContext
 
 
 /// 
-/// 
 /// \arg phsle symbol to resolve input for
-///	ppist....: context of given element, may be NULL
+/// \arg ppist context of given element, may be NULL
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Recalculate all serial mappings of given symbol
 /// \details 
 /// 
-///	For the given symbol only #SU is updated, the serial to parent is
-///	not touched (it's not known here).
+///	For the given symbol only \#SU is updated, the serial to
+///	parent is not touched (it's not known here).
 /// 
 
 struct SerialRecalculationData
@@ -2624,7 +2623,7 @@ SymbolSetParameterFixedDouble
 /// 
 /// 
 /// \arg phsle symbol to traverse spike generators for
-///	ppist.......: context of symbol, symbol assumed to be on top
+/// \arg ppist context of symbol, symbol assumed to be on top
 /// \arg pbls level specification of levels to traverse
 /// \arg pfProcesor processor
 /// \arg pfFinalizer finalizer
@@ -2768,7 +2767,7 @@ int SymbolTraverseBioLevels
 /// 
 /// 
 /// \arg phsle symbol to traverse wildcard for.
-///	ppist........: context of symbol, symbol assumed to be on top.
+/// \arg ppist context of symbol, symbol assumed to be on top.
 /// \arg pfProcesor processor.
 /// \arg pfFinalizer finalizer.
 /// \arg pvUserdata any user data.
@@ -2821,7 +2820,7 @@ SymbolTraverseDescendants
 /// 
 /// 
 /// \arg phsle symbol to traverse spike generators for.
-///	ppist.......: context of symbol, symbol assumed to be on top.
+/// \arg ppist context of symbol, symbol assumed to be on top.
 /// \arg pfProcesor processor.
 /// \arg pfFinalizer finalizer.
 /// \arg pvUserdata any user data.
@@ -2915,7 +2914,7 @@ SymbolTraverseTagged
 /// 
 /// 
 /// \arg phsle symbol to traverse wildcard for
-///	ppist........: context of symbol, symbol assumed to be on top
+/// \arg ppist context of symbol, symbol assumed to be on top
 /// \arg ppistWildcard: wildcard selector
 /// \arg pfProcesor processor
 /// \arg pfFinalizer finalizer
@@ -3091,7 +3090,7 @@ SymbolTraverseWildcard
 /// 
 /// 
 /// \arg phsle symbol to count segments for
-///	ppist.......: context of symbol, symbol assumed to be on top
+/// \arg ppist context of symbol, symbol assumed to be on top
 /// 
 /// \return int
 /// 
@@ -3105,7 +3104,7 @@ SymbolTraverseWildcard
 /// 
 /// 
 /// \arg phsle symbol to count spike generators for
-///	ppist.......: context of symbol, symbol assumed to be on top
+/// \arg ppist context of symbol, symbol assumed to be on top
 /// 
 /// \return int
 /// 
@@ -3119,7 +3118,7 @@ SymbolTraverseWildcard
 /// 
 /// 
 /// \arg phsle symbol to count spike receivers for
-///	ppist.......: context of symbol, symbol assumed to be on top
+/// \arg ppist context of symbol, symbol assumed to be on top
 /// 
 /// \return int : success of operation
 /// 
@@ -3440,9 +3439,9 @@ SymbolTraverseWildcard
 /// 
 /// 
 /// \arg phsle symbol to set coordinates for.
-/// \arg x.....:
-/// \arg y.....:
-/// \arg z.....:
+/// \arg x coordinate x
+/// \arg y coordinate y
+/// \arg z coordinate z
 /// 
 /// \return int : success of operation
 /// 
@@ -3594,7 +3593,7 @@ SymbolTraverseWildcard
 /// 
 /// 
 /// \arg phsle symbol to traverse segments for
-///	ppist.......: context of symbol, symbol assumed to be on top
+/// \arg ppist context of symbol, symbol assumed to be on top
 /// \arg pfProcesor segment processor
 /// \arg pfFinalizer segment finalizer
 /// \arg pvUserdata any user data
@@ -3613,7 +3612,7 @@ SymbolTraverseWildcard
 /// 
 /// 
 /// \arg phsle symbol to traverse spike generators for
-///	ppist.......: context of symbol, symbol assumed to be on top
+/// \arg ppist context of symbol, symbol assumed to be on top
 /// \arg pfProcesor spike generator processor
 /// \arg pfFinalizer spike generator finalizer
 /// \arg pvUserdata any user data
@@ -3628,7 +3627,7 @@ SymbolTraverseWildcard
 /// 
 /// 
 /// \arg phsle symbol to traverse spike receivers for
-///	ppist.......: context of symbol, symbol assumed to be on top
+/// \arg ppist context of symbol, symbol assumed to be on top
 /// \arg pfProcesor spike receiver processor
 /// \arg pfFinalizer spike receiver finalizer
 /// \arg pvUserdata any user data

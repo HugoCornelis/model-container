@@ -92,15 +92,14 @@ static void QueryMachinePrompt(void);
 static void QueryMachineInitReadLine();
 
 
-//f
-//f
-
 typedef
 int QueryHandler
     (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData);
 
 
-/// \struct query association
+/// \struct query association: associates a query machine command with
+/// a function callback, and perhaps with a readline completion
+/// callback.
 
 typedef struct QueryHandlerAssociation
 {
@@ -8399,19 +8398,13 @@ static int QueryHandlerSolverSet
 }
 
 
-/// 
-/// 
-/// \arg std. QueryHandler args
-/// 
-/// \return int : QueryHandler return value
-/// 
-/// \brief Give version information.
-/// \details 
-/// 
-
 struct QM_SegmentValidator_data
 {
+    /// base symbol.
+
     struct symtab_HSolveListElement *phsleBase;
+
+    /// number of entries in context ?
 
     int iEntries;
 };
@@ -8524,6 +8517,15 @@ SegmentValidator
 
     return(iResult);
 }
+
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Give version information.
+/// \details 
+/// 
 
 static
 int
@@ -8939,6 +8941,9 @@ QueryMachineEmptyGenerator(text,state)
 
     return(pcResult);
 }
+
+
+/// \struct symbol generator data for readline callback.
 
 struct QM_sg_traversal_data
 {
