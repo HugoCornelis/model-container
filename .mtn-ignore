@@ -6,10 +6,9 @@ Makefile$
 ^convertors/des2xml$
 ^convertors/des2xml_comment$
 ^convertors/des2xml_comment.c$
-^docs/various.txt$
-^doxy$
-^doxygen/docs/
-^elc-temp$
+^docs/latex
+^docs/man
+^docs/rtf
 ^glue/swig/perl/SwiggableNeurospaces.pm$
 ^glue/swig/perl/swiggable_neurospaces_wrap.c$
 ^glue/swig/python/SwiggableNeurospaces.py$
