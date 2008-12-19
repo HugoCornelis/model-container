@@ -689,22 +689,22 @@ This web page reflects the status as for project version python-2 of the Neurosp
       SSP to load the model container and Heccer, and to activate them
       for a simulation.  Other configurations will connect SSP to
       other modeling services or solvers.  SSP achieves this by
-      loading on the fly, the integration modules that are referenced
-      in its configuration.  Other modules are not loaded.
+      loading on the fly those software modules referenced in its
+      configuration.  Other modules are not loaded.
 
       <p>
 
 	Below is a typical configuration file for SSP.  It first
 	configures SSP to use the model container for internal storage
-	(called Neurospaces for legacy reasons).  Then, it instructs
+	(called Neurospaces for legacy reasons).  It then instructs
 	SSP to load a model called 'cells/tensizesp.ndf', and to
-	instantiate a solver called 'Heccer' for a part of the model
-	(namely '/tensizesp').
+	instantiate a solver called 'Heccer' for that part of the
+	model ('/tensizesp').
 
 	The simulation of the model is run using the 'apply' entry in
 	the configuration file (note that the order in the
 	configuration file is alphabetical, not chronological.  A user
-	may specify the entries in any order that he chooses.).
+	may specify these entries in any order.).
 
       <pre>
 --- !!perl/hash:SSP
@@ -1305,7 +1305,7 @@ $ neurospaces cells/purkinje/edsjb1994.ndf --traversal-symbol / --reporting-fiel
       <address><a href="mailto:hugo.cornelis@gmail.com"></a></address>
 <!-- Created: Thu Apr  6 11:31:32 CDT 2006 -->
 <!-- hhmts start -->
-Last modified: Fri Dec 19 05:03:32 CST 2008
+Last modified: Fri Dec 19 11:28:16 CST 2008
 <!-- hhmts end -->
       <script type="text/javascript">
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
