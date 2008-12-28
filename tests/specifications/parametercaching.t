@@ -116,6 +116,7 @@ coordinate z = 0.0001
 						   write => "printcoordinates n /CerebellarCortex /CerebellarCortex/Granules",
 						  },
 						  {
+						   comment => "Depending on the C library, rounding of the outcome may differ, so the outcome is one of several alternatives.",
 						   description => "What is the original coordinate of the second granule cell ?",
 						   numerical_compare => 1,
 						   read => {
@@ -189,6 +190,7 @@ coordinate z = 0.0001
 						   write => "printcoordinates n /CerebellarCortex /CerebellarCortex/Granules/3",
 						  },
 						  {
+						   comment => "Depending on the C library, rounding of the outcome may differ, so the outcome is one of several alternatives.",
 						   description => "Is the second granule cell still at its original location ?",
 						   numerical_compare => 1,
 						   read => {
@@ -250,6 +252,7 @@ coordinate z = 0.0001
 						   write => "printcoordinates n /CerebellarCortex /CerebellarCortex/Granules/3",
 						  },
 						  {
+						   comment => "Depending on the C library, rounding of the outcome may differ, so the outcome is one of several alternatives.",
 						   description => "Is the second granule cell still at its original location ?",
 						   numerical_compare => 1,
 						   read => {
@@ -316,6 +319,7 @@ coordinate z = 0.0001
 						   write => "printcoordinates n /CerebellarCortex /CerebellarCortex/Granules/3",
 						  },
 						  {
+						   comment => "Depending on the C library, rounding of the outcome may differ, so the outcome is one of several alternatives.",
 						   description => "Has the second granule cell been rotated in the network ?",
 						   numerical_compare => 1,
 						   read => {
