@@ -21,9 +21,9 @@ my $test
 						  },
 						  {
 						   # $Format: "description => \"Does the version information match with ${package}-${label} ?\","$
-description => "Does the version information match with model-container-python-2 ?",
+description => "Does the version information match with model-container-python-3 ?",
 						   # $Format: "read => \"${package}-${label}\","$
-read => "model-container-python-2",
+read => "model-container-python-3",
 						   write => "version",
 						  },
 						 ],

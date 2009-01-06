@@ -1737,7 +1737,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=model-container
- VERSION=python-2
+ VERSION=python-3
 
 
 # Some tools Automake needs.
