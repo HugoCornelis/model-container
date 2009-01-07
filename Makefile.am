@@ -17,7 +17,7 @@
 ##'
 ##############################################################################
 
-SUBDIRS = algorithms . glue/swig
+SUBDIRS = algorithms . glue/swig convertors
 
 dist_bin_SCRIPTS = bin/model-container
 
@@ -122,6 +122,9 @@ dist_lisp_DATA = \
 	emacs/neurospaces-mode/neurospaces-files.el \
 	emacs/neurospaces-mode/neurospaces-vars.el
 
+
+
+
 RELEASE_MAJOR=`release-extract --major`
 RELEASE_MINOR=`release-extract --minor`
 RELEASE_MICRO=`release-extract --micro`
@@ -155,6 +158,11 @@ dist-hook: dist-keywords
 	cp $(srcdir)/license.txt $(distdir)
 	cp $(srcdir)/lexsupport.c $(distdir)
 	cp -a $(srcdir)/docs $(distdir)
+	rm -rf $(distdir)/docs/html
+	rm -rf $(distdir)/docs/latex
+	rm -rf $(distdir)/docs/man
+	rm -rf $(distdir)/docs/html
+	rm -rf $(distdir)/docs/rtf
 	$(RM) -fr $(distdir)/docs/paper.*
 	$(srcdir)/install-sh -d $(distdir)/tests
 	$(srcdir)/install-sh -d $(distdir)/tests/html
