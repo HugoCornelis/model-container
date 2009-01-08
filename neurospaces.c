@@ -1658,7 +1658,7 @@ static int NeurospacesStartTimingReport(void)
 char * NeurospacesGetVersion(void)
 {
     // $Format: "    static char *pcVersion=\"${package}-${label}\";"$
-    static char *pcVersion="model-container-python-4";
+    static char *pcVersion="model-container-python-5";
 
     return(pcVersion);
 }

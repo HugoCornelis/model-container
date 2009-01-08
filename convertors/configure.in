@@ -19,12 +19,12 @@ dnl //////////////////////////////////////////////////////////////////////////
 
 dnl Process this file with autoconf to produce a configure script.
 # $Format: "AC_REVISION(${package}-convertors, ${label}, ${email})"$
-AC_REVISION(model-container-convertors, python-4, hugo.cornelis@gmail.com)
+AC_REVISION(model-container-convertors, python-5, hugo.cornelis@gmail.com)
 dnl AC_REVISION($Id: configure.in 1.4 Sun, 18 Feb 2007 15:53:33 -0600 hugo $)
 AC_INIT(des2xml.c)
 
 # $Format: "AM_INIT_AUTOMAKE(${package}-convertors, ${label}, ${email})"$
-AM_INIT_AUTOMAKE(model-container-convertors, python-4, hugo.cornelis@gmail.com)
+AM_INIT_AUTOMAKE(model-container-convertors, python-5, hugo.cornelis@gmail.com)
 
 dnl Checks for programs.
 AC_PROG_CC

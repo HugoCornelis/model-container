@@ -1605,7 +1605,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=model-container-convertors
- VERSION=python-4
+ VERSION=python-5
 
 
 # Some tools Automake needs.
