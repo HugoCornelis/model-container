@@ -26,16 +26,14 @@
 
 
 /// 
-/// 
 /// \arg pcconn cached connection to print symbols for
-///	bAll.....: TRUE == full list of symbols, FALSE == only given conn
+/// \arg bAll TRUE == full list of symbols, FALSE == only given conn
 /// \arg iIndent number of indentation spaces
 /// \arg pfile file to print output to
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Print symbol info for connection
-/// \details 
 /// 
 
 #define PrintCachedConnectionIndent(iIndent,pfile)			\
