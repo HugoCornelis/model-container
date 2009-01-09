@@ -26,7 +26,6 @@
 
 
 /// 
-/// 
 /// \arg iConnections number of connections to go into cache.
 /// 
 /// \return struct ConnectionCache * 
@@ -34,7 +33,6 @@
 ///	New connection cache, NULL for failure.
 /// 
 /// \brief Initialize new connection cache.
-/// \details 
 /// 
 
 struct ConnectionCache * ConnectionCacheNew(int iConnections)
