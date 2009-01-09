@@ -27,13 +27,11 @@
 
 
 /// 
-/// 
-///	pioc.: list element with I/O to init
+/// \arg pioc list element with I/O to init
 /// 
 /// \return void
 /// 
 /// \brief Init list element with I/O
-/// \details 
 /// 
 
 struct symtab_IOContainer * IOContainerCalloc(void)
@@ -54,13 +52,11 @@ struct symtab_IOContainer * IOContainerCalloc(void)
 
 
 /// 
-/// 
-///	pioc.: list element with I/O to count
+/// \arg pioc list element with I/O to count
 /// 
 /// \return int : number of elements in the container
 /// 
 /// \brief Count element in I/O container
-/// \details 
 /// 
 
 int IOContainerCountIOs(struct symtab_IOContainer * pioc)
@@ -93,13 +89,11 @@ int IOContainerCountIOs(struct symtab_IOContainer * pioc)
 
 
 /// 
-/// 
-///	pioc.: I/O container to init
+/// \arg pioc I/O container to init
 /// 
 /// \return void
 /// 
 /// \brief Init list element with I/O
-/// \details 
 /// 
 
 void IOContainerInit(struct symtab_IOContainer * pioc)
@@ -111,15 +105,13 @@ void IOContainerInit(struct symtab_IOContainer * pioc)
 
 
 /// 
-/// 
-///	pioc...: I/O container to search
+/// \arg pioc I/O container to search
 /// \arg pc relation to search for
-///	iCount.: relation number with that name (starting at 0)
+/// \arg iCount relation number with that name (starting at 0)
 /// 
 /// \return struct symtab_InputOutput * : matching relation, NULL if not found
 /// 
 /// \brief Search for specified relation
-/// \details 
 /// 
 
 struct symtab_InputOutput *
@@ -172,8 +164,7 @@ IOContainerLookupRelation
 
 
 /// 
-/// 
-///	ppcParameters: Strings indicating parameters, NULL terminated.
+/// \arg ppcParameters Strings indicating parameters, NULL terminated.
 /// \arg piTypes Integers indicating parameters are input or output. 
 /// 
 /// \return struct symtab_IOContainer
@@ -242,8 +233,7 @@ IOContainerNewFromList(char *ppcParameters[], int piTypes[])
 
 
 /// 
-/// 
-///	pioc.....: I/O relations
+/// \arg pioc I/O relations
 /// \arg ppist symbol stack with context
 /// \arg pc name of input
 /// \arg iPosition number of inputs with given name to skip
@@ -253,7 +243,6 @@ IOContainerNewFromList(char *ppcParameters[], int piTypes[])
 ///	Context attached to this input.
 /// 
 /// \brief find element that is attached to the given input
-/// \details 
 /// 
 
 struct PidinStack *
@@ -311,7 +300,6 @@ IOContainerResolve
 
 
 /// 
-/// 
 /// \arg piocTarget bio with children
 /// \arg ppist symbol stack with context
 /// \arg piocSource element generating input
@@ -319,7 +307,6 @@ IOContainerResolve
 /// \return int : position of child in input list (starts at zero)
 /// 
 /// \brief calculate position of given input element
-/// \details 
 /// 
 
 int 
