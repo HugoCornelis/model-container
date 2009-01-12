@@ -18,7 +18,9 @@
 //////////////////////////////////////////////////////////////////////////////
 
 
+#if !defined(__APPLE__)
 #include <malloc.h>
+#endif
 #include <stdlib.h>
 
 #include "neurospaces/neurospaces.h"
@@ -39,7 +41,12 @@
 
 int main(int argc,char *argv[])
 {
+
+#if !defined(__APPLE__)
+
     void *pv = (void *)mallopt;
+
+#endif
 
     //- call parser routine
 

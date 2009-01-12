@@ -19,7 +19,9 @@
 
 
 
+#if !defined(__APPLE__)
 #include <malloc.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1002,6 +1004,9 @@ timeval_subtract
 /// \details 
 /// 
 
+
+#if !defined(__APPLE__)
+
 static int QueryHandlerAllocations
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
 {
@@ -1062,6 +1067,8 @@ static int QueryHandlerAllocations
 
     return(bResult);
 }
+
+#endif
 
 
 /// 
