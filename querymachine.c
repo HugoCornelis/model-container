@@ -1005,7 +1005,6 @@ timeval_subtract
 /// 
 
 
-#if !defined(__APPLE__)
 
 static int QueryHandlerAllocations
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -1013,6 +1012,8 @@ static int QueryHandlerAllocations
     //- set result : ok
 
     int bResult = TRUE;
+
+#if !defined(__APPLE__)
 
     //- get memory statistics
 
@@ -1063,12 +1064,18 @@ static int QueryHandlerAllocations
 
     fprintf(stdout, "\n");
 
+#else
+
+    fprintf(stdout,"Memory reporting not available in MAC OSX.\n");
+
+#endif
+
     //- return result
 
     return(bResult);
 }
 
-#endif
+
 
 
 /// 
