@@ -2037,7 +2037,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=neurospaces/algorithms/symbol
- VERSION=python-5
+ VERSION=16e23f15d78f5309ea818389c3ceb50568e64313-0
 
 
 # Some tools Automake needs.

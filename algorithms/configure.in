@@ -27,7 +27,7 @@ dnl all subdirs
 AC_CONFIG_SUBDIRS(event symbol)
 
 # $Format: "AM_INIT_AUTOMAKE(${package}_algorithms, ${label}, ${email})"$
-AM_INIT_AUTOMAKE(model-container_algorithms, python-5, hugo.cornelis@gmail.com)
+AM_INIT_AUTOMAKE(model-container_algorithms, 16e23f15d78f5309ea818389c3ceb50568e64313-0, hugo.cornelis@gmail.com)
 
 dnl Checks for programs.
 AC_PROG_AWK
