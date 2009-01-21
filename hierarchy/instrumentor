@@ -123,8 +123,8 @@ sub build_indices
     my $object_methods_signatures = $definitions->{object_methods_signatures};
     my $tokens = $definitions->{tokens};
 
-    my $rules = $definitions->{rules};
-    my $symbols = $definitions->{symbols};
+    my $grammar_rules = $definitions->{grammar_rules};
+    my $grammar_symbols = $definitions->{grammar_symbols};
 
     build_forward_derivation_lists($definitions);
 
@@ -326,8 +326,8 @@ sub generate_anysymbol_rules
 {
     my $definitions = shift;
 
-    my $rules = $definitions->{rules};
-    my $symbols = $definitions->{symbols};
+    my $grammar_rules = $definitions->{grammar_rules};
+    my $grammar_symbols = $definitions->{grammar_symbols};
 
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	= gmtime(time());
@@ -359,7 +359,7 @@ sub generate_anysymbol_rules
 
     my $first = 1;
 
-    foreach my $symbol_name (keys %$symbols)
+    foreach my $symbol_name (keys %$grammar_symbols)
     {
 	if ($first)
 	{
@@ -389,8 +389,8 @@ sub generate_anysymbol_types
 {
     my $definitions = shift;
 
-    my $rules = $definitions->{rules};
-    my $symbols = $definitions->{symbols};
+    my $grammar_rules = $definitions->{grammar_rules};
+    my $grammar_symbols = $definitions->{grammar_symbols};
 
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	= gmtime(time());
@@ -415,7 +415,7 @@ sub generate_anysymbol_types
 
 ";
 
-    print $file "%type <$definitions->{typing}->{base}> AnySymbol
+    print $file "%type <$definitions->{typing}->{typer}->{name}> AnySymbol
 
 
 ";
@@ -1302,10 +1302,10 @@ sub generate_specific_symbol_rules
 {
     my $definitions = shift;
 
-    my $rules = $definitions->{rules};
-    my $symbols = $definitions->{symbols};
+    my $grammar_rules = $definitions->{grammar_rules};
+    my $grammar_symbols = $definitions->{grammar_symbols};
 
-    foreach my $symbol_name (keys %$symbols)
+    foreach my $symbol_name (keys %$grammar_symbols)
     {
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	    = gmtime(time());
@@ -1332,7 +1332,7 @@ sub generate_specific_symbol_rules
 
 ";
 
-	my $components = $symbols->{$symbol_name}->{components};
+	my $components = $grammar_symbols->{$symbol_name}->{components};
 
 	if (!@$components)
 	{
@@ -1375,10 +1375,10 @@ sub generate_specific_symbol_types
 {
     my $definitions = shift;
 
-    my $rules = $definitions->{rules};
-    my $symbols = $definitions->{symbols};
+    my $grammar_rules = $definitions->{grammar_rules};
+    my $grammar_symbols = $definitions->{grammar_symbols};
 
-    foreach my $symbol_name (keys %$symbols)
+    foreach my $symbol_name (keys %$grammar_symbols)
     {
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	    = gmtime(time());
@@ -1406,7 +1406,7 @@ sub generate_specific_symbol_types
 	print $file "%type <$definitions->{symbols}->{$symbol_name}->{typing}->{base}> ${symbol_name}Symbol
 ";
 
-	my $components = $symbols->{$symbol_name}->{components};
+	my $components = $grammar_symbols->{$symbol_name}->{components};
 
 	if (!@$components)
 	{
@@ -1433,10 +1433,10 @@ sub generate_specific_section_rules
 {
     my $definitions = shift;
 
-    my $rules = $definitions->{rules};
-    my $symbols = $definitions->{symbols};
+    my $grammar_rules = $definitions->{grammar_rules};
+    my $grammar_symbols = $definitions->{grammar_symbols};
 
-    foreach my $symbol_name (keys %$symbols)
+    foreach my $symbol_name (keys %$grammar_symbols)
     {
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	    = gmtime(time());
@@ -1471,7 +1471,7 @@ sub generate_specific_section_rules
 		{
 #line
 
-		    \$\$ = &\$1$symbols->{$symbol_name}->{typing}->{to_base};
+		    \$\$ = &\$1$grammar_symbols->{$symbol_name}->{typing}->{to_base};
 		}
 	;
 
@@ -1486,10 +1486,10 @@ sub generate_specific_section_types
 {
     my $definitions = shift;
 
-    my $rules = $definitions->{rules};
-    my $symbols = $definitions->{symbols};
+    my $grammar_rules = $definitions->{grammar_rules};
+    my $grammar_symbols = $definitions->{grammar_symbols};
 
-    foreach my $symbol_name (keys %$symbols)
+    foreach my $symbol_name (keys %$grammar_symbols)
     {
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	    = gmtime(time());
@@ -1529,10 +1529,10 @@ sub generate_specific_section_2_rules
 {
     my $definitions = shift;
 
-    my $rules = $definitions->{rules};
-    my $symbols = $definitions->{symbols};
+    my $grammar_rules = $definitions->{grammar_rules};
+    my $grammar_symbols = $definitions->{grammar_symbols};
 
-    foreach my $symbol_name (keys %$symbols)
+    foreach my $symbol_name (keys %$grammar_symbols)
     {
 	{
 	    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
@@ -1564,7 +1564,7 @@ sub generate_specific_section_2_rules
 	    print $file "	:
 ";
 
-	    my $specific_section = $rules->{specific_section};
+	    my $specific_section = $grammar_rules->{specific_section};
 
 	    my $parts = $specific_section->{parts};
 
@@ -1575,7 +1575,7 @@ sub generate_specific_section_2_rules
 		$part =~ s/specific_description/${symbol_name}Description/g;
 		$part =~ s/specific_end/${symbol_name}End/g;
 		$part =~ s/specific_front/${symbol_name}Front/g;
-		$part =~ s/specific_token/$symbols->{$symbol_name}->{specific_token}/g;
+		$part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
 
 		print $file "$part\n";
 	    }
@@ -1617,7 +1617,7 @@ sub generate_specific_section_2_rules
 	    print $file "	:
 ";
 
-	    my $specific_front = $rules->{specific_front};
+	    my $specific_front = $grammar_rules->{specific_front};
 
 	    my $parts = $specific_front->{parts};
 
@@ -1628,7 +1628,7 @@ sub generate_specific_section_2_rules
 		$part =~ s/specific_description/${symbol_name}Description/g;
 		$part =~ s/specific_end/${symbol_name}End/g;
 		$part =~ s/specific_front/${symbol_name}Front/g;
-		$part =~ s/specific_token/$symbols->{$symbol_name}->{specific_token}/g;
+		$part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
 
 		print $file "$part\n";
 	    }
@@ -1670,7 +1670,7 @@ sub generate_specific_section_2_rules
 	    print $file "	:
 ";
 
-	    my $specific_end = $rules->{specific_end};
+	    my $specific_end = $grammar_rules->{specific_end};
 
 	    my $parts = $specific_end->{parts};
 
@@ -1681,7 +1681,7 @@ sub generate_specific_section_2_rules
 		$part =~ s/specific_description/${symbol_name}Description/g;
 		$part =~ s/specific_end/${symbol_name}End/g;
 		$part =~ s/specific_front/${symbol_name}Front/g;
-		$part =~ s/specific_token/$symbols->{$symbol_name}->{specific_token}/g;
+		$part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
 
 		print $file "$part\n";
 	    }
@@ -1723,7 +1723,7 @@ sub generate_specific_section_2_rules
 	    print $file "	:
 ";
 
-	    my $specific_description = $rules->{specific_description};
+	    my $specific_description = $grammar_rules->{specific_description};
 
 	    my $global_parts = $specific_description->{parts};
 
@@ -1738,7 +1738,7 @@ sub generate_specific_section_2_rules
 		    $part =~ s/specific_description/${symbol_name}Description/g;
 		    $part =~ s/specific_end/${symbol_name}End/g;
 		    $part =~ s/specific_front/${symbol_name}Front/g;
-		    $part =~ s/specific_token/$symbols->{$symbol_name}->{specific_token}/g;
+		    $part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
 
 		    print $file "$part\n";
 		}
@@ -1749,12 +1749,12 @@ sub generate_specific_section_2_rules
 
 		my $semantic = $subpart->{semantic};
 
-		$semantic =~ s/specific_allocator/$symbols->{$symbol_name}->{specific_allocator}/g;
+		$semantic =~ s/specific_allocator/$grammar_symbols->{$symbol_name}->{specific_allocator}/g;
 		$semantic =~ s/specific_description/${symbol_name}Description/g;
 		$semantic =~ s/specific_end/${symbol_name}End/g;
 		$semantic =~ s/specific_front/${symbol_name}Front/g;
-		$semantic =~ s/specific_to_base/$symbols->{$symbol_name}->{typing}->{to_base}/g;
-		$semantic =~ s/specific_token/$symbols->{$symbol_name}->{specific_token}/g;
+		$semantic =~ s/specific_to_base/$grammar_symbols->{$symbol_name}->{typing}->{to_base}/g;
+		$semantic =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
 
 		print $file $semantic;
 
@@ -1772,10 +1772,10 @@ sub generate_specific_section_2_types
 {
     my $definitions = shift;
 
-    my $rules = $definitions->{rules};
-    my $symbols = $definitions->{symbols};
+    my $grammar_rules = $definitions->{grammar_rules};
+    my $grammar_symbols = $definitions->{grammar_symbols};
 
-    foreach my $symbol_name (keys %$symbols)
+    foreach my $symbol_name (keys %$grammar_symbols)
     {
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	    = gmtime(time());

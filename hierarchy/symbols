@@ -791,6 +791,408 @@ my $class_hierarchy
       };
 
 
+my $grammar_rules
+    = {
+       specific_description => {
+				parts => [
+					  {
+					   parts => [],
+					   semantic => '
+#line
+		    //- allocate gate kinetic
+
+		    $$ = specific_allocator();
+
+		    //- set actual symbol
+
+		    //! note : will not work, should use EndPushedPidin
+		    //! and related here
+
+		    ParserContextSetActual((PARSERCONTEXT *)pacParserContext, & $$ specific_to_base);
+',
+					  },
+					  {
+					   parts => [
+						     '		specific_token',
+						     '		ChildSectionOptionalInputOptionalParameters',
+						    ],
+					   semantic => '
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(& $1 specific_to_base, &$2->ioh.iol.hsle);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual((PARSERCONTEXT *)pacParserContext, & $1 specific_to_base);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+',
+					  },
+					  {
+					   parts => [
+						     '		specific_description',
+						     '		specific_component',
+						    ],
+					   semantic => '
+#line
+		    //- add component to current section list
+
+		    SymbolAddChild(& $1 specific_to_base, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual((PARSERCONTEXT *)pacParserContext, & $1 specific_to_base);
+
+		    //- push current description on stack
+
+		    $$ = $1;
+',
+					  },
+					  {
+					   parts => [
+						     '		specific_description',
+						     '		Parameters',
+						    ],
+					   semantic => '
+#line
+		    //- link parameters
+
+		    SymbolAssignParameters(& $1 specific_to_base, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual((PARSERCONTEXT *)pacParserContext, & $1 specific_to_base);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+',
+					  },
+					 ],
+			       },
+       specific_end => {
+			parts => [
+				  '		EndPushedPidin',
+				  '		specific_token',
+				 ],
+			semantic => '
+#line
+',
+		       },
+       specific_front => {
+			  parts => [
+				    '		specific_token',
+				    '		OptionalIdentifierOptionIndexPushedPidin',
+				   ],
+			  semantic => '
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+',
+			 },
+       specific_section => {
+			    parts => [
+				      '		specific_front',
+				      '			InputOutputRelations',
+				      '			OptionalItemInputRelations',
+				      '			specific_description',
+				      '		specific_end',
+				     ],
+			    semantic => '
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+',
+			   },
+      };
+
+
+my $grammar_symbols
+    = {
+       AttachmentPoint => {
+			   components => [
+					 ],
+			   specific_allocator => 'AttachmentCalloc',
+			   specific_token => 'TOKEN_ATTACHMENT_POINT',
+			   typing => {
+				      base => 'phsle',
+				      id => 'pidin',
+				      spec => 'patta',
+				      to_base => '->bio.ioh.iol.hsle',
+				     },
+			  },
+       AxonHillock => {
+		       components => [
+				      'Segment',
+				      'SegmentGroup',
+				     ],
+		       specific_allocator => 'AxonHillockCalloc',
+		       specific_token => 'TOKEN_AXON_HILLOCK',
+		       typing => {
+				  base => 'phsle',
+				  id => 'pidin',
+				  spec => 'paxhi',
+				  to_base => '->bio.ioh.iol.hsle',
+				 },
+		      },
+       Cell => {
+		components => [
+			       'AxonHillock',
+			       'Segment',
+			       'SegmentGroup',
+			      ],
+		specific_allocator => 'CellCalloc',
+		specific_token => 'TOKEN_CELL',
+		typing => {
+			   base => 'phsle',
+			   id => 'pidin',
+			   spec => 'pcell',
+			   to_base => '->bio.ioh.iol.hsle',
+			  },
+	       },
+       Channel => {
+		   components => [
+				  'AttachmentPoint',
+				  'Equation',
+				 ],
+		   specific_allocator => 'ChannelCalloc',
+		   specific_token => 'TOKEN_CHANNEL',
+		   typing => {
+			      base => 'phsle',
+			      id => 'pidin',
+			      spec => 'pchan',
+			      to_base => '->bio.ioh.iol.hsle',
+			     },
+		  },
+       ConcentrationGateKinetic => {
+				    components => [
+						  ],
+				    specific_allocator => 'ConcentrationGateKineticCalloc',
+				    specific_token => 'TOKEN_CONCENTRATION_GATE_KINETIC',
+				    typing => {
+					       base => 'phsle',
+					       id => 'pidin',
+					       spec => 'pcgatk',
+					       to_base => '->bio.ioh.iol.hsle',
+					      },
+				   },
+       HHGate => {
+		  components => [
+				 'ConcentrationGateKinetic',
+				 'GateKineticBackward',
+				 'GateKineticForward',
+				],
+		  specific_allocator => 'HHGateCalloc',
+		  specific_token => 'TOKEN_HH_GATE',
+		  typing => {
+			     base => 'phsle',
+			     id => 'pidin',
+			     spec => 'pgathh',
+			     to_base => '->bio.ioh.iol.hsle',
+			    },
+		 },
+       Connection => {
+		      components => [],
+		      specific_allocator => 'ConnectionCalloc',
+		      specific_token => 'TOKEN_CONNECTION',
+		      typing => {
+				 base => 'phsle',
+				 id => 'pidin',
+				 spec => 'pconn',
+				 to_base => '->bio.ioh.iol.hsle',
+				},
+		     },
+       ConnectionGroup => {
+			   components => [
+					  'Connection',
+					 ],
+			   specific_allocator => 'ConnectionGroupCalloc',
+			   specific_token => 'TOKEN_CONNECTION_GROUP',
+			   typing => {
+				      base => 'phsle',
+				      id => 'pidin',
+				      spec => 'pvconn',
+				      to_base => '->bio.ioh.iol.hsle',
+				     },
+			  },
+       Equation => {
+		    components => [],
+		    specific_allocator => 'EquationCalloc',
+		    specific_token => 'TOKEN_EQUATION',
+		    typing => {
+			       base => 'phsle',
+			       id => 'pidin',
+			       spec => 'peq',
+			       to_base => '->bio.ioh.iol.hsle',
+			      },
+		   },
+       FiberModel => {
+		      components => [],
+		      specific_allocator => 'FiberCalloc',
+		      specific_token => 'TOKEN_FIBER',
+		      typing => {
+				 base => 'phsle',
+				 id => 'pidin',
+				 spec => 'pfibr',
+				 to_base => '->bio.ioh.iol.hsle',
+				},
+		     },
+       GateKineticBackward => {
+			       components => [],
+			       specific_allocator => 'GateKineticCalloc',
+			       specific_token => 'TOKEN_GATE_KINETIC_BACKWARD',
+			       typing => {
+					  base => 'phsle',
+					  id => 'pidin',
+					  spec => 'pgatk',
+					  to_base => '->bio.ioh.iol.hsle',
+					 },
+			      },
+       GateKineticForward => {
+			      components => [],
+			      specific_allocator => 'GateKineticCalloc',
+			      specific_token => 'TOKEN_GATE_KINETIC_FORWARD',
+			      typing => {
+					 base => 'phsle',
+					 id => 'pidin',
+					 spec => 'pgatk',
+					 to_base => '->bio.ioh.iol.hsle',
+					},
+			     },
+       GroupedModel => {
+			components => [],
+			specific_allocator => 'GroupCalloc',
+			specific_token => 'TOKEN_GROUP',
+			typing => {
+				   base => 'phsle',
+				   id => 'pidin',
+				   spec => 'pgrup',
+				   to_base => '->bio.ioh.iol.hsle',
+				  },
+		       },
+       Network => {
+		   components => [
+				  'Cell',
+				  'Population',
+				  'Projection',
+				  'Network',
+				 ],
+		   specific_allocator => 'NetworkCalloc',
+		   specific_token => 'TOKEN_NETWORK',
+		   typing => {
+			      base => 'phsle',
+			      id => 'pidin',
+			      spec => 'pnetw',
+			      to_base => '->bio.ioh.iol.hsle',
+			     },
+		  },
+       Pool => {
+		components => [],
+		specific_allocator => 'PoolCalloc',
+		specific_token => 'TOKEN_POOL',
+		typing => {
+			   base => 'phsle',
+			   id => 'pidin',
+			   spec => 'ppool',
+			   to_base => '->bio.ioh.iol.hsle',
+			  },
+	       },
+       Population => {
+		      components => [
+				     'Cell',
+				     'Randomvalue',
+				    ],
+		      specific_allocator => 'PopulationCalloc',
+		      specific_token => 'TOKEN_POPULATION',
+		      typing => {
+				 base => 'phsle',
+				 id => 'pidin',
+				 spec => 'ppopu',
+				 to_base => '->bio.ioh.iol.hsle',
+				},
+		     },
+       Projection => {
+		      components => [
+				     'ConnectionGroup',
+				     'Projection',
+				    ],
+		      specific_allocator => 'ProjectionCalloc',
+		      specific_token => 'TOKEN_PROJECTION',
+		      typing => {
+				 base => 'phsle',
+				 id => 'pidin',
+				 spec => 'pproj',
+				 to_base => '->bio.ioh.iol.hsle',
+				},
+		     },
+       Randomvalue => {
+		       components => [
+				      'AttachmentPoint',
+				     ],
+		       specific_allocator => 'RandomvalueCalloc',
+		       specific_token => 'TOKEN_RANDOMVALUE',
+		       typing => {
+				  base => 'phsle',
+				  id => 'pidin',
+				  spec => 'pranv',
+				  to_base => '->bio.ioh.iol.hsle',
+				 },
+		      },
+
+       #t segments are a specific case due to the options, have to check
+
+       Segment => {
+		   components => [
+				  'AttachmentPoint',
+				  'Pool',
+				  'Channel',
+				 ],
+		   specific_allocator => 'SegmentCalloc',
+		   specific_token => 'TOKEN_SEGMENT',
+		   typing => {
+			      base => 'phsle',
+			      id => 'pidin',
+			      spec => 'psegment',
+			      to_base => '->bio.ioh.iol.hsle',
+			     },
+		  },
+
+       #t segment groups are a very specific case seems
+
+#        SegmentGroup => {
+# 			components => [],
+#        specific_allocator => 'SegmentGroupCalloc',
+# 			   specific_token => 'TOKEN_SEGMENT_GROUP',
+# 			typing => {
+# 				   base => 'phsle',
+#        id => 'pidin',
+# 				   spec => 'pD3segm',
+# 				      to_base => '->bio.ioh.iol.hsle',
+# 				  },
+# 		       },
+      };
+
+
 my $method_count = 2;
 
 my $object_methods
@@ -2141,6 +2543,8 @@ my $definitions
 		      },
 
        class_hierarchy => $class_hierarchy,
+       grammar_rules => $grammar_rules,
+       grammar_symbols => $grammar_symbols,
        name => 'symbols',
        object_methods => $object_methods,
        object_methods_custom_code => $object_methods_custom_code,
