@@ -53,14 +53,12 @@ struct ChildPositionData
 
 
 /// 
-/// 
 /// \arg pbio biocomponent to count spike generators for
-///	ppist.: context, biocomponent on top
+/// \arg ppist context, biocomponent on top
 /// 
 /// \return int : number of spike generators in biocomponent, -1 for failure
 /// 
 /// \brief count spike generators in biocomponent
-/// \details 
 /// 
 
 static int 
@@ -118,14 +116,12 @@ int BioComponentCountSpikeGenerators
 
 
 /// 
-/// 
 /// \arg pbio biocomponent to count spike receivers for
-///	ppist.: context, biocomponent on top
+/// \arg ppist context, biocomponent on top
 /// 
 /// \return int : number of spike receivers in biocomponent, -1 for failure
 /// 
 /// \brief count spike receivers in biocomponent
-/// \details 
 /// 
 
 static int 
@@ -183,14 +179,12 @@ int BioComponentCountSpikeReceivers
 
 
 /// 
-/// 
 /// \arg pbio bio component to alias
 /// \arg pidin name of new symbol
 /// 
 /// \return struct symtab_HSolveListElement * : alias for original symbol
 /// 
 /// \brief Create alias to given symbol
-/// \details 
 /// 
 
 struct symtab_HSolveListElement * 
@@ -224,7 +218,6 @@ BioComponentCreateAlias
 
 
 /// 
-/// 
 /// \arg pbio bio component to replace.
 /// \arg iCount replacement count.
 /// \arg phslResult created aliasses (must be empty).
@@ -237,6 +230,7 @@ BioComponentCreateAlias
 ///	phslResult.: created aliasses (must be empty).
 /// 
 /// \brief Create aliasses for a biocomponent.
+///
 /// \details 
 /// 
 ///	The names of the created aliasses are a concatenation of the
@@ -295,14 +289,12 @@ BioComponentCreateAliasses
 
 
 /// 
-/// 
 /// \arg pbio segment to get Cm for
 /// \arg pio input to search
 /// 
 /// \return struct symtab_HSolveListElement * : symbol generating given input
 /// 
 /// \brief Look for symbol that generates given input
-/// \details 
 /// 
 
 struct symtab_HSolveListElement * 
@@ -359,7 +351,6 @@ BioComponentGetChildFromInput
 
 
 /// 
-/// 
 /// \arg pbio component to get parameter for
 /// \arg pcName name of parameter to search for
 /// \arg ppist context of symbol
@@ -367,7 +358,6 @@ BioComponentGetChildFromInput
 /// \return struct symtab_Parameters * : parameter, NULL for failure
 /// 
 /// \brief Get parameter with given name, guaranteed to be writable.
-/// \details 
 /// 
 
 struct symtab_Parameters * 
@@ -429,7 +419,6 @@ BioComponentGetModifiableParameter
 
 
 /// 
-/// 
 /// \arg pbio component to get parameter for
 /// \arg ppist context of symbol
 /// \arg pcName name of parameter to search for
@@ -437,7 +426,6 @@ BioComponentGetModifiableParameter
 /// \return struct symtab_Parameters * : parameter, NULL for failure
 /// 
 /// \brief Get parameter with given name
-/// \details 
 /// 
 
 struct symtab_Parameters * 
@@ -603,13 +591,11 @@ BioComponentGetParameter
 
 
 /// 
-/// 
 /// \arg pbio biological component to init
 /// 
 /// \return void
 /// 
 /// \brief Init biological component
-/// \details 
 /// 
 
 void BioComponentInit(struct symtab_BioComponent * pbio)
@@ -629,7 +615,6 @@ void BioComponentInit(struct symtab_BioComponent * pbio)
 
 
 /// 
-/// 
 /// \arg pbio biological container to search
 /// \arg pcInput name of input to search
 /// \arg i sequential input number
@@ -637,6 +622,7 @@ void BioComponentInit(struct symtab_BioComponent * pbio)
 /// \return struct symtab_InputOutput * : input, NULL if not found
 /// 
 /// \brief Get element attached to named input
+///
 /// \details 
 /// 
 ///	Only one element is searched. No mixing of inputs from elements
@@ -678,7 +664,6 @@ BioComponentLookupBindableIO
 
 
 /// 
-/// 
 /// \arg pbio biological container to search
 /// \arg ppist name(s) to search
 /// \arg iLevel active level of ppist
@@ -689,6 +674,7 @@ BioComponentLookupBindableIO
 ///	found symbol, NULL for not found
 /// 
 /// \brief Hierarchical lookup in subsymbols
+///
 /// \details 
 /// 
 ///	First tries to match with container itself, if fails, returns failure
@@ -731,15 +717,15 @@ BioComponentLookupHierarchical
 
 
 /// 
-/// 
 /// \arg pbio biological component to print symbols for
-///	bAll.....: TRUE == full list of symbols, FALSE == only given comp
+/// \arg bAll TRUE == full list of symbols, FALSE == only given comp
 /// \arg iIndent number of indentation spaces
 /// \arg pfile file to print output to
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Print symbol info for biological component
+///
 /// \details 
 /// 
 
@@ -845,7 +831,6 @@ int BioComponentPrint
 
 
 /// 
-/// 
 /// \arg pbio biological component to resolve input for
 /// \arg ppist context of given element
 /// \arg pcParameter: name of parameter with function
@@ -855,6 +840,7 @@ int BioComponentPrint
 /// \return struct symtab_HSolveListElement * : symbol that gives input
 /// 
 /// \brief Find input to functional parameter
+///
 /// \details 
 /// 
 
@@ -889,15 +875,15 @@ BioComponentResolveParameterFunctionalInput
 
 
 /// 
-/// 
 /// \arg pbio symbol with phsleSearched as subsymbol
 /// \arg ppist context of given element
-///	phsleSearched.: symbol to look for, must be NULL
+/// \arg phsleSearched symbol to look for, must be NULL
 /// \arg ppistSearched context of symbol to look for
 /// 
 /// \return int : serial ID of given child, -1 for not found
 /// 
 /// \brief Obtain a serial ID for given child
+///
 /// \details 
 /// 
 ///	Serial ID's start at 1 for the children. pbio is supposed to have
@@ -1023,15 +1009,15 @@ int BioComponentLookupSerialID
 
 
 /// 
-/// 
 /// \arg pbio symbol to get parameter for.
 /// \arg pcName name of parameter.
 /// \arg ppistValue parameter value.
-///	ppist......: context of symbol (not used at the moment, can be changed).
+/// \arg ppist context of symbol (not used at the moment, can be changed).
 /// 
 /// \return struct symtab_Parameters * : parameter structure.
 /// 
 /// \brief Set parameter with given name.
+///
 /// \details 
 /// 
 
@@ -1093,15 +1079,15 @@ BioComponentSetParameterContext
 
 
 /// 
-/// 
 /// \arg pbio symbol to get parameter for.
 /// \arg pcName name of parameter.
 /// \arg dNumber parameter value.
-///	ppist..: context of symbol (not used at the moment, can be changed).
+/// \arg ppist context of symbol (not used at the moment, can be changed).
 /// 
 /// \return struct symtab_Parameters * : parameter structure.
 /// 
 /// \brief Set parameter with given name.
+///
 /// \details 
 /// 
 
@@ -1154,15 +1140,15 @@ BioComponentSetParameterDouble
 
 
 /// 
-/// 
 /// \arg pbio symbol to get parameter for.
 /// \arg pcName name of parameter.
 /// \arg pcValue parameter value.
-///	ppist..: context of symbol (not used at the moment, can be changed).
+/// \arg ppist context of symbol (not used at the moment, can be changed).
 /// 
 /// \return struct symtab_Parameters * : parameter structure.
 /// 
 /// \brief Set parameter with given name.
+///
 /// \details 
 /// 
 
@@ -1215,7 +1201,6 @@ BioComponentSetParameterString
 
 
 /// 
-/// 
 /// \arg ptstr initialized treespace traversal
 /// \arg pbio symbol to traverse
 /// 
@@ -1226,6 +1211,7 @@ BioComponentSetParameterString
 ///	-1 : immediate abort
 /// 
 /// \brief Traverse biological symbols in tree manner
+///
 /// \details 
 /// 
 
@@ -1310,9 +1296,8 @@ BioComponentTraverse
 
 
 /// 
-/// 
 /// \arg phsle symbol to traverse spike generators for
-///	ppist.......: context of symbol, symbol assumed to be on top
+/// \arg ppist context of symbol, symbol assumed to be on top
 /// \arg pfProcesor spike generator processor
 /// \arg pfFinalizer spike receiver finalizer
 /// \arg pvUserdata any user data
@@ -1320,6 +1305,7 @@ BioComponentTraverse
 /// \return see TstrTraverse()
 /// 
 /// \brief Traverse spike generators, call pfProcessor on each of them
+///
 /// \details 
 /// 
 
@@ -1390,9 +1376,8 @@ BioComponentTraverseSpikeGenerators
 
 
 /// 
-/// 
 /// \arg phsle symbol to traverse spike receivers for
-///	ppist.......: context of symbol, symbol assumed to be on top
+/// \arg ppist context of symbol, symbol assumed to be on top
 /// \arg pfProcesor spike receiver processor
 /// \arg pfFinalizer spike receiver finalizer
 /// \arg pvUserdata any user data
@@ -1400,6 +1385,7 @@ BioComponentTraverseSpikeGenerators
 /// \return see TstrTraverse()
 /// 
 /// \brief Traverse spike receivers, call pfProcessor on each of them
+///
 /// \details 
 /// 
 
