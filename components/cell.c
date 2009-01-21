@@ -36,13 +36,11 @@
 
 
 /// 
-/// 
 /// \return struct symtab_Cell * 
 /// 
 ///	Newly allocated cell, NULL for failure
 /// 
 /// \brief Allocate a new cell symbol table element
-/// \details 
 /// 
 
 struct symtab_Cell * CellCalloc(void)
@@ -72,14 +70,12 @@ struct symtab_Cell * CellCalloc(void)
 
 
 /// 
-/// 
 /// \arg pcell symbol to alias
 /// \arg pidin name of new symbol
 /// 
 /// \return struct symtab_HSolveListElement * : alias for original symbol
 /// 
 /// \brief Create alias to given symbol
-/// \details 
 /// 
 
 struct symtab_HSolveListElement * 
@@ -107,13 +103,11 @@ CellCreateAlias
 
 
 /// 
-/// 
 /// \arg pcell cell to init
 /// 
 /// \return void
 /// 
 /// \brief init cell
-/// \details 
 /// 
 
 void CellInit(struct symtab_Cell *pcell)
@@ -129,7 +123,6 @@ void CellInit(struct symtab_Cell *pcell)
 
 
 /// 
-/// 
 /// \arg dx X coordinate
 /// \arg dy Y coordinate
 /// \arg dz Z coordinate
@@ -137,6 +130,7 @@ void CellInit(struct symtab_Cell *pcell)
 /// \return struct symtab_Cell * : resulting cell, NULL for failure
 /// 
 /// \brief Allocate cell, put at specified position.
+///
 /// \details 
 /// 
 ///	Contains memory leak.
