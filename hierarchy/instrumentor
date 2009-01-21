@@ -348,7 +348,7 @@ sub generate_anysymbol_rules
 **
 ** Semantic action: default copy stack top, using base type.
 **
-** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
 **
 */
 
@@ -409,7 +409,7 @@ sub generate_anysymbol_types
 **
 ** All symbols reduce to this symbol.
 **
-** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
 **
 */
 
@@ -1326,7 +1326,7 @@ sub generate_specific_symbol_rules
 **
 ** Semantic action: default copy stack top, using base type.
 **
-** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
 **
 */
 
@@ -1397,7 +1397,7 @@ sub generate_specific_symbol_types
 **
 ** $symbol_name typing
 **
-** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
 **
 */
 
@@ -1457,7 +1457,7 @@ sub generate_specific_section_rules
 **
 ** Semantic action: copy stack top, using promoting to base type.
 **
-** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
 **
 */
 
@@ -1508,7 +1508,7 @@ sub generate_specific_section_types
 **
 ** $symbol_name section typing
 **
-** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
 **
 */
 
@@ -1552,7 +1552,7 @@ sub generate_specific_section_2_rules
 **
 ** $symbol_name section rules
 **
-** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
 **
 */
 
@@ -1605,7 +1605,7 @@ sub generate_specific_section_2_rules
 **
 ** $symbol_name front rules
 **
-** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
 **
 */
 
@@ -1658,7 +1658,7 @@ sub generate_specific_section_2_rules
 **
 ** $symbol_name end rules
 **
-** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
 **
 */
 
@@ -1711,7 +1711,7 @@ sub generate_specific_section_2_rules
 **
 ** $symbol_name description rules
 **
-** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
 **
 */
 
@@ -1794,7 +1794,7 @@ sub generate_specific_section_2_types
 **
 ** $symbol_name section typing
 **
-** $0 generates a grammar file with semantic annotations, given a set of symbols and their relationships.
+** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
 **
 */
 
