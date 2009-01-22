@@ -66,13 +66,11 @@ static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename);
 
 
 /// 
-/// 
 /// \return struct symtab_Channel * 
 /// 
 ///	Newly allocated channel, NULL for failure
 /// 
 /// \brief Allocate a new channel symbol table element
-/// \details 
 /// 
 
 struct symtab_Channel * ChannelCalloc(void)
@@ -102,14 +100,12 @@ struct symtab_Channel * ChannelCalloc(void)
 
 
 /// 
-/// 
 /// \arg pchan symbol to alias
 /// \arg pidin name of new symbol
 /// 
 /// \return struct symtab_HSolveListElement * : alias for original symbol
 /// 
 /// \brief Create alias to given symbol
-/// \details 
 /// 
 
 struct symtab_HSolveListElement * 
@@ -137,7 +133,6 @@ ChannelCreateAlias
 
 
 /// 
-/// 
 /// \arg pchan channel to get channel type for.
 /// \arg ppist context of channel.
 /// 
@@ -146,7 +141,6 @@ ChannelCreateAlias
 ///	Textual description of the channel type, NULL for failure.
 /// 
 /// \brief Get CHANNEL_TYPE parameter for this channel.
-/// \details 
 /// 
 
 struct channel_children_counts
@@ -328,7 +322,6 @@ ChannelGetChannelType
 
 
 /// 
-/// 
 /// \arg pchan channel to check
 /// \arg ppist context of channel
 /// 
@@ -337,7 +330,6 @@ ChannelGetChannelType
 ///	channel equation, NULL if none, -1 for failure
 /// 
 /// \brief get channel equation
-/// \details 
 /// 
 
 static int 
@@ -418,13 +410,11 @@ ChannelGetEquation
 
 
 /// 
-/// 
 /// \arg pchan channel to check
 /// 
 /// \return struct descr_genesis_object * : genesis object, NULL for failure
 /// 
 /// \brief get channel genesis object
-/// \details 
 /// 
 
 struct descr_genesis_object *
@@ -459,7 +449,6 @@ ChannelGetGenesisObject(struct symtab_Channel *pchan)
 
 
 /// 
-/// 
 /// \arg pchan channel to check
 /// \arg ppist context of channel
 /// 
@@ -468,7 +457,6 @@ ChannelGetGenesisObject(struct symtab_Channel *pchan)
 ///	incoming attachment, NULL if none, -1 for failure
 /// 
 /// \brief get channel incoming attachment.
-/// \details 
 /// 
 
 static int 
@@ -554,7 +542,6 @@ ChannelGetIncomingVirtual
 
 
 /// 
-/// 
 /// \arg pchan symbol to get parameter for
 /// \arg ppist context of symbol.
 /// \arg pcName name of parameter
@@ -564,7 +551,6 @@ ChannelGetIncomingVirtual
 ///	Parameter structure, NULL for failure.
 /// 
 /// \brief Get specific parameter of symbol.
-/// \details 
 /// 
 
 struct symtab_Parameters * 
@@ -608,14 +594,12 @@ ChannelGetParameter
 
 
 /// 
-/// 
 /// \arg pchan channel to check
 /// \arg ppist context of channel
 /// 
 /// \return int : TRUE if channel contains an equation.
 /// 
 /// \brief Check if channel contains an equation.
-/// \details 
 /// 
 
 int ChannelHasEquation
@@ -628,14 +612,12 @@ int ChannelHasEquation
 
 
 /// 
-/// 
 /// \arg pchan channel to check
 /// \arg ppist context of channel
 /// 
 /// \return int : TRUE if channel MG block dependent
 /// 
 /// \brief Check if channel conductance is blocked by magnesium.
-/// \details 
 /// 
 
 int
@@ -680,14 +662,12 @@ ChannelHasMGBlockGMAX
 
 
 /// 
-/// 
 /// \arg pchan channel to check
 /// \arg ppist context of channel
 /// 
 /// \return int : TRUE if channel has nernst
 /// 
 /// \brief Check if channel Erev nernst-equation controlled
-/// \details 
 /// 
 
 int ChannelHasNernstErev
@@ -735,13 +715,11 @@ int ChannelHasNernstErev
 
 
 /// 
-/// 
 /// \arg pchan channel to init
 /// 
 /// \return void
 /// 
 /// \brief init channel
-/// \details 
 /// 
 
 void ChannelInit(struct symtab_Channel *pchan)
@@ -788,7 +766,6 @@ void ChannelInit(struct symtab_Channel *pchan)
 
 
 /// 
-/// 
 /// \arg pchan channel to scale value for
 /// \arg ppist context of given element
 /// \arg dValue value to scale
@@ -797,7 +774,6 @@ void ChannelInit(struct symtab_Channel *pchan)
 /// \return double : scaled value, FLT_MAX for failure
 /// 
 /// \brief Scale value according to parameter type and symbol type
-/// \details 
 /// 
 
 double
@@ -914,14 +890,12 @@ ChannelParameterScaleValue
 
 
 /// 
-/// 
 /// \arg pchan channel to check
 /// \arg ppist context of channel
 /// 
 /// \return int : TRUE if receives spikes
 /// 
 /// \brief Check if channel receives spikes
-/// \details 
 /// 
 
 int ChannelReceivesSpikes
@@ -934,13 +908,13 @@ int ChannelReceivesSpikes
 
 
 /// 
-/// 
 /// \arg pchan channel to set table parameters for
 /// \arg pcFilename filename of table to read
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Initialize tabulated channel.
+///
 /// \details 
 /// 
 ///	Call ChannelSetup() after all bindable I/O relations have been 
@@ -971,12 +945,12 @@ ChannelSetTableParameters
 
 
 /// 
-/// 
 /// \arg pchan channel to setup
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Setup tabulated channel
+///
 /// \details 
 /// 
 ///	Reads tables according to bindable I/O relations
@@ -1072,14 +1046,12 @@ int ChannelSetup(struct symtab_Channel *pchan,struct ParserContext *pac)
 
 
 /// 
-/// 
 /// \arg pchan channel to print symbols for
 /// \arg pcFilename filename of table to read
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Initialize tabulated channel
-/// \details 
 /// 
 
 static int
