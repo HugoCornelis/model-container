@@ -89,13 +89,13 @@ sub build_forward_derivation_lists
 
     # loop over all types
 
-    foreach my $type (keys %$class_hierarchy)
+    foreach my $type (sort keys %$class_hierarchy)
     {
 	# loop over all types
 
 	my $forward_derivation_list = {};
 
-	foreach my $subtype (keys %$class_hierarchy)
+	foreach my $subtype (sort keys %$class_hierarchy)
 	{
 	    # if this type is derived from the original
 
@@ -146,7 +146,7 @@ sub build_isas
 
     # loop over all types
 
-    foreach my $type (keys %$class_hierarchy)
+    foreach my $type (sort keys %$class_hierarchy)
     {
 	my $count = 1;
 
@@ -359,7 +359,7 @@ sub generate_anysymbol_rules
 
     my $first = 1;
 
-    foreach my $symbol_name (keys %$grammar_symbols)
+    foreach my $symbol_name (sort keys %$grammar_symbols)
     {
 	if ($first)
 	{
@@ -447,7 +447,7 @@ sub generate_callees
 
 	# loop over all callees that should be generated
 
-	foreach my $callee (keys %$object_methods_custom_code)
+	foreach my $callee (sort keys %$object_methods_custom_code)
 	{
 	    # determine filename
 
@@ -872,7 +872,7 @@ sub generate_instanceof_relationships
 
     # loop over all types
 
-    foreach my $type (keys %$class_hierarchy)
+    foreach my $type (sort keys %$class_hierarchy)
     {
 	print $file "\n// $type\n\n";
 
@@ -904,7 +904,7 @@ sub generate_instanceof_relationships
 		print $file "(p)->iType == HIERARCHY_TYPE_$definitions->{name}_$type /* $type_number */\\\n";
 	    }
 
-	    foreach my $forward_derivation (keys %$forward_derivation_list)
+	    foreach my $forward_derivation (sort keys %$forward_derivation_list)
 	    {
 		if (!exists $class_hierarchy->{$forward_derivation})
 		{
@@ -961,7 +961,7 @@ sub generate_instanceof_relationships
 		print $file "(i) == HIERARCHY_TYPE_$definitions->{name}_$type /* $type_number */\\\n";
 	    }
 
-	    foreach my $forward_derivation (keys %$forward_derivation_list)
+	    foreach my $forward_derivation (sort keys %$forward_derivation_list)
 	    {
 		if (!exists $class_hierarchy->{$forward_derivation})
 		{
@@ -1109,7 +1109,7 @@ sub generate_runtime_casters
 
     # loop over all types
 
-    foreach my $type (keys %$class_hierarchy)
+    foreach my $type (sort keys %$class_hierarchy)
     {
 	# generate type name
 
@@ -1257,7 +1257,7 @@ struct $typename_type * cast_${isa}_2_${type}(struct $typename_isa *p);\n\n";
 
 	# loop over all types
 
-	foreach my $type (keys %$class_hierarchy)
+	foreach my $type (sort keys %$class_hierarchy)
 	{
 	    #! see above, similar code
 
@@ -1305,7 +1305,7 @@ sub generate_specific_symbol_rules
     my $grammar_rules = $definitions->{grammar_rules};
     my $grammar_symbols = $definitions->{grammar_symbols};
 
-    foreach my $symbol_name (keys %$grammar_symbols)
+    foreach my $symbol_name (sort keys %$grammar_symbols)
     {
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	    = gmtime(time());
@@ -1378,7 +1378,7 @@ sub generate_specific_symbol_types
     my $grammar_rules = $definitions->{grammar_rules};
     my $grammar_symbols = $definitions->{grammar_symbols};
 
-    foreach my $symbol_name (keys %$grammar_symbols)
+    foreach my $symbol_name (sort keys %$grammar_symbols)
     {
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	    = gmtime(time());
@@ -1403,7 +1403,10 @@ sub generate_specific_symbol_types
 
 ";
 
-	print $file "%type <$definitions->{symbols}->{$symbol_name}->{typing}->{base}> ${symbol_name}Symbol
+# 	print "$symbol_name\n";
+# 	print Dumper($grammar_symbols->{$symbol_name});
+
+	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{base}> ${symbol_name}Symbol
 ";
 
 	my $components = $grammar_symbols->{$symbol_name}->{components};
@@ -1413,11 +1416,11 @@ sub generate_specific_symbol_types
 	    next;
 	}
 
-	print $file "%type <$definitions->{symbols}->{$symbol_name}->{typing}->{base}> ${symbol_name}Component
+	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{base}> ${symbol_name}Component
 ";
-	print $file "%type <$definitions->{symbols}->{$symbol_name}->{typing}->{id}> ${symbol_name}SectionFront
+	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{id}> ${symbol_name}SectionFront
 ";
-	print $file "%type <$definitions->{symbols}->{$symbol_name}->{typing}->{spec}> ${symbol_name}Description
+	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{spec}> ${symbol_name}Description
 ";
 
 	print $file "
@@ -1436,7 +1439,7 @@ sub generate_specific_section_rules
     my $grammar_rules = $definitions->{grammar_rules};
     my $grammar_symbols = $definitions->{grammar_symbols};
 
-    foreach my $symbol_name (keys %$grammar_symbols)
+    foreach my $symbol_name (sort keys %$grammar_symbols)
     {
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	    = gmtime(time());
@@ -1489,7 +1492,7 @@ sub generate_specific_section_types
     my $grammar_rules = $definitions->{grammar_rules};
     my $grammar_symbols = $definitions->{grammar_symbols};
 
-    foreach my $symbol_name (keys %$grammar_symbols)
+    foreach my $symbol_name (sort keys %$grammar_symbols)
     {
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	    = gmtime(time());
@@ -1514,7 +1517,7 @@ sub generate_specific_section_types
 
 ";
 
-	print $file "%type <$definitions->{symbols}->{$symbol_name}->{typing}->{spec}> ${symbol_name}Section
+	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{spec}> ${symbol_name}Section
 ";
 	print $file "
 
@@ -1532,7 +1535,7 @@ sub generate_specific_section_2_rules
     my $grammar_rules = $definitions->{grammar_rules};
     my $grammar_symbols = $definitions->{grammar_symbols};
 
-    foreach my $symbol_name (keys %$grammar_symbols)
+    foreach my $symbol_name (sort keys %$grammar_symbols)
     {
 	{
 	    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
@@ -1775,7 +1778,7 @@ sub generate_specific_section_2_types
     my $grammar_rules = $definitions->{grammar_rules};
     my $grammar_symbols = $definitions->{grammar_symbols};
 
-    foreach my $symbol_name (keys %$grammar_symbols)
+    foreach my $symbol_name (sort keys %$grammar_symbols)
     {
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	    = gmtime(time());
@@ -1800,7 +1803,7 @@ sub generate_specific_section_2_types
 
 ";
 
-	print $file "%type <$definitions->{symbols}->{$symbol_name}->{typing}->{spec}> ${symbol_name}Section
+	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{spec}> ${symbol_name}Section
 ";
 	print $file "
 
@@ -2126,7 +2129,7 @@ sub generate_vtables
 
     # loop over all types
 
-    foreach my $type (keys %$class_hierarchy)
+    foreach my $type (sort keys %$class_hierarchy)
     {
 	# determine filename
 
