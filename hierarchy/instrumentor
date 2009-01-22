@@ -1314,7 +1314,7 @@ sub generate_specific_symbol_rules
 
 	# determine filenames
 
-	my $filename = "${symbol_name}_symbol";
+	my $filename = "${symbol_name}_component";
 
 	# open file, write header
 
@@ -1448,7 +1448,7 @@ sub generate_specific_section_rules
 
 	# determine filenames
 
-	my $filename = "${symbol_name}_section";
+	my $filename = "${symbol_name}_symbol";
 
 	# open file, write header
 
@@ -1545,7 +1545,7 @@ sub generate_specific_section_2_rules
 
 	    # determine filenames
 
-	    my $filename = "${symbol_name}_description_1";
+	    my $filename = "${symbol_name}_section";
 
 	    # open file, write header
 
@@ -1598,7 +1598,7 @@ sub generate_specific_section_2_rules
 
 	    # determine filenames
 
-	    my $filename = "${symbol_name}_description_2";
+	    my $filename = "${symbol_name}_front";
 
 	    # open file, write header
 
@@ -1651,7 +1651,7 @@ sub generate_specific_section_2_rules
 
 	    # determine filenames
 
-	    my $filename = "${symbol_name}_description_3";
+	    my $filename = "${symbol_name}_end";
 
 	    # open file, write header
 
@@ -1704,7 +1704,7 @@ sub generate_specific_section_2_rules
 
 	    # determine filenames
 
-	    my $filename = "${symbol_name}_description_4";
+	    my $filename = "${symbol_name}_description";
 
 	    # open file, write header
 
@@ -1738,6 +1738,7 @@ sub generate_specific_section_2_rules
 
 		foreach my $part ( @{ [ @$parts, ] }, )
 		{
+		    $part =~ s/specific_component/${symbol_name}Component/g;
 		    $part =~ s/specific_description/${symbol_name}Description/g;
 		    $part =~ s/specific_end/${symbol_name}End/g;
 		    $part =~ s/specific_front/${symbol_name}Front/g;
@@ -1753,6 +1754,7 @@ sub generate_specific_section_2_rules
 		my $semantic = $subpart->{semantic};
 
 		$semantic =~ s/specific_allocator/$grammar_symbols->{$symbol_name}->{specific_allocator}/g;
+		$semantic =~ s/specific_component/${symbol_name}Component/g;
 		$semantic =~ s/specific_description/${symbol_name}Description/g;
 		$semantic =~ s/specific_end/${symbol_name}End/g;
 		$semantic =~ s/specific_front/${symbol_name}Front/g;
@@ -1767,49 +1769,6 @@ sub generate_specific_section_2_rules
 	    $file->close();
 	}
 
-    }
-}
-
-
-sub generate_specific_section_2_types
-{
-    my $definitions = shift;
-
-    my $grammar_rules = $definitions->{grammar_rules};
-    my $grammar_symbols = $definitions->{grammar_symbols};
-
-    foreach my $symbol_name (sort keys %$grammar_symbols)
-    {
-	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
-	    = gmtime(time());
-
-	my $date = gmtime();
-
-	# determine filenames
-
-	my $filename = "${symbol_name}_section_2";
-
-	# open file, write header
-
-	my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.types");
-
-	print $file "/**
-**
-** $symbol_name section typing
-**
-** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
-**
-*/
-
-";
-
-	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{spec}> ${symbol_name}Section
-";
-	print $file "
-
-";
-
-	$file->close();
     }
 }
 
@@ -2605,8 +2564,6 @@ options :
 	generate_specific_section_rules($definitions);
 
 	# generate specific section types and rules (2)
-
-# 	generate_specific_section_2_types($definitions);
 
 	generate_specific_section_2_rules($definitions);
 
