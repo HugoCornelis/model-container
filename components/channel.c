@@ -321,17 +321,6 @@ ChannelGetChannelType
 }
 
 
-/// 
-/// \arg pchan channel to check
-/// \arg ppist context of channel
-/// 
-/// \return struct symtab_HSolveListElement * : 
-/// 
-///	channel equation, NULL if none, -1 for failure
-/// 
-/// \brief get channel equation
-/// 
-
 static int 
 ChannelEquationChecker
 (struct TreespaceTraversal *ptstr,void *pvUserdata)
@@ -361,6 +350,17 @@ ChannelEquationChecker
 
     return(iResult);
 }
+
+/// 
+/// \arg pchan channel to check
+/// \arg ppist context of channel
+/// 
+/// \return struct symtab_HSolveListElement * : 
+/// 
+///	channel equation, NULL if none, -1 for failure
+/// 
+/// \brief get channel equation
+/// 
 
 struct symtab_HSolveListElement *
 ChannelGetEquation
