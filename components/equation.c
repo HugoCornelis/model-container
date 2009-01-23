@@ -27,13 +27,11 @@
 
 
 /// 
-/// 
 /// \return struct symtab_Equation * 
 /// 
 ///	Newly allocated equation, NULL for failure
 /// 
 /// \brief Allocate a new equation symbol table element
-/// \details 
 /// 
 
 struct symtab_Equation * EquationCalloc(void)
@@ -67,14 +65,12 @@ struct symtab_Equation * EquationCalloc(void)
 
 
 /// 
-/// 
 /// \arg peq symbol to alias
 /// \arg pidin name of new symbol
 /// 
 /// \return struct symtab_HSolveListElement * : alias for original symbol
 /// 
 /// \brief Create alias to given symbol
-/// \details 
 /// 
 
 struct symtab_HSolveListElement * 
@@ -102,13 +98,11 @@ EquationCreateAlias
 
 
 /// 
-/// 
 /// \arg peq equation to init
 /// 
 /// \return int : type of equation (incoming, outgoing).
 /// 
 /// \brief Get type of equation.
-/// \details 
 /// 
 
 int EquationGetType(struct symtab_Equation *peq)
@@ -118,13 +112,11 @@ int EquationGetType(struct symtab_Equation *peq)
 
 
 /// 
-/// 
 /// \arg peq equation to init
 /// 
 /// \return void
 /// 
 /// \brief Init equation
-/// \details 
 /// 
 
 void EquationInit(struct symtab_Equation * peq)
@@ -140,14 +132,12 @@ void EquationInit(struct symtab_Equation * peq)
 
 
 /// 
-/// 
 /// \arg peq equation to set type for.
 /// \arg iType type of equation.
 /// 
 /// \return int : success of operation.
 /// 
 /// \brief Set type of equation.
-/// \details 
 /// 
 
 int EquationSetType(struct symtab_Equation *peq, int iType)
