@@ -198,18 +198,9 @@ struct symtab_HSolveListElement
 #define FLAGS_HSLE_TRAVERSAL		16
 
 
-#define InstanceOfMovable(phsle)				\
-    ((phsle)->iType == HIERARCHY_TYPE_symbols_cell		\
-     || (phsle)->iType == HIERARCHY_TYPE_symbols_group		\
-     || (phsle)->iType == HIERARCHY_TYPE_symbols_network	\
-     || (phsle)->iType == HIERARCHY_TYPE_symbols_population	\
-     || (phsle)->iType == HIERARCHY_TYPE_symbols_v_segment)
-
-#define InstanceOfMechanism(phsle)			\
-    ((phsle)->iType == HIERARCHY_TYPE_symbols_channel	\
-     || (phsle)->iType == HIERARCHY_TYPE_symbols_pool)
-
 #include "hierarchy/output/symbols/instanceof_relationships.h"
+
+#include "hierarchy/output/symbols/dimension_space_locators.h"
 
 
 /// \def
@@ -441,7 +432,7 @@ SymbolAllSerialsEntailChild
     int iPrincipal = 1;
 
 #ifdef TREESPACES_SUBSET_MECHANISM
-    int iMechanism = InstanceOfMechanism(phsleChild) ? 1 : 0 ;
+    int iMechanism = in_dimension_mechanism(phsleChild) ? 1 : 0 ;
 #endif
 
 #ifdef TREESPACES_SUBSET_SEGMENT

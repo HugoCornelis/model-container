@@ -170,6 +170,9 @@ my $class_hierarchy
 				     'piSymbolType2Biolevel' => 'BIOLEVEL_MECHANISM',
 				    },
 		     description => 'a ion conductance through a cell membrane',
+		     dimensions => [
+				    'mechanism',
+				   ],
 		     isa => 'bio_comp',
 		     name => 'symtab_Channel',
 		     parameters => {
@@ -332,6 +335,9 @@ my $class_hierarchy
 				  'piSymbolType2Biolevel' => 'BIOLEVEL_MECHANISM',
 				 },
 		  description => 'a concentration pool, exponential decay',
+		  dimensions => [
+				 'mechanism',
+				],
 		  isa => 'bio_comp',
 		  name => 'symtab_Pool',
 		  parameters => {
@@ -413,6 +419,9 @@ my $class_hierarchy
 				   'piSymbolType2Biolevel' => 'BIOLEVEL_CELL',
 				  },
 		   description => 'a cell, presumably a neuron',
+		   dimensions => [
+				  'movable',
+				 ],
 		   isa => 'segmenter',
 		   name => 'symtab_Cell',
 		   parameters => {
@@ -443,6 +452,9 @@ my $class_hierarchy
 				      'piSymbolType2Biolevel' => 'BIOLEVEL_NETWORK',
 				     },
 		      description => 'a set of populations connected with projections',
+		      dimensions => [
+				     'movable',
+				    ],
 		      isa => 'segmenter',
 		      name => 'symtab_Network',
 		      parameters => {
@@ -458,6 +470,9 @@ my $class_hierarchy
 					 'piSymbolType2Biolevel' => 'BIOLEVEL_POPULATION',
 					},
 			 description => 'a set of cells',
+			 dimensions => [
+					'movable',
+				       ],
 			 isa => 'segmenter',
 			 name => 'symtab_Population',
 			 parameters => {
@@ -554,6 +569,9 @@ my $class_hierarchy
 				 'traverse_segments' => 'v_segment',
 				},
 		      description => 'a group of segments',
+		      dimensions => [
+				     'movable',
+				    ],
 		      isa => 'vector',
 		      name => 'symtab_VSegment',
 		      parameters => {
@@ -570,6 +588,9 @@ my $class_hierarchy
 			     'create_alias' => 'group',
 			    },
 		  description => 'a heterogeneous group of components',
+		  dimensions => [
+				 'movable',
+				],
 		  isa => 'bio_comp',
 		  name => 'symtab_Group',
 		  parameters => {

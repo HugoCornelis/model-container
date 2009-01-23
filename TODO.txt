@@ -1,5 +1,8 @@
 -*- outline -*-
 
+* movable elements
+grep //t movable_parameter_name().
+
 * implement tests for parameter that cannot be resolved
 Bugs in the source can easily be found by browsing on
 SegmenterIsSpherical().
@@ -79,10 +82,6 @@ See if Tree::Parser can be used to read neurolucida files.
 allow to map (climbing) fibers from the neuromorpho database using the
 swc tag value, if that makes sense.
 
-* Remove from symboltable.h
-#define InstanceOfMovable(phsle)
-#define InstanceOfMechanism(phsle)
-
 * Add support for Rall's geometric ratio
 GR = \sum[d]{ \frac{ r ^ \frac{3}{2}_d }{ r ^ \frac{3}{2}_p }
 
@@ -158,6 +157,9 @@ mark the end of a segment.  Perhaps I should be using a inclusive
 traversal starting from molecular level ?
 
 ** Get rid of the CHILDREN_TRAVERSAL_FIXED_RETURN flag
+
+** SegmenterSegmentSelector()
+** VSegmentSegmentSelector()
 
 * bojum installation problems
 ** install the model library

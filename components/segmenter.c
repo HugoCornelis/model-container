@@ -2056,7 +2056,9 @@ SegmenterSegmentSelector
 
     //- if below segment level
 
-    if (InstanceOfMechanism(phsle))
+    //t must be done with biolevels
+
+    if (in_dimension_mechanism(phsle))
     {
 	//- do not process, continue with siblings
 

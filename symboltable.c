@@ -614,7 +614,10 @@ SymbolGetWorkloadIndividual
     {
 	iResult = wsc.iConnection;
     }
-    else if (InstanceOfMechanism(phsle))
+
+    //t some weird testing going on here: why not just using instanceof ?
+
+    else if (in_dimension_mechanism(phsle))
     {
 	if (phsle->iType == HIERARCHY_TYPE_symbols_channel)
 	{
@@ -1132,13 +1135,15 @@ SymbolParameterTransformValue
 
     //- and if coordinate parameter
 
+    //t movable_parameter_name()
+
     if ((pcName[0] == 'X' || pcName[0] == 'Y' || pcName[0] == 'Z')
 	&& pcName[1] == '\0')
 
     {
 	//- if this is a movable symbol
 
-	if (InstanceOfMovable(phsle))
+	if (in_dimension_movable(phsle))
 	{
 	    ///
 	    /// \todo what is really needed :
