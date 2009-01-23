@@ -336,7 +336,7 @@ sub generate_anysymbol_rules
 
     # determine filenames
 
-    my $filename = "anysymbol";
+    my $filename = "1_anysymbol";
 
     # open file, write header
 
@@ -374,6 +374,8 @@ sub generate_anysymbol_rules
 
 	print $file "		${symbol_name}Symbol
 ";
+
+	$first = 0;
     }
 
     print $file "	;
@@ -399,7 +401,7 @@ sub generate_anysymbol_types
 
     # determine filenames
 
-    my $filename = "anysymbol";
+    my $filename = "1_anysymbol";
 
     # open file, write header
 
@@ -1314,7 +1316,7 @@ sub generate_specific_symbol_rules
 
 	# determine filenames
 
-	my $filename = "${symbol_name}_component";
+	my $filename = "3_${symbol_name}_component";
 
 	# open file, write header
 
@@ -1387,7 +1389,7 @@ sub generate_specific_symbol_types
 
 	# determine filenames
 
-	my $filename = "${symbol_name}_symbol";
+	my $filename = "2_${symbol_name}_symbol";
 
 	# open file, write header
 
@@ -1448,7 +1450,7 @@ sub generate_specific_section_rules
 
 	# determine filenames
 
-	my $filename = "${symbol_name}_symbol";
+	my $filename = "2_${symbol_name}_symbol";
 
 	# open file, write header
 
@@ -1580,12 +1582,12 @@ sub generate_specific_section_2_rules
 		$part =~ s/specific_front/${symbol_name}Front/g;
 		$part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
 
-		print $file "$part\n";
+		print $file "\t\t$part\n";
 	    }
 
 	    print $file "		{\n";
 	    print $file $specific_section->{semantic};
-	    print $file "		}\n";
+	    print $file "		}\n;\n";
 
 	    $file->close();
 	}
@@ -1633,12 +1635,12 @@ sub generate_specific_section_2_rules
 		$part =~ s/specific_front/${symbol_name}Front/g;
 		$part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
 
-		print $file "$part\n";
+		print $file "\t\t$part\n";
 	    }
 
 	    print $file "		{\n";
 	    print $file $specific_front->{semantic};
-	    print $file "		}\n";
+	    print $file "		}\n;\n";
 
 	    $file->close();
 	}
@@ -1686,12 +1688,12 @@ sub generate_specific_section_2_rules
 		$part =~ s/specific_front/${symbol_name}Front/g;
 		$part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
 
-		print $file "$part\n";
+		print $file "\t\t$part\n";
 	    }
 
 	    print $file "		{\n";
 	    print $file $specific_end->{semantic};
-	    print $file "		}\n";
+	    print $file "		}\n;\n";
 
 	    $file->close();
 	}
@@ -1730,10 +1732,14 @@ sub generate_specific_section_2_rules
 
 	    my $global_parts = $specific_description->{parts};
 
+	    my $description_parts = [];
+
 	    #! note the subtle copy operation, expect the unexpected otherwise
 
 	    foreach my $subpart ( @$global_parts, )
 	    {
+		my $description_part = '';
+
 		my $parts = $subpart->{parts};
 
 		foreach my $part ( @{ [ @$parts, ] }, )
@@ -1744,10 +1750,14 @@ sub generate_specific_section_2_rules
 		    $part =~ s/specific_front/${symbol_name}Front/g;
 		    $part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
 
-		    print $file "$part\n";
+# 		    print $file "$part\n";
+
+		    $description_part .= "\t\t" . $part . "\n";
 		}
 
-		print $file "		{\n";
+# 		print $file "		{\n";
+
+		$description_part .= "		{\n";
 
 		#t add symbol type checker here.
 
@@ -1761,10 +1771,18 @@ sub generate_specific_section_2_rules
 		$semantic =~ s/specific_to_base/$grammar_symbols->{$symbol_name}->{typing}->{to_base}/g;
 		$semantic =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
 
-		print $file $semantic;
+# 		print $file $semantic;
 
-		print $file "		}\n";
+# 		print $file "		}\n";
+
+		$description_part .= $semantic;
+
+		$description_part .= "		}\n";
+
+		push @$description_parts, $description_part;
 	    }
+
+	    print $file (join "\t|\n", @$description_parts) . ";\n";
 
 	    $file->close();
 	}

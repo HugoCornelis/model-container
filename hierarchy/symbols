@@ -813,8 +813,8 @@ my $grammar_rules
 					  },
 					  {
 					   parts => [
-						     '		specific_token',
-						     '		ChildSectionOptionalInputOptionalParameters',
+						     'specific_token',
+						     'ChildSectionOptionalInputOptionalParameters',
 						    ],
 					   semantic => '
 #line
@@ -836,8 +836,8 @@ my $grammar_rules
 					  },
 					  {
 					   parts => [
-						     '		specific_description',
-						     '		specific_component',
+						     'specific_description',
+						     'specific_component',
 						    ],
 					   semantic => '
 #line
@@ -856,8 +856,8 @@ my $grammar_rules
 					  },
 					  {
 					   parts => [
-						     '		specific_description',
-						     '		Parameters',
+						     'specific_description',
+						     'Parameters',
 						    ],
 					   semantic => '
 #line
@@ -878,8 +878,8 @@ my $grammar_rules
 			       },
        specific_end => {
 			parts => [
-				  '		EndPushedPidin',
-				  '		specific_token',
+				  'EndPushedPidin',
+				  'specific_token',
 				 ],
 			semantic => '
 #line
@@ -887,8 +887,8 @@ my $grammar_rules
 		       },
        specific_front => {
 			  parts => [
-				    '		specific_token',
-				    '		OptionalIdentifierOptionIndexPushedPidin',
+				    'specific_token',
+				    'OptionalIdentifierOptionIndexPushedPidin',
 				   ],
 			  semantic => '
 #line
@@ -899,11 +899,11 @@ my $grammar_rules
 			 },
        specific_section => {
 			    parts => [
-				      '		specific_front',
-				      '			InputOutputRelations',
-				      '			OptionalItemInputRelations',
-				      '			specific_description',
-				      '		specific_end',
+				      'specific_front',
+				      '	InputOutputRelations',
+				      '	OptionalItemInputRelations',
+				      '	specific_description',
+				      'specific_end',
 				     ],
 			    semantic => '
 #line
