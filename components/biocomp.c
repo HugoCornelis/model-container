@@ -767,7 +767,7 @@ int BioComponentPrint
 
     if (palgi)
     {
-	PrintSymbolIndent(&pbio->ioh.iol.hsle,iIndent, pfile);
+	PrintSymbolIndent(&pbio->ioh.iol.hsle, iIndent, pfile);
 
 	fprintf
 	    (pfile,"AlgorithmInstance (%s)\n",AlgorithmInstanceGetName(palgi));
@@ -775,7 +775,7 @@ int BioComponentPrint
 
     //- parameters
 
-    ParContainerPrint(pbio->pparc,TRUE,iIndent + 4, pfile);
+    ParContainerPrint(pbio->pparc, TRUE, iIndent + 4, pfile);
 
     //- do indent
 
@@ -794,7 +794,7 @@ int BioComponentPrint
     {
 	//- print symbol
 
-	if (!SymbolPrint(phsle,iIndent + 4, pfile))
+	if (!SymbolPrint(phsle, iIndent + 4, pfile))
 	{
 	    bResult = FALSE;
 	    break;
@@ -821,7 +821,7 @@ int BioComponentPrint
 
     if (pbio)
     {
-	bResult = BioComponentPrint(pbio,bAll,iIndent + 4, pfile);
+	bResult = BioComponentPrint(pbio,bAll, iIndent + 4, pfile);
     }
 
     //- return result
