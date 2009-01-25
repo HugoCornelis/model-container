@@ -1847,6 +1847,10 @@ sub generate_specific_section_2_rules
 
 		foreach my $part ( @{ [ @$parts, ] }, )
 		{
+		    #t these parts also encode dependencies:
+		    #t if one of these parts contains 'specific_component',
+		    #t the current iteration of the outer loop should be skipped too.
+
 		    $part =~ s/specific_component/${symbol_name}Component/g;
 		    $part =~ s/specific_description/${symbol_name}Description/g;
 		    $part =~ s/specific_end/${symbol_name}End/g;
