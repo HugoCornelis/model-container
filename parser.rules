@@ -913,11 +913,19 @@ AnySymbol	/* <phsle> */
 	|
 		AxonHillockSymbol
 	|
+		CellSymbol
+	|
+		ChannelSymbol
+	|
 		ConcentrationGateKineticSymbol
 	|
-		HHGateSymbol
+		ConnectionSymbol
+	|
+		ConnectionGroupSymbol
 	|
 		EquationSymbol
+	|
+		FiberModelSymbol
 	|
 		GateKineticBackwardSymbol
 	|
@@ -925,33 +933,25 @@ AnySymbol	/* <phsle> */
 	|
 		GateKineticPartSymbol
 	|
+		GroupedModelSymbol
+	|
+		HHGateSymbol
+	|
+		NetworkSymbol
+	|
 		PoolSymbol
 	|
-		ChannelSymbol
+		PopulationSymbol
+	|
+		ProjectionSymbol
+	|
+		RandomvalueSymbol
 	|
 		SegmentSymbol
 	|
 		SegmentGroupSymbol
 	|
-		CellSymbol
-	|
-		RandomvalueSymbol
-	|
-		PopulationSymbol
-	|
-		ConnectionGroupSymbol
-	|
-		ConnectionSymbol
-	|
-		ProjectionSymbol
-	|
-		NetworkSymbol
-	|
-		GroupedModelSymbol
-	|
 		GroupedParametersSymbol
-	|
-		FiberModelSymbol
 	|
 		EMContourSymbol
 	|
