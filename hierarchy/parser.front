@@ -84,7 +84,11 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pidin> ContourPointSectionFront
 %type <pcpnt> ContourPointDescription
 
-%type <phsle> GateKineticComponent
+%type <pgatk> GateKineticPartDescription
+%type <phsle> GateKineticPartComponent
+
+%type <phsle> GateKineticBackwardComponent
+%type <phsle> GateKineticForwardComponent
 %type <pidin> GateKineticPartSectionFront
 
 %type <pcgatk> ConcentrationGateKineticDescription
@@ -105,7 +109,8 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pgatk> GateKineticForwardSection
 %type <pidin> GateKineticForwardSectionFront
 %type <pgatk> GateKineticPartSection
-%type <pgatk> GateKineticDescription
+%type <pgatk> GateKineticBackwardDescription
+%type <pgatk> GateKineticForwardDescription
 
 %type <phsle> AxonHillockComponent
 %type <phsle> FiberModelSymbol

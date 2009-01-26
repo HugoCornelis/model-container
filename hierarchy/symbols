@@ -1064,21 +1064,10 @@ my $grammar_symbols
 				 to_base => '->segr.bio.ioh.iol.hsle',
 				},
 		     },
-       GateKinetic => {
-		       components => [
-				      'GateKineticPart',
-				     ],
-		       specific_allocator => 'GateKineticCalloc',
-		       specific_token => 'TOKEN_GATE_KINETIC_BACKWARD',
-		       typing => {
-				  base => 'phsle',
-				  id => 'pidin',
-				  spec => 'pgatk',
-				  to_base => '->bio.ioh.iol.hsle',
-				 },
-		      },
        GateKineticBackward => {
-			       components => [],
+			       components => [
+					      'GateKineticPart',
+					     ],
 			       specific_allocator => 'GateKineticCalloc',
 			       specific_token => 'TOKEN_GATE_KINETIC_BACKWARD',
 			       typing => {
@@ -1089,7 +1078,9 @@ my $grammar_symbols
 					 },
 			      },
        GateKineticForward => {
-			      components => [],
+			      components => [
+					     'GateKineticPart',
+					    ],
 			      specific_allocator => 'GateKineticCalloc',
 			      specific_token => 'TOKEN_GATE_KINETIC_FORWARD',
 			      typing => {
@@ -1100,7 +1091,11 @@ my $grammar_symbols
 					},
 			     },
        GateKineticPart => {
-			   components => [],
+			   components => [
+					  #t this one is likely superfluous
+
+					  'GateKineticPart',
+					 ],
 			   specific_allocator => 'GateKineticCalloc',
 			   specific_token => 'TOKEN_GATE_KINETIC_PART',
 			   typing => {

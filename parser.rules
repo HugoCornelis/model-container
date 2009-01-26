@@ -84,7 +84,11 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pidin> ContourPointSectionFront
 %type <pcpnt> ContourPointDescription
 
-%type <phsle> GateKineticComponent
+%type <pgatk> GateKineticPartDescription
+%type <phsle> GateKineticPartComponent
+
+%type <phsle> GateKineticBackwardComponent
+%type <phsle> GateKineticForwardComponent
 %type <pidin> GateKineticPartSectionFront
 
 %type <pcgatk> ConcentrationGateKineticDescription
@@ -105,7 +109,8 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pgatk> GateKineticForwardSection
 %type <pidin> GateKineticForwardSectionFront
 %type <pgatk> GateKineticPartSection
-%type <pgatk> GateKineticDescription
+%type <pgatk> GateKineticBackwardDescription
+%type <pgatk> GateKineticForwardDescription
 
 %type <phsle> AxonHillockComponent
 %type <phsle> FiberModelSymbol
@@ -1282,6 +1287,24 @@ EMContourComponent
 	;
 
 
+GateKineticBackwardComponent
+	:
+		GateKineticPartSymbol
+	;
+
+
+GateKineticForwardComponent
+	:
+		GateKineticPartSymbol
+	;
+
+
+GateKineticPartComponent
+	:
+		GateKineticPartSymbol
+	;
+
+
 HHGateComponent
 	:
 		ConcentrationGateKineticSymbol
@@ -1345,11 +1368,6 @@ SegmentGroupComponent
 		SegmentGroupSymbol
 	;
 
-
-GateKineticComponent
-	:
-		GateKineticPartSymbol
-	;
 
 ConcentrationGateKineticSection	/* <pcgatk> */
 	:
@@ -1591,7 +1609,7 @@ GateKineticBackwardSection	/* <pgatk> */
 		GateKineticBackwardSectionFront
 			InputOutputRelations
 			OptionalItemInputRelations
-			GateKineticDescription
+			GateKineticBackwardDescription
 		GateKineticBackwardSectionEnd
 		{
 #line
@@ -1639,7 +1657,7 @@ GateKineticForwardSection	/* <pgatk> */
 		GateKineticForwardSectionFront
 			InputOutputRelations
 			OptionalItemInputRelations
-			GateKineticDescription
+			GateKineticForwardDescription
 		GateKineticForwardSectionEnd
 		{
 #line
@@ -1682,7 +1700,7 @@ GateKineticForwardSectionEnd
 		}
 	;
 
-GateKineticDescription	/* <pgatk> */
+GateKineticBackwardDescription	/* <pgatk> */
 	:
 		{
 #line
@@ -1700,7 +1718,7 @@ GateKineticDescription	/* <pgatk> */
 			 &$$->bio.ioh.iol.hsle);
 		}
 	|
-		GateKineticDescription
+		GateKineticBackwardDescription
 		ChildSectionOptionalInputOptionalParameters
 		{
 #line
@@ -1722,8 +1740,8 @@ GateKineticDescription	/* <pgatk> */
 		    $$ = $1;
 		}
 	|
-		GateKineticDescription
-		GateKineticComponent
+		GateKineticBackwardDescription
+		GateKineticBackwardComponent
 		{
 #line
 		    //- add component to section list
@@ -1742,7 +1760,87 @@ GateKineticDescription	/* <pgatk> */
 		}
 
 	|
-		GateKineticDescription
+		GateKineticBackwardDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+GateKineticForwardDescription	/* <pgatk> */
+	:
+		{
+#line
+		    //- allocate gate kinetic
+
+		    $$ = GateKineticCalloc();
+
+		    //- set actual symbol
+
+		    //! note : will not work, should use EndPushedPidin
+		    //! and related here
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		GateKineticForwardDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put gate kinetic on stack
+
+		    $$ = $1;
+		}
+	|
+		GateKineticForwardDescription
+		GateKineticForwardComponent
+		{
+#line
+		    //- add component to section list
+
+		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push description on stack
+
+		    $$ = $1;
+		}
+
+	|
+		GateKineticForwardDescription
 		Parameters
 		{
 #line
@@ -1769,7 +1867,7 @@ GateKineticPartSection	/* <pgatk> */
 		GateKineticPartSectionFront
 			InputOutputRelations
 			OptionalItemInputRelations
-			GateKineticDescription
+			GateKineticPartDescription
 		GateKineticPartSectionEnd
 		{
 #line
@@ -1809,6 +1907,86 @@ GateKineticPartSectionEnd
 		TOKEN_GATE_KINETIC_PART
 		{
 #line
+		}
+	;
+
+GateKineticPartDescription	/* <pgatk> */
+	:
+		{
+#line
+		    //- allocate gate kinetic
+
+		    $$ = GateKineticCalloc();
+
+		    //- set actual symbol
+
+		    //! note : will not work, should use EndPushedPidin
+		    //! and related here
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		GateKineticPartDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put gate kinetic on stack
+
+		    $$ = $1;
+		}
+	|
+		GateKineticPartDescription
+		GateKineticPartComponent
+		{
+#line
+		    //- add component to section list
+
+		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push description on stack
+
+		    $$ = $1;
+		}
+
+	|
+		GateKineticPartDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
 		}
 	;
 
