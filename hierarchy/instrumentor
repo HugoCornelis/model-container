@@ -734,7 +734,7 @@ sub generate_grammar_specific_section_2_rules
 
 # ";
 
-	    print $file "${symbol_name}Section
+	    print $file "${symbol_name}Section	/* <$grammar_symbols->{$symbol_name}->{typing}->{spec}> */
 ";
 
 	    print $file "	:
@@ -749,8 +749,8 @@ sub generate_grammar_specific_section_2_rules
 	    foreach my $part ( @{ [ @$parts, ] }, )
 	    {
 		$part =~ s/specific_description/${symbol_name}Description/g;
-		$part =~ s/specific_end/${symbol_name}End/g;
-		$part =~ s/specific_front/${symbol_name}Front/g;
+		$part =~ s/specific_end/${symbol_name}SectionEnd/g;
+		$part =~ s/specific_front/${symbol_name}SectionFront/g;
 		$part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
 
 		print $file "\t\t$part\n";
@@ -788,7 +788,7 @@ sub generate_grammar_specific_section_2_rules
 
 # ";
 
-	    print $file "${symbol_name}Front
+	    print $file "${symbol_name}SectionFront	/* <$grammar_symbols->{$symbol_name}->{typing}->{id}> */
 ";
 
 	    print $file "	:
@@ -803,8 +803,8 @@ sub generate_grammar_specific_section_2_rules
 	    foreach my $part ( @{ [ @$parts, ] }, )
 	    {
 		$part =~ s/specific_description/${symbol_name}Description/g;
-		$part =~ s/specific_end/${symbol_name}End/g;
-		$part =~ s/specific_front/${symbol_name}Front/g;
+		$part =~ s/specific_end/${symbol_name}SectionEnd/g;
+		$part =~ s/specific_front/${symbol_name}SectionFront/g;
 		$part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
 
 		print $file "\t\t$part\n";
@@ -842,7 +842,7 @@ sub generate_grammar_specific_section_2_rules
 
 # ";
 
-	    print $file "${symbol_name}End
+	    print $file "${symbol_name}SectionEnd
 ";
 
 	    print $file "	:
@@ -857,8 +857,8 @@ sub generate_grammar_specific_section_2_rules
 	    foreach my $part ( @{ [ @$parts, ] }, )
 	    {
 		$part =~ s/specific_description/${symbol_name}Description/g;
-		$part =~ s/specific_end/${symbol_name}End/g;
-		$part =~ s/specific_front/${symbol_name}Front/g;
+		$part =~ s/specific_end/${symbol_name}SectionEnd/g;
+		$part =~ s/specific_front/${symbol_name}SectionFront/g;
 		$part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
 
 		print $file "\t\t$part\n";
@@ -924,8 +924,8 @@ sub generate_grammar_specific_section_2_rules
 
 		    $part =~ s/specific_component/${symbol_name}Component/g;
 		    $part =~ s/specific_description/${symbol_name}Description/g;
-		    $part =~ s/specific_end/${symbol_name}End/g;
-		    $part =~ s/specific_front/${symbol_name}Front/g;
+		    $part =~ s/specific_end/${symbol_name}SectionEnd/g;
+		    $part =~ s/specific_front/${symbol_name}SectionFront/g;
 		    $part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
 
 # 		    print $file "$part\n";
@@ -944,8 +944,8 @@ sub generate_grammar_specific_section_2_rules
 		$semantic =~ s/specific_allocator/$grammar_symbols->{$symbol_name}->{specific_allocator}/g;
 		$semantic =~ s/specific_component/${symbol_name}Component/g;
 		$semantic =~ s/specific_description/${symbol_name}Description/g;
-		$semantic =~ s/specific_end/${symbol_name}End/g;
-		$semantic =~ s/specific_front/${symbol_name}Front/g;
+		$semantic =~ s/specific_end/${symbol_name}SectionEnd/g;
+		$semantic =~ s/specific_front/${symbol_name}SectionFront/g;
 		$semantic =~ s/specific_to_base/$grammar_symbols->{$symbol_name}->{typing}->{to_base}/g;
 		$semantic =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
 

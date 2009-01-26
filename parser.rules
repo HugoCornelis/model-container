@@ -1431,7 +1431,7 @@ AxonHillockDescription	/* <paxhi> */
 #line
 		    //- link parameters
 
-		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
+		    SymbolAssignParameters(&$1->segr.bio.ioh.iol.hsle, $2);
 
 		    //- reset actual symbol
 
@@ -1442,6 +1442,44 @@ AxonHillockDescription	/* <paxhi> */
 		    //- put symbol on stack
 
 		    $$ = $1;
+		}
+	;
+
+AxonHillockSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_AXON_HILLOCK
+		{
+#line
+		}
+	;
+
+AxonHillockSectionFront	/* <pidin> */
+	:
+		TOKEN_AXON_HILLOCK
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put pidin on stack
+
+		    $$ = $2;
+		}
+	;
+
+AxonHillockSection	/* <paxhi> */
+	:
+		AxonHillockSectionFront
+			AxonHillockDescription
+		AxonHillockSectionEnd
+		{
+#line
+		    //- assign identifier to cell struct
+
+		    SymbolSetName(&$2->segr.bio.ioh.iol.hsle, $1);
+
+		    //- put cell struct on stack
+
+		    $$ = $2;
 		}
 	;
 
@@ -3832,44 +3870,6 @@ CellDescription	/* <pcell> */
 		    //- push cell description on stack
 
 		    $$ = $1;
-		}
-	;
-
-AxonHillockSection	/* <paxhi> */
-	:
-		AxonHillockSectionFront
-			AxonHillockDescription
-		AxonHillockSectionEnd
-		{
-#line
-		    //- assign identifier to cell struct
-
-		    SymbolSetName(&$2->segr.bio.ioh.iol.hsle, $1);
-
-		    //- put cell struct on stack
-
-		    $$ = $2;
-		}
-	;
-
-AxonHillockSectionFront	/* <pidin> */
-	:
-		TOKEN_AXON_HILLOCK
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put pidin on stack
-
-		    $$ = $2;
-		}
-	;
-
-AxonHillockSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_AXON_HILLOCK
-		{
-#line
 		}
 	;
 
