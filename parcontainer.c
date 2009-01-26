@@ -26,14 +26,12 @@
 
 
 /// 
-/// 
 /// \arg pparc parameter container.
 /// \arg ppar new parameters.
 /// 
 /// \return int : success of operation.
 /// 
 /// \brief Assign parameters.
-/// \details 
 /// 
 
 int
@@ -47,13 +45,11 @@ ParContainerAssignParameters
 
 
 /// 
-/// 
 /// \return struct symtab_ParContainer * 
 /// 
 ///	Newly allocated parameter container, NULL for failure
 /// 
 /// \brief Allocate a parameter container
-/// \details 
 /// 
 
 struct symtab_ParContainer * ParContainerCalloc(void)
@@ -66,7 +62,7 @@ struct symtab_ParContainer * ParContainerCalloc(void)
 
     pparcResult
 	= (struct symtab_ParContainer *)
-	  calloc(1,sizeof(struct symtab_ParContainer));
+	  calloc(1, sizeof(struct symtab_ParContainer));
 
     //- initialize parameter container
 
@@ -79,13 +75,11 @@ struct symtab_ParContainer * ParContainerCalloc(void)
 
 
 /// 
-/// 
 /// \arg pparc container to init
 /// 
 /// \return void
 /// 
 /// \brief Init a parameter container
-/// \details 
 /// 
 
 void ParContainerInit(struct symtab_ParContainer * pparc)
@@ -97,13 +91,13 @@ void ParContainerInit(struct symtab_ParContainer * pparc)
 
 
 /// 
-/// 
 /// \arg pparc container
 /// \arg ppar parameter to link
 /// 
 /// \return void
 /// 
 /// \brief Insert new parameter at head of parameter list
+///
 /// \details 
 /// 
 ///	This function scales with the size of the parameter list,
@@ -111,33 +105,25 @@ void ParContainerInit(struct symtab_ParContainer * pparc)
 /// 
 
 void ParContainerInsert
-(struct symtab_ParContainer *pparc,struct symtab_Parameters *ppar)
+(struct symtab_ParContainer *pparc, struct symtab_Parameters *ppar)
 {
     //- insert
 
-/*     /// \note this cannot work : ->pparFirst needs update for entire list */
-
     ppar->pparNext = pparc->ppars;
     pparc->ppars = ppar;
-/*     ppar->pparFirst = pparc->ppars; */
 
     //- update ->pparFirst for entire list
 
+    struct symtab_Parameters *pparLoop = pparc->ppars;
+    do
     {
-	struct symtab_Parameters *pparLoop = pparc->ppars;
-	do
-	{
-	    pparLoop->pparFirst = pparc->ppars;
-	    pparLoop = pparLoop->pparNext;
-	}
-	while (pparLoop);
+	pparLoop->pparFirst = pparc->ppars;
+	pparLoop = pparLoop->pparNext;
     }
-
-/*     ParContainerLinkAtEnd(pparc,ppar); */
+    while (pparLoop);
 }
 
 
-/// 
 /// 
 /// \arg pparc container
 /// \arg ppar parameter list to link
@@ -145,11 +131,10 @@ void ParContainerInsert
 /// \return void
 /// 
 /// \brief Link new parameter at end of parameter list
-/// \details 
 /// 
 
 void ParContainerLinkAtEnd
-(struct symtab_ParContainer *pparc,struct symtab_Parameters *ppar)
+(struct symtab_ParContainer *pparc, struct symtab_Parameters *ppar)
 {
     //- if already parameters
 
@@ -158,12 +143,13 @@ void ParContainerLinkAtEnd
 	//- modify last parameter to link new one
 
 	struct symtab_Parameters *pparLoop = pparc->ppars;
+
 	while (pparLoop->pparNext)
 	{
 	    pparLoop = pparLoop->pparNext;
 	}
-/* 	ppar->pparNext = NULL; */
 	ppar->pparFirst = pparc->ppars;
+
 	pparLoop->pparNext = ppar;
     }
 
@@ -173,7 +159,6 @@ void ParContainerLinkAtEnd
     {
 	//- modify parameter container
 
-/* 	ppar->pparNext = NULL; */
 	ppar->pparFirst = ppar;
 	pparc->ppars = ppar;
     }
