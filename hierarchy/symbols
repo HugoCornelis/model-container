@@ -973,7 +973,7 @@ my $grammar_symbols
 				  base => 'phsle',
 				  id => 'pidin',
 				  spec => 'paxhi',
-				  to_base => '->bio.ioh.iol.hsle',
+				  to_base => '->segr.bio.ioh.iol.hsle',
 				 },
 		      },
        Cell => {
@@ -988,13 +988,14 @@ my $grammar_symbols
 			   base => 'phsle',
 			   id => 'pidin',
 			   spec => 'pcell',
-			   to_base => '->bio.ioh.iol.hsle',
+			   to_base => '->segr.bio.ioh.iol.hsle',
 			  },
 	       },
        Channel => {
 		   components => [
 				  'AttachmentPoint',
 				  'Equation',
+				  'HHGate',
 				 ],
 		   specific_allocator => 'ChannelCalloc',
 		   specific_token => 'TOKEN_CHANNEL',
@@ -1022,6 +1023,7 @@ my $grammar_symbols
 				 'ConcentrationGateKinetic',
 				 'GateKineticBackward',
 				 'GateKineticForward',
+				 'GateKineticPart',
 				],
 		  specific_allocator => 'HHGateCalloc',
 		  specific_token => 'TOKEN_HH_GATE',
@@ -1053,7 +1055,7 @@ my $grammar_symbols
 				      base => 'phsle',
 				      id => 'pidin',
 				      spec => 'pvconn',
-				      to_base => '->bio.ioh.iol.hsle',
+				      to_base => '->vect.bio.ioh.iol.hsle',
 				     },
 			  },
        Equation => {
@@ -1075,7 +1077,7 @@ my $grammar_symbols
 				 base => 'phsle',
 				 id => 'pidin',
 				 spec => 'pfibr',
-				 to_base => '->bio.ioh.iol.hsle',
+				 to_base => '->segr.bio.ioh.iol.hsle',
 				},
 		     },
        GateKineticBackward => {
@@ -1100,6 +1102,17 @@ my $grammar_symbols
 					 to_base => '->bio.ioh.iol.hsle',
 					},
 			     },
+       GateKineticPart => {
+			   components => [],
+			   specific_allocator => 'GateKineticCalloc',
+			   specific_token => 'TOKEN_GATE_KINETIC_PART',
+			   typing => {
+				      base => 'phsle',
+				      id => 'pidin',
+				      spec => 'pgatk',
+				      to_base => '->bio.ioh.iol.hsle',
+				     },
+			  },
        GroupedModel => {
 			components => [],
 			specific_allocator => 'GroupCalloc',
@@ -1124,7 +1137,7 @@ my $grammar_symbols
 			      base => 'phsle',
 			      id => 'pidin',
 			      spec => 'pnetw',
-			      to_base => '->bio.ioh.iol.hsle',
+			      to_base => '->segr.bio.ioh.iol.hsle',
 			     },
 		  },
        Pool => {
@@ -1149,7 +1162,7 @@ my $grammar_symbols
 				 base => 'phsle',
 				 id => 'pidin',
 				 spec => 'ppopu',
-				 to_base => '->bio.ioh.iol.hsle',
+				 to_base => '->segr.bio.ioh.iol.hsle',
 				},
 		     },
        Projection => {
@@ -1194,23 +1207,76 @@ my $grammar_symbols
 			      base => 'phsle',
 			      id => 'pidin',
 			      spec => 'psegment',
-			      to_base => '->bio.ioh.iol.hsle',
+			      to_base => '->segr.bio.ioh.iol.hsle',
 			     },
 		  },
 
-       #t segment groups are a very specific case seems
+       #t these ones need a serious check, just placeholders
 
-#        SegmentGroup => {
-# 			components => [],
-#        specific_allocator => 'SegmentGroupCalloc',
-# 			   specific_token => 'TOKEN_SEGMENT_GROUP',
-# 			typing => {
-# 				   base => 'phsle',
-#        id => 'pidin',
-# 				   spec => 'pD3segm',
-# 				      to_base => '->bio.ioh.iol.hsle',
-# 				  },
-# 		       },
+       SegmentGroup => {
+			components => [
+				       'Segment',
+				       'SegmentGroup',
+				      ],
+			specific_allocator => 'SegmentCalloc',
+			specific_token => 'TOKEN_SEGMENT_GROUP',
+			typing => {
+				   base => 'phsle',
+				   id => 'pidin',
+				   spec => 'psegment',
+				   to_base => '->vect.bio.ioh.iol.hsle',
+				  },
+		       },
+       GroupedParameters => {
+				   components => [
+						 ],
+				   specific_allocator => 'SegmentCalloc',
+				   specific_token => 'TOKEN_SEGMENT_GROUP',
+				   typing => {
+					      base => 'phsle',
+					      id => 'pidin',
+					      spec => 'psegment',
+					      to_base => '->bio.ioh.iol.hsle',
+					     },
+				  },
+       EMContour => {
+			   components => [
+					  'ContourPoint',
+					 ],
+			   specific_allocator => 'SegmentCalloc',
+			   specific_token => 'TOKEN_SEGMENT_GROUP',
+			   typing => {
+				      base => 'phsle',
+				      id => 'pidin',
+				      spec => 'psegment',
+				      to_base => '->bio.ioh.iol.hsle',
+				     },
+			  },
+       ContourGroup => {
+			      components => [
+					     'EMContour',
+					    ],
+			      specific_allocator => 'SegmentCalloc',
+			      specific_token => 'TOKEN_SEGMENT_GROUP',
+			      typing => {
+					 base => 'phsle',
+					 id => 'pidin',
+					 spec => 'psegment',
+					 to_base => '->vect.bio.ioh.iol.hsle',
+					},
+			     },
+       ContourPoint => {
+			      components => [
+					    ],
+			      specific_allocator => 'SegmentCalloc',
+			      specific_token => 'TOKEN_SEGMENT_GROUP',
+			      typing => {
+					 base => 'phsle',
+					 id => 'pidin',
+					 spec => 'psegment',
+					 to_base => '->bio.ioh.iol.hsle',
+					},
+			     },
       };
 
 

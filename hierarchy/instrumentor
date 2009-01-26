@@ -372,17 +372,17 @@ sub generate_grammar_anysymbol_rules
 
     my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
 
-    print $file "/**
-**
-** All symbols reduce to this symbol.
-**
-** Semantic action: default copy stack top, using base type.
-**
-** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
-**
-*/
+#     print $file "/**
+# **
+# ** All symbols reduce to this symbol.
+# **
+# ** Semantic action: default copy stack top, using base type.
+# **
+# ** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
+# **
+# */
 
-";
+# ";
 
     print $file "AnySymbol
 ";
@@ -466,6 +466,8 @@ sub generate_grammar_header
     my $object_methods_signatures = $definitions->{object_methods_signatures};
     my $tokens = $definitions->{tokens};
 
+    `cp hierarchy/parser.front /tmp/grammar/symbols/0_start.rules`;
+
 }
 
 
@@ -491,17 +493,17 @@ sub generate_grammar_specific_symbol_rules
 
 	my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
 
-	print $file "/**
-**
-** $symbol_name component rules
-**
-** Semantic action: default copy stack top, using base type.
-**
-** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
-**
-*/
+# 	print $file "/**
+# **
+# ** $symbol_name component rules
+# **
+# ** Semantic action: default copy stack top, using base type.
+# **
+# ** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
+# **
+# */
 
-";
+# ";
 
 	my $components = $grammar_symbols->{$symbol_name}->{components};
 
@@ -521,6 +523,8 @@ sub generate_grammar_specific_symbol_rules
 	    {
 		print $file "	:
 ";
+
+		$first = 0;
 	    }
 	    else
 	    {
@@ -625,17 +629,17 @@ sub generate_grammar_specific_section_rules
 
 	my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
 
-	print $file "/**
-**
-** $symbol_name section rules
-**
-** Semantic action: copy stack top, using promoting to base type.
-**
-** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
-**
-*/
+# 	print $file "/**
+# **
+# ** $symbol_name section rules
+# **
+# ** Semantic action: copy stack top, using promoting to base type.
+# **
+# ** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
+# **
+# */
 
-";
+# ";
 
 	print $file "${symbol_name}Symbol
 ";
@@ -644,6 +648,7 @@ sub generate_grammar_specific_section_rules
 		${symbol_name}Section
 		{
 #line
+		    //- put symbol table element on stack
 
 		    \$\$ = &\$1$grammar_symbols->{$symbol_name}->{typing}->{to_base};
 		}

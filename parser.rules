@@ -923,6 +923,12 @@ AnySymbol	/* <phsle> */
 	|
 		ConnectionGroupSymbol
 	|
+		ContourGroupSymbol
+	|
+		ContourPointSymbol
+	|
+		EMContourSymbol
+	|
 		EquationSymbol
 	|
 		FiberModelSymbol
@@ -934,6 +940,8 @@ AnySymbol	/* <phsle> */
 		GateKineticPartSymbol
 	|
 		GroupedModelSymbol
+	|
+		GroupedParametersSymbol
 	|
 		HHGateSymbol
 	|
@@ -950,68 +958,285 @@ AnySymbol	/* <phsle> */
 		SegmentSymbol
 	|
 		SegmentGroupSymbol
-	|
-		GroupedParametersSymbol
-	|
-		EMContourSymbol
-	|
-		ContourGroupSymbol
-	|
-		ContourPointSymbol
+	;
+
+
+AttachmentPointSymbol
+	:
+		AttachmentPointSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->bio.ioh.iol.hsle;
+		}
+	;
+
+AxonHillockSymbol
+	:
+		AxonHillockSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->segr.bio.ioh.iol.hsle;
+		}
+	;
+
+CellSymbol
+	:
+		CellSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->segr.bio.ioh.iol.hsle;
+		}
+	;
+
+ChannelSymbol
+	:
+		ChannelSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->bio.ioh.iol.hsle;
+		}
+	;
+
+ConcentrationGateKineticSymbol
+	:
+		ConcentrationGateKineticSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->bio.ioh.iol.hsle;
+		}
+	;
+
+ConnectionGroupSymbol
+	:
+		ConnectionGroupSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->vect.bio.ioh.iol.hsle;
+		}
+	;
+
+ConnectionSymbol
+	:
+		ConnectionSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->bio.ioh.iol.hsle;
+		}
+	;
+
+ContourGroupSymbol
+	:
+		ContourGroupSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->vect.bio.ioh.iol.hsle;
+		}
+	;
+
+ContourPointSymbol
+	:
+		ContourPointSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->bio.ioh.iol.hsle;
+		}
+	;
+
+EMContourSymbol
+	:
+		EMContourSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->bio.ioh.iol.hsle;
+		}
+	;
+
+EquationSymbol
+	:
+		EquationExponentialSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->bio.ioh.iol.hsle;
+		}
+	;
+
+FiberModelSymbol
+	:
+		FiberModelSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->segr.bio.ioh.iol.hsle;
+		}
+	;
+
+GateKineticBackwardSymbol
+	:
+		GateKineticBackwardSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->bio.ioh.iol.hsle;
+		}
+	;
+
+GateKineticForwardSymbol
+	:
+		GateKineticForwardSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->bio.ioh.iol.hsle;
+		}
+	;
+
+GateKineticPartSymbol
+	:
+		GateKineticPartSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->bio.ioh.iol.hsle;
+		}
+	;
+
+GroupedModelSymbol
+	:
+		GroupedModelSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->bio.ioh.iol.hsle;
+		}
+	;
+
+GroupedParametersSymbol
+	:
+		GroupedParametersSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->bio.ioh.iol.hsle;
+		}
+	;
+
+HHGateSymbol
+	:
+		HHGateSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->bio.ioh.iol.hsle;
+		}
+	;
+
+NetworkSymbol
+	:
+		NetworkSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->segr.bio.ioh.iol.hsle;
+		}
+	;
+
+PoolSymbol
+	:
+		PoolSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->bio.ioh.iol.hsle;
+		}
+	;
+
+PopulationSymbol
+	:
+		PopulationSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->segr.bio.ioh.iol.hsle;
+		}
+	;
+
+ProjectionSymbol
+	:
+		ProjectionSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->bio.ioh.iol.hsle;
+		}
+	;
+
+RandomvalueSymbol
+	:
+		RandomvalueSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->bio.ioh.iol.hsle;
+		}
+	;
+
+SegmentGroupSymbol
+	:
+		SegmentGroupSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->vect.bio.ioh.iol.hsle;
+		}
+	;
+
+SegmentSymbol
+	:
+		SegmentSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->segr.bio.ioh.iol.hsle;
+		}
 	;
 
 AxonHillockComponent
-	:
-		SegmentSymbol
-	|
-		SegmentGroupSymbol
-	;
-
-HHGateComponent
-	:
-		ConcentrationGateKineticSymbol
-	|
-		GateKineticBackwardSymbol
-	|
-		GateKineticForwardSymbol
-	|
-		GateKineticPartSymbol
-	;
-
-ContourGroupComponent
-	:
-		EMContourSymbol
-	;
-
-EMContourComponent
-	:
-		ContourPointSymbol
-	;
-
-GateKineticComponent
-	:
-		GateKineticPartSymbol
-	;
-
-ChannelComponent
-	:
-		AttachmentPointSymbol
-	|
-		EquationSymbol
-	|
-		HHGateSymbol
-	;
-
-SegmentComponent
-	:
-		AttachmentPointSymbol
-	|
-		PoolSymbol
-	|
-		ChannelSymbol
-	;
-
-SegmentGroupComponent
 	:
 		SegmentSymbol
 	|
@@ -1027,29 +1252,46 @@ CellComponent
 		SegmentGroupSymbol
 	;
 
-RandomvalueComponent
+
+ChannelComponent
 	:
 		AttachmentPointSymbol
+	|
+		EquationSymbol
+	|
+		HHGateSymbol
 	;
 
-PopulationComponent
-	:
-		CellSymbol
-	|
-		RandomvalueSymbol
-	;
 
 ConnectionGroupComponent
 	:
 		ConnectionSymbol
 	;
 
-ProjectionComponent
+
+ContourGroupComponent
 	:
-		ConnectionGroupSymbol
-	|
-		ProjectionSymbol
+		EMContourSymbol
 	;
+
+
+EMContourComponent
+	:
+		ContourPointSymbol
+	;
+
+
+HHGateComponent
+	:
+		ConcentrationGateKineticSymbol
+	|
+		GateKineticBackwardSymbol
+	|
+		GateKineticForwardSymbol
+	|
+		GateKineticPartSymbol
+	;
+
 
 NetworkComponent
 	:
@@ -1062,279 +1304,50 @@ NetworkComponent
 		NetworkSymbol
 	;
 
-ConcentrationGateKineticSymbol
-	:
-		ConcentrationGateKineticSection
-		{
-#line
-		    //- put symbol table element on stack
 
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
+PopulationComponent
+	:
+		CellSymbol
+	|
+		RandomvalueSymbol
 	;
 
-HHGateSymbol
-	:
-		HHGateSection
-		{
-#line
-		    //- put symbol table element on stack
 
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
+ProjectionComponent
+	:
+		ConnectionGroupSymbol
+	|
+		ProjectionSymbol
 	;
 
-GateKineticBackwardSymbol
-	:
-		GateKineticBackwardSection
-		{
-#line
-		    //- put symbol table element on stack
 
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
+RandomvalueComponent
+	:
+		AttachmentPointSymbol
 	;
 
-GateKineticForwardSymbol
-	:
-		GateKineticForwardSection
-		{
-#line
-		    //- put symbol table element on stack
 
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
+SegmentComponent
+	:
+		AttachmentPointSymbol
+	|
+		PoolSymbol
+	|
+		ChannelSymbol
 	;
 
-GateKineticPartSymbol
-	:
-		GateKineticPartSection
-		{
-#line
-		    //- put symbol table element on stack
 
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
+SegmentGroupComponent
+	:
+		SegmentSymbol
+	|
+		SegmentGroupSymbol
 	;
 
-FiberModelSymbol
+
+GateKineticComponent
 	:
-		FiberModelSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-EMContourSymbol
-	:
-		EMContourSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-ContourGroupSymbol
-	:
-		ContourGroupSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-ContourPointSymbol
-	:
-		ContourPointSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-GroupedModelSymbol
-	:
-		GroupedModelSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-GroupedParametersSymbol
-	:
-		GroupedParametersSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-AttachmentPointSymbol
-	:
-		AttachmentPointSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-PoolSymbol
-	:
-		PoolSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-EquationSymbol
-	:
-		EquationExponentialSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-ChannelSymbol
-	:
-		ChannelSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-AxonHillockSymbol
-	:
-		AxonHillockSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-SegmentSymbol
-	:
-		SegmentSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-SegmentGroupSymbol
-	:
-		SegmentGroupSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-CellSymbol
-	:
-		CellSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-RandomvalueSymbol
-	:
-		RandomvalueSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-PopulationSymbol
-	:
-		PopulationSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-ProjectionSymbol
-	:
-		ProjectionSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-NetworkSymbol
-	:
-		NetworkSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-ConnectionGroupSymbol
-	:
-		ConnectionGroupSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
-	;
-
-ConnectionSymbol
-	:
-		ConnectionSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = (struct symtab_HSolveListElement *)$1;
-		}
+		GateKineticPartSymbol
 	;
 
 ConcentrationGateKineticSection	/* <pcgatk> */
