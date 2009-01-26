@@ -1369,6 +1369,82 @@ SegmentGroupComponent
 	;
 
 
+AxonHillockDescription	/* <paxhi> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = AxonHillockCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->segr.bio.ioh.iol.hsle);
+		}
+	|
+		AxonHillockDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		AxonHillockDescription
+		AxonHillockComponent
+		{
+#line
+		    //- add component to current section list
+
+		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push current description on stack
+
+		    $$ = $1;
+		}
+	|
+		AxonHillockDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
 ConcentrationGateKineticSection	/* <pcgatk> */
 	:
 		ConcentrationGateKineticSectionFront
@@ -3794,82 +3870,6 @@ AxonHillockSectionEnd
 		TOKEN_AXON_HILLOCK
 		{
 #line
-		}
-	;
-
-AxonHillockDescription	/* <paxhi> */
-	:
-		{
-#line
-		    //- prepare axon hillock struct for symbol table
-
-		    $$ = AxonHillockCalloc();
-
-		    //- set actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->segr.bio.ioh.iol.hsle);
-		}
-	|
-		AxonHillockDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link has section with axon hillock description
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push axon hillock description on stack
-
-		    $$ = $1;
-		}
-	|
-		AxonHillockDescription
-		AxonHillockComponent
-		{
-#line
-		    //- add axon hillock component to section list of axon hillock
-
-		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push axon hillock description on stack
-
-		    $$ = $1;
-		}
-	|
-		AxonHillockDescription
-		Parameters
-		{
-#line
-		    //- link parameters at end of parameter list
-
-		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push axon hillock description on stack
-
-		    $$ = $1;
 		}
 	;
 

@@ -818,37 +818,36 @@ my $grammar_rules
 				parts => [
 					  {
 					   parts => [],
-					   semantic => '
-#line
-		    //- allocate gate kinetic
+					   semantic => '#line
+		    //- prepare struct for symbol table
 
 		    $$ = specific_allocator();
 
 		    //- set actual symbol
 
-		    //! note : will not work, should use EndPushedPidin
-		    //! and related here
-
-		    ParserContextSetActual((PARSERCONTEXT *)pacParserContext, & $$ specific_to_base);
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$specific_to_base);
 ',
 					  },
 					  {
 					   parts => [
-						     'specific_token',
+						     'specific_description',
 						     'ChildSectionOptionalInputOptionalParameters',
 						    ],
-					   semantic => '
-#line
+					   semantic => '#line
 		    //- link children
 
 		    if ($2)
 		    {
-			SymbolAddChild(& $1 specific_to_base, &$2->ioh.iol.hsle);
+			SymbolAddChild(&$1specific_to_base, $2);
 		    }
 
 		    //- reset actual symbol
 
-		    ParserContextSetActual((PARSERCONTEXT *)pacParserContext, & $1 specific_to_base);
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1specific_to_base);
 
 		    //- put symbol description on stack
 
@@ -860,15 +859,16 @@ my $grammar_rules
 						     'specific_description',
 						     'specific_component',
 						    ],
-					   semantic => '
-#line
+					   semantic => '#line
 		    //- add component to current section list
 
-		    SymbolAddChild(& $1 specific_to_base, $2);
+		    SymbolAddChild(&$1specific_to_base, $2);
 
 		    //- reset actual symbol
 
-		    ParserContextSetActual((PARSERCONTEXT *)pacParserContext, & $1 specific_to_base);
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1specific_to_base);
 
 		    //- push current description on stack
 
@@ -880,15 +880,16 @@ my $grammar_rules
 						     'specific_description',
 						     'Parameters',
 						    ],
-					   semantic => '
-#line
+					   semantic => '#line
 		    //- link parameters
 
-		    SymbolAssignParameters(& $1 specific_to_base, $2);
+		    SymbolAssignParameters(&$1specific_to_base, $2);
 
 		    //- reset actual symbol
 
-		    ParserContextSetActual((PARSERCONTEXT *)pacParserContext, & $1 specific_to_base);
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1specific_to_base);
 
 		    //- put symbol on stack
 
@@ -902,8 +903,7 @@ my $grammar_rules
 				  'EndPushedPidin',
 				  'specific_token',
 				 ],
-			semantic => '
-#line
+			semantic => '#line
 ',
 		       },
        specific_front => {
@@ -911,8 +911,7 @@ my $grammar_rules
 				    'specific_token',
 				    'OptionalIdentifierOptionIndexPushedPidin',
 				   ],
-			  semantic => '
-#line
+			  semantic => '#line
 		    //- put identifier on stack
 
 		    $$ = $2;
@@ -926,19 +925,18 @@ my $grammar_rules
 				      '	specific_description',
 				      'specific_end',
 				     ],
-			    semantic => '
-#line
+			    semantic => '#line
 		    //- assign name to symbol
 
-		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+		    SymbolSetName(&$4specific_to_base, $1);
 
 		    //- link input/output relations
 
-		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+		    SymbolAssignBindableIO(&$4specific_to_base, $2);
 
 		    //- bind I/O relations
 
-		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+		    SymbolAssignInputs(&$4specific_to_base, $3);
 
 		    //- put finished section info on stack
 
@@ -961,6 +959,7 @@ my $grammar_symbols
 				      spec => 'patta',
 				      to_base => '->bio.ioh.iol.hsle',
 				     },
+			   disabled => 'to complicated for the moment',
 			  },
        AxonHillock => {
 		       components => [

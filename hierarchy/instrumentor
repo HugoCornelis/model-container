@@ -709,6 +709,7 @@ sub generate_grammar_specific_section_2_rules
 
     foreach my $symbol_name (sort keys %$grammar_symbols)
     {
+	if (!$grammar_symbols->{$symbol_name}->{disabled})
 	{
 	    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 		= gmtime(time());
@@ -723,15 +724,15 @@ sub generate_grammar_specific_section_2_rules
 
 	    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
 
-	    print $file "/**
-**
-** $symbol_name section rules
-**
-** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
-**
-*/
+# 	    print $file "/**
+# **
+# ** $symbol_name section rules
+# **
+# ** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
+# **
+# */
 
-";
+# ";
 
 	    print $file "${symbol_name}Section
 ";
@@ -757,11 +758,12 @@ sub generate_grammar_specific_section_2_rules
 
 	    print $file "		{\n";
 	    print $file $specific_section->{semantic};
-	    print $file "		}\n;\n";
+	    print $file "		}\n\t;\n\n";
 
 	    $file->close();
 	}
 
+	if (!$grammar_symbols->{$symbol_name}->{disabled})
 	{
 	    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 		= gmtime(time());
@@ -776,15 +778,15 @@ sub generate_grammar_specific_section_2_rules
 
 	    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
 
-	    print $file "/**
-**
-** $symbol_name front rules
-**
-** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
-**
-*/
+# 	    print $file "/**
+# **
+# ** $symbol_name front rules
+# **
+# ** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
+# **
+# */
 
-";
+# ";
 
 	    print $file "${symbol_name}Front
 ";
@@ -810,11 +812,12 @@ sub generate_grammar_specific_section_2_rules
 
 	    print $file "		{\n";
 	    print $file $specific_front->{semantic};
-	    print $file "		}\n;\n";
+	    print $file "		}\n\t;\n\n";
 
 	    $file->close();
 	}
 
+	if (!$grammar_symbols->{$symbol_name}->{disabled})
 	{
 	    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 		= gmtime(time());
@@ -829,15 +832,15 @@ sub generate_grammar_specific_section_2_rules
 
 	    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
 
-	    print $file "/**
-**
-** $symbol_name end rules
-**
-** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
-**
-*/
+# 	    print $file "/**
+# **
+# ** $symbol_name end rules
+# **
+# ** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
+# **
+# */
 
-";
+# ";
 
 	    print $file "${symbol_name}End
 ";
@@ -863,11 +866,12 @@ sub generate_grammar_specific_section_2_rules
 
 	    print $file "		{\n";
 	    print $file $specific_end->{semantic};
-	    print $file "		}\n;\n";
+	    print $file "		}\n\t;\n\n";
 
 	    $file->close();
 	}
 
+	if (!$grammar_symbols->{$symbol_name}->{disabled})
 	{
 	    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 		= gmtime(time());
@@ -882,17 +886,17 @@ sub generate_grammar_specific_section_2_rules
 
 	    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
 
-	    print $file "/**
-**
-** $symbol_name description rules
-**
-** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
-**
-*/
+# 	    print $file "/**
+# **
+# ** $symbol_name description rules
+# **
+# ** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
+# **
+# */
 
-";
+# ";
 
-	    print $file "${symbol_name}Description
+	    print $file "${symbol_name}Description	/* <$grammar_symbols->{$symbol_name}->{typing}->{spec}> */
 ";
 
 	    print $file "	:
@@ -956,7 +960,7 @@ sub generate_grammar_specific_section_2_rules
 		push @$description_parts, $description_part;
 	    }
 
-	    print $file (join "\t|\n", @$description_parts) . ";\n";
+	    print $file (join "\t|\n", @$description_parts) . "\t;\n\n";
 
 	    $file->close();
 	}
