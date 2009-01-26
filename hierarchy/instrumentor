@@ -372,19 +372,15 @@ sub generate_grammar_anysymbol_rules
 
     my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
 
-#     print $file "/**
-# **
-# ** All symbols reduce to this symbol.
-# **
-# ** Semantic action: default copy stack top, using base type.
-# **
-# ** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
-# **
-# */
+    print $file "/*
+** Symbol propagation with default semantic rule
+**
+** this applies to .*Symbol and to .*Component
+*/
 
-# ";
+";
 
-    print $file "AnySymbol
+    print $file "AnySymbol	/* <$definitions->{typing}->{typer}->{name}> */
 ";
 
     my $first = 1;

@@ -994,7 +994,7 @@ my $grammar_symbols
        Channel => {
 		   components => [
 				  'AttachmentPoint',
-				  'Equation',
+				  'EquationExponential',
 				  'HHGate',
 				 ],
 		   specific_allocator => 'ChannelCalloc',
@@ -1018,22 +1018,6 @@ my $grammar_symbols
 					       to_base => '->bio.ioh.iol.hsle',
 					      },
 				   },
-       HHGate => {
-		  components => [
-				 'ConcentrationGateKinetic',
-				 'GateKineticBackward',
-				 'GateKineticForward',
-				 'GateKineticPart',
-				],
-		  specific_allocator => 'HHGateCalloc',
-		  specific_token => 'TOKEN_HH_GATE',
-		  typing => {
-			     base => 'phsle',
-			     id => 'pidin',
-			     spec => 'pgathh',
-			     to_base => '->bio.ioh.iol.hsle',
-			    },
-		 },
        Connection => {
 		      components => [],
 		      specific_allocator => 'ConnectionCalloc',
@@ -1058,17 +1042,17 @@ my $grammar_symbols
 				      to_base => '->vect.bio.ioh.iol.hsle',
 				     },
 			  },
-       Equation => {
-		    components => [],
-		    specific_allocator => 'EquationCalloc',
-		    specific_token => 'TOKEN_EQUATION',
-		    typing => {
-			       base => 'phsle',
-			       id => 'pidin',
-			       spec => 'peq',
-			       to_base => '->bio.ioh.iol.hsle',
+       EquationExponential => {
+			       components => [],
+			       specific_allocator => 'EquationCalloc',
+			       specific_token => 'TOKEN_EQUATION',
+			       typing => {
+					  base => 'phsle',
+					  id => 'pidin',
+					  spec => 'peq',
+					  to_base => '->bio.ioh.iol.hsle',
+					 },
 			      },
-		   },
        FiberModel => {
 		      components => [],
 		      specific_allocator => 'FiberCalloc',
@@ -1080,6 +1064,19 @@ my $grammar_symbols
 				 to_base => '->segr.bio.ioh.iol.hsle',
 				},
 		     },
+       GateKinetic => {
+		       components => [
+				      'GateKineticPart',
+				     ],
+		       specific_allocator => 'GateKineticCalloc',
+		       specific_token => 'TOKEN_GATE_KINETIC_BACKWARD',
+		       typing => {
+				  base => 'phsle',
+				  id => 'pidin',
+				  spec => 'pgatk',
+				  to_base => '->bio.ioh.iol.hsle',
+				 },
+		      },
        GateKineticBackward => {
 			       components => [],
 			       specific_allocator => 'GateKineticCalloc',
@@ -1124,6 +1121,22 @@ my $grammar_symbols
 				   to_base => '->bio.ioh.iol.hsle',
 				  },
 		       },
+       HHGate => {
+		  components => [
+				 'ConcentrationGateKinetic',
+				 'GateKineticBackward',
+				 'GateKineticForward',
+				 'GateKineticPart',
+				],
+		  specific_allocator => 'HHGateCalloc',
+		  specific_token => 'TOKEN_HH_GATE',
+		  typing => {
+			     base => 'phsle',
+			     id => 'pidin',
+			     spec => 'pgathh',
+			     to_base => '->bio.ioh.iol.hsle',
+			    },
+		 },
        Network => {
 		   components => [
 				  'Cell',

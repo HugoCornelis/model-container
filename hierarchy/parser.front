@@ -131,7 +131,7 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <phsle> ProjectionComponent
 %type <phsle> AnySymbol
 %type <phsle> AttachmentPointSymbol
-%type <phsle> EquationSymbol
+%type <phsle> EquationExponentialSymbol
 %type <phsle> PoolSymbol
 %type <phsle> AxonHillockSymbol
 %type <phsle> ChannelSymbol

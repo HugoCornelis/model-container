@@ -131,7 +131,7 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <phsle> ProjectionComponent
 %type <phsle> AnySymbol
 %type <phsle> AttachmentPointSymbol
-%type <phsle> EquationSymbol
+%type <phsle> EquationExponentialSymbol
 %type <phsle> PoolSymbol
 %type <phsle> AxonHillockSymbol
 %type <phsle> ChannelSymbol
@@ -902,7 +902,7 @@ PublicModelsEnumerated
 	;
 
 /*
-** Note : Symbol propagation with default semantic rule
+** Symbol propagation with default semantic rule
 **
 ** this applies to .*Symbol and to .*Component
 */
@@ -929,7 +929,7 @@ AnySymbol	/* <phsle> */
 	|
 		EMContourSymbol
 	|
-		EquationSymbol
+		EquationExponentialSymbol
 	|
 		FiberModelSymbol
 	|
@@ -1071,7 +1071,7 @@ EMContourSymbol
 		}
 	;
 
-EquationSymbol
+EquationExponentialSymbol
 	:
 		EquationExponentialSection
 		{
@@ -1243,6 +1243,7 @@ AxonHillockComponent
 		SegmentGroupSymbol
 	;
 
+
 CellComponent
 	:
 		AxonHillockSymbol
@@ -1257,7 +1258,7 @@ ChannelComponent
 	:
 		AttachmentPointSymbol
 	|
-		EquationSymbol
+		EquationExponentialSymbol
 	|
 		HHGateSymbol
 	;
