@@ -1460,7 +1460,7 @@ AxonHillockSectionFront	/* <pidin> */
 		IdentifierOptionIndexPushedPidin
 		{
 #line
-		    //- put pidin on stack
+		    //- put identifier on stack
 
 		    $$ = $2;
 		}
@@ -1469,27 +1469,286 @@ AxonHillockSectionFront	/* <pidin> */
 AxonHillockSection	/* <paxhi> */
 	:
 		AxonHillockSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
 			AxonHillockDescription
 		AxonHillockSectionEnd
 		{
 #line
-		    //- assign identifier to cell struct
+		    //- assign name to symbol
 
-		    SymbolSetName(&$2->segr.bio.ioh.iol.hsle, $1);
+		    SymbolSetName(&$4->segr.bio.ioh.iol.hsle, $1);
 
-		    //- put cell struct on stack
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->segr.bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->segr.bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+CellDescription	/* <pcell> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = CellCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->segr.bio.ioh.iol.hsle);
+		}
+	|
+		CellDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		CellDescription
+		CellComponent
+		{
+#line
+		    //- add component to current section list
+
+		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push current description on stack
+
+		    $$ = $1;
+		}
+	|
+		CellDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolAssignParameters(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+CellSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_CELL
+		{
+#line
+		}
+	;
+
+CellSectionFront	/* <pidin> */
+	:
+		TOKEN_CELL
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
 
 		    $$ = $2;
 		}
 	;
 
-ConcentrationGateKineticSection	/* <pcgatk> */
+CellSection	/* <pcell> */
 	:
-		ConcentrationGateKineticSectionFront
+		CellSectionFront
 			InputOutputRelations
 			OptionalItemInputRelations
-			ConcentrationGateKineticDescription
-		ConcentrationGateKineticSectionEnd
+			CellDescription
+		CellSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->segr.bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->segr.bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->segr.bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+ChannelDescription	/* <pchan> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = ChannelCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		ChannelDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		ChannelDescription
+		ChannelComponent
+		{
+#line
+		    //- add component to current section list
+
+		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push current description on stack
+
+		    $$ = $1;
+		}
+	|
+		ChannelDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	|
+		TOKEN_TABLEFILE
+		TOKEN_STRING
+		{
+#line
+		    //- remove ending '"' from string
+
+		    $2->pcString[$2->iLength - 1] = '\0';
+
+		    //- put channel description on stack
+
+		    $$ = ChannelCalloc();
+
+		    //- fill in table parameters
+
+		    ChannelSetTableParameters
+			($$,
+			 (PARSERCONTEXT *)pacParserContext,
+			 &$2->pcString[1]);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+
+		    //! memory leak : $2
+		}
+	;
+
+ChannelSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_CHANNEL
+		{
+#line
+		}
+	;
+
+ChannelSectionFront	/* <pidin> */
+	:
+		TOKEN_CHANNEL
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+ChannelSection	/* <pchan> */
+	:
+		ChannelSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			ChannelDescription
+		ChannelSectionEnd
 		{
 #line
 		    //- assign name to symbol
@@ -1504,30 +1763,13 @@ ConcentrationGateKineticSection	/* <pcgatk> */
 
 		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
 
-		    //- put concentration gate kinetic info on stack
+		    //- put finished section info on stack
 
 		    $$ = $4;
-		}
-	;
 
-ConcentrationGateKineticSectionFront	/* <pidin> */
-	:
-		TOKEN_CONCENTRATION_GATE_KINETIC
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put identifier on stack
+		    //- initialize channel specifics
 
-		    $$ = $2;
-		}
-	;
-
-ConcentrationGateKineticSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_CONCENTRATION_GATE_KINETIC
-		{
-#line
+		    ChannelSetup($$, (PARSERCONTEXT *)pacParserContext);
 		}
 	;
 
@@ -1535,14 +1777,11 @@ ConcentrationGateKineticDescription	/* <pcgatk> */
 	:
 		{
 #line
-		    //- allocate gate concept
+		    //- prepare struct for symbol table
 
 		    $$ = ConcentrationGateKineticCalloc();
 
 		    //- set actual symbol
-
-		    //! note : will not work, should use EndPushedPidin
-		    //! and related here
 
 		    ParserContextSetActual
 			((PARSERCONTEXT *)pacParserContext,
@@ -1588,6 +1827,54 @@ ConcentrationGateKineticDescription	/* <pcgatk> */
 		    //- put symbol on stack
 
 		    $$ = $1;
+		}
+	;
+
+ConcentrationGateKineticSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_CONCENTRATION_GATE_KINETIC
+		{
+#line
+		}
+	;
+
+ConcentrationGateKineticSectionFront	/* <pidin> */
+	:
+		TOKEN_CONCENTRATION_GATE_KINETIC
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+ConcentrationGateKineticSection	/* <pcgatk> */
+	:
+		ConcentrationGateKineticSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			ConcentrationGateKineticDescription
+		ConcentrationGateKineticSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put concentration gate kinetic info on stack
+
+		    $$ = $4;
 		}
 	;
 
@@ -3063,250 +3350,6 @@ PoolDescription	/* <ppool> */
 		}
 	;
 
-ChannelSection	/* <pchan> */
-	:
-		ChannelSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			ChannelDescription
-		ChannelSectionEnd
-		{
-#line
-		    //- set channel name
-
-		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
-
-		    //- set outside bindable fields
-
-		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
-
-		    //- pass channel description to stack
-
-		    $$ = $4;
-
-		    //- initialize channel specifics
-
-		    ChannelSetup($$, (PARSERCONTEXT *)pacParserContext);
-		}
-	;
-
-ChannelSectionFront	/* <pidin> */
-	:
-		TOKEN_CHANNEL
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put name on stack
-
-		    $$ = $2;
-		}
-	;
-
-ChannelSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_CHANNEL
-		{
-#line
-		}
-	;
-
-ChannelDescription	/* <pchan> */
-	:
-		{
-#line
-		    //- allocate channel description on stack
-
-		    $$ = ChannelCalloc();
-
-		    //- set actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->bio.ioh.iol.hsle);
-		}
-	|
-		ChannelDescription
-		Parameters
-		{
-#line
-		    //- link parameters at end of parameter list
-
-		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- push channel description on stack
-
-		    $$ = $1;
-		}
-	|
-		ChannelDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link has section with channel description
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- push channel description on stack
-
-		    $$ = $1;
-		}
-	|
-		ChannelDescription
-		ChannelComponent
-		{
-#line
-		    //- get actual context
-
-		    struct PidinStack *ppist
-			= ParserContextGetPidinContext
-			  ((PARSERCONTEXT *)pacParserContext);
-
-		    //- if component is equation
-
-		    if (instanceof_equation($2))
-		    {
-			//- if channel has already equation assigned
-
-			if (SymbolHasEquation(&$1->bio.ioh.iol.hsle, ppist))
-			{
-			    //- give diagnostics : not allowed
-
-			    NeurospacesError
-				((PARSERCONTEXT *)pacParserContext,
-				 "ChannelDescription",
-				 "Multiple equations for channel(%s).",
-				 SymbolName(&$1->bio.ioh.iol.hsle)
-				 ? SymbolName(&$1->bio.ioh.iol.hsle)
-				 : "Unnamed");
-			}
-
-			//- else
-
-			else
-			{
-			    //- add channel component to section list
-
-			    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-			}
-		    }
-
-		    //- else if component is attachment point
-
-		    else if (instanceof_attachment($2))
-		    {
-			//- if channel has already connection assigned
-
-			if (ChannelReceivesSpikes($1, ppist))
-			{
-			    //- give diagnostics : not allowed
-
-			    NeurospacesError
-				((PARSERCONTEXT *)pacParserContext,
-				 "ChannelDescription",
-				 "Multiple attachment points"
-				 " for channel(%s).",
-				 SymbolName(&$1->bio.ioh.iol.hsle)
-				 ? SymbolName(&$1->bio.ioh.iol.hsle)
-				 : "Unnamed");
-			}
-
-			//- else
-
-			else
-			{
-			    //- add channel component to section list
-
-			    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-			}
-		    }
-
-		    //- else if component is a HH gate
-
-		    else if (instanceof_h_h_gate($2))
-		    {
-			//- add channel component to section list
-
-			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-		    }
-		    else
-		    {
-			//- give diagnostics : not allowed
-
-			//t this cores because the name of the channel has not been set yet.
-
-			NeurospacesError
-			    ((PARSERCONTEXT *)pacParserContext,
-			     "ChannelDescription",
-			     "Unknown channel component %s"
-			     " for channel(%s).",
-			     SymbolName($2)
-			     ? SymbolName($2)
-			     : "Unnamed",
-			     SymbolName(&$1->bio.ioh.iol.hsle)
-			     ? SymbolName(&$1->bio.ioh.iol.hsle)
-			     : "Unnamed");
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- put channel data on stack
-
-		    $$ = $1;
-		}
-	|
-		TOKEN_TABLEFILE
-		TOKEN_STRING
-		{
-#line
-		    //- remove ending '"' from string
-
-		    $2->pcString[$2->iLength - 1] = '\0';
-
-		    //- put channel description on stack
-
-		    $$ = ChannelCalloc();
-
-		    //- fill in table parameters
-
-		    ChannelSetTableParameters
-			($$,
-			 (PARSERCONTEXT *)pacParserContext,
-			 &$2->pcString[1]);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->bio.ioh.iol.hsle);
-
-		    //! memory leak : $2
-		}
-	;
-
 EquationExponentialSection	/* <peq> */
 	:
 		EquationExponentialSectionFront
@@ -3746,130 +3789,6 @@ SegmentInstanceOptions	/* <iCompOptions> */
 		    //- remember cylindrical option (erases spherical option)
 
 		    $$ &= ~(FLAG_SEGMENTER_SPHERICAL);
-		}
-	;
-
-CellSection	/* <pcell> */
-	:
-		CellSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			CellDescription
-		CellSectionEnd
-		{
-#line
-		    //- assign identifier to cell struct
-
-		    SymbolSetName(&$4->segr.bio.ioh.iol.hsle, $1);
-
-		    //- set outside bindable fields
-
-		    SymbolAssignBindableIO(&$4->segr.bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->segr.bio.ioh.iol.hsle, $3);
-
-		    //- put cell struct on stack
-
-		    $$ = $4;
-		}
-	;
-
-CellSectionFront	/* <pidin> */
-	:
-		TOKEN_CELL
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put pidin on stack
-
-		    $$ = $2;
-		}
-	;
-
-CellSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_CELL
-		{
-#line
-		}
-	;
-
-CellDescription	/* <pcell> */
-	:
-		{
-#line
-		    //- prepare cell struct for symbol table
-
-		    $$ = CellCalloc();
-
-		    //- set actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->segr.bio.ioh.iol.hsle);
-		}
-	|
-		CellDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link has section with cell description
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push cell description on stack
-
-		    $$ = $1;
-		}
-	|
-		CellDescription
-		CellComponent
-		{
-#line
-		    //- add cell component to section list of cell
-
-		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push cell description on stack
-
-		    $$ = $1;
-		}
-	|
-		CellDescription
-		Parameters
-		{
-#line
-		    //- link parameters at end of parameter list
-
-		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push cell description on stack
-
-		    $$ = $1;
 		}
 	;
 

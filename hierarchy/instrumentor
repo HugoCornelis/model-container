@@ -751,13 +751,24 @@ sub generate_grammar_specific_section_2_rules
 		$part =~ s/specific_description/${symbol_name}Description/g;
 		$part =~ s/specific_end/${symbol_name}SectionEnd/g;
 		$part =~ s/specific_front/${symbol_name}SectionFront/g;
+		$part =~ s/specific_to_base/$grammar_symbols->{$symbol_name}->{typing}->{to_base}/g;
 		$part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
 
 		print $file "\t\t$part\n";
 	    }
 
+	    my $semantic = $specific_section->{semantic};
+
+	    $semantic =~ s/specific_allocator/$grammar_symbols->{$symbol_name}->{specific_allocator}/g;
+	    $semantic =~ s/specific_component/${symbol_name}Component/g;
+	    $semantic =~ s/specific_description/${symbol_name}Description/g;
+	    $semantic =~ s/specific_end/${symbol_name}SectionEnd/g;
+	    $semantic =~ s/specific_front/${symbol_name}SectionFront/g;
+	    $semantic =~ s/specific_to_base/$grammar_symbols->{$symbol_name}->{typing}->{to_base}/g;
+	    $semantic =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}/g;
+
 	    print $file "		{\n";
-	    print $file $specific_section->{semantic};
+	    print $file $semantic;
 	    print $file "		}\n\t;\n\n";
 
 	    $file->close();

@@ -909,7 +909,7 @@ my $grammar_rules
        specific_front => {
 			  parts => [
 				    'specific_token',
-				    'OptionalIdentifierOptionIndexPushedPidin',
+				    'IdentifierOptionIndexPushedPidin',
 				   ],
 			  semantic => '#line
 		    //- put identifier on stack
