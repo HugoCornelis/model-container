@@ -1276,15 +1276,14 @@ my $grammar_symbols
 				       'Segment',
 				       'SegmentGroup',
 				      ],
-			specific_allocator => 'SegmentCalloc',
+			specific_allocator => 'VSegmentCalloc',
 			specific_token => 'TOKEN_SEGMENT_GROUP',
 			typing => {
 				   base => 'phsle',
 				   id => 'pidin',
-				   spec => 'psegment',
+				   spec => 'pvsegm',
 				   to_base => '->vect.bio.ioh.iol.hsle',
 				  },
-			disabled => 'to complicated for the moment',
 		       },
        GroupedParameters => {
 				   components => [
