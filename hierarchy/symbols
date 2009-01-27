@@ -1069,7 +1069,7 @@ my $grammar_symbols
 					      'GateKineticPart',
 					     ],
 			       specific_allocator => 'GateKineticCalloc',
-			       specific_token => 'TOKEN_GATE_KINETIC_BACKWARD',
+			       specific_token => 'TOKEN_GATE_KINETIC_B',
 			       typing => {
 					  base => 'phsle',
 					  id => 'pidin',
@@ -1082,7 +1082,7 @@ my $grammar_symbols
 					     'GateKineticPart',
 					    ],
 			      specific_allocator => 'GateKineticCalloc',
-			      specific_token => 'TOKEN_GATE_KINETIC_FORWARD',
+			      specific_token => 'TOKEN_GATE_KINETIC_A',
 			      typing => {
 					 base => 'phsle',
 					 id => 'pidin',
@@ -1234,16 +1234,17 @@ my $grammar_symbols
 				   spec => 'psegment',
 				   to_base => '->vect.bio.ioh.iol.hsle',
 				  },
+			disabled => 'to complicated for the moment',
 		       },
        GroupedParameters => {
 				   components => [
 						 ],
-				   specific_allocator => 'SegmentCalloc',
-				   specific_token => 'TOKEN_SEGMENT_GROUP',
+				   specific_allocator => 'GroupedParametersCalloc',
+				   specific_token => 'TOKEN_PARAMETER_GROUP',
 				   typing => {
 					      base => 'phsle',
 					      id => 'pidin',
-					      spec => 'psegment',
+					      spec => 'pgrpp',
 					      to_base => '->bio.ioh.iol.hsle',
 					     },
 				  },

@@ -2430,11 +2430,11 @@ EquationExponentialSection	/* <peq> */
 		EquationExponentialSectionEnd
 		{
 #line
-		    //- set name
+		    //- assign name to symbol
 
 		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
 
-		    //- link outside world I/O relations
+		    //- link input/output relations
 
 		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
 
@@ -2442,15 +2442,793 @@ EquationExponentialSection	/* <peq> */
 
 		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
 
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+FiberModelDescription	/* <pfibr> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = FiberCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->segr.bio.ioh.iol.hsle);
+		}
+	|
+		FiberModelDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+		    }
+
 		    //- reset actual symbol
 
 		    ParserContextSetActual
 			((PARSERCONTEXT *)pacParserContext,
-			 &$4->bio.ioh.iol.hsle);
+			 &$1->segr.bio.ioh.iol.hsle);
 
-		    //- put equation items on stack
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		FiberModelDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+FiberModelSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_FIBER
+		{
+#line
+		}
+	;
+
+FiberModelSectionFront	/* <pidin> */
+	:
+		TOKEN_FIBER
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+FiberModelSection	/* <pfibr> */
+	:
+		FiberModelSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			FiberModelDescription
+		FiberModelSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->segr.bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->segr.bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->segr.bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
 
 		    $$ = $4;
+		}
+	;
+
+GateKineticBackwardDescription	/* <pgatk> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = GateKineticCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		GateKineticBackwardDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		GateKineticBackwardDescription
+		GateKineticBackwardComponent
+		{
+#line
+		    //- add component to current section list
+
+		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push current description on stack
+
+		    $$ = $1;
+		}
+	|
+		GateKineticBackwardDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+GateKineticBackwardSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_GATE_KINETIC_B
+		{
+#line
+		}
+	;
+
+GateKineticBackwardSectionFront	/* <pidin> */
+	:
+		TOKEN_GATE_KINETIC_B
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+GateKineticBackwardSection	/* <pgatk> */
+	:
+		GateKineticBackwardSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			GateKineticBackwardDescription
+		GateKineticBackwardSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+GateKineticForwardDescription	/* <pgatk> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = GateKineticCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		GateKineticForwardDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		GateKineticForwardDescription
+		GateKineticForwardComponent
+		{
+#line
+		    //- add component to current section list
+
+		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push current description on stack
+
+		    $$ = $1;
+		}
+	|
+		GateKineticForwardDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+GateKineticForwardSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_GATE_KINETIC_A
+		{
+#line
+		}
+	;
+
+GateKineticForwardSectionFront	/* <pidin> */
+	:
+		TOKEN_GATE_KINETIC_A
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+GateKineticForwardSection	/* <pgatk> */
+	:
+		GateKineticForwardSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			GateKineticForwardDescription
+		GateKineticForwardSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+GateKineticPartDescription	/* <pgatk> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = GateKineticCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		GateKineticPartDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		GateKineticPartDescription
+		GateKineticPartComponent
+		{
+#line
+		    //- add component to current section list
+
+		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push current description on stack
+
+		    $$ = $1;
+		}
+	|
+		GateKineticPartDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+GateKineticPartSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_GATE_KINETIC_PART
+		{
+#line
+		}
+	;
+
+GateKineticPartSectionFront	/* <pidin> */
+	:
+		TOKEN_GATE_KINETIC_PART
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+GateKineticPartSection	/* <pgatk> */
+	:
+		GateKineticPartSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			GateKineticPartDescription
+		GateKineticPartSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+GroupedModelDescription	/* <pgrup> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = GroupCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		GroupedModelDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		GroupedModelDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+GroupedModelSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_GROUP
+		{
+#line
+		}
+	;
+
+GroupedModelSectionFront	/* <pidin> */
+	:
+		TOKEN_GROUP
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+GroupedModelSection	/* <pgrup> */
+	:
+		GroupedModelSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			GroupedModelDescription
+		GroupedModelSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+GroupedParametersDescription	/* <pgrpp> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = GroupedParametersCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		GroupedParametersDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		GroupedParametersDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+GroupedParametersSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_PARAMETER_GROUP
+		{
+#line
+		}
+	;
+
+GroupedParametersSectionFront	/* <pidin> */
+	:
+		TOKEN_PARAMETER_GROUP
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+GroupedParametersSection	/* <pgrpp> */
+	:
+		GroupedParametersSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			GroupedParametersDescription
+		GroupedParametersSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+HHGateDescription	/* <pgathh> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = HHGateCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		HHGateDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		HHGateDescription
+		HHGateComponent
+		{
+#line
+		    //- add component to current section list
+
+		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push current description on stack
+
+		    $$ = $1;
+		}
+	|
+		HHGateDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+HHGateSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_HH_GATE
+		{
+#line
+		}
+	;
+
+HHGateSectionFront	/* <pidin> */
+	:
+		TOKEN_HH_GATE
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
 		}
 	;
 
@@ -2481,559 +3259,22 @@ HHGateSection	/* <pgathh> */
 		}
 	;
 
-HHGateSectionFront	/* <pidin> */
-	:
-		TOKEN_HH_GATE
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put identifier on stack
-
-		    $$ = $2;
-		}
-	;
-
-HHGateSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_HH_GATE
-		{
-#line
-		}
-	;
-
-HHGateDescription	/* <pgathh> */
+NetworkDescription	/* <pnetw> */
 	:
 		{
 #line
-		    //- allocate gate concept
+		    //- prepare struct for symbol table
 
-		    $$ = HHGateCalloc();
+		    $$ = NetworkCalloc();
 
 		    //- set actual symbol
-
-		    //! note : will not work, should use EndPushedPidin
-		    //! and related here
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->bio.ioh.iol.hsle);
-		}
-	|
-		HHGateDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link children
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- put info on stack
-
-		    $$ = $1;
-		}
-	|
-		HHGateDescription
-		HHGateComponent
-		{
-#line
-		    //- add component to section list
-
-		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- push description on stack
-
-		    $$ = $1;
-		}
-	|
-		HHGateDescription
-		Parameters
-		{
-#line
-		    //- link parameters
-
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- put symbol on stack
-
-		    $$ = $1;
-		}
-	;
-
-GateKineticBackwardSection	/* <pgatk> */
-	:
-		GateKineticBackwardSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			GateKineticBackwardDescription
-		GateKineticBackwardSectionEnd
-		{
-#line
-		    //- assign name to symbol
-
-		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
-
-		    //- link input/output relations
-
-		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
-
-		    //- put gate kinetic info on stack
-
-		    $$ = $4;
-		}
-	;
-
-GateKineticBackwardSectionFront	/* <pidin> */
-	:
-		TOKEN_GATE_KINETIC_B
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put identifier on stack
-
-		    $$ = $2;
-		}
-	;
-
-GateKineticBackwardSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_GATE_KINETIC_B
-		{
-#line
-		}
-	;
-
-GateKineticForwardSection	/* <pgatk> */
-	:
-		GateKineticForwardSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			GateKineticForwardDescription
-		GateKineticForwardSectionEnd
-		{
-#line
-		    //- assign name to symbol
-
-		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
-
-		    //- link input/output relations
-
-		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
-
-		    //- put gate kinetic info on stack
-
-		    $$ = $4;
-		}
-	;
-
-GateKineticForwardSectionFront	/* <pidin> */
-	:
-		TOKEN_GATE_KINETIC_A
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put identifier on stack
-
-		    $$ = $2;
-		}
-	;
-
-GateKineticForwardSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_GATE_KINETIC_A
-		{
-#line
-		}
-	;
-
-GateKineticBackwardDescription	/* <pgatk> */
-	:
-		{
-#line
-		    //- allocate gate kinetic
-
-		    $$ = GateKineticCalloc();
-
-		    //- set actual symbol
-
-		    //! note : will not work, should use EndPushedPidin
-		    //! and related here
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->bio.ioh.iol.hsle);
-		}
-	|
-		GateKineticBackwardDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link children
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- put gate kinetic on stack
-
-		    $$ = $1;
-		}
-	|
-		GateKineticBackwardDescription
-		GateKineticBackwardComponent
-		{
-#line
-		    //- add component to section list
-
-		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- push description on stack
-
-		    $$ = $1;
-		}
-
-	|
-		GateKineticBackwardDescription
-		Parameters
-		{
-#line
-		    //- link parameters
-
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- put symbol on stack
-
-		    $$ = $1;
-		}
-	;
-
-GateKineticForwardDescription	/* <pgatk> */
-	:
-		{
-#line
-		    //- allocate gate kinetic
-
-		    $$ = GateKineticCalloc();
-
-		    //- set actual symbol
-
-		    //! note : will not work, should use EndPushedPidin
-		    //! and related here
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->bio.ioh.iol.hsle);
-		}
-	|
-		GateKineticForwardDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link children
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- put gate kinetic on stack
-
-		    $$ = $1;
-		}
-	|
-		GateKineticForwardDescription
-		GateKineticForwardComponent
-		{
-#line
-		    //- add component to section list
-
-		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- push description on stack
-
-		    $$ = $1;
-		}
-
-	|
-		GateKineticForwardDescription
-		Parameters
-		{
-#line
-		    //- link parameters
-
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- put symbol on stack
-
-		    $$ = $1;
-		}
-	;
-
-/* a fast hack */
-
-GateKineticPartSection	/* <pgatk> */
-	:
-		GateKineticPartSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			GateKineticPartDescription
-		GateKineticPartSectionEnd
-		{
-#line
-		    //- assign name to symbol
-
-		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
-
-		    //- link input/output relations
-
-		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
-
-		    //- put gate kinetic info on stack
-
-		    $$ = $4;
-		}
-	;
-
-GateKineticPartSectionFront	/* <pidin> */
-	:
-		TOKEN_GATE_KINETIC_PART
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put identifier on stack
-
-		    $$ = $2;
-		}
-	;
-
-GateKineticPartSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_GATE_KINETIC_PART
-		{
-#line
-		}
-	;
-
-GateKineticPartDescription	/* <pgatk> */
-	:
-		{
-#line
-		    //- allocate gate kinetic
-
-		    $$ = GateKineticCalloc();
-
-		    //- set actual symbol
-
-		    //! note : will not work, should use EndPushedPidin
-		    //! and related here
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->bio.ioh.iol.hsle);
-		}
-	|
-		GateKineticPartDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link children
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- put gate kinetic on stack
-
-		    $$ = $1;
-		}
-	|
-		GateKineticPartDescription
-		GateKineticPartComponent
-		{
-#line
-		    //- add component to section list
-
-		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- push description on stack
-
-		    $$ = $1;
-		}
-
-	|
-		GateKineticPartDescription
-		Parameters
-		{
-#line
-		    //- link parameters
-
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- put symbol on stack
-
-		    $$ = $1;
-		}
-	;
-
-FiberModelSection	/* <pfibr> */
-	:
-		FiberModelSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			FiberModelDescription
-		FiberModelSectionEnd
-		{
-#line
-		    //- assign name to symbol
-
-		    SymbolSetName(&$4->segr.bio.ioh.iol.hsle, $1);
-
-		    //- link input/output relations
-
-		    SymbolAssignBindableIO(&$4->segr.bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->segr.bio.ioh.iol.hsle, $3);
-
-		    //- put fiber info on stack
-
-		    $$ = $4;
-		}
-	;
-
-FiberModelSectionFront	/* <pidin> */
-	:
-		TOKEN_FIBER
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put identifier on stack
-
-		    $$ = $2;
-		}
-	;
-
-FiberModelSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_FIBER
-		{
-#line
-		}
-	;
-
-FiberModelDescription	/* <pfibr> */
-	:
-		{
-#line
-		    //- allocate fiber
-
-		    $$ = FiberCalloc();
-
-		    //- set actual symbol
-
-		    //! note : will not work, should use EndPushedPidin
-		    //! and related here
 
 		    ParserContextSetActual
 			((PARSERCONTEXT *)pacParserContext,
 			 &$$->segr.bio.ioh.iol.hsle);
 		}
 	|
-		FiberModelDescription
+		NetworkDescription
 		ChildSectionOptionalInputOptionalParameters
 		{
 #line
@@ -3050,18 +3291,37 @@ FiberModelDescription	/* <pfibr> */
 			((PARSERCONTEXT *)pacParserContext,
 			 &$1->segr.bio.ioh.iol.hsle);
 
-		    //- put fiber on stack
+		    //- put symbol description on stack
 
 		    $$ = $1;
 		}
 	|
-		FiberModelDescription
+		NetworkDescription
+		NetworkComponent
+		{
+#line
+		    //- add component to current section list
+
+		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push current description on stack
+
+		    $$ = $1;
+		}
+	|
+		NetworkDescription
 		Parameters
 		{
 #line
 		    //- link parameters
 
-		    SymbolAssignParameters(&$1->segr.bio.ioh.iol.hsle, $2);
+		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
 
 		    //- reset actual symbol
 
@@ -3075,36 +3335,18 @@ FiberModelDescription	/* <pfibr> */
 		}
 	;
 
-GroupedModelSection	/* <pgrup> */
+NetworkSectionEnd
 	:
-		GroupedModelSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			GroupedModelDescription
-		GroupedModelSectionEnd
+		EndPushedPidin
+		TOKEN_NETWORK
 		{
 #line
-		    //- assign name to symbol
-
-		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
-
-		    //- link input/output relations
-
-		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
-
-		    //- put group info on stack
-
-		    $$ = $4;
 		}
 	;
 
-GroupedModelSectionFront	/* <pidin> */
+NetworkSectionFront	/* <pidin> */
 	:
-		TOKEN_GROUP
+		TOKEN_NETWORK
 		IdentifierOptionIndexPushedPidin
 		{
 #line
@@ -3114,34 +3356,49 @@ GroupedModelSectionFront	/* <pidin> */
 		}
 	;
 
-GroupedModelSectionEnd
+NetworkSection	/* <pnetw> */
 	:
-		EndPushedPidin
-		TOKEN_GROUP
+		NetworkSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			NetworkDescription
+		NetworkSectionEnd
 		{
 #line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->segr.bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->segr.bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->segr.bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
 		}
 	;
 
-GroupedModelDescription	/* <pgrup> */
+PoolDescription	/* <ppool> */
 	:
 		{
 #line
-		    //- allocate extension
+		    //- prepare struct for symbol table
 
-		    $$ = GroupCalloc();
+		    $$ = PoolCalloc();
 
 		    //- set actual symbol
-
-		    //! note : will not work, should use EndPushedPidin
-		    //! and related here
 
 		    ParserContextSetActual
 			((PARSERCONTEXT *)pacParserContext,
 			 &$$->bio.ioh.iol.hsle);
 		}
 	|
-		GroupedModelDescription
+		PoolDescription
 		ChildSectionOptionalInputOptionalParameters
 		{
 #line
@@ -3158,18 +3415,18 @@ GroupedModelDescription	/* <pgrup> */
 			((PARSERCONTEXT *)pacParserContext,
 			 &$1->bio.ioh.iol.hsle);
 
-		    //- put extension on stack
+		    //- put symbol description on stack
 
 		    $$ = $1;
 		}
 	|
-		GroupedModelDescription
+		PoolDescription
 		Parameters
 		{
 #line
 		    //- link parameters
 
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
 
 		    //- reset actual symbol
 
@@ -3177,19 +3434,40 @@ GroupedModelDescription	/* <pgrup> */
 			((PARSERCONTEXT *)pacParserContext,
 			 &$1->bio.ioh.iol.hsle);
 
-		    //- put extension on stack
+		    //- put symbol on stack
 
 		    $$ = $1;
 		}
 	;
 
-GroupedParametersSection	/* <pgrpp> */
+PoolSectionEnd
 	:
-		GroupedParametersSectionFront
+		EndPushedPidin
+		TOKEN_POOL
+		{
+#line
+		}
+	;
+
+PoolSectionFront	/* <pidin> */
+	:
+		TOKEN_POOL
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+PoolSection	/* <ppool> */
+	:
+		PoolSectionFront
 			InputOutputRelations
 			OptionalItemInputRelations
-			GroupedParametersDescription
-		GroupedParametersSectionEnd
+			PoolDescription
+		PoolSectionEnd
 		{
 #line
 		    //- assign name to symbol
@@ -3204,15 +3482,100 @@ GroupedParametersSection	/* <pgrpp> */
 
 		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
 
-		    //- put group info on stack
+		    //- put finished section info on stack
 
 		    $$ = $4;
 		}
 	;
 
-GroupedParametersSectionFront	/* <pidin> */
+PopulationDescription	/* <ppopu> */
 	:
-		TOKEN_PARAMETER_GROUP
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = PopulationCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->segr.bio.ioh.iol.hsle);
+		}
+	|
+		PopulationDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		PopulationDescription
+		PopulationComponent
+		{
+#line
+		    //- add component to current section list
+
+		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push current description on stack
+
+		    $$ = $1;
+		}
+	|
+		PopulationDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+PopulationSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_POPULATION
+		{
+#line
+		}
+	;
+
+PopulationSectionFront	/* <pidin> */
+	:
+		TOKEN_POPULATION
 		IdentifierOptionIndexPushedPidin
 		{
 #line
@@ -3222,34 +3585,178 @@ GroupedParametersSectionFront	/* <pidin> */
 		}
 	;
 
-GroupedParametersSectionEnd
+PopulationSection	/* <ppopu> */
 	:
-		EndPushedPidin
-		TOKEN_PARAMETER_GROUP
+		PopulationSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			PopulationDescription
+		PopulationSectionEnd
 		{
 #line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->segr.bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->segr.bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->segr.bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
 		}
 	;
 
-GroupedParametersDescription	/* <pgrup> */
+ProjectionDescription	/* <pproj> */
 	:
 		{
 #line
-		    //- allocate extension
+		    //- prepare struct for symbol table
 
-		    $$ = GroupedParametersCalloc();
+		    $$ = ProjectionCalloc();
 
 		    //- set actual symbol
-
-		    //! note : will not work, should use EndPushedPidin
-		    //! and related here
 
 		    ParserContextSetActual
 			((PARSERCONTEXT *)pacParserContext,
 			 &$$->bio.ioh.iol.hsle);
 		}
 	|
-		GroupedParametersDescription
+		ProjectionDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //! this interferes with the things below, so dump a core
+		    //! to prevent this
+
+		    *(int *)0 = 0;
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		ProjectionDescription
+		ProjectionComponent
+		{
+#line
+		    //- add component to current section list
+
+		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push current description on stack
+
+		    $$ = $1;
+		}
+	|
+		ProjectionDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+ProjectionSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_PROJECTION
+		{
+#line
+		}
+	;
+
+ProjectionSectionFront	/* <pidin> */
+	:
+		TOKEN_PROJECTION
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+ProjectionSection	/* <pproj> */
+	:
+		ProjectionSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			ProjectionDescription
+		ProjectionSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+RandomvalueDescription	/* <pranv> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = RandomvalueCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		RandomvalueDescription
 		ChildSectionOptionalInputOptionalParameters
 		{
 #line
@@ -3266,18 +3773,18 @@ GroupedParametersDescription	/* <pgrup> */
 			((PARSERCONTEXT *)pacParserContext,
 			 &$1->bio.ioh.iol.hsle);
 
-		    //- put extension on stack
+		    //- put symbol description on stack
 
 		    $$ = $1;
 		}
 	|
-		GroupedParametersDescription
-		Parameters
+		RandomvalueDescription
+		RandomvalueComponent
 		{
 #line
-		    //- link parameters
+		    //- add component to current section list
 
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
+		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
 
 		    //- reset actual symbol
 
@@ -3285,9 +3792,220 @@ GroupedParametersDescription	/* <pgrup> */
 			((PARSERCONTEXT *)pacParserContext,
 			 &$1->bio.ioh.iol.hsle);
 
-		    //- put extension on stack
+		    //- push current description on stack
 
 		    $$ = $1;
+		}
+	|
+		RandomvalueDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+RandomvalueSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_RANDOMVALUE
+		{
+#line
+		}
+	;
+
+RandomvalueSectionFront	/* <pidin> */
+	:
+		TOKEN_RANDOMVALUE
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+RandomvalueSection	/* <pranv> */
+	:
+		RandomvalueSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			RandomvalueDescription
+		RandomvalueSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+SegmentDescription	/* <psegment> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = SegmentCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->segr.bio.ioh.iol.hsle);
+		}
+	|
+		SegmentDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		SegmentDescription
+		SegmentComponent
+		{
+#line
+		    //- add component to current section list
+
+		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push current description on stack
+
+		    $$ = $1;
+		}
+	|
+		SegmentDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- put segment description on stack
+
+		    $$ = $1;
+		}
+	|
+		SegmentDescription
+		TOKEN_OPTIONS
+		SegmentInstanceOptions
+		{
+#line
+		    //- set segment options
+
+		    SymbolSetOptions(&$1->segr.bio.ioh.iol.hsle, $3);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push segment description on stack
+
+		    $$ = $1;
+		}
+	;
+
+SegmentSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_SEGMENT
+		{
+#line
+		}
+	;
+
+SegmentSectionFront	/* <pidin> */
+	:
+		TOKEN_SEGMENT
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+SegmentSection	/* <psegment> */
+	:
+		SegmentSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			SegmentDescription
+		SegmentSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->segr.bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->segr.bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->segr.bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
 		}
 	;
 
@@ -3600,219 +4318,6 @@ AttachmentPointOutgoing	/* <pcIdentifier> */
 		}
 	;
 
-PoolSection	/* <ppool> */
-	:
-		PoolSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			PoolDescription
-		PoolSectionEnd
-		{
-#line
-		    //- set pool name
-
-		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
-
-		    //- set outside bindable fields
-
-		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
-
-		    //- pass pool description to stack
-
-		    $$ = $4;
-		}
-	;
-
-PoolSectionFront	/* <pidin> */
-	:
-		TOKEN_POOL
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put name on stack
-
-		    $$ = $2;
-		}
-	;
-
-PoolSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_POOL
-		{
-#line
-		}
-	;
-
-PoolDescription	/* <ppool> */
-	:
-		Parameters
-		{
-#line
-		    //- allocate pool description on stack
-
-		    $$ = PoolCalloc();
-
-		    $$->depool.iType = TYPE_POOL_PARAMETERS;
-
-		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle, $1);
-
-		    //- set actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->bio.ioh.iol.hsle);
-		}
-	;
-
-SegmentSection	/* <psegment> */
-	:
-		SegmentSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			SegmentDescription
-		SegmentSectionEnd
-		{
-#line
-		    //- link name with segment
-
-		    SymbolSetName(&$4->segr.bio.ioh.iol.hsle, $1);
-
-		    //- set outside bindable fields
-
-		    SymbolAssignBindableIO(&$4->segr.bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->segr.bio.ioh.iol.hsle, $3);
-
-		    //- put segment items on stack
-
-		    $$ = $4;
-		}
-	;
-
-SegmentSectionFront	/* <pidin> */
-	:
-		TOKEN_SEGMENT
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put name on stack
-
-		    $$ = $2;
-		}
-	;
-
-SegmentSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_SEGMENT
-		{
-#line
-		}
-	;
-
-SegmentDescription	/* <psegment> */
-	:
-		{
-#line
-		    //- put empty segment description on stack
-
-		    $$ = SegmentCalloc();
-
-		    //- set actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->segr.bio.ioh.iol.hsle);
-		}
-	|
-		SegmentDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link children
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push segment description on stack
-
-		    $$ = $1;
-		}
-	|
-		SegmentDescription
-		Parameters
-		{
-#line
-		    //- link parameters at end of parameter list
-
-		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- put segment description on stack
-
-		    $$ = $1;
-		}
-	|
-		SegmentDescription
-		TOKEN_OPTIONS
-		SegmentInstanceOptions
-		{
-#line
-		    //- set segment options
-
-		    SymbolSetOptions(&$1->segr.bio.ioh.iol.hsle, $3);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push segment description on stack
-
-		    $$ = $1;
-		}
-	|
-		SegmentDescription
-		SegmentComponent
-		{
-#line
-		    //- add segment component to section list
-
-		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push segment description on stack
-
-		    $$ = $1;
-		}
-	;
-
 SegmentGroupSection	/* <pvsegm> */
 	:
 		SegmentGroupSectionFront
@@ -3976,546 +4481,6 @@ SegmentInstanceOptions	/* <iCompOptions> */
 		    //- remember cylindrical option (erases spherical option)
 
 		    $$ &= ~(FLAG_SEGMENTER_SPHERICAL);
-		}
-	;
-
-RandomvalueSection	/* <pranv> */
-	:
-		RandomvalueSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			RandomvalueDescription
-		RandomvalueSectionEnd
-		{
-#line
-		    //- set pool name
-
-		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
-
-		    //- set outside bindable fields
-
-		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
-
-		    //- pass randomvalue description to stack
-
-		    $$ = $4;
-		}
-	;
-
-RandomvalueSectionFront	/* <pidin> */
-	:
-		TOKEN_RANDOMVALUE
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put name on stack
-
-		    $$ = $2;
-		}
-	;
-
-RandomvalueSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_RANDOMVALUE
-		{
-#line
-		}
-	;
-
-RandomvalueDescription	/* <pranv> */
-	:
-		{
-#line
-		    //- allocate randomvalue description on stack
-
-		    $$ = RandomvalueCalloc();
-
-		    //- set actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->bio.ioh.iol.hsle);
-		}
-	|
-		RandomvalueDescription
-		Parameters
-		{
-#line
-		    //- link parameters
-
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- push description on stack
-
-		    $$ = $1;
-		}
-	|
-		RandomvalueDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link has section with description
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- push description on stack
-
-		    $$ = $1;
-		}
-	|
-		RandomvalueDescription
-		RandomvalueComponent
-		{
-#line
-		    //- if component is attachment
-
-		    if (instanceof_attachment($2))
-		    {
-/* 			//- if channel has already connection assigned */
-
-/* 			if (!HSolveListIsEmpty(&$1->dechan.hslAttachments)) */
-/* 			{ */
-/* 			    //- give diagnostics : not allowed */
-
-/* 			    NeurospacesError */
-/* 				((PARSERCONTEXT *)pacParserContext, */
-/* 				 "RandomvalueDescription", */
-/* 				 "Multiple attachment points for channel(%s).", */
-/* 				 ChannelName($1) */
-/* 				 ? ChannelName($1) */
-/* 				 : "Unnamed"); */
-/* 			} */
-
-/* 			//- else */
-
-/* 			else */
-/* 			{ */
-/* 			    //- link equation to channel */
-
-/* 			    SymbolAddChild */
-/* 				(&$1->dechan.hslAttachments, $2); */
-/* 			} */
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- put data on stack
-
-		    $$ = $1;
-		}
-	;
-
-PopulationSection	/* <ppopu> */
-	:
-		PopulationSectionFront
-			PopulationDescription
-		PopulationSectionEnd
-		{
-#line
-		    //- assign identifier to population struct
-
-		    SymbolSetName(&$2->segr.bio.ioh.iol.hsle, $1);
-
-		    //- put population struct on stack
-
-		    $$ = $2;
-		}
-	;
-
-PopulationSectionFront	/* <pidin> */
-	:
-		TOKEN_POPULATION
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put pidin on stack
-
-		    $$ = $2;
-		}
-	;
-
-PopulationSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_POPULATION
-		{
-#line
-		}
-	;
-
-PopulationDescription	/* <ppopu> */
-	:
-		{
-#line
-		    //- prepare population struct for symbol table
-
-		    $$ = PopulationCalloc();
-
-		    //- set actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->segr.bio.ioh.iol.hsle);
-		}
-	|
-		PopulationDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link has section with population description
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push population description on stack
-
-		    $$ = $1;
-		}
-	|
-		PopulationDescription
-		PopulationComponent
-		{
-#line
-		    //- add population component to sections of population
-
-		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push population description on stack
-
-		    $$ = $1;
-		}
-/*
-	|
-		PopulationDescription
-		MultipleCellSection
-		{
-#line
-		    //- allocate symbol table list element
-
-		    struct symtab_HSolveListElement * phsle
-			= VCellCalloc();
-
-		    //- link multiple cells to list element
-
-		    phsle->iType = TYPE_HSLE_MULTIPLECELLS;
-		    phsle->uSymbol.pcell = $2;
-
-		    //- add multiple cells to section list of population
-
-		    SymbolAddChild(&$1->hslSections, phsle);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- push population description on stack
-
-		    $$ = $1;
-		}
-*/	|
-		PopulationDescription
-		Parameters
-		{
-#line
-		    //- link parameters at end of parameter list
-
-		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push population description on stack
-
-		    $$ = $1;
-		}
-	;
-
-ProjectionSection	/* <pproj> */
-	:
-		ProjectionSectionFront
-			ProjectionDescription
-		ProjectionSectionEnd
-		{
-#line
-		    //- assign identifier to projection struct
-
-		    SymbolSetName(&$2->bio.ioh.iol.hsle, $1);
-
-		    //- put projection struct on stack
-
-		    $$ = $2;
-		}
-	;
-
-ProjectionSectionFront	/* <pidin> */
-	:
-		TOKEN_PROJECTION
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put pidin on stack
-
-		    $$ = $2;
-		}
-	;
-
-ProjectionSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_PROJECTION
-		{
-#line
-		}
-	;
-
-ProjectionDescription	/* <pproj> */
-	:
-		{
-#line
-		    //- prepare projection struct for symbol table
-
-		    $$ = ProjectionCalloc();
-
-		    //- set actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->bio.ioh.iol.hsle);
-		}
-	|
-		ProjectionDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link has section with projection description
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-		    }
-
-		    //! this interferes with the things below, so dump a core
-		    //! to prevent this
-
-		    *(int *)0 = 0;
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- push projection description on stack
-
-		    $$ = $1;
-		}
-	|
-		ProjectionDescription
-		ProjectionComponent
-		{
-#line
-		    //- add projection component
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- push projection description on stack
-
-		    $$ = $1;
-		}
-	|
-		ProjectionDescription
-		Parameters
-		{
-#line
-		    //- link parameters at end of parameter list
-
-		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- push description on stack
-
-		    $$ = $1;
-		}
-	;
-
-NetworkSection	/* <pnetw> */
-	:
-		NetworkSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			NetworkDescription
-		NetworkSectionEnd
-		{
-#line
-		    //- assign identifier to network struct
-
-		    SymbolSetName(&$4->segr.bio.ioh.iol.hsle, $1);
-
-		    //- set outside bindable fields
-
-		    SymbolAssignBindableIO(&$4->segr.bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->segr.bio.ioh.iol.hsle, $3);
-
-		    //- put network struct on stack
-
-		    $$ = $4;
-		}
-	;
-
-NetworkSectionFront	/* <pidin> */
-	:
-		TOKEN_NETWORK
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put pidin on stack
-
-		    $$ = $2;
-		}
-	;
-
-NetworkSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_NETWORK
-		{
-#line
-		}
-	;
-
-NetworkDescription	/* <pnetw> */
-	:
-		{
-#line
-		    //- prepare network struct for symbol table
-
-		    $$ = NetworkCalloc();
-
-		    //- set actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->segr.bio.ioh.iol.hsle);
-		}
-	|
-		NetworkDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link has section with network description
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push network description on stack
-
-		    $$ = $1;
-		}
-	|
-		NetworkDescription
-		NetworkComponent
-		{
-#line
-		    //- link component into section list of network
-
-		    SymbolAddChild(&$1->segr.bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push network description on stack
-
-		    $$ = $1;
-		}
-	|
-		NetworkDescription
-		Parameters
-		{
-#line
-		    //- link parameters at end of parameter list
-
-		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push description on stack
-
-		    $$ = $1;
 		}
 	;
 
