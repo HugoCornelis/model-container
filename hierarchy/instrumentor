@@ -923,6 +923,19 @@ sub generate_grammar_specific_section_2_rules
 
 	    foreach my $subpart ( @$global_parts, )
 	    {
+		# if this symbol cannot be made of components
+
+		if (! scalar @{ $grammar_symbols->{$symbol_name}->{components} })
+		{
+		    # we skip component parsing / linkage
+
+		    if (defined $subpart->{parts}->[1]
+			and $subpart->{parts}->[1] eq 'specific_component')
+		    {
+			next;
+		    }
+		}
+
 		my $description_part = '';
 
 		my $parts = $subpart->{parts};

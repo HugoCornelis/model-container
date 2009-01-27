@@ -1805,7 +1805,7 @@ ConcentrationGateKineticDescription	/* <pcgatk> */
 			((PARSERCONTEXT *)pacParserContext,
 			 &$1->bio.ioh.iol.hsle);
 
-		    //- put concentration gate kinetic on stack
+		    //- put symbol description on stack
 
 		    $$ = $1;
 		}
@@ -1878,6 +1878,582 @@ ConcentrationGateKineticSection	/* <pcgatk> */
 		}
 	;
 
+ConnectionDescription	/* <pconsy> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = ConnectionSymbolCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		ConnectionDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //! this interferes with the things below, so dump a core
+		    //! to prevent this
+
+		    *(int *)0 = 0;
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		ConnectionDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+ConnectionSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_CONNECTION
+		{
+#line
+		}
+	;
+
+ConnectionSectionFront	/* <pidin> */
+	:
+		TOKEN_CONNECTION
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+ConnectionSection	/* <pconsy> */
+	:
+		ConnectionSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			ConnectionDescription
+		ConnectionSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+ContourGroupDescription	/* <pvcont> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = VContourCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->vect.bio.ioh.iol.hsle);
+		}
+	|
+		ContourGroupDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		ContourGroupDescription
+		ContourGroupComponent
+		{
+#line
+		    //- add component to current section list
+
+		    SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- push current description on stack
+
+		    $$ = $1;
+		}
+	|
+		ContourGroupDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->vect.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+ContourGroupSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_CONTOUR_GROUP
+		{
+#line
+		}
+	;
+
+ContourGroupSectionFront	/* <pidin> */
+	:
+		TOKEN_CONTOUR_GROUP
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+ContourGroupSection	/* <pvcont> */
+	:
+		ContourGroupSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			ContourGroupDescription
+		ContourGroupSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->vect.bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->vect.bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->vect.bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+ContourPointDescription	/* <pcpnt> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = ContourPointCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		ContourPointDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		ContourPointDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+ContourPointSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_CONTOUR_POINT
+		{
+#line
+		}
+	;
+
+ContourPointSectionFront	/* <pidin> */
+	:
+		TOKEN_CONTOUR_POINT
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+ContourPointSection	/* <pcpnt> */
+	:
+		ContourPointSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			ContourPointDescription
+		ContourPointSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+EMContourDescription	/* <pemc> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = EMContourCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		EMContourDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		EMContourDescription
+		EMContourComponent
+		{
+#line
+		    //- add component to current section list
+
+		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- push current description on stack
+
+		    $$ = $1;
+		}
+	|
+		EMContourDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+EMContourSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_EM_CONTOUR
+		{
+#line
+		}
+	;
+
+EMContourSectionFront	/* <pidin> */
+	:
+		TOKEN_EM_CONTOUR
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+EMContourSection	/* <pemc> */
+	:
+		EMContourSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			EMContourDescription
+		EMContourSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+EquationExponentialDescription	/* <peq> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = EquationCalloc();
+
+		    SymbolSetType(&$$->bio.ioh.iol.hsle, TYPE_EQUATION_EXPONENTIAL);
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		EquationExponentialDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		EquationExponentialDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+EquationExponentialSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_EXPONENTIAL_EQUATION
+		{
+#line
+		}
+	;
+
+EquationExponentialSectionFront	/* <pidin> */
+	:
+		TOKEN_EXPONENTIAL_EQUATION
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+EquationExponentialSection	/* <peq> */
+	:
+		EquationExponentialSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			EquationExponentialDescription
+		EquationExponentialSectionEnd
+		{
+#line
+		    //- set name
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link outside world I/O relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$4->bio.ioh.iol.hsle);
+
+		    //- put equation items on stack
+
+		    $$ = $4;
+		}
+	;
+
 HHGateSection	/* <pgathh> */
 	:
 		HHGateSectionFront
@@ -1899,7 +2475,7 @@ HHGateSection	/* <pgathh> */
 
 		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
 
-		    //- put info on stack
+		    //- put finished section info on stack
 
 		    $$ = $4;
 		}
@@ -2499,369 +3075,6 @@ FiberModelDescription	/* <pfibr> */
 		}
 	;
 
-EMContourSection	/* <pemc> */
-	:
-		EMContourSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			EMContourDescription
-		EMContourSectionEnd
-		{
-#line
-		    //- assign name to symbol
-
-		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
-
-		    //- link input/output relations
-
-		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
-
-		    //- put em contour info on stack
-
-		    $$ = $4;
-		}
-	;
-
-EMContourSectionFront	/* <pidin> */
-	:
-		TOKEN_EM_CONTOUR
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put identifier on stack
-
-		    $$ = $2;
-		}
-	;
-
-EMContourSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_EM_CONTOUR
-		{
-#line
-		}
-	;
-
-EMContourDescription	/* <pemc> */
-	:
-		{
-#line
-		    //- allocate symbol
-
-		    $$ = EMContourCalloc();
-
-		    //- set actual symbol
-
-		    //! note : will not work, should use EndPushedPidin
-		    //! and related here
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->bio.ioh.iol.hsle);
-		}
-	|
-		EMContourDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link children
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- put symbol on stack
-
-		    $$ = $1;
-		}
-	|
-		EMContourDescription
-		EMContourComponent
-		{
-#line
-		    //- add component to section list
-
-		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- push description on stack
-
-		    $$ = $1;
-		}
-	|
-		EMContourDescription
-		Parameters
-		{
-#line
-		    //- link parameters
-
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- put symbol on stack
-
-		    $$ = $1;
-		}
-	;
-
-ContourGroupSection	/* <pvcont> */
-	:
-		ContourGroupSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			ContourGroupDescription
-		ContourGroupSectionEnd
-		{
-#line
-		    //- assign name to symbol
-
-		    SymbolSetName(&$4->vect.bio.ioh.iol.hsle, $1);
-
-		    //- link input/output relations
-
-		    SymbolAssignBindableIO(&$4->vect.bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->vect.bio.ioh.iol.hsle, $3);
-
-		    //- put symbol on stack
-
-		    $$ = $4;
-		}
-	;
-
-ContourGroupSectionFront	/* <pidin> */
-	:
-		TOKEN_CONTOUR_GROUP
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put identifier on stack
-
-		    $$ = $2;
-		}
-	;
-
-ContourGroupSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_CONTOUR_GROUP
-		{
-#line
-		}
-	;
-
-ContourGroupDescription	/* <pvcont> */
-	:
-		{
-#line
-		    //- allocate symbol
-
-		    $$ = VContourCalloc();
-
-		    //- set actual symbol
-
-		    //! note : will not work, should use EndPushedPidin
-		    //! and related here
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->vect.bio.ioh.iol.hsle);
-		}
-	|
-		ContourGroupDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link children
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->vect.bio.ioh.iol.hsle);
-
-		    //- put symbol on stack
-
-		    $$ = $1;
-		}
-	|
-		ContourGroupDescription
-		ContourGroupComponent
-		{
-#line
-		    //- add component to section list
-
-		    SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->vect.bio.ioh.iol.hsle);
-
-		    //- push description on stack
-
-		    $$ = $1;
-		}
-
-	|
-		ContourGroupDescription
-		Parameters
-		{
-#line
-		    //- link parameters
-
-		    SymbolAssignParameters(&$1->vect.bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->vect.bio.ioh.iol.hsle);
-
-		    //- put symbol on stack
-
-		    $$ = $1;
-		}
-	;
-
-ContourPointSection	/* <pcpnt> */
-	:
-		ContourPointSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			ContourPointDescription
-		ContourPointSectionEnd
-		{
-#line
-		    //- assign name to symbol
-
-		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
-
-		    //- link input/output relations
-
-		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
-
-		    //- put symbol on stack
-
-		    $$ = $4;
-		}
-	;
-
-ContourPointSectionFront	/* <pidin> */
-	:
-		TOKEN_CONTOUR_POINT
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put identifier on stack
-
-		    $$ = $2;
-		}
-	;
-
-ContourPointSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_CONTOUR_POINT
-		{
-#line
-		}
-	;
-
-ContourPointDescription	/* <pcpnt> */
-	:
-		{
-#line
-		    //- allocate symbol
-
-		    $$ = ContourPointCalloc();
-
-		    //- set actual symbol
-
-		    //! note : will not work, should use EndPushedPidin
-		    //! and related here
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->bio.ioh.iol.hsle);
-		}
-	|
-		ContourPointDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link children
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- put symbol on stack
-
-		    $$ = $1;
-		}
-	|
-		ContourPointDescription
-		Parameters
-		{
-#line
-		    //- link parameters
-
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- put symbol on stack
-
-		    $$ = $1;
-		}
-	;
-
 GroupedModelSection	/* <pgrup> */
 	:
 		GroupedModelSectionFront
@@ -3073,6 +3286,112 @@ GroupedParametersDescription	/* <pgrup> */
 			 &$1->bio.ioh.iol.hsle);
 
 		    //- put extension on stack
+
+		    $$ = $1;
+		}
+	;
+
+ConnectionGroupDescription
+	:
+		{
+#line
+		}
+	|
+		ConnectionGroupDescription
+		ConnectionGroupComponent
+		{
+#line
+		    //- get pointer to actual container
+
+		    struct symtab_HSolveListElement *phsle
+			= (struct symtab_HSolveListElement *)
+			  ParserContextActualContainer();
+
+		    if (!instanceof_v_connection_symbol(phsle))
+		    {
+			//- give diagnostics : prototype not found
+
+			NeurospacesError
+			    ((PARSERCONTEXT *)pacParserContext,
+			     "ConnectionGroupDescription",
+			     "No group allocated.",
+			     $2);
+		    }
+		    else
+		    {
+			//- get pointer to actual container
+
+			struct symtab_VConnectionSymbol *pvconsy
+			    = (struct symtab_VConnectionSymbol *)
+			      ParserContextActualContainer();
+
+			//- add connection component to container
+
+			SymbolAddChild(&pvconsy->vect.bio.ioh.iol.hsle, $2);
+
+			//- reset actual symbol
+
+			ParserContextSetActual
+			    ((PARSERCONTEXT *)pacParserContext,
+			     &pvconsy->vect.bio.ioh.iol.hsle);
+		    }
+		}
+	;
+
+ConnectionGroupSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_CONNECTION_GROUP
+		{
+#line
+		    //- pop segment container from container stack
+
+		    ParserContextPopContainer();
+		}
+	;
+
+ConnectionGroupSectionFront	/* <pvconsy> */
+	:
+		TOKEN_CONNECTION_GROUP
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- get actual container name
+
+		    struct symtab_IdentifierIndex *pidin
+			= ParserContextActualState();
+
+		    //- put container on stack
+
+		    $$ = VConnectionSymbolCalloc();
+
+		    //- set name of group
+
+		    SymbolSetName(&$$->vect.bio.ioh.iol.hsle, pidin);
+
+		    //- push container on container stack
+
+		    ParserContextPushContainer(&$$->vect);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->vect.bio.ioh.iol.hsle);
+
+		}
+	;
+
+ConnectionGroupSection	/* <pvconsy> */
+	:
+		ConnectionGroupSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			ConnectionGroupDescription
+		ConnectionGroupSectionEnd
+		{
+#line
+		    //- put enumerated connections struct on stack
 
 		    $$ = $1;
 		}
@@ -3348,138 +3667,6 @@ PoolDescription	/* <ppool> */
 			((PARSERCONTEXT *)pacParserContext,
 			 &$$->bio.ioh.iol.hsle);
 		}
-	;
-
-EquationExponentialSection	/* <peq> */
-	:
-		EquationExponentialSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			EquationExponentialDescription
-		EquationExponentialSectionEnd
-		{
-#line
-		    //- set name
-
-		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
-
-		    //- link outside world I/O relations
-
-		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$4->bio.ioh.iol.hsle);
-
-		    //- put equation items on stack
-
-		    $$ = $4;
-		}
-	;
-
-EquationExponentialSectionFront	/* <pidin> */
-	:
-		TOKEN_EXPONENTIAL_EQUATION
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- pass id on stack
-
-		    $$ = $2;
-		}
-	;
-
-EquationExponentialSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_EXPONENTIAL_EQUATION
-		{
-#line
-		}
-	;
-
-EquationExponentialDescription	/* <peq> */
-	:
-		{
-#line
-		    //- put empty equation description on stack
-
-		    $$ = EquationCalloc();
-
-		    SymbolSetType(&$$->bio.ioh.iol.hsle, TYPE_EQUATION_EXPONENTIAL);
-
-		    //- set actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->bio.ioh.iol.hsle);
-		}
-/* 	| */
-/* 		EquationExponentialDescription */
-/* 		ChildSectionOptionalInputOptionalParameters */
-/* 		{ */
-/* #line */
-/* 		    //- link children */
-
-/* 		    if ($2) */
-/* 		    { */
-/* 			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2); */
-/* 		    } */
-
-/* 		    //- reset actual symbol */
-
-/* 		    ParserContextSetActual */
-/* 			((PARSERCONTEXT *)pacParserContext, */
-/* 			 &$1->segr.bio.ioh.iol.hsle); */
-
-/* 		    //- push equation description on stack */
-
-/* 		    $$ = $1; */
-/* 		} */
-	|
-		EquationExponentialDescription
-		Parameters
-		{
-#line
-		    //- link parameters at end of parameter list
-
-		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- put equation description on stack
-
-		    $$ = $1;
-		}
-/* 	| */
-/* 		EquationExponentialDescription */
-/* 		EquationComponent */
-/* 		{ */
-/* #line */
-/* 		    //- add equation component to section list */
-
-/* 		    SymbolAddChild(&$1->bio.ioh.iol.hsle, $2); */
-
-/* 		    //- reset actual symbol */
-
-/* 		    ParserContextSetActual */
-/* 			((PARSERCONTEXT *)pacParserContext, */
-/* 			 &$1->bio.ioh.iol.hsle); */
-
-/* 		    //- push equation description on stack */
-
-/* 		    $$ = $1; */
-/* 		} */
 	;
 
 SegmentSection	/* <psegment> */
@@ -4083,244 +4270,6 @@ PopulationDescription	/* <ppopu> */
 		    //- push population description on stack
 
 		    $$ = $1;
-		}
-	;
-
-ConnectionSection	/* <pconsy> */
-	:
-		ConnectionSectionFront
-			ConnectionDescription
-		ConnectionSectionEnd
-		{
-#line
-		    //- assign identifier to connection struct
-
-		    SymbolSetName(&$2->bio.ioh.iol.hsle, $1);
-
-		    //- put connection struct on stack
-
-		    $$ = $2;
-		}
-	;
-
-ConnectionSectionFront	/* <pidin> */
-	:
-		TOKEN_CONNECTION
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put pidin on stack
-
-		    $$ = $2;
-		}
-	;
-
-ConnectionSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_CONNECTION
-		{
-#line
-		}
-	;
-
-ConnectionDescription	/* <pconsy> */
-	:
-		{
-#line
-		    //- prepare connection struct for symbol table
-
-		    $$ = ConnectionSymbolCalloc();
-
-		    //- set actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->bio.ioh.iol.hsle);
-		}
-	|
-		ConnectionDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link has section with connection description
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
-		    }
-
-		    //! this interferes with the things below, so dump a core
-		    //! to prevent this
-
-		    *(int *)0 = 0;
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- push connection description on stack
-
-		    $$ = $1;
-		}
-/* 	| */
-/* 		ConnectionDescription */
-/* 		ConnectionComponent */
-/* 		{ */
-/* #line */
-/* 		    //- add connection component */
-
-/* 		    if ($2) */
-/* 		    { */
-/* 			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2); */
-/* 		    } */
-
-/* 		    //- reset actual symbol */
-
-/* 		    ParserContextSetActual */
-/* 			((PARSERCONTEXT *)pacParserContext, */
-/* 			 &$1->bio.ioh.iol.hsle); */
-
-/* 		    //- push connection description on stack */
-
-/* 		    $$ = $1; */
-/* 		} */
-	|
-		ConnectionDescription
-		Parameters
-		{
-#line
-		    //- link parameters at end of parameter list
-
-		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->bio.ioh.iol.hsle);
-
-		    //- push description on stack
-
-		    $$ = $1;
-		}
-	;
-
-ConnectionGroupSection	/* <pvconsy> */
-	:
-		ConnectionGroupSectionFront
-			ConnectionGroupsEnumerated
-		ConnectionGroupSectionEnd
-		{
-#line
-		    //- put enumerated connections struct on stack
-
-		    $$ = $1;
-		}
-	;
-
-/*
-** shift & reduce identifier with index
-**
-** allocate vector to contain elements, push it on container stack
-*/ 
-
-ConnectionGroupSectionFront	/* <pvconsy> */
-	:
-		TOKEN_CONNECTION_GROUP
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- get actual container name
-
-		    struct symtab_IdentifierIndex *pidin
-			= ParserContextActualState();
-
-		    //- put container on stack
-
-		    $$ = VConnectionSymbolCalloc();
-
-		    //- set name of group
-
-		    SymbolSetName(&$$->vect.bio.ioh.iol.hsle, pidin);
-
-		    //- push container on container stack
-
-		    ParserContextPushContainer(&$$->vect);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->vect.bio.ioh.iol.hsle);
-
-		}
-	;
-
-/*
-** shift & reduce END
-**
-** pop associated container
-*/
-
-ConnectionGroupSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_CONNECTION_GROUP
-		{
-#line
-		    //- pop segment container from container stack
-
-		    ParserContextPopContainer();
-		}
-	;
-
-ConnectionGroupsEnumerated
-	:
-		{
-#line
-		}
-	|
-		ConnectionGroupsEnumerated
-		ConnectionGroupComponent
-		{
-#line
-		    //- get pointer to actual container
-
-		    struct symtab_HSolveListElement *phsle
-			= (struct symtab_HSolveListElement *)
-			  ParserContextActualContainer();
-
-		    if (!instanceof_v_connection_symbol(phsle))
-		    {
-			//- give diagnostics : prototype not found
-
-			NeurospacesError
-			    ((PARSERCONTEXT *)pacParserContext,
-			     "ConnectionGroupsEnumerated",
-			     "No group allocated.",
-			     $2);
-		    }
-		    else
-		    {
-			//- get pointer to actual container
-
-			struct symtab_VConnectionSymbol *pvconsy
-			    = (struct symtab_VConnectionSymbol *)
-			      ParserContextActualContainer();
-
-			//- add connection component to container
-
-			SymbolAddChild(&pvconsy->vect.bio.ioh.iol.hsle, $2);
-
-			//- reset actual symbol
-
-			ParserContextSetActual
-			    ((PARSERCONTEXT *)pacParserContext,
-			     &pvconsy->vect.bio.ioh.iol.hsle);
-		    }
 		}
 	;
 

@@ -1019,12 +1019,12 @@ my $grammar_symbols
 				   },
        Connection => {
 		      components => [],
-		      specific_allocator => 'ConnectionCalloc',
+		      specific_allocator => 'ConnectionSymbolCalloc',
 		      specific_token => 'TOKEN_CONNECTION',
 		      typing => {
 				 base => 'phsle',
 				 id => 'pidin',
-				 spec => 'pconn',
+				 spec => 'pconsy',
 				 to_base => '->bio.ioh.iol.hsle',
 				},
 		     },
@@ -1040,11 +1040,12 @@ my $grammar_symbols
 				      spec => 'pvconn',
 				      to_base => '->vect.bio.ioh.iol.hsle',
 				     },
+			   disabled => 'to complicated for the moment',
 			  },
        EquationExponential => {
 			       components => [],
 			       specific_allocator => 'EquationCalloc',
-			       specific_token => 'TOKEN_EQUATION',
+			       specific_token => 'TOKEN_EXPONENTIAL_EQUATION',
 			       typing => {
 					  base => 'phsle',
 					  id => 'pidin',
@@ -1250,12 +1251,12 @@ my $grammar_symbols
 			   components => [
 					  'ContourPoint',
 					 ],
-			   specific_allocator => 'SegmentCalloc',
-			   specific_token => 'TOKEN_SEGMENT_GROUP',
+			   specific_allocator => 'EMContourCalloc',
+			   specific_token => 'TOKEN_EM_CONTOUR',
 			   typing => {
 				      base => 'phsle',
 				      id => 'pidin',
-				      spec => 'psegment',
+				      spec => 'pemc',
 				      to_base => '->bio.ioh.iol.hsle',
 				     },
 			  },
@@ -1263,24 +1264,24 @@ my $grammar_symbols
 			      components => [
 					     'EMContour',
 					    ],
-			      specific_allocator => 'SegmentCalloc',
-			      specific_token => 'TOKEN_SEGMENT_GROUP',
+			      specific_allocator => 'VContourCalloc',
+			      specific_token => 'TOKEN_CONTOUR_GROUP',
 			      typing => {
 					 base => 'phsle',
 					 id => 'pidin',
-					 spec => 'psegment',
+					 spec => 'pvcont',
 					 to_base => '->vect.bio.ioh.iol.hsle',
 					},
 			     },
        ContourPoint => {
 			      components => [
 					    ],
-			      specific_allocator => 'SegmentCalloc',
-			      specific_token => 'TOKEN_SEGMENT_GROUP',
+			      specific_allocator => 'ContourPointCalloc',
+			      specific_token => 'TOKEN_CONTOUR_POINT',
 			      typing => {
 					 base => 'phsle',
 					 id => 'pidin',
-					 spec => 'psegment',
+					 spec => 'pcpnt',
 					 to_base => '->bio.ioh.iol.hsle',
 					},
 			     },
