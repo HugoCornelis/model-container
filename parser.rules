@@ -1431,7 +1431,7 @@ AxonHillockDescription	/* <paxhi> */
 #line
 		    //- link parameters
 
-		    SymbolAssignParameters(&$1->segr.bio.ioh.iol.hsle, $2);
+		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
 
 		    //- reset actual symbol
 
@@ -1555,7 +1555,7 @@ CellDescription	/* <pcell> */
 #line
 		    //- link parameters
 
-		    SymbolAssignParameters(&$1->segr.bio.ioh.iol.hsle, $2);
+		    SymbolParameterLinkAtEnd(&$1->segr.bio.ioh.iol.hsle, $2);
 
 		    //- reset actual symbol
 
@@ -1679,7 +1679,7 @@ ChannelDescription	/* <pchan> */
 #line
 		    //- link parameters
 
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
 
 		    //- reset actual symbol
 
@@ -1816,7 +1816,7 @@ ConcentrationGateKineticDescription	/* <pcgatk> */
 #line
 		    //- link parameters
 
-		    SymbolAssignParameters(&$1->bio.ioh.iol.hsle, $2);
+		    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
 
 		    //- reset actual symbol
 
@@ -1872,7 +1872,7 @@ ConcentrationGateKineticSection	/* <pcgatk> */
 
 		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
 
-		    //- put concentration gate kinetic info on stack
+		    //- put finished section info on stack
 
 		    $$ = $4;
 		}

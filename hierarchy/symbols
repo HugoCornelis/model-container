@@ -883,7 +883,7 @@ my $grammar_rules
 					   semantic => '#line
 		    //- link parameters
 
-		    SymbolAssignParameters(&$1specific_to_base, $2);
+		    SymbolParameterLinkAtEnd(&$1specific_to_base, $2);
 
 		    //- reset actual symbol
 
