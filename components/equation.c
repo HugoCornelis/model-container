@@ -128,6 +128,10 @@ void EquationInit(struct symtab_Equation * peq)
     //- zero out own fields
 
     memset(&(&peq->bio)[1],0,sizeof(*peq) - sizeof(peq->bio));
+
+    //- set type: exponential
+
+    SymbolSetType(&peq->bio.ioh.iol.hsle, TYPE_EQUATION_EXPONENTIAL);
 }
 
 

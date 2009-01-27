@@ -915,14 +915,14 @@ sub generate_grammar_specific_section_2_rules
 
 	    my $specific_description = $grammar_rules->{specific_description};
 
-	    my $global_parts = $specific_description->{parts};
-
 	    my $description_parts = [];
 
 	    #! note the subtle copy operation, expect the unexpected otherwise
 
-	    foreach my $subpart ( @$global_parts, )
+	    foreach my $subpart_name ( sort keys %$specific_description, )
 	    {
+		my $subpart = $specific_description->{$subpart_name};
+
 		# if this symbol cannot be made of components
 
 		if (! scalar @{ $grammar_symbols->{$symbol_name}->{components} })
@@ -982,6 +982,13 @@ sub generate_grammar_specific_section_2_rules
 		$description_part .= "		}\n";
 
 		push @$description_parts, $description_part;
+	    }
+
+	    if ($grammar_symbols->{$symbol_name}->{specific_description}->{add})
+	    {
+		push
+		    @$description_parts,
+			$grammar_symbols->{$symbol_name}->{specific_description}->{add};
 	    }
 
 	    print $file (join "\t|\n", @$description_parts) . "\t;\n\n";

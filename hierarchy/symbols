@@ -815,10 +815,9 @@ my $class_hierarchy
 my $grammar_rules
     = {
        specific_description => {
-				parts => [
-					  {
-					   parts => [],
-					   semantic => '#line
+				a_allocator_constructor => {
+							    parts => [],
+							    semantic => '#line
 		    //- prepare struct for symbol table
 
 		    $$ = specific_allocator();
@@ -829,13 +828,13 @@ my $grammar_rules
 			((PARSERCONTEXT *)pacParserContext,
 			 &$$specific_to_base);
 ',
-					  },
-					  {
-					   parts => [
-						     'specific_description',
-						     'ChildSectionOptionalInputOptionalParameters',
-						    ],
-					   semantic => '#line
+							   },
+				b_reference_constructor => {
+							    parts => [
+								      'specific_description',
+								      'ChildSectionOptionalInputOptionalParameters',
+								     ],
+							    semantic => '#line
 		    //- link children
 
 		    if ($2)
@@ -853,13 +852,13 @@ my $grammar_rules
 
 		    $$ = $1;
 ',
-					  },
-					  {
-					   parts => [
-						     'specific_description',
-						     'specific_component',
-						    ],
-					   semantic => '#line
+							   },
+				c_hardcoding_constructor => {
+							     parts => [
+								       'specific_description',
+								       'specific_component',
+								      ],
+							     semantic => '#line
 		    //- add component to current section list
 
 		    SymbolAddChild(&$1specific_to_base, $2);
@@ -874,13 +873,13 @@ my $grammar_rules
 
 		    $$ = $1;
 ',
-					  },
-					  {
-					   parts => [
-						     'specific_description',
-						     'Parameters',
-						    ],
-					   semantic => '#line
+							    },
+				d_parameter_constructor => {
+							    parts => [
+								      'specific_description',
+								      'Parameters',
+								     ],
+							    semantic => '#line
 		    //- link parameters
 
 		    SymbolParameterLinkAtEnd(&$1specific_to_base, $2);
@@ -895,8 +894,7 @@ my $grammar_rules
 
 		    $$ = $1;
 ',
-					  },
-					 ],
+							   },
 			       },
        specific_end => {
 			parts => [
@@ -1004,6 +1002,36 @@ my $grammar_symbols
 			      spec => 'pchan',
 			      to_base => '->bio.ioh.iol.hsle',
 			     },
+		   specific_description => {
+					    add => '		TOKEN_TABLEFILE
+		TOKEN_STRING
+		{
+#line
+		    //- remove ending \'"\' from string
+
+		    $2->pcString[$2->iLength - 1] = \'\0\';
+
+		    //- put channel description on stack
+
+		    $$ = ChannelCalloc();
+
+		    //- fill in table parameters
+
+		    ChannelSetTableParameters
+			($$,
+			 (PARSERCONTEXT *)pacParserContext,
+			 &$2->pcString[1]);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+
+		    //! memory leak : $2
+		}
+',
+					   },
 		  },
        ConcentrationGateKinetic => {
 				    components => [
@@ -1217,6 +1245,28 @@ my $grammar_symbols
 			      spec => 'psegment',
 			      to_base => '->segr.bio.ioh.iol.hsle',
 			     },
+		   specific_description => {
+					    add => '		SegmentDescription
+		TOKEN_OPTIONS
+		SegmentInstanceOptions
+		{
+#line
+		    //- set segment options
+
+		    SymbolSetOptions(&$1->segr.bio.ioh.iol.hsle, $3);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push segment description on stack
+
+		    $$ = $1;
+		}
+',
+					   },
 		  },
 
        #t these ones need a serious check, just placeholders

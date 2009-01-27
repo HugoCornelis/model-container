@@ -1766,10 +1766,6 @@ ChannelSection	/* <pchan> */
 		    //- put finished section info on stack
 
 		    $$ = $4;
-
-		    //- initialize channel specifics
-
-		    ChannelSetup($$, (PARSERCONTEXT *)pacParserContext);
 		}
 	;
 
@@ -1903,11 +1899,6 @@ ConnectionDescription	/* <pconsy> */
 		    {
 			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
 		    }
-
-		    //! this interferes with the things below, so dump a core
-		    //! to prevent this
-
-		    *(int *)0 = 0;
 
 		    //- reset actual symbol
 
@@ -2348,8 +2339,6 @@ EquationExponentialDescription	/* <peq> */
 		    //- prepare struct for symbol table
 
 		    $$ = EquationCalloc();
-
-		    SymbolSetType(&$$->bio.ioh.iol.hsle, TYPE_EQUATION_EXPONENTIAL);
 
 		    //- set actual symbol
 
@@ -3638,11 +3627,6 @@ ProjectionDescription	/* <pproj> */
 			SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
 		    }
 
-		    //! this interferes with the things below, so dump a core
-		    //! to prevent this
-
-		    *(int *)0 = 0;
-
 		    //- reset actual symbol
 
 		    ParserContextSetActual
@@ -3935,7 +3919,7 @@ SegmentDescription	/* <psegment> */
 			((PARSERCONTEXT *)pacParserContext,
 			 &$1->segr.bio.ioh.iol.hsle);
 
-		    //- put segment description on stack
+		    //- put symbol on stack
 
 		    $$ = $1;
 		}
