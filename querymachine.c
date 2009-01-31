@@ -1719,7 +1719,7 @@ QueryHandlerExpand
 ///
 /// \details 
 /// 
-///	export-ndf <wildcard>
+///	export-ndf <filename> <wildcard> <symbol>
 /// 
 
 struct QM_exporter_data
