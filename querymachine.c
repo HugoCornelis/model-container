@@ -153,6 +153,7 @@ static QueryHandler QueryHandlerCountAllocatedSymbols;
 static QueryHandler QueryHandlerDelete;
 static QueryHandler QueryHandlerEcho;
 static QueryHandler QueryHandlerExpand;
+static QueryHandler QueryHandlerExportNDF;
 static QueryHandler QueryHandlerInputInfo;
 static QueryHandler QueryHandlerHelpCommands;
 static QueryHandler QueryHandlerImportFile;
@@ -381,6 +382,17 @@ static QueryHandlerAssociation pquhasTable[] =
     {
 	"expand",
 	QueryHandlerExpand,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    /// export to NDF
+
+    {
+	"export-ndf",
+	QueryHandlerExportNDF,
 #ifdef USE_READLINE
 	1,
 	QueryMachineSymbolGenerator,
@@ -995,13 +1007,11 @@ timeval_subtract
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle allocation info query
-/// \details 
 /// 
 
 
@@ -1079,13 +1089,11 @@ static int QueryHandlerAllocations
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Bio group 2 bio level conversion.
-/// \details 
 /// 
 
 static int QueryHandlerBiogroup2Biolevel
@@ -1171,13 +1179,11 @@ static int QueryHandlerBiogroup2Biolevel
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Bio level 2 bio group conversion.
-/// \details 
 /// 
 
 static int QueryHandlerBiolevel2Biogroup
@@ -1263,13 +1269,11 @@ static int QueryHandlerBiolevel2Biogroup
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle context info query.
-/// \details 
 /// 
 
 static int QueryHandlerContextInfo
@@ -1324,13 +1328,11 @@ static int QueryHandlerContextInfo
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle context subtraction query.
-/// \details 
 /// 
 
 static int QueryHandlerContextSubtract
@@ -1389,13 +1391,11 @@ static int QueryHandlerContextSubtract
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle aliases query
-/// \details 
 /// 
 
 static int QueryHandlerCountAliases
@@ -1438,13 +1438,11 @@ static int QueryHandlerCountAliases
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle allocated symbols query
-/// \details 
 /// 
 
 static int QueryHandlerCountAllocatedSymbols
@@ -1465,12 +1463,12 @@ static int QueryHandlerCountAllocatedSymbols
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Delete a component
+///
 /// \details 
 /// 
 ///	delete <component>
@@ -1550,12 +1548,12 @@ QueryHandlerDelete
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Echo args to the terminal.
+///
 /// \details 
 /// 
 ///	echo <something>
@@ -1581,12 +1579,12 @@ QueryHandlerEcho
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Expand a wildcard.
+///
 /// \details 
 /// 
 ///	expand <wildcard>
@@ -1713,12 +1711,112 @@ QueryHandlerExpand
 
 
 /// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Expand a wildcard.
+///
+/// \details 
+/// 
+///	export-ndf <wildcard>
+/// 
+
+static
+int
+QueryHandlerExportNDF
+(char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
+{
+    //- set result : ok
+
+    int bResult = TRUE;
+
+    struct symtab_HSolveListElement *phsle = NULL;
+
+    //- parse command line element
+
+    struct PidinStack *ppist = PidinStackParse(&pcLine[iLength]);
+
+    //- if the wildcard is namespaced
+
+    struct symtab_IdentifierIndex *pidin = PidinStackElementPidin(ppist, 0);
+
+    if (!pidin)
+    {
+	fprintf(stdout, "no symbols selector found\n");
+
+	return(FALSE);
+    }
+
+    if (IdinIsNamespaced(pidin))
+    {
+	fprintf(stdout, "wildcard expansion cannot be combined with namespaces.\n");
+
+	return(FALSE);
+    }
+
+    //- allocate pidin stack pointing to root
+
+    struct PidinStack *ppistRoot = PidinStackCalloc();
+
+    if (!ppistRoot)
+    {
+	return(FALSE);
+    }
+
+    PidinStackSetRooted(ppistRoot);
+
+    struct symtab_HSolveListElement *phsleRoot
+	= PidinStackLookupTopSymbol(ppistRoot);
+
+    /// \note so phsleRoot can be NULL if the model description file was not found
+
+    if (phsleRoot)
+    {
+	//- start yaml output
+
+	fprintf(stdout, "---\n");
+
+	//- traverse symbols that match with wildcard
+
+	int iResult
+	    = SymbolTraverseWildcard
+	      (phsleRoot,
+	       ppistRoot,
+	       ppist,
+	       QueryMachineWildcardTraverser,
+	       NULL,
+	       NULL);
+
+	if (iResult != 1)
+	{
+	    fprintf(stdout, "*** Error: SymbolTraverseWildcard() failed (or aborted)\n");
+	}
+    }
+    else
+    {
+	//- diag's
+
+	fprintf(stdout, "no model loaded\n");
+    }
+
+    //- free allocated memory
+
+    PidinStackFree(ppistRoot);
+
+    //- return result
+
+    return(bResult);
+}
+
+
 /// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Print information about an input.
+///
 /// \details 
 /// 
 ///	input-info <wildcard>
@@ -1778,13 +1876,11 @@ QueryHandlerInputInfo
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle print query
-/// \details 
 /// 
 
 static int QueryHandlerImportedFiles
@@ -1816,13 +1912,11 @@ static int QueryHandlerImportedFiles
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle print query
-/// \details 
 /// 
 
 static
@@ -1912,13 +2006,11 @@ static int QueryHandlerHelpCommands
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle print query
-/// \details 
 /// 
 
 static int QueryHandlerListSymbols
@@ -1961,13 +2053,11 @@ static int QueryHandlerListSymbols
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Mesh a cell or group of segments.
-/// \details 
 /// 
 
 static int QueryHandlerMesh
@@ -2049,13 +2139,11 @@ static int QueryHandlerMesh
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle namespaces query.
-/// \details 
 /// 
 
 static int QueryHandlerNameSpaces
@@ -2102,13 +2190,11 @@ static int QueryHandlerNameSpaces
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Print algorithm info.
-/// \details 
 /// 
 
 static int QueryHandlerAlgorithmClass
@@ -2134,13 +2220,11 @@ static int QueryHandlerAlgorithmClass
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Print algorithm info.
-/// \details 
 /// 
 
 static int QueryHandlerAlgorithmInstance
@@ -2166,13 +2250,11 @@ static int QueryHandlerAlgorithmInstance
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Print algorithm info.
-/// \details 
 /// 
 
 static int QueryHandlerAlgorithmSet
@@ -2189,12 +2271,12 @@ static int QueryHandlerAlgorithmSet
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Partition a model (and cache the result for later use).
+///
 /// \details 
 /// 
 ///	partition <context> <partitions> <this-node>
@@ -2305,13 +2387,11 @@ static int QueryHandlerPartition
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Match of two contexts ?
-/// \details 
 /// 
 
 static int QueryHandlerPidinStackMatch
@@ -2355,13 +2435,11 @@ static int QueryHandlerPidinStackMatch
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Count connections in projection query.
-/// \details 
 /// 
 
 struct QM_neuro_pq_traversal_data
@@ -2654,13 +2732,11 @@ static int QueryHandlerPQCount
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Print some info on registered projection query.
-/// \details 
 /// 
 
 static int QueryHandlerPQGet
@@ -2724,13 +2800,11 @@ static int QueryHandlerPQGet
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Load a projection query from a file.
-/// \details 
 /// 
 
 static int QueryHandlerPQLoad
@@ -2941,12 +3015,12 @@ static int QueryHandlerPQLoad
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Store connections in projection query in a file.
+///
 /// \details 
 /// 
 ///	pqsave <caching = c|n> <filename>
@@ -3163,13 +3237,11 @@ static int QueryHandlerPQSave
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Define a projection query.
-/// \details 
 /// 
 
 static int QueryHandlerPQSet
@@ -3342,13 +3414,11 @@ static int QueryHandlerPQSet
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Select all projections in the model for the projection query.
-/// \details 
 /// 
 
 struct QM_projection_collector_traversal_data
@@ -3633,13 +3703,11 @@ static int QueryHandlerPQSetAll
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Print info on connections in global projection query.
-/// \details 
 /// 
 
 static int 
@@ -3921,13 +3989,11 @@ static int QueryHandlerPQTraverse
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle print query
-/// \details 
 /// 
 
 static int QueryHandlerPrintCellCount
@@ -3982,13 +4048,11 @@ static int QueryHandlerPrintCellCount
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle print query
-/// \details 
 /// 
 
 static int QueryHandlerPrintChildren
@@ -4123,12 +4187,12 @@ static int QueryHandlerPrintChildren
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Print number of connections in given projection.
+///
 /// \details 
 /// 
 ///	connectioncount <projection symbol>
@@ -4231,12 +4295,12 @@ static int QueryHandlerPrintConnectionCount
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle coordinate query
+///
 /// \details 
 /// 
 ///	printcoordinates <caching = c|n> <ancestor> <descendant>
@@ -4471,12 +4535,12 @@ static int QueryHandlerPrintCoordinates
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle print query
+///
 /// \details 
 /// 
 
@@ -4524,12 +4588,12 @@ static int QueryHandlerPrintInfo
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle parameter query
+///
 /// \details 
 /// 
 ///	printparameter <context> <parameter-name>
@@ -4631,12 +4695,12 @@ QueryMachineWildcardParameterTraverser
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle parameter query
+///
 /// \details 
 /// 
 ///	printparameter <context> <parameter1-name> <parameter2-name>
@@ -4835,12 +4899,12 @@ static int QueryHandlerPrintParameter
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle parameter query
+///
 /// \details 
 /// 
 ///	printparameter <context> <parameter1-name> <parameter2-name>
@@ -4994,12 +5058,12 @@ static int QueryHandlerPrintParameterInfo
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle parameter query
+///
 /// \details 
 /// 
 ///	printparameter <context> <parameter1-name> <parameter2-name>
@@ -5138,12 +5202,12 @@ QueryHandlerPrintParameterInput
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle scaled parameter query
+///
 /// \details 
 /// 
 
@@ -5237,12 +5301,12 @@ static int QueryHandlerPrintParameterScaled
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Handle parameter set query
+///
 /// \details 
 /// 
 ///	printparameterset <context>
@@ -5491,13 +5555,11 @@ static int QueryHandlerPrintParameterSet
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Print number of segments.
-/// \details 
 /// 
 
 static int QueryHandlerPrintSegmentCount
@@ -5552,12 +5614,12 @@ static int QueryHandlerPrintSegmentCount
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Print number of connections for a spikereceiver in a projection.
+///
 /// \details 
 /// 
 ///	spikereceivercount <projection> <spike-receiver>
@@ -5694,12 +5756,12 @@ static int QueryHandlerPrintSpikeReceiverCount
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Print unique ID for symbol with respect to container.
+///
 /// \details 
 /// 
 ///	spikereceiverserialID <population> <spike-receiver>
@@ -5795,12 +5857,12 @@ static int QueryHandlerPrintSpikeReceiverSerialID
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Print number of connections for a spikesender in a projection.
+///
 /// \details 
 /// 
 ///	spikesendercount <projection> <spike-sender>
@@ -5935,14 +5997,14 @@ static int QueryHandlerPrintSpikeSenderCount
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Print info on spikesender or receiver for a given set of
-/// \details 
 /// projections.
+///
+/// \details 
 /// 
 ///	projectionquery <caching = c|n> <attachment-path> <projection-path> ...
 /// 
@@ -6269,14 +6331,14 @@ static int QueryHandlerProjectionQuery
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Print number of connections optionally on spikesender or
-/// \details 
 /// receiver for a given set of projections.
+///
+/// \details 
 /// 
 ///	projectionquerycount \
 ///		<caching = c|n> \
@@ -6621,12 +6683,12 @@ static int QueryHandlerProjectionQueryCount
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Get solver info for symbol.
+///
 /// \details 
 /// 
 ///	resolvesolver <solved-context>
@@ -6750,13 +6812,11 @@ static int QueryHandlerResolveSolverID
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Linearize the segments in a segmenter in an internal cache.
-/// \details 
 /// 
 
 static
@@ -6834,13 +6894,11 @@ QueryHandlerSegmenterLinearize
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Report the parent count in a segmenter.
-/// \details 
 /// 
 
 static
@@ -6911,12 +6969,12 @@ QueryHandlerSegmenterParentCount
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Set the segmenter base for a group of segments.
+///
 /// \details 
 /// 
 ///	segmentersetbase <segmenter-base-context>
@@ -6990,13 +7048,11 @@ QueryHandlerSegmenterSetBase
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Report the segment tips in a segmenter.
-/// \details 
 /// 
 
 static
@@ -7067,12 +7123,12 @@ QueryHandlerSegmenterTips
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Report biocomp serial ID.
+///
 /// \details 
 /// 
 ///	serialID <context> <child-context>
@@ -7171,12 +7227,12 @@ static int QueryHandlerSerialID
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Output forestspace structure to a file.
+///
 /// \details 
 /// 
 ///	serializeforestspace <type=a|x> <context> <filename>
@@ -7505,12 +7561,12 @@ static int QueryHandlerSerializeForestspace
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Get serial mappings for a symbol relative to another symbol.
+///
 /// \details 
 /// 
 ///	serialMapping <context> <child-context>
@@ -7742,12 +7798,12 @@ static int QueryHandlerSerialMapping
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Print context of serial relative to another context.
+///
 /// \details 
 /// 
 ///	serial2context <path> <serial>
@@ -7839,12 +7895,12 @@ static int QueryHandlerSerialToContext
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Set the value of a parameter.
+///
 /// \details 
 /// 
 ///	setparameter <parameter-base> <parameter-context> <parameter-name> <parameter-type> <parameter-value>
@@ -8055,12 +8111,12 @@ static int QueryHandlerSetParameter
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Set the value of a parameter.
+///
 /// \details 
 /// 
 ///	setparameterconcept <namespaced-symbol> <parameter-name> <parameter-type> <parameter-value>
@@ -8236,12 +8292,12 @@ static int QueryHandlerSetParameterConcept
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Print solver registration for a context.
+///
 /// \details 
 /// 
 ///	solverget <solved-context>
@@ -8305,13 +8361,11 @@ static int QueryHandlerSolverGet
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value.
 /// 
 /// \brief Print all solver registrations.
-/// \details 
 /// 
 
 static int QueryHandlerSolverRegistrations
@@ -8332,12 +8386,12 @@ static int QueryHandlerSolverRegistrations
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Add solver registration
+///
 /// \details 
 /// 
 ///	solverset <symbol-path> <solver-path>
@@ -8538,7 +8592,6 @@ SegmentValidator
 /// \return int : QueryHandler return value
 /// 
 /// \brief Give version information.
-/// \details 
 /// 
 
 static
@@ -8625,13 +8678,11 @@ QueryHandlerValidateSegmentGroup
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Give version information.
-/// \details 
 /// 
 
 static int QueryHandlerVersion
@@ -8654,12 +8705,12 @@ static int QueryHandlerVersion
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Write library of symbols.
+///
 /// \details 
 /// 
 ///	writelibrary <nesting-depth> <file.nld> symbol symbol
@@ -8691,12 +8742,12 @@ static int QueryHandlerWriteLibrary
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Write modular description of symbol.
+///
 /// \details 
 /// 
 ///	writemodular \
@@ -8722,12 +8773,12 @@ static int QueryHandlerWriteModular
 
 
 /// 
-/// 
 /// \arg std. QueryHandler args
 /// 
 /// \return int : QueryHandler return value
 /// 
 /// \brief Write selfcontained symbol description.
+///
 /// \details 
 /// 
 ///	writesymbol \
@@ -8757,14 +8808,12 @@ static int QueryHandlerWriteSymbol
 
 
 /// 
-/// 
 /// \arg pcLine command line.
 /// \arg pneuro neurospaces.
 /// 
 /// \return int : TRUE means user wants to stop
 /// 
 /// \brief Handle given command line
-/// \details 
 /// 
 
 int QueryMachineHandle(struct Neurospaces *pneuro, char *pcLine)
@@ -9490,14 +9539,12 @@ static void QueryMachineInitReadLine()
 
 
 /// 
-/// 
 /// \arg pcLine command line
-///	iReadline.: use readline ?
+/// \arg iReadline use readline ?
 /// 
 /// \return void
 /// 
 /// \brief Print prompt, get input from user
-/// \details 
 /// 
 
 void QueryMachineInput(char *pcLine, int iReadline)
@@ -9609,12 +9656,11 @@ static void QueryMachinePrompt(void)
 /// 
 /// 
 /// \arg pneuro neurospaces.
-///	iReadline.: use readline ?
+/// \arg iReadline use readline ?
 /// 
 /// \return void
 /// 
 /// \brief Iface to query machine
-/// \details 
 /// 
 
 void QueryMachineStart(struct Neurospaces *pneuro, int iReadline)
