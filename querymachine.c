@@ -1722,6 +1722,50 @@ QueryHandlerExpand
 ///	export-ndf <wildcard>
 /// 
 
+struct QM_exporter_data
+{
+    /// file to write to
+
+    FILE *pfile;
+
+/*     /// serial ID of symbol to export */
+
+/*     int iSerial; */
+
+};
+
+static
+int 
+QueryMachineNDFExporter
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
+{
+    //- set default result : continue with children, then post processing
+
+    int iResult = TSTR_PROCESSOR_SUCCESS;
+
+    //- get traversal data
+
+    struct QM_exporter_data *pexd
+	= (struct QM_exporter_data *)pvUserdata;
+
+    //- set actual symbol
+
+    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
+
+    //- give diag's
+
+    char pc[1000];
+
+    PidinStackString(ptstr->ppist, pc, 1000);
+
+    fprintf(pexd->pfile, "- %s\n", pc);
+
+    //- return result
+
+    return(iResult);
+}
+
+
 static
 int
 QueryHandlerExportNDF
@@ -1733,22 +1777,57 @@ QueryHandlerExportNDF
 
     struct symtab_HSolveListElement *phsle = NULL;
 
+    //- parse filename
+
+    char pcSeparator[] = " \t,;\n";
+
+    if (!pcLine[iLength]
+	|| !pcLine[iLength + 1])
+    {
+	fprintf(stdout, "filename not found on command line\n");
+
+	return(FALSE);
+    }
+
+    char *pcFilename = &pcLine[iLength + 1];
+
+    iLength += strpbrk(&pcLine[iLength + 1], " \t") - &pcLine[iLength];
+
+    if (!pcLine[iLength]
+	|| !pcLine[iLength + 1])
+    {
+	fprintf(stdout, "symbol not found on command line\n");
+
+	return(FALSE);
+    }
+
+    pcLine[iLength] = '\0';
+
+    iLength++;
+
+/*     char *pcNamespace = &pcLine[iLength + 1]; */
+
+/*     if (strpbrk(&pcLine[iLength + 1], pcSeparator)) */
+/*     { */
+/* 	strpbrk(&pcLine[iLength + 1], pcSeparator)[0] = '\0'; */
+/*     } */
+
     //- parse command line element
 
-    struct PidinStack *ppist = PidinStackParse(&pcLine[iLength]);
+    struct PidinStack *ppistWildcard = PidinStackParse(&pcLine[iLength]);
 
     //- if the wildcard is namespaced
 
-    struct symtab_IdentifierIndex *pidin = PidinStackElementPidin(ppist, 0);
+    struct symtab_IdentifierIndex *pidinWildcard = PidinStackElementPidin(ppistWildcard, 0);
 
-    if (!pidin)
+    if (!pidinWildcard)
     {
 	fprintf(stdout, "no symbols selector found\n");
 
 	return(FALSE);
     }
 
-    if (IdinIsNamespaced(pidin))
+    if (IdinIsNamespaced(pidinWildcard))
     {
 	fprintf(stdout, "wildcard expansion cannot be combined with namespaces.\n");
 
@@ -1773,9 +1852,23 @@ QueryHandlerExportNDF
 
     if (phsleRoot)
     {
-	//- start yaml output
+	//- allocate traversal structure
 
-	fprintf(stdout, "---\n");
+	struct QM_exporter_data exd =
+	    {
+		/// file to write to
+
+		NULL,
+
+	    };
+
+	//- open output file
+
+	exd.pfile = fopen(pcFilename, "w");
+
+	//- start output
+
+	fprintf(exd.pfile, "#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n");
 
 	//- traverse symbols that match with wildcard
 
@@ -1783,15 +1876,19 @@ QueryHandlerExportNDF
 	    = SymbolTraverseWildcard
 	      (phsleRoot,
 	       ppistRoot,
-	       ppist,
-	       QueryMachineWildcardTraverser,
+	       ppistWildcard,
+	       QueryMachineNDFExporter,
 	       NULL,
-	       NULL);
+	       (void *)&exd);
 
 	if (iResult != 1)
 	{
 	    fprintf(stdout, "*** Error: SymbolTraverseWildcard() failed (or aborted)\n");
 	}
+
+	//- close output file
+
+	fclose(exd.pfile);
     }
     else
     {
