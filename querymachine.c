@@ -1728,15 +1728,15 @@ struct QM_exporter_data
 
     FILE *pfile;
 
-/*     /// serial ID of symbol to export */
+    /// current indentation level
 
-/*     int iSerial; */
+    int iIndent;
 
 };
 
 static
 int 
-QueryMachineNDFExporter
+QueryMachineNDFExporterStarter
 (struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : continue with children, then post processing
@@ -1752,13 +1752,71 @@ QueryMachineNDFExporter
 
     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
 
-    //- give diag's
+    //- print indent
 
-    char pc[1000];
+    int i;
 
-    PidinStackString(ptstr->ppist, pc, 1000);
+    for (i = 0 ; i < pexd->iIndent ; i++)
+    {
+	fprintf(pexd->pfile, "  ");
+    }
 
-    fprintf(pexd->pfile, "- %s\n", pc);
+    //- write output: start symbol
+
+/*     char pc[1000]; */
+
+/*     PidinStackString(ptstr->ppist, pc, 1000); */
+
+    fprintf(pexd->pfile, "%s %s\n", SymbolHSLETypeDescribe(phsle->iType), SymbolName(phsle));
+
+    //- increase indent
+
+    pexd->iIndent++;
+
+    //- return result
+
+    return(iResult);
+}
+
+
+static
+int 
+QueryMachineNDFExporterStopper
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
+{
+    //- set default result : continue with children, then post processing
+
+    int iResult = TSTR_PROCESSOR_SUCCESS;
+
+    //- get traversal data
+
+    struct QM_exporter_data *pexd
+	= (struct QM_exporter_data *)pvUserdata;
+
+    //- set actual symbol
+
+    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
+
+    //- decrease indent
+
+    pexd->iIndent--;
+
+    //- print indent
+
+    int i;
+
+    for (i = 0 ; i < pexd->iIndent ; i++)
+    {
+	fprintf(pexd->pfile, "  ");
+    }
+
+    //- write output: end symbol
+
+/*     char pc[1000]; */
+
+/*     PidinStackString(ptstr->ppist, pc, 1000); */
+
+    fprintf(pexd->pfile, "END %s\n", SymbolHSLETypeDescribe(phsle->iType));
 
     //- return result
 
@@ -1870,6 +1928,10 @@ QueryHandlerExportNDF
 
 	fprintf(exd.pfile, "#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n");
 
+	//- start public models
+
+	fprintf(exd.pfile, "PUBLIC_MODELS\n");
+
 	//- traverse symbols that match with wildcard
 
 	int iResult
@@ -1877,14 +1939,18 @@ QueryHandlerExportNDF
 	      (phsleRoot,
 	       ppistRoot,
 	       ppistWildcard,
-	       QueryMachineNDFExporter,
-	       NULL,
+	       QueryMachineNDFExporterStarter,
+	       QueryMachineNDFExporterStopper,
 	       (void *)&exd);
 
 	if (iResult != 1)
 	{
 	    fprintf(stdout, "*** Error: SymbolTraverseWildcard() failed (or aborted)\n");
 	}
+
+	//- end public models
+
+	fprintf(exd.pfile, "PUBLIC_MODELS\n");
 
 	//- close output file
 
