@@ -1829,7 +1829,7 @@ int
 QueryHandlerExportNDF
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
 {
-    //- set result : ok
+    //- set result: ok
 
     int bResult = TRUE;
 
@@ -1847,14 +1847,21 @@ QueryHandlerExportNDF
 	return(FALSE);
     }
 
+    if (!strpbrk(&pcLine[iLength + 1], pcSeparator))
+    {
+	fprintf(stdout, "wildcard not found on command line\n");
+
+	return(FALSE);
+    }
+
     char *pcFilename = &pcLine[iLength + 1];
 
-    iLength += strpbrk(&pcLine[iLength + 1], " \t") - &pcLine[iLength];
+    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
 
     if (!pcLine[iLength]
 	|| !pcLine[iLength + 1])
     {
-	fprintf(stdout, "symbol not found on command line\n");
+	fprintf(stdout, "wildcard not found on command line\n");
 
 	return(FALSE);
     }
