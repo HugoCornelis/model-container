@@ -1081,18 +1081,17 @@ my $grammar_symbols
 					  to_base => '->bio.ioh.iol.hsle',
 					 },
 			      },
-# should be 'Fiber'
-       FiberModel => {
-		      components => [],
-		      specific_allocator => 'FiberCalloc',
-		      specific_token => 'TOKEN_FIBER',
-		      typing => {
-				 base => 'phsle',
-				 id => 'pidin',
-				 spec => 'pfibr',
-				 to_base => '->segr.bio.ioh.iol.hsle',
-				},
-		     },
+       Fiber => {
+		 components => [],
+		 specific_allocator => 'FiberCalloc',
+		 specific_token => 'TOKEN_FIBER',
+		 typing => {
+			    base => 'phsle',
+			    id => 'pidin',
+			    spec => 'pfibr',
+			    to_base => '->segr.bio.ioh.iol.hsle',
+			   },
+		},
        GateKineticBackward => {
 			       components => [
 					      'GateKineticPart',

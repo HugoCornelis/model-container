@@ -113,10 +113,10 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pgatk> GateKineticForwardDescription
 
 %type <phsle> AxonHillockComponent
-%type <phsle> FiberModelSymbol
-%type <pfibr> FiberModelSection
-%type <pidin> FiberModelSectionFront
-%type <pfibr> FiberModelDescription
+%type <phsle> FiberSymbol
+%type <pfibr> FiberSection
+%type <pidin> FiberSectionFront
+%type <pfibr> FiberDescription
 %type <phsle> GroupedModelSymbol
 %type <pgrup> GroupedModelSection
 %type <pidin> GroupedModelSectionFront
@@ -936,7 +936,7 @@ AnySymbol	/* <phsle> */
 	|
 		EquationExponentialSymbol
 	|
-		FiberModelSymbol
+		FiberSymbol
 	|
 		GateKineticBackwardSymbol
 	|
@@ -1087,9 +1087,9 @@ EquationExponentialSymbol
 		}
 	;
 
-FiberModelSymbol
+FiberSymbol
 	:
-		FiberModelSection
+		FiberSection
 		{
 #line
 		    //- put symbol table element on stack
@@ -2437,7 +2437,7 @@ EquationExponentialSection	/* <peq> */
 		}
 	;
 
-FiberModelDescription	/* <pfibr> */
+FiberDescription	/* <pfibr> */
 	:
 		{
 #line
@@ -2452,7 +2452,7 @@ FiberModelDescription	/* <pfibr> */
 			 &$$->segr.bio.ioh.iol.hsle);
 		}
 	|
-		FiberModelDescription
+		FiberDescription
 		ChildSectionOptionalInputOptionalParameters
 		{
 #line
@@ -2474,7 +2474,7 @@ FiberModelDescription	/* <pfibr> */
 		    $$ = $1;
 		}
 	|
-		FiberModelDescription
+		FiberDescription
 		Parameters
 		{
 #line
@@ -2494,7 +2494,7 @@ FiberModelDescription	/* <pfibr> */
 		}
 	;
 
-FiberModelSectionEnd
+FiberSectionEnd
 	:
 		EndPushedPidin
 		TOKEN_FIBER
@@ -2503,7 +2503,7 @@ FiberModelSectionEnd
 		}
 	;
 
-FiberModelSectionFront	/* <pidin> */
+FiberSectionFront	/* <pidin> */
 	:
 		TOKEN_FIBER
 		IdentifierOptionIndexPushedPidin
@@ -2515,13 +2515,13 @@ FiberModelSectionFront	/* <pidin> */
 		}
 	;
 
-FiberModelSection	/* <pfibr> */
+FiberSection	/* <pfibr> */
 	:
-		FiberModelSectionFront
+		FiberSectionFront
 			InputOutputRelations
 			OptionalItemInputRelations
-			FiberModelDescription
-		FiberModelSectionEnd
+			FiberDescription
+		FiberSectionEnd
 		{
 #line
 		    //- assign name to symbol

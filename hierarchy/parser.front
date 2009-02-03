@@ -113,10 +113,10 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pgatk> GateKineticForwardDescription
 
 %type <phsle> AxonHillockComponent
-%type <phsle> FiberModelSymbol
-%type <pfibr> FiberModelSection
-%type <pidin> FiberModelSectionFront
-%type <pfibr> FiberModelDescription
+%type <phsle> FiberSymbol
+%type <pfibr> FiberSection
+%type <pidin> FiberSectionFront
+%type <pfibr> FiberDescription
 %type <phsle> GroupedModelSymbol
 %type <pgrup> GroupedModelSection
 %type <pidin> GroupedModelSectionFront
