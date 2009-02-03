@@ -27,13 +27,11 @@
 
 
 /// 
-/// 
 /// \return struct symtab_Fiber * 
 /// 
 ///	Newly allocated fiber, NULL for failure
 /// 
 /// \brief Allocate a new fiber symbol table element
-/// \details 
 /// 
 
 struct symtab_Fiber * FiberCalloc(void)
@@ -61,14 +59,12 @@ struct symtab_Fiber * FiberCalloc(void)
 
 
 /// 
-/// 
 /// \arg pfibr fiber to count spike generators for
 ///	ppist.: context, fiber on top
 /// 
 /// \return int : number of spike generators in fiber, -1 for failure
 /// 
 /// \brief count all spike generators in fiber
-/// \details 
 /// 
 
 static int 
@@ -125,14 +121,12 @@ int FiberCountSpikeGenerators
 
 
 /// 
-/// 
 /// \arg pfibr symbol to alias
 /// \arg pidin name of new symbol
 /// 
 /// \return struct symtab_HSolveListElement * : alias for original symbol
 /// 
 /// \brief Create alias to given symbol
-/// \details 
 /// 
 
 struct symtab_HSolveListElement * 
@@ -160,13 +154,11 @@ FiberCreateAlias
 
 
 /// 
-/// 
 /// \arg pfibr fiber to init
 /// 
 /// \return void
 /// 
 /// \brief init fiber
-/// \details 
 /// 
 
 void FiberInit(struct symtab_Fiber *pfibr)
@@ -182,7 +174,6 @@ void FiberInit(struct symtab_Fiber *pfibr)
 
 
 /// 
-/// 
 /// \arg dx X coordinate
 /// \arg dy Y coordinate
 /// \arg dz Z coordinate
@@ -190,7 +181,8 @@ void FiberInit(struct symtab_Fiber *pfibr)
 /// \return struct symtab_Fiber * : resulting cell, NULL for failure
 /// 
 /// \brief Allocate cell, put at specified position.
-/// \details 
+///
+/// \details
 /// 
 ///	Contains memory leak.
 /// 
