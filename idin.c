@@ -31,13 +31,11 @@
 
 
 /// 
-/// 
 /// \return struct symtab_VConnection * 
 /// 
 ///	Newly allocated connection vector, NULL for failure
 /// 
 /// \brief Allocate a new connection vector symbol table element
-/// \details 
 /// 
 
 struct symtab_VConnection * VConnectionCalloc(void)
@@ -67,13 +65,11 @@ struct symtab_VConnection * VConnectionCalloc(void)
 
 
 /// 
-/// 
 /// \return struct symtab_IdentifierIndex * 
 /// 
 ///	Newly allocated idin, NULL for failure
 /// 
 /// \brief Allocate a new idin symbol table element
-/// \details 
 /// 
 
 struct symtab_IdentifierIndex * IdinCalloc(void)
@@ -86,7 +82,7 @@ struct symtab_IdentifierIndex * IdinCalloc(void)
 
     pidinResult
 	= (struct symtab_IdentifierIndex *)
-	  calloc(1,sizeof(struct symtab_IdentifierIndex));
+	  calloc(1, sizeof(struct symtab_IdentifierIndex));
 
     //- return result
 
@@ -95,8 +91,7 @@ struct symtab_IdentifierIndex * IdinCalloc(void)
 
 
 /// 
-/// 
-///	pc...: sprintf format, NULL for a default, %i gets count.
+/// \arg pc sprintf format, NULL for a default, %i gets count.
 /// 
 /// \return struct symtab_IdentifierIndex * 
 /// 
@@ -104,7 +99,6 @@ struct symtab_IdentifierIndex * IdinCalloc(void)
 ///	failure.
 /// 
 /// \brief Allocate a new idin, give unique name using a counter.
-/// \details 
 /// 
 /// \note  Do not exceed 50 chars with format.
 /// 
@@ -151,7 +145,6 @@ struct symtab_IdentifierIndex * IdinCallocUnique(char *pcFormat)
 
 
 /// 
-/// 
 /// \arg pidin original id to create alias for.
 /// \arg iCount count to make the created id unique.
 /// 
@@ -160,7 +153,6 @@ struct symtab_IdentifierIndex * IdinCallocUnique(char *pcFormat)
 ///	Newly allocated idin, NULL for failure.
 /// 
 /// \brief Create an alias id.
-/// \details 
 /// 
 /// \note  not sure what to do with flags.
 /// 
@@ -196,8 +188,6 @@ IdinCreateAlias(struct symtab_IdentifierIndex *pidin, int iCount)
     //- copy some members
 
     pidinResult->iFlags = pidin->iFlags;
-/*     pidinResult->iIndex = pidin->iIndex; */
-    pidinResult->dValue = pidin->dValue;
 
     //- return result
 
@@ -205,7 +195,6 @@ IdinCreateAlias(struct symtab_IdentifierIndex *pidin, int iCount)
 }
 
 
-/// 
 /// 
 /// \arg pidin IdentifierIndex list to get name for
 /// \arg pcName: string receiving result
@@ -215,7 +204,6 @@ IdinCreateAlias(struct symtab_IdentifierIndex *pidin, int iCount)
 ///	pcName: string receiving result
 /// 
 /// \brief get name of IdentifierIndex list
-/// \details 
 /// 
 
 void IdinFullName(struct symtab_IdentifierIndex *pidin, char *pcName)
@@ -262,12 +250,12 @@ void IdinFullName(struct symtab_IdentifierIndex *pidin, char *pcName)
 
 
 /// 
-/// 
 /// \arg pidin IdentifierIndex struct to get name for
 /// 
 /// \return char * : name of IdentifierIndex struct, NULL for failure
 /// 
 /// \brief get name of IdentifierIndex struct
+///
 /// \details 
 /// 
 ///	Return value is pointer to symbol table read only data
@@ -337,13 +325,11 @@ char * IdinName(struct symtab_IdentifierIndex *pidin)
 
 
 /// 
-/// 
 /// \arg pc name of idin
 /// 
 /// \return struct symtab_IdentifierIndex * : new idin
 /// 
 /// \brief Create idin with given name (no copy).
-/// \details 
 /// 
 
 struct symtab_IdentifierIndex *IdinNewFromChars(char *pc)
@@ -368,14 +354,12 @@ struct symtab_IdentifierIndex *IdinNewFromChars(char *pc)
 
 
 /// 
-/// 
 /// \arg pidin a pidin.
-///	pfile..: file to print to, NULL is stdout.
+/// \arg pfile file to print to, NULL is stdout.
 /// 
 /// \return void.
 /// 
 /// \brief print pidin to a file.
-/// \details 
 /// 
 
 void IdinPrint(struct symtab_IdentifierIndex *pidin, FILE *pfile)

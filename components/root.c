@@ -150,14 +150,6 @@ RootSymbolGetPidin(struct symtab_RootSymbol *proot)
 	/// name of identifier
 
 	NULL,
-
-	/// index value
-
-	-1,
-
-	/// value of e.g. parameter
-
-	FLT_MAX,
     };
 
     //- return rooted pidin

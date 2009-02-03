@@ -56,14 +56,6 @@ struct symtab_IdentifierIndex
     /// name of identifier
 
     char *pcIdentifier;
-
-    /// index value
-
-    int iIndex;
-
-    /// value of e.g. parameter
-
-    double dValue;
 };
 
 
@@ -83,9 +75,9 @@ struct symtab_IdentifierIndex
 
 #define FLAG_IDENTINDEX_FIELD		4
 
-/// \def contains converted value
+/* /// \def contains converted value */
 
-#define FLAG_IDENTINDEX_VALUE		8
+/* #define FLAG_IDENTINDEX_VALUE		8 */
 
 /// \def identifier is not given
 
@@ -152,17 +144,6 @@ do {									\
 
 
 /// \def
-/// \def set index of idin
-/// \def
-
-#define IdinSetIndex(pidin,i)						\
-do {									\
-    CompileTimeTestIdin(pidin);						\
-    (pidin)->iIndex = (i);						\
-} while (0)
-
-
-/// \def
 /// \def set name of idin
 /// \def
 
@@ -204,8 +185,6 @@ struct symtab_IdentifierIndex *
 IdinCreateAlias(struct symtab_IdentifierIndex *pidin, int iCount);
 
 void IdinFullName(struct symtab_IdentifierIndex *pidin, char *pcName);
-
-/* int IdinIndex(struct symtab_IdentifierIndex *pidin); */
 
 char * IdinName(struct symtab_IdentifierIndex *pidin);
 
