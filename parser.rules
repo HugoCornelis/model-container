@@ -117,10 +117,10 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pfibr> FiberSection
 %type <pidin> FiberSectionFront
 %type <pfibr> FiberDescription
-%type <phsle> GroupedModelSymbol
-%type <pgrup> GroupedModelSection
-%type <pidin> GroupedModelSectionFront
-%type <pgrup> GroupedModelDescription
+%type <phsle> GroupSymbol
+%type <pgrup> GroupSection
+%type <pidin> GroupSectionFront
+%type <pgrup> GroupDescription
 %type <phsle> GroupedParametersSymbol
 %type <pgrpp> GroupedParametersSection
 %type <pidin> GroupedParametersSectionFront
@@ -944,7 +944,7 @@ AnySymbol	/* <phsle> */
 	|
 		GateKineticPartSymbol
 	|
-		GroupedModelSymbol
+		GroupSymbol
 	|
 		GroupedParametersSymbol
 	|
@@ -1131,9 +1131,9 @@ GateKineticPartSymbol
 		}
 	;
 
-GroupedModelSymbol
+GroupSymbol
 	:
-		GroupedModelSection
+		GroupSection
 		{
 #line
 		    //- put symbol table element on stack
@@ -2914,7 +2914,7 @@ GateKineticPartSection	/* <pgatk> */
 		}
 	;
 
-GroupedModelDescription	/* <pgrup> */
+GroupDescription	/* <pgrup> */
 	:
 		{
 #line
@@ -2929,7 +2929,7 @@ GroupedModelDescription	/* <pgrup> */
 			 &$$->bio.ioh.iol.hsle);
 		}
 	|
-		GroupedModelDescription
+		GroupDescription
 		ChildSectionOptionalInputOptionalParameters
 		{
 #line
@@ -2951,7 +2951,7 @@ GroupedModelDescription	/* <pgrup> */
 		    $$ = $1;
 		}
 	|
-		GroupedModelDescription
+		GroupDescription
 		Parameters
 		{
 #line
@@ -2971,7 +2971,7 @@ GroupedModelDescription	/* <pgrup> */
 		}
 	;
 
-GroupedModelSectionEnd
+GroupSectionEnd
 	:
 		EndPushedPidin
 		TOKEN_GROUP
@@ -2980,7 +2980,7 @@ GroupedModelSectionEnd
 		}
 	;
 
-GroupedModelSectionFront	/* <pidin> */
+GroupSectionFront	/* <pidin> */
 	:
 		TOKEN_GROUP
 		IdentifierOptionIndexPushedPidin
@@ -2992,13 +2992,13 @@ GroupedModelSectionFront	/* <pidin> */
 		}
 	;
 
-GroupedModelSection	/* <pgrup> */
+GroupSection	/* <pgrup> */
 	:
-		GroupedModelSectionFront
+		GroupSectionFront
 			InputOutputRelations
 			OptionalItemInputRelations
-			GroupedModelDescription
-		GroupedModelSectionEnd
+			GroupDescription
+		GroupSectionEnd
 		{
 #line
 		    //- assign name to symbol
@@ -3079,7 +3079,7 @@ GroupedParametersDescription	/* <pgrpp> */
 GroupedParametersSectionEnd
 	:
 		EndPushedPidin
-		TOKEN_PARAMETER_GROUP
+		TOKEN_GROUPED_PARAMETERS
 		{
 #line
 		}
@@ -3087,7 +3087,7 @@ GroupedParametersSectionEnd
 
 GroupedParametersSectionFront	/* <pidin> */
 	:
-		TOKEN_PARAMETER_GROUP
+		TOKEN_GROUPED_PARAMETERS
 		IdentifierOptionIndexPushedPidin
 		{
 #line

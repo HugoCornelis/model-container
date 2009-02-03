@@ -1133,17 +1133,17 @@ my $grammar_symbols
 				      to_base => '->bio.ioh.iol.hsle',
 				     },
 			  },
-       GroupedModel => {
-			components => [],
-			specific_allocator => 'GroupCalloc',
-			specific_token => 'TOKEN_GROUP',
-			typing => {
-				   base => 'phsle',
-				   id => 'pidin',
-				   spec => 'pgrup',
-				   to_base => '->bio.ioh.iol.hsle',
-				  },
-		       },
+       Group => {
+		 components => [],
+		 specific_allocator => 'GroupCalloc',
+		 specific_token => 'TOKEN_GROUP',
+		 typing => {
+			    base => 'phsle',
+			    id => 'pidin',
+			    spec => 'pgrup',
+			    to_base => '->bio.ioh.iol.hsle',
+			   },
+		},
        HHGate => {
 		  components => [
 				 'ConcentrationGateKinetic',
@@ -1289,7 +1289,7 @@ my $grammar_symbols
 				   components => [
 						 ],
 				   specific_allocator => 'GroupedParametersCalloc',
-				   specific_token => 'TOKEN_PARAMETER_GROUP',
+				   specific_token => 'TOKEN_GROUPED_PARAMETERS',
 				   typing => {
 					      base => 'phsle',
 					      id => 'pidin',
@@ -2586,11 +2586,11 @@ my $tokens
 		      lexical => 'TOKEN_PARAMETERS',
 		      purpose => 'structure',
 		     },
-       parameter_group => {
-			   class => 'grouped_parameters',
-			   lexical => 'TOKEN_PARAMETER_GROUP',
-			   purpose => 'physical',
-			  },
+       grouped_parameters => {
+			      class => 'grouped_parameters',
+			      lexical => 'TOKEN_GROUPED_PARAMETERS',
+			      purpose => 'physical',
+			     },
        parent_symbol => {
 			 lexical => 'TOKEN_PARENT_SYMBOL',
 			},
