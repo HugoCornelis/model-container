@@ -48,54 +48,85 @@ my $test
 					return "Mismatch of type count ($#$types + 1 vs $type_count)";
 				    }
 
-				    my $definitions_impl = `cat "$directory/hierarchy/output/symbols/long_descriptions.c"`;
-
-				    if (!$definitions_impl)
 				    {
-					$definitions_impl = `cat "$directory/_build/hierarchy/output/symbols/long_descriptions.c"`;
+					my $definitions_impl = `cat "$directory/hierarchy/output/symbols/long_descriptions.c"`;
+
+					if (!$definitions_impl)
+					{
+					    $definitions_impl = `cat "$directory/_build/hierarchy/output/symbols/long_descriptions.c"`;
+					}
+
+					$definitions_impl =~ /char \*ppc_symbols_long_descriptions\[COUNT_HIERARCHY_TYPE_symbols \+ 2\] =.*?\{(.*?)\}/s;
+
+					my $descriptions_long = $1;
+
+					$descriptions_long = [ split ',', $descriptions_long, ];
+
+					# -1 for terminator, -1 for first entry
+
+					my $descriptions_long_count = (scalar @$descriptions_long) - 1 - 1;
+
+					print "Found $descriptions_long_count long descriptions\n";
+
+					if ($descriptions_long_count != $type_count)
+					{
+					    return "Mismatch of count for long symbol type descriptions ($descriptions_long_count vs $type_count)";
+					}
 				    }
 
-				    $definitions_impl =~ /char \*ppc_symbols_long_descriptions\[COUNT_HIERARCHY_TYPE_symbols \+ 2\] =.*?\{(.*?)\}/s;
-
-				    my $descriptions_long = $1;
-
-				    $descriptions_long = [ split ',', $descriptions_long, ];
-
-				    # -1 for terminator, -1 for first entry
-
-				    my $descriptions_long_count = (scalar @$descriptions_long) - 1 - 1;
-
-				    print "Found $descriptions_long_count long descriptions\n";
-
-				    if ($descriptions_long_count != $type_count)
 				    {
-					return "Mismatch of count for long symbol type descriptions ($descriptions_long_count vs $type_count)";
+					my $definitions_impl = `cat "$directory/hierarchy/output/symbols/textual_descriptions.c"`;
+
+					if (!$definitions_impl)
+					{
+					    $definitions_impl = `cat "$directory/_build/hierarchy/output/symbols/textual_descriptions.c"`;
+					}
+
+					$definitions_impl =~ /char \*ppc_symbols_textual_descriptions\[COUNT_HIERARCHY_TYPE_symbols \+ 2\] =.*?\{(.*?)\}/s;
+
+					my $descriptions_textual = $1;
+
+					$descriptions_textual = [ split ',', $descriptions_textual, ];
+
+					# -1 for terminator, -1 for first entry
+
+					my $descriptions_textual_count = (scalar @$descriptions_textual) - 1 - 1;
+
+					print "Found $descriptions_textual_count textual descriptions\n";
+
+					if ($descriptions_textual_count != $type_count)
+					{
+					    return "Mismatch of count for textual symbol type descriptions ($descriptions_textual_count vs $type_count)";
+					}
+
 				    }
 
-# 				    my $definitions_impl_short = `cat $directory/symboltable.c`;
-
-				    my $definitions_impl_short = `cat "$directory/hierarchy/output/symbols/short_descriptions.c"`;
-
-				    if (!$definitions_impl_short)
 				    {
-					$definitions_impl_short = `cat "$directory/_build/hierarchy/output/symbols/short_descriptions.c"`;
-				    }
+# 					my $definitions_impl_short = `cat $directory/symboltable.c`;
 
-				    $definitions_impl =~ /char \*ppc_symbols_short_descriptions\[COUNT_HIERARCHY_TYPE_symbols \+ 2\] =.*?\{(.*?)\}/s;
+					my $definitions_impl_short = `cat "$directory/hierarchy/output/symbols/short_descriptions.c"`;
 
-				    my $descriptions_short = $1;
+					if (!$definitions_impl_short)
+					{
+					    $definitions_impl_short = `cat "$directory/_build/hierarchy/output/symbols/short_descriptions.c"`;
+					}
 
-				    $descriptions_short = [ split ',', $descriptions_short, ];
+					$definitions_impl =~ /char \*ppc_symbols_short_descriptions\[COUNT_HIERARCHY_TYPE_symbols \+ 2\] =.*?\{(.*?)\}/s;
 
-				    # -1 for terminator, -1 for first entry
+					my $descriptions_short = $1;
 
-				    my $descriptions_short_count = (scalar @$descriptions_short) - 1 - 1;
+					$descriptions_short = [ split ',', $descriptions_short, ];
 
-				    print "Found $descriptions_short_count short descriptions\n";
+					# -1 for terminator, -1 for first entry
 
-				    if ($descriptions_short_count != $type_count)
-				    {
-					return "Mismatch of count for short symbol type descriptions ($descriptions_short_count vs $type_count)";
+					my $descriptions_short_count = (scalar @$descriptions_short) - 1 - 1;
+
+					print "Found $descriptions_short_count short descriptions\n";
+
+					if ($descriptions_short_count != $type_count)
+					{
+					    return "Mismatch of count for short symbol type descriptions ($descriptions_short_count vs $type_count)";
+					}
 				    }
 
 				    return undef;
