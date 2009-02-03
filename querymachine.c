@@ -1767,7 +1767,7 @@ QueryMachineNDFExporterStarter
 
 /*     PidinStackString(ptstr->ppist, pc, 1000); */
 
-    fprintf(pexd->pfile, "%s %s\n", SymbolHSLETypeDescribe(phsle->iType), SymbolName(phsle));
+    fprintf(pexd->pfile, "%s %s\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
 
     //- increase indent
 
@@ -1816,7 +1816,7 @@ QueryMachineNDFExporterStopper
 
 /*     PidinStackString(ptstr->ppist, pc, 1000); */
 
-    fprintf(pexd->pfile, "END %s\n", SymbolHSLETypeDescribe(phsle->iType));
+    fprintf(pexd->pfile, "END %s\n", SymbolHSLETypeDescribeNDF(phsle->iType));
 
     //- return result
 

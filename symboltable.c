@@ -62,6 +62,8 @@
 
 #include "hierarchy/output/symbols/short_descriptions.c"
 
+#include "hierarchy/output/symbols/textual_descriptions.c"
+
 
 /// global number of allocated symbols
 

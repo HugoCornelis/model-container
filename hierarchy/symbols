@@ -1081,6 +1081,7 @@ my $grammar_symbols
 					  to_base => '->bio.ioh.iol.hsle',
 					 },
 			      },
+# should be 'Fiber'
        FiberModel => {
 		      components => [],
 		      specific_allocator => 'FiberCalloc',

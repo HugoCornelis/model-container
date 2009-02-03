@@ -34,8 +34,16 @@
 
 #include "hierarchy/output/symbols/short_descriptions.h"
 
+#include "hierarchy/output/symbols/textual_descriptions.h"
+
 
 extern int iTotalAllocatedSymbols;
+
+
+/// \def give NDF description of type of HSLE struct
+
+#define SymbolHSLETypeDescribeNDF(iType)	\
+    (ppc_symbols_textual_descriptions[(iType)])
 
 
 /// \def give description of type of HSLE struct
