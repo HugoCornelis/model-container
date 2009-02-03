@@ -104,14 +104,12 @@
 
 
 /// 
-/// 
-///	ppistTarget..: target & first source context stack
+/// \arg ppistTarget target & first source context stack
 /// \arg ppistSource stack to append
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Append two pidin stacks, flags unaffected, no compaction
-/// \details 
 /// 
 
 int PidinStackAppend
@@ -143,14 +141,12 @@ int PidinStackAppend
 
 
 /// 
-/// 
-///	ppistTarget..: target & first source context stack
+/// \arg ppistTarget target & first source context stack
 /// \arg ppistSource stack to append
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Append two pidin stacks, flags unaffected, with compaction
-/// \details 
 /// 
 
 int
@@ -325,13 +321,11 @@ PidinStackAppendCompact
 
 
 /// 
-/// 
 /// \return struct PidinStack * 
 /// 
 ///	Newly allocated pidin stack, NULL for failure
 /// 
 /// \brief Allocate a new pidin stack symbol table element
-/// \details 
 /// 
 
 struct PidinStack * PidinStackCalloc(void)
@@ -356,13 +350,13 @@ struct PidinStack * PidinStackCalloc(void)
 
 
 /// 
-/// 
-///	ppist1: pidin stack to test
-///	ppist2: pidin stack to test
+/// \arg ppist1 pidin stack to test
+/// \arg ppist2 pidin stack to test
 /// 
 /// \return int : TRUE if equal
 /// 
 /// \brief check if two pidinstacks equal
+///
 /// \details 
 /// 
 ///	equal defined to be all id's refer to same hierarchical symbols,
@@ -553,13 +547,11 @@ int PidinStackEqual
 
 
 /// 
-/// 
 /// \arg ppist pidin stack to clear
 /// 
 /// \return void
 /// 
 /// \brief Initialize a pidin stack
-/// \details 
 /// 
 
 void PidinStackInit(struct PidinStack *ppist)
@@ -598,7 +590,6 @@ void PidinStackInit(struct PidinStack *ppist)
 
 
 /// 
-/// 
 /// \arg ppist pidin stack
 /// 
 /// \return int
@@ -606,7 +597,6 @@ void PidinStackInit(struct PidinStack *ppist)
 ///	1 if pidinstack contains wildcards.
 /// 
 /// \brief Check if pidinstack contains wildcards.
-/// \details 
 /// 
 
 int PidinStackIsWildcard(struct PidinStack *ppist)
@@ -643,13 +633,11 @@ int PidinStackIsWildcard(struct PidinStack *ppist)
 
 
 /// 
-/// 
 /// \arg ppist pidin stack
 /// 
 /// \return struct symtab_HSolveListElement * : base symbol, used by ppist.
 /// 
 /// \brief Lookup base symbol.
-/// \details 
 /// 
 
 struct symtab_HSolveListElement *
@@ -729,13 +717,11 @@ PidinStackLookupBaseSymbol(struct PidinStack *ppist)
 
 
 /// 
-/// 
 /// \arg ppist pidin stack
 /// 
 /// \return struct symtab_HSolveListElement * : symbol, referenced by ppist
 /// 
 /// \brief Lookup top symbol
-/// \details 
 /// 
 
 struct symtab_HSolveListElement *
@@ -1059,14 +1045,12 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
 
 /// 
-/// 
 ///	ppist1: pidin stack to test
 ///	ppist2: pidin stack to test, wildcards recognized
 /// 
 /// \return int : TRUE if match
 /// 
 /// \brief check if two pidinstacks match, wildcards allowed
-/// \details 
 /// 
 
 int PidinStackMatch(struct PidinStack *ppist1, struct PidinStack *ppist2)
@@ -1250,12 +1234,12 @@ int PidinStackMatch(struct PidinStack *ppist1, struct PidinStack *ppist2)
 
 
 /// 
-/// 
 /// \arg ppar parameter referencing a field
 /// 
 /// \return struct PidinStack * : resulting pidin stack
 /// 
 /// \brief Create pidin stack from pidins in parameter
+///
 /// \details 
 /// 
 ///	The resulting pidin stack will not contain any referenced fields or
@@ -1436,12 +1420,12 @@ PidinStackNewFromParameterSymbols(struct symtab_Parameters *ppar)
 
 
 /// 
-/// 
 /// \arg pc string to parse
 /// 
 /// \return struct PidinStack * : resulting pidin stack
 /// 
 /// \brief Parse string and fill in pidin
+///
 /// \details 
 /// 
 ///	Idins are calloc()'ed, identifiers are calloc()'ed.
@@ -1707,13 +1691,11 @@ PidinStackParse(char *pc)
 
 
 /// 
-/// 
 /// \arg ppist pidin stack to pop
 /// 
 /// \return struct symtab_IdentifierIndex * : popped idin, NULL for failure
 /// 
 /// \brief Pop pidin from stack
-/// \details 
 /// 
 
 struct symtab_IdentifierIndex * PidinStackPop(struct PidinStack *ppist)
@@ -1808,14 +1790,12 @@ struct symtab_IdentifierIndex * PidinStackPop(struct PidinStack *ppist)
 
 
 /// 
-/// 
 /// \arg ppist pidin stack to print
-///	pfile.: file to print pidin stack to, NULL means stdout
+/// \arg pfile file to print pidin stack to, NULL means stdout
 /// 
 /// \return void
 /// 
 /// \brief Print pidinstack
-/// \details 
 /// 
 
 void PidinStackPrint(struct PidinStack *ppist, FILE *pfile)
@@ -1836,14 +1816,12 @@ void PidinStackPrint(struct PidinStack *ppist, FILE *pfile)
 
 
 /// 
-/// 
 /// \arg ppist pidin stack to push onto
 /// \arg pidin pidin to push
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Push pidin onto stack
-/// \details 
 /// 
 
 int PidinStackPush
@@ -1881,14 +1859,12 @@ int PidinStackPush
 
 
 /// 
-/// 
 /// \arg ppist pidin stack to push onto
 /// \arg pidin list of pidin to push
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Push list of pidin onto stack
-/// \details 
 /// 
 
 int PidinStackPushAll
@@ -1924,14 +1900,12 @@ int PidinStackPushAll
 
 
 /// 
-/// 
 /// \arg ppist pidin stack to push onto
 /// \arg pidin list of pidin to push
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Push onto pidin stack, flags unaffected, with compaction
-/// \details 
 /// 
 
 int PidinStackPushCompact
@@ -1973,14 +1947,12 @@ int PidinStackPushCompact
 
 
 /// 
-/// 
 /// \arg ppist pidin stack to push onto
 /// \arg pidin list of pidin to push
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Push list of pidin onto stack, compact
-/// \details 
 /// 
 
 int PidinStackPushCompactAll
@@ -2025,7 +1997,6 @@ int PidinStackPushCompactAll
 
 
 /// 
-/// 
 /// \arg ppist context.
 /// \arg pc name of symbol to push.
 /// 
@@ -2034,7 +2005,6 @@ int PidinStackPushCompactAll
 ///	Success of operation.
 /// 
 /// \brief Push the name of a symbol.
-/// \details 
 /// 
 
 int PidinStackPushString(struct PidinStack *ppist, char *pc)
@@ -2057,7 +2027,6 @@ int PidinStackPushString(struct PidinStack *ppist, char *pc)
 
 
 /// 
-/// 
 /// \arg ppist context.
 /// \arg pc name of symbol to push and lookup.
 /// 
@@ -2066,7 +2035,6 @@ int PidinStackPushString(struct PidinStack *ppist, char *pc)
 ///	Symbol found, NULL for failure.
 /// 
 /// \brief Push the name of a symbol on the stack, lookup top symbol.
-/// \details 
 /// 
 
 struct symtab_HSolveListElement *
@@ -2091,14 +2059,12 @@ PidinStackPushStringAndLookup(struct PidinStack *ppist, char *pc)
 
 
 /// 
-/// 
 /// \arg ppist pidin stack to push onto
 /// \arg phsle symbol pidin to push
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Push symbol's pidin onto stack
-/// \details 
 /// 
 
 int PidinStackPushSymbol
@@ -2169,17 +2135,15 @@ int PidinStackPushSymbol
 
 
 /// 
-/// 
 /// \arg ppist pidin stack to print
 /// \arg pc string to print pidin stack to.
 /// \arg iSize size of available space in pc (ignored).
 /// 
 /// \return int : success of operation.
 /// 
-///	pc....: string to print pidin stack to.
+/// \return pc string to print pidin stack to.
 /// 
 /// \brief Convert pidinstack to a string.
-/// \details 
 /// 
 
 int PidinStackString(struct PidinStack *ppist, char *pc, int iSize)
@@ -2329,7 +2293,6 @@ int PidinStackString(struct PidinStack *ppist, char *pc, int iSize)
 
 
 /// 
-/// 
 /// \arg ppistA pidin stack.
 /// \arg ppistB pidin stack.
 /// 
@@ -2338,6 +2301,7 @@ int PidinStackString(struct PidinStack *ppist, char *pc, int iSize)
 ///	result context, NULL for failure.
 /// 
 /// \brief Subtract two contexts.
+///
 /// \details 
 /// 
 ///	The result is a context that when append compacted to the
@@ -2532,7 +2496,6 @@ PidinStackSubtract(struct PidinStack *ppistA, struct PidinStack *ppistB)
 
 
 /// 
-/// 
 /// \arg ppist pidin stack to convert.
 /// 
 /// \return struct symtab_IdentifierIndex *
@@ -2540,7 +2503,6 @@ PidinStackSubtract(struct PidinStack *ppistA, struct PidinStack *ppistB)
 ///	NULL terminated pidin queue, NULL for failure.
 /// 
 /// \brief Convert a context to a pidin queue.
-/// \details 
 /// 
 /// \note 
 /// 
@@ -2617,13 +2579,11 @@ PidinStackToPidinQueue(struct PidinStack *ppist)
 
 
 /// 
-/// 
 /// \arg ppist pidin stack to print.
 /// 
 /// \return void
 /// 
 /// \brief Print pidin stack to stdout.
-/// \details 
 /// 
 
 void PidinStackTo_stdout(struct PidinStack *ppist)
