@@ -111,7 +111,7 @@ my $test
 					    $definitions_impl_short = `cat "$directory/_build/hierarchy/output/symbols/short_descriptions.c"`;
 					}
 
-					$definitions_impl =~ /char \*ppc_symbols_short_descriptions\[COUNT_HIERARCHY_TYPE_symbols \+ 2\] =.*?\{(.*?)\}/s;
+					$definitions_impl_short =~ /char \*ppc_symbols_short_descriptions\[COUNT_HIERARCHY_TYPE_symbols \+ 2\] =.*?\{(.*?)\}/s;
 
 					my $descriptions_short = $1;
 
