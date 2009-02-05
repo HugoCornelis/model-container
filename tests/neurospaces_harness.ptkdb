@@ -1,15 +1,44 @@
 $files = {
-           '_<tests/run' => [
-                              {
-                                'expr' => undef,
-                                'value' => '1',
-                                'text' => '		my $differences
+           '_<./tests/specifications/code/allocations.t' => [
+                                                              {
+                                                                'expr' => undef,
+                                                                'value' => '1',
+                                                                'text' => '						 my ($context, $component) = @_;
 ',
-                                'fname' => 'tests/run',
-                                'type' => 'user',
-                                'line' => '323'
-                              }
-                            ]
+                                                                'fname' => './tests/specifications/code/allocations.t',
+                                                                'type' => 'user',
+                                                                'line' => '44'
+                                                              },
+                                                              {
+                                                                'expr' => undef,
+                                                                'value' => '1',
+                                                                'text' => '				    my $symbol_hierarchy = do "$directory/hierarchy/symbols";
+',
+                                                                'fname' => './tests/specifications/code/allocations.t',
+                                                                'type' => 'user',
+                                                                'line' => '20'
+                                                              }
+                                                            ],
+           '_<tests/neurospaces_harness' => [
+                                              {
+                                                'expr' => undef,
+                                                'value' => '1',
+                                                'text' => '	my $module_definition = do $test_module;
+',
+                                                'fname' => 'tests/neurospaces_harness',
+                                                'type' => 'user',
+                                                'line' => '1413'
+                                              },
+                                              {
+                                                'expr' => undef,
+                                                'value' => '1',
+                                                'text' => 'main();
+',
+                                                'fname' => 'tests/neurospaces_harness',
+                                                'type' => 'user',
+                                                'line' => '1596'
+                                              }
+                                            ]
          };
 $expr_list = [
                {

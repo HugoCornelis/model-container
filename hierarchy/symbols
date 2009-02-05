@@ -182,55 +182,55 @@ my $class_hierarchy
 				    G => 'actual channel conductance, normally a solved variable',
 				    I => 'actual channel current, normally a solved variable',
 				   },
-		     grammar => {
-				 components => [
-						'AttachmentPoint',
-						'EquationExponential',
-						'HHGate',
-					       ],
-				 specific_allocator => 'ChannelCalloc',
-				 specific_token => {
-						    class => 'channel',
-						    lexical => 'TOKEN_CHANNEL',
-						    purpose => 'physical',
-						   },
-				 typing => {
-					    base => 'phsle',
-					    id => 'pidin',
-					    spec => 'pchan',
-					    to_base => '->bio.ioh.iol.hsle',
-					   },
-				 specific_description => {
-							  add => '		TOKEN_TABLEFILE
-		TOKEN_STRING
-		{
-#line
-		    //- remove ending \'"\' from string
+# 		     grammar => {
+# 				 components => [
+# 						'AttachmentPoint',
+# 						'EquationExponential',
+# 						'HHGate',
+# 					       ],
+# 				 specific_allocator => 'ChannelCalloc',
+# 				 specific_token => {
+# 						    class => 'channel',
+# 						    lexical => 'TOKEN_CHANNEL',
+# 						    purpose => 'physical',
+# 						   },
+# 				 typing => {
+# 					    base => 'phsle',
+# 					    id => 'pidin',
+# 					    spec => 'pchan',
+# 					    to_base => '->bio.ioh.iol.hsle',
+# 					   },
+# 				 specific_description => {
+# 							  add => '		TOKEN_TABLEFILE
+# 		TOKEN_STRING
+# 		{
+# #line
+# 		    //- remove ending \'"\' from string
 
-		    $2->pcString[$2->iLength - 1] = \'\0\';
+# 		    $2->pcString[$2->iLength - 1] = \'\0\';
 
-		    //- put channel description on stack
+# 		    //- put channel description on stack
 
-		    $$ = ChannelCalloc();
+# 		    $$ = ChannelCalloc();
 
-		    //- fill in table parameters
+# 		    //- fill in table parameters
 
-		    ChannelSetTableParameters
-			($$,
-			 (PARSERCONTEXT *)pacParserContext,
-			 &$2->pcString[1]);
+# 		    ChannelSetTableParameters
+# 			($$,
+# 			 (PARSERCONTEXT *)pacParserContext,
+# 			 &$2->pcString[1]);
 
-		    //- reset actual symbol
+# 		    //- reset actual symbol
 
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->bio.ioh.iol.hsle);
+# 		    ParserContextSetActual
+# 			((PARSERCONTEXT *)pacParserContext,
+# 			 &$$->bio.ioh.iol.hsle);
 
-		    //! memory leak : $2
-		}
-',
-							 },
-				},
+# 		    //! memory leak : $2
+# 		}
+# ',
+# 							 },
+# 				},
 		    },
 	 concentration_gate_kinetic => {
 					allows => {
