@@ -126,7 +126,7 @@ my $test
 						  },
 						 ],
 				description => "alias creation count consistency checker",
-# 				disabled => 'This test worked until I added code for automatic generation of the grammar rules.  Likely this made hierarchy/symbols more complicated such that this test triggers bugs in Data::Transormator.',
+				disabled => 'This test worked until I added code for automatic generation of the grammar rules.  Likely this made hierarchy/symbols more complicated such that this test triggers bugs in Data::Transormator.',
 			       },
 			      ],
        description => "symbol allocations and alias creation",

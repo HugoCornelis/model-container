@@ -20,6 +20,37 @@ my $option_static_inline;
 my $option_verbose;
 
 
+sub assign_grammar_symbols
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+
+    # initialize set of grammar symbols
+
+    my $grammar_symbols = $definitions->{grammar_symbols} || {};
+
+    # loop over all types
+
+    foreach my $type (sort keys %$class_hierarchy)
+    {
+	# create grammar symbol for this type
+
+	print "Creating grammar_symbol for $type\n";
+
+	my $class = $class_hierarchy->{$type};
+
+	$grammar_symbols->{$type} = $class->{grammar};
+
+    }
+
+    $definitions->{grammar_symbols} = $grammar_symbols;
+}
+
+
 sub assign_token_names
 {
     my $definitions = shift;
@@ -36,9 +67,16 @@ sub assign_token_names
 
     foreach my $symbol_name (sort keys %$grammar_symbols)
     {
+	my $grammar_symbol = $grammar_symbols->{$symbol_name};
+
+	if (!defined $grammar_symbol->{specific_token})
+	{
+	    next;
+	}
+
 	# get the token information assigned to this symbol
 
-	my $grammar_symbol = $grammar_symbols->{$symbol_name};
+	print "Creating lexical token for $symbol_name\n";
 
 	my $specific_token = $grammar_symbol->{specific_token};
 
@@ -378,6 +416,11 @@ sub generate_grammar_anysymbol_rules
     my $grammar_rules = $definitions->{grammar_rules};
     my $grammar_symbols = $definitions->{grammar_symbols};
 
+    if (!defined $definitions->{typing}->{typer}->{name})
+    {
+	return;
+    }
+
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	= gmtime(time());
 
@@ -438,6 +481,11 @@ sub generate_grammar_anysymbol_types
 
     my $grammar_rules = $definitions->{grammar_rules};
     my $grammar_symbols = $definitions->{grammar_symbols};
+
+    if (!defined $definitions->{typing}->{typer}->{name})
+    {
+	return
+    }
 
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	= gmtime(time());
@@ -522,7 +570,7 @@ sub generate_grammar_specific_symbol_rules
 
 	my $components = $grammar_symbols->{$symbol_name}->{components};
 
-	if (!@$components)
+	if (!defined $components or !@$components)
 	{
 	    next;
 	}
@@ -570,6 +618,11 @@ sub generate_grammar_specific_symbol_types
 
     foreach my $symbol_name (sort keys %$grammar_symbols)
     {
+	if (!defined $grammar_symbols->{$symbol_name}->{typing}->{base})
+	{
+	    next;
+	}
+
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	    = gmtime(time());
 
@@ -631,6 +684,11 @@ sub generate_grammar_specific_section_rules
 
     foreach my $symbol_name (sort keys %$grammar_symbols)
     {
+	if (!defined $grammar_symbols->{$symbol_name}->{typing}->{to_base})
+	{
+	    next;
+	}
+
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	    = gmtime(time());
 
@@ -685,6 +743,11 @@ sub generate_grammar_specific_section_types
 
     foreach my $symbol_name (sort keys %$grammar_symbols)
     {
+	if (!defined $grammar_symbols->{$symbol_name}->{typing}->{spec})
+	{
+	    next;
+	}
+
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	    = gmtime(time());
 
@@ -730,6 +793,11 @@ sub generate_grammar_specific_section_2_rules
     {
 	if (!$grammar_symbols->{$symbol_name}->{disabled})
 	{
+	    if (!$grammar_symbols->{$symbol_name}->{typing}->{spec})
+	    {
+		next;
+	    }
+
 	    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 		= gmtime(time());
 
@@ -2726,7 +2794,11 @@ options :
 
 	assign_type_numbers($definitions);
 
-	# assign token names if any
+	# construct grammar non-terminal symbols
+
+	assign_grammar_symbols($definitions);
+
+	# assign terminal token names if any
 
 	assign_token_names($definitions);
 

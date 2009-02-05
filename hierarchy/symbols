@@ -173,6 +173,55 @@ my $class_hierarchy
 		     dimensions => [
 				    'mechanism',
 				   ],
+		     grammar => {
+				 components => [
+						'Attachment',
+						'EquationExponential',
+						'HHGate',
+					       ],
+				 specific_allocator => 'ChannelCalloc',
+				 specific_token => {
+						    class => 'channel',
+						    lexical => 'TOKEN_CHANNEL',
+						    purpose => 'physical',
+						   },
+				 typing => {
+					    base => 'phsle',
+					    id => 'pidin',
+					    spec => 'pchan',
+					    to_base => '->bio.ioh.iol.hsle',
+					   },
+				 specific_description => {
+							  add => '		TOKEN_TABLEFILE
+		TOKEN_STRING
+		{
+#line
+		    //- remove ending \'"\' from string
+
+		    $2->pcString[$2->iLength - 1] = \'\0\';
+
+		    //- put channel description on stack
+
+		    $$ = ChannelCalloc();
+
+		    //- fill in table parameters
+
+		    ChannelSetTableParameters
+			($$,
+			 (PARSERCONTEXT *)pacParserContext,
+			 &$2->pcString[1]);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+
+		    //! memory leak : $2
+		}
+',
+							 },
+				},
 		     isa => 'bio_comp',
 		     name => 'symtab_Channel',
 		     parameters => {
@@ -182,55 +231,6 @@ my $class_hierarchy
 				    G => 'actual channel conductance, normally a solved variable',
 				    I => 'actual channel current, normally a solved variable',
 				   },
-# 		     grammar => {
-# 				 components => [
-# 						'Attachment',
-# 						'EquationExponential',
-# 						'HHGate',
-# 					       ],
-# 				 specific_allocator => 'ChannelCalloc',
-# 				 specific_token => {
-# 						    class => 'channel',
-# 						    lexical => 'TOKEN_CHANNEL',
-# 						    purpose => 'physical',
-# 						   },
-# 				 typing => {
-# 					    base => 'phsle',
-# 					    id => 'pidin',
-# 					    spec => 'pchan',
-# 					    to_base => '->bio.ioh.iol.hsle',
-# 					   },
-# 				 specific_description => {
-# 							  add => '		TOKEN_TABLEFILE
-# 		TOKEN_STRING
-# 		{
-# #line
-# 		    //- remove ending \'"\' from string
-
-# 		    $2->pcString[$2->iLength - 1] = \'\0\';
-
-# 		    //- put channel description on stack
-
-# 		    $$ = ChannelCalloc();
-
-# 		    //- fill in table parameters
-
-# 		    ChannelSetTableParameters
-# 			($$,
-# 			 (PARSERCONTEXT *)pacParserContext,
-# 			 &$2->pcString[1]);
-
-# 		    //- reset actual symbol
-
-# 		    ParserContextSetActual
-# 			((PARSERCONTEXT *)pacParserContext,
-# 			 &$$->bio.ioh.iol.hsle);
-
-# 		    //! memory leak : $2
-# 		}
-# ',
-# 							 },
-# 				},
 		    },
 	 concentration_gate_kinetic => {
 					allows => {
@@ -241,6 +241,22 @@ my $class_hierarchy
 							'piSymbolType2Biolevel' => 'BIOLEVEL_MECHANISM',
 						       },
 					description => 'a description of the kinetics of a channel gate that is concentration dependent',
+					grammar => {
+						    components => [
+								  ],
+						    specific_allocator => 'ConcentrationGateKineticCalloc',
+						    specific_token =>  => {
+									   class => 'concentration_gate_kinetic',
+									   lexical => 'TOKEN_CONCENTRATION_GATE_KINETIC',
+									   purpose => 'physical',
+									  },
+						    typing => {
+							       base => 'phsle',
+							       id => 'pidin',
+							       spec => 'pcgatk',
+							       to_base => '->bio.ioh.iol.hsle',
+							      },
+						   },
 					isa => 'bio_comp',
 					name => 'symtab_ConcentrationGateKinetic',
 					parameters => {
@@ -300,6 +316,26 @@ my $class_hierarchy
 				 'get_parameter' => 'h_h_gate',
 				},
 		      description => 'a channel gate with hodgkin huxley alike kinetics',
+		      grammar => {
+				  components => [
+						 'ConcentrationGateKinetic',
+						 'GateKineticBackward',
+						 'GateKineticForward',
+						 'GateKineticPart',
+						],
+				  specific_allocator => 'HHGateCalloc',
+				  specific_token => {
+						     class => 'h_h_gate',
+						     lexical => 'TOKEN_HH_GATE',
+						     purpose => 'physical',
+						    },
+				  typing => {
+					     base => 'phsle',
+					     id => 'pidin',
+					     spec => 'pgathh',
+					     to_base => '->bio.ioh.iol.hsle',
+					    },
+				 },
 		      isa => 'bio_comp',
 		      name => 'symtab_HHGate',
 		      parameters => {
@@ -329,6 +365,21 @@ my $class_hierarchy
 					'piSymbolType2Biolevel' => 'BIOLEVEL_CELL',
 				       },
 			description => 'a regular connection in the symbol table, alien typed and with alien identification numbers',
+			grammar => {
+				    components => [],
+				    specific_allocator => 'ConnectionSymbolCalloc',
+				    specific_token =>  => {
+							   class => 'connection_symbol',
+							   lexical => 'TOKEN_CONNECTION',
+							   purpose => 'physical',
+							  },
+				    typing => {
+					       base => 'phsle',
+					       id => 'pidin',
+					       spec => 'pconsy',
+					       to_base => '->bio.ioh.iol.hsle',
+					      },
+				   },
 			isa => 'root',
 			name => 'symtab_Connection',
 			parameters => {
@@ -349,6 +400,9 @@ my $class_hierarchy
 					       'piSymbolType2Biolevel' => 'BIOLEVEL_CELL',
 					      },
 			       description => 'a regular connection in the symbol table, self typed and with its own identification numbers',
+
+			       #t this one needs grammar of connection?
+
 			       isa => 'bio_comp',
 			       name => 'symtab_ConnectionSymbol',
 			       parameters => {
@@ -367,6 +421,24 @@ my $class_hierarchy
 				   'create_alias' => 'projection',
 				  },
 			description => 'a projection, with source and target populations',
+			grammar => {
+				    components => [
+						   'ConnectionGroup',
+						   'Projection',
+						  ],
+				    specific_allocator => 'ProjectionCalloc',
+				    specific_token => {
+						       class => 'projection',
+						       lexical => 'TOKEN_PROJECTION',
+						       purpose => 'physical',
+						      },
+				    typing => {
+					       base => 'phsle',
+					       id => 'pidin',
+					       spec => 'pproj',
+					       to_base => '->bio.ioh.iol.hsle',
+					      },
+				   },
 			isa => 'bio_comp',
 			name => 'symtab_Projection',
 			parameters => {
@@ -387,6 +459,21 @@ my $class_hierarchy
 		  dimensions => [
 				 'mechanism',
 				],
+		  grammar => {
+			      components => [],
+			      specific_allocator => 'PoolCalloc',
+			      specific_token => {
+						 class => 'pool',
+						 lexical => 'TOKEN_POOL',
+						 purpose => 'physical',
+						},
+			      typing => {
+					 base => 'phsle',
+					 id => 'pidin',
+					 spec => 'ppool',
+					 to_base => '->bio.ioh.iol.hsle',
+					},
+			     },
 		  isa => 'bio_comp',
 		  name => 'symtab_Pool',
 		  parameters => {
@@ -455,6 +542,24 @@ my $class_hierarchy
 					   'piSymbolType2Biolevel' => 'BIOLEVEL_SEGMENT',
 					  },
 			   description => 'a axon hillock',
+			   grammar => {
+				       components => [
+						      'Segment',
+						      'SegmentGroup',
+						     ],
+				       specific_allocator => 'AxonHillockCalloc',
+				       specific_token =>  => {
+							      class => 'axon_hillock',
+							      lexical => 'TOKEN_AXON_HILLOCK',
+							      purpose => 'physical',
+							     },
+				       typing => {
+						  base => 'phsle',
+						  id => 'pidin',
+						  spec => 'paxhi',
+						  to_base => '->segr.bio.ioh.iol.hsle',
+						 },
+				      },
 			   isa => 'segmenter',
 			   name => 'symtab_AxonHillock',
 			   parameters => {
@@ -471,6 +576,25 @@ my $class_hierarchy
 		   dimensions => [
 				  'movable',
 				 ],
+		   grammar => {
+			       components => [
+					      'AxonHillock',
+					      'Segment',
+					      'SegmentGroup',
+					     ],
+			       specific_allocator => 'CellCalloc',
+			       specific_token =>  => {
+						      class => 'cell',
+						      lexical => 'TOKEN_CELL',
+						      purpose => 'physical',
+						     },
+			       typing => {
+					  base => 'phsle',
+					  id => 'pidin',
+					  spec => 'pcell',
+					  to_base => '->segr.bio.ioh.iol.hsle',
+					 },
+			      },
 		   isa => 'segmenter',
 		   name => 'symtab_Cell',
 		   parameters => {
@@ -484,6 +608,21 @@ my $class_hierarchy
 				    'piSymbolType2Biolevel' => 'BIOLEVEL_CELL',
 				   },
 		    description => 'an axonal fiber that fires action potentials',
+		    grammar => {
+				components => [],
+				specific_allocator => 'FiberCalloc',
+				specific_token => {
+						   class => 'fiber',
+						   lexical => 'TOKEN_FIBER',
+						   purpose => 'physical',
+						  },
+				typing => {
+					   base => 'phsle',
+					   id => 'pidin',
+					   spec => 'pfibr',
+					   to_base => '->segr.bio.ioh.iol.hsle',
+					  },
+			       },
 		    isa => 'segmenter',
 		    name => 'symtab_Fiber',
 		    parameters => {
@@ -504,6 +643,26 @@ my $class_hierarchy
 		      dimensions => [
 				     'movable',
 				    ],
+		      grammar => {
+				  components => [
+						 'Cell',
+						 'Population',
+						 'Projection',
+						 'Network',
+						],
+				  specific_allocator => 'NetworkCalloc',
+				  specific_token => {
+						     class => 'network',
+						     lexical => 'TOKEN_NETWORK',
+						     purpose => 'physical',
+						    },
+				  typing => {
+					     base => 'phsle',
+					     id => 'pidin',
+					     spec => 'pnetw',
+					     to_base => '->segr.bio.ioh.iol.hsle',
+					    },
+				 },
 		      isa => 'segmenter',
 		      name => 'symtab_Network',
 		      parameters => {
@@ -522,6 +681,24 @@ my $class_hierarchy
 			 dimensions => [
 					'movable',
 				       ],
+			 grammar => {
+				     components => [
+						    'Cell',
+						    'Randomvalue',
+						   ],
+				     specific_allocator => 'PopulationCalloc',
+				     specific_token => {
+							class => 'population',
+							lexical => 'TOKEN_POPULATION',
+							purpose => 'physical',
+						       },
+				     typing => {
+						base => 'phsle',
+						id => 'pidin',
+						spec => 'ppopu',
+						to_base => '->segr.bio.ioh.iol.hsle',
+					       },
+				    },
 			 isa => 'segmenter',
 			 name => 'symtab_Population',
 			 parameters => {
@@ -539,6 +716,47 @@ my $class_hierarchy
 				      'piSymbolType2Biolevel' => 'BIOLEVEL_SEGMENT',
 				     },
 		      description => 'a single linear cylindrical segment of a neuron',
+		      grammar => {
+				  components => [
+						 'Attachment',
+						 'Pool',
+						 'Channel',
+						],
+				  specific_allocator => 'SegmentCalloc',
+				  specific_token => {
+						     class => 'segment',
+						     lexical => 'TOKEN_SEGMENT',
+						     purpose => 'physical',
+						    },
+				  typing => {
+					     base => 'phsle',
+					     id => 'pidin',
+					     spec => 'psegment',
+					     to_base => '->segr.bio.ioh.iol.hsle',
+					    },
+				  specific_description => {
+							   add => '		SegmentDescription
+		TOKEN_OPTIONS
+		SegmentInstanceOptions
+		{
+#line
+		    //- set segment options
+
+		    SymbolSetOptions(&$1->segr.bio.ioh.iol.hsle, $3);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->segr.bio.ioh.iol.hsle);
+
+		    //- push segment description on stack
+
+		    $$ = $1;
+		}
+',
+							  },
+				 },
 		      isa => 'segmenter',
 		      name => 'symtab_Segment',
 		      parameters => {
@@ -576,6 +794,23 @@ my $class_hierarchy
 				 'create_alias' => 'v_contour',
 				},
 		      description => 'a group of spatial contours',
+		      grammar => {
+				  components => [
+						 'EMContour',
+						],
+				  specific_allocator => 'VContourCalloc',
+				  specific_token => {
+						     class => 'v_contour',
+						     lexical => 'TOKEN_CONTOUR_GROUP',
+						     purpose => 'physical',
+						    },
+				  typing => {
+					     base => 'phsle',
+					     id => 'pidin',
+					     spec => 'pvcont',
+					     to_base => '->vect.bio.ioh.iol.hsle',
+					    },
+				 },
 		      isa => 'vector',
 		      name => 'symtab_VContour',
 		      parameters => {
@@ -590,6 +825,24 @@ my $class_hierarchy
 # 					 'piSymbolType2Biolevel' => 'BIOLEVEL_POPULATION',
 # 					},
 			 description => 'a group of connections with alien typing',
+			 grammar => {
+				     components => [
+						    'Connection',
+						   ],
+				     specific_allocator => 'ConnectionGroupCalloc',
+				     specific_token => {
+							class => 'v_connection_symbol',
+							lexical => 'TOKEN_CONNECTION_GROUP',
+							purpose => 'physical',
+						       },
+				     typing => {
+						base => 'phsle',
+						id => 'pidin',
+						spec => 'pvconn',
+						to_base => '->vect.bio.ioh.iol.hsle',
+					       },
+				     disabled => 'to complicated for the moment',
+				    },
 			 isa => 'vector',
 			 name => 'symtab_VConnection',
 			 parameters => {
@@ -621,6 +874,24 @@ my $class_hierarchy
 		      dimensions => [
 				     'movable',
 				    ],
+		      grammar => {
+				  components => [
+						 'Segment',
+						 'SegmentGroup',
+						],
+				  specific_allocator => 'VSegmentCalloc',
+				  specific_token => {
+						     class => 'v_segment',
+						     lexical => 'TOKEN_SEGMENT_GROUP',
+						     purpose => 'physical',
+						    },
+				  typing => {
+					     base => 'phsle',
+					     id => 'pidin',
+					     spec => 'pvsegm',
+					     to_base => '->vect.bio.ioh.iol.hsle',
+					    },
+				 },
 		      isa => 'vector',
 		      name => 'symtab_VSegment',
 		      parameters => {
@@ -640,6 +911,21 @@ my $class_hierarchy
 		  dimensions => [
 				 'movable',
 				],
+		  grammar => {
+			      components => [],
+			      specific_allocator => 'GroupCalloc',
+			      specific_token => {
+						 class => 'group',
+						 lexical => 'TOKEN_GROUP',
+						 purpose => 'physical',
+						},
+			      typing => {
+					 base => 'phsle',
+					 id => 'pidin',
+					 spec => 'pgrup',
+					 to_base => '->bio.ioh.iol.hsle',
+					},
+			     },
 		  isa => 'bio_comp',
 		  name => 'symtab_Group',
 		  parameters => {
@@ -657,6 +943,21 @@ my $class_hierarchy
 				'set_type' => 'equation',
 			       },
 		     description => 'a dual exponential equation or an alpha function',
+		     grammar => {
+				 components => [],
+				 specific_allocator => 'EquationCalloc',
+				 specific_token => {
+						    class => 'equation',
+						    lexical => 'TOKEN_EXPONENTIAL_EQUATION',
+						    purpose => 'physical',
+						   },
+				 typing => {
+					    base => 'phsle',
+					    id => 'pidin',
+					    spec => 'peq',
+					    to_base => '->bio.ioh.iol.hsle',
+					   },
+				},
 		     isa => 'bio_comp',
 		     name => 'symtab_Equation',
 		     parameters => {
@@ -676,6 +977,23 @@ my $class_hierarchy
 # 					'piSymbolType2Biolevel' => 'BIOLEVEL_SEGMENT',
 # 				       },
 			description => 'a component that produces a different random value each time it is consulted',
+			grammar => {
+				    components => [
+						   'Attachment',
+						  ],
+				    specific_allocator => 'RandomvalueCalloc',
+				    specific_token => {
+						       class => 'randomvalue',
+						       lexical => 'TOKEN_RANDOMVALUE',
+						       purpose => 'physical',
+						      },
+				    typing => {
+					       base => 'phsle',
+					       id => 'pidin',
+					       spec => 'pranv',
+					       to_base => '->bio.ioh.iol.hsle',
+					      },
+				   },
 			isa => 'bio_comp',
 			name => 'symtab_Randomvalue',
 			parameters => {
@@ -698,6 +1016,23 @@ my $class_hierarchy
 					'piSymbolType2Biolevel' => 'BIOLEVEL_ATOMIC',
 				       },
 			description => 'a spatial contour, presumably representing an EM trace',
+			grammar => {
+				    components => [
+						   'ContourPoint',
+						  ],
+				    specific_allocator => 'EMContourCalloc',
+				    specific_token => {
+						       class => 'e_m_contour',
+						       lexical => 'TOKEN_EM_CONTOUR',
+						       purpose => 'physical',
+						      },
+				    typing => {
+					       base => 'phsle',
+					       id => 'pidin',
+					       spec => 'pemc',
+					       to_base => '->bio.ioh.iol.hsle',
+					      },
+				   },
 			isa => 'bio_comp',
 			name => 'symtab_EMContour',
 			parameters => {
@@ -712,6 +1047,22 @@ my $class_hierarchy
 					  'piSymbolType2Biolevel' => 'BIOLEVEL_ATOMIC',
 					 },
 			  description => 'a single point in 3D space, presumably from an EM trace',
+			  grammar => {
+				      components => [
+						    ],
+				      specific_allocator => 'ContourPointCalloc',
+				      specific_token => {
+							 class => 'contour_point',
+							 lexical => 'TOKEN_CONTOUR_POINT',
+							 purpose => 'physical',
+							},
+				      typing => {
+						 base => 'phsle',
+						 id => 'pidin',
+						 spec => 'pcpnt',
+						 to_base => '->bio.ioh.iol.hsle',
+						},
+				     },
 			  isa => 'bio_comp',
 			  name => 'symtab_ContourPoint',
 			  parameters => {
@@ -760,6 +1111,23 @@ my $class_hierarchy
 				  'set_type' => 'attachment',
 				 },
 		       description => 'a possible connection start or end point, without the connection',
+		       grammar => {
+				   components => [
+						 ],
+				   specific_allocator => 'AttachmentCalloc',
+				   specific_token =>  => {
+							  class => 'attachment',
+							  lexical => 'TOKEN_ATTACHMENT',
+							  purpose => 'physical',
+							 },
+				   typing => {
+					      base => 'phsle',
+					      id => 'pidin',
+					      spec => 'patta',
+					      to_base => '->bio.ioh.iol.hsle',
+					     },
+				   disabled => 'to complicated for the moment',
+				  },
 
 		       #t should not be a bio_comp at all, but the
 		       #t implementation currently depends on this ...
@@ -797,6 +1165,22 @@ my $class_hierarchy
 			       allows => {
 					 },
 			       description => 'a group of parameters',
+			       grammar => {
+					   components => [
+							 ],
+					   specific_allocator => 'GroupedParametersCalloc',
+					   specific_token => {
+							      class => 'grouped_parameters',
+							      lexical => 'TOKEN_GROUPED_PARAMETERS',
+							      purpose => 'physical',
+							     },
+					   typing => {
+						      base => 'phsle',
+						      id => 'pidin',
+						      spec => 'pgrpp',
+						      to_base => '->bio.ioh.iol.hsle',
+						     },
+					  },
 			       isa => 'bio_comp',
 			       name => 'symtab_GroupedParameters',
 			       parameters => {
@@ -993,190 +1377,11 @@ my $grammar_rules
       };
 
 
+# special grammar symbols that are not directly related with symbol
+# types (but perhaps they are indirectly)
+
 my $grammar_symbols
     = {
-       Attachment => {
-		      components => [
-				    ],
-		      specific_allocator => 'AttachmentCalloc',
-		      specific_token =>  => {
-					     class => 'attachment',
-					     lexical => 'TOKEN_ATTACHMENT',
-					     purpose => 'physical',
-					    },
-		      typing => {
-				 base => 'phsle',
-				 id => 'pidin',
-				 spec => 'patta',
-				 to_base => '->bio.ioh.iol.hsle',
-				},
-		      disabled => 'to complicated for the moment',
-		     },
-       AxonHillock => {
-		       components => [
-				      'Segment',
-				      'SegmentGroup',
-				     ],
-		       specific_allocator => 'AxonHillockCalloc',
-		       specific_token =>  => {
-					      class => 'axon_hillock',
-					      lexical => 'TOKEN_AXON_HILLOCK',
-					      purpose => 'physical',
-					     },
-		       typing => {
-				  base => 'phsle',
-				  id => 'pidin',
-				  spec => 'paxhi',
-				  to_base => '->segr.bio.ioh.iol.hsle',
-				 },
-		      },
-       Cell => {
-		components => [
-			       'AxonHillock',
-			       'Segment',
-			       'SegmentGroup',
-			      ],
-		specific_allocator => 'CellCalloc',
-		specific_token =>  => {
-				       class => 'cell',
-				       lexical => 'TOKEN_CELL',
-				       purpose => 'physical',
-				      },
-		typing => {
-			   base => 'phsle',
-			   id => 'pidin',
-			   spec => 'pcell',
-			   to_base => '->segr.bio.ioh.iol.hsle',
-			  },
-	       },
-       Channel => {
-		   components => [
-				  'Attachment',
-				  'EquationExponential',
-				  'HHGate',
-				 ],
-		   specific_allocator => 'ChannelCalloc',
-		   specific_token => {
-				      class => 'channel',
-				      lexical => 'TOKEN_CHANNEL',
-				      purpose => 'physical',
-				     },
-		   typing => {
-			      base => 'phsle',
-			      id => 'pidin',
-			      spec => 'pchan',
-			      to_base => '->bio.ioh.iol.hsle',
-			     },
-		   specific_description => {
-					    add => '		TOKEN_TABLEFILE
-		TOKEN_STRING
-		{
-#line
-		    //- remove ending \'"\' from string
-
-		    $2->pcString[$2->iLength - 1] = \'\0\';
-
-		    //- put channel description on stack
-
-		    $$ = ChannelCalloc();
-
-		    //- fill in table parameters
-
-		    ChannelSetTableParameters
-			($$,
-			 (PARSERCONTEXT *)pacParserContext,
-			 &$2->pcString[1]);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->bio.ioh.iol.hsle);
-
-		    //! memory leak : $2
-		}
-',
-					   },
-		  },
-       ConcentrationGateKinetic => {
-				    components => [
-						  ],
-				    specific_allocator => 'ConcentrationGateKineticCalloc',
-				    specific_token =>  => {
-							   class => 'concentration_gate_kinetic',
-							   lexical => 'TOKEN_CONCENTRATION_GATE_KINETIC',
-							   purpose => 'physical',
-							  },
-				    typing => {
-					       base => 'phsle',
-					       id => 'pidin',
-					       spec => 'pcgatk',
-					       to_base => '->bio.ioh.iol.hsle',
-					      },
-				   },
-       Connection => {
-		      components => [],
-		      specific_allocator => 'ConnectionSymbolCalloc',
-		      specific_token =>  => {
-					     class => 'connection_symbol',
-					     lexical => 'TOKEN_CONNECTION',
-					     purpose => 'physical',
-					    },
-		      typing => {
-				 base => 'phsle',
-				 id => 'pidin',
-				 spec => 'pconsy',
-				 to_base => '->bio.ioh.iol.hsle',
-				},
-		     },
-       ConnectionGroup => {
-			   components => [
-					  'Connection',
-					 ],
-			   specific_allocator => 'ConnectionGroupCalloc',
-			   specific_token => {
-					      class => 'v_connection_symbol',
-					      lexical => 'TOKEN_CONNECTION_GROUP',
-					      purpose => 'physical',
-					     },
-			   typing => {
-				      base => 'phsle',
-				      id => 'pidin',
-				      spec => 'pvconn',
-				      to_base => '->vect.bio.ioh.iol.hsle',
-				     },
-			   disabled => 'to complicated for the moment',
-			  },
-       EquationExponential => {
-			       components => [],
-			       specific_allocator => 'EquationCalloc',
-			       specific_token => {
-						  class => 'equation',
-						  lexical => 'TOKEN_EXPONENTIAL_EQUATION',
-						  purpose => 'physical',
-						 },
-			       typing => {
-					  base => 'phsle',
-					  id => 'pidin',
-					  spec => 'peq',
-					  to_base => '->bio.ioh.iol.hsle',
-					 },
-			      },
-       Fiber => {
-		 components => [],
-		 specific_allocator => 'FiberCalloc',
-		 specific_token => {
-				    class => 'fiber',
-				    lexical => 'TOKEN_FIBER',
-				    purpose => 'physical',
-				   },
-		 typing => {
-			    base => 'phsle',
-			    id => 'pidin',
-			    spec => 'pfibr',
-			    to_base => '->segr.bio.ioh.iol.hsle',
-			   },
-		},
        GateKineticBackward => {
 			       components => [
 					      'GateKineticPart',
@@ -1224,254 +1429,6 @@ my $grammar_symbols
 				      to_base => '->bio.ioh.iol.hsle',
 				     },
 			  },
-       Group => {
-		 components => [],
-		 specific_allocator => 'GroupCalloc',
-		 specific_token => {
-				    class => 'group',
-				    lexical => 'TOKEN_GROUP',
-				    purpose => 'physical',
-				   },
-		 typing => {
-			    base => 'phsle',
-			    id => 'pidin',
-			    spec => 'pgrup',
-			    to_base => '->bio.ioh.iol.hsle',
-			   },
-		},
-       HHGate => {
-		  components => [
-				 'ConcentrationGateKinetic',
-				 'GateKineticBackward',
-				 'GateKineticForward',
-				 'GateKineticPart',
-				],
-		  specific_allocator => 'HHGateCalloc',
-		  specific_token => {
-				     class => 'h_h_gate',
-				     lexical => 'TOKEN_HH_GATE',
-				     purpose => 'physical',
-				    },
-		  typing => {
-			     base => 'phsle',
-			     id => 'pidin',
-			     spec => 'pgathh',
-			     to_base => '->bio.ioh.iol.hsle',
-			    },
-		 },
-       Network => {
-		   components => [
-				  'Cell',
-				  'Population',
-				  'Projection',
-				  'Network',
-				 ],
-		   specific_allocator => 'NetworkCalloc',
-		   specific_token => {
-				      class => 'network',
-				      lexical => 'TOKEN_NETWORK',
-				      purpose => 'physical',
-				     },
-		   typing => {
-			      base => 'phsle',
-			      id => 'pidin',
-			      spec => 'pnetw',
-			      to_base => '->segr.bio.ioh.iol.hsle',
-			     },
-		  },
-       Pool => {
-		components => [],
-		specific_allocator => 'PoolCalloc',
-		specific_token => {
-				   class => 'pool',
-				   lexical => 'TOKEN_POOL',
-				   purpose => 'physical',
-				  },
-		typing => {
-			   base => 'phsle',
-			   id => 'pidin',
-			   spec => 'ppool',
-			   to_base => '->bio.ioh.iol.hsle',
-			  },
-	       },
-       Population => {
-		      components => [
-				     'Cell',
-				     'Randomvalue',
-				    ],
-		      specific_allocator => 'PopulationCalloc',
-		      specific_token => {
-					 class => 'population',
-					 lexical => 'TOKEN_POPULATION',
-					 purpose => 'physical',
-					},
-		      typing => {
-				 base => 'phsle',
-				 id => 'pidin',
-				 spec => 'ppopu',
-				 to_base => '->segr.bio.ioh.iol.hsle',
-				},
-		     },
-       Projection => {
-		      components => [
-				     'ConnectionGroup',
-				     'Projection',
-				    ],
-		      specific_allocator => 'ProjectionCalloc',
-		      specific_token => {
-					 class => 'projection',
-					 lexical => 'TOKEN_PROJECTION',
-					 purpose => 'physical',
-					},
-		      typing => {
-				 base => 'phsle',
-				 id => 'pidin',
-				 spec => 'pproj',
-				 to_base => '->bio.ioh.iol.hsle',
-				},
-		     },
-       Randomvalue => {
-		       components => [
-				      'Attachment',
-				     ],
-		       specific_allocator => 'RandomvalueCalloc',
-		       specific_token => {
-					  class => 'randomvalue',
-					  lexical => 'TOKEN_RANDOMVALUE',
-					  purpose => 'physical',
-					 },
-		       typing => {
-				  base => 'phsle',
-				  id => 'pidin',
-				  spec => 'pranv',
-				  to_base => '->bio.ioh.iol.hsle',
-				 },
-		      },
-       Segment => {
-		   components => [
-				  'Attachment',
-				  'Pool',
-				  'Channel',
-				 ],
-		   specific_allocator => 'SegmentCalloc',
-		   specific_token => {
-				      class => 'segment',
-				      lexical => 'TOKEN_SEGMENT',
-				      purpose => 'physical',
-				     },
-		   typing => {
-			      base => 'phsle',
-			      id => 'pidin',
-			      spec => 'psegment',
-			      to_base => '->segr.bio.ioh.iol.hsle',
-			     },
-		   specific_description => {
-					    add => '		SegmentDescription
-		TOKEN_OPTIONS
-		SegmentInstanceOptions
-		{
-#line
-		    //- set segment options
-
-		    SymbolSetOptions(&$1->segr.bio.ioh.iol.hsle, $3);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push segment description on stack
-
-		    $$ = $1;
-		}
-',
-					   },
-		  },
-       SegmentGroup => {
-			components => [
-				       'Segment',
-				       'SegmentGroup',
-				      ],
-			specific_allocator => 'VSegmentCalloc',
-			specific_token => {
-					   class => 'v_segment',
-					   lexical => 'TOKEN_SEGMENT_GROUP',
-					   purpose => 'physical',
-					  },
-			typing => {
-				   base => 'phsle',
-				   id => 'pidin',
-				   spec => 'pvsegm',
-				   to_base => '->vect.bio.ioh.iol.hsle',
-				  },
-		       },
-       GroupedParameters => {
-			     components => [
-					   ],
-			     specific_allocator => 'GroupedParametersCalloc',
-			     specific_token => {
-						class => 'grouped_parameters',
-						lexical => 'TOKEN_GROUPED_PARAMETERS',
-						purpose => 'physical',
-					       },
-			     typing => {
-					base => 'phsle',
-					id => 'pidin',
-					spec => 'pgrpp',
-					to_base => '->bio.ioh.iol.hsle',
-				       },
-			    },
-       EMContour => {
-		     components => [
-				    'ContourPoint',
-				   ],
-		     specific_allocator => 'EMContourCalloc',
-		     specific_token => {
-					class => 'e_m_contour',
-					lexical => 'TOKEN_EM_CONTOUR',
-					purpose => 'physical',
-				       },
-		     typing => {
-				base => 'phsle',
-				id => 'pidin',
-				spec => 'pemc',
-				to_base => '->bio.ioh.iol.hsle',
-			       },
-		    },
-       ContourGroup => {
-			components => [
-				       'EMContour',
-				      ],
-			specific_allocator => 'VContourCalloc',
-			specific_token => {
-					   class => 'v_contour',
-					   lexical => 'TOKEN_CONTOUR_GROUP',
-					   purpose => 'physical',
-					  },
-			typing => {
-				   base => 'phsle',
-				   id => 'pidin',
-				   spec => 'pvcont',
-				   to_base => '->vect.bio.ioh.iol.hsle',
-				  },
-		       },
-       ContourPoint => {
-			components => [
-				      ],
-			specific_allocator => 'ContourPointCalloc',
-			specific_token => {
-					   class => 'contour_point',
-					   lexical => 'TOKEN_CONTOUR_POINT',
-					   purpose => 'physical',
-					  },
-			typing => {
-				   base => 'phsle',
-				   id => 'pidin',
-				   spec => 'pcpnt',
-				   to_base => '->bio.ioh.iol.hsle',
-				  },
-		       },
       };
 
 
