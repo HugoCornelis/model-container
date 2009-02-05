@@ -113,7 +113,7 @@ grouped_parameters	{	return(TOKEN_GROUPED_PARAMETERS);	}
 group			{	return(TOKEN_GROUP);		}
 has			{	return(TOKEN_HAS);		}
 child			{	return(TOKEN_CHILD);		}
-attachment_point	{	return(TOKEN_ATTACHMENT_POINT);	}
+attachment		{	return(TOKEN_ATTACHMENT);	}
 generates		{	return(TOKEN_GENERATES);	}
 receives		{	return(TOKEN_RECEIVES);		}
 events			{	return(TOKEN_EVENTS);		}

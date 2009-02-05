@@ -135,7 +135,7 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <phsle> NetworkComponent
 %type <phsle> ProjectionComponent
 %type <phsle> AnySymbol
-%type <phsle> AttachmentPointSymbol
+%type <phsle> AttachmentSymbol
 %type <phsle> EquationExponentialSymbol
 %type <phsle> PoolSymbol
 %type <phsle> AxonHillockSymbol
@@ -149,13 +149,13 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <phsle> NetworkSymbol
 %type <phsle> ConnectionGroupSymbol
 %type <phsle> ConnectionSymbol
-%type <patta> AttachmentPointSection
-%type <pidin> AttachmentPointSectionFront
-%type <patta> AttachmentPointDescription
-%type <ppar> AttachmentPointData
-%type <ppar> AttachmentPointAttributes
-%type <pcIdentifier> AttachmentPointIncoming
-%type <pcIdentifier> AttachmentPointOutgoing
+%type <patta> AttachmentSection
+%type <pidin> AttachmentSectionFront
+%type <patta> AttachmentDescription
+%type <ppar> AttachmentData
+%type <ppar> AttachmentAttributes
+%type <pcIdentifier> AttachmentIncoming
+%type <pcIdentifier> AttachmentOutgoing
 %type <ppool> PoolSection
 %type <pidin> PoolSectionFront
 %type <ppool> PoolDescription
@@ -914,7 +914,7 @@ PublicModelsEnumerated
 
 AnySymbol	/* <phsle> */
 	:
-		AttachmentPointSymbol
+		AttachmentSymbol
 	|
 		AxonHillockSymbol
 	|
@@ -966,9 +966,9 @@ AnySymbol	/* <phsle> */
 	;
 
 
-AttachmentPointSymbol
+AttachmentSymbol
 	:
-		AttachmentPointSection
+		AttachmentSection
 		{
 #line
 		    //- put symbol table element on stack
@@ -1261,7 +1261,7 @@ CellComponent
 
 ChannelComponent
 	:
-		AttachmentPointSymbol
+		AttachmentSymbol
 	|
 		EquationExponentialSymbol
 	|
@@ -1347,13 +1347,13 @@ ProjectionComponent
 
 RandomvalueComponent
 	:
-		AttachmentPointSymbol
+		AttachmentSymbol
 	;
 
 
 SegmentComponent
 	:
-		AttachmentPointSymbol
+		AttachmentSymbol
 	|
 		PoolSymbol
 	|
@@ -4234,18 +4234,18 @@ ConnectionGroupSection	/* <pvconsy> */
 		}
 	;
 
-AttachmentPointSectionEnd
+AttachmentSectionEnd
 	:
 		EndPushedPidin
-		TOKEN_ATTACHMENT_POINT
+		TOKEN_ATTACHMENT
 		{
 #line
 		}
 	;
 
-AttachmentPointSectionFront	/* <pidin> */
+AttachmentSectionFront	/* <pidin> */
 	:
-		TOKEN_ATTACHMENT_POINT
+		TOKEN_ATTACHMENT
 		IdentifierOptionIndexPushedPidin
 		{
 #line
@@ -4255,12 +4255,12 @@ AttachmentPointSectionFront	/* <pidin> */
 		}
 	;
 
-AttachmentPointSection	/* <patta> */
+AttachmentSection	/* <patta> */
 	:
-		AttachmentPointSectionFront
+		AttachmentSectionFront
 			InputOutputRelations
-			AttachmentPointDescription
-		AttachmentPointSectionEnd
+			AttachmentDescription
+		AttachmentSectionEnd
 		{
 #line
 		    //- link name
@@ -4283,7 +4283,7 @@ AttachmentPointSection	/* <patta> */
 
 			NeurospacesError
 			    ((PARSERCONTEXT *)pacParserContext,
-			     "AttachmentPointSection",
+			     "AttachmentSection",
 			     "Unrecognized attachment type(%s).",
 			     IdinName($1)
 			     ? IdinName($1)
@@ -4300,9 +4300,9 @@ AttachmentPointSection	/* <patta> */
 		}
 	;
 
-AttachmentPointDescription	/* <patta> */
+AttachmentDescription	/* <patta> */
 	:
-		AttachmentPointData
+		AttachmentData
 		{
 #line
 		    //- allocate attachment point on stack
@@ -4328,8 +4328,8 @@ AttachmentPointDescription	/* <patta> */
 			 &$$->bio.ioh.iol.hsle);
 		}
 	|
-		AttachmentPointIncoming
-		AttachmentPointData
+		AttachmentIncoming
+		AttachmentData
 		{
 #line
 		    //- allocate attachment point on stack
@@ -4355,8 +4355,8 @@ AttachmentPointDescription	/* <patta> */
 			 &$$->bio.ioh.iol.hsle);
 		}
 	|
-		AttachmentPointOutgoing
-		AttachmentPointData
+		AttachmentOutgoing
+		AttachmentData
 		{
 #line
 		    //- allocate attachment point on stack
@@ -4383,7 +4383,7 @@ AttachmentPointDescription	/* <patta> */
 		}
 	;
 
-AttachmentPointData	/* <ppar> */
+AttachmentData	/* <ppar> */
 	:
 		{
 #line
@@ -4392,7 +4392,7 @@ AttachmentPointData	/* <ppar> */
 		    $$ = NULL;
 		}
 	|
-		AttachmentPointAttributes
+		AttachmentAttributes
 		{
 #line
 		    //- put attributes on stack
@@ -4401,7 +4401,7 @@ AttachmentPointData	/* <ppar> */
 		}
 	;
 
-AttachmentPointAttributes	/* <ppar> */
+AttachmentAttributes	/* <ppar> */
 	:
 		TOKEN_ATTRIBUTES
 			Attributes
@@ -4415,7 +4415,7 @@ AttachmentPointAttributes	/* <ppar> */
 	;
 
 
-AttachmentPointIncoming	/* <pcIdentifier> */
+AttachmentIncoming	/* <pcIdentifier> */
 	:
 		TOKEN_RECEIVES TOKEN_EVENTS '(' Identifier ')'
 		{
@@ -4426,7 +4426,7 @@ AttachmentPointIncoming	/* <pcIdentifier> */
 		}
 	;
 
-AttachmentPointOutgoing	/* <pcIdentifier> */
+AttachmentOutgoing	/* <pcIdentifier> */
 	:
 		TOKEN_GENERATES TOKEN_EVENTS '(' Identifier ')'
 		{

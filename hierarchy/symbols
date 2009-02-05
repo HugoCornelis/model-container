@@ -184,7 +184,7 @@ my $class_hierarchy
 				   },
 # 		     grammar => {
 # 				 components => [
-# 						'AttachmentPoint',
+# 						'Attachment',
 # 						'EquationExponential',
 # 						'HHGate',
 # 					       ],
@@ -995,23 +995,23 @@ my $grammar_rules
 
 my $grammar_symbols
     = {
-       AttachmentPoint => {
-			   components => [
-					 ],
-			   specific_allocator => 'AttachmentCalloc',
-			   specific_token =>  => {
-						  class => 'attachment',
-						  lexical => 'TOKEN_ATTACHMENT_POINT',
-						  purpose => 'physical',
-						 },
-			   typing => {
-				      base => 'phsle',
-				      id => 'pidin',
-				      spec => 'patta',
-				      to_base => '->bio.ioh.iol.hsle',
-				     },
-			   disabled => 'to complicated for the moment',
-			  },
+       Attachment => {
+		      components => [
+				    ],
+		      specific_allocator => 'AttachmentCalloc',
+		      specific_token =>  => {
+					     class => 'attachment',
+					     lexical => 'TOKEN_ATTACHMENT',
+					     purpose => 'physical',
+					    },
+		      typing => {
+				 base => 'phsle',
+				 id => 'pidin',
+				 spec => 'patta',
+				 to_base => '->bio.ioh.iol.hsle',
+				},
+		      disabled => 'to complicated for the moment',
+		     },
        AxonHillock => {
 		       components => [
 				      'Segment',
@@ -1051,7 +1051,7 @@ my $grammar_symbols
 	       },
        Channel => {
 		   components => [
-				  'AttachmentPoint',
+				  'Attachment',
 				  'EquationExponential',
 				  'HHGate',
 				 ],
@@ -1332,7 +1332,7 @@ my $grammar_symbols
 		     },
        Randomvalue => {
 		       components => [
-				      'AttachmentPoint',
+				      'Attachment',
 				     ],
 		       specific_allocator => 'RandomvalueCalloc',
 		       specific_token => {
@@ -1349,7 +1349,7 @@ my $grammar_symbols
 		      },
        Segment => {
 		   components => [
-				  'AttachmentPoint',
+				  'Attachment',
 				  'Pool',
 				  'Channel',
 				 ],
