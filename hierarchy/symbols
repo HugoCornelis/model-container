@@ -182,6 +182,55 @@ my $class_hierarchy
 				    G => 'actual channel conductance, normally a solved variable',
 				    I => 'actual channel current, normally a solved variable',
 				   },
+		     grammar => {
+				 components => [
+						'AttachmentPoint',
+						'EquationExponential',
+						'HHGate',
+					       ],
+				 specific_allocator => 'ChannelCalloc',
+				 specific_token => {
+						    class => 'channel',
+						    lexical => 'TOKEN_CHANNEL',
+						    purpose => 'physical',
+						   },
+				 typing => {
+					    base => 'phsle',
+					    id => 'pidin',
+					    spec => 'pchan',
+					    to_base => '->bio.ioh.iol.hsle',
+					   },
+				 specific_description => {
+							  add => '		TOKEN_TABLEFILE
+		TOKEN_STRING
+		{
+#line
+		    //- remove ending \'"\' from string
+
+		    $2->pcString[$2->iLength - 1] = \'\0\';
+
+		    //- put channel description on stack
+
+		    $$ = ChannelCalloc();
+
+		    //- fill in table parameters
+
+		    ChannelSetTableParameters
+			($$,
+			 (PARSERCONTEXT *)pacParserContext,
+			 &$2->pcString[1]);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+
+		    //! memory leak : $2
+		}
+',
+							 },
+				},
 		    },
 	 concentration_gate_kinetic => {
 					allows => {
@@ -950,7 +999,11 @@ my $grammar_symbols
 			   components => [
 					 ],
 			   specific_allocator => 'AttachmentCalloc',
-			   specific_token => 'TOKEN_ATTACHMENT_POINT',
+			   specific_token =>  => {
+						  class => 'attachment',
+						  lexical => 'TOKEN_ATTACHMENT_POINT',
+						  purpose => 'physical',
+						 },
 			   typing => {
 				      base => 'phsle',
 				      id => 'pidin',
@@ -965,7 +1018,11 @@ my $grammar_symbols
 				      'SegmentGroup',
 				     ],
 		       specific_allocator => 'AxonHillockCalloc',
-		       specific_token => 'TOKEN_AXON_HILLOCK',
+		       specific_token =>  => {
+					      class => 'axon_hillock',
+					      lexical => 'TOKEN_AXON_HILLOCK',
+					      purpose => 'physical',
+					     },
 		       typing => {
 				  base => 'phsle',
 				  id => 'pidin',
@@ -980,7 +1037,11 @@ my $grammar_symbols
 			       'SegmentGroup',
 			      ],
 		specific_allocator => 'CellCalloc',
-		specific_token => 'TOKEN_CELL',
+		specific_token =>  => {
+				       class => 'cell',
+				       lexical => 'TOKEN_CELL',
+				       purpose => 'physical',
+				      },
 		typing => {
 			   base => 'phsle',
 			   id => 'pidin',
@@ -995,7 +1056,11 @@ my $grammar_symbols
 				  'HHGate',
 				 ],
 		   specific_allocator => 'ChannelCalloc',
-		   specific_token => 'TOKEN_CHANNEL',
+		   specific_token => {
+				      class => 'channel',
+				      lexical => 'TOKEN_CHANNEL',
+				      purpose => 'physical',
+				     },
 		   typing => {
 			      base => 'phsle',
 			      id => 'pidin',
@@ -1037,7 +1102,11 @@ my $grammar_symbols
 				    components => [
 						  ],
 				    specific_allocator => 'ConcentrationGateKineticCalloc',
-				    specific_token => 'TOKEN_CONCENTRATION_GATE_KINETIC',
+				    specific_token =>  => {
+							   class => 'concentration_gate_kinetic',
+							   lexical => 'TOKEN_CONCENTRATION_GATE_KINETIC',
+							   purpose => 'physical',
+							  },
 				    typing => {
 					       base => 'phsle',
 					       id => 'pidin',
@@ -1048,7 +1117,11 @@ my $grammar_symbols
        Connection => {
 		      components => [],
 		      specific_allocator => 'ConnectionSymbolCalloc',
-		      specific_token => 'TOKEN_CONNECTION',
+		      specific_token =>  => {
+					     class => 'connection_symbol',
+					     lexical => 'TOKEN_CONNECTION',
+					     purpose => 'physical',
+					    },
 		      typing => {
 				 base => 'phsle',
 				 id => 'pidin',
@@ -1061,7 +1134,11 @@ my $grammar_symbols
 					  'Connection',
 					 ],
 			   specific_allocator => 'ConnectionGroupCalloc',
-			   specific_token => 'TOKEN_CONNECTION_GROUP',
+			   specific_token => {
+					      class => 'v_connection_symbol',
+					      lexical => 'TOKEN_CONNECTION_GROUP',
+					      purpose => 'physical',
+					     },
 			   typing => {
 				      base => 'phsle',
 				      id => 'pidin',
@@ -1073,7 +1150,11 @@ my $grammar_symbols
        EquationExponential => {
 			       components => [],
 			       specific_allocator => 'EquationCalloc',
-			       specific_token => 'TOKEN_EXPONENTIAL_EQUATION',
+			       specific_token => {
+						  class => 'equation',
+						  lexical => 'TOKEN_EXPONENTIAL_EQUATION',
+						  purpose => 'physical',
+						 },
 			       typing => {
 					  base => 'phsle',
 					  id => 'pidin',
@@ -1084,7 +1165,11 @@ my $grammar_symbols
        Fiber => {
 		 components => [],
 		 specific_allocator => 'FiberCalloc',
-		 specific_token => 'TOKEN_FIBER',
+		 specific_token => {
+				    class => 'fiber',
+				    lexical => 'TOKEN_FIBER',
+				    purpose => 'physical',
+				   },
 		 typing => {
 			    base => 'phsle',
 			    id => 'pidin',
@@ -1097,7 +1182,9 @@ my $grammar_symbols
 					      'GateKineticPart',
 					     ],
 			       specific_allocator => 'GateKineticCalloc',
-			       specific_token => 'TOKEN_GATE_KINETIC_B',
+			       specific_token => {
+						  lexical => 'TOKEN_GATE_KINETIC_B',
+						 },
 			       typing => {
 					  base => 'phsle',
 					  id => 'pidin',
@@ -1110,7 +1197,9 @@ my $grammar_symbols
 					     'GateKineticPart',
 					    ],
 			      specific_allocator => 'GateKineticCalloc',
-			      specific_token => 'TOKEN_GATE_KINETIC_A',
+			      specific_token => {
+						 lexical => 'TOKEN_GATE_KINETIC_A',
+						},
 			      typing => {
 					 base => 'phsle',
 					 id => 'pidin',
@@ -1125,7 +1214,9 @@ my $grammar_symbols
 					  'GateKineticPart',
 					 ],
 			   specific_allocator => 'GateKineticCalloc',
-			   specific_token => 'TOKEN_GATE_KINETIC_PART',
+			   specific_token => {
+					      lexical => 'TOKEN_GATE_KINETIC_PART',
+					     },
 			   typing => {
 				      base => 'phsle',
 				      id => 'pidin',
@@ -1136,7 +1227,11 @@ my $grammar_symbols
        Group => {
 		 components => [],
 		 specific_allocator => 'GroupCalloc',
-		 specific_token => 'TOKEN_GROUP',
+		 specific_token => {
+				    class => 'group',
+				    lexical => 'TOKEN_GROUP',
+				    purpose => 'physical',
+				   },
 		 typing => {
 			    base => 'phsle',
 			    id => 'pidin',
@@ -1152,7 +1247,11 @@ my $grammar_symbols
 				 'GateKineticPart',
 				],
 		  specific_allocator => 'HHGateCalloc',
-		  specific_token => 'TOKEN_HH_GATE',
+		  specific_token => {
+				     class => 'h_h_gate',
+				     lexical => 'TOKEN_HH_GATE',
+				     purpose => 'physical',
+				    },
 		  typing => {
 			     base => 'phsle',
 			     id => 'pidin',
@@ -1168,7 +1267,11 @@ my $grammar_symbols
 				  'Network',
 				 ],
 		   specific_allocator => 'NetworkCalloc',
-		   specific_token => 'TOKEN_NETWORK',
+		   specific_token => {
+				      class => 'network',
+				      lexical => 'TOKEN_NETWORK',
+				      purpose => 'physical',
+				     },
 		   typing => {
 			      base => 'phsle',
 			      id => 'pidin',
@@ -1179,7 +1282,11 @@ my $grammar_symbols
        Pool => {
 		components => [],
 		specific_allocator => 'PoolCalloc',
-		specific_token => 'TOKEN_POOL',
+		specific_token => {
+				   class => 'pool',
+				   lexical => 'TOKEN_POOL',
+				   purpose => 'physical',
+				  },
 		typing => {
 			   base => 'phsle',
 			   id => 'pidin',
@@ -1193,7 +1300,11 @@ my $grammar_symbols
 				     'Randomvalue',
 				    ],
 		      specific_allocator => 'PopulationCalloc',
-		      specific_token => 'TOKEN_POPULATION',
+		      specific_token => {
+					 class => 'population',
+					 lexical => 'TOKEN_POPULATION',
+					 purpose => 'physical',
+					},
 		      typing => {
 				 base => 'phsle',
 				 id => 'pidin',
@@ -1207,7 +1318,11 @@ my $grammar_symbols
 				     'Projection',
 				    ],
 		      specific_allocator => 'ProjectionCalloc',
-		      specific_token => 'TOKEN_PROJECTION',
+		      specific_token => {
+					 class => 'projection',
+					 lexical => 'TOKEN_PROJECTION',
+					 purpose => 'physical',
+					},
 		      typing => {
 				 base => 'phsle',
 				 id => 'pidin',
@@ -1220,7 +1335,11 @@ my $grammar_symbols
 				      'AttachmentPoint',
 				     ],
 		       specific_allocator => 'RandomvalueCalloc',
-		       specific_token => 'TOKEN_RANDOMVALUE',
+		       specific_token => {
+					  class => 'randomvalue',
+					  lexical => 'TOKEN_RANDOMVALUE',
+					  purpose => 'physical',
+					 },
 		       typing => {
 				  base => 'phsle',
 				  id => 'pidin',
@@ -1228,9 +1347,6 @@ my $grammar_symbols
 				  to_base => '->bio.ioh.iol.hsle',
 				 },
 		      },
-
-       #t segments are a specific case due to the options, have to check
-
        Segment => {
 		   components => [
 				  'AttachmentPoint',
@@ -1238,7 +1354,11 @@ my $grammar_symbols
 				  'Channel',
 				 ],
 		   specific_allocator => 'SegmentCalloc',
-		   specific_token => 'TOKEN_SEGMENT',
+		   specific_token => {
+				      class => 'segment',
+				      lexical => 'TOKEN_SEGMENT',
+				      purpose => 'physical',
+				     },
 		   typing => {
 			      base => 'phsle',
 			      id => 'pidin',
@@ -1268,16 +1388,17 @@ my $grammar_symbols
 ',
 					   },
 		  },
-
-       #t these ones need a serious check, just placeholders
-
        SegmentGroup => {
 			components => [
 				       'Segment',
 				       'SegmentGroup',
 				      ],
 			specific_allocator => 'VSegmentCalloc',
-			specific_token => 'TOKEN_SEGMENT_GROUP',
+			specific_token => {
+					   class => 'v_segment',
+					   lexical => 'TOKEN_SEGMENT_GROUP',
+					   purpose => 'physical',
+					  },
 			typing => {
 				   base => 'phsle',
 				   id => 'pidin',
@@ -1286,55 +1407,71 @@ my $grammar_symbols
 				  },
 		       },
        GroupedParameters => {
-				   components => [
-						 ],
-				   specific_allocator => 'GroupedParametersCalloc',
-				   specific_token => 'TOKEN_GROUPED_PARAMETERS',
-				   typing => {
-					      base => 'phsle',
-					      id => 'pidin',
-					      spec => 'pgrpp',
-					      to_base => '->bio.ioh.iol.hsle',
-					     },
-				  },
+			     components => [
+					   ],
+			     specific_allocator => 'GroupedParametersCalloc',
+			     specific_token => {
+						class => 'grouped_parameters',
+						lexical => 'TOKEN_GROUPED_PARAMETERS',
+						purpose => 'physical',
+					       },
+			     typing => {
+					base => 'phsle',
+					id => 'pidin',
+					spec => 'pgrpp',
+					to_base => '->bio.ioh.iol.hsle',
+				       },
+			    },
        EMContour => {
-			   components => [
-					  'ContourPoint',
-					 ],
-			   specific_allocator => 'EMContourCalloc',
-			   specific_token => 'TOKEN_EM_CONTOUR',
-			   typing => {
-				      base => 'phsle',
-				      id => 'pidin',
-				      spec => 'pemc',
-				      to_base => '->bio.ioh.iol.hsle',
-				     },
-			  },
+		     components => [
+				    'ContourPoint',
+				   ],
+		     specific_allocator => 'EMContourCalloc',
+		     specific_token => {
+					class => 'e_m_contour',
+					lexical => 'TOKEN_EM_CONTOUR',
+					purpose => 'physical',
+				       },
+		     typing => {
+				base => 'phsle',
+				id => 'pidin',
+				spec => 'pemc',
+				to_base => '->bio.ioh.iol.hsle',
+			       },
+		    },
        ContourGroup => {
-			      components => [
-					     'EMContour',
-					    ],
-			      specific_allocator => 'VContourCalloc',
-			      specific_token => 'TOKEN_CONTOUR_GROUP',
-			      typing => {
-					 base => 'phsle',
-					 id => 'pidin',
-					 spec => 'pvcont',
-					 to_base => '->vect.bio.ioh.iol.hsle',
-					},
-			     },
+			components => [
+				       'EMContour',
+				      ],
+			specific_allocator => 'VContourCalloc',
+			specific_token => {
+					   class => 'v_contour',
+					   lexical => 'TOKEN_CONTOUR_GROUP',
+					   purpose => 'physical',
+					  },
+			typing => {
+				   base => 'phsle',
+				   id => 'pidin',
+				   spec => 'pvcont',
+				   to_base => '->vect.bio.ioh.iol.hsle',
+				  },
+		       },
        ContourPoint => {
-			      components => [
-					    ],
-			      specific_allocator => 'ContourPointCalloc',
-			      specific_token => 'TOKEN_CONTOUR_POINT',
-			      typing => {
-					 base => 'phsle',
-					 id => 'pidin',
-					 spec => 'pcpnt',
-					 to_base => '->bio.ioh.iol.hsle',
-					},
-			     },
+			components => [
+				      ],
+			specific_allocator => 'ContourPointCalloc',
+			specific_token => {
+					   class => 'contour_point',
+					   lexical => 'TOKEN_CONTOUR_POINT',
+					   purpose => 'physical',
+					  },
+			typing => {
+				   base => 'phsle',
+				   id => 'pidin',
+				   spec => 'pcpnt',
+				   to_base => '->bio.ioh.iol.hsle',
+				  },
+		       },
       };
 
 
@@ -2376,6 +2513,9 @@ my $object_methods_signatures
       };
 
 
+# tokens that are not associated with symbols, e.g. because they are
+# purely structural.
+
 my $tokens
     = {
        absolute => {
@@ -2391,11 +2531,6 @@ my $tokens
        attributes => {
 		      lexical => 'TOKEN_ATTRIBUTES',
 		     },
-       axon_hillock => {
-			class => 'axon_hillock',
-			lexical => 'TOKEN_AXON_HILLOCK',
-			purpose => 'physical',
-		       },
        bindables => {
 		     lexical => 'TOKEN_BINDABLES',
 		     purpose => 'structure',
@@ -2404,16 +2539,6 @@ my $tokens
 		    lexical => 'TOKEN_BINDINGS',
 		    purpose => 'structure',
 		   },
-       cell => {
-		class => 'cell',
-		lexical => 'TOKEN_CELL',
-		purpose => 'physical',
-	       },
-       channel => {
-		   class => 'channel',
-		   lexical => 'TOKEN_CHANNEL',
-		   purpose => 'physical',
-		  },
        child => {
 		 lexical => 'TOKEN_CHILD',
 		 purpose => 'structure',
@@ -2421,36 +2546,6 @@ my $tokens
        children => {
 		    lexical => 'TOKEN_CHILDREN',
 		   },
-       concentration_gate_kinetic => {
-				      class => 'concentration_gate_kinetic',
-				      lexical => 'TOKEN_CONCENTRATION_GATE_KINETIC',
-				      purpose => 'physical',
-				     },
-       h_h_gate => {
-		    class => 'h_h_gate',
-		    lexical => 'TOKEN_HH_GATE',
-		    purpose => 'physical',
-		   },
-       connection => {
-		      class => 'connection_symbol',
-		      lexical => 'TOKEN_CONNECTION',
-		      purpose => 'physical',
-		     },
-       connection_group => {
-			    class => 'v_connection_symbol',
-			    lexical => 'TOKEN_CONNECTION_GROUP',
-			    purpose => 'physical',
-			   },
-       contour_group => {
-			 class => 'v_contour',
-			 lexical => 'TOKEN_CONTOUR_GROUP',
-			 purpose => 'physical',
-			},
-       contour_point => {
-			 class => 'contour_point',
-			 lexical => 'TOKEN_CONTOUR_POINT',
-			 purpose => 'physical',
-			},
        cylindrical => {
 		       lexical => 'TOKEN_CYLINDRICAL',
 		      },
@@ -2463,47 +2558,18 @@ my $tokens
        dereference => {
 		       lexical => 'TOKEN_DEREFERENCE',
 		      },
-       em_contour => {
-		      class => 'e_m_contour',
-		      lexical => 'TOKEN_EM_CONTOUR',
-		      purpose => 'physical',
-		     },
        end => {
 	       lexical => 'TOKEN_END',
 	      },
        events => {
 		  lexical => 'TOKEN_EVENTS',
 		 },
-       exponential_equation => {
-				class => 'equation',
-				lexical => 'TOKEN_EXPONENTIAL_EQUATION',
-				purpose => 'physical',
-			       },
-       fiber => {
-		 class => 'fiber',
-		 lexical => 'TOKEN_FIBER',
-		 purpose => 'physical',
-		},
        file => {
 		lexical => 'TOKEN_FILE',
 	       },
-       gate_kinetic_b => {
-			  lexical => 'TOKEN_GATE_KINETIC_B',
-			 },
-       gate_kinetic_a => {
-			  lexical => 'TOKEN_GATE_KINETIC_A',
-			 },
-       gate_kinetic_part => {
-			     lexical => 'TOKEN_GATE_KINETIC_PART',
-			    },
        generates => {
 		     lexical => 'TOKEN_GENERATES',
 		    },
-       group => {
-		 class => 'group',
-		 lexical => 'TOKEN_GROUP',
-		 purpose => 'physical',
-		},
        has => {
 	       lexical => 'TOKEN_HAS',
 	      },
@@ -2548,11 +2614,6 @@ my $tokens
        ned => {
 	       lexical => 'TOKEN_NED',
 	      },
-       network => {
-		   class => 'network',
-		   lexical => 'TOKEN_NETWORK',
-		   purpose => 'physical',
-		  },
        neuron => {
 		  lexical => 'TOKEN_NEURON',
 		 },
@@ -2586,42 +2647,17 @@ my $tokens
 		      lexical => 'TOKEN_PARAMETERS',
 		      purpose => 'structure',
 		     },
-       grouped_parameters => {
-			      class => 'grouped_parameters',
-			      lexical => 'TOKEN_GROUPED_PARAMETERS',
-			      purpose => 'physical',
-			     },
        parent_symbol => {
 			 lexical => 'TOKEN_PARENT_SYMBOL',
 			},
-       pool => {
-		class => 'pool',
-		lexical => 'TOKEN_POOL',
-		purpose => 'physical',
-	       },
-       population => {
-		      class => 'population',
-		      lexical => 'TOKEN_POPULATION',
-		      purpose => 'physical',
-		     },
        private_models => {
 			  lexical => 'TOKEN_PRIVATE_MODELS',
 			  purpose => 'sections',
 			 },
-       projection => {
-		      class => 'projection',
-		      lexical => 'TOKEN_PROJECTION',
-		      purpose => 'physical',
-		     },
        public_models => {
 			 lexical => 'TOKEN_PUBLIC_MODELS',
 			 purpose => 'sections',
 			},
-       randomvalue => {
-		       class => 'randomvalue',
-		       lexical => 'TOKEN_RANDOMVALUE',
-		       purpose => 'physical',
-		      },
        receives => {
 		    lexical => 'TOKEN_RECEIVES',
 		   },
@@ -2631,16 +2667,6 @@ my $tokens
        seconds => {
 		   lexical => 'TOKEN_SECONDS',
 		  },
-       segment => {
-		   class => 'segment',
-		   lexical => 'TOKEN_SEGMENT',
-		   purpose => 'physical',
-		  },
-       segment_group => {
-			 class => 'v_segment',
-			 lexical => 'TOKEN_SEGMENT_GROUP',
-			 purpose => 'physical',
-			},
        shebanger => {
 		     lexical => 'TOKEN_SHEBANGER',
 		    },
@@ -2666,11 +2692,6 @@ my $tokens
        versionnumber => {
 			 lexical => 'TOKEN_VERSIONNUMBER',
 			},
-       attachment_point => {
-			    class => 'attachment',
-			    lexical => 'TOKEN_ATTACHMENT_POINT',
-			    purpose => 'physical',
-			   },
        voltage => {
 		   lexical => 'TOKEN_VOLTAGE',
 		  },
