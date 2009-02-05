@@ -37,13 +37,20 @@ sub assign_grammar_symbols
 
     foreach my $type (sort keys %$class_hierarchy)
     {
-	# create grammar symbol for this type
-
-	print "Creating grammar_symbol for $type\n";
-
 	my $class = $class_hierarchy->{$type};
 
-	$grammar_symbols->{$type} = $class->{grammar};
+	if (!defined $class->{grammar})
+	{
+	    next;
+	}
+
+	# create grammar symbol for this type
+
+	my $name = identifier_perl_to_xml($type);
+
+	print "Creating grammar_symbol for $name\n";
+
+	$grammar_symbols->{$name} = $class->{grammar};
 
     }
 
