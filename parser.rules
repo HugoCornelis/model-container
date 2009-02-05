@@ -1131,9 +1131,9 @@ GateKineticPartSymbol
 		}
 	;
 
-GroupSymbol
+GroupedParametersSymbol
 	:
-		GroupSection
+		GroupedParametersSection
 		{
 #line
 		    //- put symbol table element on stack
@@ -1142,9 +1142,9 @@ GroupSymbol
 		}
 	;
 
-GroupedParametersSymbol
+GroupSymbol
 	:
-		GroupedParametersSection
+		GroupSection
 		{
 #line
 		    //- put symbol table element on stack
@@ -2971,54 +2971,6 @@ GroupDescription	/* <pgrup> */
 		}
 	;
 
-GroupSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_GROUP
-		{
-#line
-		}
-	;
-
-GroupSectionFront	/* <pidin> */
-	:
-		TOKEN_GROUP
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put identifier on stack
-
-		    $$ = $2;
-		}
-	;
-
-GroupSection	/* <pgrup> */
-	:
-		GroupSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			GroupDescription
-		GroupSectionEnd
-		{
-#line
-		    //- assign name to symbol
-
-		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
-
-		    //- link input/output relations
-
-		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
-
-		    //- put finished section info on stack
-
-		    $$ = $4;
-		}
-	;
-
 GroupedParametersDescription	/* <pgrpp> */
 	:
 		{
@@ -3104,6 +3056,54 @@ GroupedParametersSection	/* <pgrpp> */
 			OptionalItemInputRelations
 			GroupedParametersDescription
 		GroupedParametersSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+GroupSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_GROUP
+		{
+#line
+		}
+	;
+
+GroupSectionFront	/* <pidin> */
+	:
+		TOKEN_GROUP
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+GroupSection	/* <pgrup> */
+	:
+		GroupSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			GroupDescription
+		GroupSectionEnd
 		{
 #line
 		    //- assign name to symbol

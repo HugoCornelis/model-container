@@ -117,10 +117,10 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pfibr> FiberSection
 %type <pidin> FiberSectionFront
 %type <pfibr> FiberDescription
-%type <phsle> GroupedModelSymbol
-%type <pgrup> GroupedModelSection
-%type <pidin> GroupedModelSectionFront
-%type <pgrup> GroupedModelDescription
+%type <phsle> GroupSymbol
+%type <pgrup> GroupSection
+%type <pidin> GroupSectionFront
+%type <pgrup> GroupDescription
 %type <phsle> GroupedParametersSymbol
 %type <pgrpp> GroupedParametersSection
 %type <pidin> GroupedParametersSectionFront
