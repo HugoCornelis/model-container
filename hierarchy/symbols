@@ -883,6 +883,43 @@ my $class_hierarchy
 						 'VSegment',
 						],
 				  specific_allocator => 'VSegmentCalloc',
+				  specific_section => {
+						       parts => [
+								 'specific_front',
+								 '	InputOutputRelations',
+								 '	OptionalItemInputRelations',
+								 '	specific_description',
+								 '{
+		    //- get current context
+
+		    struct PidinStack *ppist
+			= ParserContextGetPidinContext
+			  ((PARSERCONTEXT *)pacParserContext);
+
+		    //- recompute relative coordinates to absolute coordinates
+
+		    VSegmentRelative2Absolute($4, ppist);
+		}',
+								 'specific_end',
+								],
+						       semantic => '#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4specific_to_base, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4specific_to_base, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4specific_to_base, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+',
+						      },
 				  specific_token => {
 						     class => 'v_segment',
 						     lexical => 'TOKEN_SEGMENT_GROUP',
