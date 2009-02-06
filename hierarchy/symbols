@@ -423,7 +423,7 @@ my $class_hierarchy
 			description => 'a projection, with source and target populations',
 			grammar => {
 				    components => [
-						   'ConnectionGroup',
+						   'VConnection',
 						   'Projection',
 						  ],
 				    specific_allocator => 'ProjectionCalloc',
@@ -545,7 +545,7 @@ my $class_hierarchy
 			   grammar => {
 				       components => [
 						      'Segment',
-						      'SegmentGroup',
+						      'VSegment',
 						     ],
 				       specific_allocator => 'AxonHillockCalloc',
 				       specific_token =>  => {
@@ -580,7 +580,7 @@ my $class_hierarchy
 			       components => [
 					      'AxonHillock',
 					      'Segment',
-					      'SegmentGroup',
+					      'VSegment',
 					     ],
 			       specific_allocator => 'CellCalloc',
 			       specific_token =>  => {
@@ -829,6 +829,9 @@ my $class_hierarchy
 				     components => [
 						    'Connection',
 						   ],
+
+				     #t this allocator needs to be renamed to VConnectionCalloc
+
 				     specific_allocator => 'ConnectionGroupCalloc',
 				     specific_token => {
 							class => 'v_connection_symbol',
@@ -877,7 +880,7 @@ my $class_hierarchy
 		      grammar => {
 				  components => [
 						 'Segment',
-						 'SegmentGroup',
+						 'VSegment',
 						],
 				  specific_allocator => 'VSegmentCalloc',
 				  specific_token => {

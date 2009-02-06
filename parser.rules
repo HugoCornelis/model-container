@@ -73,11 +73,11 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pemc> EMContourDescription
 %type <phsle> EMContourComponent
 
-%type <phsle> ContourGroupSymbol
-%type <pvcont> ContourGroupSection
-%type <pidin> ContourGroupSectionFront
-%type <pvcont> ContourGroupDescription
-%type <phsle> ContourGroupComponent
+%type <phsle> VContourSymbol
+%type <pvcont> VContourSection
+%type <pidin> VContourSectionFront
+%type <pvcont> VContourDescription
+%type <phsle> VContourComponent
 
 %type <phsle> ContourPointSymbol
 %type <pcpnt> ContourPointSection
@@ -127,11 +127,11 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pgrpp> GroupedParametersDescription
 %type <phsle> ChannelComponent
 %type <phsle> SegmentComponent
-%type <phsle> SegmentGroupComponent
+%type <phsle> VSegmentComponent
 %type <phsle> CellComponent
 %type <phsle> RandomvalueComponent
 %type <phsle> PopulationComponent
-%type <phsle> ConnectionGroupComponent
+%type <phsle> VConnectionComponent
 %type <phsle> NetworkComponent
 %type <phsle> ProjectionComponent
 %type <phsle> AnySymbol
@@ -141,13 +141,13 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <phsle> AxonHillockSymbol
 %type <phsle> ChannelSymbol
 %type <phsle> SegmentSymbol
-%type <phsle> SegmentGroupSymbol
+%type <phsle> VSegmentSymbol
 %type <phsle> CellSymbol
 %type <phsle> RandomvalueSymbol
 %type <phsle> PopulationSymbol
 %type <phsle> ProjectionSymbol
 %type <phsle> NetworkSymbol
-%type <phsle> ConnectionGroupSymbol
+%type <phsle> VConnectionSymbol
 %type <phsle> ConnectionSymbol
 %type <patta> AttachmentSection
 %type <pidin> AttachmentSectionFront
@@ -171,9 +171,9 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <psegment> SegmentSection
 %type <pidin> SegmentSectionFront
 %type <psegment> SegmentDescription
-%type <pvsegm> SegmentGroupSection
-%type <pvsegm> SegmentGroupDescription
-%type <pidin> SegmentGroupSectionFront
+%type <pvsegm> VSegmentSection
+%type <pvsegm> VSegmentDescription
+%type <pidin> VSegmentSectionFront
 %type <iCompOptions> SegmentInstanceOptions
 %type <pcell> CellSection
 %type <pidin> CellSectionFront
@@ -187,8 +187,8 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pconsy> ConnectionSection
 %type <pconsy> ConnectionDescription
 %type <pidin> ConnectionSectionFront
-%type <pvconsy> ConnectionGroupSection
-%type <pvconsy> ConnectionGroupSectionFront
+%type <pvconsy> VConnectionSection
+%type <pvconsy> VConnectionSectionFront
 %type <pproj> ProjectionSection
 %type <pidin> ProjectionSectionFront
 %type <pproj> ProjectionDescription
@@ -926,10 +926,6 @@ AnySymbol	/* <phsle> */
 	|
 		ConnectionSymbol
 	|
-		ConnectionGroupSymbol
-	|
-		ContourGroupSymbol
-	|
 		ContourPointSymbol
 	|
 		EMContourSymbol
@@ -962,7 +958,11 @@ AnySymbol	/* <phsle> */
 	|
 		SegmentSymbol
 	|
-		SegmentGroupSymbol
+		VConnectionSymbol
+	|
+		VContourSymbol
+	|
+		VSegmentSymbol
 	;
 
 
@@ -1021,17 +1021,6 @@ ConcentrationGateKineticSymbol
 		}
 	;
 
-ConnectionGroupSymbol
-	:
-		ConnectionGroupSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = &$1->vect.bio.ioh.iol.hsle;
-		}
-	;
-
 ConnectionSymbol
 	:
 		ConnectionSection
@@ -1040,17 +1029,6 @@ ConnectionSymbol
 		    //- put symbol table element on stack
 
 		    $$ = &$1->bio.ioh.iol.hsle;
-		}
-	;
-
-ContourGroupSymbol
-	:
-		ContourGroupSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = &$1->vect.bio.ioh.iol.hsle;
 		}
 	;
 
@@ -1219,17 +1197,6 @@ RandomvalueSymbol
 		}
 	;
 
-SegmentGroupSymbol
-	:
-		SegmentGroupSection
-		{
-#line
-		    //- put symbol table element on stack
-
-		    $$ = &$1->vect.bio.ioh.iol.hsle;
-		}
-	;
-
 SegmentSymbol
 	:
 		SegmentSection
@@ -1241,11 +1208,44 @@ SegmentSymbol
 		}
 	;
 
+VConnectionSymbol
+	:
+		VConnectionSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->vect.bio.ioh.iol.hsle;
+		}
+	;
+
+VContourSymbol
+	:
+		VContourSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->vect.bio.ioh.iol.hsle;
+		}
+	;
+
+VSegmentSymbol
+	:
+		VSegmentSection
+		{
+#line
+		    //- put symbol table element on stack
+
+		    $$ = &$1->vect.bio.ioh.iol.hsle;
+		}
+	;
+
 AxonHillockComponent
 	:
 		SegmentSymbol
 	|
-		SegmentGroupSymbol
+		VSegmentSymbol
 	;
 
 
@@ -1255,7 +1255,7 @@ CellComponent
 	|
 		SegmentSymbol
 	|
-		SegmentGroupSymbol
+		VSegmentSymbol
 	;
 
 
@@ -1266,18 +1266,6 @@ ChannelComponent
 		EquationExponentialSymbol
 	|
 		HHGateSymbol
-	;
-
-
-ConnectionGroupComponent
-	:
-		ConnectionSymbol
-	;
-
-
-ContourGroupComponent
-	:
-		EMContourSymbol
 	;
 
 
@@ -1339,7 +1327,7 @@ PopulationComponent
 
 ProjectionComponent
 	:
-		ConnectionGroupSymbol
+		VConnectionSymbol
 	|
 		ProjectionSymbol
 	;
@@ -1361,11 +1349,23 @@ SegmentComponent
 	;
 
 
-SegmentGroupComponent
+VConnectionComponent
+	:
+		ConnectionSymbol
+	;
+
+
+VContourComponent
+	:
+		EMContourSymbol
+	;
+
+
+VSegmentComponent
 	:
 		SegmentSymbol
 	|
-		SegmentGroupSymbol
+		VSegmentSymbol
 	;
 
 
@@ -1972,130 +1972,6 @@ ConnectionSection	/* <pconsy> */
 		    //- bind I/O relations
 
 		    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
-
-		    //- put finished section info on stack
-
-		    $$ = $4;
-		}
-	;
-
-ContourGroupDescription	/* <pvcont> */
-	:
-		{
-#line
-		    //- prepare struct for symbol table
-
-		    $$ = VContourCalloc();
-
-		    //- set actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->vect.bio.ioh.iol.hsle);
-		}
-	|
-		ContourGroupDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link children
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->vect.bio.ioh.iol.hsle);
-
-		    //- put symbol description on stack
-
-		    $$ = $1;
-		}
-	|
-		ContourGroupDescription
-		ContourGroupComponent
-		{
-#line
-		    //- add component to current section list
-
-		    SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->vect.bio.ioh.iol.hsle);
-
-		    //- push current description on stack
-
-		    $$ = $1;
-		}
-	|
-		ContourGroupDescription
-		Parameters
-		{
-#line
-		    //- link parameters
-
-		    SymbolParameterLinkAtEnd(&$1->vect.bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->vect.bio.ioh.iol.hsle);
-
-		    //- put symbol on stack
-
-		    $$ = $1;
-		}
-	;
-
-ContourGroupSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_CONTOUR_GROUP
-		{
-#line
-		}
-	;
-
-ContourGroupSectionFront	/* <pidin> */
-	:
-		TOKEN_CONTOUR_GROUP
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put identifier on stack
-
-		    $$ = $2;
-		}
-	;
-
-ContourGroupSection	/* <pvcont> */
-	:
-		ContourGroupSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			ContourGroupDescription
-		ContourGroupSectionEnd
-		{
-#line
-		    //- assign name to symbol
-
-		    SymbolSetName(&$4->vect.bio.ioh.iol.hsle, $1);
-
-		    //- link input/output relations
-
-		    SymbolAssignBindableIO(&$4->vect.bio.ioh.iol.hsle, $2);
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->vect.bio.ioh.iol.hsle, $3);
 
 		    //- put finished section info on stack
 
@@ -3966,141 +3842,6 @@ SegmentSectionFront	/* <pidin> */
 		}
 	;
 
-SegmentGroupDescription	/* <pvsegm> */
-	:
-		{
-#line
-		    //- prepare struct for symbol table
-
-		    $$ = VSegmentCalloc();
-
-		    //- set actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->vect.bio.ioh.iol.hsle);
-		}
-	|
-		SegmentGroupDescription
-		ChildSectionOptionalInputOptionalParameters
-		{
-#line
-		    //- link children
-
-		    if ($2)
-		    {
-			SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
-		    }
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->vect.bio.ioh.iol.hsle);
-
-		    //- put symbol description on stack
-
-		    $$ = $1;
-		}
-	|
-		SegmentGroupDescription
-		SegmentGroupComponent
-		{
-#line
-		    //- add component to current section list
-
-		    SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->vect.bio.ioh.iol.hsle);
-
-		    //- push current description on stack
-
-		    $$ = $1;
-		}
-	|
-		SegmentGroupDescription
-		Parameters
-		{
-#line
-		    //- link parameters
-
-		    SymbolParameterLinkAtEnd(&$1->vect.bio.ioh.iol.hsle, $2);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->vect.bio.ioh.iol.hsle);
-
-		    //- put symbol on stack
-
-		    $$ = $1;
-		}
-	;
-
-SegmentGroupSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_SEGMENT_GROUP
-		{
-#line
-		}
-	;
-
-SegmentGroupSectionFront	/* <pidin> */
-	:
-		TOKEN_SEGMENT_GROUP
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- put identifier on stack
-
-		    $$ = $2;
-		}
-	;
-
-SegmentGroupSection	/* <pvsegm> */
-	:
-		SegmentGroupSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			SegmentGroupDescription
-		{
-		    //- get current context
-
-		    struct PidinStack *ppist
-			= ParserContextGetPidinContext
-			  ((PARSERCONTEXT *)pacParserContext);
-
-		    //- recompute relative coordinates to absolute coordinates
-
-		    VSegmentRelative2Absolute($4, ppist);
-		}
-		SegmentGroupSectionEnd
-		{
-#line
-		    //- assign name to symbol
-
-		    SymbolSetName(&$4->vect.bio.ioh.iol.hsle, $1);
-
-/* 		    //- set outside bindable fields */
-
-/* 		    SymbolAssignBindableIO(&$5->bio.ioh.iol.hsle, $3); */
-
-		    //- bind I/O relations
-
-		    SymbolAssignInputs(&$4->vect.bio.ioh.iol.hsle, $3);
-
-		    //- put finished section info on stack
-
-		    $$ = $4;
-		}
-	;
-
 SegmentSection	/* <psegment> */
 	:
 		SegmentSectionFront
@@ -4128,14 +3869,273 @@ SegmentSection	/* <psegment> */
 		}
 	;
 
-ConnectionGroupDescription
+VContourDescription	/* <pvcont> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = VContourCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->vect.bio.ioh.iol.hsle);
+		}
+	|
+		VContourDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		VContourDescription
+		VContourComponent
+		{
+#line
+		    //- add component to current section list
+
+		    SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- push current description on stack
+
+		    $$ = $1;
+		}
+	|
+		VContourDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->vect.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+VContourSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_CONTOUR_GROUP
+		{
+#line
+		}
+	;
+
+VContourSectionFront	/* <pidin> */
+	:
+		TOKEN_CONTOUR_GROUP
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+VContourSection	/* <pvcont> */
+	:
+		VContourSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			VContourDescription
+		VContourSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->vect.bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->vect.bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->vect.bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+VSegmentDescription	/* <pvsegm> */
+	:
+		{
+#line
+		    //- prepare struct for symbol table
+
+		    $$ = VSegmentCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->vect.bio.ioh.iol.hsle);
+		}
+	|
+		VSegmentDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
+		}
+	|
+		VSegmentDescription
+		VSegmentComponent
+		{
+#line
+		    //- add component to current section list
+
+		    SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- push current description on stack
+
+		    $$ = $1;
+		}
+	|
+		VSegmentDescription
+		Parameters
+		{
+#line
+		    //- link parameters
+
+		    SymbolParameterLinkAtEnd(&$1->vect.bio.ioh.iol.hsle, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+		}
+	;
+
+VSegmentSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_SEGMENT_GROUP
+		{
+#line
+		}
+	;
+
+VSegmentSectionFront	/* <pidin> */
+	:
+		TOKEN_SEGMENT_GROUP
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+VSegmentSection	/* <pvsegm> */
+	:
+		VSegmentSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			VSegmentDescription
+		{
+		    //- get current context
+
+		    struct PidinStack *ppist
+			= ParserContextGetPidinContext
+			  ((PARSERCONTEXT *)pacParserContext);
+
+		    //- recompute relative coordinates to absolute coordinates
+
+		    VSegmentRelative2Absolute($4, ppist);
+		}
+		VSegmentSectionEnd
+		{
+#line
+		    //- assign name to symbol
+
+		    SymbolSetName(&$4->vect.bio.ioh.iol.hsle, $1);
+
+/* 		    //- set outside bindable fields */
+
+/* 		    SymbolAssignBindableIO(&$5->bio.ioh.iol.hsle, $3); */
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->vect.bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
+		}
+	;
+
+VConnectionDescription
 	:
 		{
 #line
 		}
 	|
-		ConnectionGroupDescription
-		ConnectionGroupComponent
+		VConnectionDescription
+		VConnectionComponent
 		{
 #line
 		    //- get pointer to actual container
@@ -4150,7 +4150,7 @@ ConnectionGroupDescription
 
 			NeurospacesError
 			    ((PARSERCONTEXT *)pacParserContext,
-			     "ConnectionGroupDescription",
+			     "VConnectionDescription",
 			     "No group allocated.",
 			     $2);
 		    }
@@ -4175,7 +4175,7 @@ ConnectionGroupDescription
 		}
 	;
 
-ConnectionGroupSectionEnd
+VConnectionSectionEnd
 	:
 		EndPushedPidin
 		TOKEN_CONNECTION_GROUP
@@ -4187,7 +4187,7 @@ ConnectionGroupSectionEnd
 		}
 	;
 
-ConnectionGroupSectionFront	/* <pvconsy> */
+VConnectionSectionFront	/* <pvconsy> */
 	:
 		TOKEN_CONNECTION_GROUP
 		IdentifierOptionIndexPushedPidin
@@ -4219,13 +4219,13 @@ ConnectionGroupSectionFront	/* <pvconsy> */
 		}
 	;
 
-ConnectionGroupSection	/* <pvconsy> */
+VConnectionSection	/* <pvconsy> */
 	:
-		ConnectionGroupSectionFront
+		VConnectionSectionFront
 			InputOutputRelations
 			OptionalItemInputRelations
-			ConnectionGroupDescription
-		ConnectionGroupSectionEnd
+			VConnectionDescription
+		VConnectionSectionEnd
 		{
 #line
 		    //- put enumerated connections struct on stack

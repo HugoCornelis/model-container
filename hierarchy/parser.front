@@ -73,11 +73,11 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pemc> EMContourDescription
 %type <phsle> EMContourComponent
 
-%type <phsle> ContourGroupSymbol
-%type <pvcont> ContourGroupSection
-%type <pidin> ContourGroupSectionFront
-%type <pvcont> ContourGroupDescription
-%type <phsle> ContourGroupComponent
+%type <phsle> VContourSymbol
+%type <pvcont> VContourSection
+%type <pidin> VContourSectionFront
+%type <pvcont> VContourDescription
+%type <phsle> VContourComponent
 
 %type <phsle> ContourPointSymbol
 %type <pcpnt> ContourPointSection
@@ -127,11 +127,11 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pgrpp> GroupedParametersDescription
 %type <phsle> ChannelComponent
 %type <phsle> SegmentComponent
-%type <phsle> SegmentGroupComponent
+%type <phsle> VSegmentComponent
 %type <phsle> CellComponent
 %type <phsle> RandomvalueComponent
 %type <phsle> PopulationComponent
-%type <phsle> ConnectionGroupComponent
+%type <phsle> VConnectionComponent
 %type <phsle> NetworkComponent
 %type <phsle> ProjectionComponent
 %type <phsle> AnySymbol
@@ -141,13 +141,13 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <phsle> AxonHillockSymbol
 %type <phsle> ChannelSymbol
 %type <phsle> SegmentSymbol
-%type <phsle> SegmentGroupSymbol
+%type <phsle> VSegmentSymbol
 %type <phsle> CellSymbol
 %type <phsle> RandomvalueSymbol
 %type <phsle> PopulationSymbol
 %type <phsle> ProjectionSymbol
 %type <phsle> NetworkSymbol
-%type <phsle> ConnectionGroupSymbol
+%type <phsle> VConnectionSymbol
 %type <phsle> ConnectionSymbol
 %type <patta> AttachmentSection
 %type <pidin> AttachmentSectionFront
@@ -171,9 +171,9 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <psegment> SegmentSection
 %type <pidin> SegmentSectionFront
 %type <psegment> SegmentDescription
-%type <pvsegm> SegmentGroupSection
-%type <pvsegm> SegmentGroupDescription
-%type <pidin> SegmentGroupSectionFront
+%type <pvsegm> VSegmentSection
+%type <pvsegm> VSegmentDescription
+%type <pidin> VSegmentSectionFront
 %type <iCompOptions> SegmentInstanceOptions
 %type <pcell> CellSection
 %type <pidin> CellSectionFront
@@ -187,8 +187,8 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pconsy> ConnectionSection
 %type <pconsy> ConnectionDescription
 %type <pidin> ConnectionSectionFront
-%type <pvconsy> ConnectionGroupSection
-%type <pvconsy> ConnectionGroupSectionFront
+%type <pvconsy> VConnectionSection
+%type <pvconsy> VConnectionSectionFront
 %type <pproj> ProjectionSection
 %type <pidin> ProjectionSectionFront
 %type <pproj> ProjectionDescription
