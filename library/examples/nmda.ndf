@@ -17,7 +17,7 @@ PUBLIC_MODELS
         END BINDABLES
         CHILD Synapse synapse
         END CHILD
-        EXPONENTIAL_EQUATION exp2
+        EQUATION_EXPONENTIAL exp2
             BINDABLES
                 INPUT activation,OUTPUT G
             END BINDABLES
@@ -28,7 +28,7 @@ PUBLIC_MODELS
                 PARAMETER ( TAU1 = 0.0005 ),
                 PARAMETER ( TAU2 = 0.0012 ),
             END PARAMETERS
-        END EXPONENTIAL_EQUATION
+        END EQUATION_EXPONENTIAL
     END CHANNEL
 END PUBLIC_MODELS
 

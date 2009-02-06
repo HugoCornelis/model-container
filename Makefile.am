@@ -52,7 +52,7 @@ libneurospacesread_a_SOURCES = \
 	components/connectionsymbol.c \
 	components/contourpoint.c \
 	components/emcontour.c \
-	components/equation.c \
+	components/equationexponential.c \
 	components/fiber.c \
 	components/gatekinetic.c \
 	components/group.c \
@@ -231,7 +231,7 @@ nobase_include_HEADERS = \
 	neurospaces/components/connectionsymbol.h \
 	neurospaces/components/contourpoint.h \
 	neurospaces/components/emcontour.h \
-	neurospaces/components/equation.h \
+	neurospaces/components/equationexponential.h \
 	neurospaces/components/fiber.h \
 	neurospaces/components/gatekinetic.h \
 	neurospaces/components/group.h \
@@ -398,7 +398,7 @@ libneurospacesread.so: libneurospacesread.a
 	connectioncache.o \
 	defsym.o \
 	dependencyfile.o \
-	equation.o \
+	equationexponential.o \
 	fiber.o \
 	function.o \
 	gatekinetic.o \

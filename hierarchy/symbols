@@ -939,35 +939,35 @@ my $class_hierarchy
        # purely mathematical types
 
        (
-	equation => {
-		     allows => {
-				'create_alias' => 'equation',
-				'get_type' => 'equation',
-				'set_type' => 'equation',
-			       },
-		     description => 'a dual exponential equation or an alpha function',
-		     grammar => {
-				 components => [],
-				 specific_allocator => 'EquationCalloc',
-				 specific_token => {
-						    class => 'equation',
-						    lexical => 'TOKEN_EXPONENTIAL_EQUATION',
-						    purpose => 'physical',
-						   },
-				 typing => {
-					    base => 'phsle',
-					    id => 'pidin',
-					    spec => 'peq',
-					    to_base => '->bio.ioh.iol.hsle',
+	equation_exponential => {
+				 allows => {
+					    'create_alias' => 'equation_exponential',
+# 					    'get_type' => 'equation_exponential',
+# 					    'set_type' => 'equation_exponential',
 					   },
+				 description => 'an exponential equation (or an alpha function)',
+				 grammar => {
+					     components => [],
+					     specific_allocator => 'EquationExponentialCalloc',
+					     specific_token => {
+								class => 'equation_exponential',
+								lexical => 'TOKEN_EQUATION_EXPONENTIAL',
+								purpose => 'physical',
+							       },
+					     typing => {
+							base => 'phsle',
+							id => 'pidin',
+							spec => 'peqe',
+							to_base => '->bio.ioh.iol.hsle',
+						       },
+					    },
+				 isa => 'bio_comp',
+				 name => 'symtab_EquationExponential',
+				 parameters => {
+						TAU1 => 'first time constant',
+						TAU2 => 'second time constant',
+					       },
 				},
-		     isa => 'bio_comp',
-		     name => 'symtab_Equation',
-		     parameters => {
-				    TAU1 => 'first time constant',
-				    TAU2 => 'second time constant',
-				   },
-		    },
 	randomvalue => {
 			allows => {
 				   'create_alias' => 'randomvalue',

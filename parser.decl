@@ -35,7 +35,7 @@
 #include "neurospaces/components/connection.h"
 #include "neurospaces/components/connectionsymbol.h"
 #include "neurospaces/components/contourpoint.h"
-#include "neurospaces/components/equation.h"
+#include "neurospaces/components/equationexponential.h"
 #include "neurospaces/components/emcontour.h"
 #include "neurospaces/function.h"
 #include "neurospaces/components/gatekinetic.h"

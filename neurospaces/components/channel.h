@@ -95,7 +95,7 @@ int ChannelSetup(struct symtab_Channel *pchan, struct ParserContext *pac);
 
 
 #include "biocomp.h"
-#include "equation.h"
+/* #include "equationexponential.h" */
 #include "neurospaces/idin.h"
 #include "neurospaces/inputoutput.h"
 

@@ -24,6 +24,7 @@
 
 #include "neurospaces/cachedconnection.h"
 #include "neurospaces/components/connection.h"
+#include "neurospaces/components/equationexponential.h"
 #include "neurospaces/pidinstack.h"
 #include "neurospaces/parameters.h"
 #include "neurospaces/projectionquery.h"

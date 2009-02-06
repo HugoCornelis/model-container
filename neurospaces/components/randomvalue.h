@@ -56,7 +56,7 @@ RandomvalueLookupHierarchical
  int bAll);
 
 
-#include "equation.h"
+/* #include "equation.h" */
 #include "neurospaces/idin.h"
 #include "neurospaces/inputoutput.h"
 #include "neurospaces/parameters.h"

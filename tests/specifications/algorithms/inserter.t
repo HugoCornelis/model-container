@@ -116,7 +116,7 @@ report:
                         attach{-- begin HIER sections ---
                         attach}--  end  HIER sections ---
                 Name, index (exp2,-1)
-                Type (T_sym_equation)
+                Type (T_sym_equation_exponential)
                 equatiName, index (exp2,-1)
                     PARA  Name (TAU1)
                     PARA  Type (TYPE_PARA_NUMBER), Value(9.300000e-04)

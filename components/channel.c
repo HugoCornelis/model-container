@@ -52,7 +52,7 @@ char *
 ChannelGetChannelType
 (struct symtab_Channel *pchan, struct PidinStack *ppist);
 
-static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename);
+static int ChannelTable_READ(struct symtab_Channel *pchan, char *pcFilename);
 
 
 /// \def
@@ -192,7 +192,7 @@ ChannelTyper
 
     //- count types
 
-    if (instanceof_equation(phsle))
+    if (instanceof_equation_exponential(phsle))
     {
 	pccc->iEquations++;
     }
@@ -323,7 +323,7 @@ ChannelGetChannelType
 
 static int 
 ChannelEquationChecker
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : ok, continue with children
 
@@ -335,7 +335,7 @@ ChannelEquationChecker
 
     //- if equation
 
-    if (instanceof_equation(phsle))
+    if (instanceof_equation_exponential(phsle))
     {
 	//- set result : ok
 
@@ -388,7 +388,7 @@ ChannelGetEquation
 
     //- traverse channel children, check for equation
 
-    iTraversal = TstrGo(ptstr,&pchan->bio.ioh.iol.hsle);
+    iTraversal = TstrGo(ptstr, &pchan->bio.ioh.iol.hsle);
 
     //- delete treespace traversal
 
@@ -461,7 +461,7 @@ ChannelGetGenesisObject(struct symtab_Channel *pchan)
 
 static int 
 ChannelIncomingVirtualChecker
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : ok, continue with children
 
@@ -520,7 +520,7 @@ ChannelGetIncomingVirtual
 
     //- traverse channel children, check for equation
 
-    iTraversal = TstrGo(ptstr,&pchan->bio.ioh.iol.hsle);
+    iTraversal = TstrGo(ptstr, &pchan->bio.ioh.iol.hsle);
 
     //- delete treespace traversal
 
@@ -607,7 +607,7 @@ int ChannelHasEquation
 {
     //- check for equation and return if found
 
-    return(ChannelGetEquation(pchan,ppist) != NULL);
+    return(ChannelGetEquation(pchan, ppist) != NULL);
 }
 
 
@@ -691,7 +691,7 @@ int ChannelHasNernstErev
 	    //- get function
 
 	    struct symtab_Function *pfunErev
-	      = ParameterContextGetFunction(pparErev,ppist);
+	      = ParameterContextGetFunction(pparErev, ppist);
 
 	    //- if function name is NERNST
 	    if(pfunErev)
@@ -798,7 +798,7 @@ ChannelParameterScaleValue
 
     //- if conductance
 
-    if (0 == strcmp(pcName,"G_MAX"))
+    if (0 == strcmp(pcName, "G_MAX"))
     {
 	/// parent segment
 
@@ -903,7 +903,7 @@ int ChannelReceivesSpikes
 {
     //- check for incoming attachment and return if found
 
-    return(ChannelGetIncomingVirtual(pchan,ppist) != NULL);
+    return(ChannelGetIncomingVirtual(pchan, ppist) != NULL);
 }
 
 
@@ -923,7 +923,7 @@ int ChannelReceivesSpikes
 
 int
 ChannelSetTableParameters
-(struct symtab_Channel *pchan,struct ParserContext *pac,char *pcFilename)
+(struct symtab_Channel *pchan, struct ParserContext *pac, char *pcFilename)
 {
     //- set default result : ok
 
@@ -931,7 +931,7 @@ ChannelSetTableParameters
 
     //- qualify filename
 
-    pcFilename = ParserContextQualifyToParsingDirectory(pac,pcFilename);
+    pcFilename = ParserContextQualifyToParsingDirectory(pac, pcFilename);
 
     //- init channel
 
@@ -959,7 +959,7 @@ ChannelSetTableParameters
 /// \note  needs HH parameters, these have to be hardcoded.
 /// 
 
-int ChannelSetup(struct symtab_Channel *pchan,struct ParserContext *pac)
+int ChannelSetup(struct symtab_Channel *pchan, struct ParserContext *pac)
 {
     //- set default result : ok
 
@@ -973,7 +973,7 @@ int ChannelSetup(struct symtab_Channel *pchan,struct ParserContext *pac)
     {
 	//- allocate & read channel data
 
-	ChannelTable_READ(pchan,pchan->dechan.pcFilename);
+	ChannelTable_READ(pchan, pchan->dechan.pcFilename);
     }
 
     ttype = pchan->dechan.genObject.iType;
@@ -1033,7 +1033,7 @@ int ChannelSetup(struct symtab_Channel *pchan,struct ParserContext *pac)
 
 	struct symtab_Parameters *ppar = NULL;
 
-	fprintf(stderr,"tabulated current not implemented\n");
+	fprintf(stderr, "tabulated current not implemented\n");
 
 	break;
     }
@@ -1085,22 +1085,22 @@ Interpol2DAllocateTable
  int xdivs,
  int ydivs);
 
-static int tabiread(FILE *fp,int doflip);
+static int tabiread(FILE *fp, int doflip);
 
-static double tabfread(FILE *fp,int doflip);
+static double tabfread(FILE *fp, int doflip);
 
-static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename)
+static int ChannelTable_READ(struct symtab_Channel *pchan, char *pcFilename)
 {
-    int	i,j,k,n=0,ttype,itype,ntype,doflip;
-    int	dsize,isize;
+    int	i, j, k, n=0, ttype, itype, ntype, doflip;
+    int	dsize, isize;
     char	version;
     FILE	*fp = NULL;
     struct neurospaces_tab_channel_type	*chan1;
     struct neurospaces_tab2channel_type	*chan2;
     struct neurospaces_tab_current_type	*curr;
-    struct neurospaces_interpol_struct *ipolA,*ipolB;
-    struct neurospaces_interpol2d_struct *ipol2A,*ipol2B;
-    double	v,*A,*B;
+    struct neurospaces_interpol_struct *ipolA, *ipolB;
+    struct neurospaces_interpol2d_struct *ipol2A, *ipol2B;
+    double	v, *A, *B;
     int	tabiread();
     double	tabfread();
 
@@ -1111,28 +1111,28 @@ static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename)
 
     //- remember if channel has concen input
 
-    bConcen = SymbolHasBindableIO(&pchan->bio.ioh.iol.hsle,"concen",0);
+    bConcen = SymbolHasBindableIO(&pchan->bio.ioh.iol.hsle, "concen", 0);
 
     /* open the file */
-    if (!(fp = fopen(pcFilename,"r"))) {
+    if (!(fp = fopen(pcFilename, "r"))) {
 	//Error();
-	printf(" can't open file '%s'\n",pcFilename);
+	printf(" can't open file '%s'\n", pcFilename);
 	return(FALSE);
     }
     /* read header: in versions 1-3 this was an integer, now it is a byte */
     for (i=0; i<4; i++) {
-	fread(&version,1,1,fp);
+	fread(&version, 1, 1, fp);
 	if (version>0) break;
     }
     if ((version<1)||((version==2)&&(ttype==CHANNEL_TYPE_CURRENT))||(version>4)) {
 	//Error();
-	printf(" can't read file '%s': wrong version #%d\n",pcFilename,version);
+	printf(" can't read file '%s': wrong version #%d\n", pcFilename, version);
 	fclose(fp);
 	return(FALSE);
     }
     if (version>=4) {
 	/* test for binary type */
-	fread(&v,dsize,1,fp);
+	fread(&v, dsize, 1, fp);
 	doflip=(v!=4.0);
     } else {
 	doflip=0;
@@ -1140,14 +1140,14 @@ static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename)
 
     //- read type of channel
 
-    i = tabiread(fp,doflip);
+    i = tabiread(fp, doflip);
 
     pchan->dechan.genObject.iType = i;
 
     ttype = i;
     if (i!=ttype) {
 	//Error();
-	printf(" can't read file '%s': wrong object type (%d)\n",pcFilename,i);
+	printf(" can't read file '%s': wrong object type (%d)\n", pcFilename, i);
 	fclose(fp);
 	return(FALSE);
     }
@@ -1158,12 +1158,12 @@ static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename)
 
     //- read number of gates in file
 
-    i = tabiread(fp,doflip);
+    i = tabiread(fp, doflip);
 
     n = i;
     if (i!=n) {
 	//Error();
-	printf(" can't read file '%s': wrong number of tables (%d)\n",pcFilename,i);
+	printf(" can't read file '%s': wrong number of tables (%d)\n", pcFilename, i);
 	fclose(fp);
 	return(FALSE);
     }
@@ -1174,37 +1174,37 @@ static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename)
     {
 	//- get dimensions of tables according to element type
 
-	ChannelTable_dims(&pchan->dechan.genObject,&itype,&ntype);
+	ChannelTable_dims(&pchan->dechan.genObject, &itype, &ntype);
 
 	//- read dimension for current table
 
-	k = tabiread(fp,doflip);
+	k = tabiread(fp, doflip);
 
 	//itype = k;
 
 	if (k!=itype) {
 	    //Error();
-	    printf("can't read file '%s': wrong dimension of table (%d: %d)\n",pcFilename,itype,k);
+	    printf("can't read file '%s': wrong dimension of table (%d: %d)\n", pcFilename, itype, k);
 	    fclose(fp);
 	    return(FALSE);
 	}
 
 	//- read type of table, no clue what this is about
 
-	k = tabiread(fp,doflip);
+	k = tabiread(fp, doflip);
 
 	//ntype = 2;
 
 	if (k!=ntype) {
 	    //Error();
-	    printf("can't read file '%s': wrong type of table (%d: %d)\n",pcFilename,ntype,k);
+	    printf("can't read file '%s': wrong type of table (%d: %d)\n", pcFilename, ntype, k);
 	    fclose(fp);
 	    return(FALSE);
 	}
 
 	//- get pointers to rate tables which should be read
 
-	ChannelTable_ptrs(&pchan->dechan.genObject,i,bConcen,&ipolA,&ipolB,&ipol2A,&ipol2B);
+	ChannelTable_ptrs(&pchan->dechan.genObject, i, bConcen, &ipolA, &ipolB, &ipol2A, &ipol2B);
 
 	//- if single dimension
 
@@ -1212,7 +1212,7 @@ static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename)
 	{
 	    //- read table sizes, calc number of entries in a table
 
-	    k = tabiread(fp,doflip);
+	    k = tabiread(fp, doflip);
 
 	    ipolA->xdivs = k;
 	    ipolB->xdivs = k;
@@ -1220,19 +1220,19 @@ static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename)
 	    if ((k!=ipolA->xdivs) || 
 		((ttype<CHANNEL_TYPE_CURRENT)&&(k!=ipolB->xdivs))) {
 		//Error();
-		printf("can't read file '%s': wrong xdivs for table (%d: %d)\n",pcFilename,k,ipolA->xdivs);
+		printf("can't read file '%s': wrong xdivs for table (%d: %d)\n", pcFilename, k, ipolA->xdivs);
 		fclose(fp);
 		return(FALSE);
 	    }
 
-	    ipolA->xmin=tabfread(fp,doflip);
-	    ipolA->xmax=tabfread(fp,doflip);
-	    ipolA->dx=tabfread(fp,doflip);
+	    ipolA->xmin=tabfread(fp, doflip);
+	    ipolA->xmax=tabfread(fp, doflip);
+	    ipolA->dx=tabfread(fp, doflip);
 	    ipolA->invdx=1.0/ipolA->dx;
 
 	    //- allocate interpol tables
 
-	    Interpol1DAllocateTable(ipolA,ipolA->xdivs);
+	    Interpol1DAllocateTable(ipolA, ipolA->xdivs);
 
 	    if (ntype>1) {
 		ipolB->xmin=ipolA->xmin;
@@ -1240,7 +1240,7 @@ static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename)
 		ipolB->dx=ipolA->dx;
 		ipolB->invdx=1.0/ipolA->dx;
 
-		Interpol1DAllocateTable(ipolB,ipolB->xdivs);
+		Interpol1DAllocateTable(ipolB, ipolB->xdivs);
 	    }
 
 	    //- read the tables
@@ -1249,8 +1249,8 @@ static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename)
 	    if (ntype>1) B=ipolB->table;
 	    k=ipolA->xdivs;
 	    for (j=0; j<=k; j++) {
-		*A++=tabfread(fp,doflip);
-		if (ntype>1) *B++=tabfread(fp,doflip);
+		*A++=tabfread(fp, doflip);
+		if (ntype>1) *B++=tabfread(fp, doflip);
 	    }
 	}
 
@@ -1262,41 +1262,41 @@ static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename)
 
 	    //- read table sizes, calc number of entries in a table
 
-	    k = tabiread(fp,doflip);
+	    k = tabiread(fp, doflip);
 
 	    ipol2A->xdivs = k;
 	    ipol2B->xdivs = k;
 
 	    if ((k!=ipol2A->xdivs) || ((n>1)&&(k!=ipol2B->xdivs))) {
 		//Error();
-		printf(" can't read file '%s': wrong xdivs for table (%d: %d)\n",pcFilename,k,ipol2A->xdivs);
+		printf(" can't read file '%s': wrong xdivs for table (%d: %d)\n", pcFilename, k, ipol2A->xdivs);
 		fclose(fp);
 		return(FALSE);
 	    }
-	    ipol2A->xmin=tabfread(fp,doflip);
-	    ipol2A->xmax=tabfread(fp,doflip);
-	    ipol2A->dx=tabfread(fp,doflip);
+	    ipol2A->xmin=tabfread(fp, doflip);
+	    ipol2A->xmax=tabfread(fp, doflip);
+	    ipol2A->dx=tabfread(fp, doflip);
 	    ipol2A->invdx=1.0/ipol2A->dx;
 
-	    k = tabiread(fp,doflip);
+	    k = tabiread(fp, doflip);
 
 	    ipol2A->ydivs = k;
 	    ipol2B->ydivs = k;
 
 	    if ((k!=ipol2A->ydivs) || ((ntype>1)&&(k!=ipol2B->ydivs))) {
 		//Error();
-		printf(" can't read file '%s': wrong ydivs for table (%d: %d)\n",pcFilename,k,ipol2A->ydivs);
+		printf(" can't read file '%s': wrong ydivs for table (%d: %d)\n", pcFilename, k, ipol2A->ydivs);
 		fclose(fp);
 		return(FALSE);
 	    }
-	    ipol2A->ymin=tabfread(fp,doflip);
-	    ipol2A->ymax=tabfread(fp,doflip);
-	    ipol2A->dy=tabfread(fp,doflip);
+	    ipol2A->ymin=tabfread(fp, doflip);
+	    ipol2A->ymax=tabfread(fp, doflip);
+	    ipol2A->dy=tabfread(fp, doflip);
 	    ipol2A->invdy=1.0/ipol2A->dy;
 
 	    //- allocate interpol tables
 
-	    Interpol2DAllocateTable(ipol2A,ipol2A->xdivs,ipol2A->ydivs);
+	    Interpol2DAllocateTable(ipol2A, ipol2A->xdivs, ipol2A->ydivs);
 
 	    if (ntype>1) {
 		ipol2B->xmin=ipol2A->xmin;
@@ -1308,7 +1308,7 @@ static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename)
 		ipol2B->dy=ipol2A->dy;
 		ipol2B->invdy=1.0/ipol2A->dy;
 
-		Interpol2DAllocateTable(ipol2B,ipol2B->xdivs,ipol2B->ydivs);
+		Interpol2DAllocateTable(ipol2B, ipol2B->xdivs, ipol2B->ydivs);
 	    }
 
 	    //- read the tables
@@ -1317,8 +1317,8 @@ static int ChannelTable_READ(struct symtab_Channel *pchan,char *pcFilename)
 		A=ipol2A->table[j];
 		if (ntype>1) B=ipol2B->table[j];
 		for (k=0; k<=ipol2A->ydivs; k++) {
-		    *A++=tabfread(fp,doflip);
-		    if (ntype>1) *B++=tabfread(fp,doflip);
+		    *A++=tabfread(fp, doflip);
+		    if (ntype>1) *B++=tabfread(fp, doflip);
 		}
 	    }
 	}
@@ -1402,13 +1402,13 @@ ChannelTable_ptrs
 	{
 	    *ppipolA
 		= (struct neurospaces_interpol_struct *)
-		  calloc(1,sizeof(struct neurospaces_interpol_struct));
+		  calloc(1, sizeof(struct neurospaces_interpol_struct));
 	}
 	if (!(*ppipolB))
 	{
 	    *ppipolB
 		= (struct neurospaces_interpol_struct *)
-		  calloc(1,sizeof(struct neurospaces_interpol_struct));
+		  calloc(1, sizeof(struct neurospaces_interpol_struct));
 	}
 
 	//- remember allocation has been done
@@ -1451,13 +1451,13 @@ ChannelTable_ptrs
 	{
 	    *ppipol2A
 		= (struct neurospaces_interpol2d_struct *)
-		  calloc(1,sizeof(struct neurospaces_interpol2d_struct));
+		  calloc(1, sizeof(struct neurospaces_interpol2d_struct));
 	}
 	if (!(*ppipol2B))
 	{
 	    *ppipol2B
 		= (struct neurospaces_interpol2d_struct *)
-		  calloc(1,sizeof(struct neurospaces_interpol2d_struct));
+		  calloc(1, sizeof(struct neurospaces_interpol2d_struct));
 	}
 
 	//- remember allocation has been done
@@ -1497,19 +1497,19 @@ GenObjectSetup
     case CHANNEL_TYPE_SINGLE_TABLE:
 	genObject->uElement.tabchan
 	    = (struct neurospaces_tab_channel_type *)
-	      calloc(1,sizeof(struct neurospaces_tab_channel_type));
+	      calloc(1, sizeof(struct neurospaces_tab_channel_type));
 	break;
 
     case CHANNEL_TYPE_DOUBLE_TABLE:
 	genObject->uElement.tab2chan
 	    = (struct neurospaces_tab2channel_type *)
-	      calloc(1,sizeof(struct neurospaces_tab2channel_type));
+	      calloc(1, sizeof(struct neurospaces_tab2channel_type));
 	break;
 
     case CHANNEL_TYPE_CURRENT:
 	genObject->uElement.tabcurr
 	    = (struct neurospaces_tab_current_type *)
-	      calloc(1,sizeof(struct neurospaces_tab_current_type));
+	      calloc(1, sizeof(struct neurospaces_tab_current_type));
 	break;
     }
 
@@ -1521,7 +1521,7 @@ Interpol1DAllocateTable
 (struct neurospaces_interpol_struct *ipol,
  int xdivs)
 {
-    ipol->table = (double *)calloc(xdivs + 1,sizeof(double));
+    ipol->table = (double *)calloc(xdivs + 1, sizeof(double));
 
     ipol->allocated = 1;
 
@@ -1536,48 +1536,48 @@ Interpol2DAllocateTable
 {
     int i;
 
-    ipol2->table = (double **)calloc(xdivs + 1,sizeof(double*));
+    ipol2->table = (double **)calloc(xdivs + 1, sizeof(double*));
 
     for (i = 0 ; i <= xdivs ; i++)
     {
-	ipol2->table[i] = (double *)calloc(ydivs + 1,sizeof(double));
+	ipol2->table[i] = (double *)calloc(ydivs + 1, sizeof(double));
     }
 
     ipol2->allocated = 1;
 }
 
 /* reads integer value from file and flips it if needed */
-static int tabiread(FILE *fp,int doflip)
+static int tabiread(FILE *fp, int doflip)
 {
 int     n=sizeof(int);
-int	val1,val2;
-char  	*pval1,*pval2;
+int	val1, val2;
+char  	*pval1, *pval2;
 
 	if (doflip) {
-	    fread(&(val1),n,1,fp);
+	    fread(&(val1), n, 1, fp);
 	    pval1=(char *)(&(val1))+n-1;
 	    pval2=(char *)(&(val2));
 	    for (;n>0;n--) *pval2++=*pval1--;
 	} else {
-	    fread(&(val2),n,1,fp);
+	    fread(&(val2), n, 1, fp);
 	}
 	return(val2);
 }
 
 /* reads double value from file and flips it if needed */
-static double tabfread(FILE *fp,int doflip)
+static double tabfread(FILE *fp, int doflip)
 {
 int     n=sizeof(double);
-double	val1,val2;
-char  	*pval1,*pval2;
+double	val1, val2;
+char  	*pval1, *pval2;
 
 	if (doflip) {
-	    fread(&(val1),n,1,fp);
+	    fread(&(val1), n, 1, fp);
 	    pval1=(char *)(&(val1))+n-1;
 	    pval2=(char *)(&(val2));
 	    for (;n>0;n--) *pval2++=*pval1--;
 	} else {
-	    fread(&(val2),n,1,fp);
+	    fread(&(val2), n, 1, fp);
 	}
 	return(val2);
 }

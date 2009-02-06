@@ -85,8 +85,9 @@ am_libneurospacesread_a_OBJECTS = algorithm.$(OBJEXT) \
 	axonhillock.$(OBJEXT) biocomp.$(OBJEXT) cell.$(OBJEXT) \
 	channel.$(OBJEXT) concentrationgatekinetic.$(OBJEXT) \
 	connection.$(OBJEXT) connectionsymbol.$(OBJEXT) \
-	contourpoint.$(OBJEXT) emcontour.$(OBJEXT) equation.$(OBJEXT) \
-	fiber.$(OBJEXT) gatekinetic.$(OBJEXT) group.$(OBJEXT) \
+	contourpoint.$(OBJEXT) emcontour.$(OBJEXT) \
+	equationexponential.$(OBJEXT) fiber.$(OBJEXT) \
+	gatekinetic.$(OBJEXT) group.$(OBJEXT) \
 	groupedparameters.$(OBJEXT) hhgate.$(OBJEXT) iohier.$(OBJEXT) \
 	iol.$(OBJEXT) network.$(OBJEXT) pool.$(OBJEXT) \
 	population.$(OBJEXT) projection.$(OBJEXT) \
@@ -290,7 +291,7 @@ libneurospacesread_a_SOURCES = \
 	components/connectionsymbol.c \
 	components/contourpoint.c \
 	components/emcontour.c \
-	components/equation.c \
+	components/equationexponential.c \
 	components/fiber.c \
 	components/gatekinetic.c \
 	components/group.c \
@@ -404,7 +405,7 @@ nobase_include_HEADERS = \
 	neurospaces/components/connectionsymbol.h \
 	neurospaces/components/contourpoint.h \
 	neurospaces/components/emcontour.h \
-	neurospaces/components/equation.h \
+	neurospaces/components/equationexponential.h \
 	neurospaces/components/fiber.h \
 	neurospaces/components/gatekinetic.h \
 	neurospaces/components/group.h \
@@ -657,7 +658,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/defsym.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dependencyfile.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/emcontour.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/equation.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/equationexponential.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fiber.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/function.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gatekinetic.Po@am__quote@
@@ -877,19 +878,19 @@ emcontour.obj: components/emcontour.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o emcontour.obj `if test -f 'components/emcontour.c'; then $(CYGPATH_W) 'components/emcontour.c'; else $(CYGPATH_W) '$(srcdir)/components/emcontour.c'; fi`
 
-equation.o: components/equation.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT equation.o -MD -MP -MF "$(DEPDIR)/equation.Tpo" -c -o equation.o `test -f 'components/equation.c' || echo '$(srcdir)/'`components/equation.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/equation.Tpo" "$(DEPDIR)/equation.Po"; else rm -f "$(DEPDIR)/equation.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/equation.c' object='equation.o' libtool=no @AMDEPBACKSLASH@
+equationexponential.o: components/equationexponential.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT equationexponential.o -MD -MP -MF "$(DEPDIR)/equationexponential.Tpo" -c -o equationexponential.o `test -f 'components/equationexponential.c' || echo '$(srcdir)/'`components/equationexponential.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/equationexponential.Tpo" "$(DEPDIR)/equationexponential.Po"; else rm -f "$(DEPDIR)/equationexponential.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/equationexponential.c' object='equationexponential.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o equation.o `test -f 'components/equation.c' || echo '$(srcdir)/'`components/equation.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o equationexponential.o `test -f 'components/equationexponential.c' || echo '$(srcdir)/'`components/equationexponential.c
 
-equation.obj: components/equation.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT equation.obj -MD -MP -MF "$(DEPDIR)/equation.Tpo" -c -o equation.obj `if test -f 'components/equation.c'; then $(CYGPATH_W) 'components/equation.c'; else $(CYGPATH_W) '$(srcdir)/components/equation.c'; fi`; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/equation.Tpo" "$(DEPDIR)/equation.Po"; else rm -f "$(DEPDIR)/equation.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/equation.c' object='equation.obj' libtool=no @AMDEPBACKSLASH@
+equationexponential.obj: components/equationexponential.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT equationexponential.obj -MD -MP -MF "$(DEPDIR)/equationexponential.Tpo" -c -o equationexponential.obj `if test -f 'components/equationexponential.c'; then $(CYGPATH_W) 'components/equationexponential.c'; else $(CYGPATH_W) '$(srcdir)/components/equationexponential.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/equationexponential.Tpo" "$(DEPDIR)/equationexponential.Po"; else rm -f "$(DEPDIR)/equationexponential.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='components/equationexponential.c' object='equationexponential.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o equation.obj `if test -f 'components/equation.c'; then $(CYGPATH_W) 'components/equation.c'; else $(CYGPATH_W) '$(srcdir)/components/equation.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o equationexponential.obj `if test -f 'components/equationexponential.c'; then $(CYGPATH_W) 'components/equationexponential.c'; else $(CYGPATH_W) '$(srcdir)/components/equationexponential.c'; fi`
 
 fiber.o: components/fiber.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT fiber.o -MD -MP -MF "$(DEPDIR)/fiber.Tpo" -c -o fiber.o `test -f 'components/fiber.c' || echo '$(srcdir)/'`components/fiber.c; \
@@ -1894,7 +1895,7 @@ libneurospacesread.so: libneurospacesread.a
 	connectioncache.o \
 	defsym.o \
 	dependencyfile.o \
-	equation.o \
+	equationexponential.o \
 	fiber.o \
 	function.o \
 	gatekinetic.o \

@@ -57,7 +57,7 @@ SegmentGetParameter
 void SegmentInit(struct symtab_Segment *psegment);
 
 
-#include "equation.h"
+/* #include "equation.h" */
 #include "neurospaces/idin.h"
 #include "neurospaces/parameters.h"
 

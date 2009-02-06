@@ -16,7 +16,7 @@
     struct symtab_ConnectionSymbol *pconsy;
     struct symtab_ContourPoint *pcpnt;
     struct symtab_EMContour *pemc;
-    struct symtab_Equation *peq;
+    struct symtab_EquationExponential *peqe;
     struct symtab_Fiber *pfibr;
     struct symtab_Function *pfun;
     struct symtab_GateKinetic *pgatk;
@@ -165,9 +165,9 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <paxhi> AxonHillockSection
 %type <pidin> AxonHillockSectionFront
 %type <paxhi> AxonHillockDescription
-%type <peq> EquationExponentialSection
+%type <peqe> EquationExponentialSection
 %type <pidin> EquationExponentialSectionFront
-%type <peq> EquationExponentialDescription
+%type <peqe> EquationExponentialDescription
 %type <psegment> SegmentSection
 %type <pidin> SegmentSectionFront
 %type <psegment> SegmentDescription
@@ -2208,13 +2208,13 @@ EMContourSection	/* <pemc> */
 		}
 	;
 
-EquationExponentialDescription	/* <peq> */
+EquationExponentialDescription	/* <peqe> */
 	:
 		{
 #line
 		    //- prepare struct for symbol table
 
-		    $$ = EquationCalloc();
+		    $$ = EquationExponentialCalloc();
 
 		    //- set actual symbol
 
@@ -2268,7 +2268,7 @@ EquationExponentialDescription	/* <peq> */
 EquationExponentialSectionEnd
 	:
 		EndPushedPidin
-		TOKEN_EXPONENTIAL_EQUATION
+		TOKEN_EQUATION_EXPONENTIAL
 		{
 #line
 		}
@@ -2276,7 +2276,7 @@ EquationExponentialSectionEnd
 
 EquationExponentialSectionFront	/* <pidin> */
 	:
-		TOKEN_EXPONENTIAL_EQUATION
+		TOKEN_EQUATION_EXPONENTIAL
 		IdentifierOptionIndexPushedPidin
 		{
 #line
@@ -2286,7 +2286,7 @@ EquationExponentialSectionFront	/* <pidin> */
 		}
 	;
 
-EquationExponentialSection	/* <peq> */
+EquationExponentialSection	/* <peqe> */
 	:
 		EquationExponentialSectionFront
 			InputOutputRelations

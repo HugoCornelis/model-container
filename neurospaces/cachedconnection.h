@@ -37,7 +37,7 @@
 #include "neurospaces/components/contourpoint.h"
 #include "neurospaces/components/emcontour.h"
 /* #include "neurospaces/dependencyfile.h" */
-/* #include "neurospaces/components/equation.h" */
+/* #include "neurospaces/components/equationexponential.h" */
 #include "neurospaces/components/fiber.h"
 /* #include "neurospaces/function.h" */
 #include "neurospaces/components/gatekinetic.h"

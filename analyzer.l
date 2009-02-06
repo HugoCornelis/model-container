@@ -148,7 +148,7 @@ segment_group		{	return(TOKEN_SEGMENT_GROUP);	}
 channel			{	return(TOKEN_CHANNEL);		}
 pool			{	return(TOKEN_POOL);		}
 alpha_equation		{	return(TOKEN_ALPHA_EQUATION);	}
-exponential_equation	{	return(TOKEN_EXPONENTIAL_EQUATION);	}
+equation_exponential	{	return(TOKEN_EQUATION_EXPONENTIAL);	}
 options			{	return(TOKEN_OPTIONS);		}
 spherical		{	return(TOKEN_SPHERICAL);	}
 cylindrical		{	return(TOKEN_CYLINDRICAL);	}

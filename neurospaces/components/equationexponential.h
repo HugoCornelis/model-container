@@ -27,23 +27,23 @@
 
 /// \struct structure declarations
 
-struct descr_Equation;
-struct symtab_Equation;
+/* struct descr_EquationExponential; */
+struct symtab_EquationExponential;
 
 
 
-struct symtab_Equation * EquationCalloc(void);
+struct symtab_EquationExponential * EquationExponentialCalloc(void);
 
 struct symtab_HSolveListElement * 
-EquationCreateAlias
-(struct symtab_Equation *peq,
+EquationExponentialCreateAlias
+(struct symtab_EquationExponential *peqe,
  struct symtab_IdentifierIndex *pidin);
 
-int EquationGetType(struct symtab_Equation *peq);
+/* int EquationExponentialGetType(struct symtab_EquationExponential *peqe); */
 
-void EquationInit(struct symtab_Equation * peq);
+void EquationExponentialInit(struct symtab_EquationExponential * peqe);
 
-int EquationSetType(struct symtab_Equation *peq, int iType);
+/* int EquationExponentialSetType(struct symtab_EquationExponential *peqe, int iType); */
 
 
 #include "biocomp.h"
@@ -52,31 +52,31 @@ int EquationSetType(struct symtab_Equation *peq, int iType);
 #include "neurospaces/parcontainer.h"
 
 
-/// \struct
-/// \struct equation description
-/// \struct
+/* /// \struct */
+/* /// \struct equation description */
+/* /// \struct */
 
-struct descr_Equation
-{
-    /// type of equation
+/* struct descr_EquationExponential */
+/* { */
+/*     /// type of equation */
 
-    int iType;
-};
+/*     int iType; */
+/* }; */
 
 
 /// \struct
 /// \struct HH and alike equations
 /// \struct
 
-struct symtab_Equation
+struct symtab_EquationExponential
 {
     /// base struct : symbol
 
     struct symtab_BioComponent bio;
 
-    /// type of equation, see TYPE_EQUATION_*
+/*     /// type of equation, see TYPE_EQUATION_* */
 
-    struct descr_Equation deeq;
+/*     struct descr_EquationExponential deeqe; */
 };
 
 
@@ -88,9 +88,9 @@ struct symtab_Equation
 
 /* #define TYPE_EQUATION_ALPHA		2 */
 
-/// \def dual exponential equation
+/* /// \def dual exponential equation */
 
-#define TYPE_EQUATION_EXPONENTIAL	3
+/* #define TYPE_EQUATION_EXPONENTIAL	3 */
 
 
 #endif

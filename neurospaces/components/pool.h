@@ -65,7 +65,7 @@ PoolParameterScaleValue
  struct symtab_Parameters *ppar);
 
 
-#include "equation.h"
+/* #include "equationexponential.h" */
 #include "neurospaces/idin.h"
 #include "neurospaces/inputoutput.h"
 #include "neurospaces/parameters.h"
@@ -77,23 +77,27 @@ PoolParameterScaleValue
 
 struct descr_Pool
 {
-    /// type of pool data
+    /// keeping things happy
 
-    int iType;
+    int iHappy;
 
-    /// actual data : should still be changed
+/*     /// type of pool data */
 
-    union 
-    {
-	/// equation describing pool
+/*     int iType; */
 
-	struct symtab_Equation *peq;
+/*     /// actual data : should still be changed */
 
-	/// file with table describing pool
+/*     union  */
+/*     { */
+/* 	/// equation describing pool */
 
-	char *pcFilename;
-    }
-    uData;
+/* 	struct symtab_Equation *peq; */
+
+/* 	/// file with table describing pool */
+
+/* 	char *pcFilename; */
+/*     } */
+/*     uData; */
 };
 
 

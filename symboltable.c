@@ -35,7 +35,7 @@
 #include "neurospaces/components/cell.h"
 #include "neurospaces/components/channel.h"
 #include "neurospaces/components/connection.h"
-#include "neurospaces/components/equation.h"
+#include "neurospaces/components/equationexponential.h"
 #include "neurospaces/components/group.h"
 #include "neurospaces/components/iohier.h"
 #include "neurospaces/components/network.h"
