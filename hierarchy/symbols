@@ -180,17 +180,6 @@ my $class_hierarchy
 						'HHGate',
 					       ],
 				 specific_allocator => 'ChannelCalloc',
-				 specific_token => {
-						    class => 'channel',
-						    lexical => 'TOKEN_CHANNEL',
-						    purpose => 'physical',
-						   },
-				 typing => {
-					    base => 'phsle',
-					    id => 'pidin',
-					    spec => 'pchan',
-					    to_base => '->bio.ioh.iol.hsle',
-					   },
 				 specific_description => {
 							  add => '		TOKEN_TABLEFILE
 		TOKEN_STRING
@@ -221,6 +210,17 @@ my $class_hierarchy
 		}
 ',
 							 },
+				 specific_token => {
+						    class => 'channel',
+						    lexical => 'TOKEN_CHANNEL',
+						    purpose => 'physical',
+						   },
+				 typing => {
+					    base => 'phsle',
+					    id => 'pidin',
+					    spec => 'pchan',
+					    to_base => '->bio.ioh.iol.hsle',
+					   },
 				},
 		     isa => 'bio_comp',
 		     name => 'symtab_Channel',
@@ -723,17 +723,6 @@ my $class_hierarchy
 						 'Channel',
 						],
 				  specific_allocator => 'SegmentCalloc',
-				  specific_token => {
-						     class => 'segment',
-						     lexical => 'TOKEN_SEGMENT',
-						     purpose => 'physical',
-						    },
-				  typing => {
-					     base => 'phsle',
-					     id => 'pidin',
-					     spec => 'psegment',
-					     to_base => '->segr.bio.ioh.iol.hsle',
-					    },
 				  specific_description => {
 							   add => '		SegmentDescription
 		TOKEN_OPTIONS
@@ -756,6 +745,17 @@ my $class_hierarchy
 		}
 ',
 							  },
+				  specific_token => {
+						     class => 'segment',
+						     lexical => 'TOKEN_SEGMENT',
+						     purpose => 'physical',
+						    },
+				  typing => {
+					     base => 'phsle',
+					     id => 'pidin',
+					     spec => 'psegment',
+					     to_base => '->segr.bio.ioh.iol.hsle',
+					    },
 				 },
 		      isa => 'segmenter',
 		      name => 'symtab_Segment',
@@ -793,7 +793,7 @@ my $class_hierarchy
 		      allows => {
 				 'create_alias' => 'v_contour',
 				},
-		      description => 'a group of spatial contours',
+		      description => 'a vector of spatial contours',
 		      grammar => {
 				  components => [
 						 'EMContour',
@@ -824,7 +824,7 @@ my $class_hierarchy
 # 			 annotations => {
 # 					 'piSymbolType2Biolevel' => 'BIOLEVEL_POPULATION',
 # 					},
-			 description => 'a group of connections with alien typing',
+			 description => 'a vector of connections with alien typing',
 			 grammar => {
 				     components => [
 						    'Connection',
@@ -858,7 +858,7 @@ my $class_hierarchy
 # 				annotations => {
 # 						'piSymbolType2Biolevel' => 'BIOLEVEL_POPULATION',
 # 					       },
-				description => 'a group of connections with their own type information',
+				description => 'a vector of connections with their own type information',
 				isa => 'vector',
 				name => 'symtab_VConnectionSymbol',
 				parameters => {
@@ -873,7 +873,7 @@ my $class_hierarchy
 				 'create_alias' => 'v_segment',
 				 'traverse_segments' => 'v_segment',
 				},
-		      description => 'a group of segments',
+		      description => 'a vector of segments',
 		      dimensions => [
 				     'movable',
 				    ],

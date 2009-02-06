@@ -4116,7 +4116,7 @@ VSegmentSection	/* <pvsegm> */
 
 /* 		    //- set outside bindable fields */
 
-/* 		    SymbolAssignBindableIO(&$5->bio.ioh.iol.hsle, $3); */
+/* 		    SymbolAssignBindableIO(&$4->vect.bio.ioh.iol.hsle, $2); */
 
 		    //- bind I/O relations
 
