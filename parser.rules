@@ -131,7 +131,7 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <phsle> CellComponent
 %type <phsle> RandomvalueComponent
 %type <phsle> PopulationComponent
-%type <phsle> VConnectionComponent
+%type <phsle> VConnectionSymbolComponent
 %type <phsle> NetworkComponent
 %type <phsle> ProjectionComponent
 %type <phsle> AnySymbol
@@ -147,7 +147,7 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <phsle> PopulationSymbol
 %type <phsle> ProjectionSymbol
 %type <phsle> NetworkSymbol
-%type <phsle> VConnectionSymbol
+%type <phsle> VConnectionSymbolSymbol
 %type <phsle> ConnectionSymbol
 %type <patta> AttachmentSection
 %type <pidin> AttachmentSectionFront
@@ -187,8 +187,8 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pconsy> ConnectionSection
 %type <pconsy> ConnectionDescription
 %type <pidin> ConnectionSectionFront
-%type <pvconsy> VConnectionSection
-%type <pvconsy> VConnectionSectionFront
+%type <pvconsy> VConnectionSymbolSection
+%type <pvconsy> VConnectionSymbolSectionFront
 %type <pproj> ProjectionSection
 %type <pidin> ProjectionSectionFront
 %type <pproj> ProjectionDescription
@@ -958,7 +958,7 @@ AnySymbol	/* <phsle> */
 	|
 		SegmentSymbol
 	|
-		VConnectionSymbol
+		VConnectionSymbolSymbol
 	|
 		VContourSymbol
 	|
@@ -1208,9 +1208,9 @@ SegmentSymbol
 		}
 	;
 
-VConnectionSymbol
+VConnectionSymbolSymbol
 	:
-		VConnectionSection
+		VConnectionSymbolSection
 		{
 #line
 		    //- put symbol table element on stack
@@ -1327,7 +1327,7 @@ PopulationComponent
 
 ProjectionComponent
 	:
-		VConnectionSymbol
+		VConnectionSymbolSymbol
 	|
 		ProjectionSymbol
 	;
@@ -1349,7 +1349,7 @@ SegmentComponent
 	;
 
 
-VConnectionComponent
+VConnectionSymbolComponent
 	:
 		ConnectionSymbol
 	;
@@ -3869,14 +3869,14 @@ SegmentSection	/* <psegment> */
 		}
 	;
 
-VConnectionDescription	/* <pvconn> */
+VConnectionSymbolDescription	/* <pvconsy> */
 	:
 		{
 #line
 		}
 	|
-		VConnectionDescription
-		VConnectionComponent
+		VConnectionSymbolDescription
+		VConnectionSymbolComponent
 		{
 #line
 		    //- get pointer to actual container
@@ -3913,6 +3913,65 @@ VConnectionDescription	/* <pvconn> */
 			    ((PARSERCONTEXT *)pacParserContext,
 			     &pvconsy->vect.bio.ioh.iol.hsle);
 		    }
+		}
+	;
+
+VConnectionSymbolSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_CONNECTION_GROUP
+		{
+#line
+		    //- pop segment container from container stack
+
+		    ParserContextPopContainer();
+		}
+	;
+
+VConnectionSymbolSectionFront	/* <pvconsy> */
+	:
+		TOKEN_CONNECTION_GROUP
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- get actual container name
+
+		    struct symtab_IdentifierIndex *pidin
+			= ParserContextActualState();
+
+		    //- put container on stack
+
+		    $$ = VConnectionSymbolCalloc();
+
+		    //- set name of group
+
+		    SymbolSetName(&$$->vect.bio.ioh.iol.hsle, pidin);
+
+		    //- push container on container stack
+
+		    ParserContextPushContainer(&$$->vect);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->vect.bio.ioh.iol.hsle);
+
+		}
+	;
+
+VConnectionSymbolSection	/* <pvconsy> */
+	:
+		VConnectionSymbolSectionFront
+			InputOutputRelations
+			OptionalItemInputRelations
+			VConnectionSymbolDescription
+		VConnectionSymbolSectionEnd
+		{
+#line
+		    //- put enumerated connections struct on stack
+
+		    $$ = $1;
 		}
 	;
 
@@ -4172,65 +4231,6 @@ VSegmentSection	/* <pvsegm> */
 		    //- put finished section info on stack
 
 		    $$ = $4;
-		}
-	;
-
-VConnectionSectionEnd
-	:
-		EndPushedPidin
-		TOKEN_CONNECTION_GROUP
-		{
-#line
-		    //- pop segment container from container stack
-
-		    ParserContextPopContainer();
-		}
-	;
-
-VConnectionSectionFront	/* <pvconsy> */
-	:
-		TOKEN_CONNECTION_GROUP
-		IdentifierOptionIndexPushedPidin
-		{
-#line
-		    //- get actual container name
-
-		    struct symtab_IdentifierIndex *pidin
-			= ParserContextActualState();
-
-		    //- put container on stack
-
-		    $$ = VConnectionSymbolCalloc();
-
-		    //- set name of group
-
-		    SymbolSetName(&$$->vect.bio.ioh.iol.hsle, pidin);
-
-		    //- push container on container stack
-
-		    ParserContextPushContainer(&$$->vect);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->vect.bio.ioh.iol.hsle);
-
-		}
-	;
-
-VConnectionSection	/* <pvconsy> */
-	:
-		VConnectionSectionFront
-			InputOutputRelations
-			OptionalItemInputRelations
-			VConnectionDescription
-		VConnectionSectionEnd
-		{
-#line
-		    //- put enumerated connections struct on stack
-
-		    $$ = $1;
 		}
 	;
 

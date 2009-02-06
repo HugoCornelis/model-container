@@ -423,7 +423,7 @@ my $class_hierarchy
 			description => 'a projection, with source and target populations',
 			grammar => {
 				    components => [
-						   'VConnection',
+						   'VConnectionSymbol',
 						   'Projection',
 						  ],
 				    specific_allocator => 'ProjectionCalloc',
@@ -825,27 +825,6 @@ my $class_hierarchy
 # 					 'piSymbolType2Biolevel' => 'BIOLEVEL_POPULATION',
 # 					},
 			 description => 'a vector of connections with alien typing',
-			 grammar => {
-				     components => [
-						    'Connection',
-						   ],
-
-				     #t this allocator needs to be renamed to VConnectionCalloc
-
-# 				     specific_allocator => 'ConnectionGroupCalloc',
-				     specific_token => {
-							class => 'v_connection_symbol',
-							lexical => 'TOKEN_CONNECTION_GROUP',
-							purpose => 'physical',
-						       },
-				     typing => {
-						base => 'phsle',
-						id => 'pidin',
-						spec => 'pvconn',
-						to_base => '->vect.bio.ioh.iol.hsle',
-					       },
-# 				     disabled => 'to complicated for the moment',
-				    },
 			 isa => 'vector',
 			 name => 'symtab_VConnection',
 			 parameters => {
@@ -859,6 +838,31 @@ my $class_hierarchy
 # 						'piSymbolType2Biolevel' => 'BIOLEVEL_POPULATION',
 # 					       },
 				description => 'a vector of connections with their own type information',
+			 grammar => {
+				     components => [
+						    'Connection',
+						   ],
+
+				     # not having an allocator
+				     # overhere means the generated
+				     # grammar will not have allocator
+				     # code, and allocation must be
+				     # done externally.
+
+# 				     specific_allocator => 'VConnectionCalloc',
+				     specific_token => {
+							class => 'v_connection',
+							lexical => 'TOKEN_CONNECTION_GROUP',
+							purpose => 'physical',
+						       },
+				     typing => {
+						base => 'phsle',
+						id => 'pidin',
+						spec => 'pvconsy',
+						to_base => '->vect.bio.ioh.iol.hsle',
+					       },
+# 				     disabled => 'to complicated for the moment',
+				    },
 				isa => 'vector',
 				name => 'symtab_VConnectionSymbol',
 				parameters => {

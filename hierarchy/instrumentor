@@ -661,7 +661,7 @@ sub generate_grammar_specific_symbol_types
 
 	my $components = $grammar_symbols->{$symbol_name}->{components};
 
-	if (!@$components)
+	if (!defined $components || !@$components)
 	{
 	    next;
 	}
@@ -1023,7 +1023,9 @@ sub generate_grammar_specific_section_2_rules
 
 		# if this symbol cannot be made of components
 
-		if (! scalar @{ $grammar_symbols->{$symbol_name}->{components} })
+		my $components = $grammar_symbols->{$symbol_name}->{components};
+
+		if (!defined $components || !@$components)
 		{
 		    # we skip component parsing / linkage
 
@@ -1036,12 +1038,11 @@ sub generate_grammar_specific_section_2_rules
 
 		# if this symbol does not have a specific allocator
 
-		if (! scalar @{ $grammar_symbols->{$symbol_name}->{components} })
+		if (!defined $grammar_symbols->{$symbol_name}->{specific_allocator})
 		{
 		    # we skip the allocation part
 
-		    if (defined $subpart->{parts}->[1]
-			and $subpart->{parts}->[1] eq 'specific_component')
+		    if ($subpart_name =~ /allocator/)
 		    {
 			next;
 		    }

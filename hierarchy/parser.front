@@ -131,7 +131,7 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <phsle> CellComponent
 %type <phsle> RandomvalueComponent
 %type <phsle> PopulationComponent
-%type <phsle> VConnectionComponent
+%type <phsle> VConnectionSymbolComponent
 %type <phsle> NetworkComponent
 %type <phsle> ProjectionComponent
 %type <phsle> AnySymbol
@@ -147,7 +147,7 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <phsle> PopulationSymbol
 %type <phsle> ProjectionSymbol
 %type <phsle> NetworkSymbol
-%type <phsle> VConnectionSymbol
+%type <phsle> VConnectionSymbolSymbol
 %type <phsle> ConnectionSymbol
 %type <patta> AttachmentSection
 %type <pidin> AttachmentSectionFront
@@ -187,8 +187,8 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pconsy> ConnectionSection
 %type <pconsy> ConnectionDescription
 %type <pidin> ConnectionSectionFront
-%type <pvconsy> VConnectionSection
-%type <pvconsy> VConnectionSectionFront
+%type <pvconsy> VConnectionSymbolSection
+%type <pvconsy> VConnectionSymbolSectionFront
 %type <pproj> ProjectionSection
 %type <pidin> ProjectionSectionFront
 %type <pproj> ProjectionDescription
