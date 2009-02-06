@@ -832,7 +832,7 @@ my $class_hierarchy
 
 				     #t this allocator needs to be renamed to VConnectionCalloc
 
-				     specific_allocator => 'ConnectionGroupCalloc',
+# 				     specific_allocator => 'ConnectionGroupCalloc',
 				     specific_token => {
 							class => 'v_connection_symbol',
 							lexical => 'TOKEN_CONNECTION_GROUP',
@@ -844,7 +844,7 @@ my $class_hierarchy
 						spec => 'pvconn',
 						to_base => '->vect.bio.ioh.iol.hsle',
 					       },
-				     disabled => 'to complicated for the moment',
+# 				     disabled => 'to complicated for the moment',
 				    },
 			 isa => 'vector',
 			 name => 'symtab_VConnection',

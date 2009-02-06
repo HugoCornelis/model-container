@@ -34,7 +34,6 @@
 
 
 /// 
-/// 
 /// \arg pvconn connection vector.
 /// \arg pconn connection to add.
 /// 
@@ -43,7 +42,6 @@
 ///	Success of operation.
 /// 
 /// \brief Add a connection to the connection vector.
-/// \details 
 /// 
 
 int
@@ -133,13 +131,45 @@ VConnectionAddConnection
 
 
 /// 
+/// \return struct symtab_VConnection * 
+/// 
+///	Newly allocated connection vector, NULL for failure
+/// 
+/// \brief Allocate a new connection vector symbol table element
+/// 
+
+struct symtab_VConnection * VConnectionCalloc(void)
+{
+    //- set default result : failure
+
+    struct symtab_VConnection *pvconnResult = NULL;
+
+    //- construct function table
+
+#include "hierarchy/output/symbols/v_connection_vtable.c"
+
+    //- allocate connection vector
+
+    pvconnResult
+	= (struct symtab_VConnection *)
+	  SymbolCalloc(1, sizeof(struct symtab_VConnection), _vtable_v_connection, HIERARCHY_TYPE_symbols_v_connection);
+
+    //- initialize connection vector
+
+    VConnectionInit(pvconnResult);
+
+    //- return result
+
+    return(pvconnResult);
+}
+
+
 /// 
 /// \arg pvconn connection vector to init
 /// 
 /// \return void
 /// 
 /// \brief init connection vector
-/// \details 
 /// 
 
 void VConnectionInit(struct symtab_VConnection *pvconn)
@@ -155,7 +185,6 @@ void VConnectionInit(struct symtab_VConnection *pvconn)
 
 
 /// 
-/// 
 /// \arg ptstr initialized treespace traversal
 /// \arg pvconn: symbol to traverse
 /// 
@@ -166,7 +195,6 @@ void VConnectionInit(struct symtab_VConnection *pvconn)
 ///	-1  immediate abort
 /// 
 /// \brief Traverse symbols in tree manner.
-/// \details 
 /// 
 /// \note  
 /// 

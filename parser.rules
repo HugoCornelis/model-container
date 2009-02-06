@@ -3869,6 +3869,53 @@ SegmentSection	/* <psegment> */
 		}
 	;
 
+VConnectionDescription	/* <pvconn> */
+	:
+		{
+#line
+		}
+	|
+		VConnectionDescription
+		VConnectionComponent
+		{
+#line
+		    //- get pointer to actual container
+
+		    struct symtab_HSolveListElement *phsle
+			= (struct symtab_HSolveListElement *)
+			  ParserContextActualContainer();
+
+		    if (!instanceof_v_connection_symbol(phsle))
+		    {
+			//- give diagnostics : prototype not found
+
+			NeurospacesError
+			    ((PARSERCONTEXT *)pacParserContext,
+			     "VConnectionDescription",
+			     "No group allocated.",
+			     $2);
+		    }
+		    else
+		    {
+			//- get pointer to actual container
+
+			struct symtab_VConnectionSymbol *pvconsy
+			    = (struct symtab_VConnectionSymbol *)
+			      ParserContextActualContainer();
+
+			//- add connection component to container
+
+			SymbolAddChild(&pvconsy->vect.bio.ioh.iol.hsle, $2);
+
+			//- reset actual symbol
+
+			ParserContextSetActual
+			    ((PARSERCONTEXT *)pacParserContext,
+			     &pvconsy->vect.bio.ioh.iol.hsle);
+		    }
+		}
+	;
+
 VContourDescription	/* <pvcont> */
 	:
 		{
@@ -4125,53 +4172,6 @@ VSegmentSection	/* <pvsegm> */
 		    //- put finished section info on stack
 
 		    $$ = $4;
-		}
-	;
-
-VConnectionDescription
-	:
-		{
-#line
-		}
-	|
-		VConnectionDescription
-		VConnectionComponent
-		{
-#line
-		    //- get pointer to actual container
-
-		    struct symtab_HSolveListElement *phsle
-			= (struct symtab_HSolveListElement *)
-			  ParserContextActualContainer();
-
-		    if (!instanceof_v_connection_symbol(phsle))
-		    {
-			//- give diagnostics : prototype not found
-
-			NeurospacesError
-			    ((PARSERCONTEXT *)pacParserContext,
-			     "VConnectionDescription",
-			     "No group allocated.",
-			     $2);
-		    }
-		    else
-		    {
-			//- get pointer to actual container
-
-			struct symtab_VConnectionSymbol *pvconsy
-			    = (struct symtab_VConnectionSymbol *)
-			      ParserContextActualContainer();
-
-			//- add connection component to container
-
-			SymbolAddChild(&pvconsy->vect.bio.ioh.iol.hsle, $2);
-
-			//- reset actual symbol
-
-			ParserContextSetActual
-			    ((PARSERCONTEXT *)pacParserContext,
-			     &pvconsy->vect.bio.ioh.iol.hsle);
-		    }
 		}
 	;
 

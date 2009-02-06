@@ -1009,7 +1009,9 @@ sub generate_grammar_specific_section_2_rules
 	    print $file "	:
 ";
 
-	    my $specific_description = $grammar_rules->{specific_description};
+	    my $specific_description
+# 		= $grammar_symbols->{$symbol_name}->{specific_description}
+		= $grammar_rules->{specific_description};
 
 	    my $description_parts = [];
 
@@ -1024,6 +1026,19 @@ sub generate_grammar_specific_section_2_rules
 		if (! scalar @{ $grammar_symbols->{$symbol_name}->{components} })
 		{
 		    # we skip component parsing / linkage
+
+		    if (defined $subpart->{parts}->[1]
+			and $subpart->{parts}->[1] eq 'specific_component')
+		    {
+			next;
+		    }
+		}
+
+		# if this symbol does not have a specific allocator
+
+		if (! scalar @{ $grammar_symbols->{$symbol_name}->{components} })
+		{
+		    # we skip the allocation part
 
 		    if (defined $subpart->{parts}->[1]
 			and $subpart->{parts}->[1] eq 'specific_component')
