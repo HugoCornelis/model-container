@@ -1,5 +1,12 @@
 -*- outline -*-
 
+* instrumentor
+#t subs from the model-container instrumentor, should be put in a
+#t separate package and installed by the model-container or so.
+|   1. Copied over a couple of subs of the instrumentor of the
+|      model-container, such that run-time symbol information is available
+|      in a consistent fashion.
+
 * movable elements
 grep //t movable_parameter_name().
 
