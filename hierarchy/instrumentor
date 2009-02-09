@@ -2813,7 +2813,7 @@ sub main
     {
 	print
 	    "
-$0: generate C code that implements virtual methods and method instrumentation.
+$0: generate C code that implements virtual methods and method instrumentation, and possibly links it to grammars for reading declarative resource descriptors.
 
 options:
     --classes              generate class structure information.
