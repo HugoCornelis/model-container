@@ -536,7 +536,8 @@ sub generate_grammar_header
     my $object_methods_signatures = $definitions->{object_methods_signatures};
     my $tokens = $definitions->{tokens};
 
-    `cp hierarchy/parser.front /tmp/grammar/symbols/0_start.rules`;
+    `cp hierarchy/parser.start /tmp/grammar/symbols/0_start.rules`;
+    `cp hierarchy/parser.end /tmp/grammar/symbols/ZZZ_end.rules`;
 
 }
 

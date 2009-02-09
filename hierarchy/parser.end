@@ -1,0 +1,1352 @@
+AttachmentSectionEnd
+	:
+		EndPushedPidin
+		TOKEN_ATTACHMENT
+		{
+#line
+		}
+	;
+
+AttachmentSectionFront	/* <pidin> */
+	:
+		TOKEN_ATTACHMENT
+		IdentifierOptionIndexPushedPidin
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $2;
+		}
+	;
+
+AttachmentSection	/* <patta> */
+	:
+		AttachmentSectionFront
+			InputOutputRelations
+			AttachmentDescription
+		AttachmentSectionEnd
+		{
+#line
+		    //- link name
+
+		    SymbolSetName(&$3->bio.ioh.iol.hsle, $1);
+
+		    //- set type of attachment
+
+		    if (strcasecmp(IdinName($1), "spikegen") == 0)
+		    {
+			AttachmentSetType($3, TYPE_ATTACHMENT_OUTGOING);
+		    }
+		    else if (strcasecmp(IdinName($1), "synapse") == 0)
+		    {
+			AttachmentSetType($3, TYPE_ATTACHMENT_INCOMING);
+		    }
+		    else
+		    {
+			//- give diagnostics : unrecognized attachment type
+
+			NeurospacesError
+			    ((PARSERCONTEXT *)pacParserContext,
+			     "AttachmentSection",
+			     "Unrecognized attachment type(%s).",
+			     IdinName($1)
+			     ? IdinName($1)
+			     : "No type");
+		    }
+
+		    //- link I/O relations
+
+		    SymbolAssignBindableIO(&$3->bio.ioh.iol.hsle, $2);
+
+		    //- put attachment point description on stack
+
+		    $$ = $3;
+		}
+	;
+
+AttachmentDescription	/* <patta> */
+	:
+		AttachmentData
+		{
+#line
+		    //- allocate attachment point on stack
+
+		    $$ = AttachmentCalloc();
+
+/* 		    //- set type : outgoing */
+
+/* 		    AttachmentSetType($$, TYPE_ATTACHMENT_OUTGOING); */
+
+		    //- assign attributes
+
+		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle, $1);
+
+		    //- set datatype
+
+		    AttachmentSetDataType($$, "null data");
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		AttachmentIncoming
+		AttachmentData
+		{
+#line
+		    //- allocate attachment point on stack
+
+		    $$ = AttachmentCalloc();
+
+		    //- set type : incoming
+
+		    AttachmentSetType($$, TYPE_ATTACHMENT_INCOMING);
+
+		    //- assign attributes
+
+		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle, $2);
+
+		    //- set datatype
+
+		    AttachmentSetDataType($$, $1);
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	|
+		AttachmentOutgoing
+		AttachmentData
+		{
+#line
+		    //- allocate attachment point on stack
+
+		    $$ = AttachmentCalloc();
+
+		    //- set type : outgoing
+
+		    AttachmentSetType($$, TYPE_ATTACHMENT_OUTGOING);
+
+		    //- assign attributes
+
+		    SymbolAssignParameters(&$$->bio.ioh.iol.hsle, $2);
+
+		    //- set datatype
+
+		    AttachmentSetDataType($$, $1);
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->bio.ioh.iol.hsle);
+		}
+	;
+
+AttachmentData	/* <ppar> */
+	:
+		{
+#line
+		    //- put NULL attributes on stack
+
+		    $$ = NULL;
+		}
+	|
+		AttachmentAttributes
+		{
+#line
+		    //- put attributes on stack
+
+		    $$ = $1;
+		}
+	;
+
+AttachmentAttributes	/* <ppar> */
+	:
+		TOKEN_ATTRIBUTES
+			Attributes
+		TOKEN_END TOKEN_ATTRIBUTES
+		{
+#line
+		    //- put attributes on stack
+
+		    $$ = $2->pparFirst;
+		}
+	;
+
+
+AttachmentIncoming	/* <pcIdentifier> */
+	:
+		TOKEN_RECEIVES TOKEN_EVENTS '(' Identifier ')'
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $4;
+		}
+	;
+
+AttachmentOutgoing	/* <pcIdentifier> */
+	:
+		TOKEN_GENERATES TOKEN_EVENTS '(' Identifier ')'
+		{
+#line
+		    //- put identifier on stack
+
+		    $$ = $4;
+		}
+	;
+
+ChildSectionFront	/* <phsle> */
+	:
+		TOKEN_CHILD
+		Identifier
+		IdentifierOptionIndex
+		{
+#line
+		    //v prototype symbol
+
+		    struct symtab_HSolveListElement *phslePrototype = NULL;
+
+		    //- if public model lookup not disabled by the options
+
+		    if (!(((PARSERCONTEXT *)pacParserContext)
+			  ->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_PUBLIC_LOOKUP))
+		    {
+			//- if lookup prototype
+
+			phslePrototype = ParserLookupPrivateModel($2);
+
+			if (!phslePrototype)
+			{
+			    NeurospacesError
+				((PARSERCONTEXT *)pacParserContext,
+				 "ChildSectionFront",
+				 "Private Model (%s) not found.",
+				 $2);
+
+			    $$ = NULL;
+			}
+			else if (!instanceof_bio_comp(phslePrototype))
+			{
+			    NeurospacesError
+				((PARSERCONTEXT *)pacParserContext,
+				 "ChildSectionFront",
+				 "Private Model (%s) is not a bio component.",
+				 $2);
+
+			    $$ = NULL;
+			}
+			else
+			{
+			    //- allocate id for new symbol
+
+			    struct symtab_IdentifierIndex *pidin = IdinCalloc();
+
+			    IdinSetName(pidin, $2);
+
+			    //- new symbol is alias for prototype
+
+			    $$ = SymbolCreateAlias(phslePrototype, $3);
+			}
+		    }
+		    else
+		    {
+			//! so for this particular case, NULL does not
+			//! signal an error, could become complicated in
+			//! the future, perhaps another solution is
+			//! needed with dummy symbols or something ?
+
+			$$ = NULL;
+		    }
+		}
+	;
+
+ChildSectionEnd
+	:
+		TOKEN_END TOKEN_CHILD
+		{
+#line
+		}
+	;
+
+OptionalChildSectionOptionalInputOptionalParameters	/* <phsle> */
+	:
+		{
+#line
+		    //- put no symbol on stack
+
+		    $$ = NULL;
+		}
+	|
+		ChildSectionOptionalInputOptionalParameters
+	;
+
+ChildSectionOptionalInputOptionalParameters	/* <phsle> */
+	:
+		ChildSectionFront
+			FixedItemInputRelations
+			ItemParameters
+		ChildSectionEnd
+		{
+#line
+		    //- fill in values of bio component
+
+		    if ($1)
+		    {
+			SymbolAssignInputs($1, $2 ? $2->pioFirst : NULL);
+
+			SymbolAssignParameters($1, $3);
+		    }
+
+		    //- put bio component on stack
+
+		    $$ = $1;
+		}
+	|
+		ChildSectionFront
+			ItemParameters
+		ChildSectionEnd
+		{
+#line
+		    //- fill in values of bio component
+
+		    if ($1)
+		    {
+			SymbolAssignParameters($1, $2);
+
+		    }
+
+		    //- put bio component on stack
+
+		    $$ = $1;
+		}
+	|
+		ChildSectionFront
+			FixedItemInputRelations
+		ChildSectionEnd
+		{
+#line
+		    //- fill in values of bio component
+
+		    if ($1)
+		    {
+			SymbolAssignInputs($1, $2 ? $2->pioFirst : NULL);
+		    }
+
+		    //- put bio component on stack
+
+		    $$ = $1;
+		}
+	|
+		ChildSectionFront
+		ChildSectionEnd
+		{
+#line
+		    //- put bio component on stack
+
+		    $$ = $1;
+		}
+	;
+
+OptionalItemInputRelations	/* <pio> */
+	:
+		{
+#line
+		    $$ = NULL;
+		}
+	|
+		FixedItemInputRelations
+	;
+
+FixedItemInputRelations	/* <pio> */
+	:
+		TOKEN_BINDINGS
+		TOKEN_END TOKEN_BINDINGS
+		{
+#line
+		    $$ = NULL;
+		}
+	|
+		TOKEN_BINDINGS
+			ItemInputRelations
+		TOKEN_END TOKEN_BINDINGS
+		{
+#line
+		    $$ = $2;
+		}
+	|
+		TOKEN_BINDINGS
+			ItemInputRelations
+			','
+		TOKEN_END TOKEN_BINDINGS
+		{
+#line
+		    $$ = $2;
+		}
+	;
+
+ItemInputRelations	/* <pio> */
+	:
+		TOKEN_INPUT
+		FieldOrIOHierarchical
+		{
+#line
+		    //- allocate I/O relation
+
+		    struct symtab_InputOutput
+			*pio = InputOutputNewForType(INPUT_TYPE_INPUT);
+
+		    //- store idin
+
+		    pio->pidinField = $2;
+
+		    //- set TOKEN_INPUT flag for root idin $2
+
+		    IdinSetFlags($2, FLAG_IDENTINDEX_INPUTROOT);
+
+		    //- put io list on stack
+
+		    $$ = pio;
+		}
+	|
+		ItemInputRelations
+		','
+		TOKEN_INPUT
+		FieldOrIOHierarchical
+		{
+#line
+		    //- allocate I/O relation
+
+		    struct symtab_InputOutput *pio
+			= InputOutputNewForType(INPUT_TYPE_INPUT);
+
+		    //- set TOKEN_INPUT flag for root idin $4
+
+		    IdinSetFlags($4, FLAG_IDENTINDEX_INPUTROOT);
+
+		    //- store idin
+
+		    pio->pidinField = $4;
+
+		    //- link input relations into list
+
+		    pio->pioFirst = $1->pioFirst;
+		    $1->pioNext = pio;
+
+		    //- put io list on stack
+
+		    $$ = pio;
+		}
+	;
+
+OptionalItemParameters	/* <ppar> */
+	:
+		{
+#line
+		    //- put empty parameter list onto top of stack
+
+		    $$ = NULL;
+		}
+	|
+		ItemParameters
+		{
+#line
+		    //- put parameters onto top of stack
+
+		    $$ = $1;
+		}
+	;
+
+ItemParameters	/* <ppar> */
+	:
+		Parameters
+		{
+#line
+		    //- put parameters onto top of stack
+
+		    $$ = $1;
+		}
+	;
+
+Attributes	/* <ppar> */
+	:
+		Identifier
+		{
+#line
+		    //- allocate parameters on stack
+
+		    $$ = ParameterCalloc();
+
+		    $$->pparFirst = $$;
+
+		    //- fill in name and type
+
+		    ParameterSetAttribute($$);
+
+		    ParameterSetName($$, $1);
+		}
+	|
+		Attributes
+		','
+		Identifier
+		{
+#line
+		    //- allocate parameters
+
+		    struct symtab_Parameters *ppar = ParameterCalloc();
+
+		    //- fill in name and type
+
+		    ParameterSetAttribute(ppar);
+
+		    ParameterSetName(ppar, $3);
+
+		    //- link new parameter in list
+
+		    $1->pparNext = ppar;
+		    ppar->pparFirst = $1->pparFirst;
+
+		    //- push last parameter on stack
+
+		    $$ = $1;
+		}
+	;
+
+Parameters	/* <ppar> */
+	:
+		TOKEN_PARAMETERS
+			ParametersEnumerated
+		TOKEN_END TOKEN_PARAMETERS
+		{
+#line
+		    //- put parameters onto top of stack
+
+		    if ($2)
+		    {
+			$$ = $2->pparFirst;
+		    }
+		    else
+		    {
+			$$ = NULL;
+		    }
+		}
+	;
+
+ParametersEnumerated	/* <ppar> */
+	:
+		ParametersEnumerated
+		','
+		Parameter
+		{
+#line
+		    //- allocate room for symbolic parameter
+
+		    $1->pparNext = $3;
+		    $3->pparFirst = $1->pparFirst;
+
+		    //- put last parameter onto stack
+
+		    $$ = $3;
+		}
+	|
+		ParametersEnumerated
+		','
+		{
+#line
+		    //- allocate room for symbolic parameter
+
+		    $1->pparNext = NULL;
+
+		    //- put last parameter onto stack
+
+		    $$ = $1;
+		}
+	|
+		Parameter
+		{
+#line
+		    //- put last parameter onto stack
+
+		    $$ = $1;
+		}
+	|
+		{
+#line
+		    //- put no parameters onto stack
+
+		    $$ = NULL;
+		}
+	;
+
+Parameter	/* <ppar> */
+	:
+		TOKEN_PARAMETER
+		'('
+		Identifier
+		'='
+		IdentifierHierarchicalOptionalRooted
+		')'
+		{
+#line
+		    //- allocate room for symbolic parameter
+
+		    $$ = ParameterNewFromPidinQueue($3, $5->pidinRoot, TYPE_PARA_SYMBOLIC);
+
+		}
+	|
+		TOKEN_PARAMETER
+		'('
+		Identifier
+		'='
+		FieldOrIOHierarchical
+		')'
+		{
+#line
+		    //- allocate room for symbolic parameter
+
+		    $$ = ParameterNewFromPidinQueue($3, $5, TYPE_PARA_FIELD);
+
+		}
+	|
+		TOKEN_PARAMETER
+		'('
+		Identifier
+		'='
+		TOKEN_STRING
+		')'
+		{
+#line
+		    //- allocate room for string parameter
+
+		    //- remove ending '"'
+
+		    $5->pcString[$5->iLength - 1] = '\0';
+
+		    //! allocates to much
+
+		    char *pc = calloc(sizeof(char), $5->iLength);
+
+		    strcpy(pc, &$5->pcString[1]);
+
+		    $$ = ParameterNewFromString($3, pc);
+
+		}
+	|
+		TOKEN_PARAMETER
+		'('
+		Identifier
+		'='
+		TOKEN_NUMBER
+		')'
+		{
+#line
+		    //- allocate room for number parameter
+
+		    $$ = ParameterNewFromNumber($3, $5);
+
+		}
+	|
+		TOKEN_PARAMETER
+		'('
+		Identifier
+		'='
+		FunctionSpecification
+		')'
+		{
+#line
+		    //- allocate room for function parameter
+
+		    $$ = ParameterNewFromFunction($3, $5);
+
+		}
+	;
+
+OptionalComma
+	:
+		','
+	|
+	;
+
+FunctionSpecification	/* <pfun> */
+	:
+		FunctionIdentifier
+			'('
+			FunctionParameters
+			')'
+			OptionalComma
+		{
+#line
+		    //- put function with name on stack
+
+		    $$ = FunctionCalloc();
+
+		    FunctionSetName($$, $1);
+
+		    //- remember function has parameters
+
+		    FunctionAssignParameters($$, $3);
+		}
+	;
+
+FunctionIdentifier	/* <pcIdentifier> */
+	:
+		Identifier
+		{
+#line
+		    //- put function identifier on stack
+
+		    $$ = $1;
+		}
+	;
+
+FunctionParameters	/* <ppar> */
+	:
+		ParametersEnumerated
+		{
+#line
+		    //- put parameters on stack
+
+		    if ($1)
+		    {
+			$$ = $1->pparFirst;
+		    }
+		    else
+		    {
+			$$ = NULL;
+		    }
+		}
+	;
+
+InputOutputRelations	/* <pioc> */
+	:
+		{
+#line
+		    //- remember relations in container on stack
+
+		    $$ = IOContainerNewFromIO(NULL);
+		}
+	|
+		TOKEN_BINDABLES
+			InputRelations
+		TOKEN_END TOKEN_BINDABLES
+		{
+#line
+		    //- remember relations in container on stack
+
+		    $$ = IOContainerNewFromIO($2->pioFirst);
+		}
+	|
+		TOKEN_BINDABLES
+			OutputRelations
+		TOKEN_END TOKEN_BINDABLES
+		{
+#line
+		    //- remember relations in container on stack
+
+		    $$ = IOContainerNewFromIO($2->pioFirst);
+		}
+	|
+		TOKEN_BINDABLES
+			InputRelations
+			','
+			OutputRelations
+		TOKEN_END TOKEN_BINDABLES
+		{
+#line
+		    //- link relations together
+
+		    $2->pioNext = $4;
+
+		    //t loop over output relations and set ->pioFirst ?
+
+		    //- remember relations in container on stack
+
+		    $$ = IOContainerNewFromIO($2->pioFirst);
+		}
+	;
+
+InputRelations	/* <pio> */
+	:
+		InputRelations
+		','
+		TOKEN_INPUT
+		FieldOrIO
+		{
+#line
+		    //- allocate new input specification
+
+		    struct symtab_InputOutput *pio
+			= InputOutputNewForType(INPUT_TYPE_INPUT);
+
+		    pio->pidinField = $4;
+
+		    //- link input list
+
+		    $1->pioNext = pio;
+		    pio->pioFirst = $1->pioFirst;
+
+		    //- put new item on top of stack
+
+		    $$ = pio;
+		}
+	|
+		TOKEN_INPUT
+		FieldOrIO
+		{
+#line
+		    //- allocate input specification on stack
+
+		    $$ = InputOutputNewForType(INPUT_TYPE_INPUT);
+
+		    $$->pidinField = $2;
+		}
+	;
+
+OutputRelations	/* <pio> */
+	:
+		OutputRelations
+		','
+		TOKEN_OUTPUT
+		FieldOrIOOptionalHierarchical
+		{
+#line
+		    //- allocate new input specification
+
+		    struct symtab_InputOutput *pio
+			= InputOutputNewForType(INPUT_TYPE_OUTPUT);
+
+		    pio->pidinField = $4;
+
+		    //- link input list
+
+		    $1->pioNext = pio;
+		    pio->pioFirst = $1->pioFirst;
+
+		    //- put new item on top of stack
+
+		    $$ = pio;
+		}
+	|
+		TOKEN_OUTPUT
+		FieldOrIOOptionalHierarchical
+		{
+#line
+		    //- allocate input specification on stack
+
+		    $$ = InputOutputNewForType(INPUT_TYPE_OUTPUT);
+
+		    $$->pidinField = $2;
+		}
+	;
+
+FieldOrIOOptionalHierarchical	/* <pidin> */
+	:
+		FieldOrIO
+		{
+#line
+		    //- remember field idin on stack
+
+		    $$ = $1;
+		}
+	|
+		FieldOrIOHierarchical
+		{
+#line
+		    //- remember field idin on stack
+
+		    $$ = $1;
+		}
+	;
+
+FieldOrIOHierarchical	/* <pidin> */
+	:
+		IdentifierHierarchical
+		TOKEN_DEREFERENCE
+		Field
+		{
+#line
+		    //- assign root for field
+
+		    $3->pidinRoot = $1->pidinRoot;
+
+		    //- link structures in list
+
+		    $1->pidinNext = $3;
+
+		    //- remember root idin on stack
+
+		    //t we could set a flag here that says pidin is field
+
+		    $$ = $3->pidinRoot;
+		}
+	|
+		IdentifierHierarchical
+		TOKEN_IOSELECT
+		IO
+		{
+#line
+		    //- assign root for field
+
+		    $3->pidinRoot = $1->pidinRoot;
+
+		    //- link structures in list
+
+		    $1->pidinNext = $3;
+
+		    //- remember root idin on stack
+
+		    //t we could set a flag here that says pidin is field
+
+		    $$ = $3->pidinRoot;
+		}
+	;
+
+FieldOrIO	/* <pidin> */
+	:
+		Field
+		{
+#line
+		    //- put field idin on stack
+
+		    $$ = $1;
+		}
+	|
+		IO
+		{
+#line
+		    //- put IO idin on stack
+
+		    $$ = $1;
+		}
+	;
+
+Field	/* <pidin> */
+	:
+		Identifier
+		{
+#line
+		    //- put field idin on stack
+
+		    $$ = IdinCalloc();
+
+		    IdinSetFlags($$, FLAG_IDENTINDEX_FIELD);
+
+		    $$->pcIdentifier = $1;
+		}
+	;
+
+IO	/* <pidin> */
+	:
+		Identifier
+		';'
+		{
+#line
+		    //- put field idin on stack
+
+		    $$ = IdinCalloc();
+
+		    IdinSetFlags($$, FLAG_IDENTINDEX_IO);
+
+		    $$->pcIdentifier = $1;
+		}
+	;
+
+IdentifierHierarchicalNameSpaceRooted	/* <pidin> */
+	:
+		Identifier
+		TOKEN_NAMESPACESEPERATOR
+		TOKEN_HIERARCHICALSEPERATOR
+		IdentifierOptionIndex
+		{
+#line
+		    //- remember id and range
+
+		    $$ = IdinCalloc();
+
+		    $$->pcIdentifier = $1;
+
+		    //- remember idin is namespaced
+
+		    IdinSetNamespaced($$);
+
+		    //- remember idin is rooted
+
+		    IdinSetRooted($4);
+
+		    //- link with rooted idins
+
+		    $$->pidinNext = $4;
+		    $4->pidinRoot = $$;
+		}
+/*
+** path more than one deep
+**
+** selects subitems in namespace
+**
+	|
+		Identifier
+		TOKEN_NAMESPACESEPERATOR
+		IdentifierHierarchicalRooted
+		{
+		    $$ = NULL;
+
+		    //t not supported yet.
+
+		    *(int *)NULL = 0xdeadbeaf;
+		}
+*/
+	;
+
+IdentifierHierarchicalRooted	/* <pidin> */
+	:
+		TOKEN_HIERARCHICALSEPERATOR
+		IdentifierHierarchical
+		{
+#line
+		    //- remember idin list is rooted
+
+		    IdinSetRooted($2->pidinRoot);
+
+		    //- pass idin onto stack
+
+		    $$ = $2;
+		}
+	;
+
+IdentifierHierarchicalOptionalRooted	/* <pidin> */
+	:
+		IdentifierHierarchical
+	|
+		IdentifierHierarchicalRooted
+	;
+
+/*
+** top : last parsed idin
+*/
+
+IdentifierHierarchical	/* <pidin> */
+	:
+		IdentifierOptionIndex
+		{
+#line
+		    //- assign root of identifier list
+
+		    $1->pidinRoot = $1;
+
+		    //- remember idin on stack
+
+		    $$ = $1;
+		}
+	|
+		IdentifierHierarchical
+		TOKEN_HIERARCHICALSEPERATOR
+		IdentifierOptionIndex
+		{
+#line
+		    //- assign root for last identifier
+
+		    $3->pidinRoot = $1->pidinRoot;
+
+		    //- link structures in list
+
+		    $1->pidinNext = $3;
+
+		    //- remember last idin on stack
+
+		    $$ = $3;
+		}
+	;
+
+IdentifierOptionIndex	/* <pidin> */
+	:
+		TOKEN_PARENT_SYMBOL
+		{
+#line
+		    //- set flags with parent indicator
+
+		    $$ = IdinCalloc();
+
+		    IdinSetFlags($$, FLAG_IDENTINDEX_PARENT);
+		}
+	|
+		TOKEN_CURRENT_SYMBOL
+		{
+#line
+		    //- set flags with current indicator
+
+		    $$ = IdinCalloc();
+
+		    IdinSetFlags($$, FLAG_IDENTINDEX_CURRENT);
+		}
+	|
+		Identifier
+		{
+#line
+		    //- set flags : no index, remember id
+
+		    $$ = IdinCalloc();
+
+		    IdinSetFlags($$, FLAG_IDENTINDEX_NOINDEX);
+
+		    $$->pcIdentifier = $1;
+		}
+	;
+
+/*
+** shift & reduce algorithm list
+**
+** Algorithm info is pushed on parsercontext state stack
+*/
+
+AlgorithmListPush
+	:
+		{
+#line
+		    //- push start of algorithmlist marker
+
+		    ParserContextPushAlgorithmState(PARSERSTATE_START_ALGORITHMS);
+		}
+	|
+		AlgorithmListPush
+		TOKEN_ALGORITHM
+			Identifier
+			Identifier
+			OptionalItemParameters
+		TOKEN_END TOKEN_ALGORITHM
+		{
+#line
+		    //- if algorithm handlers are not disabled by the options
+
+		    if (!(((PARSERCONTEXT *)pacParserContext)
+			  ->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_ALGORITHM_HANDLING))
+
+		    {
+			//- import & init algorithm
+
+			//! because TOKEN_ALGORITHMPARAMETERS returns a string,
+			//! we loose some bytes here
+			//! perhaps they are on the stack, still needs a check
+
+			//t error checking
+
+			struct symtab_AlgorithmSymbol *palgs
+			    = AlgorithmSymbolCalloc();
+
+			AlgorithmSymbolAssignParameters(palgs, $5);
+
+			struct AlgorithmInstance *palgi
+			    = ParserAlgorithmImport
+			      ((PARSERCONTEXT *)pacParserContext,
+			       $3,
+			       $4,
+			       NULL,
+			       $5,
+			       palgs);
+
+			AlgorithmSymbolSetAlgorithmInstance(palgs, palgi);
+
+			ParserContextPushAlgorithmState(palgs);
+			ParserContextPushAlgorithmState(palgi);
+			ParserContextPushAlgorithmState($3);
+			ParserContextPushAlgorithmState($4);
+			ParserContextPushAlgorithmState(NULL);
+
+			ParserContextPushAlgorithmState(PARSERSTATE_ALGORITHM);
+		    }
+		}
+	;
+
+/*
+** pop a algorithm list
+*/
+
+AlgorithmListPop
+	:
+		{
+#line
+		    void *pvState;
+
+		    //- while algorithms on context stack
+
+		    while ((pvState = ParserContextPopAlgorithmState())
+			   != PARSERSTATE_START_ALGORITHMS)
+		    {
+			//- pop algorithm info
+
+			char *pcInit = (char *)ParserContextPopAlgorithmState();
+			char *pcInstance = (char *)ParserContextPopAlgorithmState();
+			char *pcName = (char *)ParserContextPopAlgorithmState();
+			struct AlgorithmInstance *palgi
+			    = (struct AlgorithmInstance *)
+			      ParserContextPopAlgorithmState();
+
+			struct symtab_AlgorithmSymbol *palgs
+			    = (struct symtab_AlgorithmSymbol *)
+			      ParserContextPopAlgorithmState();
+
+			//- if algorithm handlers are not disabled by the options
+
+			if (!(((PARSERCONTEXT *)pacParserContext)
+			      ->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_ALGORITHM_HANDLING))
+			{
+			    //- call algorithm on current symbol
+
+			    ParserAlgorithmHandle
+				((PARSERCONTEXT *)pacParserContext,
+				 ParserContextGetActual
+				 ((PARSERCONTEXT *)pacParserContext),
+				 palgi,
+				 pcName,
+				 pcInstance,
+				 pcInit);
+			}
+
+			//t I could free pcName, pcInstance and pcInit here ?
+
+			//- insert algorithm instance in the symbol table
+
+			//t I prefer to move this code to the
+			//t AlgorithmListPush non-terminal, but that
+			//t does not work because
+			//t ParserContextGetActual() sometimes returns
+			//t NULL overthere, don't know why.
+
+			SymbolAddChild
+			    (ParserContextGetActual((PARSERCONTEXT *)pacParserContext), &palgs->hsle);
+
+/* 			int iResult = ParserAddModel((PARSERCONTEXT *)pacParserContext, &palgs->hsle); */
+
+/* 			if (!iResult) */
+/* 			{ */
+/* 			    NeurospacesError */
+/* 				((PARSERCONTEXT *)pacParserContext, */
+/* 				 "AlgorithmListPush", */
+/* 				 "Error inserting algorithm instance (%s) in symbol table (class %s).", */
+/* 				 $3, */
+/* 				 $5); */
+/* 			} */
+
+			//- disable the algorithm
+
+			ParserAlgorithmDisable
+			    ((PARSERCONTEXT *)pacParserContext,
+			     palgi,
+			     pcName,
+			     pcInstance,
+			     pcInit);
+		    }
+
+		    //- sanity check : 
+		    //- pvState should be PARSERSTATE_START_ALGORITHMS here
+
+		    if (pvState != PARSERSTATE_START_ALGORITHMS)
+		    {
+			NeurospacesError
+			    ((PARSERCONTEXT *)pacParserContext,
+			     "AlgorithmListPop",
+			     " Internal error :"
+			     " non-terminal AlgorithmListPop encounters"
+			     " messed up algorithm stack\n"
+			     " Internal error : Expecting"
+			     " PARSERSTATE_START_ALGORITHMS (== %i),"
+			     " encountered %i\n\n",
+			     PARSERSTATE_START_ALGORITHMS,
+
+			     //t gives a warning on 64bit machines.
+
+			     (int)pvState);
+
+			//- dump core 
+			//- (should contain interesting info to be examined)
+
+			*(int *)NULL = 0xdeadbeaf;
+		    }
+		}
+	;
+
+/*
+** shift & reduce identifier with index
+**
+** push state (if identifier, push as current element)
+**
+** push idin on current element stack
+**
+** optionally attach algorithms to the symbol via AlgorithmListPush non-terminal
+*/ 
+
+IdentifierOptionIndexPushedPidin	/* <pidin> */
+	:
+		IdentifierOptionIndex
+		AlgorithmListPush
+		{
+#line
+		    //- if an identifier is given
+
+		    if ($1)
+		    {
+			//- set current working element name
+
+			ParserCurrentElementPush
+			    ((PARSERCONTEXT *)pacParserContext,
+			     $1);
+		    }
+
+		    //- remember current context state
+
+		    ParserContextPushState((void *)$1);
+		}
+	;
+
+/*
+** shift & reduce END
+**
+** pop state, if state pop pidin
+**
+** pop associated pidin from current element stack
+*/
+
+EndPushedPidin
+	:
+		TOKEN_END
+		AlgorithmListPop
+		{
+#line
+		    struct symtab_IdentifierIndex * pidin = NULL;
+
+		    //- while algorithm on context stack
+
+		    pidin
+			= (struct symtab_IdentifierIndex *)
+			  ParserContextPopState();
+
+		    //- if identifier has been pushed
+
+		    if (pidin)
+		    {
+			//- pop current working element name
+
+			ParserCurrentElementPop
+			    ((PARSERCONTEXT *)pacParserContext);
+		    }
+		}
+	;
+
+Identifier	/* <pcIdentifier> */
+	:
+		TOKEN_IDENTIFIER
+		{
+#line
+		    //- get id name from lexical scanner
+
+		    $$ = $1;
+		}
+	;
+
+%%
+
+
