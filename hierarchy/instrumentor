@@ -2815,14 +2815,14 @@ sub main
 	    "
 $0: generate C code that implements virtual methods and method instrumentation.
 
-options :
-    classes              generate class structure information.
-    help                 print usage information.
-    null-checks          generate null pointer checks.
-    output               name of output directory, (default /tmp/hierarchy).
-    static-inline        generate static inline functions.
-    v|verbose            tell what is being done, specify multiple times to get
-                         more feedback.
+options:
+    --classes              generate class structure information.
+    --help                 print usage information.
+    --null-checks          generate null pointer checks.
+    --output               name of output directory, (default /tmp/hierarchy).
+    --static-inline        generate static inline functions.
+    --verbose|-v           tell what is being done, specify multiple times to get
+                           more feedback.
 ";
 
 	exit 1;
