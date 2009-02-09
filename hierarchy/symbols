@@ -745,6 +745,35 @@ my $class_hierarchy
 		}
 ',
 							  },
+				  specific_rules => 'SegmentInstanceOptions	/* <iCompOptions> */
+	:
+		{
+#line
+		    //- erase int on stack
+
+		    $$ = 0;
+		}
+	|
+		SegmentInstanceOptions
+		TOKEN_SPHERICAL
+		{
+#line
+		    //- remember spherical option
+
+		    $$ |= FLAG_SEGMENTER_SPHERICAL;
+		}
+	|
+		SegmentInstanceOptions
+		TOKEN_CYLINDRICAL
+		{
+#line
+		    //- remember cylindrical option (erases spherical option)
+
+		    $$ &= ~(FLAG_SEGMENTER_SPHERICAL);
+		}
+	;
+
+',
 				  specific_token => {
 						     class => 'segment',
 						     lexical => 'TOKEN_SEGMENT',

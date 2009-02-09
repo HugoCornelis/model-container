@@ -1108,6 +1108,37 @@ sub generate_grammar_specific_section_2_rules
 	    $file->close();
 	}
 
+	if (!$grammar_symbols->{$symbol_name}->{disabled}
+	    and $grammar_symbols->{$symbol_name}->{specific_rules})
+	{
+	    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
+		= gmtime(time());
+
+	    my $date = gmtime();
+
+	    # determine filenames
+
+	    my $filename = "${symbol_name}_specific_rules";
+
+	    # open file, write header
+
+	    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
+
+# 	    print $file "/**
+# **
+# ** $symbol_name description rules
+# **
+# ** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
+# **
+# */
+
+# ";
+
+	    print $file $grammar_symbols->{$symbol_name}->{specific_rules};
+
+	    $file->close();
+	}
+
     }
 }
 

@@ -3870,6 +3870,34 @@ SegmentSection	/* <psegment> */
 		}
 	;
 
+SegmentInstanceOptions	/* <iCompOptions> */
+	:
+		{
+#line
+		    //- erase int on stack
+
+		    $$ = 0;
+		}
+	|
+		SegmentInstanceOptions
+		TOKEN_SPHERICAL
+		{
+#line
+		    //- remember spherical option
+
+		    $$ |= FLAG_SEGMENTER_SPHERICAL;
+		}
+	|
+		SegmentInstanceOptions
+		TOKEN_CYLINDRICAL
+		{
+#line
+		    //- remember cylindrical option (erases spherical option)
+
+		    $$ &= ~(FLAG_SEGMENTER_SPHERICAL);
+		}
+	;
+
 VConnectionSymbolDescription	/* <pvconsy> */
 	:
 		{
@@ -4453,34 +4481,6 @@ AttachmentOutgoing	/* <pcIdentifier> */
 		    //- put identifier on stack
 
 		    $$ = $4;
-		}
-	;
-
-SegmentInstanceOptions	/* <iCompOptions> */
-	:
-		{
-#line
-		    //- erase int on stack
-
-		    $$ = 0;
-		}
-	|
-		SegmentInstanceOptions
-		TOKEN_SPHERICAL
-		{
-#line
-		    //- remember spherical option
-
-		    $$ |= FLAG_SEGMENTER_SPHERICAL;
-		}
-	|
-		SegmentInstanceOptions
-		TOKEN_CYLINDRICAL
-		{
-#line
-		    //- remember cylindrical option (erases spherical option)
-
-		    $$ &= ~(FLAG_SEGMENTER_SPHERICAL);
 		}
 	;
 
