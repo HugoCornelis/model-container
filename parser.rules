@@ -5275,6 +5275,13 @@ IdentifierHierarchicalNameSpaceRooted	/* <pidin> */
 		Identifier
 		TOKEN_NAMESPACESEPERATOR
 		IdentifierHierarchicalRooted
+		{
+		    $$ = NULL;
+
+		    //t not supported yet.
+
+		    *(int *)NULL = 0xdeadbeaf;
+		}
 */
 	;
 
@@ -5371,21 +5378,6 @@ IdentifierOptionIndex	/* <pidin> */
 
 		    $$->pcIdentifier = $1;
 		}
-/* 	| */
-/* 		Identifier */
-/* 		'[' */
-/* 		Integer */
-/* 		']' */
-/* 		{ */
-/* #line */
-/* 		    //- remember id and index */
-
-/* 		    $$ = IdinCalloc(); */
-
-/* 		    $$->pcIdentifier = $1; */
-
-/* 		    $$->iIndex = $3; */
-/* 		} */
 	;
 
 /*
@@ -5560,39 +5552,6 @@ AlgorithmListPop
 		}
 	;
 
-/* /* */
-/* ** shift & reduce identifier with index */
-/* ** */
-/* ** push state (if identifier, push as current element) */
-/* ** */
-/* ** push idin on current element stack */
-/* ** */
-/* ** optionally attach algorithms to the symbol via AlgorithmListPush non-terminal */
-/* *  */
-
-/* OptionalIdentifierOptionIndexPushedPidin	/* <pidin> * */
-/* 	: */
-/* 		OptionalIdentifierOptionIndex */
-/* 		AlgorithmListPush */
-/* 		{ */
-/* #line */
-/* 		    //- if an identifier is given */
-
-/* 		    if ($1) */
-/* 		    { */
-/* 			//- set current working element name */
-
-/* 			ParserCurrentElementPush */
-/* 			    ((PARSERCONTEXT *)pacParserContext, */
-/* 			     $1); */
-/* 		    } */
-
-/* 		    //- remember current context state */
-
-/* 		    ParserContextPushState((void *)$1); */
-/* 		} */
-/* 	; */
-
 /*
 ** shift & reduce identifier with index
 **
@@ -5660,25 +5619,6 @@ EndPushedPidin
 		}
 	;
 
-/* OptionalIdentifierOptionIndex	/* <pidin> * */
-/* 	: */
-/* 		{ */
-/* #line */
-/* 		    //- remember : no identifier given */
-
-/* 		    $$ = NULL; */
-/* 		} */
-
-/* 	| */
-/* 		IdentifierOptionIndex */
-/* 		{ */
-/* #line */
-/* 		    //- remember idin struct */
-
-/* 		    $$ = $1; */
-/* 		} */
-/* 	; */
-
 Identifier	/* <pcIdentifier> */
 	:
 		TOKEN_IDENTIFIER
@@ -5686,21 +5626,9 @@ Identifier	/* <pcIdentifier> */
 #line
 		    //- get id name from lexical scanner
 
-		    //fprintf(stderr, "TOKEN_IDENTIFIER(%s)\n", $1);
 		    $$ = $1;
 		}
 	;
-
-/* Integer	/* <iInteger> * */
-/* 	: */
-/* 		TOKEN_INTEGER */
-/* 		{ */
-/* #line */
-/* 		    //- set integer on the stack */
-
-/* 		    $$ = $1; */
-/* 		} */
-/* 	; */
 
 %%
 
