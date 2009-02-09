@@ -537,7 +537,6 @@ sub generate_grammar_header
     my $tokens = $definitions->{tokens};
 
     `cp hierarchy/parser.start "$option_output/$definitions->{name}/grammar/01_start.rules"`;
-    `cp hierarchy/parser.defined_types "$option_output/$definitions->{name}/grammar/02_defined_types.rules"`;
     `cp hierarchy/parser.user_types "$option_output/$definitions->{name}/grammar/03_user_types.rules"`;
     `cp hierarchy/parser.start_symbol "$option_output/$definitions->{name}/grammar/04_start_symbol.rules"`;
     `cp hierarchy/parser.end "$option_output/$definitions->{name}/grammar/ZZZ_end.rules"`;
