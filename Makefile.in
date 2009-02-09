@@ -485,6 +485,7 @@ CLEANFILES = \
 	parser.c \
 	parser.h \
 	parser.output \
+	parser.rules \
 	parser.rules.numbered \
 	parser.y \
 	xs_initialize.c \
@@ -1843,6 +1844,8 @@ parser.y: $(srcdir)/parser.decl hierarchy/output/symbols/.sentinel parser.rules.
 	cat >parser.y $(srcdir)/parser.decl hierarchy/output/symbols/description.tokens parser.rules.numbered $(srcdir)/parser.additions
 parser.rules.numbered: $(srcdir)/parser.rules
 	perl -ne 'BEGIN { $$filename = shift @ARGV ; $$line++ } $$line++ ; s/^#line.*/#line $$line "$$filename"/; print' <$(srcdir)/parser.rules >parser.rules.numbered $(srcdir)/parser.rules
+parser.rules: hierarchy/output/symbols/.sentinel
+	cat hierarchy/output/symbols/grammar/*.rules >parser.rules
 analyzer.o: parser.h
 parser.c: parser.y
 parser.h: parser.y

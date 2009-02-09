@@ -308,7 +308,7 @@ sub dump_annotated_symbol_rules
 
     use Data::Dumper;
 
-    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/dump_annotated_symbol_rules");
+    my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/dump_annotated_symbol_rules");
 
     print $file Dumper($definitions);
 
@@ -439,7 +439,7 @@ sub generate_grammar_anysymbol_rules
 
     # open file, write header
 
-    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
+    my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/$filename.rules");
 
     print $file "/*
 ** Symbol propagation with default semantic rule
@@ -505,7 +505,7 @@ sub generate_grammar_anysymbol_types
 
     # open file, write header
 
-    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.types");
+    my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/$filename.types");
 
     print $file "/**
 **
@@ -536,8 +536,8 @@ sub generate_grammar_header
     my $object_methods_signatures = $definitions->{object_methods_signatures};
     my $tokens = $definitions->{tokens};
 
-    `cp hierarchy/parser.start /tmp/grammar/symbols/0_start.rules`;
-    `cp hierarchy/parser.end /tmp/grammar/symbols/ZZZ_end.rules`;
+    `cp hierarchy/parser.start "$option_output/$definitions->{name}/grammar/0_start.rules"`;
+    `cp hierarchy/parser.end "$option_output/$definitions->{name}/grammar/ZZZ_end.rules"`;
 
 }
 
@@ -562,7 +562,7 @@ sub generate_grammar_specific_symbol_rules
 
 	# open file, write header
 
-	my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
+	my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/$filename.rules");
 
 # 	print $file "/**
 # **
@@ -642,7 +642,7 @@ sub generate_grammar_specific_symbol_types
 
 	# open file, write header
 
-	my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.types");
+	my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/$filename.types");
 
 	print $file "/**
 **
@@ -708,7 +708,7 @@ sub generate_grammar_specific_section_rules
 
 	# open file, write header
 
-	my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
+	my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/$filename.rules");
 
 # 	print $file "/**
 # **
@@ -767,7 +767,7 @@ sub generate_grammar_specific_section_types
 
 	# open file, write header
 
-	my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.types");
+	my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/$filename.types");
 
 	print $file "/**
 **
@@ -817,7 +817,7 @@ sub generate_grammar_specific_section_2_rules
 
 	    # open file, write header
 
-	    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
+	    my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/$filename.rules");
 
 # 	    print $file "/**
 # **
@@ -884,7 +884,7 @@ sub generate_grammar_specific_section_2_rules
 
 	    # open file, write header
 
-	    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
+	    my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/$filename.rules");
 
 # 	    print $file "/**
 # **
@@ -938,7 +938,7 @@ sub generate_grammar_specific_section_2_rules
 
 	    # open file, write header
 
-	    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
+	    my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/$filename.rules");
 
 # 	    print $file "/**
 # **
@@ -992,7 +992,7 @@ sub generate_grammar_specific_section_2_rules
 
 	    # open file, write header
 
-	    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
+	    my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/$filename.rules");
 
 # 	    print $file "/**
 # **
@@ -1123,7 +1123,7 @@ sub generate_grammar_specific_section_2_rules
 
 	    # open file, write header
 
-	    my $file = IO::File->new(">/tmp/grammar/$definitions->{name}/$filename.rules");
+	    my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/$filename.rules");
 
 # 	    print $file "/**
 # **
@@ -2909,9 +2909,7 @@ options :
     }
 
     {
-	`mkdir /tmp/grammar`;
-
-	`mkdir /tmp/grammar/$definitions->{name}`;
+	`mkdir 2>/dev/null "$option_output/$definitions->{name}/grammar"`;
 
 	# generate the grammar header
 
