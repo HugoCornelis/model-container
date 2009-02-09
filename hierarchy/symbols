@@ -365,21 +365,6 @@ my $class_hierarchy
 					'piSymbolType2Biolevel' => 'BIOLEVEL_CELL',
 				       },
 			description => 'a regular connection in the symbol table, alien typed and with alien identification numbers',
-			grammar => {
-				    components => [],
-				    specific_allocator => 'ConnectionSymbolCalloc',
-				    specific_token =>  => {
-							   class => 'connection_symbol',
-							   lexical => 'TOKEN_CONNECTION',
-							   purpose => 'physical',
-							  },
-				    typing => {
-					       base => 'phsle',
-					       id => 'pidin',
-					       spec => 'pconsy',
-					       to_base => '->bio.ioh.iol.hsle',
-					      },
-				   },
 			isa => 'root',
 			name => 'symtab_Connection',
 			parameters => {
@@ -401,8 +386,21 @@ my $class_hierarchy
 					      },
 			       description => 'a regular connection in the symbol table, self typed and with its own identification numbers',
 
-			       #t this one needs grammar of connection?
-
+			       grammar => {
+					   components => [],
+					   specific_allocator => 'ConnectionSymbolCalloc',
+					   specific_token =>  => {
+								  class => 'connection_symbol',
+								  lexical => 'TOKEN_CONNECTION',
+								  purpose => 'physical',
+								 },
+					   typing => {
+						      base => 'phsle',
+						      id => 'pidin',
+						      spec => 'pconsy',
+						      to_base => '->bio.ioh.iol.hsle',
+						     },
+					  },
 			       isa => 'bio_comp',
 			       name => 'symtab_ConnectionSymbol',
 			       parameters => {
@@ -908,7 +906,7 @@ my $class_hierarchy
 				description => 'a vector of connections with their own type information',
 			 grammar => {
 				     components => [
-						    'Connection',
+						    'ConnectionSymbol',
 						   ],
 
 				     # not having an allocator

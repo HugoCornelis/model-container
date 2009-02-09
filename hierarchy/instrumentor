@@ -507,15 +507,15 @@ sub generate_grammar_anysymbol_types
 
     my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/$filename.types");
 
-    print $file "/**
-**
-** All symbols reduce to this symbol.
-**
-** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
-**
-*/
+#     print $file "/**
+# **
+# ** All symbols reduce to this symbol.
+# **
+# ** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
+# **
+# */
 
-";
+# ";
 
     print $file "%type <$definitions->{typing}->{typer}->{name}> AnySymbol
 
@@ -629,6 +629,11 @@ sub generate_grammar_specific_symbol_types
 
     foreach my $symbol_name (sort keys %$grammar_symbols)
     {
+	if ($grammar_symbols->{$symbol_name}->{disabled})
+	{
+	    next;
+	}
+
 	if (!defined $grammar_symbols->{$symbol_name}->{typing}->{base})
 	{
 	    next;
@@ -647,20 +652,25 @@ sub generate_grammar_specific_symbol_types
 
 	my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/$filename.types");
 
-	print $file "/**
-**
-** $symbol_name typing
-**
-** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
-**
-*/
+# 	print $file "/**
+# **
+# ** $symbol_name typing
+# **
+# ** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
+# **
+# */
 
-";
+# ";
 
 # 	print "$symbol_name\n";
 # 	print Dumper($grammar_symbols->{$symbol_name});
 
 	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{base}> ${symbol_name}Symbol
+";
+
+	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{id}> ${symbol_name}SectionFront
+";
+	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{spec}> ${symbol_name}Description
 ";
 
 	my $components = $grammar_symbols->{$symbol_name}->{components};
@@ -672,14 +682,9 @@ sub generate_grammar_specific_symbol_types
 
 	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{base}> ${symbol_name}Component
 ";
-	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{id}> ${symbol_name}SectionFront
-";
-	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{spec}> ${symbol_name}Description
-";
+# 	print $file "
 
-	print $file "
-
-";
+# ";
 
 	$file->close();
     }
@@ -754,6 +759,11 @@ sub generate_grammar_specific_section_types
 
     foreach my $symbol_name (sort keys %$grammar_symbols)
     {
+	if ($grammar_symbols->{$symbol_name}->{disabled})
+	{
+	    next;
+	}
+
 	if (!defined $grammar_symbols->{$symbol_name}->{typing}->{spec})
 	{
 	    next;
@@ -772,21 +782,21 @@ sub generate_grammar_specific_section_types
 
 	my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/$filename.types");
 
-	print $file "/**
-**
-** $symbol_name section typing
-**
-** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
-**
-*/
+# 	print $file "/**
+# **
+# ** $symbol_name section typing
+# **
+# ** $0 generates a grammar file with semantic actions, given a set of symbols and their relationships.
+# **
+# */
 
-";
+# ";
 
 	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{spec}> ${symbol_name}Section
 ";
-	print $file "
+# 	print $file "
 
-";
+# ";
 
 	$file->close();
     }
