@@ -188,7 +188,8 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pconsy> ConnectionDescription
 %type <pidin> ConnectionSectionFront
 %type <pvconsy> VConnectionSymbolSection
-%type <pvconsy> VConnectionSymbolSectionFront
+%type <pidin> VConnectionSymbolSectionFront
+%type <pvconsy> VConnectionSymbolDescription
 %type <pproj> ProjectionSection
 %type <pidin> ProjectionSectionFront
 %type <pproj> ProjectionDescription
@@ -3873,46 +3874,75 @@ VConnectionSymbolDescription	/* <pvconsy> */
 	:
 		{
 #line
+		    //- prepare struct for symbol table
+
+		    $$ = VConnectionSymbolCalloc();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$->vect.bio.ioh.iol.hsle);
+		}
+	|
+		VConnectionSymbolDescription
+		ChildSectionOptionalInputOptionalParameters
+		{
+#line
+		    //- link children
+
+		    if ($2)
+		    {
+			SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
+		    }
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- put symbol description on stack
+
+		    $$ = $1;
 		}
 	|
 		VConnectionSymbolDescription
 		VConnectionSymbolComponent
 		{
 #line
-		    //- get pointer to actual container
+		    //- add component to current section list
 
-		    struct symtab_HSolveListElement *phsle
-			= (struct symtab_HSolveListElement *)
-			  ParserContextActualContainer();
+		    SymbolAddChild(&$1->vect.bio.ioh.iol.hsle, $2);
 
-		    if (!instanceof_v_connection_symbol(phsle))
-		    {
-			//- give diagnostics : prototype not found
+		    //- reset actual symbol
 
-			NeurospacesError
-			    ((PARSERCONTEXT *)pacParserContext,
-			     "VConnectionDescription",
-			     "No group allocated.",
-			     $2);
-		    }
-		    else
-		    {
-			//- get pointer to actual container
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
 
-			struct symtab_VConnectionSymbol *pvconsy
-			    = (struct symtab_VConnectionSymbol *)
-			      ParserContextActualContainer();
+		    //- push current description on stack
 
-			//- add connection component to container
+		    $$ = $1;
+		}
+	|
+		VConnectionSymbolDescription
+		Parameters
+		{
+#line
+		    //- link parameters
 
-			SymbolAddChild(&pvconsy->vect.bio.ioh.iol.hsle, $2);
+		    SymbolParameterLinkAtEnd(&$1->vect.bio.ioh.iol.hsle, $2);
 
-			//- reset actual symbol
+		    //- reset actual symbol
 
-			ParserContextSetActual
-			    ((PARSERCONTEXT *)pacParserContext,
-			     &pvconsy->vect.bio.ioh.iol.hsle);
-		    }
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1->vect.bio.ioh.iol.hsle);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
 		}
 	;
 
@@ -3922,41 +3952,18 @@ VConnectionSymbolSectionEnd
 		TOKEN_CONNECTION_GROUP
 		{
 #line
-		    //- pop segment container from container stack
-
-		    ParserContextPopContainer();
 		}
 	;
 
-VConnectionSymbolSectionFront	/* <pvconsy> */
+VConnectionSymbolSectionFront	/* <pidin> */
 	:
 		TOKEN_CONNECTION_GROUP
 		IdentifierOptionIndexPushedPidin
 		{
 #line
-		    //- get actual container name
+		    //- put identifier on stack
 
-		    struct symtab_IdentifierIndex *pidin
-			= ParserContextActualState();
-
-		    //- put container on stack
-
-		    $$ = VConnectionSymbolCalloc();
-
-		    //- set name of group
-
-		    SymbolSetName(&$$->vect.bio.ioh.iol.hsle, pidin);
-
-		    //- push container on container stack
-
-		    ParserContextPushContainer(&$$->vect);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$->vect.bio.ioh.iol.hsle);
-
+		    $$ = $2;
 		}
 	;
 
@@ -3969,9 +3976,21 @@ VConnectionSymbolSection	/* <pvconsy> */
 		VConnectionSymbolSectionEnd
 		{
 #line
-		    //- put enumerated connections struct on stack
+		    //- assign name to symbol
 
-		    $$ = $1;
+		    SymbolSetName(&$4->vect.bio.ioh.iol.hsle, $1);
+
+		    //- link input/output relations
+
+		    SymbolAssignBindableIO(&$4->vect.bio.ioh.iol.hsle, $2);
+
+		    //- bind I/O relations
+
+		    SymbolAssignInputs(&$4->vect.bio.ioh.iol.hsle, $3);
+
+		    //- put finished section info on stack
+
+		    $$ = $4;
 		}
 	;
 

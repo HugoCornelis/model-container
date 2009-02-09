@@ -849,7 +849,7 @@ my $class_hierarchy
 				     # code, and allocation must be
 				     # done externally.
 
-# 				     specific_allocator => 'VConnectionCalloc',
+				     specific_allocator => 'VConnectionSymbolCalloc',
 				     specific_token => {
 							class => 'v_connection',
 							lexical => 'TOKEN_CONNECTION_GROUP',

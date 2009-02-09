@@ -188,7 +188,8 @@ int yylex(YYSTYPE *lvalp, void *pacParserContext);
 %type <pconsy> ConnectionDescription
 %type <pidin> ConnectionSectionFront
 %type <pvconsy> VConnectionSymbolSection
-%type <pvconsy> VConnectionSymbolSectionFront
+%type <pidin> VConnectionSymbolSectionFront
+%type <pvconsy> VConnectionSymbolDescription
 %type <pproj> ProjectionSection
 %type <pidin> ProjectionSectionFront
 %type <pproj> ProjectionDescription
