@@ -23,6 +23,7 @@ Makefile$
 ^parser.c$
 ^parser.h$
 ^parser.output$
+^parser.rules$
 ^parser.rules.numbered$
 ^parser.y$
 ^patches$

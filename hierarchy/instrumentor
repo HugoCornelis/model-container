@@ -435,7 +435,7 @@ sub generate_grammar_anysymbol_rules
 
     # determine filenames
 
-    my $filename = "1_anysymbol";
+    my $filename = "3_anysymbol";
 
     # open file, write header
 
@@ -501,7 +501,7 @@ sub generate_grammar_anysymbol_types
 
     # determine filenames
 
-    my $filename = "1_anysymbol";
+    my $filename = "3_anysymbol";
 
     # open file, write header
 
@@ -536,7 +536,10 @@ sub generate_grammar_header
     my $object_methods_signatures = $definitions->{object_methods_signatures};
     my $tokens = $definitions->{tokens};
 
-    `cp hierarchy/parser.start "$option_output/$definitions->{name}/grammar/0_start.rules"`;
+    `cp hierarchy/parser.start "$option_output/$definitions->{name}/grammar/01_start.rules"`;
+    `cp hierarchy/parser.defined_types "$option_output/$definitions->{name}/grammar/02_defined_types.rules"`;
+    `cp hierarchy/parser.user_types "$option_output/$definitions->{name}/grammar/03_user_types.rules"`;
+    `cp hierarchy/parser.start_symbol "$option_output/$definitions->{name}/grammar/04_start_symbol.rules"`;
     `cp hierarchy/parser.end "$option_output/$definitions->{name}/grammar/ZZZ_end.rules"`;
 
 }
@@ -558,7 +561,7 @@ sub generate_grammar_specific_symbol_rules
 
 	# determine filenames
 
-	my $filename = "3_${symbol_name}_component";
+	my $filename = "5_${symbol_name}_component";
 
 	# open file, write header
 
@@ -638,7 +641,7 @@ sub generate_grammar_specific_symbol_types
 
 	# determine filenames
 
-	my $filename = "2_${symbol_name}_symbol";
+	my $filename = "4_${symbol_name}_symbol";
 
 	# open file, write header
 
@@ -704,7 +707,7 @@ sub generate_grammar_specific_section_rules
 
 	# determine filenames
 
-	my $filename = "2_${symbol_name}_symbol";
+	my $filename = "4_${symbol_name}_symbol";
 
 	# open file, write header
 

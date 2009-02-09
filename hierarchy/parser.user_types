@@ -1,0 +1,45 @@
+%type <iCompOptions> SegmentInstanceOptions
+%type <pcIdentifier> AttachmentIncoming
+%type <pcIdentifier> AttachmentOutgoing
+%type <pidin> AttachmentSectionFront
+%type <phsle> AttachmentSymbol
+%type <patta> AttachmentDescription
+%type <patta> AttachmentSection
+%type <ppar> AttachmentAttributes
+%type <ppar> AttachmentData
+
+%type <phsle> ChildSectionFront
+%type <phsle> ChildSectionOptionalInputOptionalParameters
+%type <phsle> OptionalChildSectionOptionalInputOptionalParameters
+%type <pio> FixedItemInputRelations
+%type <pio> OptionalItemInputRelations
+%type <pio> ItemInputRelations
+%type <ppar> OptionalItemParameters
+%type <ppar> ItemParameters
+%type <ppar> Attributes
+%type <ppar> Parameters
+%type <ppar> ParametersEnumerated
+%type <ppar> Parameter
+%type <pfun> FunctionSpecification
+%type <pcIdentifier> FunctionIdentifier
+%type <ppar> FunctionParameters
+/* %type <ppar> FunctionParameter */
+/* %type <pcIdentifier> FunctionParameterName */
+/* %type <pioc> OptionalInputOutputRelations */
+%type <pioc> InputOutputRelations
+%type <pio> InputRelations
+%type <pio> OutputRelations
+%type <pidin> FieldOrIOOptionalHierarchical
+%type <pidin> FieldOrIOHierarchical
+%type <pidin> FieldOrIO
+%type <pidin> Field
+%type <pidin> IO
+%type <pidin> IdentifierOptionIndex
+%type <pidin> IdentifierOptionIndexPushedPidin
+%type <pidin> IdentifierHierarchicalNameSpaceRooted
+%type <pidin> IdentifierHierarchicalRooted
+%type <pidin> IdentifierHierarchicalOptionalRooted
+%type <pidin> IdentifierHierarchical
+%type <pcIdentifier> Identifier
+
+

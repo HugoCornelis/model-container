@@ -1,0 +1,672 @@
+%%
+
+
+/*
+**
+** keyword conventions in regex syntax
+**
+**
+** FullModelDescription : grammatical start symbol (root of derivation tree)
+**
+** .*Contents : grammatical entity that is reduced to a file contents
+**		Every file level used to have its own symbol, actually obsoleted now.
+**
+** .*Component : grammatical entity that is reduced from .*Symbol and has
+**			an associated struct symtab_HSolveListElement * 
+**			semantic value.
+**			It defines the .*Symbols allowed for the given 
+**			component and thus defines the 'physiological'
+**			hierarchy.
+**
+**	e.g. :	equation -> channel -> segment -> cell -> network
+**		connection -> network
+**
+**		segment -> cell -> population -> network
+**		connection -> projection -> network
+**
+** .*Symbol : grammatical entity that is reduced from .*Section and has
+**		an associated struct symtab_HSolveListElement * 
+**		semantic value.
+**
+** .*Section : grammatical entity surrounded with delimiting keywords
+**		The beginning delimiting keyword is coded within a front 
+**		section that normally also registers the current working 
+**		element.
+**		The ending delimiting keyword is coded within a ending section.
+**		This section normally unregisters the working element.
+**
+**	e.g.	PoolSection : PoolSectionFront More_keywords PoolSectionEnd ;
+**		PoolSectionEnd : END POOL ;
+**		PoolSectionFront : POOL Identifier ;
+**
+**
+** .*Description : grammatical entity inside a section, giving attributes for
+**			one instance
+**
+**	e.g.	PoolSection : PoolSectionFront More_keywords PoolSectionEnd ;
+**		PoolSectionFront : POOL Identifier ;
+**		PoolSectionEnd : END POOL ;
+**		PoolDescription : Keywords_giving_attributes_for_any_pool
+**
+**
+*/
+
+FullModelDescription
+	:
+		FullModelHeader
+		FullModelContents
+		FullModelTail
+	;
+
+FullModelHeader
+	:
+		/* ok if no interpreter sequence	*/
+	|
+		TOKEN_SHEBANGER
+		{
+#line
+		    ParserStart();
+		}
+	;
+
+FullModelContents		/* no type	*/
+	:
+		ParseStateHeader
+
+		FullModelHeaderSection
+
+		ParseStateDependencies
+
+		DependenciesSection
+
+		ParseStatePrivateModels
+
+		PrivateModelsSection
+
+		ParseStatePublicModels
+
+		PublicModelsSection
+
+		ParseStateDone
+	;
+
+FullModelTail
+	:
+		{
+#line
+		    ParserFinish();
+		}
+	;
+
+/*
+** tokens to register parser states (to avoid shift/reduce conflicts)
+*/
+
+ParseStateHeader
+	:
+		{
+#line
+		    //- register parsing-header state
+
+		    ((PARSERCONTEXT *)pacParserContext)->iState
+			= ((((PARSERCONTEXT *)pacParserContext)->iState
+			     & ~PARSER_MASK_STATES)
+			    | PARSER_STATE_HEADER);
+		}
+	;
+
+ParseStateDependencies
+	:
+		{
+#line
+		    //- register parsing-dependencies state
+
+		    ((PARSERCONTEXT *)pacParserContext)->iState
+			= ((((PARSERCONTEXT *)pacParserContext)->iState
+			     & ~PARSER_MASK_STATES)
+			    | PARSER_STATE_DEPENDENCIES);
+		}
+	;
+
+ParseStatePrivateModels
+	:
+		{
+#line
+		    //- register parsing-private-models state
+
+		    ((PARSERCONTEXT *)pacParserContext)->iState
+			= ((((PARSERCONTEXT *)pacParserContext)->iState
+			     & ~PARSER_MASK_STATES)
+			    | PARSER_STATE_PRIVATEMODELS);
+		}
+	;
+
+ParseStatePublicModels
+	:
+		{
+#line
+		    //- register parsing-public-models state
+
+		    ((PARSERCONTEXT *)pacParserContext)->iState
+			= ((((PARSERCONTEXT *)pacParserContext)->iState
+			     & ~PARSER_MASK_STATES)
+			    | PARSER_STATE_PUBLICMODELS);
+		}
+	;
+
+ParseStateDone
+	:
+		{
+#line
+		    //- unregister parsing state
+
+		    ((PARSERCONTEXT *)pacParserContext)->iState
+			= ((((PARSERCONTEXT *)pacParserContext)->iState
+			     & ~PARSER_MASK_STATES)
+			    | 0);
+		}
+	;
+
+FullModelHeaderSection
+	:
+		TOKEN_NEUROSPACES
+		ModelLevelIdentification
+		{
+#line
+		    //t register/check type of file
+		}
+	;
+
+ModelLevelIdentification
+	:
+		TOKEN_NDF
+	;
+
+DependenciesSection
+	:
+	|
+		DependenciesSectionFront
+			DependenciesEnumerated
+		DependenciesSectionEnd
+		{
+#line
+		}
+	;
+
+DependenciesSectionFront
+	:
+		TOKEN_IMPORT
+	;
+
+DependenciesSectionEnd
+	:
+		TOKEN_END TOKEN_IMPORT
+		{
+#line
+		    //- give diagnostics : activation of dependencies
+
+		    ParserMessage
+			((PARSERCONTEXT *)pacParserContext,
+			 LEVEL_GLOBALMSG_SYMBOLREPORT,
+			 "DependenciesSectionEnd",
+			 "Activating %s's dependencies"
+			 "(dependency list not yet)",
+			 ParserContextGetFilename
+			 ((PARSERCONTEXT *)pacParserContext));
+		}
+	;
+
+
+DependenciesEnumerated
+	:
+		{
+#line
+		    //! give msg : starting import of dependencies ?
+		}
+	|
+		DependenciesEnumerated
+		TOKEN_FILE
+		Identifier
+		TOKEN_STRING
+		FileOptions
+		{
+#line
+		    int bFail;
+		    char *pc = NULL;
+
+		    //- remove ending '"'
+
+		    $4->pcString[$4->iLength - 1] = '\0';
+		    pc = &$4->pcString[1];
+
+		    //- qualify file name
+
+		    pc
+			= ParserContextQualifyFilename
+			  ((PARSERCONTEXT *)pacParserContext, pc);
+
+		    if (pc)
+		    {
+			//- if importing files is not disabled by the options
+
+			if (!(((PARSERCONTEXT *)pacParserContext)
+			      ->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_IMPORTING))
+			{
+			    //- parse cell file
+
+			    //t pass description file specific options as parameter
+
+			    bFail
+				= ParserImport
+				  ((PARSERCONTEXT *)pacParserContext,
+				   pc,
+				   $3);
+			}
+		    }
+		    else
+		    {
+			NeurospacesError
+			    ((PARSERCONTEXT *)pacParserContext,
+			     "DependenciesEnumerated",
+			     "Could not qualify '%s' (file not found ?)\n",
+			     &$4->pcString[1]);
+		    }
+
+		    //! memory leak : $4
+		}
+	;
+
+FileOptions
+	:
+		{
+#line
+		    //t pass options to stack
+		}
+	;
+
+PrivateModelsSection
+	:
+	|
+		PrivateModelsSectionFront
+			PrivateModelsEnumerated
+		PrivateModelsSectionEnd
+		{
+#line
+		    //- give diagnostics : activation of private models
+
+		    ParserMessage
+			((PARSERCONTEXT *)pacParserContext,
+			 LEVEL_GLOBALMSG_SYMBOLREPORT,
+			 "PrivateModelsSection",
+			 "Activating %s's private models"
+			 "(private models list not yet)",
+			 ParserContextGetFilename
+			 ((PARSERCONTEXT *)pacParserContext));
+		}
+	;
+
+PrivateModelsSectionFront
+	:
+		TOKEN_PRIVATE_MODELS
+		{
+#line
+		}
+	;
+
+PrivateModelsSectionEnd
+	:
+		TOKEN_END TOKEN_PRIVATE_MODELS
+		{
+#line
+		    //- give diagnostics : activation of private models
+
+		    ParserMessage
+			((PARSERCONTEXT *)pacParserContext,
+			 LEVEL_GLOBALMSG_SYMBOLREPORT,
+			 "PrivateModelsSectionEnd",
+			 "Activating %s's private models"
+			 "(private models list not yet)",
+			 ParserContextGetFilename
+			 ((PARSERCONTEXT *)pacParserContext));
+		}
+	;
+
+/*
+** enumeration of private models
+**
+*/
+
+PrivateModelsEnumerated
+	:
+		{
+#line
+		}
+	|
+		PrivateModelsEnumerated
+
+		/* export regular private model	 		*/
+
+		AnySymbol
+		{
+#line
+		    //- if private model description available
+
+		    if ($2)
+		    {
+			//- add private model
+
+			ParserAddPrivateModel
+			    ((PARSERCONTEXT *)pacParserContext, $2);
+		    }
+
+		    //- else
+
+		    else
+		    {
+			//- give diagnostics : empty private model
+
+			//t warning instead of error
+
+			NeurospacesError
+			    ((PARSERCONTEXT *)pacParserContext,
+			     "PrivateModelsEnumerated",
+			     "Empty private model");
+		    }
+		}
+	|
+		PrivateModelsEnumerated
+
+		/* export private model from dependencies	*/
+
+		TOKEN_ALIAS
+			IdentifierHierarchicalNameSpaceRooted
+			Identifier
+			OptionalItemParameters
+			OptionalChildSectionOptionalInputOptionalParameters
+		TOKEN_END TOKEN_ALIAS
+		{
+#line
+		    //v alias target
+
+		    struct symtab_HSolveListElement *phsleProto = NULL;
+
+		    //- if model dependency lookup not disabled by the options
+
+		    if (!(((PARSERCONTEXT *)pacParserContext)
+			  ->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_DEPCY_LOOKUP))
+		    {
+			//- lookup refereed model in dependencies
+
+			phsleProto
+			    = ParserLookupDependencyModel
+			      ((PARSERCONTEXT *)pacParserContext, $3);
+
+			//- if symbol found
+
+			if (phsleProto)
+			{
+			    struct symtab_HSolveListElement *phsle
+				= SymbolCreateAlias(phsleProto, IdinNewFromChars($4));
+
+			    //- set parameters
+
+			    SymbolAssignParameters(phsle, $5);
+
+			    //- link children
+
+			    if ($6)
+			    {
+				SymbolAddChild(phsle, $6);
+
+				//- reset actual symbol
+
+				ParserContextSetActual
+				    ((PARSERCONTEXT *)pacParserContext, phsle);
+			    }
+
+			    //- add private model
+
+			    ParserAddPrivateModel
+				((PARSERCONTEXT *)pacParserContext, phsle);
+			}
+
+			//- else
+
+			else
+			{
+			    //- give error msg
+
+			    NeurospacesError
+				((PARSERCONTEXT *)pacParserContext,
+				 "PrivateModelsEnumerated",
+				 "Dependency Symbol(%s::%s) not found.",
+				 $3->pcIdentifier
+				 ? $3->pcIdentifier
+				 : "NULL",
+				 $3->pidinNext
+				 && $3->pidinNext->pcIdentifier
+				 ? $3->pidinNext->pcIdentifier
+				 : "NULL");
+			}
+		    }
+		}
+	|
+		PrivateModelsEnumerated
+
+		/* export private model from dependencies	*/
+
+		TOKEN_ALIAS
+			Identifier
+			Identifier
+			OptionalItemParameters
+			OptionalChildSectionOptionalInputOptionalParameters
+		TOKEN_END TOKEN_ALIAS
+		{
+#line
+		    //v alias target
+
+		    struct symtab_HSolveListElement *phsleProto = NULL;
+
+		    //- if model dependency lookup not disabled by the options
+
+		    if (!(((PARSERCONTEXT *)pacParserContext)
+			  ->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_DEPCY_LOOKUP))
+		    {
+			//- lookup private model, set as alias target
+
+			phsleProto
+			    = ParserLookupPrivateModel
+			      (/*(PARSERCONTEXT *)pacParserContext,*/$3);
+
+			//- if symbol found
+
+			if (phsleProto)
+			{
+			    struct symtab_HSolveListElement *phsle
+				= SymbolCreateAlias(phsleProto, IdinNewFromChars($4));
+
+			    //- set parameters
+
+			    SymbolAssignParameters(phsle, $5);
+
+			    //- link children
+
+			    if ($6)
+			    {
+				SymbolAddChild(phsle, $6);
+
+				//- reset actual symbol
+
+				ParserContextSetActual
+				    ((PARSERCONTEXT *)pacParserContext, phsle);
+			    }
+
+			    //- add private model
+
+			    ParserAddPrivateModel
+				((PARSERCONTEXT *)pacParserContext, phsle);
+			}
+
+			//- else
+
+			else
+			{
+			    //- give error msg
+
+			    NeurospacesError
+				((PARSERCONTEXT *)pacParserContext,
+				 "PrivateModelsEnumerated",
+				 "PrivateModel Symbol(%s) not found.",
+				 $3 ? $3 : "NULL");
+			}
+		    }
+		}
+	;
+
+PublicModelsSection
+	:
+	|
+		PublicModelsSectionFront
+			PublicModelsEnumerated
+		PublicModelsSectionEnd
+		{
+#line
+		}
+	;
+
+PublicModelsSectionFront
+	:
+		TOKEN_PUBLIC_MODELS
+		{
+#line
+		    //- clear current element stack
+
+		    ParserCurrentElementPopAll
+			((PARSERCONTEXT *)pacParserContext);
+		}
+	;
+
+PublicModelsSectionEnd
+	:
+		TOKEN_END TOKEN_PUBLIC_MODELS
+		{
+#line
+		    //! makes private models invisible
+		}
+	;
+
+PublicModelsEnumerated
+	:
+	|
+		PublicModelsEnumerated
+		TOKEN_ORIGIN TOKEN_NUMBER ',' TOKEN_NUMBER ',' TOKEN_NUMBER
+	|
+		PublicModelsEnumerated
+		TOKEN_RELATIVE
+/* 	| */
+/* 		PublicModelsEnumerated */
+/* 		TOKEN_ALGORITHM */
+/* 		Identifier */
+/* 		TOKEN_ALGORITHMPARAMETERS */
+/* 		{ */
+/* #line */
+/* 		    //- import & init algorithm */
+
+/* 		    //! because TOKEN_ALGORITHMPARAMETERS returns a string, */
+/* 		    //! we loose some bytes here */
+/* 		    //! perhaps they are on the stack, still needs a check */
+
+/* 		    ParserAlgorithmImport */
+/* 			((PARSERCONTEXT *)pacParserContext, */
+/* 			 $3, */
+/* 			 $4->pcString); */
+
+/* 		    //t algorithm must be event based */
+/* 		    //t register interested events from algorithm */
+/* 		    //t install algorithm callback */
+/* 		} */
+/* 		TOKEN_END TOKEN_ALGORITHMPARAMETERS */
+	|
+		PublicModelsEnumerated
+		AnySymbol
+		{
+#line
+		    //- add symbol to models
+
+		    ParserAddPublicModel
+			((PARSERCONTEXT *)pacParserContext,
+			 $2);
+		}
+	|
+		PublicModelsEnumerated
+
+		/* export model from private models	*/
+
+		TOKEN_ALIAS
+			Identifier
+			Identifier
+			OptionalItemParameters
+			OptionalChildSectionOptionalInputOptionalParameters
+		TOKEN_END TOKEN_ALIAS
+		{
+#line
+		    //v alias target
+
+		    struct symtab_HSolveListElement *phsleProto = NULL;
+
+		    //- if private model lookup not disabled by the options
+
+		    if (!(((PARSERCONTEXT *)pacParserContext)
+			  ->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_PRIVATE_LOOKUP))
+		    {
+			//- lookup private model, set as alias target
+
+			phsleProto
+			    = ParserLookupPrivateModel
+			      (/*(PARSERCONTEXT *)pacParserContext,*/$3);
+
+			//- if symbol found
+
+			if (phsleProto)
+			{
+			    struct symtab_HSolveListElement *phsle
+				= SymbolCreateAlias(phsleProto, IdinNewFromChars($4));
+
+			    //- set parameters
+
+			    SymbolAssignParameters(phsle, $5);
+
+			    //- link children
+
+			    if ($6)
+			    {
+				SymbolAddChild(phsle, $6);
+
+				//- reset actual symbol
+
+				ParserContextSetActual
+				    ((PARSERCONTEXT *)pacParserContext, phsle);
+			    }
+
+			    //- add model
+
+			    ParserAddPublicModel
+				((PARSERCONTEXT *)pacParserContext, phsle);
+			}
+
+			//- else
+
+			else
+			{
+			    //- give error msg
+
+			    NeurospacesError
+				((PARSERCONTEXT *)pacParserContext,
+				 "PublicModelsEnumerated",
+				 "PrivateModel Symbol(%s) not found.",
+				 $3 ? $3 : "NULL");
+			}
+		    }
+		}
+	;
+
