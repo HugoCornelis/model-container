@@ -638,33 +638,55 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 
 			else
 			{
-			    # compose the alternatives regex
+			    # if one of several outcomes
 
-			    my $alternatives = $read->{alternatives};
+			    if ($read->{alternatives})
+			    {
+				# compose the alternatives regex
 
-			    my $expected = '(' . (join '|', map { quotemeta } @$alternatives) . ')';
+				my $alternatives = $read->{alternatives};
 
-			    # read from the application
+				my $expected = '(' . (join '|', map { quotemeta } @$alternatives) . ')';
 
-			    ($matched_pattern_position,
-			     $error,
-			     $successfully_matching_string,
-			     $before_match,
-			     $after_match)
-				= $exp->expect($timeout, "-re", $expected, );
+				# read from the application
+
+				($matched_pattern_position,
+				 $error,
+				 $successfully_matching_string,
+				 $before_match,
+				 $after_match)
+				    = $exp->expect($timeout, "-re", $expected, );
 # 				= $exp->expect($timeout, "ThIs TeXt ShOuLd NeVeR oCcUr", );
 
-# 			    # loop over expected alternatives
+# 				# loop over expected alternatives
 
-# 			    my $alternatives = $read->{alternatives};
+# 				my $alternatives = $read->{alternatives};
 
-# 			    foreach my $alternative (@$alternatives)
-# 			    {
-# 				if ($before_match =~ /$alternative/)
+# 				foreach my $alternative (@$alternatives)
 # 				{
-# 				    last;
+# 				    if ($before_match =~ /$alternative/)
+# 				    {
+# 					last;
+# 				    }
 # 				}
-# 			    }
+			    }
+
+			    # if a shell expression is supposed to create the expected outcome
+
+			    elsif ($read->{shell})
+			    {
+				my $shell = $read->{shell};
+
+				my $expected = `$shell`;
+
+				($matched_pattern_position,
+				 $error,
+				 $successfully_matching_string,
+				 $before_match,
+				 $after_match)
+				    = $exp->expect($timeout, $expected, );
+
+			    }
 			}
 
 			$time_elapsed = tv_interval($time_start);
