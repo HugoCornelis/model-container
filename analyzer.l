@@ -89,71 +89,82 @@ commentend	"*/"
 <*>[ \t]+		/* eat up whitespace 		*/
 \n			((PARSERCONTEXT *)pacParserContext)->iLineNumber++;
 
-neurospaces		{	return(TOKEN_NEUROSPACES);	}
-ndf			{	return(TOKEN_NDF);		}
-nnd			{	return(TOKEN_NND);		}
-ncd			{	return(TOKEN_NCD);		}
-nmd			{	return(TOKEN_NMD);		}
-ned			{	return(TOKEN_NED);		}
-version			{	return(TOKEN_VERSION);		}
-units			{	return(TOKEN_UNITS);		}
-seconds			{	return(TOKEN_SECONDS);		}
-meters			{	return(TOKEN_METERS);		}
-voltage			{	return(TOKEN_VOLTAGE);		}
-siemens			{	return(TOKEN_SIEMENS);		}
-import			{	return(TOKEN_IMPORT);		}
-file			{	return(TOKEN_FILE);		}
-chantablefile		{	return(TOKEN_TABLEFILE);	}
-end			{	return(TOKEN_END);		}
-public_models		{	return(TOKEN_PUBLIC_MODELS);	}
-algorithm		{	return(TOKEN_ALGORITHM);	}
-private_models		{	return(TOKEN_PRIVATE_MODELS);	}
-fiber			{	return(TOKEN_FIBER);		}
-grouped_parameters	{	return(TOKEN_GROUPED_PARAMETERS);	}
-group			{	return(TOKEN_GROUP);		}
-has			{	return(TOKEN_HAS);		}
-child			{	return(TOKEN_CHILD);		}
-attachment		{	return(TOKEN_ATTACHMENT);	}
-generates		{	return(TOKEN_GENERATES);	}
-receives		{	return(TOKEN_RECEIVES);		}
-events			{	return(TOKEN_EVENTS);		}
-bindables		{	return(TOKEN_BINDABLES);	}
-bindings		{	return(TOKEN_BINDINGS);		}
-input			{	return(TOKEN_INPUT);		}
-output			{	return(TOKEN_OUTPUT);		}
 <*>"("			{	return('(');			}
 <*>")"			{	return(')');			}
-alias			{	return(TOKEN_ALIAS);		}
+chantablefile		{	return(TOKEN_TABLEFILE);	}
+
+
+absolute		{	return(TOKEN_ABSOLUTE);	}
+algorithm		{	return(TOKEN_ALGORITHM);	}
+alias		{	return(TOKEN_ALIAS);	}
+alpha_equation		{	return(TOKEN_ALPHA_EQUATION);	}
+attachment		{	return(TOKEN_ATTACHMENT);	}
 attributes		{	return(TOKEN_ATTRIBUTES);	}
-parameter		{	return(TOKEN_PARAMETER);	}
-parameters		{	return(TOKEN_PARAMETERS);	}
-projection		{	return(TOKEN_PROJECTION);	}
-gate_kinetic_b		{	return(TOKEN_GATE_KINETIC_B);	}
-gate_kinetic_a		{	return(TOKEN_GATE_KINETIC_A);	}
-gate_kinetic_part	{	return(TOKEN_GATE_KINETIC_PART);}
-em_contour		{	return(TOKEN_EM_CONTOUR);	}
-concentration_gate_kinetic	{	return(TOKEN_CONCENTRATION_GATE_KINETIC);	}
-hh_gate			{	return(TOKEN_HH_GATE);		}
+axon_hillock		{	return(TOKEN_AXON_HILLOCK);	}
+bindables		{	return(TOKEN_BINDABLES);	}
+bindings		{	return(TOKEN_BINDINGS);	}
+cell		{	return(TOKEN_CELL);	}
+channel		{	return(TOKEN_CHANNEL);	}
+child		{	return(TOKEN_CHILD);	}
+concentration_gate_kinetic		{	return(TOKEN_CONCENTRATION_GATE_KINETIC);	}
+connection		{	return(TOKEN_CONNECTION);	}
+connection_group		{	return(TOKEN_CONNECTION_GROUP);	}
 contour_group		{	return(TOKEN_CONTOUR_GROUP);	}
 contour_point		{	return(TOKEN_CONTOUR_POINT);	}
-connection_group	{	return(TOKEN_CONNECTION_GROUP);	}
-connection		{	return(TOKEN_CONNECTION);	}
-network			{	return(TOKEN_NETWORK);		}
-population		{	return(TOKEN_POPULATION);	}
-cell			{	return(TOKEN_CELL);		}
-neuron			{	return(TOKEN_NEURON);		}
-randomvalue		{	return(TOKEN_RANDOMVALUE);	}
-segment			{	return(TOKEN_SEGMENT);		}
-segment_group		{	return(TOKEN_SEGMENT_GROUP);	}
-channel			{	return(TOKEN_CHANNEL);		}
-pool			{	return(TOKEN_POOL);		}
-alpha_equation		{	return(TOKEN_ALPHA_EQUATION);	}
-equation_exponential	{	return(TOKEN_EQUATION_EXPONENTIAL);	}
-options			{	return(TOKEN_OPTIONS);		}
-spherical		{	return(TOKEN_SPHERICAL);	}
+"."		{	return(TOKEN_CURRENT_SYMBOL);	}
 cylindrical		{	return(TOKEN_CYLINDRICAL);	}
-absolute		{	return(TOKEN_ABSOLUTE);		}
-relative		{	return(TOKEN_RELATIVE);		}
+"->"		{	return(TOKEN_DEREFERENCE);	}
+em_contour		{	return(TOKEN_EM_CONTOUR);	}
+end		{	return(TOKEN_END);	}
+equation_exponential		{	return(TOKEN_EQUATION_EXPONENTIAL);	}
+events		{	return(TOKEN_EVENTS);	}
+fiber		{	return(TOKEN_FIBER);	}
+file		{	return(TOKEN_FILE);	}
+gate_kinetic_a		{	return(TOKEN_GATE_KINETIC_A);	}
+gate_kinetic_b		{	return(TOKEN_GATE_KINETIC_B);	}
+gate_kinetic_part		{	return(TOKEN_GATE_KINETIC_PART);	}
+generates		{	return(TOKEN_GENERATES);	}
+group		{	return(TOKEN_GROUP);	}
+grouped_parameters		{	return(TOKEN_GROUPED_PARAMETERS);	}
+has		{	return(TOKEN_HAS);	}
+hh_gate		{	return(TOKEN_HH_GATE);	}
+"/"		{	return(TOKEN_HIERARCHICALSEPERATOR);	}
+import		{	return(TOKEN_IMPORT);	}
+input		{	return(TOKEN_INPUT);	}
+"@"		{	return(TOKEN_IOSELECT);	}
+meters		{	return(TOKEN_METERS);	}
+"::"		{	return(TOKEN_NAMESPACESEPERATOR);	}
+ncd		{	return(TOKEN_NCD);	}
+ndf		{	return(TOKEN_NDF);	}
+ned		{	return(TOKEN_NED);	}
+network		{	return(TOKEN_NETWORK);	}
+neuron		{	return(TOKEN_NEURON);	}
+neurospaces		{	return(TOKEN_NEUROSPACES);	}
+nmd		{	return(TOKEN_NMD);	}
+nnd		{	return(TOKEN_NND);	}
+options		{	return(TOKEN_OPTIONS);	}
+output		{	return(TOKEN_OUTPUT);	}
+parameter		{	return(TOKEN_PARAMETER);	}
+parameters		{	return(TOKEN_PARAMETERS);	}
+".."		{	return(TOKEN_PARENT_SYMBOL);	}
+"^"		{	return(TOKEN_PARENT_SYMBOL);	}
+pool		{	return(TOKEN_POOL);	}
+population		{	return(TOKEN_POPULATION);	}
+private_models		{	return(TOKEN_PRIVATE_MODELS);	}
+projection		{	return(TOKEN_PROJECTION);	}
+public_models		{	return(TOKEN_PUBLIC_MODELS);	}
+randomvalue		{	return(TOKEN_RANDOMVALUE);	}
+receives		{	return(TOKEN_RECEIVES);	}
+relative		{	return(TOKEN_RELATIVE);	}
+seconds		{	return(TOKEN_SECONDS);	}
+segment		{	return(TOKEN_SEGMENT);	}
+segment_group		{	return(TOKEN_SEGMENT_GROUP);	}
+siemens		{	return(TOKEN_SIEMENS);	}
+spherical		{	return(TOKEN_SPHERICAL);	}
+units		{	return(TOKEN_UNITS);	}
+version		{	return(TOKEN_VERSION);	}
+voltage		{	return(TOKEN_VOLTAGE);	}
+
 {identifier}		{
 				//- store matched identifier
 
@@ -166,13 +177,6 @@ relative		{	return(TOKEN_RELATIVE);		}
 
 				return(TOKEN_IDENTIFIER);
 			}
-"/"			{	return(TOKEN_HIERARCHICALSEPERATOR);	}
-"::"			{	return(TOKEN_NAMESPACESEPERATOR);	}
-"->"			{	return(TOKEN_DEREFERENCE);	}
-"@"			{	return(TOKEN_IOSELECT);		}
-"^"			{	return(TOKEN_PARENT_SYMBOL);	}
-".."			{	return(TOKEN_PARENT_SYMBOL);	}
-"."			{	return(TOKEN_CURRENT_SYMBOL);	}
 "-"?{digit}+("."{digit}+)?("e"[-+]?{digit}+)?	{
 							lvalp->dNumber = atof(yytext);
 							return(TOKEN_NUMBER);

@@ -2571,20 +2571,22 @@ my $tokens
 		 lexical => 'TOKEN_CHILD',
 		 purpose => 'structure',
 		},
-       children => {
-		    lexical => 'TOKEN_CHILDREN',
-		   },
+#        children => {
+# 		    lexical => 'TOKEN_CHILDREN',
+# 		   },
        cylindrical => {
 		       lexical => 'TOKEN_CYLINDRICAL',
 		      },
        current_symbol => {
 			  lexical => 'TOKEN_CURRENT_SYMBOL',
+			  text => '.',
 			 },
-       define => {
-		  lexical => 'TOKEN_DEFINE',
-		 },
+#        define => {
+# 		  lexical => 'TOKEN_DEFINE',
+# 		 },
        dereference => {
 		       lexical => 'TOKEN_DEREFERENCE',
+		       text => '->',
 		      },
        end => {
 	       lexical => 'TOKEN_END',
@@ -2603,24 +2605,27 @@ my $tokens
 	      },
        hierarchicalseperator => {
 				 lexical => 'TOKEN_HIERARCHICALSEPERATOR',
+				 text => '/',
 				},
        identifier => {
 		      lexical => 'TOKEN_IDENTIFIER',
+		      text => '',
 		      type => 'pcIdentifier',
 		     },
        import => {
 		  lexical => 'TOKEN_IMPORT',
-		  purpose => 'sections',
+		  purpose => 'file_structure',
 		 },
        input => {
 		 lexical => 'TOKEN_INPUT',
 		},
-       integer => {
-		   lexical => 'TOKEN_INTEGER',
-		   type => 'iInteger',
-		  },
+#        integer => {
+# 		   lexical => 'TOKEN_INTEGER',
+# 		   type => 'iInteger',
+# 		  },
        ioselect => {
 		    lexical => 'TOKEN_IOSELECT',
+		    text => '@',
 		   },
        meters => {
 		  lexical => 'TOKEN_METERS',
@@ -2632,6 +2637,7 @@ my $tokens
 		    },
        namespaceseperator => {
 			      lexical => 'TOKEN_NAMESPACESEPERATOR',
+			      text => '::',
 			     },
        ncd => {
 	       lexical => 'TOKEN_NCD',
@@ -2656,6 +2662,7 @@ my $tokens
 	      },
        number => {
 		  lexical => 'TOKEN_NUMBER',
+		  text => '',
 		  type => 'dNumber',
 		 },
        options => {
@@ -2663,6 +2670,7 @@ my $tokens
 		  },
        origin => {
 		  lexical => 'TOKEN_ORIGIN',
+		  text => '',
 		 },
        output => {
 		  lexical => 'TOKEN_OUTPUT',
@@ -2677,14 +2685,18 @@ my $tokens
 		     },
        parent_symbol => {
 			 lexical => 'TOKEN_PARENT_SYMBOL',
+			 text => [
+				  '..',
+				  '^',
+				 ],
 			},
        private_models => {
 			  lexical => 'TOKEN_PRIVATE_MODELS',
-			  purpose => 'sections',
+			  purpose => 'file_structure',
 			 },
        public_models => {
 			 lexical => 'TOKEN_PUBLIC_MODELS',
-			 purpose => 'sections',
+			 purpose => 'file_structure',
 			},
        receives => {
 		    lexical => 'TOKEN_RECEIVES',
@@ -2697,6 +2709,7 @@ my $tokens
 		  },
        shebanger => {
 		     lexical => 'TOKEN_SHEBANGER',
+		     text => '',
 		    },
        siemens => {
 		   lexical => 'TOKEN_SIEMENS',
@@ -2706,10 +2719,12 @@ my $tokens
 		    },
        string => {
 		  lexical => 'TOKEN_STRING',
+		  text => '',
 		  type => 'pstring',
 		 },
        tablefile => {
 		     lexical => 'TOKEN_TABLEFILE',
+		     text => '',
 		    },
        units => {
 		 lexical => 'TOKEN_UNITS',
@@ -2717,9 +2732,9 @@ my $tokens
        version => {
 		   lexical => 'TOKEN_VERSION',
 		  },
-       versionnumber => {
-			 lexical => 'TOKEN_VERSIONNUMBER',
-			},
+#        versionnumber => {
+# 			 lexical => 'TOKEN_VERSIONNUMBER',
+# 			},
        voltage => {
 		   lexical => 'TOKEN_VOLTAGE',
 		  },
