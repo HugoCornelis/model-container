@@ -304,18 +304,19 @@ BUILT_SOURCES = \
 	xs_initialize.c
 
 CLEANFILES = \
+	analyzer.c \
+	analyzer.l \
+	docs/doxygen.tag \
 	hierarchy/output/algorithm_instances/.sentinel \
 	hierarchy/output/algorithmclasses/.sentinel \
 	hierarchy/output/symbols/.sentinel \
-	analyzer.c \
 	parser.c \
 	parser.h \
 	parser.output \
 	parser.rules \
 	parser.rules.numbered \
 	parser.y \
-	xs_initialize.c \
-	docs/doxygen.tag
+	xs_initialize.c
 
 #! things below are obsoleted, but left here as a memo of how to do this kind of thing.
 
@@ -350,7 +351,9 @@ parser.rules.numbered: $(srcdir)/parser.rules
 parser.rules: hierarchy/output/symbols/.sentinel
 	cat hierarchy/output/symbols/grammar/*.types >hierarchy/output/symbols/grammar/02_defined_types.rules
 	cat hierarchy/output/symbols/grammar/*.rules >parser.rules
-analyzer.o: parser.h
+analyzer.l: hierarchy/output/symbols/.sentinel
+	cat hierarchy/output/symbols/grammar/*.l >analyzer.l
+analyzer.o: parser.h analyzer.l
 parser.c: parser.y
 parser.h: parser.y
 xs_initialize.c:

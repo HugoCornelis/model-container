@@ -1811,6 +1811,22 @@ sub generate_instanceof_relationships
 }
 
 
+sub generate_lexical_header
+{
+    my $definitions = shift;
+
+    my $class_hierarchy = $definitions->{class_hierarchy};
+    my $object_methods = $definitions->{object_methods};
+    my $object_methods_return_types = $definitions->{object_methods_return_types};
+    my $object_methods_signatures = $definitions->{object_methods_signatures};
+    my $tokens = $definitions->{tokens};
+
+    `cp hierarchy/analyzer.start "$option_output/$definitions->{name}/grammar/01_start.l"`;
+    `cp hierarchy/analyzer.end "$option_output/$definitions->{name}/grammar/ZZZ_end.l"`;
+
+}
+
+
 sub generate_lexical_sources
 {
     my $definitions = shift;
@@ -1832,7 +1848,7 @@ sub generate_lexical_sources
 
     # open file, write header
 
-    my $file = IO::File->new(">$option_output/$definitions->{name}/$filename");
+    my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/$filename");
 
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday)
 	= gmtime(time());
@@ -1860,7 +1876,7 @@ sub generate_lexical_sources
 
 	# if multiple texts match this token
 
-	my $token_text = $token->{text} || $token_name;
+	my $token_text = exists $token->{text} ? $token->{text} : $token_name;
 
 	if ($token_text =~ /ARRAY/)
 	{
@@ -1898,7 +1914,7 @@ sub generate_lexical_sources
 	}
     }
 
-    print $file "\n\n";
+    print $file "\n";
 
     $file->close();
 
@@ -3013,6 +3029,12 @@ options:
     }
 
     {
+	`mkdir 2>/dev/null "$option_output/$definitions->{name}/grammar"`;
+
+	# generate the lexical header
+
+	generate_lexical_header($definitions);
+
 	# generate source files for the lexical analyzer
 
 	generate_lexical_sources($definitions);

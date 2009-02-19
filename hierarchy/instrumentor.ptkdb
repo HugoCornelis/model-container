@@ -3,11 +3,20 @@ $files = {
                                              {
                                                'expr' => undef,
                                                'value' => '1',
+                                               'text' => '	if ($token_text =~ /ARRAY/)
+',
+                                               'fname' => './hierarchy/instrumentor',
+                                               'type' => 'user',
+                                               'line' => '1866'
+                                             },
+                                             {
+                                               'expr' => undef,
+                                               'value' => '1',
                                                'text' => '    my $definitions = shift;
 ',
                                                'fname' => './hierarchy/instrumentor',
                                                'type' => 'user',
-                                               'line' => '137'
+                                               'line' => 129
                                              }
                                            ]
          };

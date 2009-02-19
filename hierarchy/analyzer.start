@@ -1,0 +1,96 @@
+%{
+//
+// Neurospaces: a library which implements a global typed symbol table to
+// be used in neurobiological model maintenance and simulation.
+//
+// $Id: analyzer.l 1.74 Fri, 14 Sep 2007 11:16:48 -0500 hugo $
+//
+
+//////////////////////////////////////////////////////////////////////////////
+//'
+//' Neurospaces : testbed C implementation that integrates with genesis
+//'
+//' Copyright (C) 1999-2008 Hugo Cornelis
+//'
+//' functional ideas ..	Hugo Cornelis, hugo.cornelis@gmail.com
+//'
+//' coding ............	Hugo Cornelis, hugo.cornelis@gmail.com
+//'
+//////////////////////////////////////////////////////////////////////////////
+
+#include <string.h>
+
+#include "neurospaces/neurospaces.h"
+
+// don't include it, it gives double typedef's of bison symbols
+
+//#include "parser.h"
+#include "neurospaces/lexsupport.h"
+#include "neurospaces/parsersupport.h"
+
+
+/*
+** define the name of the scanning routine
+*/
+
+#define YY_DECL int parserlex(YYSTYPE *lvalp,void *pacParserContext)
+
+#define ECHO 0
+
+YY_DECL;
+
+%}
+
+%option noyywrap
+%option stack
+
+%x START_PCOMMENT
+%x START_CCOMMENT
+
+string  \"[^\0\\\"]*\"
+bstring \"[^\0\\\"]*
+
+digit		[0-9]
+identifier	[a-z][a-z0-9_]*("["[0-9]+("-"[0-9]+)?"]"("["[0-9]+("-"[0-9]+)"]")*)?
+ppcommentstart	"//"
+commentstart	"/*"
+commentend	"*/"
+
+
+%%
+
+
+"{*"			yy_push_state(START_PCOMMENT);
+<START_PCOMMENT>{
+	"{*"		yy_push_state(START_PCOMMENT);
+	"*}"		yy_pop_state();
+	[^\n]		/*	eat everything		*/
+	\n		{
+				/* and count newlines		*/
+				((PARSERCONTEXT *)pacParserContext)->iLineNumber++;
+			}
+}
+
+"//"[^\n]*\n		{
+				/* eat up C++ one-line comments	*/
+				((PARSERCONTEXT *)pacParserContext)->iLineNumber++;
+			}
+"/*"			yy_push_state(START_CCOMMENT);
+<START_CCOMMENT>{
+	"*/"		yy_pop_state();
+	[^\n]		/*	eat everything		*/
+	\n		{
+				/* and count newlines		*/
+				((PARSERCONTEXT *)pacParserContext)->iLineNumber++;
+			}
+}
+
+^"#!".*			{	return(TOKEN_SHEBANGER);	}
+<*>[ \t]+		/* eat up whitespace 		*/
+\n			((PARSERCONTEXT *)pacParserContext)->iLineNumber++;
+
+<*>"("			{	return('(');			}
+<*>")"			{	return(')');			}
+chantablefile		{	return(TOKEN_TABLEFILE);	}
+
+

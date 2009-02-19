@@ -1,0 +1,46 @@
+{identifier}		{
+				//- store matched identifier
+
+				lvalp->pcIdentifier 
+				    = (char *)malloc(1 + yyleng);
+
+				strncpy(lvalp->pcIdentifier,yytext,yyleng);
+
+				lvalp->pcIdentifier[yyleng] = '\0';
+
+				return(TOKEN_IDENTIFIER);
+			}
+"-"?{digit}+("."{digit}+)?("e"[-+]?{digit}+)?	{
+							lvalp->dNumber = atof(yytext);
+							return(TOKEN_NUMBER);
+						}
+{string}	{
+			lvalp->pstring
+			  = (struct symtab_String *)
+			    malloc
+				(1
+				 + yyleng
+				 + sizeof(struct symtab_String));
+
+			lvalp->pstring->pcString
+			  = (char *)&lvalp->pstring[1];
+
+			strncpy(lvalp->pstring->pcString,yytext,yyleng);
+
+			lvalp->pstring->pcString[yyleng] = '\0';
+
+			lvalp->pstring->iLength = yyleng;
+
+			return(TOKEN_STRING);
+		}
+<*>.			return(yytext[0]);
+
+
+%%
+
+/*
+** included here so we can use the YY_* macro's,
+** change start conditions etc.
+*/
+
+#include "lexsupport.c"
