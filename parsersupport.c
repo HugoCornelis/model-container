@@ -93,13 +93,13 @@ static int ParserContextRepair(PARSERCONTEXT *pac);
 
 
 /// 
-/// 
 /// \arg pacContext parser context
 /// \arg phsle symbol table element
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Add symbol to private or public model list.
+///
 /// \details 
 /// 
 ///	Depending on parser state, a call is made ParserAddPrivateModel()
@@ -153,14 +153,12 @@ int ParserAddModel
 
 
 /// 
-/// 
 /// \arg pacContext parser context
 /// \arg phsle symbol table element
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Add symbol to current private model list
-/// \details 
 /// 
 
 /* static */
@@ -217,13 +215,13 @@ int ParserAddPrivateModel
 
 
 /// 
-/// 
-///	pacContext.: parser context, may be NULL
+/// \arg pacContext parser context, may be NULL
 /// \arg phsle symbol table element
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Add symbol to current public model list
+///
 /// \details 
 /// 
 ///	Generates events for TYPE_HSLE_D3SEGMENT, TYPE_HSLE_CELL
@@ -488,11 +486,9 @@ int ParserAddPublicModel
 
 
 /// 
-/// 
 /// \return PARSERCONTEXT * : allocated parser context, NULL for failure
 /// 
 /// \brief Allocate new parser context
-/// \details 
 /// 
 
 PARSERCONTEXT *ParserContextCalloc(void)
@@ -516,11 +512,9 @@ PARSERCONTEXT *ParserContextCalloc(void)
 
 
 /// 
-/// 
 /// \return void
 /// 
 /// \brief Clear parser context
-/// \details 
 /// 
 
 void ParserClearContext(void)
@@ -545,11 +539,9 @@ void ParserClearContext(void)
 
 
 /// 
-/// 
 /// \return void
 /// 
 /// \brief Clear root parser context
-/// \details 
 /// 
 
 void ParserClearRootContext(void)
@@ -578,13 +570,11 @@ void ParserClearRootContext(void)
 
 
 /// 
-/// 
 /// \arg pac new parser context
 /// 
 /// \return void
 /// 
 /// \brief Set new parser context
-/// \details 
 /// 
 
 static void ParserChangeContext(PARSERCONTEXT *pac)
@@ -596,11 +586,9 @@ static void ParserChangeContext(PARSERCONTEXT *pac)
 
 
 /// 
-/// 
 /// \return symtab_Vector *  : popped container element
 /// 
 /// \brief Pop container element
-/// \details 
 /// 
 
 struct symtab_Vector * ParserContextActualContainer(void)
@@ -617,11 +605,9 @@ struct symtab_Vector * ParserContextActualContainer(void)
 
 
 /// 
-/// 
 /// \return void * : popped data
 /// 
 /// \brief Pop data
-/// \details 
 /// 
 
 void * ParserContextActualState(void)
@@ -641,13 +627,11 @@ void * ParserContextActualState(void)
 
 
 /// 
-/// 
 /// \arg pac parser context
 /// 
 /// \return struct symtab_HSolveListElement * : actually defined symbol
 /// 
 /// \brief Get symbol being defined
-/// \details 
 /// 
 
 struct symtab_HSolveListElement *ParserContextGetActual(PARSERCONTEXT *pac)
@@ -663,13 +647,11 @@ struct symtab_HSolveListElement *ParserContextGetActual(PARSERCONTEXT *pac)
 
 
 /// 
-/// 
 /// \arg pac parser context to initialize
 /// 
 /// \return void
 /// 
 /// \brief Initialize parser context
-/// \details 
 /// 
 
 void ParserContextInit(PARSERCONTEXT *pac)
@@ -689,11 +671,9 @@ void ParserContextInit(PARSERCONTEXT *pac)
 
 
 /// 
-/// 
 /// \return symtab_Vector *  : popped container element
 /// 
 /// \brief Pop container element
-/// \details 
 /// 
 
 struct symtab_Vector * ParserContextPopContainer(void)
@@ -717,11 +697,9 @@ struct symtab_Vector * ParserContextPopContainer(void)
 
 
 /// 
-/// 
 /// \return void *  : popped algorithm state
 /// 
 /// \brief Pop algorithm state
-/// \details 
 /// 
 
 void * ParserContextPopAlgorithmState(void)
@@ -745,11 +723,9 @@ void * ParserContextPopAlgorithmState(void)
 
 
 /// 
-/// 
 /// \return void * : popped data
 /// 
 /// \brief Pop data
-/// \details 
 /// 
 
 void * ParserContextPopState(void)
@@ -773,13 +749,11 @@ void * ParserContextPopState(void)
 
 
 /// 
-/// 
 /// \arg pvect (generic) container element
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Push container element
-/// \details 
 /// 
 
 int ParserContextPushContainer(struct symtab_Vector * pvect)
@@ -814,13 +788,11 @@ int ParserContextPushContainer(struct symtab_Vector * pvect)
 
 
 /// 
-/// 
 /// \arg pv algorithm state info
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Push algorithm state
-/// \details 
 /// 
 
 int ParserContextPushAlgorithmState(void *pv)
@@ -852,13 +824,11 @@ int ParserContextPushAlgorithmState(void *pv)
 
 
 /// 
-/// 
 /// \arg pv date to push
 /// 
 /// \return void
 /// 
 /// \brief Push data
-/// \details 
 /// 
 
 int ParserContextPushState(void *pv)
@@ -890,13 +860,13 @@ int ParserContextPushState(void *pv)
 
 
 /// 
-/// 
-///	pac.: parser context to use for qualification, may be NULL
+/// \arg pac parser context to use for qualification, may be NULL
 /// \arg pc filename to qualify
 /// 
 /// \return char * : qualified filename, NULL for failure
 /// 
 /// \brief qualify a filename suitable for import functions
+///
 /// \details 
 /// 
 ///	Return value is obtained using malloc() and should be free()d.
@@ -950,13 +920,13 @@ char *ParserContextQualifyFilename(PARSERCONTEXT *pac,char *pc)
 
 
 /// 
-/// 
 /// \arg pac parser context to use for qualification
 /// \arg pc filename to qualify
 /// 
 /// \return char * : qualified filename, NULL for failure
 /// 
 /// \brief qualify a filename using parser context configuration.
+///
 /// \details 
 /// 
 ///	See NeurospacesQualifyToConfiguration().
@@ -975,13 +945,13 @@ char *ParserContextQualifyToConfiguration(PARSERCONTEXT *pac, char *pc)
 
 
 /// 
-/// 
 /// \arg pac parser context to use for qualification
 /// \arg pc filename to qualify
 /// 
 /// \return char * : qualified filename, NULL for failure
 /// 
 /// \brief qualify a filename using parser contexts to get intended dir
+///
 /// \details 
 /// 
 ///	Return value is obtained using malloc() and should be free()d.
@@ -1103,13 +1073,13 @@ char *ParserContextQualifyToParsingDirectory(PARSERCONTEXT *pac, char *pc)
 
 
 /// 
-/// 
 /// \arg pac parser context to use for qualification
 /// \arg pc filename to qualify
 /// 
 /// \return char * : qualified filename, NULL for failure
 /// 
 /// \brief qualify a filename using current environment.
+///
 /// \details 
 /// 
 ///	Return value is obtained using malloc() and should be free()d.
@@ -1219,7 +1189,6 @@ char *ParserContextQualifyToEnvironment(char *pc)
 
 
 /// 
-/// 
 /// \arg pac parser context
 /// \arg phsle symbol being defined
 /// 
@@ -1228,7 +1197,6 @@ char *ParserContextQualifyToEnvironment(char *pc)
 ///	Previous actual symbol
 /// 
 /// \brief Set symbol being defined.
-/// \details 
 /// 
 
 struct symtab_HSolveListElement *
@@ -1251,14 +1219,12 @@ ParserContextSetActual
 
 
 /// 
-/// 
 /// \arg pac parser context
 /// \arg pif imported file
 /// 
 /// \return void
 /// 
 /// \brief Set imported file attached to parser context
-/// \details 
 /// 
 
 void ParserContextSetImportedFile(PARSERCONTEXT *pac,struct ImportedFile *pif)
@@ -1325,7 +1291,6 @@ void ParserContextSetImportedFile(PARSERCONTEXT *pac,struct ImportedFile *pif)
 
 
 /// 
-/// 
 /// \arg pac parser context
 /// 
 /// \return struct symtab_IdentifierIndex * :
@@ -1333,7 +1298,6 @@ void ParserContextSetImportedFile(PARSERCONTEXT *pac,struct ImportedFile *pif)
 ///	name of popped element, NULL for failure
 /// 
 /// \brief Pop current element name
-/// \details 
 /// 
 
 struct symtab_IdentifierIndex * 
@@ -1352,13 +1316,11 @@ ParserCurrentElementPop
 
 
 /// 
-/// 
 /// \arg pac parser context
 /// 
 /// \return void
 /// 
 /// \brief Pop all current element names (empties element stack)
-/// \details 
 /// 
 /// \note  See ParserContextPrepare() for more info on this function.
 /// 
@@ -1372,14 +1334,12 @@ void ParserCurrentElementPopAll(PARSERCONTEXT *pac)
 
 
 /// 
-/// 
 /// \arg pac parser context
 /// \arg pidinName new current element name
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Set new current element name.
-/// \details 
 /// 
 /// \note  See ParserContextPrepare() for more info on this function.
 /// 
@@ -1398,11 +1358,9 @@ int ParserCurrentElementPush
 
 
 /// 
-/// 
 /// \return void
 /// 
 /// \brief Finish parsing, clean up
-/// \details 
 /// 
 
 void ParserFinish(void)
@@ -1421,14 +1379,14 @@ void ParserFinish(void)
 
 
 /// 
-/// 
-///	pac.........: parser context, NULL for default root context.
+/// \arg pac parser context, NULL for default root context.
 /// \arg pcFilename file to parse
 /// \arg pcNameSpace name space for imported models
 /// 
 /// \return int : success of operation
 /// 
 /// \brief import file, parse if necessary
+///
 /// \details 
 /// 
 ///	Import the given file, if it is not yet imported, parse it with the
@@ -1612,7 +1570,6 @@ ParserImport
 
 
 /// 
-/// 
 /// \arg pacContext parser context to search for symbol
 /// \arg pidin namespaced hierarchical name to search for
 /// 
@@ -1621,6 +1578,7 @@ ParserImport
 ///	source of dependency, NULL if not found.
 /// 
 /// \brief lookup a dependency symbol
+///
 /// \details 
 /// 
 ///	Gives pointer into another pif struct its public model symbols,
@@ -1660,7 +1618,6 @@ ParserLookupDependencyModel
 
 
 /// 
-/// 
 /// \arg pcIdentifier name of private model to search
 /// 
 /// \return struct symtab_HSolveListElement * : 
@@ -1668,6 +1625,7 @@ ParserLookupDependencyModel
 ///	private, NULL for failure
 /// 
 /// \brief lookup a private model
+///
 /// \details 
 /// 
 ///	Lookup a private in current active private models
@@ -1797,7 +1755,6 @@ struct symtab_HSolveListElement *ParserLookupPrivateModel(char *pcIdentifier)
 
 
 /// 
-/// 
 /// \arg pacContext parser context
 /// \arg iPriority priority of given message
 /// \arg pcContext descriptive string for parsing context (unused)
@@ -1808,6 +1765,7 @@ struct symtab_HSolveListElement *ParserLookupPrivateModel(char *pcIdentifier)
 ///		 -1 : stop parsing
 /// 
 /// \brief log a message from any of the parsing functions
+///
 /// \details 
 /// 
 ///	iPriority is compared with the verbosity option given on the command
@@ -1912,16 +1870,16 @@ int ParserMessage
 
 
 /// 
-/// 
 /// \arg pacContext parser context
 /// \arg palgi algorithm instance to disable.
 /// \arg pcName name of algorithm to import
 /// \arg pcInstance name of algorithm instance to create
-///	pcInit.....: init string of algorithm, only for diag's
+/// \arg pcInit init string of algorithm, only for diag's
 /// 
 /// \return int : success of operation
 /// 
 /// \brief disable a loadable algorithm
+///
 /// \details 
 /// 
 ///	Does some parsing logging, calls AlgorithmDisable()
@@ -1977,7 +1935,6 @@ int ParserAlgorithmDisable
 
 
 /// 
-/// 
 /// \arg pac parser context
 /// \arg phsle symbol to handle
 /// \arg palgi algorithm instance that should handle given symbol.
@@ -1988,7 +1945,6 @@ int ParserAlgorithmDisable
 /// \return int : success of operation
 /// 
 /// \brief Call algorithm instance handler on given symbol.
-/// \details 
 /// 
 
 int
@@ -2057,7 +2013,6 @@ ParserAlgorithmHandle
 
 
 /// 
-/// 
 /// \arg pacContext parser context
 /// \arg pcName name of algorithm class to import
 /// \arg pcInstance name of algorithm instance to create
@@ -2070,6 +2025,7 @@ ParserAlgorithmHandle
 ///	instance of imported algorithm, NULL for failure.
 /// 
 /// \brief import a algorithm
+///
 /// \details 
 /// 
 ///	Does some parsing logging, calls AlgorithmImport()
@@ -2150,13 +2106,13 @@ ParserAlgorithmImport
 
 
 /// 
-/// 
 /// \arg pacParserContext parser context
 /// \arg pifToParse parse request
 /// 
 /// \return int : success of operation
 /// 
 /// \brief serve a new parse request
+///
 /// \details 
 /// 
 ///	Filename of file to parse and parsing function must both be given in
@@ -2284,7 +2240,6 @@ int ParserParse
 
 
 /// 
-/// 
 /// \arg pac parser context.
 /// \arg phsle symbol needed for preparation.
 /// 
@@ -2351,7 +2306,6 @@ ParserContextPrepare
 
 
 /// 
-/// 
 /// \arg pacContext parser context
 /// 
 /// \return int
@@ -2394,13 +2348,11 @@ static int ParserContextRepair(PARSERCONTEXT *pac)
 
 
 /// 
-/// 
 /// \arg pac new parser context
 /// 
 /// \return void
 /// 
 /// \brief Set new parser context
-/// \details 
 /// 
 
 void ParserSetContext(PARSERCONTEXT *pac)
@@ -2425,13 +2377,11 @@ void ParserSetContext(PARSERCONTEXT *pac)
 
 
 /// 
-/// 
 /// \arg pac new root parser context
 /// 
 /// \return void
 /// 
 /// \brief Set new root parser context
-/// \details 
 /// 
 
 void ParserSetRootContext(PARSERCONTEXT *pac)
@@ -2462,11 +2412,9 @@ void ParserSetRootContext(PARSERCONTEXT *pac)
 
 
 /// 
-/// 
 /// \return void
 /// 
 /// \brief Initialize parsing
-/// \details 
 /// 
 
 void ParserStart(void)
