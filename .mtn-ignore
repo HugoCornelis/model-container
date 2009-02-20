@@ -3,6 +3,7 @@ tests/glue
 
 Makefile$
 ^analyzer.c$
+^analyzer.l$
 ^convertors/des2xml$
 ^convertors/des2xml_comment$
 ^convertors/des2xml_comment.c$
