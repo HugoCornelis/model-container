@@ -383,7 +383,7 @@ SymbolFindCachedParameter
     {
 	fprintf(stderr, "Cannot update context caches in SymbolFindCachedParameter()\n");
 
-/* 	return(NULL); */
+	return(NULL);
     }
 
     //- set serial

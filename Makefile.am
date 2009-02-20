@@ -348,7 +348,7 @@ parser.y: $(srcdir)/parser.decl hierarchy/output/symbols/.sentinel parser.rules.
 	cat >parser.y $(srcdir)/parser.decl hierarchy/output/symbols/description.tokens parser.rules.numbered $(srcdir)/parser.additions
 parser.rules.numbered: $(srcdir)/parser.rules
 	perl -ne 'BEGIN { $$filename = shift @ARGV ; $$line++ } $$line++ ; s/^#line.*/#line $$line "$$filename"/; print' <$(srcdir)/parser.rules >parser.rules.numbered $(srcdir)/parser.rules
-parser.rules: hierarchy/output/symbols/.sentinel
+parser.rules: hierarchy/output/symbols/.sentinel analyzer.l
 	cat hierarchy/output/symbols/grammar/*.types >hierarchy/output/symbols/grammar/02_defined_types.rules
 	cat hierarchy/output/symbols/grammar/*.rules >parser.rules
 analyzer.l: hierarchy/output/symbols/.sentinel

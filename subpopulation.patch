@@ -1,0 +1,103 @@
+#
+# old_revision [d74762c2370d6bfee49c91208fcf4cb2bf9bebed]
+#
+# patch "hierarchy/symbols"
+#  from [57f726c82c615baab0b10f166154fba6c1358c9f]
+#    to [93f57de7113285ab31d19a4bc28a8086f925003f]
+#
+============================================================
+--- hierarchy/symbols	57f726c82c615baab0b10f166154fba6c1358c9f
++++ hierarchy/symbols	93f57de7113285ab31d19a4bc28a8086f925003f
+@@ -683,6 +683,7 @@ my $class_hierarchy
+ 				     components => [
+ 						    'Cell',
+ 						    'Randomvalue',
++						    'Subpopulation',
+ 						   ],
+ 				     specific_allocator => 'PopulationCalloc',
+ 				     specific_token => {
+@@ -705,45 +706,45 @@ my $class_hierarchy
+ 					EXTENT_Z => 'coordinate of the last cell minus coordinate of the first cell',
+ 				       },
+ 			},
+-# 	  subpopulation => {
+-# 			    allows => {
+-# 				       'count_cells' => 'population',
+-# 				       'create_alias' => 'population',
+-# 				       'get_parameter' => 'population',
+-# 				      },
+-# 			    annotations => {
+-# 					    'piSymbolType2Biolevel' => 'BIOLEVEL_POPULATION',
+-# 					   },
+-# 			    description => 'a subset of cells',
+-# 			    dimensions => [
+-# 					   'movable',
+-# 					  ],
+-# 			    grammar => {
+-# 					components => [
+-# 						       'Cell',
+-# 						       'Randomvalue',
+-# 						      ],
+-# 					specific_allocator => 'PopulationCalloc',
+-# 					specific_token => {
+-# 							   class => 'population',
+-# 							   lexical => 'TOKEN_SUBPOPULATION',
+-# 							   purpose => 'physical',
+-# 							  },
+-# 					typing => {
+-# 						   base => 'phsle',
+-# 						   id => 'pidin',
+-# 						   spec => 'ppopu',
+-# 						   to_base => '->segr.bio.ioh.iol.hsle',
+-# 						  },
+-# 				       },
+-# 			    isa => 'segmenter',
+-# 			    name => 'symtab_Population',
+-# 			    parameters => {
+-# 					   EXTENT_X => 'coordinate of the last cell minus coordinate of the first cell',
+-# 					   EXTENT_Y => 'coordinate of the last cell minus coordinate of the first cell',
+-# 					   EXTENT_Z => 'coordinate of the last cell minus coordinate of the first cell',
+-# 					  },
+-# 			   },
++ 	  subpopulation => {
++ 			    allows => {
++ 				       'count_cells' => 'population',
++ 				       'create_alias' => 'population',
++ 				       'get_parameter' => 'population',
++ 				      },
++ 			    annotations => {
++ 					    'piSymbolType2Biolevel' => 'BIOLEVEL_POPULATION',
++ 					   },
++ 			    description => 'a subset of cells',
++ 			    dimensions => [
++ 					   'movable',
++ 					  ],
++ 			    grammar => {
++ 					components => [
++ 						       'Cell',
++ 						       'Randomvalue',
++ 						      ],
++ 					specific_allocator => 'PopulationCalloc',
++ 					specific_token => {
++ 							   class => 'population',
++ 							   lexical => 'TOKEN_SUBPOPULATION',
++ 							   purpose => 'physical',
++ 							  },
++ 					typing => {
++ 						   base => 'phsle',
++ 						   id => 'pidin',
++ 						   spec => 'ppopu',
++ 						   to_base => '->segr.bio.ioh.iol.hsle',
++ 						  },
++ 				       },
++ 			    isa => 'segmenter',
++ 			    name => 'symtab_Population',
++ 			    parameters => {
++ 					   EXTENT_X => 'coordinate of the last cell minus coordinate of the first cell',
++ 					   EXTENT_Y => 'coordinate of the last cell minus coordinate of the first cell',
++ 					   EXTENT_Z => 'coordinate of the last cell minus coordinate of the first cell',
++ 					  },
++ 			   },
+ 	  segment => {
+ 		      allows => {
+ 				 'create_alias' => 'segment',
