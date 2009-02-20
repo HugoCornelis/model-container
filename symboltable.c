@@ -127,7 +127,6 @@ int SymbolDeleter(struct TreespaceTraversal *ptstr, void *pvUserdata)
 ///	Unique string representation identifying this symbol content.
 /// 
 /// \brief Get ID identifying this symbol content.
-/// \details 
 /// 
 /// \note 
 /// 
@@ -158,9 +157,8 @@ BaseSymbolGetID(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist
 
 
 /// 
-/// 
 /// \arg phsle symbol to use for caching.
-///	iSerial: serial to use for caching, context of parameter.
+/// \arg iSerial serial to use for caching, context of parameter.
 /// \arg pcName name of parameter.
 /// \arg dNumber value of parameter.
 /// 
@@ -225,7 +223,7 @@ SymbolCacheParameterDouble
 /// 
 /// 
 /// \arg phsle symbol to use for caching.
-///	iSerial: serial to use for caching, context of parameter.
+/// \arg iSerial serial to use for caching, context of parameter.
 /// \arg pcName name of parameter.
 /// \arg pcValue value of parameter.
 /// 
@@ -288,7 +286,6 @@ SymbolCacheParameterString
 
 
 /// 
-/// 
 /// \arg std ANSI calloc() parameters.
 /// \arg _vtable function table.
 /// \arg iType type of element.
@@ -298,7 +295,6 @@ SymbolCacheParameterString
 ///	Newly allocated symbol, NULL for failure.
 /// 
 /// \brief Allocate a new symbol table element.
-/// \details 
 /// 
 
 struct symtab_HSolveListElement *
@@ -340,7 +336,6 @@ SymbolCalloc(size_t nmemb, size_t size, VTable_symbols * _vtable, int iType)
 }
 
 
-/// 
 /// 
 /// \arg phsle symbol to find parameter of.
 /// \arg pcName name of parameter.
@@ -469,7 +464,6 @@ SymbolFindCachedParameter
 
 
 /// 
-/// 
 /// \arg phsle symbol to find parameter of.
 /// \arg pcName name of parameter.
 /// \arg ppist context of symbol.
@@ -514,7 +508,6 @@ SymbolFindParameter
 
 
 /// 
-/// 
 /// \arg phsle symbol to free.
 /// 
 /// \return int
@@ -522,7 +515,6 @@ SymbolFindParameter
 ///	Success of operation.
 /// 
 /// \brief Free memory of a symbol table element
-/// \details 
 /// 
 
 int SymbolFree(struct symtab_HSolveListElement *phsle)
@@ -558,13 +550,11 @@ int SymbolFree(struct symtab_HSolveListElement *phsle)
 
 
 /// 
-/// 
 /// \arg phsle symbol to get algorithm info for
 /// 
 /// \return struct AlgorithmInstance * : algorithm instance
 /// 
 /// \brief Get algorithm info for symbol
-/// \details 
 /// 
 
 struct AlgorithmInstance *
@@ -577,7 +567,6 @@ SymbolGetAlgorithmInstanceInfo(struct symtab_HSolveListElement *phsle)
 
 
 /// 
-/// 
 /// \arg phsle symbol to get individual workload for.
 /// \arg ppist context of symbol
 /// 
@@ -587,7 +576,6 @@ SymbolGetAlgorithmInstanceInfo(struct symtab_HSolveListElement *phsle)
 ///	in workload units, -1 for failure.
 /// 
 /// \brief Get workload for this symbol.
-/// \details 
 /// 
 
 int
@@ -658,13 +646,11 @@ SymbolGetWorkloadIndividual
 
 
 /// 
-/// 
 /// \arg phsle symbol to init.
 /// 
 /// \return void
 /// 
 /// \brief Init a new symbol table element
-/// \details 
 /// 
 
 void SymbolInit(struct symtab_HSolveListElement * phsle)
@@ -680,7 +666,6 @@ void SymbolInit(struct symtab_HSolveListElement * phsle)
 
 
 /// 
-/// 
 /// \arg phsle symbol container
 /// \arg ppist context of symbol
 /// \arg ppistCoord context to get coordinate for
@@ -691,6 +676,7 @@ void SymbolInit(struct symtab_HSolveListElement * phsle)
 /// \return pD3Coord coordinate receiving result
 /// 
 /// \brief Resolve coordinates for symbol.
+///
 /// \details 
 /// 
 ///	Coordinate values are by default relative to parent.  
@@ -866,7 +852,6 @@ SymbolParameterResolveCoordinateValue
 
 
 /// 
-/// 
 /// \arg phsle symbol container
 /// \arg ppist context of symbol
 /// \arg ppistCoord context to get coordinate for
@@ -875,6 +860,7 @@ SymbolParameterResolveCoordinateValue
 /// \return double : coordinate parameter value, FLT_MAX if some error occured
 /// 
 /// \brief Resolve coordinate value of parameter
+///
 /// \details 
 /// 
 ///	Coordinate values are by default relative to parent.  
@@ -1034,7 +1020,6 @@ SymbolParameterResolveTransformedValue
 
 
 /// 
-/// 
 /// \arg phsle symbol to get parameter for
 /// \arg ppist context of symbol
 /// \arg pcName name of parameter
@@ -1042,7 +1027,6 @@ SymbolParameterResolveTransformedValue
 /// \return double : scaled parameter value, FLT_MAX if some error occured
 /// 
 /// \brief Resolve scaled value of parameter
-/// \details 
 /// 
 
 double
@@ -1075,7 +1059,6 @@ SymbolParameterResolveScaledValue
 
 
 /// 
-/// 
 /// \arg phsle symbol to calculate absolute value
 /// \arg ppist context of given element
 /// \arg ppar parameter that specifies type of transformation
@@ -1086,7 +1069,6 @@ SymbolParameterResolveScaledValue
 /// \return pD3 transformed coordinate
 /// 
 /// \brief Calculate transformation on value for given parameter.
-/// \details 
 /// 
 
 static 
@@ -1357,7 +1339,6 @@ SymbolParameterTransformValue
 
 
 /// 
-/// 
 /// \arg phsle symbol container.
 /// \arg ppist context of given element
 ///	iPrincipal.: principal serial ID for sub-symbol.
@@ -1367,7 +1348,6 @@ SymbolParameterTransformValue
 ///	symbol corresponding to iPrincipal, NULL for failure
 /// 
 /// \brief Convert principal serial ID to symbol info.
-/// \details 
 /// 
 
 struct SymbolPrincipal2ContextData
@@ -1787,6 +1767,7 @@ SymbolPrincipalSerial2RelativeContext
 /// \return int : success of operation
 /// 
 /// \brief Recalculate all serial mappings of given symbol
+///
 /// \details 
 /// 
 ///	For the given symbol only \#SU is updated, the serial to
@@ -2539,14 +2520,12 @@ int SymbolRecalcAllSerials
 
 
 /// 
-/// 
 /// \arg phsle symbol to add algorithm info to
 /// \arg palgi algorithm instance
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Add algorithm info to symbol
-/// \details 
 /// 
 
 int
@@ -2578,7 +2557,6 @@ SymbolSetAlgorithmInstanceInfo
 }
 
 
-/// 
 /// 
 /// \arg phsle symbol to get parameter for
 /// \arg ppist context of symbol.
@@ -2627,7 +2605,6 @@ SymbolSetParameterFixedDouble
 }
 
 
-/// 
 /// 
 /// \arg phsle symbol to traverse spike generators for
 /// \arg ppist context of symbol, symbol assumed to be on top
@@ -2772,7 +2749,6 @@ int SymbolTraverseBioLevels
 
 
 /// 
-/// 
 /// \arg phsle symbol to traverse wildcard for.
 /// \arg ppist context of symbol, symbol assumed to be on top.
 /// \arg pfProcesor processor.
@@ -2824,7 +2800,6 @@ SymbolTraverseDescendants
 }
 
 
-/// 
 /// 
 /// \arg phsle symbol to traverse spike generators for.
 /// \arg ppist context of symbol, symbol assumed to be on top.
@@ -2918,7 +2893,6 @@ SymbolTraverseTagged
 }
 
 
-/// 
 /// 
 /// \arg phsle symbol to traverse wildcard for
 /// \arg ppist context of symbol, symbol assumed to be on top
@@ -3021,13 +2995,13 @@ SymbolTraverseWildcard
 
 
 /// 
-/// 
 /// \arg phsle symbol container.
 /// \arg phsleChild child to add.
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Add a child to the children of given symbol container.
+///
 /// \details 
 /// 
 ///	Updates (sub)?space indices if symbol type has mappings.
@@ -3035,18 +3009,15 @@ SymbolTraverseWildcard
 
 
 /// 
-/// 
 /// \arg phsle symbol.
 /// \arg pioc IO relations.
 /// 
 /// \return int : success of operation.
 /// 
 /// \brief Assign bindable relations to symbol.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol.
 /// \arg pio inputs.
@@ -3054,11 +3025,9 @@ SymbolTraverseWildcard
 /// \return int : success of operation.
 /// 
 /// \brief Assign inputs to symbol.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol.
 /// \arg ppar parameters.
@@ -3066,11 +3035,9 @@ SymbolTraverseWildcard
 /// \return int : success of operation.
 /// 
 /// \brief Assign bindable relations to symbol.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to count cells for.
 /// \arg ppist context of symbol
@@ -3078,11 +3045,9 @@ SymbolTraverseWildcard
 /// \return int : number of cells in symbol, -1 for failure.
 /// 
 /// \brief Count cells of symbol.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to count connections for.
 /// \arg ppist context of symbol
@@ -3090,11 +3055,9 @@ SymbolTraverseWildcard
 /// \return int : number of connections in symbol, -1 for failure.
 /// 
 /// \brief Count connections of symbol.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to count segments for
 /// \arg ppist context of symbol, symbol assumed to be on top
@@ -3104,11 +3067,9 @@ SymbolTraverseWildcard
 ///	Number of segments, -1 for failure.
 /// 
 /// \brief Count segments.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to count spike generators for
 /// \arg ppist context of symbol, symbol assumed to be on top
@@ -3118,11 +3079,9 @@ SymbolTraverseWildcard
 ///	Number of spike generators, -1 for failure.
 /// 
 /// \brief Count spike generators.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to count spike receivers for
 /// \arg ppist context of symbol, symbol assumed to be on top
@@ -3132,11 +3091,9 @@ SymbolTraverseWildcard
 ///	Number of spike receivers, -1 for failure.
 /// 
 /// \brief Count spike receivers.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg pbio symbol to alias
 /// \arg pidin name of new symbol
@@ -3144,11 +3101,9 @@ SymbolTraverseWildcard
 /// \return struct symtab_BioComponent * : alias for original symbol
 /// 
 /// \brief Create alias to given symbol
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol that receives given input
 /// \arg pio input to search
@@ -3156,22 +3111,18 @@ SymbolTraverseWildcard
 /// \return struct symtab_HSolveListElement * : symbol generating given input
 /// 
 /// \brief Look for symbol that generates given input
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to get children from.
 /// 
 /// \return IOHContainer * : symbol container.
 /// 
 /// \brief Get children from given symbol.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg piol symbol to get inputs from.
 /// 
@@ -3180,11 +3131,9 @@ SymbolTraverseWildcard
 ///	input container of symbol.
 /// 
 /// \brief Find inputs of symbol.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to get parameter for
 /// \arg pcName name of parameter
@@ -3193,33 +3142,27 @@ SymbolTraverseWildcard
 /// \return struct symtab_Parameters * : parameter structure
 /// 
 /// \brief Get parameter of symbol
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to get name for.
 /// 
 /// \return char * : name of symbol.
 /// 
 /// \brief Get name of symbol.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to get options for.
 /// 
 /// \return int : options.
 /// 
 /// \brief Get options of symbol.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to get parameter for.
 /// \arg ppist context of symbol.
@@ -3228,22 +3171,18 @@ SymbolTraverseWildcard
 /// \return struct symtab_Parameters * : parameter structure
 /// 
 /// \brief Get parameter of symbol
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to get pidin for
 /// 
 /// \return struct symtab_IdentifierIndex * : pidin of symbol
 /// 
 /// \brief Get pidin for symbol
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to get prototype for.
 /// 
@@ -3257,7 +3196,6 @@ SymbolTraverseWildcard
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to get type for.
 /// 
@@ -3285,7 +3223,6 @@ SymbolTraverseWildcard
 
 
 /// 
-/// 
 /// \arg phsle symbol to check.
 /// \arg pc name of input.
 /// \arg i location of input.
@@ -3293,11 +3230,9 @@ SymbolTraverseWildcard
 /// \return int : TRUE if symbol has bindable IO relations.
 /// 
 /// \brief Check if symbol has bindable IO relations.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to check
 /// \arg ppist context of channel
@@ -3305,33 +3240,27 @@ SymbolTraverseWildcard
 /// \return int : TRUE if symbol contains an equation.
 /// 
 /// \brief Check if symbol contains an equation.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle channel to check
 /// 
 /// \return int : TRUE if symbol has MG blocking
 /// 
 /// \brief Check if symbol G is MG blocked.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle channel to check
 /// 
 /// \return int : TRUE if symbol has nernst
 /// 
 /// \brief Check if symbol Erev nernst-equation controlled
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to get parameter for.
 /// \arg ppars new list of parameters.
@@ -3339,11 +3268,9 @@ SymbolTraverseWildcard
 /// \return int : success of operation.
 /// 
 /// \brief Add new paramaters, not overriding existing ones.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol container.
 /// \arg ppist element to search.
@@ -3354,11 +3281,9 @@ SymbolTraverseWildcard
 /// \return struct symtab_HSolveListElement * : searched symbol.
 /// 
 /// \brief lookup a hierarchical symbol name in another symbol.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsleCont symbol container
 /// \arg ppistCont context of container
@@ -3368,11 +3293,9 @@ SymbolTraverseWildcard
 /// \return int : serial ID of symbol with respect to container, -1 for failure
 /// 
 /// \brief Get a serial unique ID for symbol with respect to container
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to get parameter for
 /// \arg pcName name of parameter
@@ -3381,11 +3304,9 @@ SymbolTraverseWildcard
 /// \return double : parameter value, FLT_MAX if some error occured
 /// 
 /// \brief Resolve value of parameter
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to do scaling
 /// \arg ppist context of given element
@@ -3395,11 +3316,9 @@ SymbolTraverseWildcard
 /// \return double : scaled value, FLT_MAX for failure
 /// 
 /// \brief Scale value according to parameter type and symbol type
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to print
 /// \arg iIndent number of indentation spaces
@@ -3408,11 +3327,9 @@ SymbolTraverseWildcard
 /// \return int : success of operation
 /// 
 /// \brief Pretty print symbol
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to resolve input for
 /// \arg ppist context of given element
@@ -3424,11 +3341,9 @@ SymbolTraverseWildcard
 ///	symbol table element generating input, NULL for non-existent
 /// 
 /// \brief Find input with given name
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to resolve input for
 /// \arg ppist context of given element
@@ -3439,11 +3354,9 @@ SymbolTraverseWildcard
 /// \return struct symtab_HSolveListElement * : symbol that gives input
 /// 
 /// \brief Find input to functional parameter
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to set coordinates for.
 /// \arg x coordinate x
@@ -3453,11 +3366,9 @@ SymbolTraverseWildcard
 /// \return int : success of operation
 /// 
 /// \brief Set coordinates for symbol.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to set name of
 /// \arg pidin name.
@@ -3465,11 +3376,9 @@ SymbolTraverseWildcard
 /// \return int : success of operation
 /// 
 /// \brief Set name of symbol.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to set parameter for.
 /// \arg iOptions options for symbol.
@@ -3477,16 +3386,14 @@ SymbolTraverseWildcard
 /// \return int : success of operation.
 /// 
 /// \brief Set options of symbol.
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to get parameter for
 /// \arg pcName name of parameter
 /// \arg dNumber: parameter value
-///	ppist context of symbol (not used at the moment, can be changed)
+/// \arg ppist context of symbol (not used at the moment, can be changed)
 /// 
 /// \return struct symtab_Parameters * : parameter structure
 /// 
@@ -3503,12 +3410,11 @@ SymbolTraverseWildcard
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to get parameter for
 /// \arg pcName name of parameter
 /// \arg pcValue: parameter value
-///	ppist context of symbol (not used at the moment, can be changed)
+/// \arg ppist context of symbol (not used at the moment, can be changed)
 /// 
 /// \return struct symtab_Parameters * : parameter structure
 /// 
@@ -3525,7 +3431,6 @@ SymbolTraverseWildcard
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to set prototype for.
 /// \arg phsleProto prototype symbol.
@@ -3540,7 +3445,6 @@ SymbolTraverseWildcard
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to get type for.
 /// \arg iType type of symbol.
@@ -3569,7 +3473,6 @@ SymbolTraverseWildcard
 
 
 /// 
-/// 
 /// \arg ptstr initialized treespace traversal
 /// \arg phsle symbol to traverse
 /// 
@@ -3580,7 +3483,6 @@ SymbolTraverseWildcard
 ///	-1 : immediate abort
 /// 
 /// \brief Traverse symbols in tree manner.
-/// \details 
 /// 
 /// \note  See IOHierarchyTraverse()
 /// 
@@ -3598,7 +3500,6 @@ SymbolTraverseWildcard
 
 
 /// 
-/// 
 /// \arg phsle symbol to traverse segments for
 /// \arg ppist context of symbol, symbol assumed to be on top
 /// \arg pfProcesor segment processor
@@ -3612,11 +3513,9 @@ SymbolTraverseWildcard
 ///	-1 : immediate abort
 /// 
 /// \brief Traverse segments, call pfProcessor on each of them
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to traverse spike generators for
 /// \arg ppist context of symbol, symbol assumed to be on top
@@ -3627,11 +3526,9 @@ SymbolTraverseWildcard
 /// \return int : success of operation
 /// 
 /// \brief Traverse spike generators, call pfProcessor on each of them
-/// \details 
 /// 
 
 
-/// 
 /// 
 /// \arg phsle symbol to traverse spike receivers for
 /// \arg ppist context of symbol, symbol assumed to be on top
@@ -3642,7 +3539,6 @@ SymbolTraverseWildcard
 /// \return int : see TstrGo()
 /// 
 /// \brief Traverse spike receivers, call pfProcessor on each of them
-/// \details 
 /// 
 
 
