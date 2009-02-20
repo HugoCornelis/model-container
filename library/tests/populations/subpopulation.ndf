@@ -75,18 +75,18 @@ PUBLIC_MODELS
 
 		SUBPOPULATION Cortical
 
-			ALGORITHM Grid3D
-				GranuleGrid
-				PARAMETERS
-					PARAMETER ( PROTOTYPE = "Granule_cell" ),
-					PARAMETER ( X_COUNT = 120.0 ),
-					PARAMETER ( X_DISTANCE = 2.5e-05 ),
-					PARAMETER ( Y_COUNT = 26.0 ),
-					PARAMETER ( Y_DISTANCE = 1.875e-05 ),
-					PARAMETER ( Z_COUNT = 1.0 ),
-					PARAMETER ( Z_DISTANCE = 2e-5 ),
-				END PARAMETERS
-			END ALGORITHM
+// 			ALGORITHM Grid3D
+// 				GranuleGrid
+// 				PARAMETERS
+// 					PARAMETER ( PROTOTYPE = "Granule_cell" ),
+// 					PARAMETER ( X_COUNT = 120.0 ),
+// 					PARAMETER ( X_DISTANCE = 2.5e-05 ),
+// 					PARAMETER ( Y_COUNT = 26.0 ),
+// 					PARAMETER ( Y_DISTANCE = 1.875e-05 ),
+// 					PARAMETER ( Z_COUNT = 1.0 ),
+// 					PARAMETER ( Z_DISTANCE = 2e-5 ),
+// 				END PARAMETERS
+// 			END ALGORITHM
 
 			PARAMETERS
 				PARAMETER ( X = 0.0 ),
@@ -98,18 +98,18 @@ PUBLIC_MODELS
 
 		SUBPOPULATION Periphery
 
-			ALGORITHM Grid3D
-				GranuleGrid
-				PARAMETERS
-					PARAMETER ( PROTOTYPE = "Granule_cell" ),
-					PARAMETER ( X_COUNT = 120.0 ),
-					PARAMETER ( X_DISTANCE = 2.5e-05 ),
-					PARAMETER ( Y_COUNT = 26.0 ),
-					PARAMETER ( Y_DISTANCE = 1.875e-05 ),
-					PARAMETER ( Z_COUNT = 1.0 ),
-					PARAMETER ( Z_DISTANCE = 4e-5 ),
-				END PARAMETERS
-			END ALGORITHM
+// 			ALGORITHM Grid3D
+// 				GranuleGrid
+// 				PARAMETERS
+// 					PARAMETER ( PROTOTYPE = "Granule_cell" ),
+// 					PARAMETER ( X_COUNT = 120.0 ),
+// 					PARAMETER ( X_DISTANCE = 2.5e-05 ),
+// 					PARAMETER ( Y_COUNT = 26.0 ),
+// 					PARAMETER ( Y_DISTANCE = 1.875e-05 ),
+// 					PARAMETER ( Z_COUNT = 1.0 ),
+// 					PARAMETER ( Z_DISTANCE = 4e-5 ),
+// 				END PARAMETERS
+// 			END ALGORITHM
 
 			PARAMETERS
 				PARAMETER ( X = 0.0 ),
