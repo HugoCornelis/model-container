@@ -9,7 +9,8 @@ my $test
        command_definitions => [
 			       {
 				arguments => [
-					      '-q',
+					      '-v',
+					      '1',
 					      '-R',
 					      'tests/populations/subpopulation.ndf',
 					     ],
@@ -174,7 +175,6 @@ my $test
 			       },
 			      ],
        description => "source code extensions",
-       disabled => "does not work yet, reason unknown",
        name => 'extensions.t',
       };
 
