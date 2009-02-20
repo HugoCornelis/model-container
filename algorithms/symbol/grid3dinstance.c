@@ -139,7 +139,6 @@ Grid3DInstanceSymbolHandler
 
 
 /// 
-/// 
 /// \arg std AlgorithmHandler args
 /// 
 /// \return struct AlgorithmInstance *  
@@ -147,7 +146,6 @@ Grid3DInstanceSymbolHandler
 ///	created algorithm instance, NULL for failure
 /// 
 /// \brief Algorithm handler to create instance of Grid3D algorithm.
-/// \details 
 /// 
 
 struct AlgorithmInstance *
@@ -278,14 +276,14 @@ Grid3DInstanceNew
 
 
 /// 
-/// 
-///	palg..: grid3d algorithm
+/// \arg palg grid3d algorithm
 /// \arg pioh symbol to add components to
 /// \arg ppist current parser context
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Add components as specified by options and variables.
+///
 /// \details 
 /// 
 ///	After adding, used to call SymbolRecalcAllSerials() on given 
@@ -416,13 +414,11 @@ Grid3DAddComponents
 
 
 /// 
-/// 
 /// \arg std AlgorithmHandler args
 /// 
 /// \return int  std AlgorithmHandler return value
 /// 
 /// \brief Algorithm handler to print info on grid 3d instance actions.
-/// \details 
 /// 
 
 static int Grid3DInstancePrintInfo
@@ -479,12 +475,12 @@ static int Grid3DInstancePrintInfo
 
 
 /// 
-/// 
-///	AlgorithmSymbolHandler args.
+/// \arg AlgorithmSymbolHandler args.
 /// 
 /// \return int : std AlgorithmHandler return value
 /// 
 /// \brief Algorithm handler to add Grid3Ds on given symbol
+///
 /// \details 
 /// 
 ///	Does it do a clean update of serials ?
