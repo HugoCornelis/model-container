@@ -20,7 +20,7 @@
 
 #include <math.h>
 #include <stdlib.h>
-
+#include <stdio.h>
 
 #include "neurospaces/parcontainer.h"
 
@@ -71,6 +71,61 @@ struct symtab_ParContainer * ParContainerCalloc(void)
     //- return result
 
     return(pparcResult);
+}
+
+
+/// 
+/// \arg pparc container
+/// \arg ppist context
+/// \arg pfile file to export to, NULL for stdout.
+/// 
+/// \return int success of operation.
+/// 
+/// \brief export all parameters to YAML.
+///
+/// \todo pfile does not propagate through yet.
+///
+
+int
+ParContainerExportYAML
+(struct symtab_ParContainer *pparc, struct PidinStack *ppist, FILE *pfile)
+{
+    //- set default result: ok
+
+    int iResult = 1;
+
+    //- default output file (should be)
+
+    if (pfile)
+    {
+	pfile = stdout;
+    }
+
+    //- loop over parameters
+
+    struct symtab_Parameters *pparLoop = pparc->ppars;
+
+    while (pparLoop)
+    {
+	//- print parameter info
+
+	// \todo add pfile to arguments.
+
+	if (!ParameterPrintInfoRecursive(pparLoop, ppist, 0))
+	{
+	    iResult = 0;
+
+	    break;
+	}
+
+	//- next parameter
+
+	pparLoop = pparLoop->pparNext;
+    }
+
+    //- return result
+
+    return(iResult);
 }
 
 

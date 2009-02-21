@@ -185,6 +185,7 @@ static QueryHandler QueryHandlerPrintSegmentCount;
 static QueryHandler QueryHandlerPrintSpikeReceiverCount;
 static QueryHandler QueryHandlerPrintSpikeReceiverSerialID;
 static QueryHandler QueryHandlerPrintSpikeSenderCount;
+static QueryHandler QueryHandlerPrintSymbolParameters;
 static QueryHandler QueryHandlerProjectionQuery;
 static QueryHandler QueryHandlerProjectionQueryCount;
 static QueryHandler QueryHandlerResolveSolverID;
@@ -880,6 +881,17 @@ static QueryHandlerAssociation pquhasTable[] =
     {
 	"spikesendercount",
 	QueryHandlerPrintSpikeSenderCount,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    /// symbol parameters
+
+    {
+	"symbolparameters",
+	QueryHandlerPrintSymbolParameters,
 #ifdef USE_READLINE
 	1,
 	QueryMachineSymbolGenerator,
@@ -6147,6 +6159,151 @@ static int QueryHandlerPrintSpikeSenderCount
 
     PidinStackFree(ppistSender);
     PidinStackFree(ppistProjection);
+
+    //- return result
+
+    return(bResult);
+}
+
+
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Handle parameter query
+///
+/// \details 
+/// 
+///	printsymbolparameters <context>
+/// 
+
+static int QueryHandlerPrintSymbolParameters
+(char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
+{
+    //- set result : ok
+
+    int bResult = TRUE;
+
+    struct symtab_HSolveListElement *phsle = NULL;
+
+    //- parse command line element
+
+    struct PidinStack *ppist = PidinStackParse(&pcLine[iLength]);
+
+/*     //- parse parameter */
+
+/*     char pcSeparator[] = " \t,;\n"; */
+
+/*     char *pcPar = strpbrk(&pcLine[iLength + 1], pcSeparator); */
+
+/*     if (!pcPar) */
+/*     { */
+/* 	fprintf(stdout, "parameter not found on command line\n"); */
+
+/* 	return(FALSE); */
+/*     } */
+
+/*     pcPar++; */
+
+    //- if the context is a wildcard
+
+    if (PidinStackIsWildcard(ppist))
+    {
+	//- allocate pidin stack pointing to root
+
+	struct PidinStack *ppistRoot = PidinStackCalloc();
+
+	if (!ppistRoot)
+	{
+	    return(FALSE);
+	}
+
+	PidinStackSetRooted(ppistRoot);
+
+	struct symtab_HSolveListElement *phsleRoot
+	    = PidinStackLookupTopSymbol(ppistRoot);
+
+	/// \note so phsleRoot can be NULL if the model description file was not found
+
+	if (phsleRoot)
+	{
+/* 	    //- traverse symbols that match with wildcard */
+
+/* 	    int iResult */
+/* 		= SymbolTraverseWildcard */
+/* 		  (phsleRoot, */
+/* 		   ppistRoot, */
+/* 		   ppist, */
+/* 		   QueryMachineWildcardParameterTraverser, */
+/* 		   NULL, */
+/* 		   (void *)pcPar); */
+
+/* 	    if (iResult != 1) */
+/* 	    { */
+/* 		fprintf(stdout, "SymbolTraverseWildcard() failed (or aborted)\n"); */
+/* 	    } */
+	}
+	else
+	{
+	    //- diag's
+
+	    fprintf(stdout, "no model loaded\n");
+	}
+
+	//- free allocated memory
+
+	PidinStackFree(ppistRoot);
+    }
+
+    //- else single parameter query
+
+    else
+    {
+	//- lookup symbol
+
+/* 	/// \note allows namespacing, yet incompatible with parameter caches. */
+
+/* 	phsle = SymbolsLookupHierarchical(pneuro->psym, ppist); */
+
+	/// \note does not allow namespacing
+
+	phsle = PidinStackLookupTopSymbol(ppist);
+
+	//- if found
+
+	if (phsle)
+	{
+	    //- if biocomponent
+
+	    if (instanceof_bio_comp(phsle))
+	    {
+		struct symtab_BioComponent *pbio
+		    = (struct symtab_BioComponent *)phsle;
+
+		struct symtab_ParContainer *pparc
+		    = pbio->pparc;
+
+		if (!ParContainerExportYAML(pparc, ppist, NULL))
+		{
+		    bResult = 0;
+		}
+	    }
+	}
+
+	//- else
+
+	else
+	{
+	    //- diag's
+
+	    fprintf(stdout, "symbol not found\n");
+	}
+    }
+
+    //- free stacks
+
+    PidinStackFree(ppist);
 
     //- return result
 
