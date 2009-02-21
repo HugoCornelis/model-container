@@ -804,20 +804,22 @@ ParameterPrintInfoRecursive
 	PrintIndent(iIndent, stdout);
 	fprintf(stdout, "%s", "value: ");
 
-	struct PidinStack *ppist = PidinStackCalloc();
+	struct PidinStack *ppist2 = PidinStackCalloc();
 
-	PidinStackPushAll(ppist, ppar->uValue.pidin);
+	PidinStackPushAll(ppist2, ppar->uValue.pidin);
 
-	PidinStackPrint(ppist, stdout);
+	PidinStackPrint(ppist2, stdout);
 
-	PidinStackFree(ppist);      
+	PidinStackFree(ppist2);      
 
 	fprintf(stdout, "%s", "\n");
 
 	PrintIndent(iIndent, stdout);
 	PidinStackString(ppistValue, pc, sizeof(pc));  
 	fprintf(stdout, "'resolved value': %s%s%s\n", pc, "->", pcFieldName);
-           
+
+	PidinStackFree(ppistValue);
+
 	return 1;
     }
 
@@ -830,9 +832,9 @@ ParameterPrintInfoRecursive
 	char *pc = ParameterGetString(ppar);
 
 	PrintIndent(iIndent, stdout);
-	fprintf(stdout,"type: String\n");
+	fprintf(stdout, "type: String\n");
 	PrintIndent(iIndent, stdout);
-	fprintf(stdout,"value: \"%s\"\n\n", pc);
+	fprintf(stdout, "value: \"%s\"\n\n", pc);
 
 	return 1;
     }
