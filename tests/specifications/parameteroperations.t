@@ -74,6 +74,37 @@ my $test
 						   read => 'value = "Purkinje_spine"',
 						   write => "printparameter /Purkinje/SpinesNormal_13_1 PROTOTYPE",
 						  },
+						  {
+						   description => "Can we find extended information for Erev function parameters ?",
+						   read => "
+'parameter name': Erev
+type: function
+'function name': NERNST
+'function parameters':
+
+  'parameter name': Cin
+  'field name': concen
+  type: Field
+  value: ../ca_pool->concen
+  'resolved value': /Purkinje/segments/soma/ca_pool->concen
+
+  'parameter name': Cout
+  type: Number
+  value: 2.4
+
+  'parameter name': valency
+  'field name': VAL
+  type: Field
+  value: ../ca_pool->VAL
+  'resolved value': /Purkinje/segments/soma/ca_pool->VAL
+
+  'parameter name': T
+  type: Number
+  value: 37
+
+",
+						   write => "printparameterinfo /Purkinje/segments/soma/cat Erev",
+						  },
 						 ],
 				description => "retrieving parameters of various types",
 # 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
