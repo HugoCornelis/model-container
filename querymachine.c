@@ -5184,7 +5184,10 @@ static int QueryHandlerPrintParameterInfo
 
 		int iResult = ParameterPrintInfoRecursive(ppar, ppist, 0);
 
-		
+		if (!iResult)
+		{
+		    bResult = 0;
+		}
 	    }
 	    else
 	    {
