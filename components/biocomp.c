@@ -290,6 +290,52 @@ BioComponentCreateAliasses
 
 /// 
 /// \arg pbio segment to get Cm for
+/// \arg ppist context.
+/// \arg pfile output stream, NULL for default of stdout.
+/// 
+/// \return int success of operation.
+/// 
+/// \brief Export all parameters in YAML format to the given stream.
+/// 
+
+int
+BioComponentExportParametersYAML
+(struct symtab_BioComponent *pbio,
+ struct PidinStack *ppist,
+ FILE *pfile)
+{
+    //- set default result: ok
+
+    int iResult = 1;
+
+    struct symtab_ParContainer *pparc = pbio->pparc;
+
+    if (!ParContainerExportYAML(pparc, ppist, pfile))
+    {
+	return(0);
+    }
+
+    //- if prototype
+
+    struct symtab_BioComponent * pbioPrototype
+	= (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
+
+    if (pbioPrototype)
+    {
+	//- export prototype parameters
+
+	iResult
+	    = BioComponentExportParametersYAML(pbioPrototype, ppist, pfile);
+    }
+
+    //- return result
+
+    return(iResult);
+}
+
+
+/// 
+/// \arg pbio segment to get Cm for
 /// \arg pio input to search
 /// 
 /// \return struct symtab_HSolveListElement * : symbol generating given input

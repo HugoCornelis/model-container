@@ -6281,10 +6281,7 @@ static int QueryHandlerPrintSymbolParameters
 		struct symtab_BioComponent *pbio
 		    = (struct symtab_BioComponent *)phsle;
 
-		struct symtab_ParContainer *pparc
-		    = pbio->pparc;
-
-		if (!ParContainerExportYAML(pparc, ppist, NULL))
+		if (!BioComponentExportParametersYAML(pbio, ppist, NULL))
 		{
 		    bResult = 0;
 		}

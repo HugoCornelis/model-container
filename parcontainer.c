@@ -23,6 +23,7 @@
 #include <stdio.h>
 
 #include "neurospaces/parcontainer.h"
+#include "neurospaces/symbols.h"
 
 
 /// 
@@ -107,11 +108,16 @@ ParContainerExportYAML
 
     while (pparLoop)
     {
+	int iIndent = 0;
+
+	PrintIndent(iIndent, stdout);
+	fprintf(stdout, "  -\n");
+
 	//- print parameter info
 
 	// \todo add pfile to arguments.
 
-	if (!ParameterPrintInfoRecursive(pparLoop, ppist, 0))
+	if (!ParameterPrintInfoRecursive(pparLoop, ppist, iIndent + 2))
 	{
 	    iResult = 0;
 

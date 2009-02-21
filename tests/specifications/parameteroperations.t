@@ -75,35 +75,127 @@ my $test
 						   write => "printparameter /Purkinje/SpinesNormal_13_1 PROTOTYPE",
 						  },
 						  {
-						   description => "Can we find extended information for Erev function parameters ?",
+						   description => "Can we find extended information for an Erev function parameter ?",
 						   read => "
 'parameter name': Erev
 type: function
 'function name': NERNST
 'function parameters':
 
-  'parameter name': Cin
-  'field name': concen
-  type: Field
-  value: ../ca_pool->concen
-  'resolved value': /Purkinje/segments/soma/ca_pool->concen
-
-  'parameter name': Cout
-  type: Number
-  value: 2.4
-
-  'parameter name': valency
-  'field name': VAL
-  type: Field
-  value: ../ca_pool->VAL
-  'resolved value': /Purkinje/segments/soma/ca_pool->VAL
-
-  'parameter name': T
-  type: Number
-  value: 37
-
+  -
+    'parameter name': Cin
+    'field name': concen
+    type: field
+    value: ../ca_pool->concen
+    'resolved value': /Purkinje/segments/soma/ca_pool->concen
+  -
+    'parameter name': Cout
+    type: number
+    value: 2.4
+  -
+    'parameter name': valency
+    'field name': VAL
+    type: field
+    value: ../ca_pool->VAL
+    'resolved value': /Purkinje/segments/soma/ca_pool->VAL
+  -
+    'parameter name': T
+    type: number
+    value: 37
 ",
 						   write => "printparameterinfo /Purkinje/segments/soma/cat Erev",
+						  },
+						  {
+						   description => "Can we find extended information for a segment's parameters ?",
+						   read => "  -
+    'parameter name': Z
+    type: number
+    value: 3.8022e-05
+  -
+    'parameter name': Y
+    type: number
+    value: 1.1682e-05
+  -
+    'parameter name': X
+    type: number
+    value: 1.5649e-05
+  -
+    'parameter name': PARENT
+    type: symbolic
+    value: ../main[1]
+  -
+    'parameter name': rel_X
+    type: number
+    value: 1.666e-06
+  -
+    'parameter name': rel_Y
+    type: number
+    value: 1.111e-06
+  -
+    'parameter name': rel_Z
+    type: number
+    value: 6.666e-06
+  -
+    'parameter name': DIA
+    type: number
+    value: 8.5e-06
+  -
+    'parameter name': Vm_init
+    type: number
+    value: -0.068
+  -
+    'parameter name': RM
+    type: number
+    value: 3
+  -
+    'parameter name': RA
+    type: number
+    value: 2.5
+  -
+    'parameter name': CM
+    type: number
+    value: 0.0164
+  -
+    'parameter name': ELEAK
+    type: number
+    value: -0.08
+",
+						   write => "symbolparameters /Purkinje/segments/main[2]",
+						  },
+						  {
+						   description => "Can we find extended information for a channel's parameters ?",
+						   read => "  -
+    'parameter name': G_MAX
+    type: number
+    value: 5
+  -
+    'parameter name': Erev
+    type: function
+    'function name': NERNST
+    'function parameters':
+
+      -
+        'parameter name': Cin
+        'field name': concen
+        type: field
+        value: ../ca_pool->concen
+        'resolved value': /Purkinje/segments/main[2]/ca_pool->concen
+      -
+        'parameter name': Cout
+        type: number
+        value: 2.4
+      -
+        'parameter name': valency
+        'field name': VAL
+        type: field
+        value: ../ca_pool->VAL
+        'resolved value': /Purkinje/segments/main[2]/ca_pool->VAL
+      -
+        'parameter name': T
+        type: number
+        value: 37
+",
+						   write => "symbolparameters /Purkinje/segments/main[2]/cat",
 						  },
 						 ],
 				description => "retrieving parameters of various types",

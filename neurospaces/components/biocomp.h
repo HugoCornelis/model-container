@@ -98,6 +98,12 @@ int
 BioComponentCreateAliasses
 (struct symtab_BioComponent *pbio, int iCount, HSolveList *phslResult);
 
+int
+BioComponentExportParametersYAML
+(struct symtab_BioComponent *pbio,
+ struct PidinStack *ppist,
+ FILE *pfile);
+
 struct symtab_HSolveListElement * 
 BioComponentGetChildFromInput
 (struct symtab_BioComponent *pbio,
@@ -119,7 +125,7 @@ void BioComponentInit(struct symtab_BioComponent * pbio);
 
 struct symtab_InputOutput *
 BioComponentLookupBindableIO
-(struct symtab_BioComponent *pbio,char *pcInput,int i);
+(struct symtab_BioComponent *pbio, char *pcInput, int i);
 
 struct symtab_HSolveListElement *
 BioComponentLookupHierarchical
@@ -135,7 +141,7 @@ int BioComponentLookupSerialID
  struct PidinStack *ppistSearched);
 
 int BioComponentPrint
-(struct symtab_BioComponent *pbio,int bAll,int iIndent,FILE *pfile);
+(struct symtab_BioComponent *pbio, int bAll, int iIndent, FILE *pfile);
 
 struct symtab_HSolveListElement *
 BioComponentResolveParameterFunctionalInput
@@ -205,7 +211,7 @@ static inline
 #endif
 struct symtab_Parameters * 
 BioComponentChangeParameter
-(struct symtab_BioComponent * pbio,struct symtab_Parameters *ppar);
+(struct symtab_BioComponent * pbio, struct symtab_Parameters *ppar);
 
 #ifndef SWIG
 static inline
@@ -283,14 +289,12 @@ BioComponentSetPrototype
 
 
 /// 
-/// 
 /// \arg pbio symbol to assign parameters to.
 /// \arg ppar new parameters.
 /// 
 /// \return int : success of operation.
 /// 
 /// \brief Assign parameter to symbol.
-/// \details 
 /// 
 
 #ifndef SWIG
@@ -305,14 +309,12 @@ BioComponentAssignParameters
 
 
 /// 
-/// 
 /// \arg pbio symbol to get parameter for.
 /// \arg ppar new parameter.
 /// 
 /// \return struct symtab_Parameters * : new parameter, NULL for failure.
 /// 
 /// \brief Set parameter with given name.
-/// \details 
 /// 
 /// \note 
 /// 
@@ -327,7 +329,7 @@ static inline
 #endif
 struct symtab_Parameters * 
 BioComponentChangeParameter
-(struct symtab_BioComponent * pbio,struct symtab_Parameters *ppar)
+(struct symtab_BioComponent * pbio, struct symtab_Parameters *ppar)
 {
     //- set default result : from given parameter
 
@@ -595,11 +597,11 @@ BioComponentSetAtXYZ
 
     //- allocate & insert parameters
 
-    if (SymbolSetParameterDouble(&pbio->ioh.iol.hsle,"X",dx))
+    if (SymbolSetParameterDouble(&pbio->ioh.iol.hsle, "X", dx))
     {
-	if (SymbolSetParameterDouble(&pbio->ioh.iol.hsle,"Y",dy))
+	if (SymbolSetParameterDouble(&pbio->ioh.iol.hsle, "Y", dy))
 	{
-	    if (SymbolSetParameterDouble(&pbio->ioh.iol.hsle,"Z",dz))
+	    if (SymbolSetParameterDouble(&pbio->ioh.iol.hsle, "Z", dz))
 	    {
 	    }
 	    else

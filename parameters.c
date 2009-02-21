@@ -778,7 +778,7 @@ ParameterPrintInfoRecursive
 	//- print result
 
 	PrintIndent(iIndent, stdout);
-	fprintf(stdout, "type: Number\n");
+	fprintf(stdout, "type: number\n");
 	PrintIndent(iIndent, stdout);
 	fprintf(stdout, "value: %g\n", d);
 
@@ -797,7 +797,7 @@ ParameterPrintInfoRecursive
 	fprintf(stdout, "'field name': %s\n", pcFieldName);
 
 	PrintIndent(iIndent, stdout);      
-	fprintf(stdout, "type: Field\n");
+	fprintf(stdout, "type: field\n");
 
 	char pc[1024];
 
@@ -832,7 +832,7 @@ ParameterPrintInfoRecursive
 	char *pc = ParameterGetString(ppar);
 
 	PrintIndent(iIndent, stdout);
-	fprintf(stdout, "type: String\n");
+	fprintf(stdout, "type: string\n");
 	PrintIndent(iIndent, stdout);
 	fprintf(stdout, "value: \"%s\"\n\n", pc);
 
@@ -843,11 +843,24 @@ ParameterPrintInfoRecursive
 
     else if (ParameterIsSymbolic(ppar))
     {
-	//- give diagnostics: not implemented yet
+	PrintIndent(iIndent, stdout);
+	fprintf(stdout, "type: symbolic\n");
 
-	fprintf(stdout, "\nreporting of symbolic parameters is not implemented yet\n");
-      
-	return 0;
+	struct PidinStack *ppistPar = PidinStackCalloc();
+
+	PidinStackPushAll(ppistPar, ppar->uValue.pidin);
+
+	PrintIndent(iIndent, stdout);
+
+	fprintf(stdout,"value: ");
+
+	PidinStackPrint(ppistPar, stdout);
+
+	PidinStackFree(ppistPar);
+
+	fprintf(stdout, "\n");
+
+	return 1;
     }
 
     //- for attribute
