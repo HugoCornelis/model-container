@@ -606,9 +606,9 @@ ParameterNewFromString
 int ParameterPrint
 (struct symtab_Parameters *ppar, int bAll, int iIndent, FILE *pfile);
 
-int
-ParameterPrintInfo
-(struct symtab_Parameters *ppar, struct PidinStack *ppist);
+/* int */
+/* ParameterPrintInfo */
+/* (struct symtab_Parameters *ppar, struct PidinStack *ppist); */
 
 int
 ParameterPrintInfoRecursive
