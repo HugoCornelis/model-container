@@ -4862,8 +4862,6 @@ QueryMachineWildcardParameterTraverser
 }
 
 
-
-
 /// 
 /// \arg std. QueryHandler args
 /// 
@@ -4875,6 +4873,7 @@ QueryMachineWildcardParameterTraverser
 /// 
 ///	printparameter <context> <parameter1-name> <parameter2-name>
 /// 
+
 static int QueryHandlerPrintParameter
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
 {
@@ -5064,10 +5063,6 @@ static int QueryHandlerPrintParameter
 }
 
 
-
-
-
-
 /// 
 /// \arg std. QueryHandler args
 /// 
@@ -5079,6 +5074,7 @@ static int QueryHandlerPrintParameter
 /// 
 ///	printparameter <context> <parameter1-name> <parameter2-name>
 /// 
+
 static int QueryHandlerPrintParameterInfo
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
 {
@@ -5184,11 +5180,15 @@ static int QueryHandlerPrintParameterInfo
 
 	    if (ppar)
 	    {
+		fprintf(stdout, "%s", "---\n");
 
-	      fprintf(stdout,"%s","---\n");
-	      int iResult = ParameterPrintInfoRecursive(ppar,ppist,0);
-	      
-	      return iResult;
+		int iResult = ParameterPrintInfoRecursive(ppar, ppist, 0);
+
+		
+	    }
+	    else
+	    {
+		fprintf(stdout, "parameter not found\n");
 	    }
 	}
 
@@ -5210,21 +5210,6 @@ static int QueryHandlerPrintParameterInfo
 
     return(bResult);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /// 
@@ -8458,6 +8443,97 @@ static int QueryHandlerSetParameterConcept
     //- return result
 
     return(bResult);
+}
+
+
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print solver registration for a context.
+///
+/// \details 
+/// 
+///	solverget <solved-context>
+/// 
+
+static int QueryHandlerShowParameters
+(char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
+{
+    //- set result : ok
+
+    int bResult = TRUE;
+
+    /// argument separator
+
+    char pcSeparator[] = " \t,;\n";
+
+    //- get base context
+
+    char *pcArg = &pcLine[iLength + 1];
+
+    struct PidinStack *ppist = PidinStackParse(pcArg);
+
+    char pcContext[1000];
+
+    PidinStackString(ppist, pcContext, 1000);
+
+    //- lookup symbol
+
+    /// \note allows namespacing, yet incompatible with parameter caches.
+
+    struct symtab_HSolveListElement *phsle
+	= SymbolsLookupHierarchical(pneuro->psym, ppist);
+
+    if (!phsle)
+    {
+	fprintf(stdout, "symbol not found\n");
+
+	return(FALSE);
+    }
+
+    if (phsle)
+    {
+	fprintf(stdout, "---\nshow_parameters:\n");
+
+	/// \todo this code is one more reason to implement traversals that are
+	/// \todo orthogonal to the model's axis.
+
+	//- loop over all prototypes including self
+
+	struct symtab_BioComponent *pbio
+	    = (struct symtab_BioComponent *)phsle;
+
+	while (pbio)
+	{
+	    //- loop over parameters of this prototype
+
+	    struct symtab_Parameters *ppar
+		= ParContainerIterateParameters(pbio->pparc);
+
+	    while (ppar)
+	    {
+		//- get parameter name
+
+		char *pc = ParameterGetName(ppar);
+
+		//- print parameter info
+
+		fprintf(stdout, "  - component_name: %s\n", pcContext);
+		fprintf(stdout, "    field: %s\n", ParameterGetName(ppar));
+		fprintf(stdout, "    value: %s\n", ParameterGetString(ppar));
+
+		//- go to next parameter
+
+		ppar = ParContainerNextParameter(ppar);
+	    }
+
+	    //- go to next prototype
+
+	    pbio = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
+	}
+    }
 }
 
 
