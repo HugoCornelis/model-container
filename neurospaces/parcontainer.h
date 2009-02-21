@@ -68,24 +68,13 @@ do {									\
 
 
 /// \def
-/// \def get parameter list from container
-/// \def
-
-#define ParContainerGetParameters(pparc)				\
-({									\
-    CompileTimeTestParContainer(pparc);					\
-    (pparc)->ppars;							\
-})
-
-
-/// \def
 /// \def start iterate over all parameters
 /// \def
 
 #define ParContainerIterateParameters(pparc)				\
 ({									\
     CompileTimeTestParContainer(pparc);					\
-    ParContainerGetParameters(pparc);					\
+    (pparc)->ppars;							\
 })
 
 
@@ -153,13 +142,16 @@ ParContainerAssignParameters
 
 struct symtab_ParContainer * ParContainerCalloc(void);
 
+void ParContainerExportYAML
+(struct symtab_ParContainer *pparc, struct PidinStack *ppist, FILE *pfile);
+
 void ParContainerInit(struct symtab_ParContainer * pparc);
 
 void ParContainerInsert
-(struct symtab_ParContainer *pparc,struct symtab_Parameters *ppar);
+(struct symtab_ParContainer *pparc, struct symtab_Parameters *ppar);
 
 void ParContainerLinkAtEnd
-(struct symtab_ParContainer *pparc,struct symtab_Parameters *pparNew);
+(struct symtab_ParContainer *pparc, struct symtab_Parameters *pparNew);
 
 
 #endif
