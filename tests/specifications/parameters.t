@@ -264,7 +264,7 @@ my $test
 						    write => "printparameterscaled /Purkinje/segments/b0s01[1]/kc G_MAX",
 						   },
 						  ],
-				 description => "parameter calculations on dendrites of the standard Purkinje cell model",
+				 description => "parameter calculations on dendrites of the standard Purkinje cell model (2)",
 # 				 disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 				},
 				{
@@ -358,7 +358,7 @@ my $test
 						    write => "printparameterscaled /Purkinje/segments/b0s01[1] RA",
 						   },
 						  ],
-				 description => "parameter calculations on spines of the standard Purkinje cell model",
+				 description => "parameter calculations on spines of the standard Purkinje cell model (2)",
 # 				 disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 				},
 				{
@@ -422,13 +422,13 @@ my $test
 						   write => "printparameter /section1/e0/e0_0 THICKNESS",
 						  },
 						  {
-						   description => "Is the thickness inherited by the contour points ?",
+						   description => "Is the thickness inherited by the contour points (2) ?",
 						   read => '= 7e-08
 ',
 						   write => "printparameter /section1/e0/e0_1 THICKNESS",
 						  },
 						  {
-						   description => "Is the thickness inherited by the contour points ?",
+						   description => "Is the thickness inherited by the contour points (3) ?",
 						   read => '= 7e-08
 ',
 						   write => "printparameter /section1/e0/e0_2 THICKNESS",
