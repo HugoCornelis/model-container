@@ -769,6 +769,8 @@ ParameterPrintInfoRecursive
     PrintIndent(iIndent, stdout);
     fprintf(stdout, "'parameter name': %s\n", ParameterGetName(ppar));
 
+    //- for straight number values
+
     if (ParameterIsNumber(ppar))
     {
 	double d = ParameterResolveValue(ppar, ppist);
@@ -783,12 +785,10 @@ ParameterPrintInfoRecursive
 	return 1;
     }
 
-    if (ParameterIsField(ppar))
+    //- for field references
+
+    else if (ParameterIsField(ppar))
     {
-    
-
-	/// \defouble d = ParameterResolveValue(ppar, ppist);
-
 	char *pcFieldName = ParameterGetFieldName(ppar);
 
 	struct PidinStack *ppistValue = ParameterResolveToPidinStack(ppar, ppist);
@@ -812,14 +812,11 @@ ParameterPrintInfoRecursive
 
 	PidinStackFree(ppist);      
 
-	//IdinPrint(ppar->uValue.pidin, stdout);
 	fprintf(stdout, "%s", "\n");
-	//fprintf(stdout, "\n");
 
 	PrintIndent(iIndent, stdout);
 	PidinStackString(ppistValue, pc, sizeof(pc));  
 	fprintf(stdout, "'resolved value': %s%s%s\n", pc, "->", pcFieldName);
-
            
 	return 1;
     }
@@ -839,6 +836,9 @@ ParameterPrintInfoRecursive
 
 	return 1;
     }
+
+    //- for symbolic references
+
     else if (ParameterIsSymbolic(ppar))
     {
 	//- give diagnostics: not implemented yet
@@ -847,6 +847,9 @@ ParameterPrintInfoRecursive
       
 	return 0;
     }
+
+    //- for attribute
+
     else if (ParameterIsAttribute(ppar))
     {
 	//- give diagnostics: not implemented yet
@@ -856,28 +859,25 @@ ParameterPrintInfoRecursive
 	return 0;
     }
 
-    if (ParameterIsFunction(ppar))
+    //- for functions
+
+    else if (ParameterIsFunction(ppar))
     {
 	struct symtab_Function *pfun = ParameterContextGetFunction(ppar, ppist);
 		
-/*       if(!pfun) */
-/* 	{ */
-/* 	  pfun = ppar->uValue.pfun; */
-/* 	} */
-		
-	PrintIndent(iIndent,stdout);
-	fprintf(stdout,"type: function\n");
+	PrintIndent(iIndent, stdout);
+	fprintf(stdout, "type: function\n");
 
-	PrintIndent(iIndent,stdout);
-	fprintf(stdout,"'function name': %s\n", FunctionGetName(pfun));
+	PrintIndent(iIndent, stdout);
+	fprintf(stdout, "'function name': %s\n", FunctionGetName(pfun));
 
-	PrintIndent(iIndent,stdout);
-	fprintf(stdout,"'function parameters':\n\n");
+	PrintIndent(iIndent, stdout);
+	fprintf(stdout, "'function parameters':\n\n");
 
 	struct symtab_Parameters *pparFunCurr
 	    = pfun->pparc->ppars;
 
-	for(;pparFunCurr;pparFunCurr = pparFunCurr->pparNext)
+	for( ; pparFunCurr ; pparFunCurr = pparFunCurr->pparNext)
 	{
 	    ParameterPrintInfoRecursive(pparFunCurr, ppist, iLevel + 1); 
 
@@ -893,7 +893,7 @@ ParameterPrintInfoRecursive
     {
 	//- diag's
 
-	fprintf(stdout, "parameter (%s) not found in symbol\n", ppar->pcIdentifier);
+	fprintf(stdout, "parameter (%s) has an unknown type\n", ppar->pcIdentifier);
 
 	return 0;
     }
