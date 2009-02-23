@@ -2437,6 +2437,8 @@ sub generate_textual_descriptions
 
 		my $description1 = "T_" . (substr $definitions->{name}, 0, 3) . "_$name";
 
+		$description1 = lc($description1);
+
 		print $file1 "    \"$description1\",\n";
 
 		# write short description
