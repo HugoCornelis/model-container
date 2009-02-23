@@ -2435,9 +2435,11 @@ sub generate_textual_descriptions
 	    {
 		# write long description
 
-		my $description1 = "T_" . (substr $definitions->{name}, 0, 3) . "_$name";
+		my $description1 = (substr $definitions->{name}, 0, 3) . "_$name";
 
 		$description1 = lc($description1);
+
+		$description1 = "T_$description1";
 
 		print $file1 "    \"$description1\",\n";
 
