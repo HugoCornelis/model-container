@@ -550,7 +550,7 @@ sub generate_grammar_header
     `cp hierarchy/parser.start "$option_output/$definitions->{name}/grammar/01_start.rules"`;
     `cp hierarchy/parser.user_types "$option_output/$definitions->{name}/grammar/03_user_types.rules"`;
     `cp hierarchy/parser.start_symbol "$option_output/$definitions->{name}/grammar/04_start_symbol.rules"`;
-    `cp hierarchy/parser.end "$option_output/$definitions->{name}/grammar/ZZZ_end.rules"`;
+    `cp hierarchy/parser.end "$option_output/$definitions->{name}/grammar/zzz_end.rules"`;
 
 }
 
@@ -1822,7 +1822,7 @@ sub generate_lexical_header
     my $tokens = $definitions->{tokens};
 
     `cp hierarchy/analyzer.start "$option_output/$definitions->{name}/grammar/01_start.l"`;
-    `cp hierarchy/analyzer.end "$option_output/$definitions->{name}/grammar/ZZZ_end.l"`;
+    `cp hierarchy/analyzer.end "$option_output/$definitions->{name}/grammar/zzz_end.l"`;
 
 }
 
