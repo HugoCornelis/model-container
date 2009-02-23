@@ -2347,16 +2347,27 @@ sub generate_textual_descriptions
 
 	my $names = [];
 
-	map
-	{
-	    $names->[$class_hierarchy->{$_}->{number}] = $_;
-	}
-	    grep
-	    {
-		exists $class_hierarchy->{$_}->{number}
-		    && $class_hierarchy->{$_}->{number} ne -1
-		}
-		keys %$class_hierarchy;
+	(
+	 map
+	 {
+	     my $name = $_;
+
+	     if ($class_hierarchy->{$_}->{token_name})
+	     {
+		 $name = $class_hierarchy->{$_}->{token_name};
+
+		 $name =~ s/^token_//gi;
+	     }
+
+	     $names->[$class_hierarchy->{$_}->{number}] = $name;
+	 }
+	 grep
+	 {
+	     exists $class_hierarchy->{$_}->{number}
+		 && $class_hierarchy->{$_}->{number} ne -1;
+	 }
+	 keys %$class_hierarchy
+	);
 
 	# and get there short version names
 
@@ -2374,11 +2385,15 @@ sub generate_textual_descriptions
 		   {
 		       $result = substr $string, 0, 6;
 
+# 		       print "Trying $result\n";
+
 		       my $count = 6;
 
 		       while ($st->{$result})
 		       {
 			   my $try = substr $string, $count, 1;
+
+# 			   print "$try\n";
 
 			   if (!$try)
 			   {
@@ -2396,6 +2411,8 @@ sub generate_textual_descriptions
 		   {
 		       $result = $_;
 		   }
+
+		   # align to six chars
 
 		   defined $result
 		       ? $result . (" " x (6 - length $result))
