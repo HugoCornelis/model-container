@@ -143,8 +143,12 @@ ParContainerAssignParameters
 struct symtab_ParContainer * ParContainerCalloc(void);
 
 int
+ParContainerExportNDF
+(struct symtab_ParContainer *pparc, struct PidinStack *ppist, int iIndent, FILE *pfile);
+
+int
 ParContainerExportYAML
-(struct symtab_ParContainer *pparc, struct PidinStack *ppist, FILE *pfile);
+(struct symtab_ParContainer *pparc, struct PidinStack *ppist, int iIndent, FILE *pfile);
 
 void ParContainerInit(struct symtab_ParContainer * pparc);
 

@@ -289,8 +289,9 @@ BioComponentCreateAliasses
 
 
 /// 
-/// \arg pbio segment to get Cm for
+/// \arg pbio bio component.
 /// \arg ppist context.
+/// \arg iIndent Start indentation level.
 /// \arg pfile output stream, NULL for default of stdout.
 /// 
 /// \return int success of operation.
@@ -302,6 +303,7 @@ int
 BioComponentExportParametersYAML
 (struct symtab_BioComponent *pbio,
  struct PidinStack *ppist,
+ int iIndent,
  FILE *pfile)
 {
     //- set default result: ok
@@ -310,7 +312,7 @@ BioComponentExportParametersYAML
 
     struct symtab_ParContainer *pparc = pbio->pparc;
 
-    if (!ParContainerExportYAML(pparc, ppist, pfile))
+    if (!ParContainerExportYAML(pparc, ppist, 0, pfile))
     {
 	return(0);
     }
@@ -325,7 +327,7 @@ BioComponentExportParametersYAML
 	//- export prototype parameters
 
 	iResult
-	    = BioComponentExportParametersYAML(pbioPrototype, ppist, pfile);
+	    = BioComponentExportParametersYAML(pbioPrototype, ppist, 0, pfile);
     }
 
     //- return result

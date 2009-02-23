@@ -612,7 +612,11 @@ int ParameterPrint
 
 int
 ParameterPrintInfoRecursive
-(struct symtab_Parameters *ppar, struct PidinStack *ppist, int iLevel);
+(struct symtab_Parameters *ppar, struct PidinStack *ppist, int iLevel, FILE *pfile);
+
+int
+ParameterPrintInfoRecursiveNDF
+(struct symtab_Parameters *ppar, struct PidinStack *ppist, int iLevel, FILE *pfile);
 
 struct symtab_HSolveListElement *
 ParameterResolveFunctionalInput

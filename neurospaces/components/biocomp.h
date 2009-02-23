@@ -102,6 +102,7 @@ int
 BioComponentExportParametersYAML
 (struct symtab_BioComponent *pbio,
  struct PidinStack *ppist,
+ int iIndent,
  FILE *pfile);
 
 struct symtab_HSolveListElement * 

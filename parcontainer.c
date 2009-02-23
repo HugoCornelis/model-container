@@ -76,8 +76,9 @@ struct symtab_ParContainer * ParContainerCalloc(void)
 
 
 /// 
-/// \arg pparc container
-/// \arg ppist context
+/// \arg pparc parameter container.
+/// \arg ppist context.
+/// \arg iIndent start indentation level.
 /// \arg pfile file to export to, NULL for stdout.
 /// 
 /// \return int success of operation.
@@ -89,7 +90,7 @@ struct symtab_ParContainer * ParContainerCalloc(void)
 
 int
 ParContainerExportYAML
-(struct symtab_ParContainer *pparc, struct PidinStack *ppist, FILE *pfile)
+(struct symtab_ParContainer *pparc, struct PidinStack *ppist, int iIndent, FILE *pfile)
 {
     //- set default result: ok
 
@@ -117,7 +118,7 @@ ParContainerExportYAML
 
 	// \todo add pfile to arguments.
 
-	if (!ParameterPrintInfoRecursive(pparLoop, ppist, iIndent + 2))
+	if (!ParameterPrintInfoRecursive(pparLoop, ppist, iIndent + 2, pfile))
 	{
 	    iResult = 0;
 
@@ -128,6 +129,73 @@ ParContainerExportYAML
 
 	pparLoop = pparLoop->pparNext;
     }
+
+    //- return result
+
+    return(iResult);
+}
+
+
+/// 
+/// \arg pparc parameter container.
+/// \arg ppist context.
+/// \arg iIndent start indentation level.
+/// \arg pfile file to export to, NULL for stdout.
+/// 
+/// \return int success of operation.
+/// 
+/// \brief export all parameters to NDF.
+///
+/// \todo pfile does not propagate through yet.
+///
+
+int
+ParContainerExportNDF
+(struct symtab_ParContainer *pparc, struct PidinStack *ppist, int iIndent, FILE *pfile)
+{
+    //- set default result: ok
+
+    int iResult = 1;
+
+    if (!pparc->ppars)
+    {
+	return(1);
+    }
+
+    //- default output file (should be)
+
+    if (!pfile)
+    {
+	pfile = stdout;
+    }
+
+    PrintIndent(iIndent, pfile);
+    fprintf(pfile, "PARAMETERS\n");
+
+    //- loop over parameters
+
+    struct symtab_Parameters *pparLoop = pparc->ppars;
+
+    while (pparLoop)
+    {
+	//- print parameter info
+
+	// \todo add pfile to arguments.
+
+	if (!ParameterPrintInfoRecursiveNDF(pparLoop, ppist, iIndent + 2, pfile))
+	{
+	    iResult = 0;
+
+	    break;
+	}
+
+	//- next parameter
+
+	pparLoop = pparLoop->pparNext;
+    }
+
+    PrintIndent(iIndent, pfile);
+    fprintf(pfile, "END PARAMETERS\n");
 
     //- return result
 

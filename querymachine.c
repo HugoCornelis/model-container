@@ -1744,6 +1744,9 @@ struct QM_exporter_data
 
     int iIndent;
 
+    /// wildcard selector
+
+    struct PidinStack *ppistWildcard;
 };
 
 static
@@ -1780,6 +1783,24 @@ QueryMachineNDFExporterStarter
 /*     PidinStackString(ptstr->ppist, pc, 1000); */
 
     fprintf(pexd->pfile, "%s %s\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
+
+    int iType = TstrGetActualType(ptstr);
+
+    if (subsetof_bio_comp(iType))
+    {
+	struct symtab_BioComponent *pbio
+	    = (struct symtab_BioComponent *)phsle;
+
+	struct symtab_ParContainer *pparc = pbio->pparc;
+
+	if (pparc)
+	{
+	    if (!ParContainerExportNDF(pparc, ptstr->ppist, pexd->iIndent, pexd->pfile))
+	    {
+		iResult = TSTR_PROCESSOR_ABORT;
+	    }
+	}
+    }
 
     //- increase indent
 
@@ -1937,6 +1958,13 @@ QueryHandlerExportNDF
 
 		NULL,
 
+		/// current indentation level
+
+		0,
+
+		/// wildcard selector
+
+		ppistWildcard,
 	    };
 
 	//- open output file
@@ -1985,6 +2013,8 @@ QueryHandlerExportNDF
     //- free allocated memory
 
     PidinStackFree(ppistRoot);
+
+    PidinStackFree(ppistWildcard);
 
     //- return result
 
@@ -5194,7 +5224,7 @@ static int QueryHandlerPrintParameterInfo
 	    {
 		fprintf(stdout, "%s", "---\n");
 
-		int iResult = ParameterPrintInfoRecursive(ppar, ppist, 0);
+		int iResult = ParameterPrintInfoRecursive(ppar, ppist, 0, stdout);
 
 		if (!iResult)
 		{
@@ -6281,7 +6311,7 @@ static int QueryHandlerPrintSymbolParameters
 		struct symtab_BioComponent *pbio
 		    = (struct symtab_BioComponent *)phsle;
 
-		if (!BioComponentExportParametersYAML(pbio, ppist, NULL))
+		if (!BioComponentExportParametersYAML(pbio, ppist, 0, NULL))
 		{
 		    bResult = 0;
 		}

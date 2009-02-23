@@ -752,6 +752,7 @@ ParameterNewFromString
 /// \arg ppar parameter.
 /// \arg ppist context.
 /// \arg iLevel indentation depth.
+/// \arg pfile serialization stream.
 /// 
 /// \return int
 /// 
@@ -762,12 +763,12 @@ ParameterNewFromString
 
 int
 ParameterPrintInfoRecursive
-(struct symtab_Parameters *ppar, struct PidinStack *ppist, int iLevel)
+(struct symtab_Parameters *ppar, struct PidinStack *ppist, int iLevel, FILE *pfile)
 {
     int iIndent = (iLevel == 0) ? 0 : (iLevel * 2);
 
-    PrintIndent(iIndent, stdout);
-    fprintf(stdout, "'parameter name': %s\n", ParameterGetName(ppar));
+    PrintIndent(iIndent, pfile);
+    fprintf(pfile, "'parameter name': %s\n", ParameterGetName(ppar));
 
     //- for straight number values
 
@@ -777,10 +778,10 @@ ParameterPrintInfoRecursive
 
 	//- print result
 
-	PrintIndent(iIndent, stdout);
-	fprintf(stdout, "type: number\n");
-	PrintIndent(iIndent, stdout);
-	fprintf(stdout, "value: %g\n", d);
+	PrintIndent(iIndent, pfile);
+	fprintf(pfile, "type: number\n");
+	PrintIndent(iIndent, pfile);
+	fprintf(pfile, "value: %g\n", d);
 
 	return 1;
     }
@@ -791,34 +792,38 @@ ParameterPrintInfoRecursive
     {
 	char *pcFieldName = ParameterGetFieldName(ppar);
 
-	struct PidinStack *ppistValue = ParameterResolveToPidinStack(ppar, ppist);
+	PrintIndent(iIndent, pfile);
+	fprintf(pfile, "'field name': %s\n", pcFieldName);
 
-	PrintIndent(iIndent, stdout);
-	fprintf(stdout, "'field name': %s\n", pcFieldName);
-
-	PrintIndent(iIndent, stdout);      
-	fprintf(stdout, "type: field\n");
+	PrintIndent(iIndent, pfile);      
+	fprintf(pfile, "type: field\n");
 
 	char pc[1024];
 
-	PrintIndent(iIndent, stdout);
-	fprintf(stdout, "%s", "value: ");
+	PrintIndent(iIndent, pfile);
+	fprintf(pfile, "%s", "value: ");
 
-	struct PidinStack *ppist2 = PidinStackCalloc();
+	{
+	    struct PidinStack *ppist2 = PidinStackCalloc();
 
-	PidinStackPushAll(ppist2, ppar->uValue.pidin);
+	    PidinStackPushAll(ppist2, ppar->uValue.pidin);
 
-	PidinStackPrint(ppist2, stdout);
+	    PidinStackPrint(ppist2, pfile);
 
-	PidinStackFree(ppist2);      
+	    PidinStackFree(ppist2);      
+	}
 
-	fprintf(stdout, "%s", "\n");
+	fprintf(pfile, "%s", "\n");
 
-	PrintIndent(iIndent, stdout);
-	PidinStackString(ppistValue, pc, sizeof(pc));  
-	fprintf(stdout, "'resolved value': %s%s%s\n", pc, "->", pcFieldName);
+	{
+	    struct PidinStack *ppistValue = ParameterResolveToPidinStack(ppar, ppist);
 
-	PidinStackFree(ppistValue);
+	    PrintIndent(iIndent, pfile);
+	    PidinStackString(ppistValue, pc, sizeof(pc));  
+	    fprintf(pfile, "'resolved value': %s%s%s\n", pc, "->", pcFieldName);
+
+	    PidinStackFree(ppistValue);
+	}
 
 	return 1;
     }
@@ -831,10 +836,10 @@ ParameterPrintInfoRecursive
 
 	char *pc = ParameterGetString(ppar);
 
-	PrintIndent(iIndent, stdout);
-	fprintf(stdout, "type: string\n");
-	PrintIndent(iIndent, stdout);
-	fprintf(stdout, "value: \"%s\"\n\n", pc);
+	PrintIndent(iIndent, pfile);
+	fprintf(pfile, "type: string\n");
+	PrintIndent(iIndent, pfile);
+	fprintf(pfile, "value: \"%s\"\n\n", pc);
 
 	return 1;
     }
@@ -843,22 +848,22 @@ ParameterPrintInfoRecursive
 
     else if (ParameterIsSymbolic(ppar))
     {
-	PrintIndent(iIndent, stdout);
-	fprintf(stdout, "type: symbolic\n");
+	PrintIndent(iIndent, pfile);
+	fprintf(pfile, "type: symbolic\n");
 
 	struct PidinStack *ppistPar = PidinStackCalloc();
 
 	PidinStackPushAll(ppistPar, ppar->uValue.pidin);
 
-	PrintIndent(iIndent, stdout);
+	PrintIndent(iIndent, pfile);
 
-	fprintf(stdout,"value: ");
+	fprintf(pfile,"value: ");
 
-	PidinStackPrint(ppistPar, stdout);
+	PidinStackPrint(ppistPar, pfile);
 
 	PidinStackFree(ppistPar);
 
-	fprintf(stdout, "\n");
+	fprintf(pfile, "\n");
 
 	return 1;
     }
@@ -880,26 +885,26 @@ ParameterPrintInfoRecursive
     {
 	struct symtab_Function *pfun = ParameterContextGetFunction(ppar, ppist);
 		
-	PrintIndent(iIndent, stdout);
-	fprintf(stdout, "type: function\n");
+	PrintIndent(iIndent, pfile);
+	fprintf(pfile, "type: function\n");
 
-	PrintIndent(iIndent, stdout);
-	fprintf(stdout, "'function name': %s\n", FunctionGetName(pfun));
+	PrintIndent(iIndent, pfile);
+	fprintf(pfile, "'function name': %s\n", FunctionGetName(pfun));
 
-	PrintIndent(iIndent, stdout);
-	fprintf(stdout, "'function parameters':\n\n");
+	PrintIndent(iIndent, pfile);
+	fprintf(pfile, "'function parameters':\n\n");
 
 	struct symtab_Parameters *pparFunCurr
 	    = pfun->pparc->ppars;
 
 	for( ; pparFunCurr ; pparFunCurr = pparFunCurr->pparNext)
 	{
-	    PrintIndent(iIndent, stdout);
-	    fprintf(stdout, "  -\n");
+	    PrintIndent(iIndent, pfile);
+	    fprintf(pfile, "  -\n");
 
-	    ParameterPrintInfoRecursive(pparFunCurr, ppist, iLevel + 2); 
+	    ParameterPrintInfoRecursive(pparFunCurr, ppist, iLevel + 2, pfile); 
 
-/* 	    fprintf(stdout, "%s", "\n"); */
+/* 	    fprintf(pfile, "%s", "\n"); */
 	}
 
 	return 1;
@@ -920,6 +925,142 @@ ParameterPrintInfoRecursive
 }
 
 
+/// 
+/// \arg ppar parameter.
+/// \arg ppist context.
+/// \arg iLevel indentation depth.
+/// \arg pfile serialization stream.
+/// 
+/// \return int
+/// 
+///	success of operation.
+/// 
+/// \brief Print parameter info in NDF format, following symbolic
+/// references.
+/// 
+
+int
+ParameterPrintInfoRecursiveNDF
+(struct symtab_Parameters *ppar, struct PidinStack *ppist, int iLevel, FILE *pfile)
+{
+    int iIndent = (iLevel == 0) ? 0 : (iLevel * 2);
+
+    PrintIndent(iIndent, pfile);
+    fprintf(pfile, "PARAMETER ( %s = ", ParameterGetName(ppar));
+
+    //- for straight number values
+
+    if (ParameterIsNumber(ppar))
+    {
+	double d = ParameterResolveValue(ppar, ppist);
+
+	//- print result
+
+	fprintf(pfile, "%g ),\n", d);
+
+	return 1;
+    }
+
+    //- for field references
+
+    else if (ParameterIsField(ppar))
+    {
+	struct PidinStack *ppist2 = PidinStackCalloc();
+
+	PidinStackPushAll(ppist2, ppar->uValue.pidin);
+
+	PidinStackPrint(ppist2, pfile);
+
+	PidinStackFree(ppist2);      
+
+	fprintf(pfile, " ),\n");
+
+	return 1;
+    }
+
+    //- for string parameter values
+
+    else if (ParameterIsString(ppar))
+    {
+	//- print string result
+
+	char *pc = ParameterGetString(ppar);
+
+	fprintf(pfile, "\"%s\" ),\n", pc);
+
+	return 1;
+    }
+
+    //- for symbolic references
+
+    else if (ParameterIsSymbolic(ppar))
+    {
+	struct PidinStack *ppistPar = PidinStackCalloc();
+
+	PidinStackPushAll(ppistPar, ppar->uValue.pidin);
+
+	PidinStackPrint(ppistPar, pfile);
+
+	PidinStackFree(ppistPar);
+
+	fprintf(pfile, " ),\n");
+
+	return 1;
+    }
+
+    //- for attribute
+
+    else if (ParameterIsAttribute(ppar))
+    {
+	//- give diagnostics: not implemented yet
+
+	fprintf(stdout, "\nreporting of attribute parameters is not implemented yet\n");
+
+	return 0;
+    }
+
+    //- for functions
+
+    else if (ParameterIsFunction(ppar))
+    {
+	struct symtab_Function *pfun = ParameterContextGetFunction(ppar, ppist);
+		
+	fprintf(pfile, "\n");
+
+	PrintIndent(iIndent + 2, pfile);
+
+	fprintf(pfile, "%s\n", FunctionGetName(pfun));
+
+	PrintIndent(iIndent + 4, pfile);
+	fprintf(pfile, "(\n");
+
+	struct symtab_Parameters *pparFunCurr
+	    = pfun->pparc->ppars;
+
+	for( ; pparFunCurr ; pparFunCurr = pparFunCurr->pparNext)
+	{
+	    ParameterPrintInfoRecursiveNDF(pparFunCurr, ppist, iLevel + 8, pfile); 
+	}
+
+	PrintIndent(iIndent + 4, pfile);
+	fprintf(pfile, "),\n");
+
+	return 1;
+    }
+
+    //- else
+
+    else
+    {
+	//- diag's
+
+	fprintf(stdout, "parameter (%s) has an unknown type\n", ppar->pcIdentifier);
+
+	return 0;
+    }
+
+    return 1;
+}
 
 
 /// 
