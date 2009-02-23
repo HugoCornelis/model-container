@@ -2445,7 +2445,7 @@ sub generate_textual_descriptions
 
 		# write short description
 
-		my $description2 = $shortname;
+		my $description2 = lc($shortname);
 
 		print $file2 "    \"$description2\",\n";
 
