@@ -2356,7 +2356,17 @@ sub generate_textual_descriptions
 	     {
 		 $name = $class_hierarchy->{$_}->{token_name};
 
+		 # remove ndf token_ prefix
+
 		 $name =~ s/^token_//gi;
+
+		 # replace ndf _group suffix with v_ code prefix
+
+		 #! note that this will be undone for textual ndf
+		 #! tokens, meaning that it is time to clean up
+		 #! this mess.
+
+		 $name =~ s/(.*)_group/v_$1/i;
 	     }
 
 	     $names->[$class_hierarchy->{$_}->{number}] = $name;
@@ -2449,9 +2459,11 @@ sub generate_textual_descriptions
 
 		print $file2 "    \"$description2\",\n";
 
-		# write textual description
+		# write textual ndf description
 
 		my $description3 = $name;
+
+		$description3 =~ s/v_(.*)/$1_GROUP/i;
 
 		print $file3 "    \"$description3\",\n";
 	    }

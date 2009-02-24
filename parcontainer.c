@@ -98,7 +98,7 @@ ParContainerExportYAML
 
     //- default output file (should be)
 
-    if (pfile)
+    if (!pfile)
     {
 	pfile = stdout;
     }

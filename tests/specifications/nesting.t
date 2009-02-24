@@ -49,7 +49,7 @@ Child 5 : 5,T_sym_network
 Child 6 : 6,T_sym_network
 Child 7 : 7,T_sym_network
 Child 8 : 8,T_sym_network
-Child 9 : NetworkGrid,T_sym_algorithm_symbol
+Child 9 : NetworkGrid,T_sym_algorithm
 inputs (if any) :
  neurospaces ',
 						   timeout => 10,
