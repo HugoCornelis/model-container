@@ -21,9 +21,10 @@ SUBDIRS = event symbol
 
 noinst_LIBRARIES = libalgorithms.a
 
-libalgorithms_a_SOURCES = main.c
 
 libalgorithms_a_DEPENDENCIES = event/libevent_algorithms.a symbol/libsymbol_algorithms.a
+
+libalgorithms_a_SOURCES = main.c
 
 libalgorithms_a_LIBADD = event/libevent_algorithms.a symbol/libsymbol_algorithms.a
 

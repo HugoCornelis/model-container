@@ -43,7 +43,7 @@ SwiggableNeurospaces.py swiggable_neurospaces_wrap.c: $(swig_DATA)
 	swig -DPRE_PROTO_TRAVERSAL -I$(builddir)../../.. -I$(srcdir)/../../.. -python -makedefault -module SwiggableNeurospaces -o swiggable_neurospaces_wrap.c $(srcdir)/neurospaces.i
 
 swiggable_neurospaces_wrap.o: swiggable_neurospaces_wrap.c
-	gcc -g -DPRE_PROTO_TRAVERSAL -I/usr/include/python2.4 -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols/ -c swiggable_neurospaces_wrap.c -fPIC -Xlinker -export-dynamic
+	gcc -g -DPRE_PROTO_TRAVERSAL -I$PYTHON_PREFIX/include/python$PYTHON_VERSION -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols/ -c swiggable_neurospaces_wrap.c -fPIC -Xlinker -export-dynamic
 
 #t this line needs -f PIC for some architectures, and -lncurses for some architectures
 

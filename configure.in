@@ -97,6 +97,9 @@ AC_CONFIG_SUBDIRS(algorithms convertors glue/swig)
 # $Format: "AM_INIT_AUTOMAKE(${package}, ${label}, ${email})"$
 AM_INIT_AUTOMAKE(model-container, 16e23f15d78f5309ea818389c3ceb50568e64313-0, hugo.cornelis@gmail.com)
 
+
+AC_CANONICAL_TARGET
+
 dnl Checks for programs.
 AC_PROG_AWK
 AC_PROG_YACC
@@ -106,6 +109,7 @@ AC_ARG_PROGRAM
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_RANLIB
+dnl AC_PROG_LIBTOOL
 
 dnl Checks for libraries.
 dnl Replace `main' with a function in -lcurses:
@@ -149,6 +153,15 @@ AC_CHECK_HEADERS([limits.h sys/time.h unistd.h float.h stddef.h ],[],[
 
 
 
+dnl Check for Python
+AM_PATH_PYTHON(,[],[
+   echo "Python is not installed."
+   exit -1
+])
+
+
+
+
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 AC_C_INLINE
@@ -176,7 +189,6 @@ dnl Check for some needed programs.
 AC_CHECK_PROGS(PERL, perl5 perl)
 
 AC_PATH_PROGS(DOXYGEN,doxygen,[NULL])
-
 
 
 # search lisp dir for installing the emacs major mode
@@ -268,39 +280,39 @@ dnl fi
 
 #! it seems to be impossible to specify this using regex ranges
 
-dnl MODEL_DESCRIPTION_FILES=`find library -iname "*.ndf" -printf "%p " | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
-dnl MODEL_DESCRIPTION_FILES=`find library -iname "*.ndf" -printf "%p " | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
-MODEL_DESCRIPTION_FILES=`find library -iname "*.ndf" -printf "%p "`
+dnl MODEL_DESCRIPTION_FILES=`find library -iname "*.ndf" | perl -pe 's/\n/ /g' | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
+dnl MODEL_DESCRIPTION_FILES=`find library -iname "*.ndf" | perl -pe 's/\n/ /g' | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
+MODEL_DESCRIPTION_FILES=`find library -iname "*.ndf" | perl -pe 's/\n/ /g'`
 AC_SUBST(MODEL_DESCRIPTION_FILES)
 
-MODEL_XML_FILES=`find library -iname "*.xml" -printf "%p " | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
+MODEL_XML_FILES=`find library -iname "*.xml" | perl -pe 's/\n/ /g' | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
 AC_SUBST(MODEL_XML_FILES)
 
-MODEL_PROJECTIONCACHES=`find library/projectionqueries -type f -printf "%p "`
+MODEL_PROJECTIONCACHES=`find library/projectionqueries -type f | perl -pe 's/\n/ /g'`
 AC_SUBST(MODEL_PROJECTIONCACHES)
 
-MODEL_GENESIS_TABFILES=`find library -iname "*.tab" -printf "%p "`
+MODEL_GENESIS_TABFILES=`find library -iname "*.tab" | perl -pe 's/\n/ /g'`
 AC_SUBST(MODEL_GENESIS_TABFILES)
 
-MODEL_GENESIS_MORPHOLOGYFILES=`find library -iname "*.p" -printf "%p "`
+MODEL_GENESIS_MORPHOLOGYFILES=`find library -iname "*.p" | perl -pe 's/\n/ /g'`
 AC_SUBST(MODEL_GENESIS_MORPHOLOGYFILES)
 
-MODEL_SWC_MORPHOLOGYFILES=`find library -iname "*.swc" -printf "%p " | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
+MODEL_SWC_MORPHOLOGYFILES=`find library -iname "*.swc" | perl -pe 's/\n/ /g' | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
 AC_SUBST(MODEL_SWC_MORPHOLOGYFILES)
 
-MODEL_TEXFILES=`find library -iname "*.tex" -printf "%p "`
+MODEL_TEXFILES=`find library -iname "*.tex" | perl -pe 's/\n/ /g'`
 AC_SUBST(MODEL_TEXFILES)
 
-MODEL_YAMLFILES=`find library -iname "*.yml" -printf "%p "`
+MODEL_YAMLFILES=`find library -iname "*.yml" | perl -pe 's/\n/ /g'`
 AC_SUBST(MODEL_YAMLFILES)
 
-ALGORITHM_DATA=`find library/algorithm_data -type f -printf "%p "`
+ALGORITHM_DATA=`find library/algorithm_data -type f | perl -pe 's/\n/ /g'`
 AC_SUBST(ALGORITHM_DATA)
 
 
 # determine the test library to install
 
-TEST_SPECIFICATION_FILES=`echo -n "tests/introduction.html " && find tests/specifications -iname "*.t" -printf "%p " && find tests/specifications/strings -iname "*.txt" -printf "%p "`
+TEST_SPECIFICATION_FILES=`/bin/echo -n "tests/introduction.html " && find tests/specifications -iname "*.t" | perl -pe 's/\n/ /g' && find tests/specifications/strings -iname "*.txt" | perl -pe 's/\n/ /g'`
 AC_SUBST(TEST_SPECIFICATION_FILES)
 
 
