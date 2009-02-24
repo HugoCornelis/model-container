@@ -496,15 +496,15 @@ Child 4 : MossyFiberProjection,T_sym_projection
 Child 5 : ForwardProjection,T_sym_projection
 Child 6 : BackwardProjection,T_sym_projection
 Child 7 : ParallelFiberProjection,T_sym_projection
-Child 8 : Golgis2Granules_GABAB,T_sym_algorithm_symbol
-Child 9 : Golgis2Granules_GABAA,T_sym_algorithm_symbol
-Child 10 : Granules2Golgis,T_sym_algorithm_symbol
-Child 11 : Mossies2Granules_AMPA,T_sym_algorithm_symbol
-Child 12 : Mossies2Granules_NMDA,T_sym_algorithm_symbol
-Child 13 : Mossies2Golgis,T_sym_algorithm_symbol
-Child 14 : ForwardProjection,T_sym_algorithm_symbol
-Child 15 : BackwardProjectionB,T_sym_algorithm_symbol
-Child 16 : BackwardProjectionA,T_sym_algorithm_symbol
+Child 8 : Golgis2Granules_GABAB,T_sym_algorithm
+Child 9 : Golgis2Granules_GABAA,T_sym_algorithm
+Child 10 : Granules2Golgis,T_sym_algorithm
+Child 11 : Mossies2Granules_AMPA,T_sym_algorithm
+Child 12 : Mossies2Granules_NMDA,T_sym_algorithm
+Child 13 : Mossies2Golgis,T_sym_algorithm
+Child 14 : ForwardProjection,T_sym_algorithm
+Child 15 : BackwardProjectionB,T_sym_algorithm
+Child 16 : BackwardProjectionA,T_sym_algorithm
 inputs (if any) :
 ",
 						   write => "childreninfo /CerebellarCortex"
