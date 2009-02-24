@@ -25,6 +25,23 @@ AC_INIT(neurospaces, swig-glue-python, hugo\.cornelis\@gmail\.com)
 
 AM_INIT_AUTOMAKE(neurospaces, swig-glue-python)
 
+dnl Check for Python
+AM_PATH_PYTHON(,[],[
+   echo "Python is not installed."
+   exit -1
+])
+
+
+AC_CHECKING([local Python configuration])
+PYTHON_PREFIX=`echo $PYTHON | sed -e "s,[[^/]]*$,,;s,/$,,;s,^$,.,"`
+PYTHON_PREFIX=`echo $PYTHON_PREFIX | sed -e "s,[[^/]]*$,,;s,/$,,;s,^$,.,"`
+PYTHONHOME=$PYTHON_PREFIX
+
+AC_SUBST(PYTHON_PREFIX)
+AC_SUBST(PYTHONHOME)
+
+
+
 # Checks for programs.
 # AC_PROG_CC
 # AC_PROG_RANLIB
@@ -38,6 +55,8 @@ AM_INIT_AUTOMAKE(neurospaces, swig-glue-python)
 # Checks for typedefs, structures, and compiler characteristics.
 
 # Checks for library functions.
+
+
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

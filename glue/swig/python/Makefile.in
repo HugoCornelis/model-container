@@ -109,6 +109,12 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+PYTHON = @PYTHON@
+PYTHONHOME = @PYTHONHOME@
+PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
+PYTHON_PLATFORM = @PYTHON_PLATFORM@
+PYTHON_PREFIX = @PYTHON_PREFIX@
+PYTHON_VERSION = @PYTHON_VERSION@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -136,15 +142,18 @@ mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
 pdfdir = @pdfdir@
+pkgpyexecdir = @pkgpyexecdir@
+pkgpythondir = @pkgpythondir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+pyexecdir = @pyexecdir@
+pythondir = $(prefix)/glue/swig/python
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 SUBDIRS = 
-pythondir = $(prefix)/glue/swig/python
 nobase_python_HEADERS = Neurospaces/__init__.py Neurospaces/SingleCellContainer.py Neurospaces/SimpleHeccer.py
 python_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.py _SwiggableNeurospaces.so tests/neurospaces_test.py
 BUILT_SOURCES = \
@@ -627,7 +636,7 @@ SwiggableNeurospaces.py swiggable_neurospaces_wrap.c: $(swig_DATA)
 	swig -DPRE_PROTO_TRAVERSAL -I$(builddir)../../.. -I$(srcdir)/../../.. -python -makedefault -module SwiggableNeurospaces -o swiggable_neurospaces_wrap.c $(srcdir)/neurospaces.i
 
 swiggable_neurospaces_wrap.o: swiggable_neurospaces_wrap.c
-	gcc -g -DPRE_PROTO_TRAVERSAL -I/usr/include/python2.4 -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols/ -c swiggable_neurospaces_wrap.c -fPIC -Xlinker -export-dynamic
+	gcc -g -DPRE_PROTO_TRAVERSAL -I$(PYTHON_PREFIX)/include/python$(PYTHON_VERSION) -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols/ -c swiggable_neurospaces_wrap.c -fPIC -Xlinker -export-dynamic
 
 #t this line needs -f PIC for some architectures, and -lncurses for some architectures
 
