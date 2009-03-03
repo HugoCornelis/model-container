@@ -35,6 +35,7 @@ nobase_python_HEADERS = Neurospaces/__init__.py Neurospaces/SingleCellContainer.
 
 python_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.py _SwiggableNeurospaces.so tests/neurospaces_test.py
 
+
 BUILT_SOURCES = \
 	SwiggableNeurospaces.py \
 	swiggable_neurospaces_wrap.c
@@ -43,12 +44,12 @@ SwiggableNeurospaces.py swiggable_neurospaces_wrap.c: $(swig_DATA)
 	swig -DPRE_PROTO_TRAVERSAL -I$(builddir)../../.. -I$(srcdir)/../../.. -python -makedefault -module SwiggableNeurospaces -o swiggable_neurospaces_wrap.c $(srcdir)/neurospaces.i
 
 swiggable_neurospaces_wrap.o: swiggable_neurospaces_wrap.c
-	gcc -g -DPRE_PROTO_TRAVERSAL -I$(PYTHON_PREFIX)/include/python$(PYTHON_VERSION) -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols/ -c swiggable_neurospaces_wrap.c -fPIC -Xlinker -export-dynamic
+	gcc $(SWIGCOMPILELINKSFORPYTHON) -c swiggable_neurospaces_wrap.c
 
 #t this line needs -f PIC for some architectures, and -lncurses for some architectures
 
 _SwiggableNeurospaces.so: swiggable_neurospaces_wrap.o
-	gcc -g -shared swiggable_neurospaces_wrap.o -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -lhistory -lreadline -fPIC -o _SwiggableNeurospaces.so -Xlinker -export-dynamic
+	gcc $(SWIGLDLINKSFORPERL) -o _SwiggableNeurospaces.so 
 
 all: _SwiggableNeurospaces.so
 
