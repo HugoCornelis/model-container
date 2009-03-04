@@ -16,6 +16,10 @@ Makefile.in$
 ^glue/swig/perl/swiggable_neurospaces_wrap.c$
 ^glue/swig/python/SwiggableNeurospaces.py$
 ^glue/swig/python/swiggable_neurospaces_wrap.c$
+^glue/swig/perl/SwiggableNeurospaces.dylib$
+^glue/swig/perl/SwiggableNeurospaces.so$
+^convertors/lex.yy.c$
+^ylwrap$
 ^hierarchy/output
 ^html/htdocs/neurospaces_project/neurospaces/
 ^installed$
@@ -43,3 +47,4 @@ tar.gz$
 docs/html
 docs/doxygen.tag$
 config.status.lineno
+

@@ -39,7 +39,7 @@ host_triplet = @host@
 target_triplet = @target@
 subdir = glue/swig/perl
 DIST_COMMON = $(nobase_perl_HEADERS) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in COPYING INSTALL missing
+	$(srcdir)/Makefile.in missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
