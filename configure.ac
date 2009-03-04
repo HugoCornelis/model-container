@@ -354,9 +354,24 @@ case "$host_os" in
     ARFLAGS='-static -c -o'
     AC_SUBST(AR)
     AC_SUBST(ARFLAGS)
+    AC_MSG_RESULT([$AR $ARFLAGS])
 
     PERLLIB_EXTENSION='dylib'
     AC_SUBST(PERLLIB_EXTENSION)
+
+
+    # This is to get rid of the annoying error that occurs when
+    # you use two arch flags. By default these commands produce a -arch for both
+    # architectures.
+
+    PERL_CCOPTS=`perl -MExtUtils::Embed -e ccopts | perl -pe 's/-arch i386 -arch ppc//g'`
+    AC_SUBST(PERL_CCOPTS)
+
+    PERL_LDADD=`perl -MExtUtils::Embed -e ldopts | perl -pe 's/-arch i386 -arch ppc//g'`
+    AC_SUBST(PERL_LDADD)
+
+    PERL_LDFLAGS=`perl -MExtUtils::Embed -e ldopts | perl -pe 's/-arch i386 -arch ppc//g'`
+    AC_SUBST(PERL_LDFLAGS)
 
     SWIGCOMPILELINKSFORPERL='-g \
 	-DPRE_PROTO_TRAVERSAL \

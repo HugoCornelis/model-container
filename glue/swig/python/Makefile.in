@@ -230,7 +230,7 @@ CLEANFILES = \
 	SwiggableNeurospaces.py \
 	swiggable_neurospaces_wrap.c \
 	swiggable_neurospaces_wrap.o \
-	_SwiggableNeurospaces.so
+	_SwiggableNeurospaces.$(PERLLIB_EXTENSION)
 
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
@@ -593,7 +593,7 @@ uninstall-am: uninstall-nobase_pythonHEADERS uninstall-pythonDATA
 
 dist-hook:
 	cp $(srcdir)/neurospaces.i $(distdir)
-	$(INSTALL) -d $(distdir)/tests
+	$(INSTALL) -d $(distdir)/testspwd
 	cp $(srcdir)/tests/*.py $(distdir)/tests
 
 SwiggableNeurospaces.py swiggable_neurospaces_wrap.c: $(swig_DATA)
@@ -605,7 +605,7 @@ swiggable_neurospaces_wrap.o: swiggable_neurospaces_wrap.c
 #t this line needs -f PIC for some architectures, and -lncurses for some architectures
 
 _SwiggableNeurospaces.so: swiggable_neurospaces_wrap.o
-	gcc $(SWIGLDLINKSFORPERL) -o _SwiggableNeurospaces.so 
+	gcc $(SWIGLDLINKSFORPERL) -o _SwiggableNeurospaces.$(PERLLIB_EXTENSION)
 
 all: _SwiggableNeurospaces.so
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

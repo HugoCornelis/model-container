@@ -233,7 +233,7 @@ CLEANFILES = \
 	SwiggableNeurospaces.pm \
 	swiggable_neurospaces_wrap.c \
 	swiggable_neurospaces_wrap.o \
-	SwiggableNeurospaces.so
+	SwiggableNeurospaces.$(PERLLIB_EXTENSION)
 
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
@@ -608,7 +608,7 @@ swiggable_neurospaces_wrap.o: swiggable_neurospaces_wrap.c
 #t this line needs -f PIC for some architectures, and -lncurses for some architectures
 
 SwiggableNeurospaces.so: swiggable_neurospaces_wrap.o
-	gcc $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.so
+	gcc $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION)
 
 all: SwiggableNeurospaces.so
 

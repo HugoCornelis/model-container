@@ -7767,8 +7767,24 @@ echo $ECHO_N "checking Using libtool for MAC OS X.... $ECHO_C" >&6; }
     ARFLAGS='-static -c -o'
 
 
+    { echo "$as_me:$LINENO: result: $AR $ARFLAGS" >&5
+echo "${ECHO_T}$AR $ARFLAGS" >&6; }
 
     PERLLIB_EXTENSION='dylib'
+
+
+
+    # This is to get rid of the annoying error that occurs when
+    # you use two arch flags. By default these commands produce a -arch for both
+    # architectures.
+
+    PERL_CCOPTS=`perl -MExtUtils::Embed -e ccopts | perl -pe 's/-arch i386 -arch ppc//g'`
+
+
+    PERL_LDADD=`perl -MExtUtils::Embed -e ldopts | perl -pe 's/-arch i386 -arch ppc//g'`
+
+
+    PERL_LDFLAGS=`perl -MExtUtils::Embed -e ldopts | perl -pe 's/-arch i386 -arch ppc//g'`
 
 
     SWIGCOMPILELINKSFORPERL='-g \

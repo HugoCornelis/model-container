@@ -50,7 +50,7 @@ swiggable_neurospaces_wrap.o: swiggable_neurospaces_wrap.c
 #t this line needs -f PIC for some architectures, and -lncurses for some architectures
 
 SwiggableNeurospaces.so: swiggable_neurospaces_wrap.o
-	gcc $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.so
+	gcc $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION)
 
 all: SwiggableNeurospaces.so
 

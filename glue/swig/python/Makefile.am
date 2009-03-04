@@ -26,7 +26,7 @@ SUBDIRS =
 
 dist-hook:
 	cp $(srcdir)/neurospaces.i $(distdir)
-	$(INSTALL) -d $(distdir)/tests
+	$(INSTALL) -d $(distdir)/testspwd
 	cp $(srcdir)/tests/*.py $(distdir)/tests
 
 pythondir = $(prefix)/glue/swig/python
@@ -49,7 +49,7 @@ swiggable_neurospaces_wrap.o: swiggable_neurospaces_wrap.c
 #t this line needs -f PIC for some architectures, and -lncurses for some architectures
 
 _SwiggableNeurospaces.so: swiggable_neurospaces_wrap.o
-	gcc $(SWIGLDLINKSFORPERL) -o _SwiggableNeurospaces.so 
+	gcc $(SWIGLDLINKSFORPERL) -o _SwiggableNeurospaces.$(PERLLIB_EXTENSION)
 
 all: _SwiggableNeurospaces.so
 
