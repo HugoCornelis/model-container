@@ -58,7 +58,7 @@ CLEANFILES = \
 	SwiggableNeurospaces.pm \
 	swiggable_neurospaces_wrap.c \
 	swiggable_neurospaces_wrap.o \
-	SwiggableNeurospaces.so
+	SwiggableNeurospaces.$(PERLLIB_EXTENSION)
 
 ## following http://www.geocities.com/foetsch/python/swig_linux.htm
 

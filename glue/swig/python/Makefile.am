@@ -57,6 +57,6 @@ CLEANFILES = \
 	SwiggableNeurospaces.py \
 	swiggable_neurospaces_wrap.c \
 	swiggable_neurospaces_wrap.o \
-	_SwiggableNeurospaces.so
+	_SwiggableNeurospaces.$(PERLLIB_EXTENSION)
 
 
