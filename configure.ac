@@ -423,38 +423,32 @@ case "$host_os" in
     PERLLIB_EXTENSION='so'
     AC_SUBST(PERLLIB_EXTENSION)
 
-    SWIGCOMPILELINKSFORPERL='-I/usr/local/neurospaces/instrumentor \
+    SWIGCOMPILELINKSFORPERL='-g \
+	-DPRE_PROTO_TRAVERSAL \
+	-I$(builddir)../../.. \
 	-I$(srcdir)/../../.. \
-	-I$(top_builddir) \
-	-ffloat-store \
-	-I../../.. \
-	-include heccer/config.h \
-	-g \
-	-O0 \
+	-I$(builddir)../../../hierarchy/output/symbols \
+	-I$(srcdir)/../../../hierarchy/output/symbols/ \
 	-fPIC \
 	`perl -MExtUtils::Embed -e ccopts`'
     AC_SUBST(SWIGCOMPILELINKSFORPERL)
 
     SWIGLDLINKSFORPERL='-g \
-	-shared swiggable_heccer_wrap.o \
+	-shared swiggable_neurospaces_wrap.o \
 	-L../../.. \
-	-lheccer \
-	-L../../../integrators \
-	-lhneurospaces \
-	-L/usr/local/lib/model-container \
 	-lneurospacesread \
-	-L/usr/local/lib/neurospaces/algorithms/symbol \
+	-L../../../algorithms/event \
+	-levent_algorithms \
+	-L../../../algorithms/symbol \
 	-lsymbol_algorithms \
 	-lncurses \
-	-lreadline \
 	-lhistory \
-	-fPIC'
+	-lreadline'
     AC_SUBST(SWIGLDLINKSFORPERL)
 
     SWIGCOMPILELINKSFORPYTHON='-g \
 	-DPRE_PROTO_TRAVERSAL \
 	-I$(PYTHON_HEADERS) \
-	-I/usr/local/neurospaces/instrumentor \
 	-I$(builddir)../../.. \
 	-I$(srcdir)/../../.. \
 	-I$(builddir)../../../hierarchy/output/symbols \
@@ -465,18 +459,17 @@ case "$host_os" in
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
 
     SWIGLDLINKSFORPYTHON='-g \
-	-shared swiggable_heccer_wrap.o \
+	-shared swiggable_neurospaces_wrap.o \
 	-L../../.. \
-	-lheccer \
-	-L../../../integrators \
-	-lhneurospaces \
-	-L/usr/local/lib/model-container \
 	-lneurospacesread \
-	-L/usr/local/lib/neurospaces/algorithms/symbol \
+	-L../../../algorithms/event \
+	-levent_algorithms \
+	-L../../../algorithms/symbol \
 	-lsymbol_algorithms \
 	-lncurses \
-	-lreadline \
 	-lhistory \
+	-lreadline \
+	-fPIC \
 	-Xlinker \
 	-export-dynamic'
     AC_SUBST(SWIGLDLINKSFORPYTHON)
