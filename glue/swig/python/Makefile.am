@@ -33,7 +33,7 @@ pythondir = $(prefix)/glue/swig/python
 
 nobase_python_HEADERS = Neurospaces/__init__.py Neurospaces/SingleCellContainer.py Neurospaces/SimpleHeccer.py
 
-python_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.py _SwiggableNeurospaces.so tests/neurospaces_test.py
+python_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.py _SwiggableNeurospaces.$(PERLLIB_EXTENSION) tests/neurospaces_test.py
 
 
 BUILT_SOURCES = \
@@ -48,10 +48,10 @@ swiggable_neurospaces_wrap.o: swiggable_neurospaces_wrap.c
 
 #t this line needs -f PIC for some architectures, and -lncurses for some architectures
 
-_SwiggableNeurospaces.so: swiggable_neurospaces_wrap.o
+_SwiggableNeurospaces.$(PERLLIB_EXTENSION): swiggable_neurospaces_wrap.o
 	gcc $(SWIGLDLINKSFORPERL) -o _SwiggableNeurospaces.$(PERLLIB_EXTENSION)
 
-all: _SwiggableNeurospaces.so
+all: _SwiggableNeurospaces.$(PERLLIB_EXTENSION)
 
 CLEANFILES = \
 	SwiggableNeurospaces.py \

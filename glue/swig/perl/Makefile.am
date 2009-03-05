@@ -33,7 +33,7 @@ perldir = $(prefix)/glue/swig/perl
 
 nobase_perl_HEADERS = Neurospaces.pm Neurospaces/Query.pm Neurospaces/Traversal.pm Neurospaces/Tokens/Physical.pm
 
-perl_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.pm SwiggableNeurospaces.so # neurospaces_test.pm
+perl_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.pm SwiggableNeurospaces.$(PERLLIB_EXTENSION) # neurospaces_test.pm
 
 # exclude = -lhistory
 
@@ -49,10 +49,10 @@ swiggable_neurospaces_wrap.o: swiggable_neurospaces_wrap.c
 
 #t this line needs -f PIC for some architectures, and -lncurses for some architectures
 
-SwiggableNeurospaces.so: swiggable_neurospaces_wrap.o
+SwiggableNeurospaces.$(PERLLIB_EXTENSION): swiggable_neurospaces_wrap.o
 	gcc $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION)
 
-all: SwiggableNeurospaces.so
+all: SwiggableNeurospaces.$(PERLLIB_EXTENSION)
 
 CLEANFILES = \
 	SwiggableNeurospaces.pm \

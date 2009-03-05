@@ -3,6 +3,7 @@ tests/glue
 
 Makefile$
 *Makefile.in$
+aclocal.m4$
 ^analyzer.c$
 ^analyzer.l$
 ^convertors/des2xml$
