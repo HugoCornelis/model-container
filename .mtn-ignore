@@ -2,7 +2,7 @@ tests/convertors
 tests/glue
 
 Makefile$
-Makefile.in$
+*Makefile.in$
 ^analyzer.c$
 ^analyzer.l$
 ^convertors/des2xml$
