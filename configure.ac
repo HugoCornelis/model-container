@@ -93,9 +93,7 @@ AC_SUBST(PERL_LDADD)
 PERL_LDFLAGS=`perl -MExtUtils::Embed -e ldopts`
 AC_SUBST(PERL_LDFLAGS)
 
-dnl all subdirs
 
-AC_CONFIG_SUBDIRS(algorithms convertors glue/swig)
 
 # $Format: "AM_INIT_AUTOMAKE(${package}, ${label}, ${email})"$
 AM_INIT_AUTOMAKE(model-container, 16e23f15d78f5309ea818389c3ceb50568e64313-0,hugo.cornelis@gmail.com)
@@ -356,24 +354,24 @@ case "$host_os" in
     AC_SUBST(ARFLAGS)
     AC_MSG_RESULT([$AR $ARFLAGS])
 
-    PERLLIB_EXTENSION='dylib'
-    AC_SUBST(PERLLIB_EXTENSION)
-
-
     # This is to get rid of the annoying error that occurs when
     # you use two arch flags. By default these commands produce a -arch for both
     # architectures.
 
-    PERL_CCOPTS=`perl -MExtUtils::Embed -e ccopts | perl -pe 's/-arch i386 -arch ppc//g'`
+    PERL_CCOPTS=`perl -MExtUtils::Embed -e ccopts | perl -pe 's/\-arch\s\S+\s//g'`
     AC_SUBST(PERL_CCOPTS)
 
-    PERL_LDADD=`perl -MExtUtils::Embed -e ldopts | perl -pe 's/-arch i386 -arch ppc//g'`
+    PERL_LDADD=`perl -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
     AC_SUBST(PERL_LDADD)
 
-    PERL_LDFLAGS=`perl -MExtUtils::Embed -e ldopts | perl -pe 's/-arch i386 -arch ppc//g'`
+    PERL_LDFLAGS=`perl -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
     AC_SUBST(PERL_LDFLAGS)
 
+    PERLLIB_EXTENSION='dylib'
+    AC_SUBST(PERLLIB_EXTENSION)
+
     SWIGCOMPILELINKSFORPERL='-g \
+	-Wdeclaration-after-statement \
 	-DPRE_PROTO_TRAVERSAL \
 	-I$(builddir)../../.. \
 	-I$(srcdir)/../../.. \
@@ -381,8 +379,13 @@ case "$host_os" in
 	-I$(srcdir)/../../../hierarchy/output/symbols/ \
 	-fPIC \
 	-dynamic \
-	`perl -MExtUtils::Embed -e ccopts`'
+	$(PERL_CCOPTS)'
     AC_SUBST(SWIGCOMPILELINKSFORPERL)
+
+    SWIGCOMPILECOMMAND_PERL='gcc \
+        $(SWIGCOMPILELINKSFORPERL) \
+        -c swiggable_neurospaces_wrap.c'
+    AC_SUBST(SWIGCOMPILECOMMAND_PERL)
 
     SWIGLDLINKSFORPERL='-L../../.. \
 	-lneurospacesread \
@@ -391,12 +394,25 @@ case "$host_os" in
 	-L../../../algorithms/symbol \
 	-lsymbol_algorithms \
 	-lncurses \
-	-fPIC \
 	-bundle \
 	-undefined suppress \
-	-flat_namespace'
+	-flat_namespace \
+	$(PERL_LDFLAGS)'
     AC_SUBST(SWIGLDLINKSFORPERL)
 
+    SWIGLINKCOMMAND_PERL='ld \
+	$(SWIGLDLINKSFORPERL) \
+	-o SwiggableNeurospaces.$(PERLLIB_EXTENSION) \
+	swiggable_neurospaces_wrap.o'
+    AC_SUBST(SWIGLINKCOMMAND_PERL)
+
+
+
+
+
+    PYTHONLIB_EXTENSION='dylib'
+    AC_SUBST(PYTHONLIB_EXTENSION)
+    
     SWIGCOMPILELINKSFORPYTHON='-g \
 	-DPRE_PROTO_TRAVERSAL \
 	-I$(PYTHON_HEADERS) \
@@ -407,8 +423,12 @@ case "$host_os" in
 	-fPIC'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
 
-    SWIGLDLINKSFORPYTHON='-g \
-	-shared swiggable_neurospaces_wrap.o \
+    SWIGCOMPILECOMMAND_PYTHON='gcc \
+        $(SWIGCOMPILELINKSFORPYTHON) \
+        -c swiggable_neurospaces_wrap.c'
+    AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
+
+    SWIGLDLINKSFORPYTHON='-L$(PYTHON_HEADERS) \
 	-L../../.. \
 	-lneurospacesread \
 	-L../../../algorithms/event \
@@ -417,15 +437,25 @@ case "$host_os" in
 	-lsymbol_algorithms \
 	-lncurses \
 	-lreadline \
-	-fPIC \
 	-framework Python \
+        -flat_namespace \
+        -undefined suppress \
 	-bundle \
 	-bundle_loader $(PYTHON_EXE)'
     AC_SUBST(SWIGLDLINKSFORPYTHON)
 
+    SWIGLINKCOMMAND_PYTHON='ld \
+	$(SWIGLDLINKSFORPYTHON) \
+	-o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) swiggable_neurospaces_wrap.o'
+    AC_SUBST(SWIGLINKCOMMAND_PYTHON)
+
     AC_MSG_RESULT([done.])
     dnl }}} end MAC OS X settings
     ;;
+
+
+
+
   *)
     dnl {{{ Default settings (Linux 2.6)
     AR='ar'
@@ -438,6 +468,9 @@ case "$host_os" in
     PERLLIB_EXTENSION='so'
     AC_SUBST(PERLLIB_EXTENSION)
 
+    SWIGLD_PERL='gcc'
+    AC_SUBST(SWIGLD_PERL)
+
     SWIGCOMPILELINKSFORPERL='-g \
 	-DPRE_PROTO_TRAVERSAL \
 	-I$(builddir)../../.. \
@@ -447,6 +480,11 @@ case "$host_os" in
 	-fPIC \
 	`perl -MExtUtils::Embed -e ccopts`'
     AC_SUBST(SWIGCOMPILELINKSFORPERL)
+
+    SWIGCOMPILECOMMAND_PERL='gcc \
+        $(SWIGCOMPILELINKSFORPERL) \
+        -c swiggable_heccer_wrap.c' 
+    AC_SUBST(SWIGCOMPILECOMMAND_PERL)
 
     SWIGLDLINKSFORPERL='-g \
 	-shared swiggable_neurospaces_wrap.o \
@@ -461,6 +499,19 @@ case "$host_os" in
 	-lreadline'
     AC_SUBST(SWIGLDLINKSFORPERL)
 
+
+    SWIGLINKCOMMAND_PERL='gcc \
+        $(SWIGLDLINKSFORPERL) \
+        -o SwiggableHeccer.$(PERLLIB_EXTENSION)'
+    AC_SUBST(SWIGCOMPILECOMMAND_PERL)
+
+
+
+
+
+    PYTHONLIB_EXTENSION='dylib'
+    AC_SUBST(PYTHONLIB_EXTENSION)
+
     SWIGCOMPILELINKSFORPYTHON='-g \
 	-DPRE_PROTO_TRAVERSAL \
 	-I$(PYTHON_HEADERS) \
@@ -472,6 +523,11 @@ case "$host_os" in
 	-Xlinker \
 	-export-dynamic'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
+   
+    SWIGCOMPILECOMMAND_PYTHON='gcc \
+       $(SWIGCOMPILELINKSFORPYTHON) \
+       -c swiggable_neurospaces_wrap.c'
+    AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
 
     SWIGLDLINKSFORPYTHON='-g \
 	-shared swiggable_neurospaces_wrap.o \
@@ -488,6 +544,12 @@ case "$host_os" in
 	-Xlinker \
 	-export-dynamic'
     AC_SUBST(SWIGLDLINKSFORPYTHON)
+  
+    SWIGLINKCOMMAND_PYTHON='gcc \
+	$(SWIGLDLINKSFORPYTHON) \
+	-o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
+    AC_SUBST(SWIGLINKCOMMAND_PYTHON)
+
     dnl }}} End of General Settings
   
   ;;

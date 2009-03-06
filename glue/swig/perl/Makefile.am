@@ -35,7 +35,6 @@ nobase_perl_HEADERS = Neurospaces.pm Neurospaces/Query.pm Neurospaces/Traversal.
 
 perl_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.pm SwiggableNeurospaces.$(PERLLIB_EXTENSION) # neurospaces_test.pm
 
-# exclude = -lhistory
 
 BUILT_SOURCES = \
 	SwiggableNeurospaces.pm \
@@ -45,12 +44,12 @@ SwiggableNeurospaces.pm swiggable_neurospaces_wrap.c: $(swig_DATA)
 	swig -DPRE_PROTO_TRAVERSAL -I$(builddir)../../.. -I$(srcdir)/../../.. -perl5 -makedefault -module SwiggableNeurospaces -o swiggable_neurospaces_wrap.c $(srcdir)/neurospaces.i
 
 swiggable_neurospaces_wrap.o: swiggable_neurospaces_wrap.c
-	gcc $(SWIGCOMPILELINKSFORPERL) -c swiggable_neurospaces_wrap.c 
+	$(SWIGCOMPILECOMMAND_PERL)
 
 #t this line needs -f PIC for some architectures, and -lncurses for some architectures
 
 SwiggableNeurospaces.$(PERLLIB_EXTENSION): swiggable_neurospaces_wrap.o
-	gcc $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION)
+	 $(SWIGLINKCOMMAND_PERL)
 
 all: SwiggableNeurospaces.$(PERLLIB_EXTENSION)
 
