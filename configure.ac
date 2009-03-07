@@ -468,9 +468,6 @@ case "$host_os" in
     PERLLIB_EXTENSION='so'
     AC_SUBST(PERLLIB_EXTENSION)
 
-    SWIGLD_PERL='gcc'
-    AC_SUBST(SWIGLD_PERL)
-
     SWIGCOMPILELINKSFORPERL='-g \
 	-DPRE_PROTO_TRAVERSAL \
 	-I$(builddir)../../.. \
@@ -483,7 +480,7 @@ case "$host_os" in
 
     SWIGCOMPILECOMMAND_PERL='gcc \
         $(SWIGCOMPILELINKSFORPERL) \
-        -c swiggable_heccer_wrap.c' 
+        -c swiggable_neurospaces_wrap.c' 
     AC_SUBST(SWIGCOMPILECOMMAND_PERL)
 
     SWIGLDLINKSFORPERL='-g \
@@ -499,17 +496,16 @@ case "$host_os" in
 	-lreadline'
     AC_SUBST(SWIGLDLINKSFORPERL)
 
-
     SWIGLINKCOMMAND_PERL='gcc \
         $(SWIGLDLINKSFORPERL) \
-        -o SwiggableHeccer.$(PERLLIB_EXTENSION)'
+        -o SwiggableNeurospaces.$(PERLLIB_EXTENSION)'
     AC_SUBST(SWIGCOMPILECOMMAND_PERL)
 
 
 
 
 
-    PYTHONLIB_EXTENSION='dylib'
+    PYTHONLIB_EXTENSION='so'
     AC_SUBST(PYTHONLIB_EXTENSION)
 
     SWIGCOMPILELINKSFORPYTHON='-g \
