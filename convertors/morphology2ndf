@@ -621,12 +621,15 @@ sub main
 
 		#t this is currently a guess
 
+		#t looked up on the neuronland website, dia vs radius
+		#t not sure if this applies also to the soma, given by $2 ?
+
 		my $tag = $2;
 
 		my $x = $3 * 1e-6;
 		my $y = $4 * 1e-6;
 		my $z = $5 * 1e-6;
-		my $dia = $6 * 1e-6;
+		my $dia = $6 * 1e-6 * 2;
 
 		my $parent_number = $7;
 

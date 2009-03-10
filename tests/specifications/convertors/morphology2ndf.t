@@ -43410,6 +43410,7 @@ END PUBLIC_MODELS
 						  {
 						   comment => "Due to regex backtracking, this test runs really slow.  The morphology used for this test, has been obtained from <a href=\"http://neuromorpho.org/neuroMorpho/neuron_info.jsp?neuron_name=C170897A-P3\">http://neuromorpho.org/neuroMorpho/neuron_info.jsp?neuron_name=C170897A-P3</a>",
 						   description => "Can a SWC morphology file be converted and activated ?",
+                                                   disabled => "Disabled, radius vs diameter conversion must first be clarified",
 						   read => [
 							    '-re',
 							    '#!/.*/neurospacesparse
@@ -43536,6 +43537,7 @@ END PUBLIC_MODELS
 						  {
 						   comment => "Due to regex backtracking, this test runs really slow.  The morphology used for this test, has been obtained from <a href=\"http://neuromorpho.org/neuroMorpho/neuron_info.jsp?neuron_name=C170897A-P3\">http://neuromorpho.org/neuroMorpho/neuron_info.jsp?neuron_name=C170897A-P3</a>",
 						   description => "Can a SWC morphology file be converted and activated, based on TAG values ?",
+						   disabled => "Disabled, radius vs diameter conversion must first be clarified",
 						   read => [
 							    '-re',
 							    '#!/.*/neurospacesparse
