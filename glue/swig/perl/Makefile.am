@@ -33,7 +33,8 @@ perldir = $(prefix)/glue/swig/perl
 
 nobase_perl_HEADERS = Neurospaces.pm Neurospaces/Query.pm Neurospaces/Traversal.pm Neurospaces/Tokens/Physical.pm
 
-perl_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.pm SwiggableNeurospaces.so # neurospaces_test.pm
+perl_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.pm SwiggableNeurospaces.$(PERLLIB_EXTENSION) # neurospaces_test.pm
+
 
 BUILT_SOURCES = \
 	SwiggableNeurospaces.pm \
@@ -43,20 +44,20 @@ SwiggableNeurospaces.pm swiggable_neurospaces_wrap.c: $(swig_DATA)
 	swig -DPRE_PROTO_TRAVERSAL -I$(builddir)../../.. -I$(srcdir)/../../.. -perl5 -makedefault -module SwiggableNeurospaces -o swiggable_neurospaces_wrap.c $(srcdir)/neurospaces.i
 
 swiggable_neurospaces_wrap.o: swiggable_neurospaces_wrap.c
-	gcc -g -DPRE_PROTO_TRAVERSAL -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols/ -c swiggable_neurospaces_wrap.c -fPIC `perl -MExtUtils::Embed -e ccopts`
+	$(SWIGCOMPILECOMMAND_PERL)
 
 #t this line needs -f PIC for some architectures, and -lncurses for some architectures
 
-SwiggableNeurospaces.so: swiggable_neurospaces_wrap.o
-	gcc -g -shared swiggable_neurospaces_wrap.o -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -lhistory -lreadline -fPIC -o SwiggableNeurospaces.so
+SwiggableNeurospaces.$(PERLLIB_EXTENSION): swiggable_neurospaces_wrap.o
+	 $(SWIGLINKCOMMAND_PERL)
 
-all: SwiggableNeurospaces.so
+all: SwiggableNeurospaces.$(PERLLIB_EXTENSION)
 
 CLEANFILES = \
 	SwiggableNeurospaces.pm \
 	swiggable_neurospaces_wrap.c \
 	swiggable_neurospaces_wrap.o \
-	SwiggableNeurospaces.so
+	SwiggableNeurospaces.$(PERLLIB_EXTENSION)
 
 ## following http://www.geocities.com/foetsch/python/swig_linux.htm
 

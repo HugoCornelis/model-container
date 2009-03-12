@@ -2,7 +2,7 @@ dnl
 dnl Neurospaces: a library which implements a global typed symbol table to
 dnl be used in neurobiological model maintenance and simulation.
 dnl
-dnl $Id: configure.in 1.40 Wed, 10 Oct 2007 16:57:00 -0500 hugo $
+dnl $Id: configure.ac 1.40 Wed, 10 Oct 2007 16:57:00 -0500 hugo $
 dnl
 
 dnl //////////////////////////////////////////////////////////////////////////
@@ -20,11 +20,14 @@ dnl //////////////////////////////////////////////////////////////////////////
 dnl Process this file with autoconf to produce a configure script.
 # $Format: "AC_REVISION(${package}, ${label}, ${email})"$
 AC_REVISION(model-container, 16e23f15d78f5309ea818389c3ceb50568e64313-0, hugo.cornelis@gmail.com)
-dnl AC_REVISION($Id: configure.in 1.40 Wed, 10 Oct 2007 16:57:00 -0500 hugo $)
+dnl AC_REVISION($Id: configure.ac 1.40 Wed, 10 Oct 2007 16:57:00 -0500 hugo $)
 AC_INIT
 AC_CONFIG_SRCDIR([neurospaces.c])
 
 AC_CONFIG_HEADERS([neurospaces/config.h])
+
+dnl Obtain operating system information.
+AC_CANONICAL_TARGET
 
 dnl Determine whether symbols in prototypes have serial ID's lower or higher than in instances / references. 1 means lower (prototype symbols come first in regular traversals)
 
@@ -90,15 +93,12 @@ AC_SUBST(PERL_LDADD)
 PERL_LDFLAGS=`perl -MExtUtils::Embed -e ldopts`
 AC_SUBST(PERL_LDFLAGS)
 
-dnl all subdirs
 
-AC_CONFIG_SUBDIRS(algorithms convertors glue/swig)
 
 # $Format: "AM_INIT_AUTOMAKE(${package}, ${label}, ${email})"$
-AM_INIT_AUTOMAKE(model-container, 16e23f15d78f5309ea818389c3ceb50568e64313-0, hugo.cornelis@gmail.com)
+AM_INIT_AUTOMAKE(model-container, 16e23f15d78f5309ea818389c3ceb50568e64313-0,hugo.cornelis@gmail.com)
 
 
-AC_CANONICAL_TARGET
 
 dnl Checks for programs.
 AC_PROG_AWK
@@ -109,7 +109,7 @@ AC_ARG_PROGRAM
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_RANLIB
-dnl AC_PROG_LIBTOOL
+
 
 dnl Checks for libraries.
 dnl Replace `main' with a function in -lcurses:
@@ -160,6 +160,24 @@ AM_PATH_PYTHON(,[],[
 ])
 
 
+case $PYTHON_PREFIX in
+  *)   
+    PYTHON_PREFIX=`echo $PYTHON | sed -e "s,[[^/]]*$,,;s,/$,,;s,^$,.,"`
+    PYTHON_PREFIX=`echo $PYTHON_PREFIX | sed -e "s,[[^/]]*$,,;s,/$,,;s,^$,.,"`
+    PYTHONHOME=$PYTHON_PREFIX
+    AC_SUBST(PYTHON_PREFIX)
+    AC_SUBST(PYTHONHOME)
+
+    AC_MSG_CHECKING([Python header location])
+    PYTHON_HEADERS='$(PYTHON_PREFIX)/include/python$(PYTHON_VERSION)'
+    AC_SUBST(PYTHON_HEADERS)
+    AC_MSG_RESULT([$PYTHON_PREFIX/include/python$PYTHON_VERSION])
+
+    PYTHON_EXE='$(PYTHON_PREFIX)/bin/python'
+    AC_SUBST(PYTHON_EXE)
+  ;;
+esac
+
 
 
 dnl Checks for typedefs, structures, and compiler characteristics.
@@ -189,6 +207,7 @@ dnl Check for some needed programs.
 AC_CHECK_PROGS(PERL, perl5 perl)
 
 AC_PATH_PROGS(DOXYGEN,doxygen,[NULL])
+
 
 
 # search lisp dir for installing the emacs major mode
@@ -316,25 +335,231 @@ TEST_SPECIFICATION_FILES=`/bin/echo -n "tests/introduction.html " && find tests/
 AC_SUBST(TEST_SPECIFICATION_FILES)
 
 
-dnl AC_CONFIG_FILES([Makefile config.h])
-dnl AC_OUTPUT
 
-AC_CONFIG_FILES([Makefile])
-AC_OUTPUT
+dnl This does macro substitutions for certain opertaing systems and 
+dnl architectures 
+AC_MSG_CHECKING([OS specifics...])
+AC_MSG_RESULT([Host is running $host_os.])
+dnl {{{
+case "$host_os" in
+  darwin*)
+    #
+    # These are settings specific to MAC OS X.
+    #
+    dnl {{{{
+    AC_MSG_CHECKING([Using libtool for MAC OS X.])
+    AR=libtool
+    ARFLAGS='-static -c -o'
+    AC_SUBST(AR)
+    AC_SUBST(ARFLAGS)
+    AC_MSG_RESULT([$AR $ARFLAGS])
 
-if test "$WARNED" = "yes"; then
+    # This is to get rid of the annoying error that occurs when
+    # you use two arch flags. By default these commands produce a -arch for both
+    # architectures.
 
-# this is only a test of autoconf's functionality
+    PERL_CCOPTS=`perl -MExtUtils::Embed -e ccopts | perl -pe 's/\-arch\s\S+\s//g'`
+    AC_SUBST(PERL_CCOPTS)
 
-echo ""
-echo "* Warnings were generated during configure.  You may proceed building"
-echo "* neurospaces, but you probably want to fix the problem before"
-echo "* running it."
-echo "* If you think configure's results are wrong,"
-echo "* you may wish to edit the file 'config.h' before running make."
-echo "* After building, be sure to run the command 'neurospaces config' to"
-echo "* see if the problem persists. "
-echo "*"
-echo "* Know that this is only a test of autoconf's functionality. "
-echo ""
-fi
+    PERL_LDADD=`perl -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
+    AC_SUBST(PERL_LDADD)
+
+    PERL_LDFLAGS=`perl -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
+    AC_SUBST(PERL_LDFLAGS)
+
+    PERLLIB_EXTENSION='dylib'
+    AC_SUBST(PERLLIB_EXTENSION)
+
+    SWIGCOMPILELINKSFORPERL='-g \
+	-Wdeclaration-after-statement \
+	-DPRE_PROTO_TRAVERSAL \
+	-I$(builddir)../../.. \
+	-I$(srcdir)/../../.. \
+	-I$(builddir)../../../hierarchy/output/symbols \
+	-I$(srcdir)/../../../hierarchy/output/symbols/ \
+	-fPIC \
+	-dynamic \
+	$(PERL_CCOPTS)'
+    AC_SUBST(SWIGCOMPILELINKSFORPERL)
+
+    SWIGCOMPILECOMMAND_PERL='gcc \
+        $(SWIGCOMPILELINKSFORPERL) \
+        -c swiggable_neurospaces_wrap.c'
+    AC_SUBST(SWIGCOMPILECOMMAND_PERL)
+
+    SWIGLDLINKSFORPERL='-L../../.. \
+	-lneurospacesread \
+	-L../../../algorithms/event \
+	-levent_algorithms \
+	-L../../../algorithms/symbol \
+	-lsymbol_algorithms \
+	-lncurses \
+	-bundle \
+	-undefined suppress \
+	-flat_namespace \
+	$(PERL_LDFLAGS)'
+    AC_SUBST(SWIGLDLINKSFORPERL)
+
+    SWIGLINKCOMMAND_PERL='ld \
+	$(SWIGLDLINKSFORPERL) \
+	-o SwiggableNeurospaces.$(PERLLIB_EXTENSION) \
+	swiggable_neurospaces_wrap.o'
+    AC_SUBST(SWIGLINKCOMMAND_PERL)
+
+
+
+
+
+    PYTHONLIB_EXTENSION='dylib'
+    AC_SUBST(PYTHONLIB_EXTENSION)
+    
+    SWIGCOMPILELINKSFORPYTHON='-g \
+	-DPRE_PROTO_TRAVERSAL \
+	-I$(PYTHON_HEADERS) \
+	-I$(builddir)../../.. \
+	-I$(srcdir)/../../.. \
+	-I$(builddir)../../../hierarchy/output/symbols \
+	-I$(srcdir)/../../../hierarchy/output/symbols \
+	-fPIC'
+    AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
+
+    SWIGCOMPILECOMMAND_PYTHON='gcc \
+        $(SWIGCOMPILELINKSFORPYTHON) \
+        -c swiggable_neurospaces_wrap.c'
+    AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
+
+    SWIGLDLINKSFORPYTHON='-L$(PYTHON_HEADERS) \
+	-L../../.. \
+	-lneurospacesread \
+	-L../../../algorithms/event \
+	-levent_algorithms \
+	-L../../../algorithms/symbol \
+	-lsymbol_algorithms \
+	-lncurses \
+	-lreadline \
+	-framework Python \
+        -flat_namespace \
+        -undefined suppress \
+	-bundle \
+	-bundle_loader $(PYTHON_EXE)'
+    AC_SUBST(SWIGLDLINKSFORPYTHON)
+
+    SWIGLINKCOMMAND_PYTHON='ld \
+	$(SWIGLDLINKSFORPYTHON) \
+	-o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) swiggable_neurospaces_wrap.o'
+    AC_SUBST(SWIGLINKCOMMAND_PYTHON)
+
+    AC_MSG_RESULT([done.])
+    dnl }}} end MAC OS X settings
+    ;;
+
+
+
+
+  *)
+    dnl {{{ Default settings (Linux 2.6)
+    AR='ar'
+    ARFLAGS='cru'
+    AC_SUBST(AR)
+    AC_SUBST(ARFLAGS)
+    AC_MSG_CHECKING([ranlib invocation ])
+    AC_MSG_RESULT([$AR $ARFLAGS])
+
+    PERLLIB_EXTENSION='so'
+    AC_SUBST(PERLLIB_EXTENSION)
+
+    SWIGCOMPILELINKSFORPERL='-g \
+	-DPRE_PROTO_TRAVERSAL \
+	-I$(builddir)../../.. \
+	-I$(srcdir)/../../.. \
+	-I$(builddir)../../../hierarchy/output/symbols \
+	-I$(srcdir)/../../../hierarchy/output/symbols/ \
+	-fPIC \
+	`perl -MExtUtils::Embed -e ccopts`'
+    AC_SUBST(SWIGCOMPILELINKSFORPERL)
+
+    SWIGCOMPILECOMMAND_PERL='gcc \
+        $(SWIGCOMPILELINKSFORPERL) \
+        -c swiggable_neurospaces_wrap.c' 
+    AC_SUBST(SWIGCOMPILECOMMAND_PERL)
+
+    SWIGLDLINKSFORPERL='-g \
+	-shared swiggable_neurospaces_wrap.o \
+	-L../../.. \
+	-lneurospacesread \
+	-L../../../algorithms/event \
+	-levent_algorithms \
+	-L../../../algorithms/symbol \
+	-lsymbol_algorithms \
+	-lncurses \
+	-lhistory \
+	-lreadline'
+    AC_SUBST(SWIGLDLINKSFORPERL)
+
+    SWIGLINKCOMMAND_PERL='gcc \
+        $(SWIGLDLINKSFORPERL) \
+        -o SwiggableNeurospaces.$(PERLLIB_EXTENSION)'
+    AC_SUBST(SWIGCOMPILECOMMAND_PERL)
+
+
+
+
+
+    PYTHONLIB_EXTENSION='so'
+    AC_SUBST(PYTHONLIB_EXTENSION)
+
+    SWIGCOMPILELINKSFORPYTHON='-g \
+	-DPRE_PROTO_TRAVERSAL \
+	-I$(PYTHON_HEADERS) \
+	-I$(builddir)../../.. \
+	-I$(srcdir)/../../.. \
+	-I$(builddir)../../../hierarchy/output/symbols \
+	-I$(srcdir)/../../../hierarchy/output/symbols/ \
+	-fPIC \
+	-Xlinker \
+	-export-dynamic'
+    AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
+   
+    SWIGCOMPILECOMMAND_PYTHON='gcc \
+       $(SWIGCOMPILELINKSFORPYTHON) \
+       -c swiggable_neurospaces_wrap.c'
+    AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
+
+    SWIGLDLINKSFORPYTHON='-g \
+	-shared swiggable_neurospaces_wrap.o \
+	-L../../.. \
+	-lneurospacesread \
+	-L../../../algorithms/event \
+	-levent_algorithms \
+	-L../../../algorithms/symbol \
+	-lsymbol_algorithms \
+	-lncurses \
+	-lhistory \
+	-lreadline \
+	-fPIC \
+	-Xlinker \
+	-export-dynamic'
+    AC_SUBST(SWIGLDLINKSFORPYTHON)
+  
+    SWIGLINKCOMMAND_PYTHON='gcc \
+	$(SWIGLDLINKSFORPYTHON) \
+	-o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
+    AC_SUBST(SWIGLINKCOMMAND_PYTHON)
+
+    dnl }}} End of General Settings
+  
+  ;;
+esac
+dnl }}}
+
+
+AC_OUTPUT(Makefile \
+	algorithms/Makefile \
+	algorithms/event/Makefile \
+	algorithms/symbol/Makefile \
+	convertors/Makefile \
+	glue/swig/Makefile \
+	glue/swig/perl/Makefile \
+	glue/swig/python/Makefile 
+)
+

@@ -19,6 +19,8 @@
 
 SUBDIRS = algorithms . glue/swig convertors
 
+#add glue/swig convertors subdirs back after this works.
+
 dist_bin_SCRIPTS = bin/model-container
 
 #CC = g++
@@ -463,4 +465,7 @@ doxygen: doxygen.cfg
 	$(DOXYGEN) doxygen.cfg
 
 docs: doxygen html-upload-prepare
+	echo Not implemented  yet
+
+
 
