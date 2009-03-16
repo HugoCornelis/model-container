@@ -406,6 +406,9 @@ PUBLIC_MODELS
 		PROJECTION projection1
 
 			PARAMETERS
+
+				//t why are these encoded as absolute contexts ?
+
 				PARAMETER ( SOURCE = /spiker3 ),
 				PARAMETER ( TARGET = /spiker3 )
 			END PARAMETERS
