@@ -370,40 +370,16 @@ case "$host_os" in
     PERLLIB_EXTENSION='dylib'
     AC_SUBST(PERLLIB_EXTENSION)
 
-    SWIGCOMPILELINKSFORPERL='-g \
-	-Wdeclaration-after-statement \
-	-DPRE_PROTO_TRAVERSAL \
-	-I$(builddir)../../.. \
-	-I$(srcdir)/../../.. \
-	-I$(builddir)../../../hierarchy/output/symbols \
-	-I$(srcdir)/../../../hierarchy/output/symbols/ \
-	-fPIC \
-	-dynamic \
-	$(PERL_CCOPTS)'
+    SWIGCOMPILELINKSFORPERL='-g -Wdeclaration-after-statement -DPRE_PROTO_TRAVERSAL -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols/ -fPIC -dynamic $(PERL_CCOPTS)'
     AC_SUBST(SWIGCOMPILELINKSFORPERL)
 
-    SWIGCOMPILECOMMAND_PERL='gcc \
-        $(SWIGCOMPILELINKSFORPERL) \
-        -c swiggable_neurospaces_wrap.c'
+    SWIGCOMPILECOMMAND_PERL='gcc $(SWIGCOMPILELINKSFORPERL) -c swiggable_neurospaces_wrap.c'
     AC_SUBST(SWIGCOMPILECOMMAND_PERL)
 
-    SWIGLDLINKSFORPERL='-L../../.. \
-	-lneurospacesread \
-	-L../../../algorithms/event \
-	-levent_algorithms \
-	-L../../../algorithms/symbol \
-	-lsymbol_algorithms \
-	-lncurses \
-	-bundle \
-	-undefined suppress \
-	-flat_namespace \
-	$(PERL_LDFLAGS)'
+    SWIGLDLINKSFORPERL='-L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -bundle -undefined suppress -flat_namespace $(PERL_LDFLAGS)'
     AC_SUBST(SWIGLDLINKSFORPERL)
 
-    SWIGLINKCOMMAND_PERL='ld \
-	$(SWIGLDLINKSFORPERL) \
-	-o SwiggableNeurospaces.$(PERLLIB_EXTENSION) \
-	swiggable_neurospaces_wrap.o'
+    SWIGLINKCOMMAND_PERL='ld $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION) swiggable_neurospaces_wrap.o'
     AC_SUBST(SWIGLINKCOMMAND_PERL)
 
 
@@ -413,40 +389,16 @@ case "$host_os" in
     PYTHONLIB_EXTENSION='dylib'
     AC_SUBST(PYTHONLIB_EXTENSION)
     
-    SWIGCOMPILELINKSFORPYTHON='-g \
-	-DPRE_PROTO_TRAVERSAL \
-	-I$(PYTHON_HEADERS) \
-	-I$(builddir)../../.. \
-	-I$(srcdir)/../../.. \
-	-I$(builddir)../../../hierarchy/output/symbols \
-	-I$(srcdir)/../../../hierarchy/output/symbols \
-	-fPIC'
+    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL -I$(PYTHON_HEADERS) -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols -fPIC'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
 
-    SWIGCOMPILECOMMAND_PYTHON='gcc \
-        $(SWIGCOMPILELINKSFORPYTHON) \
-        -c swiggable_neurospaces_wrap.c'
+    SWIGCOMPILECOMMAND_PYTHON='gcc $(SWIGCOMPILELINKSFORPYTHON) -c swiggable_neurospaces_wrap.c'
     AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
 
-    SWIGLDLINKSFORPYTHON='-L$(PYTHON_HEADERS) \
-	-L../../.. \
-	-lneurospacesread \
-	-L../../../algorithms/event \
-	-levent_algorithms \
-	-L../../../algorithms/symbol \
-	-lsymbol_algorithms \
-	-lncurses \
-	-lreadline \
-	-framework Python \
-        -flat_namespace \
-        -undefined suppress \
-	-bundle \
-	-bundle_loader $(PYTHON_EXE)'
+    SWIGLDLINKSFORPYTHON='-L$(PYTHON_HEADERS) -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -lreadline -framework Python -flat_namespace -undefined suppress -bundle -bundle_loader $(PYTHON_EXE)'
     AC_SUBST(SWIGLDLINKSFORPYTHON)
 
-    SWIGLINKCOMMAND_PYTHON='ld \
-	$(SWIGLDLINKSFORPYTHON) \
-	-o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) swiggable_neurospaces_wrap.o'
+    SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) swiggable_neurospaces_wrap.o'
     AC_SUBST(SWIGLINKCOMMAND_PYTHON)
 
     AC_MSG_RESULT([done.])
@@ -468,37 +420,16 @@ case "$host_os" in
     PERLLIB_EXTENSION='so'
     AC_SUBST(PERLLIB_EXTENSION)
 
-    SWIGCOMPILELINKSFORPERL='-g \
-	-DPRE_PROTO_TRAVERSAL \
-	-I$(builddir)../../.. \
-	-I$(srcdir)/../../.. \
-	-I$(builddir)../../../hierarchy/output/symbols \
-	-I$(srcdir)/../../../hierarchy/output/symbols/ \
-	-fPIC \
-	`perl -MExtUtils::Embed -e ccopts`'
+    SWIGCOMPILELINKSFORPERL='-g 	-DPRE_PROTO_TRAVERSAL 	-I$(builddir)../../.. 	-I$(srcdir)/../../.. 	-I$(builddir)../../../hierarchy/output/symbols 	-I$(srcdir)/../../../hierarchy/output/symbols/ 	-fPIC 	`perl -MExtUtils::Embed -e ccopts`'
     AC_SUBST(SWIGCOMPILELINKSFORPERL)
 
-    SWIGCOMPILECOMMAND_PERL='gcc \
-        $(SWIGCOMPILELINKSFORPERL) \
-        -c swiggable_neurospaces_wrap.c' 
+    SWIGCOMPILECOMMAND_PERL='gcc         $(SWIGCOMPILELINKSFORPERL)         -c swiggable_neurospaces_wrap.c' 
     AC_SUBST(SWIGCOMPILECOMMAND_PERL)
 
-    SWIGLDLINKSFORPERL='-g \
-	-shared swiggable_neurospaces_wrap.o \
-	-L../../.. \
-	-lneurospacesread \
-	-L../../../algorithms/event \
-	-levent_algorithms \
-	-L../../../algorithms/symbol \
-	-lsymbol_algorithms \
-	-lncurses \
-	-lhistory \
-	-lreadline'
+    SWIGLDLINKSFORPERL='-g 	-shared swiggable_neurospaces_wrap.o 	-L../../.. 	-lneurospacesread 	-L../../../algorithms/event 	-levent_algorithms 	-L../../../algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline'
     AC_SUBST(SWIGLDLINKSFORPERL)
 
-    SWIGLINKCOMMAND_PERL='gcc \
-        $(SWIGLDLINKSFORPERL) \
-        -o SwiggableNeurospaces.$(PERLLIB_EXTENSION)'
+    SWIGLINKCOMMAND_PERL='gcc         $(SWIGLDLINKSFORPERL)         -o SwiggableNeurospaces.$(PERLLIB_EXTENSION)'
     AC_SUBST(SWIGCOMPILECOMMAND_PERL)
 
 
@@ -508,42 +439,16 @@ case "$host_os" in
     PYTHONLIB_EXTENSION='so'
     AC_SUBST(PYTHONLIB_EXTENSION)
 
-    SWIGCOMPILELINKSFORPYTHON='-g \
-	-DPRE_PROTO_TRAVERSAL \
-	-I$(PYTHON_HEADERS) \
-	-I$(builddir)../../.. \
-	-I$(srcdir)/../../.. \
-	-I$(builddir)../../../hierarchy/output/symbols \
-	-I$(srcdir)/../../../hierarchy/output/symbols/ \
-	-fPIC \
-	-Xlinker \
-	-export-dynamic'
+    SWIGCOMPILELINKSFORPYTHON='-g 	-DPRE_PROTO_TRAVERSAL 	-I$(PYTHON_HEADERS) 	-I$(builddir)../../.. 	-I$(srcdir)/../../.. 	-I$(builddir)../../../hierarchy/output/symbols 	-I$(srcdir)/../../../hierarchy/output/symbols/ 	-fPIC 	-Xlinker 	-export-dynamic'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
    
-    SWIGCOMPILECOMMAND_PYTHON='gcc \
-       $(SWIGCOMPILELINKSFORPYTHON) \
-       -c swiggable_neurospaces_wrap.c'
+    SWIGCOMPILECOMMAND_PYTHON='gcc        $(SWIGCOMPILELINKSFORPYTHON)        -c swiggable_neurospaces_wrap.c'
     AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
 
-    SWIGLDLINKSFORPYTHON='-g \
-	-shared swiggable_neurospaces_wrap.o \
-	-L../../.. \
-	-lneurospacesread \
-	-L../../../algorithms/event \
-	-levent_algorithms \
-	-L../../../algorithms/symbol \
-	-lsymbol_algorithms \
-	-lncurses \
-	-lhistory \
-	-lreadline \
-	-fPIC \
-	-Xlinker \
-	-export-dynamic'
+    SWIGLDLINKSFORPYTHON='-g 	-shared swiggable_neurospaces_wrap.o 	-L../../.. 	-lneurospacesread 	-L../../../algorithms/event 	-levent_algorithms 	-L../../../algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline 	-fPIC 	-Xlinker 	-export-dynamic'
     AC_SUBST(SWIGLDLINKSFORPYTHON)
   
-    SWIGLINKCOMMAND_PYTHON='gcc \
-	$(SWIGLDLINKSFORPYTHON) \
-	-o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
+    SWIGLINKCOMMAND_PYTHON='gcc 	$(SWIGLDLINKSFORPYTHON) 	-o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
     AC_SUBST(SWIGLINKCOMMAND_PYTHON)
 
     dnl }}} End of General Settings
