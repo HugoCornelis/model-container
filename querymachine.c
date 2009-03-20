@@ -1747,6 +1747,10 @@ struct QM_exporter_data
     /// wildcard selector
 
     struct PidinStack *ppistWildcard;
+
+    /// output type
+
+    int iType;
 };
 
 static
@@ -1782,7 +1786,14 @@ QueryMachineNDFExporterStarter
 
 /*     PidinStackString(ptstr->ppist, pc, 1000); */
 
-    fprintf(pexd->pfile, "%s %s\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
+    if (pexd->iType == 0)
+    {
+	fprintf(pexd->pfile, "%s %s\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
+    }
+    else
+    {
+	fprintf(pexd->pfile, "<%s> <name>%s</name>\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
+    }
 
     int iType = TstrGetActualType(ptstr);
 
@@ -1809,9 +1820,19 @@ QueryMachineNDFExporterStarter
 
 	    if (pparc)
 	    {
-		if (!ParContainerExportNDF(pparc, ptstr->ppist, pexd->iIndent, pexd->pfile))
+		if (pexd->iType == 0)
 		{
-		    iResult = TSTR_PROCESSOR_ABORT;
+		    if (!ParContainerExportNDF(pparc, ptstr->ppist, pexd->iIndent, pexd->pfile))
+		    {
+			iResult = TSTR_PROCESSOR_ABORT;
+		    }
+		}
+		else
+		{
+		    if (!ParContainerExportNDF(pparc, ptstr->ppist, pexd->iIndent, pexd->pfile))
+		    {
+			iResult = TSTR_PROCESSOR_ABORT;
+		    }
 		}
 	    }
 	}
@@ -1864,7 +1885,14 @@ QueryMachineNDFExporterStopper
 
 /*     PidinStackString(ptstr->ppist, pc, 1000); */
 
-    fprintf(pexd->pfile, "END %s\n", SymbolHSLETypeDescribeNDF(phsle->iType));
+    if (pexd->iType == 0)
+    {
+	fprintf(pexd->pfile, "END %s\n", SymbolHSLETypeDescribeNDF(phsle->iType));
+    }
+    else
+    {
+	fprintf(pexd->pfile, "</%s>\n", SymbolHSLETypeDescribeNDF(phsle->iType));
+    }
 
     //- return result
 
@@ -1980,6 +2008,10 @@ QueryHandlerExportNDF
 		/// wildcard selector
 
 		ppistWildcard,
+
+		/// output type
+
+		0,
 	    };
 
 	//- open output file
@@ -1988,11 +2020,24 @@ QueryHandlerExportNDF
 
 	//- start output
 
-	fprintf(exd.pfile, "#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n");
+	if (exd.iType == 0)
+	{
+	    fprintf(exd.pfile, "#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n");
+	}
+	else
+	{
+	}
 
 	//- start public models
 
-	fprintf(exd.pfile, "PUBLIC_MODELS\n");
+	if (exd.iType == 0)
+	{
+	    fprintf(exd.pfile, "PUBLIC_MODELS\n");
+	}
+	else
+	{
+	    fprintf(exd.pfile, "<PUBLIC_MODELS>\n");
+	}
 
 	//- traverse symbols that match with wildcard
 
@@ -2012,7 +2057,14 @@ QueryHandlerExportNDF
 
 	//- end public models
 
-	fprintf(exd.pfile, "PUBLIC_MODELS\n");
+	if (exd.iType == 0)
+	{
+	    fprintf(exd.pfile, "PUBLIC_MODELS\n");
+	}
+	else
+	{
+	    fprintf(exd.pfile, "</PUBLIC_MODELS>\n");
+	}
 
 	//- close output file
 
