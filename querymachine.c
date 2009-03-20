@@ -1788,16 +1788,31 @@ QueryMachineNDFExporterStarter
 
     if (subsetof_bio_comp(iType))
     {
+	//t if is prototype
+	//t and exporting prototypes enabled
+
 	struct symtab_BioComponent *pbio
 	    = (struct symtab_BioComponent *)phsle;
 
-	struct symtab_ParContainer *pparc = pbio->pparc;
+	struct symtab_BioComponent * pbioPrototype
+	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
 
-	if (pparc)
+	if (0 && pbioPrototype)
 	{
-	    if (!ParContainerExportNDF(pparc, ptstr->ppist, pexd->iIndent, pexd->pfile))
+	}
+
+	//- else hardcoded component
+
+	else
+	{
+	    struct symtab_ParContainer *pparc = pbio->pparc;
+
+	    if (pparc)
 	    {
-		iResult = TSTR_PROCESSOR_ABORT;
+		if (!ParContainerExportNDF(pparc, ptstr->ppist, pexd->iIndent, pexd->pfile))
+		{
+		    iResult = TSTR_PROCESSOR_ABORT;
+		}
 	    }
 	}
     }
