@@ -630,6 +630,48 @@ BioComponentGetParameter
 		    ? &parY 
 		    : &parZ ;
 	}
+
+	//- if serial parameter
+
+	else if (strcmp(pcName, "SERIAL") == 0)
+	{
+	    static struct symtab_Parameters parSerial =
+	    {
+		/// link structures into list
+
+		NULL,
+
+		/// first parameter of list
+
+		NULL,
+
+		/// type of parameter
+
+		TYPE_PARA_NUMBER,
+
+		/// flags
+
+		FLAG_PARA_READONLY,
+
+		/// name of parameter
+
+		"SERIAL",
+
+		/// value : serial from context
+
+		{
+		    INT_MAX,
+		},
+	    };
+
+	    //- set value
+
+	    parSerial.uValue.dNumber = PidinStackToSerial(ppist);
+
+	    //- set result : defaults to equal to zero
+
+	    pparResult = &parSerial;
+	}
     }
 
     //- return result
