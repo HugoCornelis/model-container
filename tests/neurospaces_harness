@@ -545,6 +545,8 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 		    $before_match,
 		    $after_match);
 
+		my $expected;
+
 		my $time_elapsed;
 
 		if (ref $command eq 'CODE')
@@ -620,6 +622,8 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 			     $before_match,
 			     $after_match)
 				= $exp->expect($timeout, $read, );
+
+			    $expected = $read;
 			}
 
 			# if array, means regex match
@@ -632,21 +636,23 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 			     $before_match,
 			     $after_match)
 				= $exp->expect($timeout, @$read, );
+
+			    #! skip the expect '-re' flag
+
+			    $expected = $read->[1];
 			}
 
 			# else, hash, one of several alternatives expected
 
 			else
 			{
-			    # if one of several outcomes
+			    # compose the alternatives regex
 
 			    if ($read->{alternatives})
 			    {
-				# compose the alternatives regex
-
 				my $alternatives = $read->{alternatives};
 
-				my $expected = '(' . (join '|', map { quotemeta } @$alternatives) . ')';
+				$expected = '(' . (join '|', map { quotemeta } @$alternatives) . ')';
 
 				# read from the application
 
@@ -656,36 +662,53 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 				 $before_match,
 				 $after_match)
 				    = $exp->expect($timeout, "-re", $expected, );
-# 				= $exp->expect($timeout, "ThIs TeXt ShOuLd NeVeR oCcUr", );
-
-# 				# loop over expected alternatives
-
-# 				my $alternatives = $read->{alternatives};
-
-# 				foreach my $alternative (@$alternatives)
-# 				{
-# 				    if ($before_match =~ /$alternative/)
-# 				    {
-# 					last;
-# 				    }
-# 				}
 			    }
-
-			    # if a shell expression is supposed to create the expected outcome
-
-			    elsif ($read->{shell})
+			    elsif ($read->{application_output_file})
 			    {
-				my $shell = $read->{shell};
+				my $application_output_file
+				    = $read->{application_output_file};
 
-				my $expected = `$shell`;
+ 				print '** Application output file: $application_output_file\n';
 
-				($matched_pattern_position,
-				 $error,
-				 $successfully_matching_string,
-				 $before_match,
-				 $after_match)
-				    = $exp->expect($timeout, $expected, );
+				my $expected_output_file
+				    = $read->{expected_output_file};
 
+ 				print '*** Expected output file: $expected_output_file\n';
+
+				local $/;
+
+				my $application_output = `cat "$application_output_file"`;
+
+				my $expected_output = `cat "$expected_output_file"`;
+
+				$expected = $expected_output;
+
+				if ($expected_output eq $application_output)
+				{
+				    $before_match = $application_output;
+				}
+				else
+				{
+				    $before_match = $application_output;
+
+				    $read = $expected_output;
+
+				    $error = 'expected_output does not match application_output';
+				}
+
+				#t mando, why is this needed?? if the
+				#t application generates a file that we
+				#t use for testing, we remove it here,
+				#t but may be that the application still
+				#t needs it.
+
+				#
+				# clean up the generated files
+				#
+
+# 				print `pwd`;
+
+				`rm -f $application_output_file`;
 			    }
 			}
 
@@ -741,7 +764,7 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 			 {
 			  description => $description,
 			  error => $error,
-			  expected => (ref $command_test->{read} eq 'ARRAY' ? $command_test->{read}->[1] : $command_test->{read}),
+			  expected => $expected,
 			  message => $message,
 			  module_name => $module_name,
 			  seen => $before_match,
