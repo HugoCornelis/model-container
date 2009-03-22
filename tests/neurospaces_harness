@@ -668,18 +668,27 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 				my $application_output_file
 				    = $read->{application_output_file};
 
- 				print '** Application output file: $application_output_file\n';
+ 				print "*** Application output file: $application_output_file\n";
 
 				my $expected_output_file
 				    = $read->{expected_output_file};
-
- 				print '*** Expected output file: $expected_output_file\n';
 
 				local $/;
 
 				my $application_output = `cat "$application_output_file"`;
 
-				my $expected_output = `cat "$expected_output_file"`;
+				my $expected_output;
+
+				if ($expected_output_file)
+				{
+				    print "*** Expected output file: $expected_output_file\n";
+
+				    $expected_output = `cat "$expected_output_file"`;
+				}
+				elsif (defined $read->{expected_output})
+				{
+				    $expected_output = $read->{expected_output};
+				}
 
 				$expected = $expected_output;
 
