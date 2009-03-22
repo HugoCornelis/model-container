@@ -944,7 +944,7 @@ int
 ParameterExport
 (struct symtab_Parameters *ppar, struct PidinStack *ppist, int iLevel, int iType, FILE *pfile)
 {
-    int iIndent = (iLevel == 0) ? 0 : (iLevel * 2);
+    int iIndent = iLevel; // (iLevel == 0) ? 0 : (iLevel * 2);
 
     PrintIndent(iIndent, pfile);
 
@@ -971,7 +971,7 @@ ParameterExport
 	}
 	else
 	{
-	    fprintf(pfile, "<value>%g</value>\n", d);
+	    fprintf(pfile, "<value>%g</value> </parameter>\n", d);
 	}
 
 	return 1;
@@ -999,7 +999,7 @@ ParameterExport
 
 	    //t escape entities
 
-	    fprintf(pfile, "<field>%s</field>\n", pc);
+	    fprintf(pfile, "<field>%s</field> </parameter>\n", pc);
 	}
 
 	PidinStackFree(ppist2);      
@@ -1021,7 +1021,7 @@ ParameterExport
 	}
 	else
 	{
-	    fprintf(pfile, "<string>%s</string>\n", pc);
+	    fprintf(pfile, "<string>%s</string> </parameter>\n", pc);
 	}
 
 	return 1;
@@ -1049,7 +1049,7 @@ ParameterExport
 
 	    //t escape entities
 
-	    fprintf(pfile, "<symbol>%s</symbol>\n", pc);
+	    fprintf(pfile, "<symbol>%s</symbol> </parameter>\n", pc);
 	}
 
 	PidinStackFree(ppistPar);
@@ -1113,7 +1113,7 @@ ParameterExport
 	}
 	else
 	{
-	    fprintf(pfile, "</function>\n");
+	    fprintf(pfile, "</function> </parameter>\n");
 	}
 
 	return 1;

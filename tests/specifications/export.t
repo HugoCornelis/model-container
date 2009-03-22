@@ -36,35 +36,35 @@ my $test
 NEUROSPACES NDF
 
 PUBLIC_MODELS
-CHANNEL NMDA_fixed_conductance
-PARAMETERS
-    PARAMETER ( Erev = 0 ),
-    PARAMETER ( G_MAX = 
-      FIXED
-        (
-                    PARAMETER ( value = 6.87066e-10 ),
-                    PARAMETER ( scale = 1 ),
-        ),
-END PARAMETERS
-  ATTACHMENT synapse
-  END ATTACHMENT
-  EQUATION_EXPONENTIAL exp2
- PARAMETERS
-      PARAMETER ( TAU1 = 0.0005 ),
-      PARAMETER ( TAU2 = 0.0012 ),
- END PARAMETERS
-  END EQUATION_EXPONENTIAL
-END CHANNEL
-CHANNEL NMDA
-  ATTACHMENT synapse
-  END ATTACHMENT
-  EQUATION_EXPONENTIAL exp2
- PARAMETERS
-      PARAMETER ( TAU1 = 0.0005 ),
-      PARAMETER ( TAU2 = 0.0012 ),
- END PARAMETERS
-  END EQUATION_EXPONENTIAL
-END CHANNEL
+  CHANNEL NMDA_fixed_conductance
+    PARAMETERS
+      PARAMETER ( Erev = 0 ),
+      PARAMETER ( G_MAX = 
+        FIXED
+          (
+              PARAMETER ( value = 6.87066e-10 ),
+              PARAMETER ( scale = 1 ),
+          ),
+    END PARAMETERS
+    ATTACHMENT synapse
+    END ATTACHMENT
+    EQUATION_EXPONENTIAL exp2
+      PARAMETERS
+        PARAMETER ( TAU1 = 0.0005 ),
+        PARAMETER ( TAU2 = 0.0012 ),
+      END PARAMETERS
+    END EQUATION_EXPONENTIAL
+  END CHANNEL
+  CHANNEL NMDA
+    ATTACHMENT synapse
+    END ATTACHMENT
+    EQUATION_EXPONENTIAL exp2
+      PARAMETERS
+        PARAMETER ( TAU1 = 0.0005 ),
+        PARAMETER ( TAU2 = 0.0012 ),
+      END PARAMETERS
+    END EQUATION_EXPONENTIAL
+  END CHANNEL
 PUBLIC_MODELS
 ',
 							   },
@@ -80,34 +80,34 @@ PUBLIC_MODELS
 						   read => {
 							    application_output_file => '/tmp/1.xml',
 							    expected_output => '<public_models>
-<CHANNEL> <name>NMDA_fixed_conductance</name>
-<parameters>
-    <parameter> <name>Erev</name><value>0</value>
-    <parameter> <name>G_MAX</name>
-      <function> <name>FIXED</name>
-                            <parameter> <name>value</name><value>6.87066e-10</value>
-                    <parameter> <name>scale</name><value>1</value>
-        </function>
-</parameters>
-  <ATTACHMENT> <name>synapse</name>
-  </ATTACHMENT>
-  <EQUATION_EXPONENTIAL> <name>exp2</name>
- <parameters>
-      <parameter> <name>TAU1</name><value>0.0005</value>
-      <parameter> <name>TAU2</name><value>0.0012</value>
- </parameters>
-  </EQUATION_EXPONENTIAL>
-</CHANNEL>
-<CHANNEL> <name>NMDA</name>
-  <ATTACHMENT> <name>synapse</name>
-  </ATTACHMENT>
-  <EQUATION_EXPONENTIAL> <name>exp2</name>
- <parameters>
-      <parameter> <name>TAU1</name><value>0.0005</value>
-      <parameter> <name>TAU2</name><value>0.0012</value>
- </parameters>
-  </EQUATION_EXPONENTIAL>
-</CHANNEL>
+  <CHANNEL> <name>NMDA_fixed_conductance</name>
+    <parameters>
+      <parameter> <name>Erev</name><value>0</value> </parameter>
+      <parameter> <name>G_MAX</name>
+        <function> <name>FIXED</name>
+                        <parameter> <name>value</name><value>6.87066e-10</value> </parameter>
+              <parameter> <name>scale</name><value>1</value> </parameter>
+          </function> </parameter>
+    </parameters>
+    <ATTACHMENT> <name>synapse</name>
+    </ATTACHMENT>
+    <EQUATION_EXPONENTIAL> <name>exp2</name>
+      <parameters>
+        <parameter> <name>TAU1</name><value>0.0005</value> </parameter>
+        <parameter> <name>TAU2</name><value>0.0012</value> </parameter>
+      </parameters>
+    </EQUATION_EXPONENTIAL>
+  </CHANNEL>
+  <CHANNEL> <name>NMDA</name>
+    <ATTACHMENT> <name>synapse</name>
+    </ATTACHMENT>
+    <EQUATION_EXPONENTIAL> <name>exp2</name>
+      <parameters>
+        <parameter> <name>TAU1</name><value>0.0005</value> </parameter>
+        <parameter> <name>TAU2</name><value>0.0012</value> </parameter>
+      </parameters>
+    </EQUATION_EXPONENTIAL>
+  </CHANNEL>
 </public_models>
 ',
 							   },

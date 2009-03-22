@@ -1773,12 +1773,14 @@ QueryMachineExporterStarter
 
     //- print indent
 
-    int i;
+    PrintIndent(pexd->iIndent, pexd->pfile);
 
-    for (i = 0 ; i < pexd->iIndent ; i++)
-    {
-	fprintf(pexd->pfile, "  ");
-    }
+/*     int i; */
+
+/*     for (i = 0 ; i < pexd->iIndent ; i++) */
+/*     { */
+/* 	fprintf(pexd->pfile, "  "); */
+/*     } */
 
     //- write output: start symbol
 
@@ -1820,7 +1822,7 @@ QueryMachineExporterStarter
 
 	    if (pparc)
 	    {
-		if (!ParContainerExport(pparc, ptstr->ppist, pexd->iIndent, pexd->iType, pexd->pfile))
+		if (!ParContainerExport(pparc, ptstr->ppist, pexd->iIndent + 2, pexd->iType, pexd->pfile))
 		{
 		    iResult = TSTR_PROCESSOR_ABORT;
 		}
@@ -1830,7 +1832,7 @@ QueryMachineExporterStarter
 
     //- increase indent
 
-    pexd->iIndent++;
+    pexd->iIndent += 2;
 
     //- return result
 
@@ -1858,16 +1860,18 @@ QueryMachineExporterStopper
 
     //- decrease indent
 
-    pexd->iIndent--;
+    pexd->iIndent -= 2;
 
     //- print indent
 
-    int i;
+    PrintIndent(pexd->iIndent, pexd->pfile);
 
-    for (i = 0 ; i < pexd->iIndent ; i++)
-    {
-	fprintf(pexd->pfile, "  ");
-    }
+/*     int i; */
+
+/*     for (i = 0 ; i < pexd->iIndent ; i++) */
+/*     { */
+/* 	fprintf(pexd->pfile, "  "); */
+/*     } */
 
     //- write output: end symbol
 
@@ -2068,6 +2072,10 @@ QueryHandlerExport
 	    fprintf(exd.pfile, "<public_models>\n");
 	}
 
+	//- increase indent
+
+	exd.iIndent += 2;
+
 	//- traverse symbols that match with wildcard
 
 	int iResult
@@ -2083,6 +2091,10 @@ QueryHandlerExport
 	{
 	    fprintf(stdout, "*** Error: SymbolTraverseWildcard() failed (or aborted)\n");
 	}
+
+	//- decrease indent
+
+	exd.iIndent -= 2;
 
 	//- end public models
 
