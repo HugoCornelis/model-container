@@ -2,7 +2,7 @@ tests/convertors
 tests/glue
 
 Makefile$
-*Makefile.in$
+.*Makefile.in$
 aclocal.m4$
 ^analyzer.c$
 ^analyzer.l$
