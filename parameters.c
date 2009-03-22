@@ -929,6 +929,7 @@ ParameterPrintInfoRecursive
 /// \arg ppar parameter.
 /// \arg ppist context.
 /// \arg iLevel indentation depth.
+/// \arg iType type of export (0: NDF, 1: XML).
 /// \arg pfile serialization stream.
 /// 
 /// \return int
@@ -940,13 +941,21 @@ ParameterPrintInfoRecursive
 /// 
 
 int
-ParameterPrintInfoRecursiveNDF
-(struct symtab_Parameters *ppar, struct PidinStack *ppist, int iLevel, FILE *pfile)
+ParameterExport
+(struct symtab_Parameters *ppar, struct PidinStack *ppist, int iLevel, int iType, FILE *pfile)
 {
     int iIndent = (iLevel == 0) ? 0 : (iLevel * 2);
 
     PrintIndent(iIndent, pfile);
-    fprintf(pfile, "PARAMETER ( %s = ", ParameterGetName(ppar));
+
+    if (iType == 0)
+    {
+	fprintf(pfile, "PARAMETER ( %s = ", ParameterGetName(ppar));
+    }
+    else
+    {
+	fprintf(pfile, "<parameter> <name>%s</name>", ParameterGetName(ppar));
+    }
 
     //- for straight number values
 
@@ -956,7 +965,14 @@ ParameterPrintInfoRecursiveNDF
 
 	//- print result
 
-	fprintf(pfile, "%g ),\n", d);
+	if (iType == 0)
+	{
+	    fprintf(pfile, "%g ),\n", d);
+	}
+	else
+	{
+	    fprintf(pfile, "<value>%g</value>\n", d);
+	}
 
 	return 1;
     }
@@ -969,11 +985,24 @@ ParameterPrintInfoRecursiveNDF
 
 	PidinStackPushAll(ppist2, ppar->uValue.pidin);
 
-	PidinStackPrint(ppist2, pfile);
+	if (iType == 0)
+	{
+	    PidinStackPrint(ppist2, pfile);
+
+	    fprintf(pfile, " ),\n");
+	}
+	else
+	{
+	    char pc[1000];
+
+	    PidinStackString(ppist2, pc, sizeof(pc));
+
+	    //t escape entities
+
+	    fprintf(pfile, "<field>%s</field>\n", pc);
+	}
 
 	PidinStackFree(ppist2);      
-
-	fprintf(pfile, " ),\n");
 
 	return 1;
     }
@@ -986,7 +1015,14 @@ ParameterPrintInfoRecursiveNDF
 
 	char *pc = ParameterGetString(ppar);
 
-	fprintf(pfile, "\"%s\" ),\n", pc);
+	if (iType == 0)
+	{
+	    fprintf(pfile, "\"%s\" ),\n", pc);
+	}
+	else
+	{
+	    fprintf(pfile, "<string>%s</string>\n", pc);
+	}
 
 	return 1;
     }
@@ -999,11 +1035,24 @@ ParameterPrintInfoRecursiveNDF
 
 	PidinStackPushAll(ppistPar, ppar->uValue.pidin);
 
-	PidinStackPrint(ppistPar, pfile);
+	if (iType == 0)
+	{
+	    PidinStackPrint(ppistPar, pfile);
+
+	    fprintf(pfile, " ),\n");
+	}
+	else
+	{
+	    char pc[1000];
+
+	    PidinStackString(ppistPar, pc, sizeof(pc));
+
+	    //t escape entities
+
+	    fprintf(pfile, "<symbol>%s</symbol>\n", pc);
+	}
 
 	PidinStackFree(ppistPar);
-
-	fprintf(pfile, " ),\n");
 
 	return 1;
     }
@@ -1029,21 +1078,43 @@ ParameterPrintInfoRecursiveNDF
 
 	PrintIndent(iIndent + 2, pfile);
 
-	fprintf(pfile, "%s\n", FunctionGetName(pfun));
+	if (iType == 0)
+	{
+	    fprintf(pfile, "%s\n", FunctionGetName(pfun));
+	}
+	else
+	{
+	    fprintf(pfile, "<function> <name>%s</name>\n", FunctionGetName(pfun));
+	}
 
 	PrintIndent(iIndent + 4, pfile);
-	fprintf(pfile, "(\n");
+
+	if (iType == 0)
+	{
+	    fprintf(pfile, "(\n");
+	}
+	else
+	{
+	}
 
 	struct symtab_Parameters *pparFunCurr
 	    = pfun->pparc->ppars;
 
 	for( ; pparFunCurr ; pparFunCurr = pparFunCurr->pparNext)
 	{
-	    ParameterPrintInfoRecursiveNDF(pparFunCurr, ppist, iLevel + 8, pfile); 
+	    ParameterExport(pparFunCurr, ppist, iLevel + 8, iType, pfile); 
 	}
 
 	PrintIndent(iIndent + 4, pfile);
-	fprintf(pfile, "),\n");
+
+	if (iType == 0)
+	{
+	    fprintf(pfile, "),\n");
+	}
+	else
+	{
+	    fprintf(pfile, "</function>\n");
+	}
 
 	return 1;
     }

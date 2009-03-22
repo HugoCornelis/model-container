@@ -153,7 +153,7 @@ static QueryHandler QueryHandlerCountAllocatedSymbols;
 static QueryHandler QueryHandlerDelete;
 static QueryHandler QueryHandlerEcho;
 static QueryHandler QueryHandlerExpand;
-static QueryHandler QueryHandlerExportNDF;
+static QueryHandler QueryHandlerExport;
 static QueryHandler QueryHandlerInputInfo;
 static QueryHandler QueryHandlerHelpCommands;
 static QueryHandler QueryHandlerImportFile;
@@ -389,11 +389,11 @@ static QueryHandlerAssociation pquhasTable[] =
 #endif
     },
 
-    /// export to NDF
+    /// export
 
     {
-	"export-ndf",
-	QueryHandlerExportNDF,
+	"export",
+	QueryHandlerExport,
 #ifdef USE_READLINE
 	1,
 	QueryMachineSymbolGenerator,
@@ -1727,11 +1727,11 @@ QueryHandlerExpand
 /// 
 /// \return int : QueryHandler return value
 /// 
-/// \brief Expand a wildcard.
+/// \brief Export a model in one of the available formats.
 ///
 /// \details 
 /// 
-///	export-ndf <filename> <wildcard> <symbol>
+///	export <ndf|xml> <filename> <wildcard> <symbol>
 /// 
 
 struct QM_exporter_data
@@ -1755,7 +1755,7 @@ struct QM_exporter_data
 
 static
 int 
-QueryMachineNDFExporterStarter
+QueryMachineExporterStarter
 (struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : continue with children, then post processing
@@ -1820,19 +1820,9 @@ QueryMachineNDFExporterStarter
 
 	    if (pparc)
 	    {
-		if (pexd->iType == 0)
+		if (!ParContainerExport(pparc, ptstr->ppist, pexd->iIndent, pexd->iType, pexd->pfile))
 		{
-		    if (!ParContainerExportNDF(pparc, ptstr->ppist, pexd->iIndent, pexd->pfile))
-		    {
-			iResult = TSTR_PROCESSOR_ABORT;
-		    }
-		}
-		else
-		{
-		    if (!ParContainerExportNDF(pparc, ptstr->ppist, pexd->iIndent, pexd->pfile))
-		    {
-			iResult = TSTR_PROCESSOR_ABORT;
-		    }
+		    iResult = TSTR_PROCESSOR_ABORT;
 		}
 	    }
 	}
@@ -1850,7 +1840,7 @@ QueryMachineNDFExporterStarter
 
 static
 int 
-QueryMachineNDFExporterStopper
+QueryMachineExporterStopper
 (struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : continue with children, then post processing
@@ -1902,7 +1892,7 @@ QueryMachineNDFExporterStopper
 
 static
 int
-QueryHandlerExportNDF
+QueryHandlerExport
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
 {
     //- set result: ok
@@ -1911,9 +1901,37 @@ QueryHandlerExportNDF
 
     struct symtab_HSolveListElement *phsle = NULL;
 
-    //- parse filename
+    //- get type
+
+    int iType = -1;
 
     char pcSeparator[] = " \t,;\n";
+
+    char *pcType = strpbrk(&pcLine[iLength + 1], pcSeparator);
+
+    if (!pcType)
+    {
+	fprintf(stdout, "export type not specified on command line\n");
+
+	return(FALSE);
+    }
+
+    if (strcmp(pcType, "ndf") == 0)
+    {
+	iType = 0;
+    }
+    else if (strcmp(pcType, "xml") == 0)
+    {
+	iType = 1;
+    }
+    else
+    {
+	iType = -1;
+    }
+
+    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+    //- parse filename
 
     if (!pcLine[iLength]
 	|| !pcLine[iLength + 1])
@@ -2046,8 +2064,8 @@ QueryHandlerExportNDF
 	      (phsleRoot,
 	       ppistRoot,
 	       ppistWildcard,
-	       QueryMachineNDFExporterStarter,
-	       QueryMachineNDFExporterStopper,
+	       QueryMachineExporterStarter,
+	       QueryMachineExporterStopper,
 	       (void *)&exd);
 
 	if (iResult != 1)

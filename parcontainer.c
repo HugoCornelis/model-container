@@ -140,18 +140,17 @@ ParContainerExportYAML
 /// \arg pparc parameter container.
 /// \arg ppist context.
 /// \arg iIndent start indentation level.
+/// \arg iType type of export (0: NDF, 1: XML).
 /// \arg pfile file to export to, NULL for stdout.
 /// 
 /// \return int success of operation.
 /// 
-/// \brief export all parameters to NDF.
-///
-/// \todo pfile does not propagate through yet.
+/// \brief export all parameters.
 ///
 
 int
-ParContainerExportNDF
-(struct symtab_ParContainer *pparc, struct PidinStack *ppist, int iIndent, FILE *pfile)
+ParContainerExport
+(struct symtab_ParContainer *pparc, struct PidinStack *ppist, int iIndent, int iType, FILE *pfile)
 {
     //- set default result: ok
 
@@ -170,7 +169,15 @@ ParContainerExportNDF
     }
 
     PrintIndent(iIndent, pfile);
-    fprintf(pfile, "PARAMETERS\n");
+
+    if (iType == 0)
+    {
+	fprintf(pfile, "PARAMETERS\n");
+    }
+    else
+    {
+	fprintf(pfile, "<parameters>\n");
+    }
 
     //- loop over parameters
 
@@ -180,9 +187,7 @@ ParContainerExportNDF
     {
 	//- print parameter info
 
-	// \todo add pfile to arguments.
-
-	if (!ParameterPrintInfoRecursiveNDF(pparLoop, ppist, iIndent + 2, pfile))
+	if (!ParameterExport(pparLoop, ppist, iIndent + 2, iType, pfile))
 	{
 	    iResult = 0;
 
@@ -195,7 +200,15 @@ ParContainerExportNDF
     }
 
     PrintIndent(iIndent, pfile);
-    fprintf(pfile, "END PARAMETERS\n");
+
+    if (iType == 1)
+    {
+	fprintf(pfile, "END PARAMETERS\n");
+    }
+    else
+    {
+	fprintf(pfile, "</parameters>\n");
+    }
 
     //- return result
 

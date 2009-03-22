@@ -577,6 +577,10 @@ struct symtab_Function *
 ParameterContextGetFunction
 (struct symtab_Parameters *ppar, struct PidinStack *ppist);
 
+int
+ParameterExport
+(struct symtab_Parameters *ppar, struct PidinStack *ppist, int iLevel, int iType, FILE *pfile);
+
 void ParameterFree(struct symtab_Parameters *ppar);
 
 struct symtab_IdentifierIndex *
@@ -612,10 +616,6 @@ int ParameterPrint
 
 int
 ParameterPrintInfoRecursive
-(struct symtab_Parameters *ppar, struct PidinStack *ppist, int iLevel, FILE *pfile);
-
-int
-ParameterPrintInfoRecursiveNDF
 (struct symtab_Parameters *ppar, struct PidinStack *ppist, int iLevel, FILE *pfile);
 
 struct symtab_HSolveListElement *
