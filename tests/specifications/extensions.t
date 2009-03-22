@@ -22,6 +22,11 @@ my $test
 						   timeout => 5,
 						   write => undef,
 						  },
+
+						  #t complete these tests:
+						  #t find subpopulation symbol
+						  #t check biolevels of subpopulation
+
 						  {
 						   description => "Can we find the subpopulations ?",
 						   read => "",
