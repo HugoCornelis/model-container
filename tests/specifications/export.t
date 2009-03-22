@@ -75,6 +75,7 @@ PUBLIC_MODELS
 						   read => 'neurospaces',
 						  },
 						  {
+						   comment => 'xml to html conversion fails when converting this test to html',
 						   description => "Does the exported XML file contain the correct model ?",
 						   read => {
 							    application_output_file => '/tmp/1.xml',
