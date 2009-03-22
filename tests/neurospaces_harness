@@ -710,6 +710,24 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 
 				`rm -f $application_output_file`;
 			    }
+			    elsif ($read->{shell})
+			    {
+				my $shell = $read->{shell};
+
+				my $expected = `$shell`;
+
+				($matched_pattern_position,
+				 $error,
+				 $successfully_matching_string,
+				 $before_match,
+				 $after_match)
+				    = $exp->expect($timeout, $expected, );
+
+			    }
+			    else
+			    {
+				die "test not understood by $0, aborting";
+			    }
 			}
 
 			$time_elapsed = tv_interval($time_start);
