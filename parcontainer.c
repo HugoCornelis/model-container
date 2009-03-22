@@ -201,7 +201,7 @@ ParContainerExport
 
     PrintIndent(iIndent, pfile);
 
-    if (iType == 1)
+    if (iType == 0)
     {
 	fprintf(pfile, "END PARAMETERS\n");
     }

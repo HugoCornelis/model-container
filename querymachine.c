@@ -1907,14 +1907,20 @@ QueryHandlerExport
 
     char pcSeparator[] = " \t,;\n";
 
-    char *pcType = strpbrk(&pcLine[iLength + 1], pcSeparator);
-
-    if (!pcType)
+    if (!strpbrk(&pcLine[iLength + 1], pcSeparator))
     {
 	fprintf(stdout, "export type not specified on command line\n");
 
 	return(FALSE);
     }
+
+    char *pcType = &pcLine[iLength + 1];
+
+    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+    pcLine[iLength] = '\0';
+
+    iLength++;
 
     if (strcmp(pcType, "ndf") == 0)
     {
@@ -1929,7 +1935,12 @@ QueryHandlerExport
 	iType = -1;
     }
 
-    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+    if (iType == -1)
+    {
+	fprintf(stdout, "export of type %s not supported\n", pcType);
+
+	return(FALSE);
+    }
 
     //- parse filename
 
@@ -1948,7 +1959,7 @@ QueryHandlerExport
 	return(FALSE);
     }
 
-    char *pcFilename = &pcLine[iLength + 1];
+    char *pcFilename = &pcLine[iLength];
 
     iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
 
@@ -2029,7 +2040,7 @@ QueryHandlerExport
 
 		/// output type
 
-		0,
+		iType,
 	    };
 
 	//- open output file
@@ -2054,7 +2065,7 @@ QueryHandlerExport
 	}
 	else
 	{
-	    fprintf(exd.pfile, "<PUBLIC_MODELS>\n");
+	    fprintf(exd.pfile, "<public_models>\n");
 	}
 
 	//- traverse symbols that match with wildcard
@@ -2081,7 +2092,7 @@ QueryHandlerExport
 	}
 	else
 	{
-	    fprintf(exd.pfile, "</PUBLIC_MODELS>\n");
+	    fprintf(exd.pfile, "</public_models>\n");
 	}
 
 	//- close output file
