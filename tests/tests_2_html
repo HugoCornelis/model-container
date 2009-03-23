@@ -617,7 +617,7 @@ options :
 			    }
 			    elsif (defined $read->{expected_output})
 			    {
-				$output .= "<verbatim>$read->{expected_output}</verbatim>";
+				$output .= "$read->{expected_output}";
 			    }
 			    else
 			    {
@@ -634,6 +634,17 @@ options :
 			{
 			    die "$0: unknown read specification";
 			}
+		    }
+
+		    # do some simple replacements for entities
+
+		    #t see also http://www.w3schools.com/tags/ref_entities.asp
+
+		    if ($read)
+		    {
+			$read =~ s/</&lt;/g;
+			$read =~ s/>/&gt;/g;
+			$read =~ s/&/&amp;/g;
 		    }
 
 		    $source->{"$entries. Expected output "} = $read;
