@@ -46,8 +46,8 @@ PUBLIC_MODELS
               PARAMETER ( scale = 1 ),
           ),
     END PARAMETERS
-    ATTACHMENT synapse
-    END ATTACHMENT
+    CHILD Synapse synapse
+    END CHILD
     EQUATION_EXPONENTIAL exp2
       PARAMETERS
         PARAMETER ( TAU1 = 0.0005 ),
@@ -56,8 +56,8 @@ PUBLIC_MODELS
     END EQUATION_EXPONENTIAL
   END CHANNEL
   CHANNEL NMDA
-    ATTACHMENT synapse
-    END ATTACHMENT
+    CHILD Synapse synapse
+    END CHILD
     EQUATION_EXPONENTIAL exp2
       PARAMETERS
         PARAMETER ( TAU1 = 0.0005 ),
@@ -89,8 +89,8 @@ PUBLIC_MODELS
               <parameter> <name>scale</name><value>1</value> </parameter>
           </function> </parameter>
     </parameters>
-    <ATTACHMENT> <name>synapse</name>
-    </ATTACHMENT>
+    <child> <name>synapse</name> </child>
+    </child>
     <EQUATION_EXPONENTIAL> <name>exp2</name>
       <parameters>
         <parameter> <name>TAU1</name><value>0.0005</value> </parameter>
@@ -99,8 +99,8 @@ PUBLIC_MODELS
     </EQUATION_EXPONENTIAL>
   </CHANNEL>
   <CHANNEL> <name>NMDA</name>
-    <ATTACHMENT> <name>synapse</name>
-    </ATTACHMENT>
+    <child> <name>synapse</name> </child>
+    </child>
     <EQUATION_EXPONENTIAL> <name>exp2</name>
       <parameters>
         <parameter> <name>TAU1</name><value>0.0005</value> </parameter>

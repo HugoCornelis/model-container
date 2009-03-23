@@ -1771,32 +1771,6 @@ QueryMachineExporterStarter
 
     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
 
-    //- print indent
-
-    PrintIndent(pexd->iIndent, pexd->pfile);
-
-/*     int i; */
-
-/*     for (i = 0 ; i < pexd->iIndent ; i++) */
-/*     { */
-/* 	fprintf(pexd->pfile, "  "); */
-/*     } */
-
-    //- write output: start symbol
-
-/*     char pc[1000]; */
-
-/*     PidinStackString(ptstr->ppist, pc, 1000); */
-
-    if (pexd->iType == 0)
-    {
-	fprintf(pexd->pfile, "%s %s\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
-    }
-    else
-    {
-	fprintf(pexd->pfile, "<%s> <name>%s</name>\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
-    }
-
     int iType = TstrGetActualType(ptstr);
 
     if (subsetof_bio_comp(iType))
@@ -1810,22 +1784,49 @@ QueryMachineExporterStarter
 	struct symtab_BioComponent * pbioPrototype
 	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
 
-	if (0 && pbioPrototype)
+	if (pbioPrototype)
 	{
+	    //- export reference to component
+
+	    PrintIndent(pexd->iIndent, pexd->pfile);
+
+	    if (pexd->iType == 0)
+	    {
+		fprintf(pexd->pfile, "CHILD %s %s\n", SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
+	    }
+	    else
+	    {
+		fprintf(pexd->pfile, "<child> <name>%s</name> </child>\n", SymbolName(phsle));
+	    }
 	}
 
 	//- else hardcoded component
 
 	else
 	{
-	    struct symtab_ParContainer *pparc = pbio->pparc;
+	    //- export component
 
-	    if (pparc)
+	    PrintIndent(pexd->iIndent, pexd->pfile);
+
+	    if (pexd->iType == 0)
 	    {
-		if (!ParContainerExport(pparc, ptstr->ppist, pexd->iIndent + 2, pexd->iType, pexd->pfile))
-		{
-		    iResult = TSTR_PROCESSOR_ABORT;
-		}
+		fprintf(pexd->pfile, "%s %s\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
+	    }
+	    else
+	    {
+		fprintf(pexd->pfile, "<%s> <name>%s</name>\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
+	    }
+	}
+
+	//- export parameter of this biological component
+
+	struct symtab_ParContainer *pparc = pbio->pparc;
+
+	if (pparc)
+	{
+	    if (!ParContainerExport(pparc, ptstr->ppist, pexd->iIndent + 2, pexd->iType, pexd->pfile))
+	    {
+		iResult = TSTR_PROCESSOR_ABORT;
 	    }
 	}
     }
@@ -1854,38 +1855,60 @@ QueryMachineExporterStopper
     struct QM_exporter_data *pexd
 	= (struct QM_exporter_data *)pvUserdata;
 
-    //- set actual symbol
-
-    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
-
     //- decrease indent
 
     pexd->iIndent -= 2;
 
-    //- print indent
+    //- set actual symbol
 
-    PrintIndent(pexd->iIndent, pexd->pfile);
+    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
 
-/*     int i; */
+    int iType = TstrGetActualType(ptstr);
 
-/*     for (i = 0 ; i < pexd->iIndent ; i++) */
-/*     { */
-/* 	fprintf(pexd->pfile, "  "); */
-/*     } */
-
-    //- write output: end symbol
-
-/*     char pc[1000]; */
-
-/*     PidinStackString(ptstr->ppist, pc, 1000); */
-
-    if (pexd->iType == 0)
+    if (subsetof_bio_comp(iType))
     {
-	fprintf(pexd->pfile, "END %s\n", SymbolHSLETypeDescribeNDF(phsle->iType));
-    }
-    else
-    {
-	fprintf(pexd->pfile, "</%s>\n", SymbolHSLETypeDescribeNDF(phsle->iType));
+	//t if is prototype
+	//t and exporting prototypes enabled
+
+	struct symtab_BioComponent *pbio
+	    = (struct symtab_BioComponent *)phsle;
+
+	struct symtab_BioComponent * pbioPrototype
+	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
+
+	if (pbioPrototype)
+	{
+	    //- export reference to component
+
+	    PrintIndent(pexd->iIndent, pexd->pfile);
+
+	    if (pexd->iType == 0)
+	    {
+		fprintf(pexd->pfile, "END CHILD\n");
+	    }
+	    else
+	    {
+		fprintf(pexd->pfile, "</child>\n");
+	    }
+	}
+
+	//- else hardcoded component
+
+	else
+	{
+	    //- end biological component
+
+	    PrintIndent(pexd->iIndent, pexd->pfile);
+
+	    if (pexd->iType == 0)
+	    {
+		fprintf(pexd->pfile, "END %s\n", SymbolHSLETypeDescribeNDF(phsle->iType));
+	    }
+	    else
+	    {
+		fprintf(pexd->pfile, "</%s>\n", SymbolHSLETypeDescribeNDF(phsle->iType));
+	    }
+	}
     }
 
     //- return result
