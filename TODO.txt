@@ -1,5 +1,8 @@
 -*- outline -*-
 
+* split shorthand for bindables and bindings combinations.
+See channels/nmda.ndf
+
 * complete tests for subpopulations
 
 * instrumentor

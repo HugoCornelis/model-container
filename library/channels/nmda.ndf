@@ -24,6 +24,13 @@ END PRIVATE_MODELS
 PUBLIC_MODELS
 
 	CHANNEL NMDA_fixed_conductance
+
+		//t so exp2->G as bindable is short for having G as
+		//t bindable + having exp2->G as binding.
+		//t
+		//t simplifying things means splitting out and
+		//t removing the short hand notation.
+ 
 		BINDABLES
 			INPUT Vm,OUTPUT exp2->G,OUTPUT I
 		END BINDABLES
