@@ -1,6 +1,6 @@
 tests/convertors
 tests/glue
-
+^neurospaces\/config\.h\.in$
 .*Makefile.in$
 Makefile$
 ^analyzer.c$
