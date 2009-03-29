@@ -9467,7 +9467,7 @@ int QueryMachineHandle(struct Neurospaces *pneuro, char *pcLine)
     {
 	//- if command matches
 
-	if (strncmp(pquhasTable[i].pcCommand, pcInit, iLength) == 0)
+	if (strncasecmp(pquhasTable[i].pcCommand, pcInit, iLength) == 0)
 	{
 	    //- execute command
 
