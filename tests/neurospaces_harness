@@ -1056,13 +1056,17 @@ sub report_error_add
 
 	use IO::File;
 
-	my $expected_file = new IO::File ">/tmp/text_expected";
+	my $expected_filename = "/tmp/text_$config->{package}_$error_count.expected";
+
+	my $expected_file = new IO::File ">$expected_filename";
 
 	print $expected_file $expected;
 
 	$expected_file->close();
 
-	my $seen_file = new IO::File ">/tmp/text_seen";
+	my $seen_filename = "/tmp/text_$config->{package}_$error_count.seen";
+
+	my $seen_file = new IO::File ">$seen_filename";
 
 	print $seen_file $seen;
 
