@@ -136,11 +136,13 @@ AC_CHECK_LIB(m, main,[echo "Found! lib m."],[
    exit -1
 ])
 
+dnl AC_DEFINE(HAVE_READLINE_LIB, [1])
 dnl Replace `main' with a function in -lreadline:
 dnl the second command on failure should be an 'exit -1'
-AC_CHECK_LIB(readline, main,[echo "Found! lib readline."],[
-   echo "Error! lib readline is not installed."
-])
+dnl AC_CHECK_LIB(readline, main,[echo "Found! lib readline."],[
+dnl   echo "Error! lib readline is not installed."
+dnl   AC_DEFINE(HAVE_READLINE_LIB, 0)
+dnl ])
 
 
 dnl Checks for header files.
@@ -151,7 +153,7 @@ AC_CHECK_HEADERS([limits.h sys/time.h unistd.h float.h stddef.h ],[],[
    exit -1
 ])
 
-
+AC_CHECK_HEADERS([readline/readline.h],[],[])
 
 dnl Check for Python
 AM_PATH_PYTHON(,[],[
