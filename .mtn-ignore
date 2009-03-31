@@ -37,6 +37,7 @@ Makefile$
 ^tests/html/
 ^xs_initialize.c$
 ^ylwrap$
+config.h.in$
 _Inline
 aclocal.m4$
 autoscan.log$
