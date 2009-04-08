@@ -51,11 +51,11 @@ struct exporter_data
 
 
 int 
-ExporterStarter
+ExporterSymbolStarter
 (struct TreespaceTraversal *ptstr, void *pvUserdata);
 
 int 
-ExporterStopper
+ExporterSymbolStopper
 (struct TreespaceTraversal *ptstr, void *pvUserdata);
 
 

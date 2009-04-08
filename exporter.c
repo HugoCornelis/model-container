@@ -31,7 +31,7 @@
 /// 
 
 int 
-ExporterStarter
+ExporterSymbolStarter
 (struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : continue with children, then post processing
@@ -119,7 +119,7 @@ ExporterStarter
 
 
 int 
-ExporterStopper
+ExporterSymbolStopper
 (struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : continue with children, then post processing

@@ -1924,8 +1924,8 @@ QueryHandlerExport
 	      (phsleRoot,
 	       ppistRoot,
 	       ppistWildcard,
-	       ExporterStarter,
-	       ExporterStopper,
+	       ExporterSymbolStarter,
+	       ExporterSymbolStopper,
 	       (void *)&exd);
 
 	if (iResult != 1)
