@@ -79,6 +79,7 @@ libneurospacesread_a_SOURCES = \
 	coordinatecache.c \
 	defsym.c \
 	dependencyfile.c \
+	exporter.c \
 	function.c \
 	hines_listlist.c \
 	idin.c \
@@ -259,6 +260,7 @@ nobase_include_HEADERS = \
 	neurospaces/coordinatecache.h \
 	neurospaces/defsym.h \
 	neurospaces/dependencyfile.h \
+	neurospaces/exporter.h \
 	neurospaces/double.h \
 	neurospaces/function.h \
 	neurospaces/genesis/olf/olf_defs.h \
@@ -407,6 +409,7 @@ libneurospacesread.so: libneurospacesread.a
 	connectioncache.o \
 	defsym.o \
 	dependencyfile.o \
+	exporter.o \
 	equationexponential.o \
 	fiber.o \
 	function.o \

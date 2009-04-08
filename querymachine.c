@@ -63,6 +63,7 @@ extern "C" {
 #include "neurospaces/components/root.h"
 #include "neurospaces/components/segment.h"
 #include "neurospaces/coordinatecache.h"
+#include "neurospaces/exporter.h"
 #include "neurospaces/function.h"
 #include "neurospaces/importedfile.h"
 #include "neurospaces/inputoutput.h"
@@ -1734,191 +1735,6 @@ QueryHandlerExpand
 ///	export <ndf|xml> <filename> <wildcard> <symbol>
 /// 
 
-struct QM_exporter_data
-{
-    /// file to write to
-
-    FILE *pfile;
-
-    /// current indentation level
-
-    int iIndent;
-
-    /// wildcard selector
-
-    struct PidinStack *ppistWildcard;
-
-    /// output type
-
-    int iType;
-};
-
-static
-int 
-QueryMachineExporterStarter
-(struct TreespaceTraversal *ptstr, void *pvUserdata)
-{
-    //- set default result : continue with children, then post processing
-
-    int iResult = TSTR_PROCESSOR_SUCCESS;
-
-    //- get traversal data
-
-    struct QM_exporter_data *pexd
-	= (struct QM_exporter_data *)pvUserdata;
-
-    //- set actual symbol
-
-    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
-
-    int iType = TstrGetActualType(ptstr);
-
-    if (subsetof_bio_comp(iType))
-    {
-	//- if is prototype
-
-	//t and exporting prototypes enabled ?
-
-	struct symtab_BioComponent *pbio
-	    = (struct symtab_BioComponent *)phsle;
-
-	struct symtab_BioComponent * pbioPrototype
-	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
-
-	if (pbioPrototype)
-	{
-	    //- export reference to component
-
-	    PrintIndent(pexd->iIndent, pexd->pfile);
-
-	    if (pexd->iType == 0)
-	    {
-		fprintf(pexd->pfile, "CHILD %s %s\n", SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
-	    }
-	    else
-	    {
-		fprintf(pexd->pfile, "<child> <name>%s</name> </child>\n", SymbolName(phsle));
-	    }
-	}
-
-	//- else hardcoded component
-
-	else
-	{
-	    //- export component
-
-	    PrintIndent(pexd->iIndent, pexd->pfile);
-
-	    if (pexd->iType == 0)
-	    {
-		fprintf(pexd->pfile, "%s %s\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
-	    }
-	    else
-	    {
-		fprintf(pexd->pfile, "<%s> <name>%s</name>\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
-	    }
-	}
-
-	//- export parameter of this biological component
-
-	struct symtab_ParContainer *pparc = pbio->pparc;
-
-	if (pparc)
-	{
-	    if (!ParContainerExport(pparc, ptstr->ppist, pexd->iIndent + 2, pexd->iType, pexd->pfile))
-	    {
-		iResult = TSTR_PROCESSOR_ABORT;
-	    }
-	}
-    }
-
-    //- increase indent
-
-    pexd->iIndent += 2;
-
-    //- return result
-
-    return(iResult);
-}
-
-
-static
-int 
-QueryMachineExporterStopper
-(struct TreespaceTraversal *ptstr, void *pvUserdata)
-{
-    //- set default result : continue with children, then post processing
-
-    int iResult = TSTR_PROCESSOR_SUCCESS;
-
-    //- get traversal data
-
-    struct QM_exporter_data *pexd
-	= (struct QM_exporter_data *)pvUserdata;
-
-    //- decrease indent
-
-    pexd->iIndent -= 2;
-
-    //- set actual symbol
-
-    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
-
-    int iType = TstrGetActualType(ptstr);
-
-    if (subsetof_bio_comp(iType))
-    {
-	//- if is prototype
-
-	//t and exporting prototypes enabled ?
-
-	struct symtab_BioComponent *pbio
-	    = (struct symtab_BioComponent *)phsle;
-
-	struct symtab_BioComponent * pbioPrototype
-	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
-
-	if (pbioPrototype)
-	{
-	    //- export reference to component
-
-	    PrintIndent(pexd->iIndent, pexd->pfile);
-
-	    if (pexd->iType == 0)
-	    {
-		fprintf(pexd->pfile, "END CHILD\n");
-	    }
-	    else
-	    {
-		fprintf(pexd->pfile, "</child>\n");
-	    }
-	}
-
-	//- else hardcoded component
-
-	else
-	{
-	    //- end biological component
-
-	    PrintIndent(pexd->iIndent, pexd->pfile);
-
-	    if (pexd->iType == 0)
-	    {
-		fprintf(pexd->pfile, "END %s\n", SymbolHSLETypeDescribeNDF(phsle->iType));
-	    }
-	    else
-	    {
-		fprintf(pexd->pfile, "</%s>\n", SymbolHSLETypeDescribeNDF(phsle->iType));
-	    }
-	}
-    }
-
-    //- return result
-
-    return(iResult);
-}
-
-
 static
 int
 QueryHandlerExport
@@ -2053,7 +1869,7 @@ QueryHandlerExport
     {
 	//- allocate traversal structure
 
-	struct QM_exporter_data exd =
+	struct exporter_data exd =
 	    {
 		/// file to write to
 
@@ -2108,8 +1924,8 @@ QueryHandlerExport
 	      (phsleRoot,
 	       ppistRoot,
 	       ppistWildcard,
-	       QueryMachineExporterStarter,
-	       QueryMachineExporterStopper,
+	       ExporterStarter,
+	       ExporterStopper,
 	       (void *)&exd);
 
 	if (iResult != 1)
