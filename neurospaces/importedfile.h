@@ -28,9 +28,7 @@
 #include "hines_list.h"
 
 
-/// \struct
 /// \struct one imported file
-/// \struct
 
 struct ImportedFile
 {
