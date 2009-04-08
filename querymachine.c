@@ -1775,8 +1775,9 @@ QueryMachineExporterStarter
 
     if (subsetof_bio_comp(iType))
     {
-	//t if is prototype
-	//t and exporting prototypes enabled
+	//- if is prototype
+
+	//t and exporting prototypes enabled ?
 
 	struct symtab_BioComponent *pbio
 	    = (struct symtab_BioComponent *)phsle;
@@ -1867,8 +1868,9 @@ QueryMachineExporterStopper
 
     if (subsetof_bio_comp(iType))
     {
-	//t if is prototype
-	//t and exporting prototypes enabled
+	//- if is prototype
+
+	//t and exporting prototypes enabled ?
 
 	struct symtab_BioComponent *pbio
 	    = (struct symtab_BioComponent *)phsle;
