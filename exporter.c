@@ -19,7 +19,9 @@
 #include <string.h>
 
 #include "neurospaces/components/biocomp.h"
+#include "neurospaces/defsym.h"
 #include "neurospaces/exporter.h"
+#include "neurospaces/importedfile.h"
 
 
 /// \struct data to describe how to export a model.
@@ -52,7 +54,7 @@ ExporterSymbolStarter
 
 static
 int
-ExporterSymbols(struct PidinStack *ppistWildcard, int iType, char *pcFilename);
+ExporterSymbols(struct PidinStack *ppistWildcard, int iType, FILE *pfile);
 
 static
 int 
@@ -81,11 +83,37 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 
     int iResult = 1;
 
-    //t get dependencies / prototypes
+    //- open output file
+
+    FILE *pfile = fopen(pcFilename, "w");
+
+    //- start output
+
+    if (iType == EXPORTER_TYPE_NDF)
+    {
+	fprintf(pfile, "#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n");
+    }
+    else
+    {
+    }
+
+    //- get dependencies / prototypes
+
+    struct ImportedFile *pif = ImportedFileGetRootImport();
+
+    struct DefinedSymbols *pdefsym = ImportedFileGetDefinedSymbols(pif);
+
+    iResult
+	= (iResult
+	   && DefSymPrint(pdefsym, FLAG_SYMBOL_DEPENDENCY, 4, iType, pfile));
 
     //- export symbols
 
-    iResult = ExporterSymbols(ppistWildcard, iType, pcFilename);
+    iResult = ExporterSymbols(ppistWildcard, iType, pfile);
+
+    //- close output file
+
+    fclose(pfile);
 
     //- return result
 
@@ -184,7 +212,7 @@ ExporterSymbolStarter
 
 static
 int
-ExporterSymbols(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
+ExporterSymbols(struct PidinStack *ppistWildcard, int iType, FILE *pfile)
 {
     //- set default result: ok
 
@@ -214,7 +242,7 @@ ExporterSymbols(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 	    {
 		/// file to write to
 
-		NULL,
+		pfile,
 
 		/// current indentation level
 
@@ -228,20 +256,6 @@ ExporterSymbols(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 
 		iType,
 	    };
-
-	//- open output file
-
-	exd.pfile = fopen(pcFilename, "w");
-
-	//- start output
-
-	if (exd.iType == EXPORTER_TYPE_NDF)
-	{
-	    fprintf(exd.pfile, "#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n");
-	}
-	else
-	{
-	}
 
 	//- start public models
 
@@ -290,10 +304,6 @@ ExporterSymbols(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 	{
 	    fprintf(exd.pfile, "</public_models>\n");
 	}
-
-	//- close output file
-
-	fclose(exd.pfile);
     }
     else
     {

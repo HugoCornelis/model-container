@@ -1767,7 +1767,11 @@ QueryHandlerExport
 
     iLength++;
 
-    if (strcmp(pcType, "ndf") == 0)
+    if (strcmp(pcType, "info") == 0)
+    {
+	iType = EXPORTER_TYPE_INFO;
+    }
+    else if (strcmp(pcType, "ndf") == 0)
     {
 	iType = EXPORTER_TYPE_NDF;
     }

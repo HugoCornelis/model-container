@@ -144,8 +144,9 @@ DependencyFilePrint
     {
 	fprintf
 	    (pfile,
-	     "FILE %s\n",
-	     DependencyFileGetNameSpace(pdf));
+	     "FILE %s \"%s\"\n",
+	     DependencyFileGetNameSpace(pdf),
+	     ImportedFileGetFilename(DependencyFileGetImportedFile(pdf)));
     }
 
     if (iType == EXPORTER_TYPE_INFO)

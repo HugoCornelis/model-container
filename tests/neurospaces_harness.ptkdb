@@ -1,42 +1,22 @@
 $files = {
-           '_<./tests/specifications/code/allocations.t' => [
-                                                              {
-                                                                'expr' => undef,
-                                                                'value' => '1',
-                                                                'text' => '						 my ($context, $component) = @_;
-',
-                                                                'fname' => './tests/specifications/code/allocations.t',
-                                                                'type' => 'user',
-                                                                'line' => '44'
-                                                              },
-                                                              {
-                                                                'expr' => undef,
-                                                                'value' => '1',
-                                                                'text' => '				    my $symbol_hierarchy = do "$directory/hierarchy/symbols";
-',
-                                                                'fname' => './tests/specifications/code/allocations.t',
-                                                                'type' => 'user',
-                                                                'line' => '20'
-                                                              }
-                                                            ],
            '_<tests/neurospaces_harness' => [
                                               {
                                                 'expr' => undef,
                                                 'value' => '1',
-                                                'text' => '	my $module_definition = do $test_module;
+                                                'text' => '		if ($command_test->{disabled})
 ',
                                                 'fname' => 'tests/neurospaces_harness',
                                                 'type' => 'user',
-                                                'line' => '1413'
+                                                'line' => '530'
                                               },
                                               {
                                                 'expr' => undef,
                                                 'value' => '1',
-                                                'text' => 'main();
+                                                'text' => '    read_cmd_line();
 ',
                                                 'fname' => 'tests/neurospaces_harness',
                                                 'type' => 'user',
-                                                'line' => '1596'
+                                                'line' => '248'
                                               }
                                             ]
          };
@@ -55,4 +35,4 @@ $expr_list = [
                }
              ];
 $eval_saved_text = undef;
-$main_win_geometry = '1272x941+297+45';
+$main_win_geometry = '1592x1114+0+0';

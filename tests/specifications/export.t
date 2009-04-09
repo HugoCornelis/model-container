@@ -36,6 +36,10 @@ my $test
 
 NEUROSPACES NDF
 
+IMPORT
+        FILE mapper "/tmp/neurospaces/test/models/mappers/spikereceiver.ndf"
+END IMPORT
+
 PUBLIC_MODELS
   CHANNEL NMDA_fixed_conductance
     PARAMETERS
@@ -81,7 +85,8 @@ PUBLIC_MODELS
 						   description => "Does the exported XML file contain the correct model ?",
 						   read => {
 							    application_output_file => '/tmp/1.xml',
-							    expected_output => '<public_models>
+							    expected_output => '        
+<public_models>
   <CHANNEL> <name>NMDA_fixed_conductance</name>
     <parameters>
       <parameter> <name>Erev</name><value>0</value> </parameter>

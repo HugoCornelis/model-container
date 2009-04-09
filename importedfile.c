@@ -506,7 +506,9 @@ ImportedFilePrint
 	   | FLAG_SYMBOL_PRIVATEMODEL
 	   | FLAG_SYMBOL_PUBLICMODEL);
 
-    //- if we are exporting for import later
+    //- if we are not exporting for import later
+
+    //! this is only to get the tests to work
 
     if (iType == EXPORTER_TYPE_INFO)
     {
