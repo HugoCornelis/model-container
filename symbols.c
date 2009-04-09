@@ -186,7 +186,7 @@ SymbolsLookupImportedFile
 /// \brief print list of imported files
 /// 
 
-int SymbolsPrintImportedFiles(struct Symbols *pisSymbols,FILE *pfile)
+int SymbolsPrintImportedFiles(struct Symbols *pisSymbols, FILE *pfile)
 {
     //- set default result : failure
 
@@ -238,7 +238,7 @@ int SymbolsInitialize(struct Symbols *pisSymbols)
 
     //- zero out symbol table
 
-    memset(pisSymbols,0,sizeof(*pisSymbols));
+    memset(pisSymbols, 0, sizeof(*pisSymbols));
 
     //- initialize filename list
 
@@ -294,7 +294,7 @@ SymbolsLookupHierarchical
     //- get active entry from pidin stack
 
     struct symtab_IdentifierIndex *pidin
-	= PidinStackElementPidin(ppist,iLevel);
+	= PidinStackElementPidin(ppist, iLevel);
 
     //- get root import
 
@@ -388,7 +388,7 @@ SymbolsLookupNameSpace
 /// \brief Pretty print symbol table to given file
 /// 
 
-int SymbolsPrint(struct Symbols *pisSymbols,FILE *pfile)
+int SymbolsPrint(struct Symbols *pisSymbols, FILE *pfile)
 {
     //- set default result : ok
 
@@ -403,7 +403,7 @@ int SymbolsPrint(struct Symbols *pisSymbols,FILE *pfile)
     {
 	//- print info about imported file
 
-	if (!ImportedFilePrint(pif,0,pfile))
+	if (!ImportedFilePrint(pif, 0, pfile))
 	{
 	    bResult = FALSE;
 
@@ -432,7 +432,7 @@ int SymbolsPrint(struct Symbols *pisSymbols,FILE *pfile)
 /// 
 
 int SymbolsPrintModel
-(struct symtab_HSolveListElement *phsle,int iIndent,FILE *pfile)
+(struct symtab_HSolveListElement *phsle, int iIndent, FILE *pfile)
 {
     //- set default result : ok
 
