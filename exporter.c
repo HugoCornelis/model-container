@@ -22,14 +22,46 @@
 #include "neurospaces/exporter.h"
 
 
+static
+int 
+ExporterSymbolStarter
+(struct TreespaceTraversal *ptstr, void *pvUserdata);
+
+static
+int
+ExporterSymbols(struct PidinStack *ppistWildcard, int iType, char *pcFilename);
+
+static
+int 
+ExporterSymbolStopper
+(struct TreespaceTraversal *ptstr, void *pvUserdata);
+
+
 /// 
-/// \arg pc name of imported file
+/// \arg pcFilename name of exported file
 /// 
 /// \return struct ImportedFile * : new imported file struct
 /// 
 /// \brief Allocated new imported file struct.
 /// 
 
+int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
+{
+    //- set default result: ok
+
+    int iResult = 1;
+
+    //- export symbols
+
+    iResult = ExporterSymbols(ppistWildcard, iType, pcFilename);
+
+    //- return result
+
+    return(iResult);
+}
+
+
+static
 int 
 ExporterSymbolStarter
 (struct TreespaceTraversal *ptstr, void *pvUserdata)
@@ -118,6 +150,135 @@ ExporterSymbolStarter
 }
 
 
+static
+int
+ExporterSymbols(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
+{
+    //- set default result: ok
+
+    int iResult = 1;
+
+    //- allocate pidin stack pointing to root
+
+    struct PidinStack *ppistRoot = PidinStackCalloc();
+
+    if (!ppistRoot)
+    {
+	return(FALSE);
+    }
+
+    PidinStackSetRooted(ppistRoot);
+
+    struct symtab_HSolveListElement *phsleRoot
+	= PidinStackLookupTopSymbol(ppistRoot);
+
+    /// \note so phsleRoot can be NULL if the model description file was not found
+
+    if (phsleRoot)
+    {
+	//- allocate traversal structure
+
+	struct exporter_data exd =
+	    {
+		/// file to write to
+
+		NULL,
+
+		/// current indentation level
+
+		0,
+
+		/// wildcard selector
+
+		ppistWildcard,
+
+		/// output type
+
+		iType,
+	    };
+
+	//- open output file
+
+	exd.pfile = fopen(pcFilename, "w");
+
+	//- start output
+
+	if (exd.iType == 0)
+	{
+	    fprintf(exd.pfile, "#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n");
+	}
+	else
+	{
+	}
+
+	//- start public models
+
+	if (exd.iType == 0)
+	{
+	    fprintf(exd.pfile, "PUBLIC_MODELS\n");
+	}
+	else
+	{
+	    fprintf(exd.pfile, "<public_models>\n");
+	}
+
+	//- increase indent
+
+	exd.iIndent += 2;
+
+	//- traverse symbols that match with wildcard
+
+	int iTraversal
+	    = SymbolTraverseWildcard
+	      (phsleRoot,
+	       ppistRoot,
+	       ppistWildcard,
+	       ExporterSymbolStarter,
+	       ExporterSymbolStopper,
+	       (void *)&exd);
+
+	if (iTraversal != 1)
+	{
+	    fprintf(stdout, "*** Error: SymbolTraverseWildcard() failed (or aborted)\n");
+
+	    iResult = 0;
+	}
+
+	//- decrease indent
+
+	exd.iIndent -= 2;
+
+	//- end public models
+
+	if (exd.iType == 0)
+	{
+	    fprintf(exd.pfile, "PUBLIC_MODELS\n");
+	}
+	else
+	{
+	    fprintf(exd.pfile, "</public_models>\n");
+	}
+
+	//- close output file
+
+	fclose(exd.pfile);
+    }
+    else
+    {
+	iResult = 0;
+    }
+
+    //- free allocated memory
+
+    PidinStackFree(ppistRoot);
+
+    //- return result
+
+    return(iResult);
+}
+
+
+static
 int 
 ExporterSymbolStopper
 (struct TreespaceTraversal *ptstr, void *pvUserdata)

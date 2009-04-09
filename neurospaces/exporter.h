@@ -50,13 +50,7 @@ struct exporter_data
 
 
 
-int 
-ExporterSymbolStarter
-(struct TreespaceTraversal *ptstr, void *pvUserdata);
-
-int 
-ExporterSymbolStopper
-(struct TreespaceTraversal *ptstr, void *pvUserdata);
+int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename);
 
 
 #endif
