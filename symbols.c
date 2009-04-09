@@ -36,16 +36,6 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-//////////////////////////////////////////////////////////////////////////////
-//o
-//o struct Symbols :
-//o ----------------
-//o
-//o Symbols defines a set of imported files (see struct ImportedFile) and a
-//o a set of algorithms (see struct Algorithm).
-//o
-//////////////////////////////////////////////////////////////////////////////
-
 /// 
 /// \arg pisSymbols symbol table
 /// \arg pcFilename file to add
