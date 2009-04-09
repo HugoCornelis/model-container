@@ -21,6 +21,7 @@
 #include <string.h>
 
 #include "neurospaces/dependencyfile.h"
+#include "neurospaces/exporter.h"
 #include "neurospaces/importedfile.h"
 #include "neurospaces/symbolvirtual_protos.h"
 
@@ -489,28 +490,39 @@ ImportedFilePrint
 
     int bResult = TRUE;
 
-    //- get pointer to defined symbols in imported file
+    //- if printing information only
 
-    struct DefinedSymbols *pdefsym
-	= ImportedFileGetDefinedSymbols(pif);
+    if (iType == EXPORTER_TYPE_INFO)
+    {
+	//- print properties of imported file
 
-    //- print properties of imported file
+	bResult = ImportedFilePrintProperties(pif, iIndent, pfile);
+    }
 
-    bResult = ImportedFilePrintProperties(pif, iIndent, pfile);
+    //- by default we export all information
+
+    int iFlags
+	= (FLAG_SYMBOL_DEPENDENCY
+	   | FLAG_SYMBOL_PRIVATEMODEL
+	   | FLAG_SYMBOL_PUBLICMODEL);
+
+    //- if we are exporting for import later
+
+    if (iType == EXPORTER_TYPE_INFO)
+    {
+	//- do not export dependencies
+
+	iFlags &= ~FLAG_SYMBOL_DEPENDENCY;
+    }
 
     //- pretty print info about defined symbols
 
     /// \note only print private & public models, assuming that
     /// \note all dependencies will be printed too.
 
-    bResult = DefSymPrint
-		(pdefsym,
-		 /* FLAG_SYMBOL_DEPENDENCY */
-/* 		 |  */FLAG_SYMBOL_PRIVATEMODEL
-		 | FLAG_SYMBOL_PUBLICMODEL,
-		 MoreIndent(iIndent),
-		 iType,
-		 pfile);
+    struct DefinedSymbols *pdefsym = ImportedFileGetDefinedSymbols(pif);
+
+    bResult = DefSymPrint(pdefsym, iFlags, MoreIndent(iIndent), iType, pfile);
 
     //- return result
 

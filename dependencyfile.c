@@ -23,6 +23,7 @@
 
 
 #include "neurospaces/dependencyfile.h"
+#include "neurospaces/exporter.h"
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -131,15 +132,29 @@ DependencyFilePrint
     //- print local name space of dependency file
 
     PrintIndent(iIndent,pfile);
-    fprintf
-	(pfile,
-	 "Aliased to local name space : (%s)\n",
-	 DependencyFileGetNameSpace(pdf));
 
-    //- pretty print symbols of imported file
+    if (iType == EXPORTER_TYPE_INFO)
+    {
+	fprintf
+	    (pfile,
+	     "Aliased to local name space : (%s)\n",
+	     DependencyFileGetNameSpace(pdf));
+    }
+    else if (iType == EXPORTER_TYPE_NDF)
+    {
+	fprintf
+	    (pfile,
+	     "FILE %s\n",
+	     DependencyFileGetNameSpace(pdf));
+    }
 
-    ImportedFilePrint
-	(DependencyFileGetImportedFile(pdf), MoreIndent(iIndent), iType, pfile);
+    if (iType == EXPORTER_TYPE_INFO)
+    {
+	//- pretty print symbols of imported file
+
+	ImportedFilePrint
+	    (DependencyFileGetImportedFile(pdf), MoreIndent(iIndent), iType, pfile);
+    }
 
     //- return result
 

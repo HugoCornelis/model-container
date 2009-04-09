@@ -22,6 +22,7 @@
 #include "neurospaces/components/root.h"
 #include "neurospaces/defsym.h"
 #include "neurospaces/dependencyfile.h"
+#include "neurospaces/exporter.h"
 #include "neurospaces/symbolvirtual_protos.h"
 
 
@@ -367,6 +368,15 @@ DefSymPrint
 
     if (bResult && iFlags & FLAG_SYMBOL_DEPENDENCY)
     {
+	if (iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pfile, "IMPORT\n");
+	}
+	else if (iType == EXPORTER_TYPE_XML)
+	{
+	    fprintf(pfile, "<import>\n");
+	}
+
 	//- loop over dependency files
 
 	struct DependencyFile * pdf
@@ -383,6 +393,16 @@ DefSymPrint
 
 	    pdf = (struct DependencyFile *)HSolveListNext(&pdf->hsleLink);
 	}
+
+	if (iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pfile, "END IMPORT\n");
+	}
+	else if (iType == EXPORTER_TYPE_XML)
+	{
+	    fprintf(pfile, "</import>\n");
+	}
+
     }
 
     //- if private models requested
@@ -395,7 +415,16 @@ DefSymPrint
 	//- print info : public models
 
 	PrintIndent(iIndent, pfile);
-	fprintf(pfile, "PRIVATE_MODELS\n");
+
+	if (iType == EXPORTER_TYPE_INFO
+	    || iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pfile, "PRIVATE_MODELS\n");
+	}
+	else if (iType == EXPORTER_TYPE_XML)
+	{
+	    fprintf(pfile, "<private_models>\n");
+	}
 
 	fprintf(pfile, "\n");
 
@@ -408,7 +437,16 @@ DefSymPrint
 	//- print info : end public models
 
 	PrintIndent(iIndent, pfile);
-	fprintf(pfile, "END PRIVATE_MODELS\n");
+
+	if (iType == EXPORTER_TYPE_INFO
+	    || iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pfile, "END PRIVATE_MODELS\n");
+	}
+	else if (iType == EXPORTER_TYPE_XML)
+	{
+	    fprintf(pfile, "</private_models>\n");
+	}
     }
 
     //- if public models requested
@@ -421,7 +459,16 @@ DefSymPrint
 	//- print info : public models
 
 	PrintIndent(iIndent, pfile);
-	fprintf(pfile, "PUBLIC_MODELS\n");
+
+	if (iType == EXPORTER_TYPE_INFO
+	    || iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pfile, "PUBLIC_MODELS\n");
+	}
+	else if (iType == EXPORTER_TYPE_XML)
+	{
+	    fprintf(pfile, "<public_models>\n");
+	}
 
 	fprintf(pfile, "\n");
 
@@ -434,7 +481,16 @@ DefSymPrint
 	//- print info : end public models
 
 	PrintIndent(iIndent, pfile);
-	fprintf(pfile, "END PUBLIC_MODELS\n");
+
+	if (iType == EXPORTER_TYPE_INFO
+	    || iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pfile, "END PUBLIC_MODELS\n");
+	}
+	else if (iType == EXPORTER_TYPE_XML)
+	{
+	    fprintf(pfile, "</public_models>\n");
+	}
     }
 
     fprintf(pfile, "\n");
