@@ -92,8 +92,9 @@ DefSymLookup
 #define FLAG_SYMBOL_PUBLICMODEL		4
 
 
-int DefSymPrint
-(struct DefinedSymbols *pdefsym,int iFlags,int iIndent,FILE *pfile);
+int
+DefSymPrint
+(struct DefinedSymbols *pdefsym, int iFlags, int iIndent, int iType, FILE *pfile);
 
 int DefSymPrintNameSpaces
 (struct DefinedSymbols *pdefsym,int iIndent,FILE *pfile);

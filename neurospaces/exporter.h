@@ -29,7 +29,16 @@
 
 int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename);
 
+//d export the old info type cryptic format.
+
+#define EXPORTER_TYPE_INFO	5
+
+//d export in NDF format.
+
 #define EXPORTER_TYPE_NDF	11
+
+//d export in a custom XML format.
+
 #define EXPORTER_TYPE_XML	12
 
 

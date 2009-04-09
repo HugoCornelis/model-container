@@ -61,7 +61,7 @@ DependencyFileGetNameSpace(struct DependencyFile *pdf);
 
 int
 DependencyFilePrint
-(struct DependencyFile *pdf, int iIndent, FILE *pfile);
+(struct DependencyFile *pdf, int iIndent, int iType, FILE *pfile);
 
 int
 DependencyFileSetImportedFile

@@ -1,4 +1,4 @@
-static char *pcVersionTime="(08/06/15) Sunday, June 15, 2008 22:02:17 hugo";
+static char *pcVersionTime="(09/04/08) Wednesday, April 8, 2009 22:47:20 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -35,6 +35,8 @@ static char *pcVersionTime="(08/06/15) Sunday, June 15, 2008 22:02:17 hugo";
 
 #define YYSTYPE void
 
+
+#include "neurospaces/exporter.h"
 #include "neurospaces/lexsupport.h"
 #include "neurospaces/neurospaces.h"
 #include "neurospaces/hines_listlist.h"
@@ -424,7 +426,7 @@ static int ConfigProcess(struct NeurospacesConfig *pnsc, struct Neurospaces *pne
     {
 	//- print symbol table
 
-	SymbolsPrint(pneuro->psym, stderr);
+	SymbolsPrint(pneuro->psym, EXPORTER_TYPE_INFO, stderr);
     }
 
 /*     //- if symbols requested */

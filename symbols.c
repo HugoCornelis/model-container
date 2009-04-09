@@ -380,15 +380,18 @@ SymbolsLookupNameSpace
 
 
 /// 
-/// \arg pisSymbols symbol table to print
-/// \arg pfile file to print output to
+/// \arg pisSymbols symbol table to print.
+/// \arg iType type of export.
+/// \arg pfile file to print output to.
 /// 
-/// \return int success of operation
+/// \return int success of operation.
 /// 
-/// \brief Pretty print symbol table to given file
+/// \brief Pretty print symbol table to given file.
 /// 
 
-int SymbolsPrint(struct Symbols *pisSymbols, FILE *pfile)
+int
+SymbolsPrint
+(struct Symbols *pisSymbols, int iType, FILE *pfile)
 {
     //- set default result : ok
 
@@ -403,7 +406,7 @@ int SymbolsPrint(struct Symbols *pisSymbols, FILE *pfile)
     {
 	//- print info about imported file
 
-	if (!ImportedFilePrint(pif, 0, pfile))
+	if (!ImportedFilePrint(pif, 0, iType, pfile))
 	{
 	    bResult = FALSE;
 

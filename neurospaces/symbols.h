@@ -80,7 +80,7 @@ SymbolsLookupImportedFile
  char *pcFilename,
  struct ParserContext *pac);
 
-int SymbolsPrintImportedFiles(struct Symbols *psymSymbols,FILE *pfile);
+int SymbolsPrintImportedFiles(struct Symbols *psymSymbols, FILE *pfile);
 
 int SymbolsInitialize(struct Symbols *psymSymbols);
 
@@ -95,11 +95,11 @@ SymbolsLookupNameSpace
  struct PidinStack *ppist);
 
 
-#define PrintIndent(iIndent,pfile) fprintf((pfile),"%-.*s",(iIndent),"                                                  ")
+#define PrintIndent(iIndent,pfile) fprintf((pfile), "%-.*s", (iIndent), "                                                  ")
 #define MoreIndent(iIndent) ((iIndent) + 4)
 #define LessIndent(iIndent) ((iIndent) - 4)
 
-#define PrintSymbolIndent(phsle,iIndent,pfile)				\
+#define PrintSymbolIndent(phsle, iIndent, pfile)			\
 do									\
 {									\
     PrintIndent(iIndent,pfile);						\
@@ -110,10 +110,10 @@ do									\
 }									\
 while (0)
 
-int SymbolsPrint(struct Symbols *pisSymbols,FILE *pfile);
+int SymbolsPrint(struct Symbols *pisSymbols, int iType, FILE *pfile);
 
 int SymbolsPrintModel
-(struct symtab_HSolveListElement *phsle,int iIndent,FILE *pfile);
+(struct symtab_HSolveListElement *phsle, int iIndent, FILE *pfile);
 
 
 #endif

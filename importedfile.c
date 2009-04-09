@@ -55,7 +55,7 @@ struct ImportedFile *ImportedFileCalloc(char *pc)
     //- allocate for imported file struct
 
     struct ImportedFile *pifResult
-	= (struct ImportedFile *)calloc(1,sizeof(*pifResult));
+	= (struct ImportedFile *)calloc(1, sizeof(*pifResult));
 
     //- allocate for defined symbols
 
@@ -68,11 +68,11 @@ struct ImportedFile *ImportedFileCalloc(char *pc)
 
     //- register qualified filename
 
-    ImportedFileSetFilename(pifResult,pc);
+    ImportedFileSetFilename(pifResult, pc);
 
     //- register defined symbols
 
-    ImportedFileSetDefinedSymbols(pifResult,pdefsym);
+    ImportedFileSetDefinedSymbols(pifResult, pdefsym);
 
     //- return result
 
@@ -96,7 +96,7 @@ void ImportedFileClearRootImport(void)
 
 	NeurospacesMessage
 	    (LEVEL_GLOBALMSG_IMPORTANT,
-	     3, //pacCurrentContext->pcParser,
+	     3,
 	     "Warning : Erasing erased root import file\n",
 	     NULL);
     }
@@ -117,7 +117,7 @@ void ImportedFileClearRootImport(void)
 /// 
 
 struct DependencyFile *
-ImportedFileFindDependencyFile(struct ImportedFile *pif,char *pc)
+ImportedFileFindDependencyFile(struct ImportedFile *pif, char *pc)
 {
     //- set default result : failure
 
@@ -138,7 +138,7 @@ ImportedFileFindDependencyFile(struct ImportedFile *pif,char *pc)
     {
 	//- if namespace match
 
-	if (strcmp(pc,DependencyFileGetNameSpace(pdf)) == 0)
+	if (strcmp(pc, DependencyFileGetNameSpace(pdf)) == 0)
 	{
 	    //- set result
 
@@ -292,7 +292,7 @@ ImportedFileLookupHierarchical
     //- get active entry from pidin stack
 
     struct symtab_IdentifierIndex *pidin
-	= PidinStackElementPidin(ppist,iLevel);
+	= PidinStackElementPidin(ppist, iLevel);
 
     //- if null search
 
@@ -327,7 +327,7 @@ ImportedFileLookupHierarchical
     {
 	//- resolve namespaces
 
-	pif = ImportedFileLookupNameSpace(pif,ppist,&iLevel);
+	pif = ImportedFileLookupNameSpace(pif, ppist, &iLevel);
     }
 
     //- get pointer to defined symbols in imported file
@@ -350,7 +350,7 @@ ImportedFileLookupHierarchical
 	//- lookup of next stack entries in symbol
 
 	phsleResult
-	    = SymbolLookupHierarchical(phsle,ppist,iLevel + 1,TRUE);
+	    = SymbolLookupHierarchical(phsle, ppist, iLevel + 1, TRUE);
     }
 
     //- return result
@@ -393,7 +393,7 @@ ImportedFileLookupNameSpace
     //- get active entry from pidin stack
 
     struct symtab_IdentifierIndex *pidin
-	= PidinStackElementPidin(ppist,*piLevel);
+	= PidinStackElementPidin(ppist, *piLevel);
 
     //- if null imported file
 
@@ -433,7 +433,7 @@ ImportedFileLookupNameSpace
 	//- find corresponding imported file
 
 	struct DependencyFile *pdf
-	    = ImportedFileFindDependencyFile(pif,IdinName(pidin));
+	    = ImportedFileFindDependencyFile(pif, IdinName(pidin));
 
 	//- if found
 
@@ -447,7 +447,7 @@ ImportedFileLookupNameSpace
 
 	    pifResult
 		= ImportedFileLookupNameSpace
-		  (DependencyFileGetImportedFile(pdf),ppist,piLevel);
+		  (DependencyFileGetImportedFile(pdf), ppist, piLevel);
 	}
 
 	//- return result
@@ -471,16 +471,19 @@ ImportedFileLookupNameSpace
 
 
 /// 
-/// \arg pif imported file to print symbols of
-/// \arg iIndent number of indentation spaces
-/// \arg pfile file to print output to
+/// \arg pif imported file to print symbols of.
+/// \arg iIndent number of indentation spaces.
+/// \arg iType type of format to export.
+/// \arg pfile file to print output to.
 /// 
-/// \return int : success of operation
+/// \return int : success of operation.
 /// 
-/// \brief Pretty print symbol table of imported file
+/// \brief Pretty print symbol table of imported file.
 /// 
 
-int ImportedFilePrint(struct ImportedFile *pif,int iIndent,FILE *pfile)
+int
+ImportedFilePrint
+(struct ImportedFile *pif, int iIndent, int iType, FILE *pfile)
 {
     //- set default result : ok
 
@@ -493,7 +496,7 @@ int ImportedFilePrint(struct ImportedFile *pif,int iIndent,FILE *pfile)
 
     //- print properties of imported file
 
-    bResult = ImportedFilePrintProperties(pif,iIndent,pfile);
+    bResult = ImportedFilePrintProperties(pif, iIndent, pfile);
 
     //- pretty print info about defined symbols
 
@@ -506,6 +509,7 @@ int ImportedFilePrint(struct ImportedFile *pif,int iIndent,FILE *pfile)
 /* 		 |  */FLAG_SYMBOL_PRIVATEMODEL
 		 | FLAG_SYMBOL_PUBLICMODEL,
 		 MoreIndent(iIndent),
+		 iType,
 		 pfile);
 
     //- return result
@@ -526,7 +530,7 @@ int ImportedFilePrint(struct ImportedFile *pif,int iIndent,FILE *pfile)
 
 int
 ImportedFilePrintNameSpaces
-(struct ImportedFile *pif,int iIndent,FILE *pfile)
+(struct ImportedFile *pif, int iIndent, FILE *pfile)
 {
     //- set default result : ok
 
@@ -539,7 +543,7 @@ ImportedFilePrintNameSpaces
 
     //- print namespaces
 
-    DefSymPrintNameSpaces(pdefsym,iIndent,pfile);
+    DefSymPrintNameSpaces(pdefsym, iIndent, pfile);
 
     //- return result
 
@@ -575,7 +579,8 @@ void ImportedFilePrintRootImport(void)
 /// \brief Pretty print symbol table of imported file
 /// 
 
-int ImportedFilePrintProperties
+int
+ImportedFilePrintProperties
 (struct ImportedFile *pif, int iIndent, FILE *pfile)
 {
     //- set default result : ok
@@ -596,34 +601,34 @@ int ImportedFilePrintProperties
 
     //- name, flags, etc
 
-    PrintIndent(iIndent,pfile);
-    fprintf(pfile,"\n");
-    PrintIndent(iIndent,pfile);
-    fprintf(pfile,"\n");
-    PrintIndent(iIndent,pfile);
+    PrintIndent(iIndent, pfile);
+    fprintf(pfile, "\n");
+    PrintIndent(iIndent, pfile);
+    fprintf(pfile, "\n");
+    PrintIndent(iIndent, pfile);
     fprintf
 	(pfile,
 	 "-----------------%60.60s-\n",
 	 "------------------------------------------------------------");
-    PrintIndent(iIndent,pfile);
-    fprintf(pfile,"Imported file : (%60.60s)\n",&pcName[iPosition]);
-    PrintIndent(iIndent,pfile);
-    fprintf(pfile,"Imported file : (%60.60s)\n",&pcName[iFilename]);
-    PrintIndent(iIndent,pfile);
+    PrintIndent(iIndent, pfile);
+    fprintf(pfile, "Imported file : (%60.60s)\n", &pcName[iPosition]);
+    PrintIndent(iIndent, pfile);
+    fprintf(pfile, "Imported file : (%60.60s)\n", &pcName[iFilename]);
+    PrintIndent(iIndent, pfile);
     fprintf
 	(pfile,
 	 "-----------------%60.60s-\n",
 	 "------------------------------------------------------------");
 
-    PrintIndent(iIndent,pfile);
-    fprintf(pfile,"Flags : (%.8x)\n",pif->iFlags);
+    PrintIndent(iIndent, pfile);
+    fprintf(pfile, "Flags : (%.8x)\n", pif->iFlags);
 
     if (pif->iFlags & IMPORTEDFILE_FLAG_ROOT)
     {
-	fprintf(pfile,"\tRoot imported file\n");
+	fprintf(pfile, "\tRoot imported file\n");
     }
 
-    PrintIndent(iIndent,pfile);
+    PrintIndent(iIndent, pfile);
     fprintf
 	(pfile,
 	 "Parse Method : (%s)\n\n",

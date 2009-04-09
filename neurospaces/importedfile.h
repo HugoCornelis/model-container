@@ -91,7 +91,9 @@ ImportedFileLookupNameSpace
  struct PidinStack *ppist,
  int *piLevel);
 
-int ImportedFilePrint(struct ImportedFile *pif, int iIndent, FILE *pfile);
+int
+ImportedFilePrint
+(struct ImportedFile *pif, int iIndent, int iType, FILE *pfile);
 
 int ImportedFilePrintNameSpaces
 (struct ImportedFile *pif, int iIndent, FILE *pfile);

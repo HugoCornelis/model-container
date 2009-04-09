@@ -2092,7 +2092,7 @@ static int QueryHandlerListSymbols
     {
 	//- print namespaces to stdout
 
-	ImportedFilePrint(pif,0,stdout);
+	ImportedFilePrint(pif, 0, EXPORTER_TYPE_INFO, stdout);
     }
 
     //- else

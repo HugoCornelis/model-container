@@ -37,13 +37,13 @@
 //////////////////////////////////////////////////////////////////////////////
 
 /// 
-/// 
 /// \arg pdefsym defined symbols to add public models to
 /// \arg phsle model to add
 /// 
 /// \return int : success of operation
 /// 
 /// \brief add public model to defined symbols
+///
 /// \details 
 /// 
 ///	No duplicate checking is done
@@ -68,13 +68,13 @@ int DefSymAddPublicModel
 
 
 /// 
-/// 
 /// \arg pdefsym defined symbols to add private models to
 /// \arg phsle private model to add
 /// 
 /// \return int : success of operation
 /// 
 /// \brief add private model to defined symbols
+///
 /// \details 
 /// 
 ///	No duplicate checking is done
@@ -99,11 +99,9 @@ int DefSymAddPrivateModel
 
 
 /// 
-/// 
 /// \return struct DefinedSymbols * : newly allocated defined symbols
 /// 
 /// \brief Allocate & initialize defined symbols struct.
-/// \details 
 /// 
 
 struct DefinedSymbols *DefSymCalloc(void)
@@ -111,7 +109,7 @@ struct DefinedSymbols *DefSymCalloc(void)
     //- allocate defined symbols
 
     struct DefinedSymbols *pdefsymResult
-	= (struct DefinedSymbols *)calloc(1,sizeof(*pdefsymResult));
+	= (struct DefinedSymbols *)calloc(1, sizeof(*pdefsymResult));
 
     //- init
 
@@ -129,13 +127,11 @@ struct DefinedSymbols *DefSymCalloc(void)
 
 
 /// 
-/// 
 /// \arg pdefsym defined symbols to init
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Initialize defined symbols struct.
-/// \details 
 /// 
 
 int DefSymInit(struct DefinedSymbols *pdefsym)
@@ -162,18 +158,19 @@ int DefSymInit(struct DefinedSymbols *pdefsym)
     }
 
     HSolveListEnqueue
-	(&pdefsym->hslPublicModels,&pdefsym->prootPublic->hsle.hsleLink);
+	(&pdefsym->hslPublicModels, &pdefsym->prootPublic->hsle.hsleLink);
 
     pdefsym->prootPrivate = RootSymbolCalloc();
 
     if (!pdefsym->prootPrivate)
     {
 	free(pdefsym->prootPublic);
+
 	return(FALSE);
     }
 
     HSolveListEnqueue
-	(&pdefsym->hslPrivateModels,&pdefsym->prootPrivate->hsle.hsleLink);
+	(&pdefsym->hslPrivateModels, &pdefsym->prootPrivate->hsle.hsleLink);
 
     //- return result
 
@@ -182,7 +179,6 @@ int DefSymInit(struct DefinedSymbols *pdefsym)
 
 
 /// 
-/// 
 /// \arg pdefsym defined symbols of imported file
 /// 
 /// \return struct symtab_HSolveListElement *
@@ -190,7 +186,6 @@ int DefSymInit(struct DefinedSymbols *pdefsym)
 ///	hypothetical root symbol, that exports all world visible symbols
 /// 
 /// \brief Get the world visible hypothetical root
-/// \details 
 /// 
 
 struct symtab_RootSymbol *
@@ -203,7 +198,6 @@ DefSymGetRootSymbol(struct DefinedSymbols *pdefsym)
 
 
 /// 
-/// 
 /// \arg pdefsym defined symbols of imported file
 /// 
 /// \return int
@@ -211,7 +205,6 @@ DefSymGetRootSymbol(struct DefinedSymbols *pdefsym)
 ///	success of operation.
 /// 
 /// \brief Increment count of number of dependencies.
-/// \details 
 /// 
 
 int
@@ -224,7 +217,6 @@ DefSymIncrementDependencyFiles(struct DefinedSymbols *pdefsym)
 
 
 /// 
-/// 
 /// \arg pdefsym defined symbols of imported file
 /// \arg pcSpace name space to search in
 /// \arg pcName name to lookup
@@ -235,6 +227,7 @@ DefSymIncrementDependencyFiles(struct DefinedSymbols *pdefsym)
 ///	Matching symbol, NULL if not found
 /// 
 /// \brief lookup a symbol name in given defined symbols
+///
 /// \details 
 /// 
 ///	If iFlags does not contain FLAG_SYMBOL_DEPENDENCY, pcSpace should be
@@ -266,7 +259,7 @@ DefSymLookup
 	{
 	    //- if namespaces match
 
-	    if (strcmp(pcNameSpace,DependencyFileGetNameSpace(pdf)) == 0)
+	    if (strcmp(pcNameSpace, DependencyFileGetNameSpace(pdf)) == 0)
 	    {
 		//- get pointer to imported file
 
@@ -317,7 +310,7 @@ DefSymLookup
     {
 	//- lookup in private models
 
-	phsleResult = RootSymbolLookup(pdefsym->prootPrivate,pcName);
+	phsleResult = RootSymbolLookup(pdefsym->prootPrivate, pcName);
 
 	if (phsleResult)
 	{
@@ -331,7 +324,7 @@ DefSymLookup
     {
 	//- lookup in public models
 
-	phsleResult = RootSymbolLookup(pdefsym->prootPublic,pcName);
+	phsleResult = RootSymbolLookup(pdefsym->prootPublic, pcName);
 
 	if (phsleResult)
 	{
@@ -346,23 +339,25 @@ DefSymLookup
 
 
 /// 
+/// \arg pdefsym defined symbols to print.
+/// \arg iFlags flags specifying which symbols to print.
+/// \arg iIndent number of indentation spaces.
+/// \arg iType type of format to export.
+/// \arg pfile file to print output to.
 /// 
-/// \arg pdefsym defined symbols to print
-/// \arg iFlags flags specifying which symbols to print
-/// \arg iIndent number of indentation spaces
-/// \arg pfile file to print output to
+/// \return int : success of operation.
 /// 
-/// \return int : success of operation
-/// 
-/// \brief Pretty print defined symbol
+/// \brief Pretty print defined symbol.
+///
 /// \details 
 /// 
 ///	iFlags is or'd from FLAG_SYMBOL_DEPENDENCY, FLAG_SYMBOL_PROTOTYPE,
 ///	FLAG_SYMBOL_MODEL or zero.
 /// 
 
-int DefSymPrint
-(struct DefinedSymbols *pdefsym,int iFlags,int iIndent,FILE *pfile)
+int
+DefSymPrint
+(struct DefinedSymbols *pdefsym, int iFlags, int iIndent, int iType, FILE *pfile)
 {
     //- set default result : ok
 
@@ -382,7 +377,7 @@ int DefSymPrint
 	{
 	    //- pretty print dependency file
 
-	    bResult = DependencyFilePrint(pdf,MoreIndent(iIndent),pfile);
+	    bResult = DependencyFilePrint(pdf, MoreIndent(iIndent), iType, pfile);
 
 	    //- go to next dependency file
 
@@ -394,55 +389,55 @@ int DefSymPrint
 
     if (bResult && iFlags & FLAG_SYMBOL_PRIVATEMODEL)
     {
-	fprintf(pfile,"\n");
-	fprintf(pfile,"\n");
+	fprintf(pfile, "\n");
+	fprintf(pfile, "\n");
 
 	//- print info : public models
 
-	PrintIndent(iIndent,pfile);
-	fprintf(pfile,"PRIVATE_MODELS\n");
+	PrintIndent(iIndent, pfile);
+	fprintf(pfile, "PRIVATE_MODELS\n");
 
-	fprintf(pfile,"\n");
+	fprintf(pfile, "\n");
 
 	//- print private models
 
-	RootSymbolPrint(pdefsym->prootPrivate,MoreIndent(iIndent),pfile);
+	RootSymbolPrint(pdefsym->prootPrivate, MoreIndent(iIndent), pfile);
 
-	fprintf(pfile,"\n");
+	fprintf(pfile, "\n");
 
 	//- print info : end public models
 
-	PrintIndent(iIndent,pfile);
-	fprintf(pfile,"END PRIVATE_MODELS\n");
+	PrintIndent(iIndent, pfile);
+	fprintf(pfile, "END PRIVATE_MODELS\n");
     }
 
     //- if public models requested
 
     if (bResult && iFlags & FLAG_SYMBOL_PUBLICMODEL)
     {
-	fprintf(pfile,"\n");
-	fprintf(pfile,"\n");
+	fprintf(pfile, "\n");
+	fprintf(pfile, "\n");
 
 	//- print info : public models
 
-	PrintIndent(iIndent,pfile);
-	fprintf(pfile,"PUBLIC_MODELS\n");
+	PrintIndent(iIndent, pfile);
+	fprintf(pfile, "PUBLIC_MODELS\n");
 
-	fprintf(pfile,"\n");
+	fprintf(pfile, "\n");
 
 	//- print public models
 
-	RootSymbolPrint(pdefsym->prootPublic,MoreIndent(iIndent),pfile);
+	RootSymbolPrint(pdefsym->prootPublic, MoreIndent(iIndent), pfile);
 
-	fprintf(pfile,"\n");
+	fprintf(pfile, "\n");
 
 	//- print info : end public models
 
-	PrintIndent(iIndent,pfile);
-	fprintf(pfile,"END PUBLIC_MODELS\n");
+	PrintIndent(iIndent, pfile);
+	fprintf(pfile, "END PUBLIC_MODELS\n");
     }
 
-    fprintf(pfile,"\n");
+    fprintf(pfile, "\n");
 
     //- return result
 
@@ -451,7 +446,6 @@ int DefSymPrint
 
 
 /// 
-/// 
 /// \arg pdf defined symbols to print namespaces for
 /// \arg iIndent number of indentation spaces
 /// \arg pfile file to print output to
@@ -459,11 +453,12 @@ int DefSymPrint
 /// \return int : success of operation
 /// 
 /// \brief Pretty print namespaces in set of defined symbols.
+///
 /// \details 
 /// 
 
 int DefSymPrintNameSpaces
-(struct DefinedSymbols *pdefsym,int iIndent,FILE *pfile)
+(struct DefinedSymbols *pdefsym, int iIndent, FILE *pfile)
 {
     //- set default result : ok
 
@@ -481,7 +476,7 @@ int DefSymPrintNameSpaces
 	{
 	    //- output filename, namespace
 
-	    PrintIndent(iIndent,pfile);
+	    PrintIndent(iIndent, pfile);
 	    fprintf
 		(pfile,
 		 "File (%s) --> Namespace (%s::)\n",
@@ -493,8 +488,8 @@ int DefSymPrintNameSpaces
     }
     else
     {
-	PrintIndent(iIndent,pfile);
-	fprintf(pfile,"No namespaces\n");
+	PrintIndent(iIndent, pfile);
+	fprintf(pfile, "No namespaces\n");
     }
 
     //- return result

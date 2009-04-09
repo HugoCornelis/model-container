@@ -37,7 +37,6 @@
 //////////////////////////////////////////////////////////////////////////////
 
 /// 
-/// 
 /// \arg pc associated namespace
 /// \arg pif associated imported file
 /// 
@@ -46,6 +45,7 @@
 ///	allocated dependency file, NULL for failure
 /// 
 /// \brief Allocate a dependency file associated with given namespace and 
+///
 /// \details 
 ///	imported file.
 /// 
@@ -77,7 +77,6 @@ DependencyFileCallocNameSpaceImportedFile(char *pc, struct ImportedFile *pif)
 
 
 /// 
-/// 
 /// \arg pdf dependency file.
 /// 
 /// \return struct ImportedFile *
@@ -85,7 +84,6 @@ DependencyFileCallocNameSpaceImportedFile(char *pc, struct ImportedFile *pif)
 ///	imported file.
 /// 
 /// \brief Get imported file attached to this dependency file.
-/// \details 
 /// 
 
 struct ImportedFile *
@@ -96,7 +94,6 @@ DependencyFileGetImportedFile(struct DependencyFile *pdf)
 
 
 /// 
-/// 
 /// \arg pdf dependency file.
 /// 
 /// \return char *
@@ -104,7 +101,6 @@ DependencyFileGetImportedFile(struct DependencyFile *pdf)
 ///	namespace.
 /// 
 /// \brief Get namespace attached to this dependency file.
-/// \details 
 /// 
 
 char *
@@ -115,7 +111,6 @@ DependencyFileGetNameSpace(struct DependencyFile *pdf)
 
 
 /// 
-/// 
 /// \arg pdf dependency file to print
 /// \arg iIndent number of indentation spaces
 /// \arg pfile file to print output to
@@ -123,10 +118,11 @@ DependencyFileGetNameSpace(struct DependencyFile *pdf)
 /// \return int : success of operation
 /// 
 /// \brief Pretty print dependency file
-/// \details 
 /// 
 
-int DependencyFilePrint(struct DependencyFile *pdf, int iIndent, FILE *pfile)
+int
+DependencyFilePrint
+(struct DependencyFile *pdf, int iIndent, int iType, FILE *pfile)
 {
     //- set default result : ok
 
@@ -143,7 +139,7 @@ int DependencyFilePrint(struct DependencyFile *pdf, int iIndent, FILE *pfile)
     //- pretty print symbols of imported file
 
     ImportedFilePrint
-	(DependencyFileGetImportedFile(pdf), MoreIndent(iIndent), pfile);
+	(DependencyFileGetImportedFile(pdf), MoreIndent(iIndent), iType, pfile);
 
     //- return result
 
@@ -151,7 +147,6 @@ int DependencyFilePrint(struct DependencyFile *pdf, int iIndent, FILE *pfile)
 }
 
 
-/// 
 /// 
 /// \arg pdf dependency file.
 /// \arg pif associated imported file.
@@ -161,7 +156,6 @@ int DependencyFilePrint(struct DependencyFile *pdf, int iIndent, FILE *pfile)
 ///	success of operation.
 /// 
 /// \brief Set imported file attached to this dependency file.
-/// \details 
 /// 
 
 int
@@ -175,7 +169,6 @@ DependencyFileSetImportedFile
 
 
 /// 
-/// 
 /// \arg pdf dependency file.
 /// \arg pc associated namespace.
 /// 
@@ -184,7 +177,6 @@ DependencyFileSetImportedFile
 ///	success of operation.
 /// 
 /// \brief Set namespace attached to this dependency file.
-/// \details 
 /// 
 
 int
