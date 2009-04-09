@@ -22,6 +22,29 @@
 #include "neurospaces/exporter.h"
 
 
+/// \struct data to describe how to export a model.
+
+struct exporter_data
+{
+    /// file to write to
+
+    FILE *pfile;
+
+    /// current indentation level
+
+    int iIndent;
+
+    /// wildcard selector
+
+    struct PidinStack *ppistWildcard;
+
+    /// output type
+
+    int iType;
+};
+
+
+
 static
 int 
 ExporterSymbolStarter
@@ -38,11 +61,13 @@ ExporterSymbolStopper
 
 
 /// 
-/// \arg pcFilename name of exported file
+/// \arg ppistWildcard wildcard of symbols to export.
+/// \arg iType 0 for NDF, 1 for XML.
+/// \arg pcFilename name of exported file.
 /// 
-/// \return struct ImportedFile * : new imported file struct
+/// \return int success of operation.
 /// 
-/// \brief Allocated new imported file struct.
+/// \brief Export a model in a defined format to a file.
 /// 
 
 int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
@@ -50,6 +75,8 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
     //- set default result: ok
 
     int iResult = 1;
+
+    //t get dependencies / prototypes
 
     //- export symbols
 

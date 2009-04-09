@@ -27,29 +27,6 @@
 #include "neurospaces/treespacetraversal.h"
 
 
-/// \struct data to describe how to export a model.
-
-struct exporter_data
-{
-    /// file to write to
-
-    FILE *pfile;
-
-    /// current indentation level
-
-    int iIndent;
-
-    /// wildcard selector
-
-    struct PidinStack *ppistWildcard;
-
-    /// output type
-
-    int iType;
-};
-
-
-
 int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename);
 
 
