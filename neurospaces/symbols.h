@@ -49,9 +49,7 @@ struct Symbols;
 #endif
 
 
-/// \struct
 /// \struct global symbol table
-/// \struct
 
 struct Symbols
 {

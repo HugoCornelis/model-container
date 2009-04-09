@@ -47,15 +47,15 @@
 //////////////////////////////////////////////////////////////////////////////
 
 /// 
-/// 
 /// \arg pisSymbols symbol table
 /// \arg pcFilename file to add
-///	pac.........: current parser context, NULL for none
+/// \arg pac current parser context, NULL for none.
 /// 
 /// \return struct ImportedFile * : new imported file struct, NULL for failure
 /// 
 /// \brief add an filename to the imported files
-/// \details 
+/// 
+/// \details
 /// 
 ///	Qualifies pcFilename, allocates new imported file and adds to 
 ///	cache list.
@@ -97,11 +97,9 @@ SymbolsAddImportedFile
 
 
 /// 
-/// 
 /// \return struct Symbols * : new symbol table, NULL for failure
 /// 
 /// \brief Allocate new symbol table
-/// \details 
 /// 
 
 struct Symbols * SymbolsCalloc(void)
@@ -125,15 +123,15 @@ struct Symbols * SymbolsCalloc(void)
 
 
 /// 
-/// 
 /// \arg pisSymbols symbol table
 /// \arg pcFilename file to lookup
-///	pac.........: current parser context, NULL for none
+/// \arg pac current parser context, NULL for none.
 /// 
 /// \return struct ImportedFile * : imported file struct, NULL for failure
 /// 
 /// \brief find an imported file
-/// \details 
+/// 
+/// \details
 /// 
 ///	Qualifies pcFilename, checks if qualified filename is in 
 ///	cache list.
@@ -190,14 +188,12 @@ SymbolsLookupImportedFile
 
 
 /// 
-/// 
 /// \arg pisSymbols symbol table
 /// \arg pfile file to print output to
 /// 
-/// \return int : success of operation
+/// \return int success of operation
 /// 
 /// \brief print list of imported files
-/// \details 
 /// 
 
 int SymbolsPrintImportedFiles(struct Symbols *pisSymbols,FILE *pfile)
@@ -233,13 +229,13 @@ int SymbolsPrintImportedFiles(struct Symbols *pisSymbols,FILE *pfile)
 
 
 /// 
-/// 
 /// \arg pisSymbols symbol table to initialize
 /// 
-/// \return int : success of operation
+/// \return int success of operation
 /// 
 /// \brief initialize symbol table
-/// \details 
+/// 
+/// \details
 /// 
 ///	Init imported file list, algorithms.
 /// 
@@ -278,14 +274,12 @@ int SymbolsInitialize(struct Symbols *pisSymbols)
 
 
 /// 
-/// 
 /// \arg pisSymbols symbol table to search in
 /// \arg ppist element to search
 /// 
 /// \return struct symtab_HSolveListElement * : matching symbol
 /// 
 /// \brief lookup a hierarchical symbol name in given symbol table
-/// \details 
 /// 
 /// \note 
 /// 
@@ -370,14 +364,12 @@ SymbolsLookupHierarchical
 
 
 /// 
-/// 
 /// \arg pisSymbols symbol table to search in
 /// \arg ppist namespace to search
 /// 
 /// \return struct ImportedFile * : imported file associated to namespace
 /// 
 /// \brief lookup namespace, return defined symbols
-/// \details 
 /// 
 
 struct ImportedFile *
@@ -398,14 +390,12 @@ SymbolsLookupNameSpace
 
 
 /// 
-/// 
 /// \arg pisSymbols symbol table to print
 /// \arg pfile file to print output to
 /// 
-/// \return int : success of operation
+/// \return int success of operation
 /// 
 /// \brief Pretty print symbol table to given file
-/// \details 
 /// 
 
 int SymbolsPrint(struct Symbols *pisSymbols,FILE *pfile)
@@ -442,15 +432,13 @@ int SymbolsPrint(struct Symbols *pisSymbols,FILE *pfile)
 
 
 /// 
-/// 
 /// \arg phsle model to print
 /// \arg iIndent number of indentation spaces
 /// \arg pfile file to print output to
 /// 
-/// \return int : success of operation
+/// \return int success of operation
 /// 
 /// \brief Pretty print model
-/// \details 
 /// 
 
 int SymbolsPrintModel
