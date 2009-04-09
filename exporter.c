@@ -62,13 +62,18 @@ ExporterSymbolStopper
 
 /// 
 /// \arg ppistWildcard wildcard of symbols to export.
-/// \arg iType 0 for NDF, 1 for XML.
+/// \arg iType type of export, see below.
 /// \arg pcFilename name of exported file.
 /// 
 /// \return int success of operation.
 /// 
 /// \brief Export a model in a defined format to a file.
 /// 
+/// \details
+///
+///	Use the EXPORTER_TYPE_NDF and related to export in various
+///	formats.
+///
 
 int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 {
@@ -126,7 +131,7 @@ ExporterSymbolStarter
 
 	    PrintIndent(pexd->iIndent, pexd->pfile);
 
-	    if (pexd->iType == 0)
+	    if (pexd->iType == EXPORTER_TYPE_NDF)
 	    {
 		fprintf(pexd->pfile, "CHILD %s %s\n", SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
 	    }
@@ -144,7 +149,7 @@ ExporterSymbolStarter
 
 	    PrintIndent(pexd->iIndent, pexd->pfile);
 
-	    if (pexd->iType == 0)
+	    if (pexd->iType == EXPORTER_TYPE_NDF)
 	    {
 		fprintf(pexd->pfile, "%s %s\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
 	    }
@@ -230,7 +235,7 @@ ExporterSymbols(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 
 	//- start output
 
-	if (exd.iType == 0)
+	if (exd.iType == EXPORTER_TYPE_NDF)
 	{
 	    fprintf(exd.pfile, "#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n");
 	}
@@ -240,7 +245,7 @@ ExporterSymbols(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 
 	//- start public models
 
-	if (exd.iType == 0)
+	if (exd.iType == EXPORTER_TYPE_NDF)
 	{
 	    fprintf(exd.pfile, "PUBLIC_MODELS\n");
 	}
@@ -277,7 +282,7 @@ ExporterSymbols(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 
 	//- end public models
 
-	if (exd.iType == 0)
+	if (exd.iType == EXPORTER_TYPE_NDF)
 	{
 	    fprintf(exd.pfile, "PUBLIC_MODELS\n");
 	}
@@ -347,7 +352,7 @@ ExporterSymbolStopper
 
 	    PrintIndent(pexd->iIndent, pexd->pfile);
 
-	    if (pexd->iType == 0)
+	    if (pexd->iType == EXPORTER_TYPE_NDF)
 	    {
 		fprintf(pexd->pfile, "END CHILD\n");
 	    }
@@ -365,7 +370,7 @@ ExporterSymbolStopper
 
 	    PrintIndent(pexd->iIndent, pexd->pfile);
 
-	    if (pexd->iType == 0)
+	    if (pexd->iType == EXPORTER_TYPE_NDF)
 	    {
 		fprintf(pexd->pfile, "END %s\n", SymbolHSLETypeDescribeNDF(phsle->iType));
 	    }

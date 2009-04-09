@@ -29,6 +29,9 @@
 
 int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename);
 
+#define EXPORTER_TYPE_NDF	11
+#define EXPORTER_TYPE_XML	12
+
 
 #endif
 

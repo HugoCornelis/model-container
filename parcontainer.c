@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "neurospaces/exporter.h"
 #include "neurospaces/parcontainer.h"
 #include "neurospaces/symbols.h"
 
@@ -170,7 +171,7 @@ ParContainerExport
 
     PrintIndent(iIndent, pfile);
 
-    if (iType == 0)
+    if (iType == EXPORTER_TYPE_NDF)
     {
 	fprintf(pfile, "PARAMETERS\n");
     }
@@ -201,7 +202,7 @@ ParContainerExport
 
     PrintIndent(iIndent, pfile);
 
-    if (iType == 0)
+    if (iType == EXPORTER_TYPE_NDF)
     {
 	fprintf(pfile, "END PARAMETERS\n");
     }

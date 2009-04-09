@@ -27,6 +27,7 @@
 
 #include "neurospaces/components/biocomp.h"
 #include "neurospaces/components/iol.h"
+#include "neurospaces/exporter.h"
 #include "neurospaces/function.h"
 #include "neurospaces/idin.h"
 #include "neurospaces/inputoutput.h"
@@ -948,7 +949,7 @@ ParameterExport
 
     PrintIndent(iIndent, pfile);
 
-    if (iType == 0)
+    if (iType == EXPORTER_TYPE_NDF)
     {
 	fprintf(pfile, "PARAMETER ( %s = ", ParameterGetName(ppar));
     }
@@ -965,7 +966,7 @@ ParameterExport
 
 	//- print result
 
-	if (iType == 0)
+	if (iType == EXPORTER_TYPE_NDF)
 	{
 	    fprintf(pfile, "%g ),\n", d);
 	}
@@ -985,7 +986,7 @@ ParameterExport
 
 	PidinStackPushAll(ppist2, ppar->uValue.pidin);
 
-	if (iType == 0)
+	if (iType == EXPORTER_TYPE_NDF)
 	{
 	    PidinStackPrint(ppist2, pfile);
 
@@ -1015,7 +1016,7 @@ ParameterExport
 
 	char *pc = ParameterGetString(ppar);
 
-	if (iType == 0)
+	if (iType == EXPORTER_TYPE_NDF)
 	{
 	    fprintf(pfile, "\"%s\" ),\n", pc);
 	}
@@ -1035,7 +1036,7 @@ ParameterExport
 
 	PidinStackPushAll(ppistPar, ppar->uValue.pidin);
 
-	if (iType == 0)
+	if (iType == EXPORTER_TYPE_NDF)
 	{
 	    PidinStackPrint(ppistPar, pfile);
 
@@ -1078,7 +1079,7 @@ ParameterExport
 
 	PrintIndent(iIndent + 2, pfile);
 
-	if (iType == 0)
+	if (iType == EXPORTER_TYPE_NDF)
 	{
 	    fprintf(pfile, "%s\n", FunctionGetName(pfun));
 	}
@@ -1089,7 +1090,7 @@ ParameterExport
 
 	PrintIndent(iIndent + 4, pfile);
 
-	if (iType == 0)
+	if (iType == EXPORTER_TYPE_NDF)
 	{
 	    fprintf(pfile, "(\n");
 	}
@@ -1107,7 +1108,7 @@ ParameterExport
 
 	PrintIndent(iIndent + 4, pfile);
 
-	if (iType == 0)
+	if (iType == EXPORTER_TYPE_NDF)
 	{
 	    fprintf(pfile, "),\n");
 	}

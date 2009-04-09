@@ -1769,11 +1769,11 @@ QueryHandlerExport
 
     if (strcmp(pcType, "ndf") == 0)
     {
-	iType = 0;
+	iType = EXPORTER_TYPE_NDF;
     }
     else if (strcmp(pcType, "xml") == 0)
     {
-	iType = 1;
+	iType = EXPORTER_TYPE_XML;
     }
     else
     {
@@ -1852,6 +1852,11 @@ QueryHandlerExport
     //- export model
 
     int iExported = ExporterModel(ppistWildcard, iType, pcFilename);
+
+    if (!iExported)
+    {
+	return(FALSE);
+    }
 
     //- free allocated memory
 
