@@ -22,9 +22,6 @@
 #define TREESPACETRAVERSAL_H
 
 
-//f
-//f
-
 struct TreespaceTraversal;
 
 typedef 
@@ -34,6 +31,10 @@ int TreespaceTraversalProcessor
 
 
 /// \def processor failure : continue with siblings, no postprocessing
+
+//t after inspecting the code iohier.c I think this one does not work ??
+
+//t guess the postprocessing phase is done as usual ??
 
 #define TSTR_PROCESSOR_FAILURE			1
 
@@ -49,9 +50,10 @@ int TreespaceTraversalProcessor
 
 #define TSTR_PROCESSOR_ABORT			4
 
+/// \def processor failure : continue with siblings, with postprocessing
 
-//f
-//f
+#define TSTR_PROCESSOR_SIBLINGS			5
+
 
 typedef TreespaceTraversalProcessor TreespaceTraversalSelector;
 
@@ -236,13 +238,11 @@ int TstrGetPrincipalSerial(struct TreespaceTraversal *ptstr);
 
 
 /// 
-/// 
 /// \arg ptstr initialized treespace traversal
 /// 
 /// \return int : principal serial, INT_MAX for failure.
 /// 
 /// \brief Get the actual principal serial.
-/// \details 
 /// 
 
 #ifndef SWIG

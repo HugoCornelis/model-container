@@ -138,6 +138,8 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 	struct symtab_HSolveListElement *phslePrivate
 	    = PidinStackLookupTopSymbol(ppistPrivate);
 
+	phslePrivate = (struct symtab_HSolveListElement *)pdefsym->prootPrivate;
+
 	/// \note phslePrivate can be NULL if the model description file was not found ?
 
 	if (phslePrivate)
@@ -269,8 +271,12 @@ ExporterSymbolStarter
 	    }
 	    else
 	    {
-		fprintf(pexd->pfile, "<child> <name>%s</name> </child>\n", SymbolName(phsle));
+		fprintf(pexd->pfile, "<child> <prototype>%s</prototype> <name>%s</name> \n", SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
 	    }
+
+	    //- set result: only sibling processing
+
+	    iResult = TSTR_PROCESSOR_SIBLINGS;
 	}
 
 	//- else hardcoded component
