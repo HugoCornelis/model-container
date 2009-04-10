@@ -1,4 +1,4 @@
-static char *pcVersionTime="(09/04/08) Wednesday, April 8, 2009 22:47:20 hugo";
+static char *pcVersionTime="(09/04/09) Thursday, April 9, 2009 22:15:44 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -508,13 +508,11 @@ static int ConfigProcess(struct NeurospacesConfig *pnsc, struct Neurospaces *pne
 
 
 /// 
-/// 
 /// \arg std. ANSI main() args
 /// 
 /// \return int : TRUE
 /// 
 /// \brief Give help message
-/// \details 
 /// 
 
 int NeurospacesHelp(int argc, char *argv[])
@@ -570,7 +568,6 @@ int NeurospacesHelp(int argc, char *argv[])
 }
 
 
-/// 
 /// 
 /// \arg pacContext parser context
 /// \arg pcError stdargs descriptive string for error that occurred
@@ -629,7 +626,6 @@ NeurospacesLogFileTree
 
 
 /// 
-/// 
 /// \arg pacContext parser context.
 /// \arg pcContext descriptive string for parsing context.
 /// \arg pcError stdargs descriptive string for error that occurred.
@@ -637,7 +633,6 @@ NeurospacesLogFileTree
 /// \return int : 0 : continue parsing
 /// 
 /// \brief log an error message from any of the parsing functions
-/// \details 
 /// 
 
 int
@@ -698,14 +693,12 @@ NeurospacesError(PARSERCONTEXT *pacContext, char *pcContext, char *pcError, ...)
 
 
 /// 
-/// 
 /// \arg pneuro neurospaces.
 /// \arg pcAppl application name.
 /// 
 /// \return int : success of operation.
 /// 
 /// \brief Import neurospaces description files.
-/// \details 
 /// 
 /// \note 
 /// 
@@ -944,7 +937,6 @@ NeurospacesImport
 
 
 /// 
-/// 
 /// \arg iPriority priority of given message
 /// \arg iContext message context
 /// \arg pcFormat vfprintf() format string.
@@ -955,6 +947,7 @@ NeurospacesImport
 ///		 -1 : stop parsing
 /// 
 /// \brief log a message
+///
 /// \details 
 /// 
 ///	iPriority is compared with the verbosity option given on the 
@@ -1053,7 +1046,6 @@ NeurospacesMessage
 
 
 /// 
-/// 
 /// \arg pneuro neurospaces object.
 /// \arg pc a filename.
 /// 
@@ -1062,7 +1054,6 @@ NeurospacesMessage
 ///	qualified malloc()ed filename, or NULL if not found.
 /// 
 /// \brief Qualify a filename.
-/// \details 
 /// 
 
 char *
@@ -1095,13 +1086,13 @@ NeurospacesQualifyFilename(struct Neurospaces *pneuro, char *pc)
 
 
 /// 
-/// 
 /// \arg pneuro neurospaces object to use for qualification
 /// \arg pc filename to qualify
 /// 
 /// \return char * : qualified filename, NULL for failure
 /// 
 /// \brief qualify a filename using parser context configuration.
+///
 /// \details 
 /// 
 ///	See NeurospacesQualifyToConfiguration().
@@ -1159,7 +1150,6 @@ char *NeurospacesQualifyToConfiguration(struct Neurospaces *pneuro, char *pc)
 
 
 /// 
-/// 
 /// \arg pneuro neurospaces.
 /// \arg argc std main() argument.
 /// \arg argv std main() argument.
@@ -1167,6 +1157,7 @@ char *NeurospacesQualifyToConfiguration(struct Neurospaces *pneuro, char *pc)
 /// \return int : success of operation
 /// 
 /// \brief Instantiate neurospaces with a cmd like interface.
+///
 /// \details 
 /// 
 ///	Std. neurospaces configuration options are recognized.
@@ -1229,13 +1220,11 @@ int NeurospacesRead(struct Neurospaces *pneuro, int argc, char *argv[])
 
 
 /// 
-/// 
 /// \arg pneuro neurospaces.
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Remove projection query.
-/// \details 
 /// 
 
 int NeurospacesRemoveProjectionQuery(struct Neurospaces *pneuro)
@@ -1260,14 +1249,12 @@ int NeurospacesRemoveProjectionQuery(struct Neurospaces *pneuro)
 
 
 /// 
-/// 
 /// \arg pneuro neurospaces.
 /// \arg ppq projection query to register.
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Register projection query.
-/// \details 
 /// 
 
 int
@@ -1298,13 +1285,13 @@ NeurospacesSetProjectionQuery
 
 
 /// 
-/// 
 /// \arg pneuro neurospaces.
 /// \arg psm solver mapper array.
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Register solver mapper array.
+///
 /// \details 
 /// 
 ///	psm ends with 
@@ -1344,7 +1331,6 @@ NeurospacesSetSolverMapper
 
 
 /// 
-/// 
 /// \arg pneuro neurospaces.
 /// \arg pcName name of solver class.
 /// \arg ppist context of symbol to setup.
@@ -1352,7 +1338,6 @@ NeurospacesSetSolverMapper
 /// \return int : success of operation
 /// 
 /// \brief Setup a solution engine.
-/// \details 
 /// 
 
 int
@@ -1495,11 +1480,9 @@ NeurospacesSetupSolverInstance
 
 
 /// 
-/// 
 /// \return int : success of operation
 /// 
 /// \brief Report timing as a log message.
-/// \details 
 /// 
 
 // copied from GNU libc.
@@ -1648,13 +1631,11 @@ static int NeurospacesStartTimingReport(void)
 
 
 /// 
-/// 
 /// \return char *
 /// 
 ///	Version identifier.
 /// 
 /// \brief Obtain version identifier.
-/// \details 
 /// 
 
 char * NeurospacesGetVersion(void)
@@ -1667,13 +1648,11 @@ char * NeurospacesGetVersion(void)
 
 
 /// 
-/// 
 /// \return struct Neurospaces *
 /// 
 ///	Empty neurospaces.
 /// 
 /// \brief Construct a neurospaces object.
-/// \details 
 /// 
 
 /// hacker variable
@@ -1714,7 +1693,6 @@ struct Neurospaces *NeurospacesNew(void)
 
 
 /// 
-/// 
 /// \arg std. ANSI main() args
 /// 
 ///	argv[].: files to parse or options
@@ -1724,6 +1702,7 @@ struct Neurospaces *NeurospacesNew(void)
 ///	Result of given command line.
 /// 
 /// \brief parse given files
+///
 /// \details 
 /// 
 ///	options :
