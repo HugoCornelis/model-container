@@ -31,13 +31,13 @@
 
 
 /// 
-/// 
 /// \arg pioh symbol container
 /// \arg phsleChild child to enqueue
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Add a child to the children of given symbol container.
+///
 /// \details 
 /// 
 ///	Updates (sub)?space indices if symbol type has mappings.
@@ -73,13 +73,13 @@ IOHierarchyAddChild
 #ifdef DELETE_OPERATION
 
 /// 
-/// 
 /// \arg pioh symbol container
 /// \arg phsleChild child to delete
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Delete a child from the children of given symbol container.
+///
 /// \details 
 /// 
 ///	Does not update (sub)?space indices.
@@ -111,13 +111,11 @@ IOHierarchyDeleteChild
 
 
 /// 
-/// 
 /// \arg pioh symbol to get children from.
 /// 
 /// \return IOHContainer * : symbol container.
 /// 
 /// \brief Get children from given symbol.
-/// \details 
 /// 
 
 IOHContainer *
@@ -139,13 +137,11 @@ IOHierarchyGetChildren
 
 
 /// 
-/// 
 ///	pioh.: hierarchical I/O element to init
 /// 
 /// \return void
 /// 
 /// \brief Init hierarchical I/O element
-/// \details 
 /// 
 
 void IOHierarchyInit(struct symtab_IOHierarchy * pioh)
@@ -161,7 +157,6 @@ void IOHierarchyInit(struct symtab_IOHierarchy * pioh)
 
 
 /// 
-/// 
 /// \arg pioh container
 /// \arg ppist name(s) to search
 /// \arg iLevel: active level of ppist
@@ -172,6 +167,7 @@ void IOHierarchyInit(struct symtab_IOHierarchy * pioh)
 ///	found symbol, NULL for not found
 /// 
 /// \brief Hierarchical lookup in subsymbols
+///
 /// \details 
 /// 
 ///	First tries to match with container itself, if fails, returns failure
@@ -281,7 +277,6 @@ IOHierarchyLookupHierarchical
 
 
 /// 
-/// 
 /// \arg pioh symbol to print symbols for
 ///	bAll.....: TRUE == full list of symbols, FALSE == only given comp
 /// \arg iIndent number of indentation spaces
@@ -290,7 +285,6 @@ IOHierarchyLookupHierarchical
 /// \return int : success of operation
 /// 
 /// \brief Print symbol info
-/// \details 
 /// 
 
 int IOHierarchyPrint
@@ -374,7 +368,6 @@ int IOHierarchyPrint
 /* /// \return int : success of operation */
 /* /// */
 /* /// \brief Recalculate children serials relative to symbol (== parent). */
-/// \details 
 /* /// */
 /* ///	Uses #SU in children to set serial to parent, #SU must be correct */
 /* ///	for this function to work. */
@@ -431,7 +424,6 @@ int IOHierarchyPrint
 
 
 /// 
-/// 
 /// \arg ptstr initialized treespace traversal
 /// \arg pioh symbol to traverse
 /// 
@@ -442,7 +434,6 @@ int IOHierarchyPrint
 ///	-1 : immediate abort
 /// 
 /// \brief Traverse IO symbols in tree manner.
-/// \details 
 /// 
 /// \note  
 /// 
