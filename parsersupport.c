@@ -1485,7 +1485,9 @@ ParserImport
 
 		//- queue element into dependency list
 
-		HSolveListEnqueue
+		//! respect ordering
+
+		HSolveListEntail
 		    (&pdefsym->hslDependencyFiles,
 		     &pdf->hsleLink);
 	    }
