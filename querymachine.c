@@ -2229,7 +2229,7 @@ static int QueryHandlerNameSpaces
     {
 	//- print namespaces to stdout
 
-	ImportedFilePrintNameSpaces(pif,0,stdout);
+	ImportedFilePrintNameSpaces(pif, 0, stdout);
     }
 
     //- else
