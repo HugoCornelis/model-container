@@ -86,6 +86,7 @@ PUBLIC_MODELS
 						   read => {
 							    application_output_file => '/tmp/1.xml',
 							    expected_output => '<import>
+        <file> <namespace>mapper</namespace> <filename>/tmp/neurospaces/test/models/mappers/spikereceiver.ndf</filename> </file>
 </import>
 
 <public_models>

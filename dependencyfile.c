@@ -133,7 +133,7 @@ DependencyFilePrint
 
     if (iType == EXPORTER_TYPE_INFO)
     {
-	PrintIndent(iIndent,pfile);
+	PrintIndent(iIndent, pfile);
 
 	fprintf
 	    (pfile,
@@ -142,11 +142,21 @@ DependencyFilePrint
     }
     else if (iType == EXPORTER_TYPE_NDF)
     {
-	PrintIndent(iIndent,pfile);
+	PrintIndent(iIndent, pfile);
 
 	fprintf
 	    (pfile,
 	     "FILE %s \"%s\"\n",
+	     DependencyFileGetNameSpace(pdf),
+	     ImportedFileGetFilename(DependencyFileGetImportedFile(pdf)));
+    }
+    else if (iType == EXPORTER_TYPE_XML)
+    {
+	PrintIndent(iIndent, pfile);
+
+	fprintf
+	    (pfile,
+	     "<file> <namespace>%s</namespace> <filename>%s</filename> </file>\n",
 	     DependencyFileGetNameSpace(pdf),
 	     ImportedFileGetFilename(DependencyFileGetImportedFile(pdf)));
     }
