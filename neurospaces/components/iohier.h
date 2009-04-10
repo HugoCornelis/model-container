@@ -55,10 +55,8 @@ struct symtab_IOHierarchy;
 #include "neurospaces/pidinstack.h"
 
 
-/// \struct
 /// \struct gives transparant access to hierarchical structures with input/output, 
 /// \struct inherits from linked list structure
-/// \struct
 
 struct symtab_IOHierarchy
 {
@@ -75,7 +73,7 @@ struct symtab_IOHierarchy
 #include "neurospaces/treespacetraversal.h"
 
 
-// prototype functions
+/// prototype functions
 
 int
 IOHierarchyAddChild
@@ -88,8 +86,6 @@ IOHierarchyDeleteChild
 (struct symtab_IOHierarchy *pioh,
  struct symtab_HSolveListElement *phsleChild);
 #endif
-
-/* int IOHierarchyGetNumberOfChildren(struct symtab_IOHierarchy * pioh); */
 
 IOHContainer *
 IOHierarchyGetChildren
