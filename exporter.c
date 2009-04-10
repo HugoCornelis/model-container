@@ -54,7 +54,12 @@ ExporterSymbolStarter
 
 static
 int
-ExporterSymbols(struct PidinStack *ppistWildcard, int iType, FILE *pfile);
+ExporterSymbol
+(struct symtab_HSolveListElement *phsle,
+ struct PidinStack *ppist,
+ struct PidinStack *ppistWildcard,
+ int iType,
+ FILE *pfile);
 
 static
 int 
@@ -97,7 +102,7 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
     {
     }
 
-    //- get dependencies / prototypes
+    //- export dependencies
 
     struct ImportedFile *pif = ImportedFileGetRootImport();
 
@@ -107,9 +112,108 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 	= (iResult
 	   && DefSymPrint(pdefsym, FLAG_SYMBOL_DEPENDENCY, 4, iType, pfile));
 
-    //- export symbols
+    //- export private symbols
 
-    iResult = ExporterSymbols(ppistWildcard, iType, pfile);
+    {
+	//- start public models
+
+	if (iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pfile, "PRIVATE_MODELS\n");
+	}
+	else
+	{
+	    fprintf(pfile, "<private_models>\n");
+	}
+
+	//- allocate pidin stack pointing to root
+
+	struct PidinStack *ppistPrivate = PidinStackParse("::");
+
+	if (!ppistPrivate)
+	{
+	    return(FALSE);
+	}
+
+	struct symtab_HSolveListElement *phslePrivate
+	    = PidinStackLookupTopSymbol(ppistPrivate);
+
+	/// \note phslePrivate can be NULL if the model description file was not found ?
+
+	if (phslePrivate)
+	{
+	    iResult = ExporterSymbol(phslePrivate, ppistPrivate, ppistWildcard, iType, pfile);
+	}
+
+	//- end private models
+
+	if (iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pfile, "END PRIVATE_MODELS\n");
+	}
+	else
+	{
+	    fprintf(pfile, "</private_models>\n");
+	}
+
+	//- free allocated memory
+
+	PidinStackFree(ppistPrivate);
+
+	fprintf(pfile, "\n");
+    }
+
+    //- export public symbols
+
+    {
+	//- start public models
+
+	if (iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pfile, "PUBLIC_MODELS\n");
+	}
+	else
+	{
+	    fprintf(pfile, "<public_models>\n");
+	}
+
+	//- allocate pidin stack pointing to root
+
+	struct PidinStack *ppistRoot = PidinStackCalloc();
+
+	if (!ppistRoot)
+	{
+	    return(FALSE);
+	}
+
+	PidinStackSetRooted(ppistRoot);
+
+	struct symtab_HSolveListElement *phsleRoot
+	    = PidinStackLookupTopSymbol(ppistRoot);
+
+	/// \note so phsleRoot can be NULL if the model description file was not found
+
+	if (phsleRoot)
+	{
+	    iResult = ExporterSymbol(phsleRoot, ppistRoot, ppistWildcard, iType, pfile);
+	}
+
+	//- end public models
+
+	if (iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pfile, "PUBLIC_MODELS\n");
+	}
+	else
+	{
+	    fprintf(pfile, "</public_models>\n");
+	}
+
+	//- free allocated memory
+
+	PidinStackFree(ppistRoot);
+
+    }
 
     //- close output file
 
@@ -212,107 +316,63 @@ ExporterSymbolStarter
 
 static
 int
-ExporterSymbols(struct PidinStack *ppistWildcard, int iType, FILE *pfile)
+ExporterSymbol
+(struct symtab_HSolveListElement *phsle,
+ struct PidinStack *ppist,
+ struct PidinStack *ppistWildcard,
+ int iType,
+ FILE *pfile)
 {
     //- set default result: ok
 
     int iResult = 1;
 
-    //- allocate pidin stack pointing to root
+    //- allocate traversal structure
 
-    struct PidinStack *ppistRoot = PidinStackCalloc();
+    struct exporter_data exd =
+	{
+	    /// file to write to
 
-    if (!ppistRoot)
+	    pfile,
+
+	    /// current indentation level
+
+	    0,
+
+	    /// wildcard selector
+
+	    ppistWildcard,
+
+	    /// output type
+
+	    iType,
+	};
+
+    //- increase indent
+
+    exd.iIndent += 2;
+
+    //- traverse symbols that match with wildcard
+
+    int iTraversal
+	= SymbolTraverseWildcard
+	  (phsle,
+	   ppist,
+	   ppistWildcard,
+	   ExporterSymbolStarter,
+	   ExporterSymbolStopper,
+	   (void *)&exd);
+
+    if (iTraversal != 1)
     {
-	return(FALSE);
-    }
+	fprintf(stdout, "*** Error: SymbolTraverseWildcard() failed (or aborted)\n");
 
-    PidinStackSetRooted(ppistRoot);
-
-    struct symtab_HSolveListElement *phsleRoot
-	= PidinStackLookupTopSymbol(ppistRoot);
-
-    /// \note so phsleRoot can be NULL if the model description file was not found
-
-    if (phsleRoot)
-    {
-	//- allocate traversal structure
-
-	struct exporter_data exd =
-	    {
-		/// file to write to
-
-		pfile,
-
-		/// current indentation level
-
-		0,
-
-		/// wildcard selector
-
-		ppistWildcard,
-
-		/// output type
-
-		iType,
-	    };
-
-	//- start public models
-
-	if (exd.iType == EXPORTER_TYPE_NDF)
-	{
-	    fprintf(exd.pfile, "PUBLIC_MODELS\n");
-	}
-	else
-	{
-	    fprintf(exd.pfile, "<public_models>\n");
-	}
-
-	//- increase indent
-
-	exd.iIndent += 2;
-
-	//- traverse symbols that match with wildcard
-
-	int iTraversal
-	    = SymbolTraverseWildcard
-	      (phsleRoot,
-	       ppistRoot,
-	       ppistWildcard,
-	       ExporterSymbolStarter,
-	       ExporterSymbolStopper,
-	       (void *)&exd);
-
-	if (iTraversal != 1)
-	{
-	    fprintf(stdout, "*** Error: SymbolTraverseWildcard() failed (or aborted)\n");
-
-	    iResult = 0;
-	}
-
-	//- decrease indent
-
-	exd.iIndent -= 2;
-
-	//- end public models
-
-	if (exd.iType == EXPORTER_TYPE_NDF)
-	{
-	    fprintf(exd.pfile, "PUBLIC_MODELS\n");
-	}
-	else
-	{
-	    fprintf(exd.pfile, "</public_models>\n");
-	}
-    }
-    else
-    {
 	iResult = 0;
     }
 
-    //- free allocated memory
+    //- decrease indent
 
-    PidinStackFree(ppistRoot);
+    exd.iIndent -= 2;
 
     //- return result
 

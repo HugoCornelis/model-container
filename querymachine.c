@@ -1732,7 +1732,7 @@ QueryHandlerExpand
 ///
 /// \details 
 /// 
-///	export <ndf|xml> <filename> <wildcard> <symbol>
+///	export <info|ndf|xml> <filename> <wildcard> <symbol>
 /// 
 
 static
@@ -4604,9 +4604,13 @@ static int QueryHandlerPrintCoordinates
 /// \brief Handle print query
 ///
 /// \details 
+///
+///	printinfo <type> <context>
 /// 
 
-static int QueryHandlerPrintInfo
+static
+int
+QueryHandlerPrintInfo
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
 {
     //- set result : ok
@@ -4614,6 +4618,51 @@ static int QueryHandlerPrintInfo
     int bResult = TRUE;
 
     struct symtab_HSolveListElement *phsle = NULL;
+
+/*     //- get type */
+
+/*     int iType = -1; */
+
+/*     char pcSeparator[] = " \t,;\n"; */
+
+/*     if (!strpbrk(&pcLine[iLength + 1], pcSeparator)) */
+/*     { */
+/* 	fprintf(stdout, "export type not specified on command line\n"); */
+
+/* 	return(FALSE); */
+/*     } */
+
+/*     char *pcType = &pcLine[iLength + 1]; */
+
+/*     iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength]; */
+
+/*     pcLine[iLength] = '\0'; */
+
+/*     iLength++; */
+
+/*     if (strcmp(pcType, "info") == 0) */
+/*     { */
+/* 	iType = EXPORTER_TYPE_INFO; */
+/*     } */
+/*     else if (strcmp(pcType, "ndf") == 0) */
+/*     { */
+/* 	iType = EXPORTER_TYPE_NDF; */
+/*     } */
+/*     else if (strcmp(pcType, "xml") == 0) */
+/*     { */
+/* 	iType = EXPORTER_TYPE_XML; */
+/*     } */
+/*     else */
+/*     { */
+/* 	iType = -1; */
+/*     } */
+
+/*     if (iType == -1) */
+/*     { */
+/* 	fprintf(stdout, "export of type %s not supported\n", pcType); */
+
+/* 	return(FALSE); */
+/*     } */
 
     //- parse command line element
 
@@ -4631,7 +4680,7 @@ static int QueryHandlerPrintInfo
     {
 	//- print info
 
-	SymbolPrint(phsle,4,stdout);
+	SymbolPrint(phsle, 4, stdout);
     }
 
     //- else

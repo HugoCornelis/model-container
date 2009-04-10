@@ -40,6 +40,9 @@ IMPORT
     FILE mapper "/tmp/neurospaces/test/models/mappers/spikereceiver.ndf"
 END IMPORT
 
+PRIVATE_MODELS
+END PRIVATE_MODELS
+
 PUBLIC_MODELS
   CHANNEL NMDA_fixed_conductance
     PARAMETERS
@@ -88,6 +91,9 @@ PUBLIC_MODELS
 							    expected_output => '<import>
     <file> <namespace>mapper</namespace> <filename>/tmp/neurospaces/test/models/mappers/spikereceiver.ndf</filename> </file>
 </import>
+
+<private_models>
+</private_models>
 
 <public_models>
   <CHANNEL> <name>NMDA_fixed_conductance</name>
