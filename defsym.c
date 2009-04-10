@@ -374,7 +374,7 @@ DefSymPrint
 	}
 	else if (iType == EXPORTER_TYPE_XML)
 	{
-/* 	    fprintf(pfile, "<import>\n"); */
+	    fprintf(pfile, "<import>\n");
 	}
 
 	//- loop over dependency files
@@ -400,7 +400,7 @@ DefSymPrint
 	}
 	else if (iType == EXPORTER_TYPE_XML)
 	{
-/* 	    fprintf(pfile, "</import>\n"); */
+	    fprintf(pfile, "</import>\n");
 	}
 
     }

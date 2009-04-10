@@ -85,7 +85,9 @@ PUBLIC_MODELS
 						   description => "Does the exported XML file contain the correct model ?",
 						   read => {
 							    application_output_file => '/tmp/1.xml',
-							    expected_output => '        
+							    expected_output => '<import>
+</import>
+
 <public_models>
   <CHANNEL> <name>NMDA_fixed_conductance</name>
     <parameters>

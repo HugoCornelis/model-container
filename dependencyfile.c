@@ -131,10 +131,10 @@ DependencyFilePrint
 
     //- print local name space of dependency file
 
-    PrintIndent(iIndent,pfile);
-
     if (iType == EXPORTER_TYPE_INFO)
     {
+	PrintIndent(iIndent,pfile);
+
 	fprintf
 	    (pfile,
 	     "Aliased to local name space : (%s)\n",
@@ -142,6 +142,8 @@ DependencyFilePrint
     }
     else if (iType == EXPORTER_TYPE_NDF)
     {
+	PrintIndent(iIndent,pfile);
+
 	fprintf
 	    (pfile,
 	     "FILE %s \"%s\"\n",
