@@ -28,13 +28,13 @@
 
 
 /// 
-/// 
 /// \arg proot root symbol
 /// \arg phsle child to add
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Add child to root symbol.
+///
 /// \details 
 /// 
 ///	Updates serial indices, see also SymbolInit(), SymbolEntailChild().
@@ -63,13 +63,11 @@ RootSymbolAddChild
 
 
 /// 
-/// 
 /// \return struct symtab_RootSymbol * 
 /// 
 ///	Newly allocated root symbol, NULL for failure
 /// 
 /// \brief Allocate a new root symbol table element
-/// \details 
 /// 
 
 struct symtab_RootSymbol * RootSymbolCalloc(void)
@@ -99,13 +97,11 @@ struct symtab_RootSymbol * RootSymbolCalloc(void)
 
 
 /// 
-/// 
 /// \arg proot root to free
 /// 
 /// \return void
 /// 
 /// \brief Free a root symbol.
-/// \details 
 /// 
 
 void RootSymbolFree(struct symtab_RootSymbol *proot)
@@ -117,7 +113,6 @@ void RootSymbolFree(struct symtab_RootSymbol *proot)
 
 
 /// 
-/// 
 /// \arg proot root to init
 /// 
 /// \return struct symtab_IdentifierIndex *
@@ -125,7 +120,6 @@ void RootSymbolFree(struct symtab_RootSymbol *proot)
 ///	Pidin of root, shared over all roots.
 /// 
 /// \brief Get pidin of root.
-/// \details 
 /// 
 
 struct symtab_IdentifierIndex *
@@ -159,13 +153,11 @@ RootSymbolGetPidin(struct symtab_RootSymbol *proot)
 
 
 /// 
-/// 
 /// \arg proot root to init
 /// 
 /// \return void
 /// 
 /// \brief init root
-/// \details 
 /// 
 
 void RootSymbolInit(struct symtab_RootSymbol *proot)
@@ -189,7 +181,6 @@ void RootSymbolInit(struct symtab_RootSymbol *proot)
 
 
 /// 
-/// 
 /// \arg proot root to search in
 /// \arg pcName name of symbol to lookup
 /// 
@@ -198,7 +189,6 @@ void RootSymbolInit(struct symtab_RootSymbol *proot)
 ///	struct symtab_HSolveListElement * : found symbol, NULL for not found
 /// 
 /// \brief Look for child symbol
-/// \details 
 /// 
 
 struct symtab_HSolveListElement *
@@ -243,14 +233,12 @@ RootSymbolLookup(struct symtab_RootSymbol *proot, char *pcName)
 
 
 /// 
-/// 
 /// \arg proot root to search in
 /// \arg ppist element to search
 /// 
 /// \return struct symtab_HSolveListElement * : matching symbol
 /// 
 /// \brief lookup a hierarchical symbol name in given root.
-/// \details 
 /// 
 /// \note  does not support lookup of current (this should never be needed).
 /// 
@@ -293,7 +281,6 @@ RootSymbolLookupHierarchical
 
 
 /// 
-/// 
 /// \arg proot root to search in
 /// \arg iIndent number of indentation spaces
 /// \arg pfile file to print output to
@@ -301,7 +288,6 @@ RootSymbolLookupHierarchical
 /// \return int : success of operation
 /// 
 /// \brief Print children of a root
-/// \details 
 /// 
 
 int
@@ -338,7 +324,6 @@ RootSymbolPrint
 
 
 /// 
-/// 
 /// \arg ptstr initialized treespace traversal
 /// \arg proot symbol to traverse
 /// 
@@ -349,7 +334,6 @@ RootSymbolPrint
 ///	-1 : immediate abort
 /// 
 /// \brief Traverse symbols in tree manner.
-/// \details 
 /// 
 /// \note  See IOHierarchyTraverse()
 /// 
@@ -535,9 +519,8 @@ RootSymbolTraverse
 
 
 /// 
-/// 
 /// \arg phsle symbol to traverse spike generators for
-///	ppist.......: context of symbol, symbol assumed to be on top
+/// \arg ppist context of symbol, symbol assumed to be on top.
 /// \arg pfProcesor spike generator processor
 /// \arg pfFinalizer spike receiver finalizer
 /// \arg pvUserdata any user data
@@ -545,7 +528,6 @@ RootSymbolTraverse
 /// \return int : see TstrGo()
 /// 
 /// \brief Traverse spike generators, call pfProcessor on each of them
-/// \details 
 /// 
 
 static int 
@@ -615,9 +597,8 @@ RootSymbolTraverseSpikeGenerators
 
 
 /// 
-/// 
 /// \arg phsle symbol to traverse spike receivers for
-///	ppist.......: context of symbol, symbol assumed to be on top
+/// \arg ppist context of symbol, symbol assumed to be on top.
 /// \arg pfProcesor spike receiver processor
 /// \arg pfFinalizer spike receiver finalizer
 /// \arg pvUserdata any user data
@@ -625,7 +606,6 @@ RootSymbolTraverseSpikeGenerators
 /// \return int : see TstrGo()
 /// 
 /// \brief Traverse spike receivers, call pfProcessor on each of them
-/// \details 
 /// 
 
 static int 
