@@ -210,8 +210,8 @@ IOHierarchyLookupHierarchical
 	else
 	{
 	  phsleResult
-	    = SymbolLookupHierarchical
-	    (&pioh->iol.hsle, ppist, iLevel + 1, TRUE);
+	      = SymbolLookupHierarchical
+	        (&pioh->iol.hsle, ppist, iLevel + 1, TRUE);
 	  
 	}
     }
@@ -278,13 +278,13 @@ IOHierarchyLookupHierarchical
 
 /// 
 /// \arg pioh symbol to print symbols for
-///	bAll.....: TRUE == full list of symbols, FALSE == only given comp
+/// \arg bAll TRUE == full list of symbols, FALSE == only given one.
 /// \arg iIndent number of indentation spaces
 /// \arg pfile file to print output to
 /// 
 /// \return int : success of operation
 /// 
-/// \brief Print symbol info
+/// \brief Print symbol info.
 /// 
 
 int IOHierarchyPrint
