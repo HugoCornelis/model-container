@@ -387,7 +387,7 @@ DefSymPrint
 	{
 	    //- pretty print dependency file
 
-	    bResult = DependencyFilePrint(pdf, MoreIndent(iIndent), iType, pfile);
+	    bResult = DependencyFilePrint(pdf, iIndent, iType, pfile);
 
 	    //- go to next dependency file
 
