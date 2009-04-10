@@ -29,9 +29,7 @@
 #include "neurospaces/symboltable.h"
 
 
-/// \struct
-/// \struct hypothetical root symbol
-/// \struct
+/// \struct root symbol
 
 struct symtab_RootSymbol
 {
@@ -46,7 +44,6 @@ struct symtab_RootSymbol
 
 
 #include "neurospaces/pidinstack.h"
-
 
 
 int
