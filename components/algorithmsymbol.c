@@ -30,13 +30,11 @@
 
 
 /// 
-/// 
 /// \return struct symtab_AlgorithmSymbol * 
 /// 
 ///	Newly allocated algorithm symbol, NULL for failure
 /// 
 /// \brief Allocate a new algorithm symbol symbol table element
-/// \details 
 /// 
 
 struct symtab_AlgorithmSymbol *AlgorithmSymbolCalloc(void)
@@ -71,14 +69,12 @@ struct symtab_AlgorithmSymbol *AlgorithmSymbolCalloc(void)
 
 
 /// 
-/// 
 /// \arg palgs algorithm symbol to alias
 /// \arg pidin name of new symbol
 /// 
 /// \return struct symtab_HSolveListElement * : alias for original symbol
 /// 
 /// \brief Create alias to given symbol.
-/// \details 
 /// 
 
 struct symtab_HSolveListElement *
@@ -106,7 +102,6 @@ AlgorithmSymbolCreateAlias
 
 
 /// 
-/// 
 /// \arg palgs algorithm symbol to init
 /// 
 /// \return int
@@ -114,7 +109,6 @@ AlgorithmSymbolCreateAlias
 ///	success of operation.
 /// 
 /// \brief init algorithm symbol
-/// \details 
 /// 
 
 int
@@ -135,7 +129,6 @@ AlgorithmSymbolInit(struct symtab_AlgorithmSymbol *palgs)
 
 
 /// 
-/// 
 /// \arg palgs algorithm symbol to init
 /// \arg palgi algorithm instance
 /// 
@@ -144,7 +137,6 @@ AlgorithmSymbolInit(struct symtab_AlgorithmSymbol *palgs)
 ///	success of operation.
 /// 
 /// \brief init algorithm symbol
-/// \details 
 /// 
 
 int
@@ -173,7 +165,6 @@ AlgorithmSymbolSetAlgorithmInstance
 
 
 /// 
-/// 
 /// \arg ptstr initialized treespace traversal
 /// \arg pconn symbol to traverse
 /// 
@@ -184,7 +175,6 @@ AlgorithmSymbolSetAlgorithmInstance
 ///	-1 : immediate abort
 /// 
 /// \brief Traverse symbols in tree manner.
-/// \details 
 /// 
 /// \note  See IOHierarchyTraverse()
 /// 
