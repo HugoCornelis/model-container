@@ -50,6 +50,7 @@ int NetworkCountConnections
 struct symtab_HSolveListElement * 
 NetworkCreateAlias
 (struct symtab_Network *pnetw,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 void NetworkInit(struct symtab_Network *pnetw);

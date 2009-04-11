@@ -188,7 +188,7 @@ ReplacerInstanceInsert
 	//- create an alias (symbol must be biocomp)
 
 	struct symtab_HSolveListElement *phsleNew
-	    = SymbolCreateAlias(phslePrototype, pidinAlias);
+	    = SymbolCreateAlias(phslePrototype, NULL, pidinAlias);
 
 	//- add algorithm info
 

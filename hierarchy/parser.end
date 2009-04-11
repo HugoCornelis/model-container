@@ -251,7 +251,7 @@ ChildSectionFront	/* <phsle> */
 
 			    //- new symbol is alias for prototype
 
-			    $$ = SymbolCreateAlias(phslePrototype, $3);
+			    $$ = SymbolCreateAlias(phslePrototype, NULL, $3);
 			}
 		    }
 		    else

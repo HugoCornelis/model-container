@@ -84,15 +84,17 @@ struct symtab_AxonHillock * AxonHillockCalloc(void)
 struct symtab_HSolveListElement * 
 AxonHillockCreateAlias
 (struct symtab_AxonHillock *paxhi,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_AxonHillock *paxhiResult = AxonHillockCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&paxhiResult->segr.bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&paxhiResult->segr.bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&paxhiResult->segr.bio.ioh.iol.hsle, &paxhi->segr.bio.ioh.iol.hsle);
 
     //- increment number of created aliases

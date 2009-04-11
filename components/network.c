@@ -161,15 +161,17 @@ int NetworkCountConnections
 struct symtab_HSolveListElement * 
 NetworkCreateAlias
 (struct symtab_Network *pnetw,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_Network *pnetwResult = NetworkCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&pnetwResult->segr.bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pnetwResult->segr.bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&pnetwResult->segr.bio.ioh.iol.hsle, &pnetw->segr.bio.ioh.iol.hsle);
 
     //- increment number of created aliases

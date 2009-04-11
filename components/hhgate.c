@@ -89,15 +89,17 @@ struct symtab_HHGate * HHGateCalloc(void)
 struct symtab_HSolveListElement * 
 HHGateCreateAlias
 (struct symtab_HHGate *pgathh,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_HHGate *pgathhResult = HHGateCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&pgathhResult->bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pgathhResult->bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&pgathhResult->bio.ioh.iol.hsle, &pgathh->bio.ioh.iol.hsle);
 
     //- increment number of created aliases

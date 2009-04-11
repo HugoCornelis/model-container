@@ -95,15 +95,17 @@ struct symtab_GateKinetic * GateKineticCalloc(void)
 struct symtab_HSolveListElement * 
 GateKineticCreateAlias
 (struct symtab_GateKinetic *pgatk,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_GateKinetic *pgatkResult = GateKineticCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&pgatkResult->bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pgatkResult->bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&pgatkResult->bio.ioh.iol.hsle, &pgatk->bio.ioh.iol.hsle);
 
     //- increment number of created aliases

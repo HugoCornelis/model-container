@@ -378,15 +378,17 @@ int VSegmentCountSegments
 struct symtab_HSolveListElement * 
 VSegmentCreateAlias
 (struct symtab_VSegment *pvsegm,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_VSegment *pvsegmResult = VSegmentCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&pvsegmResult->vect.bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pvsegmResult->vect.bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&pvsegmResult->vect.bio.ioh.iol.hsle, &pvsegm->vect.bio.ioh.iol.hsle);
 
     //- increment number of created aliases

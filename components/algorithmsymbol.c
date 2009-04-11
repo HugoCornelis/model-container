@@ -80,15 +80,17 @@ struct symtab_AlgorithmSymbol *AlgorithmSymbolCalloc(void)
 struct symtab_HSolveListElement *
 AlgorithmSymbolCreateAlias
 (struct symtab_AlgorithmSymbol *palgs,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_AlgorithmSymbol *palgsResult = AlgorithmSymbolCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&palgsResult->hsle, pidin);
+    SymbolSetNamespace(&palgsResult->hsle, pcNamespace);
     SymbolSetPrototype(&palgsResult->hsle, &palgs->hsle);
 
     //- increment number of created aliases

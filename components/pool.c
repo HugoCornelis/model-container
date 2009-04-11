@@ -93,15 +93,17 @@ struct symtab_Pool * PoolCalloc(void)
 struct symtab_HSolveListElement * 
 PoolCreateAlias
 (struct symtab_Pool *ppool,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_Pool *ppoolResult = PoolCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&ppoolResult->bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&ppoolResult->bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&ppoolResult->bio.ioh.iol.hsle, &ppool->bio.ioh.iol.hsle);
 
     //- increment number of created aliases

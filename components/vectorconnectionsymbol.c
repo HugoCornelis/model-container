@@ -82,15 +82,17 @@ struct symtab_VConnectionSymbol * VConnectionSymbolCalloc(void)
 struct symtab_HSolveListElement * 
 VConnectionSymbolCreateAlias
 (struct symtab_VConnectionSymbol *pvconsy,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_VConnectionSymbol *pvconsyResult = VConnectionSymbolCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&pvconsyResult->vect.bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pvconsyResult->vect.bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&pvconsyResult->vect.bio.ioh.iol.hsle, &pvconsy->vect.bio.ioh.iol.hsle);
 
     //- increment number of created aliases

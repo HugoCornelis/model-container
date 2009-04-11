@@ -111,15 +111,17 @@ struct symtab_Channel * ChannelCalloc(void)
 struct symtab_HSolveListElement * 
 ChannelCreateAlias
 (struct symtab_Channel *pchan,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_Channel *pchanResult = ChannelCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&pchanResult->bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pchanResult->bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&pchanResult->bio.ioh.iol.hsle, &pchan->bio.ioh.iol.hsle);
 
     //- increment number of created aliases

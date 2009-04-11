@@ -78,15 +78,17 @@ struct symtab_EMContour * EMContourCalloc(void)
 struct symtab_HSolveListElement * 
 EMContourCreateAlias
 (struct symtab_EMContour *pemc,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_EMContour *pemcResult = EMContourCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&pemcResult->bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pemcResult->bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&pemcResult->bio.ioh.iol.hsle, &pemc->bio.ioh.iol.hsle);
 
     //- increment number of created aliases

@@ -482,15 +482,17 @@ int ProjectionCountConnections
 struct symtab_HSolveListElement * 
 ProjectionCreateAlias
 (struct symtab_Projection *pproj,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_Projection *pprojResult = ProjectionCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&pprojResult->bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pprojResult->bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&pprojResult->bio.ioh.iol.hsle, &pproj->bio.ioh.iol.hsle);
 
     //- increment number of created aliases

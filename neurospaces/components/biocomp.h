@@ -75,6 +75,12 @@ struct symtab_BioComponent
     /// generic option container
 
     int iOptions;
+
+    /// namespace
+
+    //! only valid for true aliasses, not sure about the typing.
+
+    char *pcNamespace;
 };
 
 
@@ -92,6 +98,7 @@ int BioComponentCountSpikeReceivers
 struct symtab_HSolveListElement * 
 BioComponentCreateAlias
 (struct symtab_BioComponent *pbio,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 int
@@ -272,6 +279,13 @@ static inline
 int
 BioComponentSetName
 (struct symtab_BioComponent *pbio, struct symtab_IdentifierIndex *pidin);
+
+#ifndef SWIG
+static inline
+#endif
+int
+BioComponentSetNamespace
+(struct symtab_BioComponent *pbio, char *pc);
 
 #ifndef SWIG
 static inline
@@ -638,6 +652,21 @@ BioComponentSetName
 (struct symtab_BioComponent *pbio, struct symtab_IdentifierIndex *pidin)
 {
     pbio->pidinName = pidin;
+}
+
+
+/// 
+/// set namespace of component
+/// 
+
+#ifndef SWIG
+static inline
+#endif
+int
+BioComponentSetNamespace
+(struct symtab_BioComponent *pbio, char *pc)
+{
+    pbio->pcNamespace = pc;
 }
 
 

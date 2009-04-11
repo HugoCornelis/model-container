@@ -44,6 +44,7 @@ int ProjectionCountConnections
 struct symtab_HSolveListElement * 
 ProjectionCreateAlias
 (struct symtab_Projection *pproj,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 int

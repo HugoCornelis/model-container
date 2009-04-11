@@ -42,6 +42,7 @@ struct symtab_AxonHillock * AxonHillockCalloc(void);
 struct symtab_HSolveListElement * 
 AxonHillockCreateAlias
 (struct symtab_AxonHillock *paxhi,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 void AxonHillockInit(struct symtab_AxonHillock *paxhi);

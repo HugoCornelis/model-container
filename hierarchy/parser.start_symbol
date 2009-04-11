@@ -408,8 +408,18 @@ PrivateModelsEnumerated
 
 			if (phsleProto)
 			{
+			    //! passing the namespace here is a hack
+			    //! to get serialization to work.
+
+			    //t the right solution would be to use
+			    //t alien typing on a true alias symbol,
+			    //t such that the alias symbol contains the
+			    //t namespace reference (and possibly more),
+			    //t and that it can behave as the aliassee
+			    //t when it need to.
+
 			    struct symtab_HSolveListElement *phsle
-				= SymbolCreateAlias(phsleProto, IdinNewFromChars($4));
+				= SymbolCreateAlias(phsleProto, IdinName($3), IdinNewFromChars($4));
 
 			    //- set parameters
 
@@ -456,7 +466,7 @@ PrivateModelsEnumerated
 	|
 		PrivateModelsEnumerated
 
-		/* export private model from dependencies	*/
+		/* export private model previously defined private	*/
 
 		TOKEN_ALIAS
 			Identifier
@@ -486,7 +496,7 @@ PrivateModelsEnumerated
 			if (phsleProto)
 			{
 			    struct symtab_HSolveListElement *phsle
-				= SymbolCreateAlias(phsleProto, IdinNewFromChars($4));
+				= SymbolCreateAlias(phsleProto, NULL, IdinNewFromChars($4));
 
 			    //- set parameters
 
@@ -633,7 +643,7 @@ PublicModelsEnumerated
 			if (phsleProto)
 			{
 			    struct symtab_HSolveListElement *phsle
-				= SymbolCreateAlias(phsleProto, IdinNewFromChars($4));
+				= SymbolCreateAlias(phsleProto, NULL, IdinNewFromChars($4));
 
 			    //- set parameters
 

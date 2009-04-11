@@ -86,15 +86,17 @@ struct symtab_Randomvalue * RandomvalueCalloc(void)
 struct symtab_HSolveListElement * 
 RandomvalueCreateAlias
 (struct symtab_Randomvalue *pranv,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_Randomvalue *pranvResult = RandomvalueCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&pranvResult->bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pranvResult->bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&pranvResult->bio.ioh.iol.hsle, &pranv->bio.ioh.iol.hsle);
 
     //- increment number of created aliases

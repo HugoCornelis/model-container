@@ -44,6 +44,7 @@ int FiberCountSpikeGenerators
 struct symtab_HSolveListElement * 
 FiberCreateAlias
 (struct symtab_Fiber *pfibr,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 void FiberInit(struct symtab_Fiber *pfibr);

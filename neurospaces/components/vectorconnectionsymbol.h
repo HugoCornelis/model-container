@@ -37,6 +37,7 @@ struct symtab_VConnectionSymbol * VConnectionSymbolCalloc(void);
 struct symtab_HSolveListElement * 
 VConnectionSymbolCreateAlias
 (struct symtab_VConnectionSymbol *pvconsy,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 void VConnectionSymbolInit(struct symtab_VConnectionSymbol *pvconsy);

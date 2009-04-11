@@ -45,6 +45,7 @@ int PopulationCountCells
 struct symtab_HSolveListElement * 
 PopulationCreateAlias
 (struct symtab_Population *ppopu,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 struct symtab_Parameters * 

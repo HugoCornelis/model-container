@@ -43,6 +43,7 @@ int GroupCountSpikeGenerators
 struct symtab_HSolveListElement * 
 GroupCreateAlias
 (struct symtab_Group *pgrup,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 void GroupInit(struct symtab_Group *pgrup);

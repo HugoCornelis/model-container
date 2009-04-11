@@ -37,6 +37,7 @@ struct symtab_EquationExponential * EquationExponentialCalloc(void);
 struct symtab_HSolveListElement * 
 EquationExponentialCreateAlias
 (struct symtab_EquationExponential *peqe,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 /* int EquationExponentialGetType(struct symtab_EquationExponential *peqe); */

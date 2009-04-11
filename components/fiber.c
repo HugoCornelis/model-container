@@ -132,15 +132,17 @@ int FiberCountSpikeGenerators
 struct symtab_HSolveListElement * 
 FiberCreateAlias
 (struct symtab_Fiber *pfibr,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_Fiber *pfibrResult = FiberCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&pfibrResult->segr.bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pfibrResult->segr.bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&pfibrResult->segr.bio.ioh.iol.hsle, &pfibr->segr.bio.ioh.iol.hsle);
 
     //- increment number of created aliases

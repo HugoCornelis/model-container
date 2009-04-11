@@ -95,15 +95,17 @@ struct symtab_ConcentrationGateKinetic * ConcentrationGateKineticCalloc(void)
 struct symtab_HSolveListElement * 
 ConcentrationGateKineticCreateAlias
 (struct symtab_ConcentrationGateKinetic *pcgatc,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_ConcentrationGateKinetic *pcgatcResult = ConcentrationGateKineticCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&pcgatcResult->bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pcgatcResult->bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&pcgatcResult->bio.ioh.iol.hsle, &pcgatc->bio.ioh.iol.hsle);
 
     //- increment number of created aliases

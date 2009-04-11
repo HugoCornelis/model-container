@@ -57,6 +57,7 @@ struct symtab_HHGate * HHGateCalloc(void);
 struct symtab_HSolveListElement * 
 HHGateCreateAlias
 (struct symtab_HHGate *pgathh,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 struct symtab_Parameters * 

@@ -490,6 +490,7 @@ static int SpinesRegisterModified(struct symtab_IOHierarchy *pioh)
 /*     struct symtab_BioComponent *pbioNew */
 /* 	= SymbolCreateAlias */
 /* 	  ((struct symtab_BioComponent *)phsleSpine, */
+/* 	   NULL, */
 /* 	   IdinDuplicate(SymbolGetPidin(phsleSpine))); */
 
 /*     //- add algorithm info */
@@ -850,7 +851,7 @@ static int SpinesDoPhysicalAdjustments
 
 	//- create an alias to spine
 
-	struct symtab_HSolveListElement *phsleNew = SymbolCreateAlias(phsleSpine, pidinAlias);
+	struct symtab_HSolveListElement *phsleNew = SymbolCreateAlias(phsleSpine, NULL, pidinAlias);
 
 	//- add algorithm info
 

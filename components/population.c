@@ -145,15 +145,17 @@ int PopulationCountCells
 struct symtab_HSolveListElement * 
 PopulationCreateAlias
 (struct symtab_Population *ppopu,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_Population *ppopuResult = PopulationCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&ppopuResult->segr.bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&ppopuResult->segr.bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&ppopuResult->segr.bio.ioh.iol.hsle, &ppopu->segr.bio.ioh.iol.hsle);
 
     //- increment number of created aliases

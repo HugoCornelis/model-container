@@ -40,6 +40,7 @@ struct symtab_EMContour * EMContourCalloc(void);
 struct symtab_HSolveListElement * 
 EMContourCreateAlias
 (struct symtab_EMContour *pemc,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 void EMContourInit(struct symtab_EMContour *pemc);

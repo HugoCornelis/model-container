@@ -40,6 +40,7 @@ struct symtab_ConcentrationGateKinetic * ConcentrationGateKineticCalloc(void);
 struct symtab_HSolveListElement * 
 ConcentrationGateKineticCreateAlias
 (struct symtab_ConcentrationGateKinetic *pcgatc,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 struct symtab_Parameters * 

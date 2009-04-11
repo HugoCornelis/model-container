@@ -125,15 +125,17 @@ struct symtab_Segment * SegmentCalloc(void)
 struct symtab_HSolveListElement * 
 SegmentCreateAlias
 (struct symtab_Segment *psegment,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_Segment *psegmentResult = SegmentCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&psegmentResult->segr.bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&psegmentResult->segr.bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&psegmentResult->segr.bio.ioh.iol.hsle, &psegment->segr.bio.ioh.iol.hsle);
 
     //- set options

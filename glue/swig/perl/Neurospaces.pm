@@ -59,7 +59,9 @@ sub add_component
 
     my $pidin = SwiggableNeurospaces::IdinCallocUnique($target_new);
 
-    my $symbol_alias = $symbol_source->SymbolCreateAlias($pidin);
+    #t have to fill in namespace
+
+    my $symbol_alias = $symbol_source->SymbolCreateAlias(undef, $pidin);
 
     # link the alias into the symbol table
 

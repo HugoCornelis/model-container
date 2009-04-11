@@ -37,6 +37,7 @@ struct symtab_Attachment * AttachmentCalloc(void);
 struct symtab_HSolveListElement * 
 AttachmentCreateAlias
 (struct symtab_Attachment *patta,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 int AttachmentGetType(struct symtab_Attachment *patta);

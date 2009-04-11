@@ -43,6 +43,7 @@ struct symtab_AlgorithmSymbol *AlgorithmSymbolCalloc(void);
 struct symtab_HSolveListElement *
 AlgorithmSymbolCreateAlias
 (struct symtab_AlgorithmSymbol *palgs,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 int

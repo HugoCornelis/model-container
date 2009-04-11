@@ -45,6 +45,7 @@ int VSegmentCountSegments
 struct symtab_HSolveListElement * 
 VSegmentCreateAlias
 (struct symtab_VSegment *pvsegm,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 void VSegmentInit(struct symtab_VSegment *pvsegm);

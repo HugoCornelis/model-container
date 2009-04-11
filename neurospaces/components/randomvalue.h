@@ -40,6 +40,7 @@ struct symtab_Randomvalue * RandomvalueCalloc(void);
 struct symtab_HSolveListElement * 
 RandomvalueCreateAlias
 (struct symtab_Randomvalue *pranv,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 struct symtab_HSolveListElement *

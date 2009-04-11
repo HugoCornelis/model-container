@@ -190,6 +190,7 @@ int BioComponentCountSpikeReceivers
 struct symtab_HSolveListElement * 
 BioComponentCreateAlias
 (struct symtab_BioComponent *pbio,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : failure
@@ -200,9 +201,10 @@ BioComponentCreateAlias
 
     ((int *)0)[0] = 0;
 
-/*     //- set name and prototype */
+/*     //- set name, namespace and prototype */
 
 /*     BioComponentSetName(pbioResult, pidin); */
+/*     BioComponentSetNamespace(pbioResult, pcNamespace); */
 /*     BioComponentSetPrototype(pbioResult, pbio); */
 
 /*     //- increment number of created aliases */
@@ -261,7 +263,7 @@ BioComponentCreateAliasses
 	    //- create alias
 
 	    struct symtab_HSolveListElement *phsleAlias
-		= SymbolCreateAlias(&pbio->ioh.iol.hsle, pidinAlias);
+		= SymbolCreateAlias(&pbio->ioh.iol.hsle, NULL, pidinAlias);
 
 	    if (!phsleAlias)
 	    {

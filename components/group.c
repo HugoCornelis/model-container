@@ -138,15 +138,17 @@ int GroupCountSpikeGenerators
 struct symtab_HSolveListElement * 
 GroupCreateAlias
 (struct symtab_Group *pgrup,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_Group *pgrupResult = GroupCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&pgrupResult->bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pgrupResult->bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&pgrupResult->bio.ioh.iol.hsle, &pgrup->bio.ioh.iol.hsle);
 
     //- increment number of created aliases

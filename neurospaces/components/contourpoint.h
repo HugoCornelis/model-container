@@ -41,6 +41,7 @@ struct symtab_ContourPoint * ContourPointCalloc(void);
 struct symtab_HSolveListElement * 
 ContourPointCreateAlias
 (struct symtab_ContourPoint *pcpnt,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 struct symtab_Parameters * 

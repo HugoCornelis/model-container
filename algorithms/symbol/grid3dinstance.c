@@ -367,7 +367,7 @@ Grid3DAddComponents
 
 		//- create alias
 
-		phsleNew = SymbolCreateAlias(pg3i->g3v.phsleProto, pidin);
+		phsleNew = SymbolCreateAlias(pg3i->g3v.phsleProto, NULL, pidin);
 
 		//- set coordinates
 

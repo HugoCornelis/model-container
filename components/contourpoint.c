@@ -82,15 +82,17 @@ struct symtab_ContourPoint * ContourPointCalloc(void)
 struct symtab_HSolveListElement * 
 ContourPointCreateAlias
 (struct symtab_ContourPoint *pcpnt,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_ContourPoint *pcpntResult = ContourPointCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&pcpntResult->bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pcpntResult->bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&pcpntResult->bio.ioh.iol.hsle, &pcpnt->bio.ioh.iol.hsle);
 
     //- increment number of created aliases

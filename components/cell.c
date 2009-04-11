@@ -81,15 +81,17 @@ struct symtab_Cell * CellCalloc(void)
 struct symtab_HSolveListElement * 
 CellCreateAlias
 (struct symtab_Cell *pcell,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_Cell *pcellResult = CellCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&pcellResult->segr.bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pcellResult->segr.bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&pcellResult->segr.bio.ioh.iol.hsle, &pcell->segr.bio.ioh.iol.hsle);
 
     //- increment number of created aliases

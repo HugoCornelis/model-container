@@ -46,6 +46,7 @@ struct symtab_Segment * SegmentCalloc(void);
 struct symtab_HSolveListElement * 
 SegmentCreateAlias
 (struct symtab_Segment *psegment,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 struct symtab_Parameters * 

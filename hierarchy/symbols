@@ -117,6 +117,7 @@ my $class_hierarchy
 				'traverse_spike_receivers' => 'bio_component',
 				'set_at_x_y_z' => 'bio_component',
 				'set_name' => 'bio_component',
+				'set_namespace' => 'bio_component',
 				'set_options' => 'bio_component',
 				'set_parameter_context' => 'bio_component',
 				'set_parameter_double' => 'bio_component',
@@ -1605,6 +1606,7 @@ my $object_methods
 	'resolve_parameter_functional_input',
 	'set_at_x_y_z',
 	'set_name',
+	'set_namespace',
 	'set_options',
 	'set_parameter_context',
 	'set_parameter_double',
@@ -1817,6 +1819,9 @@ my $object_methods_custom_code
        'set_name' => {
 		      simple => 1,
 		     },
+       'set_namespace' => {
+			   simple => 1,
+			  },
        'set_options' => {
 			 simple => 1,
 			},
@@ -2126,6 +2131,11 @@ my $object_methods_return_types
 		      selector => '.uSelector.iFunc',
 		      type => 'int',
 		     },
+       'set_namespace' => {
+			   default => 'FALSE',
+			   selector => '.uSelector.iFunc',
+			   type => 'int',
+			  },
        'set_options' => {
 			 default => 'FALSE',
 			 selector => '.uSelector.iFunc',
@@ -2320,8 +2330,8 @@ my $object_methods_signatures
 				   prototype => '(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)',
 				  },
        'create_alias' => {
-			  calling => '(phsle, pidin)',
-			  prototype => '(struct symtab_HSolveListElement *phsle, struct symtab_IdentifierIndex *pidin)',
+			  calling => '(phsle, pcNamespace, pidin)',
+			  prototype => '(struct symtab_HSolveListElement *phsle, char *pcNamespace, struct symtab_IdentifierIndex *pidin)',
 			 },
        'delete_child' => {
 			  calling => '(phsle, phsleChild)',
@@ -2498,6 +2508,10 @@ my $object_methods_signatures
 		      calling => '(phsle, pidin)',
 		      prototype => '(struct symtab_HSolveListElement *phsle, struct symtab_IdentifierIndex *pidin)',
 		     },
+       'set_namespace' => {
+			   calling => '(phsle, pc)',
+			   prototype => '(struct symtab_HSolveListElement *phsle, char *pc)',
+			  },
        'set_options' => {
 			 calling => '(phsle, iOptions)',
 			 prototype => '(struct symtab_HSolveListElement *phsle, int iOptions)',

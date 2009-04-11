@@ -76,15 +76,17 @@ struct symtab_EquationExponential * EquationExponentialCalloc(void)
 struct symtab_HSolveListElement * 
 EquationExponentialCreateAlias
 (struct symtab_EquationExponential *peqe,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_EquationExponential *peqeResult = EquationExponentialCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&peqeResult->bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&peqeResult->bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&peqeResult->bio.ioh.iol.hsle, &peqe->bio.ioh.iol.hsle);
 
     //- increment number of created aliases

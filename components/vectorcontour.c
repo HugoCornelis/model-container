@@ -82,15 +82,17 @@ struct symtab_VContour * VContourCalloc(void)
 struct symtab_HSolveListElement * 
 VContourCreateAlias
 (struct symtab_VContour *pvcont,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_VContour *pvcontResult = VContourCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&pvcontResult->vect.bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pvcontResult->vect.bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&pvcontResult->vect.bio.ioh.iol.hsle, &pvcont->vect.bio.ioh.iol.hsle);
 
     //- increment number of created aliases

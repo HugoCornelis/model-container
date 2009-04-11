@@ -40,6 +40,7 @@ struct symtab_GateKinetic * GateKineticCalloc(void);
 struct symtab_HSolveListElement * 
 GateKineticCreateAlias
 (struct symtab_GateKinetic *pgatk,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 struct symtab_Parameters * 

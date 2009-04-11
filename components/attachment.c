@@ -74,15 +74,17 @@ struct symtab_Attachment * AttachmentCalloc(void)
 struct symtab_HSolveListElement * 
 AttachmentCreateAlias
 (struct symtab_Attachment *patta,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
     struct symtab_Attachment *pattaResult = AttachmentCalloc();
 
-    //- set name and prototype
+    //- set name, namespace and prototype
 
     SymbolSetName(&pattaResult->bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pattaResult->bio.ioh.iol.hsle, pcNamespace);
     SymbolSetPrototype(&pattaResult->bio.ioh.iol.hsle, &patta->bio.ioh.iol.hsle);
 
     //- copy type of attachment

@@ -37,6 +37,7 @@ struct symtab_VContour * VContourCalloc(void);
 struct symtab_HSolveListElement * 
 VContourCreateAlias
 (struct symtab_VContour *pvcont,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 void VContourInit(struct symtab_VContour *pvcont);

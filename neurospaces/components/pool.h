@@ -40,6 +40,7 @@ struct symtab_Pool * PoolCalloc(void);
 struct symtab_HSolveListElement * 
 PoolCreateAlias
 (struct symtab_Pool *ppool,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 struct symtab_Parameters * 

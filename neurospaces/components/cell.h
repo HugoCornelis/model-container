@@ -42,6 +42,7 @@ struct symtab_Cell * CellCalloc(void);
 struct symtab_HSolveListElement * 
 CellCreateAlias
 (struct symtab_Cell *pcell,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 void CellInit(struct symtab_Cell *pcell);

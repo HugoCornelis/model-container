@@ -46,6 +46,7 @@ struct symtab_Channel * ChannelCalloc(void);
 struct symtab_HSolveListElement * 
 ChannelCreateAlias
 (struct symtab_Channel *pchan,
+ char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 struct symtab_HSolveListElement *
