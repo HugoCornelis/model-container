@@ -124,7 +124,7 @@ int ParserAddModel
     {
 	//- add private model
 
-	bResult = ParserAddPrivateModel(pacContext,phsle);
+	bResult = ParserAddPrivateModel(pacContext, phsle);
     }
 
     //- else if parsing private models
@@ -133,7 +133,7 @@ int ParserAddModel
     {
 	//- add public model
 
-	bResult = ParserAddPublicModel(pacContext,phsle);
+	bResult = ParserAddPublicModel(pacContext, phsle);
     }
 
     //- else
@@ -143,7 +143,7 @@ int ParserAddModel
 	//- register error
 
 	NeurospacesError
-	    (pacContext,"ParserAddModel()","Called in wrong parser state");
+	    (pacContext, "ParserAddModel()", "Called in wrong parser state");
     }
 
     //- return result
@@ -180,11 +180,11 @@ int ParserAddPrivateModel
 
 /*     //- set flag : is public model */
 
-/*     SymbolSetFlags(phsle,FLAGS_HSLE_PRIVATE); */
+/*     SymbolSetFlags(phsle, FLAGS_HSLE_PRIVATE); */
 
     //- add symbol as private model
 
-    bResult = DefSymAddPrivateModel(pdefsym,phsle);
+    bResult = DefSymAddPrivateModel(pdefsym, phsle);
 
     //- look at type of symbol
 
@@ -200,7 +200,7 @@ int ParserAddPrivateModel
 	    (pacContext,
 	     LEVEL_GLOBALMSG_SYMBOLADD,
 	     "ParserAddPrivateModel()",
-	     "Add Private Model(%s,%s)",
+	     "Add Private Model(%s, %s)",
 	     SymbolHSLETypeDescribe(phsle->iType),
 	     SymbolName(phsle));
 
@@ -257,7 +257,7 @@ int ParserAddPublicModel
 
 /*     //- set flag : is public model */
 
-/*     SymbolSetFlags(phsle,FLAGS_HSLE_PUBLIC); */
+/*     SymbolSetFlags(phsle, FLAGS_HSLE_PUBLIC); */
 
     //- don't look at symbol type
 
@@ -362,7 +362,7 @@ int ParserAddPublicModel
 
     //- add symbol as public model
 
-    bResult = DefSymAddPublicModel(pdefsym,phsle);
+    bResult = DefSymAddPublicModel(pdefsym, phsle);
 
     //- don't look at symbol type
 
@@ -471,7 +471,7 @@ int ParserAddPublicModel
 	    (pacContext,
 	     LEVEL_GLOBALMSG_SYMBOLADD,
 	     "ParserAddPublicModel()",
-	     "Add Public Model(%s,%s)",
+	     "Add Public Model(%s, %s)",
 	     SymbolHSLETypeDescribe(phsle->iType),
 	     SymbolName(phsle));
 
@@ -499,7 +499,7 @@ PARSERCONTEXT *ParserContextCalloc(void)
 
     //- allocate parser context
 
-    pacResult = (PARSERCONTEXT *)calloc(1,sizeof(PARSERCONTEXT));
+    pacResult = (PARSERCONTEXT *)calloc(1, sizeof(PARSERCONTEXT));
 
     //- initialize parser context
 
@@ -658,7 +658,7 @@ void ParserContextInit(PARSERCONTEXT *pac)
 {
     //- zero out parser context
 
-    memset(pac,0,sizeof(*pac));
+    memset(pac, 0, sizeof(*pac));
 
     //- erase stack
 
@@ -806,7 +806,7 @@ int ParserContextPushAlgorithmState(void *pv)
     if (!ppvParserAlgorithmData)
     {
 	ppvParserAlgorithmData
-	    = (void **)calloc(SIZE_PARSERALGORITHMSTACK,sizeof(void *));
+	    = (void **)calloc(SIZE_PARSERALGORITHMSTACK, sizeof(void *));
     }
 
     //- increment index to data
@@ -842,7 +842,7 @@ int ParserContextPushState(void *pv)
     if (!ppvParserContextData)
     {
 	ppvParserContextData
-	    = (void **)calloc(SIZE_PARSERCONTEXTSTACK,sizeof(void *));
+	    = (void **)calloc(SIZE_PARSERCONTEXTSTACK, sizeof(void *));
     }
 
     //- increment index to data
@@ -875,7 +875,7 @@ int ParserContextPushState(void *pv)
 ///	previous parsed files will not be done.
 /// 
 
-char *ParserContextQualifyFilename(PARSERCONTEXT *pac,char *pc)
+char *ParserContextQualifyFilename(PARSERCONTEXT *pac, char *pc)
 {
     //- set default result
 
@@ -1125,7 +1125,7 @@ char *ParserContextQualifyToEnvironment(char *pc)
 	    {
 		pcResult = (char *)malloc(1 + i + strlen(pc));
 
-		strcpy(pcResult,pcModels);
+		strcpy(pcResult, pcModels);
 
 		strcat(pcResult, pc);
 	    }
@@ -1133,7 +1133,7 @@ char *ParserContextQualifyToEnvironment(char *pc)
 	    {
 		pcResult = (char *)malloc(2 + i + strlen(pc));
 
-		strcpy(pcResult,pcModels);
+		strcpy(pcResult, pcModels);
 
 		pcResult[i] = '/';
 		pcResult[i + 1] = '\0';
@@ -1201,7 +1201,7 @@ char *ParserContextQualifyToEnvironment(char *pc)
 
 struct symtab_HSolveListElement *
 ParserContextSetActual
-(PARSERCONTEXT *pac,struct symtab_HSolveListElement *phsle)
+(PARSERCONTEXT *pac, struct symtab_HSolveListElement *phsle)
 {
     //- set result : previous symbol
 
@@ -1227,7 +1227,7 @@ ParserContextSetActual
 /// \brief Set imported file attached to parser context
 /// 
 
-void ParserContextSetImportedFile(PARSERCONTEXT *pac,struct ImportedFile *pif)
+void ParserContextSetImportedFile(PARSERCONTEXT *pac, struct ImportedFile *pif)
 {
     char *pcFilename = NULL;
     char *pcDirectory = NULL;
@@ -1249,7 +1249,7 @@ void ParserContextSetImportedFile(PARSERCONTEXT *pac,struct ImportedFile *pif)
 
     //- filename starts at end of directory part
 
-    pcFilename = strrchr(pcDirectory,'/');
+    pcFilename = strrchr(pcDirectory, '/');
 
     //- if no directory part
 
@@ -1282,11 +1282,11 @@ void ParserContextSetImportedFile(PARSERCONTEXT *pac,struct ImportedFile *pif)
     //- allocate and copy directory and filename
 
     pac->pcDirectory = (char *)malloc(1 + iDirectory);
-    strncpy(pac->pcDirectory,pcDirectory,iDirectory);
+    strncpy(pac->pcDirectory, pcDirectory, iDirectory);
     pac->pcDirectory[iDirectory] = '\0';
 
     pac->pcFilename = (char *)malloc(1 + iFilename);
-    strcpy(pac->pcFilename,pcFilename);
+    strcpy(pac->pcFilename, pcFilename);
 }
 
 
@@ -1345,11 +1345,11 @@ void ParserCurrentElementPopAll(PARSERCONTEXT *pac)
 /// 
 
 int ParserCurrentElementPush
-(PARSERCONTEXT *pac,struct symtab_IdentifierIndex *pidinName)
+(PARSERCONTEXT *pac, struct symtab_IdentifierIndex *pidinName)
 {
     //- set result : push onto stack
 
-    int bResult = PidinStackPushAll(&pac->pist,pidinName);
+    int bResult = PidinStackPushAll(&pac->pist, pidinName);
 
     //- return result
 
@@ -1373,7 +1373,7 @@ void ParserFinish(void)
 
 /* 	/// \note current context should contain root here */
 
-/* 	ParserEventGenerate(EVENT_ACTION_FINISH,NULL,&pacCurrentContext->pist); */
+/* 	ParserEventGenerate(EVENT_ACTION_FINISH, NULL, &pacCurrentContext->pist); */
     }
 }
 
@@ -1434,7 +1434,7 @@ ParserImport
 
     //- try to lookup file in symbol table
 
-    pifToParse = SymbolsLookupImportedFile(psym,pcFilename,pac);
+    pifToParse = SymbolsLookupImportedFile(psym, pcFilename, pac);
 
     //- if not found
 
@@ -1446,7 +1446,7 @@ ParserImport
 	//- if add file to symbol table
 
 	bResult
-	    = (pifToParse = SymbolsAddImportedFile(psym,pcFilename,pac))
+	    = (pifToParse = SymbolsAddImportedFile(psym, pcFilename, pac))
 	      != NULL;
 
 	if (bResult)
@@ -1467,11 +1467,11 @@ ParserImport
 
 /* 	    //- register parse function */
 
-/* 	    ImportedFileSetParseMethod(pifToParse,parse); */
+/* 	    ImportedFileSetParseMethod(pifToParse, parse); */
 
 	    //- parse file
 
-	    bResult = ParserParse(pac,pifToParse) == 0;
+	    bResult = ParserParse(pac, pifToParse) == 0;
 
 	    //- if parse ok
 
@@ -1481,7 +1481,7 @@ ParserImport
 
 		struct DependencyFile *pdf
 		    = DependencyFileCallocNameSpaceImportedFile
-		      (pcNameSpace,pifToParse);
+		      (pcNameSpace, pifToParse);
 
 		//- queue element into dependency list
 
@@ -1533,7 +1533,7 @@ ParserImport
 
 	pdf
 	    = DependencyFileCallocNameSpaceImportedFile
-	      (pcNameSpace,pifToParse);
+	      (pcNameSpace, pifToParse);
 
 	//- queue element into dependency list
 
@@ -1590,7 +1590,7 @@ ParserImport
 
 struct symtab_HSolveListElement *
 ParserLookupDependencyModel
-(PARSERCONTEXT *pacContext,struct symtab_IdentifierIndex *pidin)
+(PARSERCONTEXT *pacContext, struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : not found
 
@@ -1652,7 +1652,7 @@ struct symtab_HSolveListElement *ParserLookupPrivateModel(char *pcIdentifier)
     //- lookup private model in current context
 
     phsleResult
-	= DefSymLookup(pdefsym,NULL,pcIdentifier,FLAG_SYMBOL_PRIVATEMODEL);
+	= DefSymLookup(pdefsym, NULL, pcIdentifier, FLAG_SYMBOL_PRIVATEMODEL);
 
     //- return result
 
@@ -1724,7 +1724,7 @@ struct symtab_HSolveListElement *ParserLookupPrivateModel(char *pcIdentifier)
 
 /* 	//- append with element to search */
 
-/* 	if (!PidinStackAppendCompact(&pistToSearch,ppist)) */
+/* 	if (!PidinStackAppendCompact(&pistToSearch, ppist)) */
 /* 	{ */
 /* 	    return(NULL); */
 /* 	} */
@@ -1736,7 +1736,7 @@ struct symtab_HSolveListElement *ParserLookupPrivateModel(char *pcIdentifier)
 /*     { */
 /* 	//- push pidin */
 
-/* 	if (!PidinStackPushCompactAll(&pistToSearch,pidin)) */
+/* 	if (!PidinStackPushCompactAll(&pistToSearch, pidin)) */
 /* 	{ */
 /* 	    return(NULL); */
 /* 	} */
@@ -1780,7 +1780,8 @@ int ParserMessage
 (PARSERCONTEXT *pacContext,
  int iPriority,
  char *pcContext,
- char *pcMessage,...)
+ char *pcMessage,
+ ...)
 {
     //- set default result : continue parsing
 
@@ -1837,29 +1838,29 @@ int ParserMessage
 
     //- get start of stdargs
 
-    va_start(vaList,pcMessage);
+    va_start(vaList, pcMessage);
 
     //- do indentation according to nesting level
 
     sprintf
 	(pc,
-	 "%i,%-12.12s,%i\t||",
+	 "%i, %-12.12s, %i\t||",
 	 pacContext->iNestingLevel,
 	 ParserContextGetFilename(pacContext),
 	 ParserContextGetLineNumber(pacContext));
 
-    NeurospacesMessage(iPriority,1,pc,NULL);
+    NeurospacesMessage(iPriority, 1, pc, NULL);
 
     for (i = 0; i < pacContext->iNestingLevel; i++)
     {
-	NeurospacesMessage(iPriority,0,"  ",NULL);
+	NeurospacesMessage(iPriority, 0, "  ", NULL);
     }
 
     //- give diagnostics
 
-    NeurospacesMessage(iPriority,0,pcMessage,vaList);
+    NeurospacesMessage(iPriority, 0, pcMessage, vaList);
 
-    NeurospacesMessage(iPriority,2,"\n",NULL);
+    NeurospacesMessage(iPriority, 2, "\n", NULL);
 
     //- end stdargs
 
@@ -1900,7 +1901,7 @@ int ParserAlgorithmDisable
 
     //- import algorithm
 
-    bResult = AlgorithmInstanceDisable(palgi,pcName,pacContext) != FALSE;
+    bResult = AlgorithmInstanceDisable(palgi, pcName, pacContext) != FALSE;
 
     //- if success
 
@@ -2146,7 +2147,7 @@ int ParserParse
 
     //- if file can be opened
 
-    pFILE = fopen(ImportedFileGetFilename(pifToParse),"r");
+    pFILE = fopen(ImportedFileGetFilename(pifToParse), "r");
 
     if (pFILE)
     {
@@ -2170,11 +2171,11 @@ int ParserParse
 
 	//- put pifToParse in parser context
 
-	ParserContextSetImportedFile(pacContext,pifToParse);
+	ParserContextSetImportedFile(pacContext, pifToParse);
 
 	//- lexical switch to selected file
 
-	LexFileSwitch(&pacContext->pyyBuffer,pFILE);
+	LexFileSwitch(&pacContext->pyyBuffer, pFILE);
 
 	//- link parser contexts
 
@@ -2429,7 +2430,7 @@ void ParserStart(void)
 
 /* 	/// \note current context should contain root here */
 
-/* 	ParserEventGenerate(EVENT_ACTION_START,NULL,&pacCurrentContext->pist); */
+/* 	ParserEventGenerate(EVENT_ACTION_START, NULL, &pacCurrentContext->pist); */
     }
 }
 
