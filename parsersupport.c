@@ -200,7 +200,7 @@ int ParserAddPrivateModel
 	    (pacContext,
 	     LEVEL_GLOBALMSG_SYMBOLADD,
 	     "ParserAddPrivateModel()",
-	     "Add Private Model(%s, %s)",
+	     "Add Private Model(%s,%s)",
 	     SymbolHSLETypeDescribe(phsle->iType),
 	     SymbolName(phsle));
 
@@ -471,7 +471,7 @@ int ParserAddPublicModel
 	    (pacContext,
 	     LEVEL_GLOBALMSG_SYMBOLADD,
 	     "ParserAddPublicModel()",
-	     "Add Public Model(%s, %s)",
+	     "Add Public Model(%s,%s)",
 	     SymbolHSLETypeDescribe(phsle->iType),
 	     SymbolName(phsle));
 
@@ -1846,7 +1846,7 @@ int ParserMessage
 
     sprintf
 	(pc,
-	 "%i, %-12.12s, %i\t||",
+	 "%i,%-12.12s,%i\t||",
 	 pacContext->iNestingLevel,
 	 ParserContextGetFilename(pacContext),
 	 ParserContextGetLineNumber(pacContext));
