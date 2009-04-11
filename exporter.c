@@ -265,13 +265,34 @@ ExporterSymbolStarter
 
 	    PrintIndent(pexd->iIndent, pexd->pfile);
 
+	    char *pcNamespace = pbio->pcNamespace;
+
 	    if (pexd->iType == EXPORTER_TYPE_NDF)
 	    {
-		fprintf(pexd->pfile, "CHILD %s %s\n", SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
+		if (pcNamespace)
+		{
+		    char pc[1000];
+
+		    strcpy(pc, pcNamespace);
+		    strcat(pc, "::");
+
+		    pcNamespace = &pc[0];
+		}
+
+		fprintf(pexd->pfile, "CHILD %s%s%s %s\n", (pcNamespace ? pcNamespace : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
 	    }
 	    else
 	    {
-		fprintf(pexd->pfile, "<child> <prototype>%s</prototype> <name>%s</name> \n", SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
+		if (pcNamespace)
+		{
+		    char pc[1000];
+
+		    sprintf(pc, "<namespace>%s</namespace>", pcNamespace);
+
+		    pcNamespace = &pc[0];
+		}
+
+		fprintf(pexd->pfile, "<child> %s<prototype>%s%s</prototype> <name>%s</name>\n", (pcNamespace ? pcNamespace : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
 	    }
 
 	    //- set result: only sibling processing

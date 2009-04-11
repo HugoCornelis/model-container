@@ -107,7 +107,7 @@ DependencyFileGetImportedFile(struct DependencyFile *pdf)
 char *
 DependencyFileGetNameSpace(struct DependencyFile *pdf)
 {
-    return(pdf->pcNameSpace);
+    return(pdf->pcNamespace);
 }
 
 
@@ -211,7 +211,7 @@ int
 DependencyFileSetNameSpace
 (struct DependencyFile *pdf, char *pc)
 {
-    pdf->pcNameSpace = pc;
+    pdf->pcNamespace = pc;
 }
 
 

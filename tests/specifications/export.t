@@ -41,7 +41,7 @@ IMPORT
 END IMPORT
 
 PRIVATE_MODELS
-  CHILD Synapse Synapse
+  CHILD mapper::/Synapse Synapse
   END CHILD
 END PRIVATE_MODELS
 
@@ -95,7 +95,7 @@ PUBLIC_MODELS
 </import>
 
 <private_models>
-  <child> <prototype>Synapse</prototype> <name>Synapse</name> 
+  <child> <namespace>mapper</namespace><prototype>/Synapse</prototype> <name>Synapse</name>
   </child>
 </private_models>
 
@@ -109,7 +109,7 @@ PUBLIC_MODELS
               <parameter> <name>scale</name><value>1</value> </parameter>
           </function> </parameter>
     </parameters>
-    <child> <prototype>Synapse</prototype> <name>synapse</name> 
+    <child> <prototype>Synapse</prototype> <name>synapse</name>
     </child>
     <EQUATION_EXPONENTIAL> <name>exp2</name>
       <parameters>
@@ -119,7 +119,7 @@ PUBLIC_MODELS
     </EQUATION_EXPONENTIAL>
   </CHANNEL>
   <CHANNEL> <name>NMDA</name>
-    <child> <prototype>Synapse</prototype> <name>synapse</name> 
+    <child> <prototype>Synapse</prototype> <name>synapse</name>
     </child>
     <EQUATION_EXPONENTIAL> <name>exp2</name>
       <parameters>
@@ -157,7 +157,6 @@ PUBLIC_MODELS
 						  },
 						  {
 						   description => "Does the exported NDF file contain the correct model ?",
-						   disabled => 'this test fails for two reasons: the filenames are absolute pathnames, and the namespaces are lost.',
 						   read => {
 							    application_output_file => '/tmp/1.ndf',
 							    expected_output => '#!neurospacesparse
@@ -195,7 +194,6 @@ PUBLIC_MODELS
 						  {
 						   comment => 'xml to html conversion fails when converting this test to html',
 						   description => "Does the exported XML file contain the correct model ?",
-						   disabled => 'this test fails for two reasons: the filenames are absolute pathnames, and the namespaces are lost.',
 						   read => {
 							    application_output_file => '/tmp/1.xml',
 							    expected_output => '<import>
@@ -204,16 +202,16 @@ PUBLIC_MODELS
 </import>
 
 <private_models>
-  <child> <namespace>k</namespace> <prototype>k</prototype> <name>k</name>
+  <child> <namespace>k</namespace><prototype>/k</prototype> <name>k</name>
   </child>
-  <child> <namespace>na</namespace> <prototype>na</prototype> <name>na</name>
+  <child> <namespace>na</namespace><prototype>/na</prototype> <name>na</name>
   </child>
 </private_models>
 
 <public_models>
-  <child> <prototype>k</prototype> <name>k</name> 
+  <child> <prototype>k</prototype> <name>k</name>
   </child>
-  <child> <prototype>na</prototype> <name>na</name> 
+  <child> <prototype>na</prototype> <name>na</name>
   </child>
 </public_models>
 ',

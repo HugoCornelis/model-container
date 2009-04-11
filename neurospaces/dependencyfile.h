@@ -42,7 +42,7 @@ struct DependencyFile
 
     /// name space
 
-    char *pcNameSpace;
+    char *pcNamespace;
 
     /// pointer to imported file its symbols
 
