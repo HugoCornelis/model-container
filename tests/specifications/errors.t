@@ -308,7 +308,7 @@ InserterInstance: \*\*\* Error: Inserter instance spines cannot resolve NAME_SEL
 Inserter instance spines
 Inserter instance inhibition
 Inserter instance excitation
-.+?/neurospacesparse: Parse of .+?/utilities/incomplete_inserter.ndf failed with 3 \(cumulative\) errors.
+.+?/neurospacesparse: Parse of .*?utilities/incomplete_inserter.ndf failed with 3 \(cumulative\) errors.
 ',
 							   ],
 						   write => undef,

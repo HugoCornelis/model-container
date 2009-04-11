@@ -511,28 +511,28 @@ inputs (if any) :
 						  },
 						  {
 						   description => "Describe the root namespaces, default arguments.",
-						   read => "File (/tmp/neurospaces/test/models/legacy/populations/purkinje.ndf) --> Namespace (Purkinje::)
-File (/tmp/neurospaces/test/models/legacy/populations/granule.ndf) --> Namespace (Granule::)
+						   read => "File (/tmp/neurospaces/test/models/fibers/mossyfiber.ndf) --> Namespace (Fibers::)
 File (/tmp/neurospaces/test/models/legacy/populations/golgi.ndf) --> Namespace (Golgi::)
-File (/tmp/neurospaces/test/models/fibers/mossyfiber.ndf) --> Namespace (Fibers::)
+File (/tmp/neurospaces/test/models/legacy/populations/granule.ndf) --> Namespace (Granule::)
+File (/tmp/neurospaces/test/models/legacy/populations/purkinje.ndf) --> Namespace (Purkinje::)
 ",
 						   write => "namespaces"
 						  },
 						  {
 						   description => "Describe the root namespaces, namespace explicitly given.",
-						   read => "File (/tmp/neurospaces/test/models/legacy/populations/purkinje.ndf) --> Namespace (Purkinje::)
-File (/tmp/neurospaces/test/models/legacy/populations/granule.ndf) --> Namespace (Granule::)
+						   read => "File (/tmp/neurospaces/test/models/fibers/mossyfiber.ndf) --> Namespace (Fibers::)
 File (/tmp/neurospaces/test/models/legacy/populations/golgi.ndf) --> Namespace (Golgi::)
-File (/tmp/neurospaces/test/models/fibers/mossyfiber.ndf) --> Namespace (Fibers::)
+File (/tmp/neurospaces/test/models/legacy/populations/granule.ndf) --> Namespace (Granule::)
+File (/tmp/neurospaces/test/models/legacy/populations/purkinje.ndf) --> Namespace (Purkinje::)
 ",
 						   write => "namespaces ::"
 						  },
 						  {
 						   description => "Describe the root namespaces, root explicitly given.",
-						   read => "File (/tmp/neurospaces/test/models/legacy/populations/purkinje.ndf) --> Namespace (Purkinje::)
-File (/tmp/neurospaces/test/models/legacy/populations/granule.ndf) --> Namespace (Granule::)
+						   read => "File (/tmp/neurospaces/test/models/fibers/mossyfiber.ndf) --> Namespace (Fibers::)
 File (/tmp/neurospaces/test/models/legacy/populations/golgi.ndf) --> Namespace (Golgi::)
-File (/tmp/neurospaces/test/models/fibers/mossyfiber.ndf) --> Namespace (Fibers::)
+File (/tmp/neurospaces/test/models/legacy/populations/granule.ndf) --> Namespace (Granule::)
+File (/tmp/neurospaces/test/models/legacy/populations/purkinje.ndf) --> Namespace (Purkinje::)
 ",
 						   write => "namespaces ::/"
 						  },
