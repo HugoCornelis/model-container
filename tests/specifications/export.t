@@ -37,7 +37,7 @@ my $test
 NEUROSPACES NDF
 
 IMPORT
-    FILE mapper "/tmp/neurospaces/test/models/mappers/spikereceiver.ndf"
+    FILE mapper "mappers/spikereceiver.ndf"
 END IMPORT
 
 PRIVATE_MODELS
@@ -91,7 +91,7 @@ PUBLIC_MODELS
 						   read => {
 							    application_output_file => '/tmp/1.xml',
 							    expected_output => '<import>
-    <file> <namespace>mapper</namespace> <filename>/tmp/neurospaces/test/models/mappers/spikereceiver.ndf</filename> </file>
+    <file> <namespace>mapper</namespace> <filename>mappers/spikereceiver.ndf</filename> </file>
 </import>
 
 <private_models>
@@ -166,8 +166,8 @@ PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE k "/local_home/local_home/hugo/neurospaces_project/model-container/source/snapshots/0/library/channels/hodgkin-huxley/potassium.ndf"
-    FILE na "/local_home/local_home/hugo/neurospaces_project/model-container/source/snapshots/0/library/channels/hodgkin-huxley/sodium.ndf"
+    FILE k "channels/hodgkin-huxley/potassium.ndf"
+    FILE na "channels/hodgkin-huxley/sodium.ndf"
 END IMPORT
 
 PRIVATE_MODELS
@@ -199,14 +199,14 @@ PUBLIC_MODELS
 						   read => {
 							    application_output_file => '/tmp/1.xml',
 							    expected_output => '<import>
-    <file> <namespace>k</namespace> <filename>/tmp/neurospaces/test/models/channels/hodgkin-huxley/potassium.ndf</filename> </file>
-    <file> <namespace>na</namespace> <filename>/tmp/neurospaces/test/models/channels/hodgkin-huxley/sodium.ndf</filename> </file>
+    <file> <namespace>k</namespace> <filename>channels/hodgkin-huxley/potassium.ndf</filename> </file>
+    <file> <namespace>na</namespace> <filename>channels/hodgkin-huxley/sodium.ndf</filename> </file>
 </import>
 
 <private_models>
-  <child> <prototype>k</prototype> <name>k</name> 
+  <child> <namespace>k</namespace> <prototype>k</prototype> <name>k</name>
   </child>
-  <child> <prototype>na</prototype> <name>na</name> 
+  <child> <namespace>na</namespace> <prototype>na</prototype> <name>na</name>
   </child>
 </private_models>
 

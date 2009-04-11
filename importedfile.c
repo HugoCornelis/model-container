@@ -44,14 +44,16 @@ struct ImportedFile *pifRootImport = NULL;
 //////////////////////////////////////////////////////////////////////////////
 
 /// 
-/// \arg pc name of imported file.
+/// \arg pcQualified qualified name of imported file.
+/// \arg pcRelative relative name of imported file.
 /// 
 /// \return struct ImportedFile * : new imported file struct.
 /// 
 /// \brief Allocated new imported file struct.
 /// 
 
-struct ImportedFile *ImportedFileCalloc(char *pc)
+struct ImportedFile *
+ImportedFileCalloc(char *pcQualified, char *pcRelative)
 {
     //- allocate for imported file struct
 
@@ -69,7 +71,7 @@ struct ImportedFile *ImportedFileCalloc(char *pc)
 
     //- register qualified filename
 
-    ImportedFileSetFilename(pifResult, pc);
+    ImportedFileSetFilenames(pifResult, pcQualified, pcRelative);
 
     //- register defined symbols
 
@@ -210,15 +212,32 @@ ImportedFileGetDefinedSymbols(struct ImportedFile *pif)
 /// 
 /// \return char *
 /// 
-///	original filename.
+///	qualified filename of this imported file.
 /// 
-/// \brief Get original filename of this imported file.
+/// \brief Get qualified filename of this imported file.
 /// 
 
 char *
-ImportedFileGetFilename(struct ImportedFile *pif)
+ImportedFileGetQualified(struct ImportedFile *pif)
 {
-    return(pif->pcFilename);
+    return(pif->pcQualified);
+}
+
+
+/// 
+/// \arg pif imported file.
+/// 
+/// \return char *
+/// 
+///	relative filename of this imported file.
+/// 
+/// \brief Get relative filename of this imported file.
+/// 
+
+char *
+ImportedFileGetRelative(struct ImportedFile *pif)
+{
+    return(pif->pcRelative);
 }
 
 
@@ -603,7 +622,7 @@ ImportedFilePrintProperties
 
     //- get name
 
-    char *pcName = ImportedFileGetFilename(pif);
+    char *pcName = ImportedFileGetQualified(pif);
 
     int iLength = strlen(pcName);
 
@@ -676,6 +695,8 @@ ImportedFileSetDefinedSymbols
 
 /// 
 /// \arg pif imported file.
+/// \arg pcQualified qualified filename.
+/// \arg pcRelative relative filename.
 /// 
 /// \return int
 /// 
@@ -684,9 +705,13 @@ ImportedFileSetDefinedSymbols
 /// \brief Set filename for an imported file.
 /// 
 
-int ImportedFileSetFilename(struct ImportedFile *pif, char *pc)
+int
+ImportedFileSetFilenames
+(struct ImportedFile *pif, char *pcQualified, char *pcRelative)
 {
-    pif->pcFilename = pc;
+    pif->pcQualified = pcQualified;
+
+    pif->pcRelative = pcRelative;
 
     return(1);
 }

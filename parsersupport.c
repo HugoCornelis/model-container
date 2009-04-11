@@ -1245,7 +1245,7 @@ void ParserContextSetImportedFile(PARSERCONTEXT *pac, struct ImportedFile *pif)
 
     //- get filename from imported file
 
-    pcDirectory = ImportedFileGetFilename(pif);
+    pcDirectory = ImportedFileGetQualified(pif);
 
     //- filename starts at end of directory part
 
@@ -1380,7 +1380,8 @@ void ParserFinish(void)
 
 /// 
 /// \arg pac parser context, NULL for default root context.
-/// \arg pcFilename file to parse
+/// \arg pcQualified qualified filename of file to parse.
+/// \arg pcRelative relative filename of file to parse.
 /// \arg pcNameSpace name space for imported models
 /// 
 /// \return int : success of operation
@@ -1401,7 +1402,8 @@ void ParserFinish(void)
 int
 ParserImport
 (PARSERCONTEXT *pac,
- char *pcFilename,
+ char *pcQualified,
+ char *pcRelative,
  char *pcNameSpace)
 {
     //- set default result : failure
@@ -1430,11 +1432,11 @@ ParserImport
 	 LEVEL_GLOBALMSG_FILEIMPORT,
 	 "ParserImport()",
 	 "->Dependency file(%s)",
-	 pcFilename);
+	 pcQualified);
 
     //- try to lookup file in symbol table
 
-    pifToParse = SymbolsLookupImportedFile(psym, pcFilename, pac);
+    pifToParse = SymbolsLookupImportedFile(psym, pcQualified, pac);
 
     //- if not found
 
@@ -1446,7 +1448,7 @@ ParserImport
 	//- if add file to symbol table
 
 	bResult
-	    = (pifToParse = SymbolsAddImportedFile(psym, pcFilename, pac))
+	    = (pifToParse = SymbolsAddImportedFile(psym, pcQualified, pcRelative, pac))
 	      != NULL;
 
 	if (bResult)
@@ -1505,7 +1507,7 @@ ParserImport
 		(pac,
 		 "ParserImport()",
 		 "Could not import %s",
-		 pcFilename);
+		 pcQualified);
 	}
     }
 
@@ -1553,7 +1555,7 @@ ParserImport
 	     "ParserImport()",
 	     "%s is cached"
 	     "(public model list not yet)",
-	     ImportedFileGetFilename(pifToParse));
+	     ImportedFileGetQualified(pifToParse));
     }
 
     //- give diagnostics
@@ -1563,7 +1565,7 @@ ParserImport
 	 LEVEL_GLOBALMSG_FILEIMPORT,
 	 "ParserImport()",
 	 "->End(%s)",
-	 pcFilename);
+	 pcQualified);
 
     //- return result
 
@@ -2147,7 +2149,7 @@ int ParserParse
 
     //- if file can be opened
 
-    pFILE = fopen(ImportedFileGetFilename(pifToParse), "r");
+    pFILE = fopen(ImportedFileGetQualified(pifToParse), "r");
 
     if (pFILE)
     {
@@ -2233,7 +2235,7 @@ int ParserParse
 	fprintf
 	    (stderr,
 	     "Error opening file %s\n",
-	     ImportedFileGetFilename(pifToParse));
+	     ImportedFileGetQualified(pifToParse));
     }
 
     //- return result

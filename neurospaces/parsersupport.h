@@ -318,7 +318,8 @@ void ParserFinish(void);
 int
 ParserImport
 (PARSERCONTEXT *pacParserContext,
- char *pcFilename,
+ char *pcQualified,
+ char *pcRelative,
  char *pcNameSpace);
 
 struct symtab_HSolveListElement *

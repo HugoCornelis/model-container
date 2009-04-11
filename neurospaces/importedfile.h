@@ -36,9 +36,13 @@ struct ImportedFile
 
     HSolveListElement hsleLink;
 
-    /// name of imported file
+    /// name of imported file, qualified filename
 
-    char *pcFilename;
+    char *pcQualified;
+
+    /// name of imported file, relative filename
+
+    char *pcRelative;
 
     /// flags (ao level type of file, file not found)
 
@@ -59,7 +63,8 @@ struct ImportedFile
 #include "pidinstack.h"
 
 
-struct ImportedFile *ImportedFileCalloc(char *pc);
+struct ImportedFile *
+ImportedFileCalloc(char *pcQualified, char *pcRelative);
 
 void ImportedFileClearRootImport(void);
 
@@ -72,7 +77,10 @@ struct DefinedSymbols *
 ImportedFileGetDefinedSymbols(struct ImportedFile *pif);
 
 char *
-ImportedFileGetFilename(struct ImportedFile *pif);
+ImportedFileGetQualified(struct ImportedFile *pif);
+
+char *
+ImportedFileGetRelative(struct ImportedFile *pif);
 
 struct symtab_RootSymbol *
 ImportedFileGetRootSymbol(struct ImportedFile *pif);
@@ -107,7 +115,9 @@ int
 ImportedFileSetDefinedSymbols
 (struct ImportedFile *pif, struct DefinedSymbols *pdefsym);
 
-int ImportedFileSetFilename(struct ImportedFile *pif, char *pc);
+int
+ImportedFileSetFilenames
+(struct ImportedFile *pif, char *pcQualified, char *pcRelative);
 
 void ImportedFileSetRootImport(struct ImportedFile *pif);
 

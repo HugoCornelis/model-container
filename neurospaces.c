@@ -1,4 +1,4 @@
-static char *pcVersionTime="(09/04/09) Thursday, April 9, 2009 22:15:44 hugo";
+static char *pcVersionTime="(09/04/10) Friday, April 10, 2009 23:55:13 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -794,10 +794,12 @@ NeurospacesImport
 
 	//- qualify input file name
 
-	pcInputName
-	    = ParserContextQualifyFilename(pacRootContext, pcInputName);
+	char *pcRelative = strdup(pcInputName);
 
-	if (!pcInputName)
+	char *pcQualified
+	    = ParserContextQualifyFilename(pacRootContext, pcRelative);
+
+	if (!pcQualified)
 	{
 	    fprintf
 		(stderr,
@@ -821,7 +823,7 @@ NeurospacesImport
 	//- add the file to symbols
 
 	struct ImportedFile *pifFile
-	    = SymbolsAddImportedFile(pneuro->psym, pcInputName, pacRootContext);
+	    = SymbolsAddImportedFile(pneuro->psym, pcQualified, pcRelative, pacRootContext);
 
 	//- link imported file its symbols into parser context
 
@@ -845,9 +847,14 @@ NeurospacesImport
 
 	//- open given file
 
-	if ((inputfile = fopen(pcInputName, "r")) == NULL)
+	if ((inputfile = fopen(pcQualified, "r")) == NULL)
 	{
-	    fprintf(stderr,"%s: %s filename qualified, but cannot be opened\n", pcAppl, pcInputName);
+	    fprintf
+		(stderr,
+		 "%s: %s filename qualified to %s, but cannot be opened\n",
+		 pcAppl,
+		 pcInputName,
+		 pcQualified);
 
 	    pneuro->iErrorCount++;
 
@@ -903,7 +910,7 @@ NeurospacesImport
 		(stderr,
 		 "%s: Parse of %s failed with %i (cumulative) error%s.\n",
 		 pcAppl,
-		 pcInputName,
+		 pcRelative,
 		 pneuro->iErrorCount,
 		 pneuro->iErrorCount == 1 ? "" : "s");
 	}
@@ -911,7 +918,7 @@ NeurospacesImport
 	{
 	    if (pnsc->nso.iVerbosity)
 	    {
-		fprintf(stderr,"%s: No errors for %s.\n", pcAppl, pcInputName);
+		fprintf(stderr,"%s: No errors for %s.\n", pcAppl, pcQualified);
 	    }
 	}
 

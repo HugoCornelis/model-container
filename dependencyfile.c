@@ -148,7 +148,7 @@ DependencyFilePrint
 	    (pfile,
 	     "FILE %s \"%s\"\n",
 	     DependencyFileGetNameSpace(pdf),
-	     ImportedFileGetFilename(DependencyFileGetImportedFile(pdf)));
+	     ImportedFileGetRelative(DependencyFileGetImportedFile(pdf)));
     }
     else if (iType == EXPORTER_TYPE_XML)
     {
@@ -158,7 +158,7 @@ DependencyFilePrint
 	    (pfile,
 	     "<file> <namespace>%s</namespace> <filename>%s</filename> </file>\n",
 	     DependencyFileGetNameSpace(pdf),
-	     ImportedFileGetFilename(DependencyFileGetImportedFile(pdf)));
+	     ImportedFileGetRelative(DependencyFileGetImportedFile(pdf)));
     }
 
     if (iType == EXPORTER_TYPE_INFO)

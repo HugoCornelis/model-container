@@ -69,7 +69,8 @@ struct Symbols
 struct ImportedFile *
 SymbolsAddImportedFile
 (struct Symbols *psymSymbols,
- char *pcFilename,
+ char *pcQualified,
+ char *pcRelative,
  struct ParserContext *pac);
 
 struct Symbols * SymbolsCalloc(void);

@@ -536,7 +536,7 @@ int DefSymPrintNameSpaces
 	    fprintf
 		(pfile,
 		 "File (%s) --> Namespace (%s::)\n",
-		 ImportedFileGetFilename(DependencyFileGetImportedFile(pdf)),
+		 ImportedFileGetQualified(DependencyFileGetImportedFile(pdf)),
 		 DependencyFileGetNameSpace(pdf));
 
 	    pdf = (struct DependencyFile *)HSolveListNext(&pdf->hsleLink);

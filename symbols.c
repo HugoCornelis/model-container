@@ -38,7 +38,8 @@
 
 /// 
 /// \arg pisSymbols symbol table
-/// \arg pcFilename file to add
+/// \arg pcQualified qualified filename to add.
+/// \arg pcRelative relative filename to add.
 /// \arg pac current parser context, NULL for none.
 /// 
 /// \return struct ImportedFile * : new imported file struct, NULL for failure
@@ -55,22 +56,17 @@
 struct ImportedFile *
 SymbolsAddImportedFile
 (struct Symbols *pisSymbols,
- char *pcFilename,
+ char *pcQualified,
+ char *pcRelative,
  struct ParserContext *pac)
 {
     //- set default result : failure
 
     struct ImportedFile *pifResult = NULL;
 
-    /// qualified filename to lookup
-
-    char *pcQualified = NULL;
-
-    pcQualified = pcFilename;
-
     //- allocate new imported file struct
 
-    pifResult = ImportedFileCalloc(pcQualified);
+    pifResult = ImportedFileCalloc(pcQualified, pcRelative);
 
     //- insert file (at head : gives good chance for early match)
 
@@ -154,7 +150,7 @@ SymbolsLookupImportedFile
     {
 	//- if found
 
-	if (strcmp(pcQualified, pifLoop->pcFilename) == 0)
+	if (strcmp(pcQualified, pifLoop->pcQualified) == 0)
 	{
 	    //- set result
 

@@ -2025,7 +2025,7 @@ QueryHandlerImportFile
 
     //- import the file
 
-    if (!ParserImport(pneuro->pacRootContext, pcFilename, pcNamespace))
+    if (!ParserImport(pneuro->pacRootContext, pcFilename, NULL, pcNamespace))
     {
 	fprintf(stdout, "importing file failed\n");
     }

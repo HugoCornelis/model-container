@@ -241,11 +241,13 @@ DependenciesEnumerated
 
 		    //- qualify file name
 
-		    pc
-			= ParserContextQualifyFilename
-			  ((PARSERCONTEXT *)pacParserContext, pc);
+		    char *pcRelative = strdup(pc);
 
-		    if (pc)
+		    char *pcQualified
+			= ParserContextQualifyFilename
+			  ((PARSERCONTEXT *)pacParserContext, pcRelative);
+
+		    if (pcQualified)
 		    {
 			//- if importing files is not disabled by the options
 
@@ -259,7 +261,8 @@ DependenciesEnumerated
 			    bFail
 				= ParserImport
 				  ((PARSERCONTEXT *)pacParserContext,
-				   pc,
+				   pcQualified,
+				   pcRelative,
 				   $3);
 			}
 		    }

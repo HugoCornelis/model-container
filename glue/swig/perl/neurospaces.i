@@ -2251,7 +2251,7 @@ SV * swig_get_files()
     {
 	//- get name of file
 
-	SV * psvFilename = newSVpv(pifLoop->pcFilename, 0);
+	SV * psvFilename = newSVpv(pifLoop->pcQualified, 0);
 
 	//- add to result
 
