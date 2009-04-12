@@ -1127,7 +1127,8 @@ Parse Method : \\(no info\\)
 						  },
 						  {
 						   description => "Can we create new namespaces, for cached files ?",
-						   read => "importing file ok
+						   read => "importing file /tmp/neurospaces/test/models/segments/spines/purkinje.ndf as //tmp/neurospaces/test/models/segments/spines/purkinje.ndf
+importing file /tmp/neurospaces/test/models/segments/spines/purkinje.ndf ok
 ",
 						   write => "importfile /tmp/neurospaces/test/models/segments/spines/purkinje.ndf spines_imported",
 						  },
