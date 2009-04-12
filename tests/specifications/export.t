@@ -454,6 +454,136 @@ PUBLIC_MODELS
 						 ],
 				description => "export of a simple model and manually importing files",
 			       },
+			       {
+				arguments => [
+					      '-q',
+					      '-v',
+					      '1',
+					      'tests/cells/singlea_naf.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/singlea_naf.ndf.', ],
+						   timeout => 15,
+						  },
+						  {
+						   description => "Can we export the model as NDF ?",
+						   read => '#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+    FILE soma "tests/segments/soma.ndf"
+    FILE gate1 "gates/naf_activation.ndf"
+    FILE gate2 "gates/naf_inactivation.ndf"
+END IMPORT
+
+PRIVATE_MODELS
+  ALIAS gate1::/naf_activation naf_gate_activation
+  END ALIAS
+  ALIAS gate2::/naf_inactivation naf_gate_inactivation
+  END ALIAS
+  CHANNEL NaF
+    PARAMETERS
+      PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
+      PARAMETER ( G_MAX = 75000 ),
+      PARAMETER ( Erev = 0.045 ),
+    END PARAMETERS
+    CHILD naf_gate_activation naf_gate_activation
+    END CHILD
+    CHILD naf_gate_inactivation naf_gate_inactivation
+    END CHILD
+  END CHANNEL
+  SEGMENT soma2
+    PARAMETERS
+      PARAMETER ( Vm_init = -0.028 ),
+      PARAMETER ( RM = 1 ),
+      PARAMETER ( RA = 2.5 ),
+      PARAMETER ( CM = 0.0164 ),
+      PARAMETER ( ELEAK = -0.08 ),
+    END PARAMETERS
+    CHILD NaF NaF
+    END CHILD
+  END SEGMENT
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+  CELL singlea_naf
+    SEGMENT_GROUP segments
+      CHILD soma2 soma
+        PARAMETERS
+          PARAMETER ( rel_X = 0 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = 0 ),
+          PARAMETER ( DIA = 2.98e-05 ),
+        END PARAMETERS
+      END CHILD
+    END SEGMENT_GROUP
+  END CELL
+PUBLIC_MODELS
+',
+						   write => "export ndf STDOUT /**",
+						  },
+						  {
+						   description => "Can we export the model as XML ?",
+						   read => '<import>
+    <file> <namespace>soma</namespace> <filename>tests/segments/soma.ndf</filename> </file>
+    <file> <namespace>gate1</namespace> <filename>gates/naf_activation.ndf</filename> </file>
+    <file> <namespace>gate2</namespace> <filename>gates/naf_inactivation.ndf</filename> </file>
+</import>
+
+<private_models>
+  <alias> <namespace>gate1</namespace><prototype>/naf_activation</prototype> <name>naf_gate_activation</name>
+  </alias>
+  <alias> <namespace>gate2</namespace><prototype>/naf_inactivation</prototype> <name>naf_gate_inactivation</name>
+  </alias>
+  <CHANNEL> <name>NaF</name>
+    <parameters>
+      <parameter> <name>CHANNEL_TYPE</name><string>ChannelActInact</string> </parameter>
+      <parameter> <name>G_MAX</name><value>75000</value> </parameter>
+      <parameter> <name>Erev</name><value>0.045</value> </parameter>
+    </parameters>
+    <child> <prototype>naf_gate_activation</prototype> <name>naf_gate_activation</name>
+    </child>
+    <child> <prototype>naf_gate_inactivation</prototype> <name>naf_gate_inactivation</name>
+    </child>
+  </CHANNEL>
+  <SEGMENT> <name>soma2</name>
+    <parameters>
+      <parameter> <name>Vm_init</name><value>-0.028</value> </parameter>
+      <parameter> <name>RM</name><value>1</value> </parameter>
+      <parameter> <name>RA</name><value>2.5</value> </parameter>
+      <parameter> <name>CM</name><value>0.0164</value> </parameter>
+      <parameter> <name>ELEAK</name><value>-0.08</value> </parameter>
+    </parameters>
+    <child> <prototype>NaF</prototype> <name>NaF</name>
+    </child>
+  </SEGMENT>
+</private_models>
+
+<public_models>
+  <CELL> <name>singlea_naf</name>
+    <SEGMENT_GROUP> <name>segments</name>
+      <child> <prototype>soma2</prototype> <name>soma</name>
+        <parameters>
+          <parameter> <name>rel_X</name><value>0</value> </parameter>
+          <parameter> <name>rel_Y</name><value>0</value> </parameter>
+          <parameter> <name>rel_Z</name><value>0</value> </parameter>
+          <parameter> <name>DIA</name><value>2.98e-05</value> </parameter>
+        </parameters>
+      </child>
+    </SEGMENT_GROUP>
+  </CELL>
+</public_models>
+',
+						   write => "export xml STDOUT /**",
+						  },
+						 ],
+				description => "export of a model with an active channel",
+			       },
 			      ],
        description => "exporting models in a variety of export formats",
        name => 'export.t',
