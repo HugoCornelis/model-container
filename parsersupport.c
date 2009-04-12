@@ -1473,7 +1473,7 @@ ParserImport
 
 	    //- parse file
 
-	    bResult = ParserParse(pac, pifToParse) == 0;
+	    bResult = ParserParse(pac, pifToParse);
 
 	    //- if parse ok
 
@@ -2194,7 +2194,7 @@ int ParserParse
 
 	/// \note note: one global parse function here
 
-	bResult = parserparse(pacContext);
+	bResult = parserparse(pacContext) == 0;
 
 	//- unswitch the lexical analyzer
 
