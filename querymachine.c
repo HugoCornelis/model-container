@@ -1974,11 +1974,11 @@ static int QueryHandlerImportedFiles
 
 
 /// 
-/// \arg std. QueryHandler args
+/// \arg std. QueryHandler args.
 /// 
-/// \return int : QueryHandler return value
+/// \return int : QueryHandler return value.
 /// 
-/// \brief Handle print query
+/// \brief Import a file.
 /// 
 
 static
@@ -2004,7 +2004,14 @@ QueryHandlerImportFile
 
     char *pcFilename = &pcLine[iLength + 1];
 
-    iLength += strpbrk(&pcLine[iLength + 1], " \t") - &pcLine[iLength];
+    if (!strpbrk(&pcLine[iLength + 1], pcSeparator))
+    {
+	fprintf(stdout, "namespace not found on command line\n");
+
+	return(FALSE);
+    }
+
+    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
 
     if (!pcLine[iLength]
 	|| !pcLine[iLength + 1])
@@ -2041,11 +2048,9 @@ QueryHandlerImportFile
 
 
 /// 
-/// 
 /// \return void
 /// 
 /// \brief print info on commands
-/// \details 
 /// 
 
 static int QueryHandlerHelpCommands
@@ -5307,8 +5312,6 @@ QueryHandlerPrintParameterInput
 /// 
 /// \brief Handle scaled parameter query
 ///
-/// \details 
-/// 
 
 static int QueryHandlerPrintParameterScaled
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
@@ -9258,11 +9261,9 @@ int QueryMachineHandle(struct Neurospaces *pneuro, char *pcLine)
 
 
 /// 
-/// 
 /// \return void
 /// 
 /// \brief Init readline specific things.
-/// \details 
 /// 
 
 static char *
@@ -9968,11 +9969,9 @@ void QueryMachineInput(char *pcLine, int iReadline)
 
 
 /// 
-/// 
 /// \return void
 /// 
 /// \brief print prompt
-/// \details 
 /// 
 
 static void QueryMachinePrompt(void)
@@ -9985,7 +9984,6 @@ static void QueryMachinePrompt(void)
 }
 
 
-/// 
 /// 
 /// \arg pneuro neurospaces.
 /// \arg iReadline use readline ?
