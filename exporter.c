@@ -90,7 +90,16 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 
     //- open output file
 
-    FILE *pfile = fopen(pcFilename, "w");
+    FILE *pfile = NULL;
+
+    if (strcmp(pcFilename, "STDOUT") == 0)
+    {
+	pfile = stdout;
+    }
+    else
+    {
+	pfile = fopen(pcFilename, "w");
+    }
 
     //- start output
 
@@ -219,7 +228,13 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 
     //- close output file
 
-    fclose(pfile);
+    if (strcmp(pcFilename, "STDOUT") == 0)
+    {
+    }
+    else
+    {
+	fclose(pfile);
+    }
 
     //- return result
 
