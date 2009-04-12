@@ -269,6 +269,11 @@ ExporterSymbolStarter
 
 	    if (pexd->iType == EXPORTER_TYPE_NDF)
 	    {
+		char *pcToken
+		    = (pexd->iIndent == 2
+		       ? "ALIAS"
+		       : "CHILD");
+
 		if (pcNamespace)
 		{
 		    char pc[1000];
@@ -279,10 +284,15 @@ ExporterSymbolStarter
 		    pcNamespace = &pc[0];
 		}
 
-		fprintf(pexd->pfile, "CHILD %s%s%s %s\n", (pcNamespace ? pcNamespace : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
+		fprintf(pexd->pfile, "%s %s%s%s %s\n", pcToken, (pcNamespace ? pcNamespace : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
 	    }
 	    else
 	    {
+		char *pcToken
+		    = (pexd->iIndent == 2
+		       ? "alias"
+		       : "child");
+
 		if (pcNamespace)
 		{
 		    char pc[1000];
@@ -292,7 +302,7 @@ ExporterSymbolStarter
 		    pcNamespace = &pc[0];
 		}
 
-		fprintf(pexd->pfile, "<child> %s<prototype>%s%s</prototype> <name>%s</name>\n", (pcNamespace ? pcNamespace : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
+		fprintf(pexd->pfile, "<%s> %s<prototype>%s%s</prototype> <name>%s</name>\n", pcToken, (pcNamespace ? pcNamespace : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
 	    }
 
 	    //- set result: only sibling processing
@@ -364,7 +374,7 @@ ExporterSymbol
 
 	    /// current indentation level
 
-	    0,
+	    2,
 
 	    /// wildcard selector
 
@@ -374,10 +384,6 @@ ExporterSymbol
 
 	    iType,
 	};
-
-    //- increase indent
-
-    exd.iIndent += 2;
 
     //- traverse symbols that match with wildcard
 
@@ -396,10 +402,6 @@ ExporterSymbol
 
 	iResult = 0;
     }
-
-    //- decrease indent
-
-    exd.iIndent -= 2;
 
     //- return result
 
@@ -451,11 +453,21 @@ ExporterSymbolStopper
 
 	    if (pexd->iType == EXPORTER_TYPE_NDF)
 	    {
-		fprintf(pexd->pfile, "END CHILD\n");
+		char *pcToken
+		    = (pexd->iIndent == 2
+		       ? "ALIAS"
+		       : "CHILD");
+
+		fprintf(pexd->pfile, "END %s\n", pcToken);
 	    }
 	    else
 	    {
-		fprintf(pexd->pfile, "</child>\n");
+		char *pcToken
+		    = (pexd->iIndent == 2
+		       ? "alias"
+		       : "child");
+
+		fprintf(pexd->pfile, "</%s>\n", pcToken);
 	    }
 	}
 

@@ -41,8 +41,8 @@ IMPORT
 END IMPORT
 
 PRIVATE_MODELS
-  CHILD mapper::/Synapse Synapse
-  END CHILD
+  ALIAS mapper::/Synapse Synapse
+  END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
@@ -95,8 +95,8 @@ PUBLIC_MODELS
 </import>
 
 <private_models>
-  <child> <namespace>mapper</namespace><prototype>/Synapse</prototype> <name>Synapse</name>
-  </child>
+  <alias> <namespace>mapper</namespace><prototype>/Synapse</prototype> <name>Synapse</name>
+  </alias>
 </private_models>
 
 <public_models>
@@ -170,17 +170,17 @@ IMPORT
 END IMPORT
 
 PRIVATE_MODELS
-  CHILD k::/k k
-  END CHILD
-  CHILD na::/na na
-  END CHILD
+  ALIAS k::/k k
+  END ALIAS
+  ALIAS na::/na na
+  END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CHILD k k
-  END CHILD
-  CHILD na na
-  END CHILD
+  ALIAS k k
+  END ALIAS
+  ALIAS na na
+  END ALIAS
 PUBLIC_MODELS
 ',
 							   },
@@ -202,17 +202,17 @@ PUBLIC_MODELS
 </import>
 
 <private_models>
-  <child> <namespace>k</namespace><prototype>/k</prototype> <name>k</name>
-  </child>
-  <child> <namespace>na</namespace><prototype>/na</prototype> <name>na</name>
-  </child>
+  <alias> <namespace>k</namespace><prototype>/k</prototype> <name>k</name>
+  </alias>
+  <alias> <namespace>na</namespace><prototype>/na</prototype> <name>na</name>
+  </alias>
 </private_models>
 
 <public_models>
-  <child> <prototype>k</prototype> <name>k</name>
-  </child>
-  <child> <prototype>na</prototype> <name>na</name>
-  </child>
+  <alias> <prototype>k</prototype> <name>k</name>
+  </alias>
+  <alias> <prototype>na</prototype> <name>na</name>
+  </alias>
 </public_models>
 ',
 							   },
