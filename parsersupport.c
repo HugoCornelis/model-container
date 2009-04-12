@@ -2198,7 +2198,13 @@ int ParserParse
 
 	//- unswitch the lexical analyzer
 
-	LexFileUnswitch(((PARSERCONTEXT *)pacParserContext)->pyyBuffer);
+	//! if we don't do this check, we get a crash, but I would
+	//! anyway expect pyyBuffer never to be NULL here ...
+
+	if (((PARSERCONTEXT *)pacParserContext)->pyyBuffer)
+	{
+	    LexFileUnswitch(((PARSERCONTEXT *)pacParserContext)->pyyBuffer);
+	}
 
 	//- set current parser context back to previous
 

@@ -2030,15 +2030,27 @@ QueryHandlerImportFile
 	strpbrk(&pcLine[iLength + 1], pcSeparator)[0] = '\0';
     }
 
+    //- allocate memory for permanent storage
+
+    pcFilename = strdup(pcFilename);
+
+    pcNamespace = strdup(pcNamespace);
+
+    //- qualify the filename
+
+    char *pcQualified = ParserContextQualifyFilename(NULL, pcFilename);
+
+    fprintf(stdout, "importing file %s as %s\n", pcFilename, pcQualified);
+
     //- import the file
 
-    if (!ParserImport(pneuro->pacRootContext, pcFilename, NULL, pcNamespace))
+    if (!ParserImport(pneuro->pacRootContext, pcQualified, pcFilename, pcNamespace))
     {
-	fprintf(stdout, "importing file failed\n");
+	fprintf(stdout, "importing file %s failed\n", pcFilename);
     }
     else
     {
-	fprintf(stdout, "importing file ok\n");
+	fprintf(stdout, "importing file %s ok\n", pcFilename);
     }
 
     //- return result
