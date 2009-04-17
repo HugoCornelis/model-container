@@ -109,10 +109,14 @@ IOListResolveInput
 /* struct symtab_IOList * IOListCalloc(void); */
 
 struct symtab_IOContainer *
+IOListGetBindables
+(struct symtab_IOList *piol);
+
+struct symtab_IOContainer *
 IOListGetInputs
 (struct symtab_IOList *piol);
 
-void IOListInit(struct symtab_IOList * piol);
+int IOListInit(struct symtab_IOList * piol);
 
 
 #include "neurospaces/iocontainer.h"

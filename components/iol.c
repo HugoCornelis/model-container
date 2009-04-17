@@ -31,26 +31,23 @@
 
 
 /// 
-/// 
-/// \arg piol symbol to get inputs from.
+/// \arg piol symbol to get bindables from.
 /// 
 /// \return struct symtab_IOContainer * 
 /// 
-///	input container of symbol.
+///	bindable container of symbol.
 /// 
-/// \brief Find inputs of symbol.
-/// \details 
+/// \brief Find bindables of symbol.
 /// 
 
 struct symtab_IOContainer *
-IOListGetInputs
+IOListGetBindables
 (struct symtab_IOList *piol)
 {
-    //- set default result : not found
+    //- set default result: from symbol
 
-    struct symtab_IOContainer * piocResult = NULL;
-
-    piocResult = piol->piocInputs;
+    struct symtab_IOContainer * piocResult
+	= piol->piocBindable;
 
     //- return result
 
@@ -59,17 +56,44 @@ IOListGetInputs
 
 
 /// 
+/// \arg piol symbol to get inputs from.
 /// 
-///	piol.: list element with I/O to init
+/// \return struct symtab_IOContainer * 
 /// 
-/// \return void
+///	input container of symbol.
 /// 
-/// \brief Init list element with I/O
-/// \details 
+/// \brief Find inputs of symbol.
 /// 
 
-void IOListInit(struct symtab_IOList * piol)
+struct symtab_IOContainer *
+IOListGetInputs
+(struct symtab_IOList *piol)
 {
+    //- set default result: from symbol
+
+    struct symtab_IOContainer * piocResult
+	= piol->piocInputs;
+
+    //- return result
+
+    return(piocResult);
+}
+
+
+/// 
+/// \arg piol list element with I/O to init.
+/// 
+/// \return int success of operation.
+/// 
+/// \brief Init list element with I/O
+/// 
+
+int IOListInit(struct symtab_IOList * piol)
+{
+    //- set default result: success
+
+    int iResult = 1;
+
     //- init base symbol
 
     SymbolInit(&piol->hsle);
@@ -78,6 +102,10 @@ void IOListInit(struct symtab_IOList * piol)
 
     piol->piocInputs = IOContainerCalloc();
     piol->piocBindable = IOContainerCalloc();
+
+    //- return result
+
+    return(iResult);
 }
 
 

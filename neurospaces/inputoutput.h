@@ -82,9 +82,17 @@ struct symtab_InputOutput
 
 /* struct symtab_InputOutput * InputOutputCalloc(void); */
 
+int
+InputOutputExport
+(struct symtab_InputOutput *pio,
+ struct PidinStack *ppist,
+ int iIndent,
+ int iType,
+ FILE *pfile);
+
 char * InputOutputFieldName(struct symtab_InputOutput *pio);
 
-void InputOutputInit(struct symtab_InputOutput *pio);
+int InputOutputInit(struct symtab_InputOutput *pio);
 
 struct symtab_InputOutput * InputOutputNewForType(int iType);
 

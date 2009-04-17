@@ -48,6 +48,16 @@ struct exporter_data
 
 
 static
+int
+ExporterBindables
+(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, struct exporter_data *pexd);
+
+static
+int
+ExporterBindings
+(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, struct exporter_data *pexd);
+
+static
 int 
 ExporterSymbolStarter
 (struct TreespaceTraversal *ptstr, void *pvUserdata);
@@ -65,6 +75,169 @@ static
 int 
 ExporterSymbolStopper
 (struct TreespaceTraversal *ptstr, void *pvUserdata);
+
+
+///
+/// \arg phsle symbol to export bindables of.
+/// \arg ppist context of symbol.
+///
+/// \return int success of operation.
+///
+/// \brief Export the bindables of a symbol.
+///
+
+static
+int
+ExporterBindables
+(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, struct exporter_data *pexd)
+{
+    //- set default result: success
+
+    int iResult = 1;
+
+    //- if has bindables
+
+    if (instanceof_iol(phsle))
+    {
+	struct symtab_IOList *piol
+	    = (struct symtab_IOList *)phsle;
+
+	//- lookup bindables
+
+	struct symtab_IOContainer * pioc
+	    = IOListGetBindables(piol);
+
+	//- loop over bindables
+
+	struct symtab_InputOutput *pio
+	    = IOContainerIterateRelations(pioc);
+
+	if (pio)
+	{
+	    PrintIndent(pexd->iIndent + 2, pexd->pfile);
+
+	    if (pexd->iType == EXPORTER_TYPE_NDF)
+	    {
+		fprintf(pexd->pfile, "BINDABLES\n");
+	    }
+	    else
+	    {
+		fprintf(pexd->pfile, "<bindables>\n");
+	    }
+
+	    while (pio)
+	    {
+		//- export this bindable
+
+		if (!InputOutputExport(pio, ppist, pexd->iIndent + 4, pexd->iType, pexd->pfile))
+		{
+		    iResult = 0;
+
+		    break;
+		}
+
+		pio = IOContainerNextRelation(pio);
+	    }
+
+	    PrintIndent(pexd->iIndent + 2, pexd->pfile);
+
+	    if (pexd->iType == EXPORTER_TYPE_NDF)
+	    {
+		fprintf(pexd->pfile, "END BINDABLES\n");
+	    }
+	    else
+	    {
+		fprintf(pexd->pfile, "</bindables>\n");
+	    }
+
+	}
+    }
+
+    //- return result
+
+    return(iResult);
+}
+
+
+///
+/// \arg phsle symbol to export bindings of.
+/// \arg ppist context of symbol.
+///
+/// \return int success of operation.
+///
+/// \brief Export the bindings of a symbol.
+///
+
+static
+int
+ExporterBindings
+(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, struct exporter_data *pexd)
+{
+    //- set default result: success
+
+    int iResult = 1;
+
+    //- if has bindings
+
+    if (instanceof_iol(phsle))
+    {
+	struct symtab_IOList *piol
+	    = (struct symtab_IOList *)phsle;
+
+	//- lookup bindings
+
+	struct symtab_IOContainer * pioc
+	    = IOListGetInputs(piol);
+
+	//- loop over bindings
+
+	struct symtab_InputOutput *pio
+	    = IOContainerIterateRelations(pioc);
+
+	if (pio)
+	{
+	    PrintIndent(pexd->iIndent + 2, pexd->pfile);
+
+	    if (pexd->iType == EXPORTER_TYPE_NDF)
+	    {
+		fprintf(pexd->pfile, "BINDINGS\n");
+	    }
+	    else
+	    {
+		fprintf(pexd->pfile, "<bindings>\n");
+	    }
+
+	    while (pio)
+	    {
+		//- export this binding
+
+		if (!InputOutputExport(pio, ppist, pexd->iIndent + 4, pexd->iType, pexd->pfile))
+		{
+		    iResult = 0;
+
+		    break;
+		}
+
+		pio = IOContainerNextRelation(pio);
+	    }
+
+	    PrintIndent(pexd->iIndent + 2, pexd->pfile);
+
+	    if (pexd->iType == EXPORTER_TYPE_NDF)
+	    {
+		fprintf(pexd->pfile, "END BINDINGS\n");
+	    }
+	    else
+	    {
+		fprintf(pexd->pfile, "</bindings>\n");
+	    }
+	}
+    }
+
+    //- return result
+
+    return(iResult);
+}
 
 
 /// 
@@ -341,6 +514,22 @@ ExporterSymbolStarter
 	    {
 		fprintf(pexd->pfile, "<%s> <name>%s</name>\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
 	    }
+	}
+
+	//- at this moment we never export bindables and bindings if this is symbol is an alias
+
+/* 	struct symtab_BioComponent * pbioPrototype */
+/* 	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle); */
+
+	if (!pbioPrototype)
+	{
+	    //- export bindables
+
+	    ExporterBindables(phsle, ptstr->ppist, pexd);
+
+	    //- export bindings
+
+	    ExporterBindings(phsle, ptstr->ppist, pexd);
 	}
 
 	//- export parameter of this biological component

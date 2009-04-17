@@ -47,6 +47,10 @@ END PRIVATE_MODELS
 
 PUBLIC_MODELS
   CHANNEL NMDA_fixed_conductance
+    BINDABLES
+      INPUT Vm,
+      OUTPUT I,
+    END BINDABLES
     PARAMETERS
       PARAMETER ( Erev = 0 ),
       PARAMETER ( G_MAX = 
@@ -59,6 +63,13 @@ PUBLIC_MODELS
     CHILD Synapse synapse
     END CHILD
     EQUATION_EXPONENTIAL exp2
+      BINDABLES
+        INPUT activation,
+        OUTPUT G,
+      END BINDABLES
+      BINDINGS
+        INPUT ../synapse->activation,
+      END BINDINGS
       PARAMETERS
         PARAMETER ( TAU1 = 0.0005 ),
         PARAMETER ( TAU2 = 0.0012 ),
@@ -66,9 +77,20 @@ PUBLIC_MODELS
     END EQUATION_EXPONENTIAL
   END CHANNEL
   CHANNEL NMDA
+    BINDABLES
+      INPUT Vm,
+      OUTPUT I,
+    END BINDABLES
     CHILD Synapse synapse
     END CHILD
     EQUATION_EXPONENTIAL exp2
+      BINDABLES
+        INPUT activation,
+        OUTPUT G,
+      END BINDABLES
+      BINDINGS
+        INPUT ../synapse->activation,
+      END BINDINGS
       PARAMETERS
         PARAMETER ( TAU1 = 0.0005 ),
         PARAMETER ( TAU2 = 0.0012 ),
@@ -101,6 +123,10 @@ PUBLIC_MODELS
 
 <public_models>
   <CHANNEL> <name>NMDA_fixed_conductance</name>
+    <bindables>
+      <input> <name>Vm</name> </input>
+      <output> <name>I</name> </output>
+    </bindables>
     <parameters>
       <parameter> <name>Erev</name><value>0</value> </parameter>
       <parameter> <name>G_MAX</name>
@@ -112,6 +138,13 @@ PUBLIC_MODELS
     <child> <prototype>Synapse</prototype> <name>synapse</name>
     </child>
     <EQUATION_EXPONENTIAL> <name>exp2</name>
+      <bindables>
+        <input> <name>activation</name> </input>
+        <output> <name>G</name> </output>
+      </bindables>
+      <bindings>
+        <input> <name>../synapse->activation</name> </input>
+      </bindings>
       <parameters>
         <parameter> <name>TAU1</name><value>0.0005</value> </parameter>
         <parameter> <name>TAU2</name><value>0.0012</value> </parameter>
@@ -119,9 +152,20 @@ PUBLIC_MODELS
     </EQUATION_EXPONENTIAL>
   </CHANNEL>
   <CHANNEL> <name>NMDA</name>
+    <bindables>
+      <input> <name>Vm</name> </input>
+      <output> <name>I</name> </output>
+    </bindables>
     <child> <prototype>Synapse</prototype> <name>synapse</name>
     </child>
     <EQUATION_EXPONENTIAL> <name>exp2</name>
+      <bindables>
+        <input> <name>activation</name> </input>
+        <output> <name>G</name> </output>
+      </bindables>
+      <bindings>
+        <input> <name>../synapse->activation</name> </input>
+      </bindings>
       <parameters>
         <parameter> <name>TAU1</name><value>0.0005</value> </parameter>
         <parameter> <name>TAU2</name><value>0.0012</value> </parameter>
@@ -260,6 +304,10 @@ END PRIVATE_MODELS
 
 PUBLIC_MODELS
   CHANNEL NMDA_fixed_conductance
+    BINDABLES
+      INPUT Vm,
+      OUTPUT I,
+    END BINDABLES
     PARAMETERS
       PARAMETER ( Erev = 0 ),
       PARAMETER ( G_MAX = 
@@ -272,6 +320,13 @@ PUBLIC_MODELS
     CHILD Synapse synapse
     END CHILD
     EQUATION_EXPONENTIAL exp2
+      BINDABLES
+        INPUT activation,
+        OUTPUT G,
+      END BINDABLES
+      BINDINGS
+        INPUT ../synapse->activation,
+      END BINDINGS
       PARAMETERS
         PARAMETER ( TAU1 = 0.0005 ),
         PARAMETER ( TAU2 = 0.0012 ),
@@ -279,9 +334,20 @@ PUBLIC_MODELS
     END EQUATION_EXPONENTIAL
   END CHANNEL
   CHANNEL NMDA
+    BINDABLES
+      INPUT Vm,
+      OUTPUT I,
+    END BINDABLES
     CHILD Synapse synapse
     END CHILD
     EQUATION_EXPONENTIAL exp2
+      BINDABLES
+        INPUT activation,
+        OUTPUT G,
+      END BINDABLES
+      BINDINGS
+        INPUT ../synapse->activation,
+      END BINDINGS
       PARAMETERS
         PARAMETER ( TAU1 = 0.0005 ),
         PARAMETER ( TAU2 = 0.0012 ),
@@ -314,6 +380,10 @@ PUBLIC_MODELS
 
 <public_models>
   <CHANNEL> <name>NMDA_fixed_conductance</name>
+    <bindables>
+      <input> <name>Vm</name> </input>
+      <output> <name>I</name> </output>
+    </bindables>
     <parameters>
       <parameter> <name>Erev</name><value>0</value> </parameter>
       <parameter> <name>G_MAX</name>
@@ -325,6 +395,13 @@ PUBLIC_MODELS
     <child> <prototype>Synapse</prototype> <name>synapse</name>
     </child>
     <EQUATION_EXPONENTIAL> <name>exp2</name>
+      <bindables>
+        <input> <name>activation</name> </input>
+        <output> <name>G</name> </output>
+      </bindables>
+      <bindings>
+        <input> <name>../synapse->activation</name> </input>
+      </bindings>
       <parameters>
         <parameter> <name>TAU1</name><value>0.0005</value> </parameter>
         <parameter> <name>TAU2</name><value>0.0012</value> </parameter>
@@ -332,9 +409,20 @@ PUBLIC_MODELS
     </EQUATION_EXPONENTIAL>
   </CHANNEL>
   <CHANNEL> <name>NMDA</name>
+    <bindables>
+      <input> <name>Vm</name> </input>
+      <output> <name>I</name> </output>
+    </bindables>
     <child> <prototype>Synapse</prototype> <name>synapse</name>
     </child>
     <EQUATION_EXPONENTIAL> <name>exp2</name>
+      <bindables>
+        <input> <name>activation</name> </input>
+        <output> <name>G</name> </output>
+      </bindables>
+      <bindings>
+        <input> <name>../synapse->activation</name> </input>
+      </bindings>
       <parameters>
         <parameter> <name>TAU1</name><value>0.0005</value> </parameter>
         <parameter> <name>TAU2</name><value>0.0012</value> </parameter>
@@ -373,6 +461,10 @@ END PRIVATE_MODELS
 
 PUBLIC_MODELS
   CHANNEL NMDA_fixed_conductance
+    BINDABLES
+      INPUT Vm,
+      OUTPUT I,
+    END BINDABLES
     PARAMETERS
       PARAMETER ( Erev = 0 ),
       PARAMETER ( G_MAX = 
@@ -385,6 +477,13 @@ PUBLIC_MODELS
     CHILD Synapse synapse
     END CHILD
     EQUATION_EXPONENTIAL exp2
+      BINDABLES
+        INPUT activation,
+        OUTPUT G,
+      END BINDABLES
+      BINDINGS
+        INPUT ../synapse->activation,
+      END BINDINGS
       PARAMETERS
         PARAMETER ( TAU1 = 0.0005 ),
         PARAMETER ( TAU2 = 0.0012 ),
@@ -392,9 +491,20 @@ PUBLIC_MODELS
     END EQUATION_EXPONENTIAL
   END CHANNEL
   CHANNEL NMDA
+    BINDABLES
+      INPUT Vm,
+      OUTPUT I,
+    END BINDABLES
     CHILD Synapse synapse
     END CHILD
     EQUATION_EXPONENTIAL exp2
+      BINDABLES
+        INPUT activation,
+        OUTPUT G,
+      END BINDABLES
+      BINDINGS
+        INPUT ../synapse->activation,
+      END BINDINGS
       PARAMETERS
         PARAMETER ( TAU1 = 0.0005 ),
         PARAMETER ( TAU2 = 0.0012 ),
@@ -420,6 +530,10 @@ PUBLIC_MODELS
 
 <public_models>
   <CHANNEL> <name>NMDA_fixed_conductance</name>
+    <bindables>
+      <input> <name>Vm</name> </input>
+      <output> <name>I</name> </output>
+    </bindables>
     <parameters>
       <parameter> <name>Erev</name><value>0</value> </parameter>
       <parameter> <name>G_MAX</name>
@@ -431,6 +545,13 @@ PUBLIC_MODELS
     <child> <prototype>Synapse</prototype> <name>synapse</name>
     </child>
     <EQUATION_EXPONENTIAL> <name>exp2</name>
+      <bindables>
+        <input> <name>activation</name> </input>
+        <output> <name>G</name> </output>
+      </bindables>
+      <bindings>
+        <input> <name>../synapse->activation</name> </input>
+      </bindings>
       <parameters>
         <parameter> <name>TAU1</name><value>0.0005</value> </parameter>
         <parameter> <name>TAU2</name><value>0.0012</value> </parameter>
@@ -438,9 +559,20 @@ PUBLIC_MODELS
     </EQUATION_EXPONENTIAL>
   </CHANNEL>
   <CHANNEL> <name>NMDA</name>
+    <bindables>
+      <input> <name>Vm</name> </input>
+      <output> <name>I</name> </output>
+    </bindables>
     <child> <prototype>Synapse</prototype> <name>synapse</name>
     </child>
     <EQUATION_EXPONENTIAL> <name>exp2</name>
+      <bindables>
+        <input> <name>activation</name> </input>
+        <output> <name>G</name> </output>
+      </bindables>
+      <bindings>
+        <input> <name>../synapse->activation</name> </input>
+      </bindings>
       <parameters>
         <parameter> <name>TAU1</name><value>0.0005</value> </parameter>
         <parameter> <name>TAU2</name><value>0.0012</value> </parameter>
@@ -487,6 +619,10 @@ PRIVATE_MODELS
   ALIAS gate2::/naf_inactivation naf_gate_inactivation
   END ALIAS
   CHANNEL NaF
+    BINDABLES
+      INPUT Vm,
+      OUTPUT I,
+    END BINDABLES
     PARAMETERS
       PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
       PARAMETER ( G_MAX = 75000 ),
@@ -498,6 +634,12 @@ PRIVATE_MODELS
     END CHILD
   END CHANNEL
   SEGMENT soma2
+    BINDABLES
+      OUTPUT Vm,
+    END BINDABLES
+    BINDINGS
+      INPUT NaF->I,
+    END BINDINGS
     PARAMETERS
       PARAMETER ( Vm_init = -0.028 ),
       PARAMETER ( RM = 1 ),
@@ -541,6 +683,10 @@ PUBLIC_MODELS
   <alias> <namespace>gate2</namespace><prototype>/naf_inactivation</prototype> <name>naf_gate_inactivation</name>
   </alias>
   <CHANNEL> <name>NaF</name>
+    <bindables>
+      <input> <name>Vm</name> </input>
+      <output> <name>I</name> </output>
+    </bindables>
     <parameters>
       <parameter> <name>CHANNEL_TYPE</name><string>ChannelActInact</string> </parameter>
       <parameter> <name>G_MAX</name><value>75000</value> </parameter>
@@ -552,6 +698,12 @@ PUBLIC_MODELS
     </child>
   </CHANNEL>
   <SEGMENT> <name>soma2</name>
+    <bindables>
+      <output> <name>Vm</name> </output>
+    </bindables>
+    <bindings>
+      <input> <name>NaF->I</name> </input>
+    </bindings>
     <parameters>
       <parameter> <name>Vm_init</name><value>-0.028</value> </parameter>
       <parameter> <name>RM</name><value>1</value> </parameter>

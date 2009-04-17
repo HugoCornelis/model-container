@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "neurospaces/exporter.h"
 #include "neurospaces/inputoutput.h"
 #include "neurospaces/hines_list.h"
 #include "neurospaces/idin.h"
@@ -34,13 +35,11 @@ static struct symtab_InputOutput * InputOutputCalloc(void);
 
 
 /// 
-/// 
 /// \return struct symtab_InputOutput * 
 /// 
-///	Newly allocated input, NULL for failure
+///	Newly allocated input, NULL for failure.
 /// 
-/// \brief Allocate a new input/output symbol table element
-/// \details 
+/// \brief Allocate a new input/output symbol table element.
 /// 
 
 static struct symtab_InputOutput * InputOutputCalloc(void)
@@ -65,13 +64,100 @@ static struct symtab_InputOutput * InputOutputCalloc(void)
 }
 
 
+///
+/// \arg pio input/output to export.
+/// \arg ppist context of input/output.
+/// \arg iIndent current indentation level.
+/// \arg iType type of export, see exporter.h.
+/// \arg pfile stream to export to.
+///
+/// \return int success of operation.
+///
+/// \brief export this input/output.
+///
+
+int
+InputOutputExport
+(struct symtab_InputOutput *pio,
+ struct PidinStack *ppist,
+ int iIndent,
+ int iType,
+ FILE *pfile)
+{
+    //- set default result: success
+
+    int iResult = 1;
+
+    PrintIndent(iIndent, pfile);
+
+    //- for an input
+
+    if (pio->iType == INPUT_TYPE_INPUT)
+    {
+	//- export input
+
+	struct PidinStack *ppist2 = PidinStackCalloc();
+
+	PidinStackPushAll(ppist2, pio->pidinField);
+
+	char pc[1000];
+
+	PidinStackString(ppist2, pc, sizeof(pc));
+
+	if (iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pfile, "INPUT %s,\n", pc);
+	}
+	else
+	{
+	    fprintf(pfile, "<input> <name>%s</name> </input>\n", pc);
+	}
+
+	PidinStackFree(ppist2);      
+    }
+
+    //- for an output
+
+    else if (pio->iType == INPUT_TYPE_OUTPUT)
+    {
+	//- export output
+
+	struct PidinStack *ppist2 = PidinStackCalloc();
+
+	PidinStackPushAll(ppist2, pio->pidinField);
+
+	char pc[1000];
+
+	PidinStackString(ppist2, pc, sizeof(pc));
+
+	if (iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pfile, "OUTPUT %s,\n", pc);
+	}
+	else
+	{
+	    fprintf(pfile, "<output> <name>%s</name> </output>\n", pc);
+	}
+
+	PidinStackFree(ppist2);
+    }
+    else
+    {
+    }
+
+    //- return result
+
+    return(iResult);
+}
+
+
 /// 
+/// \arg pio input/output to get field name for.
 /// 
-///	pio.: input/output to get field name for
+/// \return char * : name of input/output field, NULL for failure.
 /// 
-/// \return char * : name of input/output field, NULL for failure
-/// 
-/// \brief get name of input/output field
+/// \brief get name of input/output field.
+///
 /// \details 
 /// 
 ///	Return value is pointer to symbol table read only data.
@@ -120,38 +206,42 @@ char * InputOutputFieldName(struct symtab_InputOutput *pio)
 
 
 /// 
+/// \arg pio input/output to init.
 /// 
-///	pio.: input/output to init
+/// \return int success of operation.
 /// 
-/// \return void
-/// 
-/// \brief init input
-/// \details 
+/// \brief init input.
 /// 
 
-void InputOutputInit(struct symtab_InputOutput *pio)
+int InputOutputInit(struct symtab_InputOutput *pio)
 {
+    //- set default result: success
+
+    int iResult = 1;
+
     //- zero out all fields
 
     memset((void *)pio,0,sizeof(*pio));
+
+    //- return result
+
+    return(iResult);
 }
 
 
 /// 
-/// 
-///	iType..: type to allocate, INPUT_TYPE_INPUT or INPUT_TYPE_OUTPUT
+/// \arg iType type to allocate, INPUT_TYPE_INPUT or INPUT_TYPE_OUTPUT.
 /// 
 /// \return struct symtab_InputOutput * 
 /// 
-///	Newly allocated input, NULL for failure
+///	Newly allocated input, NULL for failure.
 /// 
-/// \brief Allocate a new input/output symbol table element
-/// \details 
+/// \brief Allocate a new input/output symbol table element.
 /// 
 
 struct symtab_InputOutput * InputOutputNewForType(int iType)
 {
-    //- set default result : failure
+    //- set default result: failure
 
     struct symtab_InputOutput *pioResult = InputOutputCalloc();
 
@@ -168,16 +258,14 @@ struct symtab_InputOutput * InputOutputNewForType(int iType)
 
 
 /// 
-/// 
-///	pio....: input/output
-/// \arg ppist stack with context
+/// \arg pio input/output.
+/// \arg ppist stack with context.
 /// 
 /// \return struct PidinStack *
 /// 
 ///	Context attached to this input.
 /// 
-/// \brief find element that is attached to the given input
-/// \details 
+/// \brief find element that is attached to the given input.
 /// 
 
 struct PidinStack * 

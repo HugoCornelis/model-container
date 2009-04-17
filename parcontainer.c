@@ -86,7 +86,8 @@ struct symtab_ParContainer * ParContainerCalloc(void)
 /// 
 /// \brief export all parameters to YAML.
 ///
-/// \todo pfile does not propagate through yet.
+/// \todo pfile does not propagate through yet.  What did I mean with
+/// propagate again ?
 ///
 
 int
