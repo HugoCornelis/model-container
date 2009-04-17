@@ -333,6 +333,7 @@ clean-local:
 	$(RM) -fr `find $(srcdir) -name _Inline`
 	$(RM) -fr $(srcdir)/hierarchy/output
 	$(RM) -rf $(top_srcdir)/docs/html
+	$(RM) -rf $(top_srcdir)/docs/model-container
 
 TESTS = $(srcdir)/tests/neurospaces_harness
 
@@ -463,6 +464,9 @@ libneurospacesread.so: libneurospacesread.a
 #perldir = $(prefix)/glue/swig/perl
 
 #nobase_perl_DATA = @PERL_EMBED_DATA@
+
+doxygen-upload: 
+	scp -r docs/model-container docs@repo-genesis3.cbi.utsa.edu:~/doxygen
 
 doxygen: doxygen.cfg
 	$(DOXYGEN) doxygen.cfg
