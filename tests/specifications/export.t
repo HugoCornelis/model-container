@@ -7,31 +7,32 @@ use strict;
 my $test
     = {
        command_definitions => [
-			       {
-				arguments => [
-					      '-q',
-					      '-v',
-					      '1',
-					      'channels/nmda.ndf',
-					     ],
-				command => './neurospacesparse',
-				command_tests => [
-						  {
-						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/channels/nmda.ndf.', ],
-						   timeout => 15,
-						  },
-						  {
-						   description => "Can we export the model to an NDF file ?",
-						   read => 'neurospaces',
-						   wait => 1,
-						   write => "export ndf /tmp/1.ndf /**",
-						  },
-						  {
-						   description => "Does the exported NDF file contain the correct model ?",
-						   read => {
-							    application_output_file => '/tmp/1.ndf',
-							    expected_output => '#!neurospacesparse
+			       (
+				{
+				 arguments => [
+					       '-q',
+					       '-v',
+					       '1',
+					       'channels/nmda.ndf',
+					      ],
+				 command => './neurospacesparse',
+				 command_tests => [
+						   {
+						    description => "Is neurospaces startup successful ?",
+						    read => [ '-re', './neurospacesparse: No errors for .+?/channels/nmda.ndf.', ],
+						    timeout => 15,
+						   },
+						   {
+						    description => "Can we export the model to an NDF file ?",
+						    read => 'neurospaces',
+						    wait => 1,
+						    write => "export ndf /tmp/1.ndf /**",
+						   },
+						   {
+						    description => "Does the exported NDF file contain the correct model ?",
+						    read => {
+							     application_output_file => '/tmp/1.ndf',
+							     expected_output => '#!neurospacesparse
 // -*- NEUROSPACES -*-
 
 NEUROSPACES NDF
@@ -99,20 +100,20 @@ PUBLIC_MODELS
   END CHANNEL
 END PUBLIC_MODELS
 ',
-							   },
-						  },
-						  {
-						   description => "Can we export the model to an XML file ?",
-						   read => 'neurospaces',
-						   wait => 1,
-						   write => "export xml /tmp/1.xml /**",
-						  },
-						  {
-						   comment => 'xml to html conversion fails when converting this test to html',
-						   description => "Does the exported XML file contain the correct model ?",
-						   read => {
-							    application_output_file => '/tmp/1.xml',
-							    expected_output => '<import>
+							    },
+						   },
+						   {
+						    description => "Can we export the model to an XML file ?",
+						    read => 'neurospaces',
+						    wait => 1,
+						    write => "export xml /tmp/1.xml /**",
+						   },
+						   {
+						    comment => 'xml to html conversion fails when converting this test to html',
+						    description => "Does the exported XML file contain the correct model ?",
+						    read => {
+							     application_output_file => '/tmp/1.xml',
+							     expected_output => '<import>
     <file> <namespace>mapper</namespace> <filename>mappers/spikereceiver.ndf</filename> </file>
 </import>
 
@@ -174,36 +175,36 @@ END PUBLIC_MODELS
   </CHANNEL>
 </public_models>
 ',
-							   },
-						  },
-						 ],
-				description => "export of a simple model",
-			       },
-			       {
-				arguments => [
-					      '-q',
-					      '-v',
-					      '1',
-					      'channels/hodgkin-huxley.ndf',
-					     ],
-				command => './neurospacesparse',
-				command_tests => [
-						  {
-						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/channels/hodgkin-huxley.ndf.', ],
-						   timeout => 15,
-						  },
-						  {
-						   description => "Can we export the model to an NDF file ?",
-						   read => 'neurospaces',
-						   wait => 1,
-						   write => "export ndf /tmp/1.ndf /**",
-						  },
-						  {
-						   description => "Does the exported NDF file contain the correct model ?",
-						   read => {
-							    application_output_file => '/tmp/1.ndf',
-							    expected_output => '#!neurospacesparse
+							    },
+						   },
+						  ],
+				 description => "export of a simple model",
+				},
+				{
+				 arguments => [
+					       '-q',
+					       '-v',
+					       '1',
+					       'channels/hodgkin-huxley.ndf',
+					      ],
+				 command => './neurospacesparse',
+				 command_tests => [
+						   {
+						    description => "Is neurospaces startup successful ?",
+						    read => [ '-re', './neurospacesparse: No errors for .+?/channels/hodgkin-huxley.ndf.', ],
+						    timeout => 15,
+						   },
+						   {
+						    description => "Can we export the model to an NDF file ?",
+						    read => 'neurospaces',
+						    wait => 1,
+						    write => "export ndf /tmp/1.ndf /**",
+						   },
+						   {
+						    description => "Does the exported NDF file contain the correct model ?",
+						    read => {
+							     application_output_file => '/tmp/1.ndf',
+							     expected_output => '#!neurospacesparse
 // -*- NEUROSPACES -*-
 
 NEUROSPACES NDF
@@ -227,20 +228,20 @@ PUBLIC_MODELS
   END ALIAS
 END PUBLIC_MODELS
 ',
-							   },
-						  },
-						  {
-						   description => "Can we export the model to an XML file ?",
-						   read => 'neurospaces',
-						   wait => 1,
-						   write => "export xml /tmp/1.xml /**",
-						  },
-						  {
-						   comment => 'xml to html conversion fails when converting this test to html',
-						   description => "Does the exported XML file contain the correct model ?",
-						   read => {
-							    application_output_file => '/tmp/1.xml',
-							    expected_output => '<import>
+							    },
+						   },
+						   {
+						    description => "Can we export the model to an XML file ?",
+						    read => 'neurospaces',
+						    wait => 1,
+						    write => "export xml /tmp/1.xml /**",
+						   },
+						   {
+						    comment => 'xml to html conversion fails when converting this test to html',
+						    description => "Does the exported XML file contain the correct model ?",
+						    read => {
+							     application_output_file => '/tmp/1.xml',
+							     expected_output => '<import>
     <file> <namespace>k</namespace> <filename>channels/hodgkin-huxley/potassium.ndf</filename> </file>
     <file> <namespace>na</namespace> <filename>channels/hodgkin-huxley/sodium.ndf</filename> </file>
 </import>
@@ -259,36 +260,36 @@ END PUBLIC_MODELS
   </alias>
 </public_models>
 ',
-							   },
-						  },
-						 ],
-				description => "export of a HH alike channel model in different ways",
-			       },
-			       {
-				arguments => [
-					      '-q',
-					      '-v',
-					      '1',
-					      'channels/nmda.ndf',
-					     ],
-				command => './neurospacesparse',
-				command_tests => [
-						  {
-						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/channels/nmda.ndf.', ],
-						   timeout => 15,
-						  },
-						  {
-						   description => "Can we export the model to an NDF file ?",
-						   read => 'neurospaces',
-						   wait => 1,
-						   write => "export ndf /tmp/1.ndf /**",
-						  },
-						  {
-						   description => "Does the exported NDF file contain the correct model ?",
-						   read => {
-							    application_output_file => '/tmp/1.ndf',
-							    expected_output => '#!neurospacesparse
+							    },
+						   },
+						  ],
+				 description => "export of a HH alike channel model in different ways",
+				},
+				{
+				 arguments => [
+					       '-q',
+					       '-v',
+					       '1',
+					       'channels/nmda.ndf',
+					      ],
+				 command => './neurospacesparse',
+				 command_tests => [
+						   {
+						    description => "Is neurospaces startup successful ?",
+						    read => [ '-re', './neurospacesparse: No errors for .+?/channels/nmda.ndf.', ],
+						    timeout => 15,
+						   },
+						   {
+						    description => "Can we export the model to an NDF file ?",
+						    read => 'neurospaces',
+						    wait => 1,
+						    write => "export ndf /tmp/1.ndf /**",
+						   },
+						   {
+						    description => "Does the exported NDF file contain the correct model ?",
+						    read => {
+							     application_output_file => '/tmp/1.ndf',
+							     expected_output => '#!neurospacesparse
 // -*- NEUROSPACES -*-
 
 NEUROSPACES NDF
@@ -356,20 +357,20 @@ PUBLIC_MODELS
   END CHANNEL
 END PUBLIC_MODELS
 ',
-							   },
-						  },
-						  {
-						   description => "Can we export the model to an XML file ?",
-						   read => 'neurospaces',
-						   wait => 1,
-						   write => "export xml /tmp/1.xml /**",
-						  },
-						  {
-						   comment => 'xml to html conversion fails when converting this test to html',
-						   description => "Does the exported XML file contain the correct model ?",
-						   read => {
-							    application_output_file => '/tmp/1.xml',
-							    expected_output => '<import>
+							    },
+						   },
+						   {
+						    description => "Can we export the model to an XML file ?",
+						    read => 'neurospaces',
+						    wait => 1,
+						    write => "export xml /tmp/1.xml /**",
+						   },
+						   {
+						    comment => 'xml to html conversion fails when converting this test to html',
+						    description => "Does the exported XML file contain the correct model ?",
+						    read => {
+							     application_output_file => '/tmp/1.xml',
+							     expected_output => '<import>
     <file> <namespace>mapper</namespace> <filename>mappers/spikereceiver.ndf</filename> </file>
 </import>
 
@@ -431,19 +432,19 @@ END PUBLIC_MODELS
   </CHANNEL>
 </public_models>
 ',
-							   },
-						  },
-						  {
-						   description => 'Can we import a gaba channel ?',
-						   write => 'importfile channels/gaba.ndf gaba',
-						  },
-						  {
-						   description => 'Can we import a basket type synaptic channel ?',
-						   write => 'importfile channels/purkinje_basket.ndf basket',
-						  },
-						  {
-						   description => 'Are the imported namespaces present in the ndf export ?',
-						   read => '#!neurospacesparse
+							    },
+						   },
+						   {
+						    description => 'Can we import a gaba channel ?',
+						    write => 'importfile channels/gaba.ndf gaba',
+						   },
+						   {
+						    description => 'Can we import a basket type synaptic channel ?',
+						    write => 'importfile channels/purkinje_basket.ndf basket',
+						   },
+						   {
+						    description => 'Are the imported namespaces present in the ndf export ?',
+						    read => '#!neurospacesparse
 // -*- NEUROSPACES -*-
 
 NEUROSPACES NDF
@@ -513,11 +514,11 @@ PUBLIC_MODELS
   END CHANNEL
 END PUBLIC_MODELS
 ',
-						   write => 'export ndf STDOUT /**',
-						  },
-						  {
-						   description => 'Are the imported namespaces present in the xml export ?',
-						   read => '<import>
+						    write => 'export ndf STDOUT /**',
+						   },
+						   {
+						    description => 'Are the imported namespaces present in the xml export ?',
+						    read => '<import>
     <file> <namespace>mapper</namespace> <filename>mappers/spikereceiver.ndf</filename> </file>
     <file> <namespace>gaba</namespace> <filename>channels/gaba.ndf</filename> </file>
     <file> <namespace>basket</namespace> <filename>channels/purkinje_basket.ndf</filename> </file>
@@ -581,28 +582,28 @@ END PUBLIC_MODELS
   </CHANNEL>
 </public_models>
 ',
-						   write => 'export xml STDOUT /**',
-						  },
-						 ],
-				description => "export of a simple model and manually importing files",
-			       },
-			       {
-				arguments => [
-					      '-q',
-					      '-v',
-					      '1',
-					      'tests/cells/singlea_naf.ndf',
-					     ],
-				command => './neurospacesparse',
-				command_tests => [
-						  {
-						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/singlea_naf.ndf.', ],
-						   timeout => 15,
-						  },
-						  {
-						   description => "Can we export the model as NDF ?",
-						   read => '#!neurospacesparse
+						    write => 'export xml STDOUT /**',
+						   },
+						  ],
+				 description => "export of a simple model and manually importing files",
+				},
+				{
+				 arguments => [
+					       '-q',
+					       '-v',
+					       '1',
+					       'tests/cells/singlea_naf.ndf',
+					      ],
+				 command => './neurospacesparse',
+				 command_tests => [
+						   {
+						    description => "Is neurospaces startup successful ?",
+						    read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/singlea_naf.ndf.', ],
+						    timeout => 15,
+						   },
+						   {
+						    description => "Can we export the model as NDF ?",
+						    read => '#!neurospacesparse
 // -*- NEUROSPACES -*-
 
 NEUROSPACES NDF
@@ -667,11 +668,11 @@ PUBLIC_MODELS
   END CELL
 END PUBLIC_MODELS
 ',
-						   write => "export ndf STDOUT /**",
-						  },
-						  {
-						   description => "Can we export the model as XML ?",
-						   read => '<import>
+						    write => "export ndf STDOUT /**",
+						   },
+						   {
+						    description => "Can we export the model as XML ?",
+						    read => '<import>
     <file> <namespace>soma</namespace> <filename>tests/segments/soma.ndf</filename> </file>
     <file> <namespace>gate1</namespace> <filename>gates/naf_activation.ndf</filename> </file>
     <file> <namespace>gate2</namespace> <filename>gates/naf_inactivation.ndf</filename> </file>
@@ -731,11 +732,25 @@ END PUBLIC_MODELS
   </CELL>
 </public_models>
 ',
-						   write => "export xml STDOUT /**",
-						  },
-						 ],
-				description => "export of a model with an active channel",
-			       },
+						    write => "export xml STDOUT /**",
+						   },
+						  ],
+				 description => "export of a model with an active channel",
+				},
+			       ),
+			       (
+# 				map
+# 				{
+# 				}
+# 				qw(
+# 				   channels/nmda.ndf
+# 				   cells/purkinje/edsjb1994.ndf
+# 				   cells/purkinje/edsjb1994_partitioned.ndf
+# 				   populations/
+# 				   networks/input.ndf
+# 				   networks/white-matter.ndf
+# 				  )
+			       ),
 			      ],
        description => "exporting models in a variety of export formats",
        name => 'export.t',
