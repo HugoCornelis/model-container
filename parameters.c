@@ -1110,7 +1110,7 @@ ParameterExport
 
 	if (iType == EXPORTER_TYPE_NDF)
 	{
-	    fprintf(pfile, "),\n");
+	    fprintf(pfile, "), ),\n");
 	}
 	else
 	{

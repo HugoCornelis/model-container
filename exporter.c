@@ -386,7 +386,7 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 
 	if (iType == EXPORTER_TYPE_NDF)
 	{
-	    fprintf(pfile, "PUBLIC_MODELS\n");
+	    fprintf(pfile, "END PUBLIC_MODELS\n");
 	}
 	else
 	{

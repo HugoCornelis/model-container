@@ -1,3 +1,5 @@
+/* -*- C -*- */
+
 AttachmentSectionEnd
 	:
 		EndPushedPidin
@@ -733,6 +735,7 @@ InputOutputRelations	/* <pioc> */
 	|
 		TOKEN_BINDABLES
 			InputRelations
+			OptionalComma
 		TOKEN_END TOKEN_BINDABLES
 		{
 #line
@@ -743,6 +746,7 @@ InputOutputRelations	/* <pioc> */
 	|
 		TOKEN_BINDABLES
 			OutputRelations
+			OptionalComma
 		TOKEN_END TOKEN_BINDABLES
 		{
 #line
@@ -755,6 +759,7 @@ InputOutputRelations	/* <pioc> */
 			InputRelations
 			','
 			OutputRelations
+			OptionalComma
 		TOKEN_END TOKEN_BINDABLES
 		{
 #line

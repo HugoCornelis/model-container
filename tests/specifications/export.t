@@ -58,7 +58,7 @@ PUBLIC_MODELS
           (
               PARAMETER ( value = 6.87066e-10 ),
               PARAMETER ( scale = 1 ),
-          ),
+          ), ),
     END PARAMETERS
     CHILD Synapse synapse
     END CHILD
@@ -97,7 +97,7 @@ PUBLIC_MODELS
       END PARAMETERS
     END EQUATION_EXPONENTIAL
   END CHANNEL
-PUBLIC_MODELS
+END PUBLIC_MODELS
 ',
 							   },
 						  },
@@ -225,7 +225,7 @@ PUBLIC_MODELS
   END ALIAS
   ALIAS na na
   END ALIAS
-PUBLIC_MODELS
+END PUBLIC_MODELS
 ',
 							   },
 						  },
@@ -315,7 +315,7 @@ PUBLIC_MODELS
           (
               PARAMETER ( value = 6.87066e-10 ),
               PARAMETER ( scale = 1 ),
-          ),
+          ), ),
     END PARAMETERS
     CHILD Synapse synapse
     END CHILD
@@ -354,7 +354,7 @@ PUBLIC_MODELS
       END PARAMETERS
     END EQUATION_EXPONENTIAL
   END CHANNEL
-PUBLIC_MODELS
+END PUBLIC_MODELS
 ',
 							   },
 						  },
@@ -472,7 +472,7 @@ PUBLIC_MODELS
           (
               PARAMETER ( value = 6.87066e-10 ),
               PARAMETER ( scale = 1 ),
-          ),
+          ), ),
     END PARAMETERS
     CHILD Synapse synapse
     END CHILD
@@ -511,7 +511,7 @@ PUBLIC_MODELS
       END PARAMETERS
     END EQUATION_EXPONENTIAL
   END CHANNEL
-PUBLIC_MODELS
+END PUBLIC_MODELS
 ',
 						   write => 'export ndf STDOUT /**',
 						  },
@@ -665,7 +665,7 @@ PUBLIC_MODELS
       END CHILD
     END SEGMENT_GROUP
   END CELL
-PUBLIC_MODELS
+END PUBLIC_MODELS
 ',
 						   write => "export ndf STDOUT /**",
 						  },
