@@ -44,6 +44,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* #pragma nooptimize */
 
 struct PidinStack;
 
@@ -766,6 +767,9 @@ int PidinStackUpdateCaches(struct PidinStack *ppist)
 
 
 #undef PIDINSTACK_SMART_CACHE
+
+
+/* #pragma optimize */
 
 
 #endif
