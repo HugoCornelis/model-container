@@ -119,7 +119,6 @@ int SymbolDeleter(struct TreespaceTraversal *ptstr, void *pvUserdata)
 
 
 /// 
-/// 
 /// \arg phsle symbol to get ID for.
 /// 
 /// \return char *
@@ -220,7 +219,6 @@ SymbolCacheParameterDouble
 }
 
 
-/// 
 /// 
 /// \arg phsle symbol to use for caching.
 /// \arg iSerial serial to use for caching, context of parameter.
