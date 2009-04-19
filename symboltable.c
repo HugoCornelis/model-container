@@ -1339,7 +1339,7 @@ SymbolParameterTransformValue
 /// 
 /// \arg phsle symbol container.
 /// \arg ppist context of given element
-///	iPrincipal.: principal serial ID for sub-symbol.
+/// \arg iPrincipal principal serial ID for sub-symbol.
 /// 
 /// \return struct PidinStack *
 /// 
@@ -3272,7 +3272,7 @@ SymbolTraverseWildcard
 /// 
 /// \arg phsle symbol container.
 /// \arg ppist element to search.
-///	iLevel.: active level of ppist,
+/// \arg iLevel active level of ppist,
 ///		0 <= iLevel < PidinStackNumberOfEntries().
 /// \arg bAll set TRUE if all names in ppist should be searched.
 /// 
