@@ -739,17 +739,60 @@ END PUBLIC_MODELS
 				},
 			       ),
 			       (
-# 				map
-# 				{
-# 				}
-# 				qw(
-# 				   channels/nmda.ndf
-# 				   cells/purkinje/edsjb1994.ndf
-# 				   cells/purkinje/edsjb1994_partitioned.ndf
-# 				   populations/
-# 				   networks/input.ndf
-# 				   networks/white-matter.ndf
-# 				  )
+				map
+				{
+				    my $ndf = $_;
+
+				    (
+				     {
+				      arguments => [
+						    '-q',
+						    '-v',
+						    '1',
+						    $ndf,
+						   ],
+				      command => './neurospacesparse',
+				      command_tests => [
+							{
+							 description => "Is neurospaces startup successful ?",
+							 read => [ '-re', "./neurospacesparse: No errors for .+?/$ndf.", ],
+							 timeout => 15,
+							},
+							{
+							 description => "Can we export the model as NDF ?",
+							 wait => 1,
+							 write => "export ndf /tmp/1.ndf /**",
+							},
+						       ],
+				      description => "export of $ndf before reading it back",
+				     },
+				     {
+				      arguments => [
+						    '-q',
+						    '-v',
+						    '1',
+						    '/tmp/1.ndf',
+						   ],
+				      command => './neurospacesparse',
+				      command_tests => [
+							{
+							 description => "Is neurospaces startup successful ?",
+							 read => "./neurospacesparse: No errors for /tmp/1.ndf.",
+							 timeout => 15,
+							},
+						       ],
+				      description => "reading of $ndf after exporting it",
+				      disabled => ($ndf eq "networks/input.ndf" ? "export of $ndf does not work correctly, connection vectors and connection symbol vectors are messed up." : 0),
+				     },
+				    );
+				}
+				qw(
+				   channels/nmda.ndf
+				   cells/purkinje/edsjb1994.ndf
+				   cells/purkinje/edsjb1994_partitioned.ndf
+				   networks/input.ndf
+				   networks/white-matter.ndf
+				  )
 			       ),
 			      ],
        description => "exporting models in a variety of export formats",
