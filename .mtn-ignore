@@ -13,6 +13,7 @@ Makefile$
 ^docs/latex
 ^docs/man
 ^docs/rtf
+^docs/model-container
 ^elc-temp$
 ^glue/swig/perl/SwiggableNeurospaces.dylib$
 ^glue/swig/perl/SwiggableNeurospaces.pm$
