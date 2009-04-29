@@ -1,4 +1,4 @@
-static char *pcVersionTime="(09/04/19) Sunday, April 19, 2009 16:00:29 hugo";
+static char *pcVersionTime="(09/04/29) Wednesday, April 29, 2009 03:48:28 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -18,6 +18,66 @@ static char *pcVersionTime="(09/04/19) Sunday, April 19, 2009 16:00:29 hugo";
 //' coding ............	Hugo Cornelis, hugo.cornelis@gmail.com
 //'
 //////////////////////////////////////////////////////////////////////////////
+
+/*! \mainpage Neurospaces Model Container
+ *
+ * \section intro_sec Introduction
+ *
+ * The Neurospaces Model Container provides an internal and external
+ * storage format for models that is independent of any implementation
+ * of a mathematical solver.  The <em>Neurospaces Model Container</em>
+ * is used as an abstraction layer on top of a solver and deals with
+ * biological entities and end-user concepts rather than mathematical
+ * equations.  The model container stores models in an intuitive way
+ * and is easy to use where a solver is not.  It provides a solver
+ * independent internal storage format for models to allow user
+ * invisible optimizations of the numerical core.  By 'containing' the
+ * biological model, the model container reliefs the implementation of
+ * the numerical core from the software implementation pressures
+ * typically associated with heterogeneously structured data typical
+ * for biological models.
+ *
+ *
+ * \section advantages Advantages
+ *
+ * \subsection descr_nature Descriptive Nature
+ *
+ * The declarative nature of the neurospaces API allows to _describe_
+ * models reaching from subcellular level to systems level.  This
+ * allows to extract information from a model, otherwise unaccessible.
+ * The best example is extraction of the information needed to
+ * partition a model.
+ *
+ * \subsection separation_algo Separation between Algorithmic
+ * Descriptions and Atomic Descriptions
+ *
+ * The model container separates the algorithmic part from the
+ * descriptive part.  Algorithms are instantiated with parameterized
+ * references to algorithm classes.
+ *
+ * \subsection data_compression Automatic Data Compression
+ *
+ * The Neurospaces model container stores a model in a very compact
+ * representation.  This is only possible because the model container
+ * does not handle the technical part of a simulation.
+ *
+ * \subsection data_struct_transform Data Transformations
+ *
+ * On the fly structure transformations on the compressed data creates
+ * different structural views on the same data without further
+ * processing or caching.  This is similar to XML structure
+ * transformations, but comes at little cost.  An example of such a
+ * transformation is the split of a spine in two compartments.
+ *
+ * \subsection connection_matrix Multiple Views on the Connection Matrix
+ *
+ * The model container allows to inspect connectivity in different
+ * ways, which is especially relevant for projections between
+ * networks.  Projections as well as networks may have a hierarchical
+ * structure.
+ *
+ */
+
 
 #include <stdarg.h>
 #include <stdlib.h>
