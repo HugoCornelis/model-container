@@ -198,19 +198,11 @@ PSymbolSerialStackTop(struct PSymbolSerialStack *psymsst)
 {
     //- return active symbol from base struct
 
+    struct symtab_HSolveListElement *
+	PSymbolStackTop(struct PSymbolStack *psymst);
+
     return(PSymbolStackTop(&psymsst->symst));
 }
-
-
-/// \def
-/// \def free given symbol serial stack
-/// \def
-
-#define PSymbolSerialStackFree(psymsst)					\
-do {									\
-    free(psymsst);							\
-    psymsst = NULL;							\
-} while (0)
 
 
 #include "pidinstack.h"

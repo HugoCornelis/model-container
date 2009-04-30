@@ -137,123 +137,39 @@ PSymbolStackElementSymbol(struct PSymbolStack *psymst, int i)
 }
 
 
-/// \def
-/// \def test type(psymst) == struct PSymbolStack * at compile time
-/// \def
-
-#define CompileTimeTestPSymbolStack(psymst)				\
-do {									\
-    struct PSymbolStack symst;						\
-    (psymst) == &symst;							\
-} while (0)
-
-
-/// \def
-/// \def append two symbol stacks, flags unaffected, no compaction
-/// \def
-
-#define PSymbolStackAppend(psymstTarget,psymstSource)			\
-({									\
-    int i;								\
-    CompileTimeTestPSymbolStack(psymstTarget);				\
-    CompileTimeTestPSymbolStack(psymstSource);				\
-    for (i = 0; i <= (psymstSource)->iTop; i++)				\
-    {									\
-	PSymbolStackPush						\
-	    ((psymstTarget),						\
-	     (psymstSource)->pphsle[i]);				\
-    }									\
-    1;									\
-})
-
-
-/// \def
-/// \def free given symbol stack
-/// \def
-
-#define PSymbolStackFree(psymst)					\
-do {									\
-    free(psymst);							\
-    psymst = NULL;							\
-} while (0)
-
-
-/// \def
-/// \def duplicate symbol stack
-/// \def
-
-#define PSymbolStackDuplicate(psymst)					\
-({									\
-    struct PSymbolStack *psymstResult = NULL;				\
-    CompileTimeTestPSymbolStack(psymst);				\
-    psymstResult = PSymbolStackCalloc();				\
-    if (psymstResult)							\
-    {									\
-	*psymstResult = *(psymst);					\
-    }									\
-    psymstResult;							\
-})
-
-
-/// \def
-/// \def get number of entries in symbol stack
-/// \def
-
-#define PSymbolStackNumberOfEntries(psymst)				\
-({									\
-    CompileTimeTestPSymbolStack(psymst);				\
-    (psymst)->iTop + 1;							\
-})
-
-
-/// \def
-/// \def register symbol stack is rooted
-/// \def
-
-#define PSymbolStackSetRooted(psymst)					\
-do {									\
-    CompileTimeTestPSymbolStack(psymst);				\
-    (psymst)->iFlags |= FLAG_SYMST_ROOTED;				\
-} while (0)
-
-
-/// \def
-/// \def check if symbol stack is rooted
-/// \def
-
-#define PSymbolStackIsRooted(psymst)					\
-({									\
-    CompileTimeTestPSymbolStack(psymst);				\
-    (psymst)->iFlags & FLAG_SYMST_ROOTED != 0;				\
-})
-
-
-/// \def
-/// \def get topmost element
-/// \def
-
-#define PSymbolStackTop(psymst)						\
-({									\
-    CompileTimeTestPSymbolStack(psymst);				\
-    PSymbolStackElementSymbol((psymst),(psymst)->iTop);			\
-})
-
-
 #include "pidinstack.h"
 #include "symboltable.h"
 
 
 struct PSymbolStack * PSymbolStackCalloc(void);
 
-void PSymbolStackInit(struct PSymbolStack *psymst);
+int
+PSymbolStackAppend
+(struct PSymbolStack *psymstTarget, struct PSymbolStack *psymstSource);
+
+struct PSymbolStack *
+PSymbolStackDuplicate(struct PSymbolStack *psymst);
+
+int PSymbolStackFree(struct PSymbolStack *psymst);
+
+int PSymbolStackInit(struct PSymbolStack *psymst);
+
+int PSymbolStackIsRooted(struct PSymbolStack *psymst);
 
 struct PSymbolStack * 
 PSymbolStackNewFromPidinStack(struct PidinStack *ppist);
+
+int PSymbolStackNumberOfEntries(struct PSymbolStack *psymst);
 
 struct symtab_HSolveListElement * PSymbolStackPop(struct PSymbolStack *psymst);
 
 int PSymbolStackPush
 (struct PSymbolStack *psymst,struct symtab_HSolveListElement *phsle);
+
+int PSymbolStackSetRooted(struct PSymbolStack *psymst);
+
+struct symtab_HSolveListElement *
+PSymbolStackTop(struct PSymbolStack *psymst);
 
 
 #endif

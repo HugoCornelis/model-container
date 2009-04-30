@@ -54,7 +54,7 @@
 /// 
 ///	Newly allocated symbol stack, NULL for failure.
 /// 
-/// \brief Allocate a new symbol stack symbol table element.
+/// \brief Allocate a new symbol stack.
 /// 
 
 struct PSymbolStack * PSymbolStackCalloc(void)
@@ -80,6 +80,68 @@ struct PSymbolStack * PSymbolStackCalloc(void)
 
 
 /// 
+/// \arg psymstTarget target symbol stack.
+/// \arg psymstSource source symbol stack.
+/// 
+/// \return int success of operation.
+/// 
+/// \brief Append two symbol stacks.
+/// 
+
+int
+PSymbolStackAppend
+(struct PSymbolStack *psymstTarget, struct PSymbolStack *psymstSource)
+{
+    int i;
+
+    for (i = 0; i <= (psymstSource)->iTop; i++)
+    {
+	PSymbolStackPush(psymstTarget, psymstSource->pphsle[i]);
+    }
+
+    return(1);
+}
+
+
+/// 
+/// \arg psymst symbol stack to duplicate.
+///
+/// \return struct PSymbolStack * 
+/// 
+///	Duplicate of symbol stack, NULL for failure.
+/// 
+/// \brief Duplicate a symbol stack.
+/// 
+
+struct PSymbolStack *
+PSymbolStackDuplicate(struct PSymbolStack *psymst)
+{
+    struct PSymbolStack *psymstResult = PSymbolStackCalloc();
+
+    if (psymstResult)
+    {
+	*psymstResult = *psymst;
+    }
+
+    return(psymstResult);
+}
+
+
+///
+/// \arg psymst symbol stack to free.
+///
+/// \return int success of operation.
+///
+/// \brief Free memory of a symbol stack.
+///
+
+int PSymbolStackFree(struct PSymbolStack *psymst)
+{
+    free(psymst);
+}
+
+
+/// 
 /// \arg psymst symbol stack to clear.
 /// 
 /// \return int success of operation.
@@ -87,7 +149,7 @@ struct PSymbolStack * PSymbolStackCalloc(void)
 /// \brief Initialize a symbol stack.
 /// 
 
-void PSymbolStackInit(struct PSymbolStack *psymst)
+int PSymbolStackInit(struct PSymbolStack *psymst)
 {
     //- clear stack top
 
@@ -96,6 +158,20 @@ void PSymbolStackInit(struct PSymbolStack *psymst)
     //- return success
 
     return 1;
+}
+
+
+/// 
+/// \arg psymst symbol stack.
+/// 
+/// \return int true if rooted.
+/// 
+/// \brief Check if symbol stack is rooted.
+///
+
+int PSymbolStackIsRooted(struct PSymbolStack *psymst)
+{
+    return(psymst->iFlags & FLAG_SYMST_ROOTED != 0);
 }
 
 
@@ -209,6 +285,18 @@ PSymbolStackNewFromPidinStack(struct PidinStack *ppist)
 
 
 /// 
+/// \arg psymst symbol stack.
+/// 
+/// \return int number of entries in the symbol stack.
+///
+
+int PSymbolStackNumberOfEntries(struct PSymbolStack *psymst)
+{
+    return(psymst->iTop + 1);
+}
+
+
+/// 
 /// \arg psymst symbol stack to pop.
 /// 
 /// \return struct symtab_IdentifierIndex * popped idin, NULL for
@@ -286,6 +374,38 @@ int PSymbolStackPush
     //- return result
 
     return(bResult);
+}
+
+
+/// 
+/// \arg psymst symbol stack.
+/// 
+/// \return int success of operation.
+/// 
+/// \brief Set rooted flag.
+/// 
+
+int PSymbolStackSetRooted(struct PSymbolStack *psymst)
+{
+    psymst->iFlags |= FLAG_SYMST_ROOTED;
+
+    return 1;
+}
+
+
+/// 
+/// \arg psymst symbol stack.
+/// 
+/// \return struct symtab_HSolveListElement * topmost symbol table
+/// element.
+/// 
+/// \brief Get topmost element.
+///
+
+struct symtab_HSolveListElement *
+PSymbolStackTop(struct PSymbolStack *psymst)
+{
+    return(PSymbolStackElementSymbol(psymst, psymst->iTop));
 }
 
 
