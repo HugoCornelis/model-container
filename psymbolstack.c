@@ -50,13 +50,11 @@
 
 
 /// 
-/// 
 /// \return struct PSymbolStack * 
 /// 
-///	Newly allocated symbol stack, NULL for failure
+///	Newly allocated symbol stack, NULL for failure.
 /// 
-/// \brief Allocate a new symbol stack symbol table element
-/// \details 
+/// \brief Allocate a new symbol stack symbol table element.
 /// 
 
 struct PSymbolStack * PSymbolStackCalloc(void)
@@ -82,13 +80,11 @@ struct PSymbolStack * PSymbolStackCalloc(void)
 
 
 /// 
+/// \arg psymst symbol stack to clear.
 /// 
-/// \arg psymst symbol stack to clear
+/// \return int success of operation.
 /// 
-/// \return void
-/// 
-/// \brief Initialize a symbol stack
-/// \details 
+/// \brief Initialize a symbol stack.
 /// 
 
 void PSymbolStackInit(struct PSymbolStack *psymst)
@@ -96,19 +92,21 @@ void PSymbolStackInit(struct PSymbolStack *psymst)
     //- clear stack top
 
     psymst->iTop = -1;
+
+    //- return success
+
+    return 1;
 }
 
 
 /// 
+/// \arg ppist pidin stack to convert.
 /// 
-/// \arg ppist pidin stack to convert
+/// \return struct PSymbolStack * new symbol stack.
 /// 
-/// \return struct PSymbolStack * : new symbol stack
+/// \brief Create symbol stack correspoonding to ppist.
 /// 
-/// \brief Create symbol stack correspoonding to ppist
-/// \details 
-/// 
-/// \todo  Optimize, function to get #pidins on stack
+/// \todo Optimize, function to get #pidins on stack.
 /// 
 
 struct PSymbolStack * 
@@ -211,13 +209,12 @@ PSymbolStackNewFromPidinStack(struct PidinStack *ppist)
 
 
 /// 
+/// \arg psymst symbol stack to pop.
 /// 
-/// \arg psymst symbol stack to pop
+/// \return struct symtab_IdentifierIndex * popped idin, NULL for
+/// failure.
 /// 
-/// \return struct symtab_IdentifierIndex * : popped idin, NULL for failure
-/// 
-/// \brief Pop symbol from stack
-/// \details 
+/// \brief Pop symbol from stack.
 /// 
 
 struct symtab_HSolveListElement * PSymbolStackPop(struct PSymbolStack *psymst)
@@ -250,14 +247,12 @@ struct symtab_HSolveListElement * PSymbolStackPop(struct PSymbolStack *psymst)
 
 
 /// 
+/// \arg psymst symbol stack to push onto.
+/// \arg phsle phsle to push.
 /// 
-/// \arg psymst symbol stack to push onto
-/// \arg phsle phsle to push
+/// \return int success of operation.
 /// 
-/// \return int : success of operation
-/// 
-/// \brief Push phsle onto stack
-/// \details 
+/// \brief Push phsle onto stack.
 /// 
 
 int PSymbolStackPush
