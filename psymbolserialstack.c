@@ -48,14 +48,63 @@ PSymbolSerialStackPushed
 (struct PSymbolSerialStack *psymsst,struct symtab_HSolveListElement *phsle);
 
 
+///
+/// \arg psymsst symbol serial stack. 
+///
+/// \return struct symtab_HSolveListElement *
 /// 
+///	Base element.
+/// 
+/// \brief Get base element.
+/// 
+
+struct symtab_HSolveListElement *
+PSymbolSerialStackBase(struct PSymbolSerialStack *psymsst)
+{
+    //- return active symbol from base struct
+
+    return(PSymbolStackBase(&psymsst->symst));
+}
+
+
+///
+/// \arg psymsst symbol serial stack. 
+///
+/// \return int Number of cached entries.
+/// 
+/// \brief Get cached number of entries.
+/// 
+
+int PSymbolSerialStackCachedEntries(struct PSymbolSerialStack *psymsst)
+{
+    //- set result : cached principal serial
+
+    return(psymsst->iPrincipalEntries);
+}
+
+
+///
+/// \arg psymsst symbol serial stack. 
+///
+/// \return int Cached serial.
+/// 
+/// \brief Get cached principal serial.
+/// 
+
+int PSymbolSerialStackCachedSerial(struct PSymbolSerialStack *psymsst)
+{
+    //- set result : cached principal serial
+
+    return(psymsst->iPrincipalSerial);
+}
+
+
 /// 
 /// \return struct PSymbolSerialStack * 
 /// 
 ///	Newly allocated symbol serial stack, NULL for failure
 /// 
 /// \brief Allocate a new symbol serial stack symbol table element
-/// \details 
 /// 
 
 struct PSymbolSerialStack * PSymbolSerialStackCalloc(void)
@@ -80,17 +129,53 @@ struct PSymbolSerialStack * PSymbolSerialStackCalloc(void)
 }
 
 
+///
+/// \arg psymsst symbol serial stack. 
+///
+/// \return int success of operation.
 /// 
+/// \brief Register symbol serial stack is not rooted
+/// 
+
+int PSymbolSerialStackClearRooted(struct PSymbolSerialStack *psymsst)
+{
+    //- set result : from base struct
+
+    PSymbolStackClearRooted(&psymsst->symst);
+}
+
+
+///
+/// \arg psymsst symbol serial stack. 
+///
+/// \return struct symtab_HSolveListElement *
+/// 
+/// \brief Get element at given place
+/// 
+
+struct symtab_HSolveListElement *
+PSymbolSerialStackElementSymbol(struct PSymbolSerialStack *psymsst, int i)
+{
+    //- set default result : from base struct
+
+    struct symtab_HSolveListElement *phsleResult
+	= PSymbolStackElementSymbol(&psymsst->symst,i);
+
+    //- return result
+
+    return(phsleResult);
+}
+
+
 /// 
 /// \arg psymsst symbol serial stack to clear
 /// 
-/// \return void
+/// \return int success of operation.
 /// 
 /// \brief Initialize a symbol serial stack
-/// \details 
 /// 
 
-void PSymbolSerialStackInit(struct PSymbolSerialStack *psymsst)
+int PSymbolSerialStackInit(struct PSymbolSerialStack *psymsst)
 {
     //- init base struct
 
@@ -101,10 +186,29 @@ void PSymbolSerialStackInit(struct PSymbolSerialStack *psymsst)
     psymsst->iPrincipalSerial = 0;
 
     psymsst->iPrincipalEntries = PSymbolStackNumberOfEntries(&psymsst->symst);
+
+    //- return success
+
+    return 1;
 }
 
 
 /// 
+/// \arg psymsst symbol serial stack.
+/// 
+/// \return int number of entries in stack.
+/// 
+/// \brief Get number of entries in symbol serial stack
+/// 
+
+int PSymbolSerialStackNumberOfEntries(struct PSymbolSerialStack *psymsst)
+{
+    //- return : from base struct
+
+    return(PSymbolStackNumberOfEntries(&psymsst->symst));
+}
+
+
 /// 
 /// \arg psymsst symbol serial stack to pop
 /// 
@@ -113,7 +217,6 @@ void PSymbolSerialStackInit(struct PSymbolSerialStack *psymsst)
 ///	popped symbol, NULL for failure
 /// 
 /// \brief Pop symbol from stack
-/// \details 
 /// 
 
 struct symtab_HSolveListElement * 
@@ -149,13 +252,13 @@ PSymbolSerialStackPop(struct PSymbolSerialStack *psymsst)
 
 
 /// 
-/// 
 /// \arg psymsst popped symbol serial stack
 /// \arg phsle symbol that has been popped
 /// 
 /// \return void
 /// 
 /// \brief Repair a symbol serial stack that has been popped
+///
 /// \details 
 /// 
 ///	Updates serial after popping phsle from psymsst.
@@ -179,14 +282,12 @@ PSymbolSerialStackPopped
 
 
 /// 
+/// \arg psymsst symbol serial stack to push onto.
+/// \arg phsle phsle to push.
 /// 
-/// \arg psymsst symbol serial stack to push onto
-/// \arg phsle phsle to push
+/// \return int : success of operation.
 /// 
-/// \return int : success of operation
-/// 
-/// \brief Push phsle onto stack
-/// \details 
+/// \brief Push phsle onto stack.
 /// 
 
 int
@@ -223,13 +324,13 @@ PSymbolSerialStackPush
 
 
 /// 
-/// 
 /// \arg psymsst symbol serial stack after push
 /// \arg phsle symbol that has been pushed
 /// 
 /// \return void
 /// 
 /// \brief Repair a symbol serial stack that has been pushed on
+///
 /// \details 
 /// 
 ///	Updates serial after pushing phsle onto psymsst.
@@ -249,6 +350,44 @@ PSymbolSerialStackPushed
     psymsst->iPrincipalSerial += iPrincipalSerial;
 
     psymsst->iPrincipalEntries++;
+}
+
+
+/// 
+/// \arg psymsst symbol serial stack.
+/// 
+/// \return int success of operation.
+/// 
+/// \brief Register symbol serial stack is rooted.
+/// 
+
+int PSymbolSerialStackSetRooted(struct PSymbolSerialStack *psymsst)
+{
+    //- set rooted for base struct
+
+    PSymbolStackSetRooted(&psymsst->symst);
+}
+
+
+/// 
+/// \arg psymsst symbol serial stack.
+/// 
+/// \return struct symtab_HSolveListElement * 
+/// 
+///	top symbol, NULL for failure.
+/// 
+/// \brief Get topmost element.
+/// 
+
+struct symtab_HSolveListElement *
+PSymbolSerialStackTop(struct PSymbolSerialStack *psymsst)
+{
+    //- return active symbol from base struct
+
+    struct symtab_HSolveListElement *
+	PSymbolStackTop(struct PSymbolStack *psymst);
+
+    return(PSymbolStackTop(&psymsst->symst));
 }
 
 
