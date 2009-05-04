@@ -2669,6 +2669,24 @@ void PidinStackCompress(struct PidinStack *ppist)
     {
 	PidinStackPushCompact(ppist, ppist->ppidin[i]);
     }
+
+    //- if we have an empty stack for result
+
+    if (ppist->iTop == -1)
+    {
+	//- and it is not rooted
+
+	if (!PidinStackIsRooted(ppist))
+	{
+	    //- we push a pointer to current element
+
+	    struct symtab_IdentifierIndex *pidin = IdinCalloc();
+
+	    IdinSetFlags(pidin, FLAG_IDENTINDEX_CURRENT);
+
+	    PidinStackPush(ppist, pidin);
+	}
+    }
 }
 
 
