@@ -1915,9 +1915,16 @@ int PidinStackPushCompact
 
     int iResult = TRUE;
 
+    //- if pidin points to current
+
+    if (IdinPointsToCurrent(pidin))
+    {
+	//- we do nothing
+    }
+
     //- if pidin points to parent
 
-    if (IdinPointsToParent(pidin))
+    else if (IdinPointsToParent(pidin))
     {
 	//- pop stack if possible
 
@@ -2644,9 +2651,9 @@ void PidinStackCompress(struct PidinStack *ppist)
 	return;
     }
 
-    //- reset top to first element
+    //- reset top
 
-    ppist->iTop = 0;
+    ppist->iTop = -1;
 
 #ifdef PIDINSTACK_SMART_CACHE
 
@@ -2656,9 +2663,9 @@ void PidinStackCompress(struct PidinStack *ppist)
 
 #endif
 
-    //- push & compact all but first entry
+    //- push & compact all entries
 
-    for (i = 1 ; i < iEntries ; i++)
+    for (i = 0 ; i < iEntries ; i++)
     {
 	PidinStackPushCompact(ppist, ppist->ppidin[i]);
     }
