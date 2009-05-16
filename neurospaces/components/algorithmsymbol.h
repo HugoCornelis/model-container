@@ -148,14 +148,12 @@ struct symtab_AlgorithmSymbol
 
 
 /// 
-/// 
 /// \arg palgs symbol to assign parameters to.
 /// \arg ppar new parameters.
 /// 
 /// \return int : success of operation.
 /// 
 /// \brief Assign parameter to symbol.
-/// \details 
 /// 
 
 #ifndef SWIG
@@ -170,14 +168,12 @@ AlgorithmSymbolAssignParameters
 
 
 /// 
-/// 
 /// \arg palgs symbol to get parameter for.
 /// \arg ppar new parameter.
 /// 
 /// \return struct symtab_Parameters * : new parameter.
 /// 
 /// \brief Set parameter with given name.
-/// \details 
 /// 
 
 #ifndef SWIG
@@ -216,7 +212,6 @@ AlgorithmSymbolGetName(struct symtab_AlgorithmSymbol *palgs)
 
 
 /// 
-/// 
 /// \arg palgs component to get parameter for
 /// \arg ppist context of symbol
 /// \arg pcName name of parameter to search for
@@ -224,7 +219,6 @@ AlgorithmSymbolGetName(struct symtab_AlgorithmSymbol *palgs)
 /// \return struct symtab_Parameters * : parameter, NULL for failure
 /// 
 /// \brief Get parameter with given name
-/// \details 
 /// 
 
 #ifndef SWIG
