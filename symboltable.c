@@ -2570,8 +2570,8 @@ SymbolSetAlgorithmInstanceInfo
 ///	This function operates at treespace level, i.e. if you change
 ///	a parameter with this function, only this symbol
 ///	will have the given parameter value.  Note that references to
-///	to the root of the given context will still share the
-///	parameter value.
+///	the root of the given context will still share the parameter
+///	value.
 /// 
 
 struct symtab_Parameters *

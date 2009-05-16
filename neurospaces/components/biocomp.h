@@ -68,6 +68,10 @@ struct symtab_BioComponent
 
     struct symtab_HSolveListElement *phslePrototype;
 
+    /// allocation identifier of the prototype symbol
+
+    int iPrototype;
+
     /// parameters
 
     struct symtab_ParContainer *pparc;
@@ -88,6 +92,9 @@ struct symtab_BioComponent
 
 
 // prototype functions
+
+int
+BioComponentAssignUniquePrototypeID(struct symtab_BioComponent *pbio);
 
 int BioComponentCountSpikeGenerators
 (struct symtab_HSolveListElement *phsle, struct PidinStack *ppist);
@@ -350,6 +357,10 @@ BioComponentChangeParameter
 
     struct symtab_Parameters *pparResult = ppar;
 
+    //- detach the prototype identifier
+
+    BioComponentAssignUniquePrototypeID(pbio);
+
     //- insert new parameter
 
     ParContainerInsert(pbio->pparc, pparResult);
@@ -555,6 +566,24 @@ BioComponentSetPrototype
     //- set prototype
 
     pbio->phslePrototype = &pbioProto->ioh.iol.hsle;
+
+    //- if the prototype has already a prototype identifier assigned
+
+    if (pbioProto->iPrototype)
+    {
+	//- inherit the prototype identifier
+
+	pbio->iPrototype = pbioProto->iPrototype;
+    }
+
+    //- else
+
+    else
+    {
+	//- create a new unique prototype identifier
+
+	BioComponentAssignUniquePrototypeID(pbio);
+    }
 
 #ifdef PRE_PROTO_TRAVERSAL
 

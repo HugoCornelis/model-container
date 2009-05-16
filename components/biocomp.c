@@ -53,13 +53,29 @@ struct ChildPositionData
 
 
 /// 
-/// \arg pbio biocomponent to count spike generators for
-/// \arg ppist context, biocomponent on top
+/// \arg pbio bio component.
 /// 
-/// \return int : number of spike generators in biocomponent, -1 for failure
+/// \return int success of operation.
 /// 
-/// \brief count spike generators in biocomponent
+/// \brief Assign a unique prototype identifier to this bio component.
 /// 
+
+int
+BioComponentAssignUniquePrototypeID(struct symtab_BioComponent *pbio)
+{
+    //- set default result: ok
+
+    int iResult = 1;
+
+    //- create a new unique prototype identifier
+
+    pbio->iPrototype = pbio->ioh.iol.hsle.iAllocationIdentifier;
+
+    //- return result
+
+    return(iResult);
+}
+
 
 static int 
 BioComponentSpikeGeneratorCounter
@@ -93,6 +109,16 @@ BioComponentSpikeGeneratorCounter
     return(iResult);
 }
 
+
+/// 
+/// \arg pbio biocomponent to count spike generators for
+/// \arg ppist context, biocomponent on top
+/// 
+/// \return int : number of spike generators in biocomponent, -1 for failure
+/// 
+/// \brief count spike generators in biocomponent
+/// 
+
 int BioComponentCountSpikeGenerators
 (struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)
 {
@@ -114,15 +140,6 @@ int BioComponentCountSpikeGenerators
     return(iResult);
 }
 
-
-/// 
-/// \arg pbio biocomponent to count spike receivers for
-/// \arg ppist context, biocomponent on top
-/// 
-/// \return int : number of spike receivers in biocomponent, -1 for failure
-/// 
-/// \brief count spike receivers in biocomponent
-/// 
 
 static int 
 BioComponentSpikeReceiverCounter
@@ -155,6 +172,16 @@ BioComponentSpikeReceiverCounter
 
     return(iResult);
 }
+
+
+/// 
+/// \arg pbio biocomponent to count spike receivers for
+/// \arg ppist context, biocomponent on top
+/// 
+/// \return int : number of spike receivers in biocomponent, -1 for failure
+/// 
+/// \brief count spike receivers in biocomponent
+/// 
 
 int BioComponentCountSpikeReceivers
 (struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)
@@ -447,6 +474,10 @@ BioComponentGetModifiableParameter
 	pparResult = calloc(1, sizeof(struct symtab_Parameters));
 
 	memcpy(pparResult, ppar, sizeof(struct symtab_Parameters));
+
+	//- detach the prototype identifier
+
+	BioComponentAssignUniquePrototypeID(pbio);
 
 	//- enqueue copy in parameter list
 
@@ -1150,6 +1181,10 @@ BioComponentSetParameterContext
 	    return(NULL);
 	}
 
+	//- detach the prototype identifier
+
+	BioComponentAssignUniquePrototypeID(pbio);
+
 	//- insert new parameter
 
 	ParContainerInsert(pbio->pparc, pparResult);
@@ -1211,6 +1246,10 @@ BioComponentSetParameterDouble
 	    return(NULL);
 	}
 
+	//- detach the prototype identifier
+
+	BioComponentAssignUniquePrototypeID(pbio);
+
 	//- insert new parameter
 
 	ParContainerInsert(pbio->pparc, pparResult);
@@ -1271,6 +1310,10 @@ BioComponentSetParameterString
 	{
 	    return(NULL);
 	}
+
+	//- detach the prototype identifier
+
+	BioComponentAssignUniquePrototypeID(pbio);
 
 	//- insert new parameter
 
