@@ -44,13 +44,11 @@ static double PoolGetBeta
 
 
 /// 
-/// 
 /// \return struct symtab_Pool * 
 /// 
 ///	Newly allocated pool, NULL for failure
 /// 
 /// \brief Allocate a new pool symbol table element
-/// \details 
 /// 
 
 struct symtab_Pool * PoolCalloc(void)
@@ -80,14 +78,12 @@ struct symtab_Pool * PoolCalloc(void)
 
 
 /// 
-/// 
 /// \arg ppool symbol to alias
 /// \arg pidin name of new symbol
 /// 
 /// \return struct symtab_HSolveListElement * : alias for original symbol
 /// 
 /// \brief Create alias to given symbol
-/// \details 
 /// 
 
 struct symtab_HSolveListElement * 
@@ -117,13 +113,13 @@ PoolCreateAlias
 
 
 /// 
-/// 
 /// \arg ppool pool to get unscaled beta for.
 /// \arg ppist context of pool.
 /// 
 /// \return double : always 1.
 /// 
 /// \brief Get time constant of segment.
+///
 /// \details 
 /// 
 ///	Beta is completely dependent on other values, so this value is
@@ -146,7 +142,6 @@ static double PoolGetBeta
 
 
 /// 
-/// 
 /// \arg ppool symbol to get parameter for.
 /// \arg ppist context of given symbol.
 /// \arg pcName name of parameter.
@@ -154,7 +149,6 @@ static double PoolGetBeta
 /// \return struct symtab_Parameters * : parameter structure
 /// 
 /// \brief Get parameter of symbol.
-/// \details 
 /// 
 
 struct symtab_Parameters * 
@@ -177,7 +171,7 @@ PoolGetParameter
     {
 	//- if surface
 
-	if (0 == strcmp(pcName,"BETA"))
+	if (0 == strcmp(pcName, "BETA"))
 	{
 	    //- get beta
 
@@ -189,6 +183,21 @@ PoolGetParameter
 		= SymbolSetParameterDouble
 		  (&ppool->bio.ioh.iol.hsle, "BETA", dBeta);
 	}
+
+	//- if initial concentration
+
+	else if (0 == strcmp(pcName, "concen_init"))
+	{
+	    //- get base
+
+	    double dBase = SymbolParameterResolveValue(&ppool->bio.ioh.iol.hsle, ppist, "BASE");
+
+	    //- set initial concentration
+
+	    pparResult
+		= SymbolSetParameterDouble
+		  (&ppool->bio.ioh.iol.hsle, "concentration", dBase);
+	}
     }
 
     //- return result
@@ -198,13 +207,11 @@ PoolGetParameter
 
 
 /// 
-/// 
 /// \arg ppool pool to init
 /// 
 /// \return void
 /// 
 /// \brief init pool
-/// \details 
 /// 
 
 void PoolInit(struct symtab_Pool *ppool)
@@ -220,7 +227,6 @@ void PoolInit(struct symtab_Pool *ppool)
 
 
 /// 
-/// 
 /// \arg ppool pool container
 /// \arg ppist name(s) to search
 /// \arg iLevel: active level of ppist
@@ -231,6 +237,7 @@ void PoolInit(struct symtab_Pool *ppool)
 ///	found symbol, NULL for not found
 /// 
 /// \brief Hierarchical lookup in pool subsymbols.
+///
 /// \details 
 /// 
 ///	Always fails.
@@ -254,7 +261,6 @@ PoolLookupHierarchical
 
 
 /// 
-/// 
 /// \arg ppool pool to scale value for
 /// \arg ppist context of given element
 /// \arg dValue value to scale
@@ -263,7 +269,6 @@ PoolLookupHierarchical
 /// \return double : scaled value, FLT_MAX for failure
 /// 
 /// \brief Scale value according to parameter type and symbol type
-/// \details 
 /// 
 
 double
@@ -298,18 +303,18 @@ PoolParameterScaleValue
 
 	struct symtab_Parameters *pparPoolDia
 	    = SymbolFindParameter
-	      ((struct symtab_HSolveListElement *)ppool,ppist,"DIA");
+	      ((struct symtab_HSolveListElement *)ppool, ppist, "DIA");
 
-	double dPoolDia = ParameterResolveValue(pparPoolDia,ppist);
+	double dPoolDia = ParameterResolveValue(pparPoolDia, ppist);
 
 	//- get shell thickness
 
 	struct symtab_Parameters *pparThickness
 	    = SymbolFindParameter
-	      ((struct symtab_HSolveListElement *)ppool,ppist,"THICK");
+	      ((struct symtab_HSolveListElement *)ppool, ppist, "THICK");
 
 	double dThickness
-	    = ParameterResolveValue(pparThickness,ppist);
+	    = ParameterResolveValue(pparThickness, ppist);
 
 	if (dPoolDia == FLT_MAX
 	    || dThickness == FLT_MAX)
@@ -394,10 +399,10 @@ PoolParameterScaleValue
 
 	    struct symtab_Parameters *pparPoolLength
 		= SymbolFindParameter
-		((struct symtab_HSolveListElement *)ppool,ppist,"LENGTH");
+		((struct symtab_HSolveListElement *)ppool, ppist, "LENGTH");
 
 	    double dPoolLength
-		= ParameterResolveValue(pparPoolLength,ppist);
+		= ParameterResolveValue(pparPoolLength, ppist);
 
 	    /// \note factor between parentheses comes from (see above)
 	    /// \note (dCompDia^2 - (dCompDia - dDia)^2)
