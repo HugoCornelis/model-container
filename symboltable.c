@@ -2798,97 +2798,97 @@ SymbolTraverseDescendants
 }
 
 
-/// 
-/// \arg phsle symbol to traverse spike generators for.
-/// \arg ppist context of symbol, symbol assumed to be on top.
-/// \arg pfProcesor processor.
-/// \arg pfFinalizer finalizer.
-/// \arg pvUserdata any user data.
-/// 
-/// \return int : see TstrGo().
-/// 
-/// \details 
-/// 
-///	Traverse all tagged symbols, call pfProcessor and pfFinalizer
-///	on each of them.
-/// 
+/* ///  */
+/* /// \arg phsle symbol to traverse spike generators for. */
+/* /// \arg ppist context of symbol, symbol assumed to be on top. */
+/* /// \arg pfProcesor processor. */
+/* /// \arg pfFinalizer finalizer. */
+/* /// \arg pvUserdata any user data. */
+/* ///  */
+/* /// \return int : see TstrGo(). */
+/* ///  */
+/* /// \details  */
+/* ///  */
+/* ///	Traverse all tagged symbols, call pfProcessor and pfFinalizer */
+/* ///	on each of them. */
+/* ///  */
 
-static int 
-TaggedSelector
-(struct TreespaceTraversal *ptstr, void *pvUserdata)
-{
-    //- set default result : process children of this symbol
+/* static int  */
+/* TaggedSelector */
+/* (struct TreespaceTraversal *ptstr, void *pvUserdata) */
+/* { */
+/*     //- set default result : process children of this symbol */
 
-    int iResult = TSTR_SELECTOR_PROCESS_CHILDREN;
+/*     int iResult = TSTR_SELECTOR_PROCESS_CHILDREN; */
 
-    //- get actual symbol type
+/*     //- get actual symbol type */
 
-    int iType = TstrGetActualType(ptstr);
+/*     int iType = TstrGetActualType(ptstr); */
 
-    //- if symbol is tagged
+/*     //- if symbol is tagged */
 
-    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
+/*     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr); */
 
-    int iFlags = SymbolGetFlags(phsle);
+/*     int iFlags = SymbolGetFlags(phsle); */
 
-    if (iFlags & FLAGS_HSLE_TRAVERSAL)
-    {
-	//- select, process children too
+/*     if (iFlags & FLAGS_HSLE_TRAVERSAL) */
+/*     { */
+/* 	//- select, process children too */
 
-	iResult = TSTR_SELECTOR_PROCESS_CHILDREN;
-    }
+/* 	iResult = TSTR_SELECTOR_PROCESS_CHILDREN; */
+/*     } */
 
-    //- else this level is higher than the selected one
+/*     //- else this level is higher than the selected one */
 
-    else
-    {
-	//- do not process, continue with children
+/*     else */
+/*     { */
+/* 	//- do not process, continue with children */
 
-	iResult = TSTR_SELECTOR_PROCESS_ONLY_CHILDREN;
-    }
+/* 	iResult = TSTR_SELECTOR_PROCESS_ONLY_CHILDREN; */
+/*     } */
 
-    //- return result
+/*     //- return result */
 
-    return(iResult);
-}
+/*     return(iResult); */
+/* } */
 
 
-int
-SymbolTraverseTagged
-(struct symtab_HSolveListElement *phsle,
- struct PidinStack *ppist,
- TreespaceTraversalProcessor *pfProcesor,
- TreespaceTraversalProcessor *pfFinalizer,
- void *pvUserdata)
-{
-    //- set default result : ok
+/* int */
+/* SymbolTraverseTagged */
+/* (struct symtab_HSolveListElement *phsle, */
+/*  struct PidinStack *ppist, */
+/*  TreespaceTraversalProcessor *pfProcesor, */
+/*  TreespaceTraversalProcessor *pfFinalizer, */
+/*  void *pvUserdata) */
+/* { */
+/*     //- set default result : ok */
 
-    int iResult = 1;
+/*     int iResult = 1; */
 
-    //- allocate treespace traversal
+/*     //- allocate treespace traversal */
 
-    struct TreespaceTraversal *ptstr
-	= TstrNew
-	  (ppist,
-	   TaggedSelector,
-	   NULL,
-	   pfProcesor,
-	   pvUserdata,
-	   pfFinalizer,
-	   pvUserdata);
+/*     struct TreespaceTraversal *ptstr */
+/* 	= TstrNew */
+/* 	  (ppist, */
+/* 	   TaggedSelector, */
+/* 	   NULL, */
+/* 	   pfProcesor, */
+/* 	   pvUserdata, */
+/* 	   pfFinalizer, */
+/* 	   pvUserdata); */
 
-    //- traverse symbols, looking for serial
+/*     //- traverse symbols, looking for serial */
 
-    iResult = TstrGo(ptstr,phsle);
+/*     iResult = TstrGo(ptstr,phsle); */
 
-    //- delete treespace traversal
+/*     //- delete treespace traversal */
 
-    TstrDelete(ptstr);
+/*     TstrDelete(ptstr); */
 
-    //- return result
+/*     //- return result */
 
-    return(iResult);
-}
+/*     return(iResult); */
+/* } */
 
 
 /// 

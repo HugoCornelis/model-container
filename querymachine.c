@@ -7522,14 +7522,14 @@ QueryMachineForestspaceSelector
 
     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
 
-    //- if tagged
+/*     //- if tagged */
 
-    if (SymbolGetFlags(phsle) & FLAGS_HSLE_TRAVERSAL != 0)
-    {
-	//- do not process, continue with siblings
+/*     if (SymbolGetFlags(phsle) & FLAGS_HSLE_TRAVERSAL != 0) */
+/*     { */
+/* 	//- do not process, continue with siblings */
 
-//	iResult = SYMBOL_SELECTOR_PROCESS_SIBLING;
-    }
+/* //	iResult = SYMBOL_SELECTOR_PROCESS_SIBLING; */
+/*     } */
 
     //- return result
 

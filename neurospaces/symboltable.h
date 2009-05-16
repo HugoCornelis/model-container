@@ -141,9 +141,9 @@ struct symtab_HSolveListElement
 
     int iType;
 
-    /// flags
+/*     /// flags */
 
-    int iFlags;
+/*     int iFlags; */
 
     /// struct to do invisible serial mappings
 

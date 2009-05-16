@@ -128,10 +128,10 @@ do {									\
 
 
 
-#ifndef SWIG
-static inline
-#endif
-int SymbolGetFlags(struct symtab_HSolveListElement *phsle);
+/* #ifndef SWIG */
+/* static inline */
+/* #endif */
+/* int SymbolGetFlags(struct symtab_HSolveListElement *phsle); */
 
 
 #include <stdlib.h>
@@ -143,17 +143,17 @@ int SymbolGetFlags(struct symtab_HSolveListElement *phsle);
 
 
 
-/// 
-/// get flags of symbol.
-/// 
+/* ///  */
+/* /// get flags of symbol. */
+/* ///  */
 
-#ifndef SWIG
-static inline
-#endif
-int SymbolGetFlags(struct symtab_HSolveListElement *phsle)
-{
-    return(phsle->iFlags);
-}
+/* #ifndef SWIG */
+/* static inline */
+/* #endif */
+/* int SymbolGetFlags(struct symtab_HSolveListElement *phsle) */
+/* { */
+/*     return(phsle->iFlags); */
+/* } */
 
 
 #include "inputoutput.h"
@@ -272,13 +272,13 @@ SymbolTraverseDescendants
  TreespaceTraversalProcessor *pfFinalizer,
  void *pvUserdata);
 
-int
-SymbolTraverseTagged
-(struct symtab_HSolveListElement *phsle,
- struct PidinStack *ppist,
- TreespaceTraversalProcessor *pfProcesor,
- TreespaceTraversalProcessor *pfFinalizer,
- void *pvUserdata);
+/* int */
+/* SymbolTraverseTagged */
+/* (struct symtab_HSolveListElement *phsle, */
+/*  struct PidinStack *ppist, */
+/*  TreespaceTraversalProcessor *pfProcesor, */
+/*  TreespaceTraversalProcessor *pfFinalizer, */
+/*  void *pvUserdata); */
 
 int
 SymbolTraverseWildcard
