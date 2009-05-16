@@ -67,7 +67,7 @@
 
 /// global number of allocated symbols
 
-int iTotalAllocatedSymbols = 1;
+int iTotalAllocatedSymbols = 0;
 
 
 /// number of created aliases for biocomponents
@@ -320,13 +320,13 @@ SymbolCalloc(size_t nmemb, size_t size, VTable_symbols * _vtable, int iType)
 
     attach_typeinfo_symbols(phsleResult, _vtable, iType);
 
-    //- register allocation identifier
-
-    phsleResult->iAllocationIdentifier = iTotalAllocatedSymbols;
-
     //- increment number of allocated symbols
 
     iTotalAllocatedSymbols++;
+
+    //- register allocation identifier
+
+    phsleResult->iAllocationIdentifier = iTotalAllocatedSymbols;
 
     //- return result
 
