@@ -243,6 +243,7 @@ my $test
 				description => "prototype identifiers of the purkinje cell model",
 			       },
 			      ],
+       comment => 'This test needs to be enhanced with setting parameters of symbols and using parameter caches.  Doing so should change the value of the PROTOTYPE_IDENTIFIER automatically',
        description => "prototyping",
        name => 'prototyping.t',
       };

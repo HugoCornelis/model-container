@@ -1,5 +1,10 @@
 -*- outline -*-
 
+* PROTOTYPE_IDENTIFIER parameter
+In prototyping.t: 'This test needs to be enhanced with setting
+parameters of symbols and using parameter caches.  Doing so should
+change the value of the PROTOTYPE_IDENTIFIER automatically',
+
 * split shorthand for bindables and bindings combinations.
 See channels/nmda.ndf
 
