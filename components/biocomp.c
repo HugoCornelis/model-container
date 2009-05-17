@@ -540,17 +540,64 @@ BioComponentGetParameter
 
     if (!pparResult)
     {
-	//- if prototype
+	//- if prototype identifier
 
-	struct symtab_BioComponent * pbioPrototype
-	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
-
-	if (pbioPrototype)
+	if (strcmp(pcName, "PROTOTYPE_IDENTIFIER") == 0)
 	{
-	    //- lookup parameter for prototype
+	    static struct symtab_Parameters parPrototype =
+	    {
+		/// link structures into list
 
-	    pparResult
-		= BioComponentGetParameter(pbioPrototype, ppist, pcName);
+		NULL,
+
+		/// first parameter of list
+
+		NULL,
+
+		/// type of parameter
+
+		TYPE_PARA_NUMBER,
+
+		/// flags
+
+		FLAG_PARA_READONLY,
+
+		/// name of parameter
+
+		"PROTOTYPE_IDENTIFIER",
+
+		/// value : serial from context
+
+		{
+		    INT_MAX,
+		},
+	    };
+
+	    //- set value
+
+	    parPrototype.uValue.dNumber = pbio->iPrototype;
+
+	    //- set result : defaults to equal to zero
+
+	    pparResult = &parPrototype;
+	}
+
+	//- if no default that overwrites the prototype
+
+	if (!pparResult)
+	{
+	    //- if prototype
+
+	    struct symtab_BioComponent * pbioPrototype
+		= (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
+
+	    if (pbioPrototype)
+	    {
+		//- lookup parameter for prototype
+
+		pparResult
+		    = BioComponentGetParameter(pbioPrototype, ppist, pcName);
+	    }
 	}
     }
 

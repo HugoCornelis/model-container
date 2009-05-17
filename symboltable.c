@@ -653,9 +653,9 @@ SymbolGetWorkloadIndividual
 
 void SymbolInit(struct symtab_HSolveListElement * phsle)
 {
-    //- zero out struct
+/*     //- zero out struct */
 
-    memset(phsle, 0, sizeof(*phsle));
+/*     memset(phsle, 0, sizeof(*phsle)); */
 
     //- clear serial mapping info
 
