@@ -8204,6 +8204,8 @@ static int QueryHandlerSetParameter
 	return(FALSE);
     }
 
+    int iBase = PidinStackToSerial(ppistBase);
+
     //- lookup parameter context symbol
 
     struct symtab_HSolveListElement *phsleParameter
@@ -8308,9 +8310,23 @@ static int QueryHandlerSetParameter
 
 	    //- set parameter value
 
-	    ppar = SymbolSetParameterFixedDouble(phsleParameter, ppistAbsoluteParameter, pcName, dValue);
+	    // if the base symbol is at the root of the hierarchy, we
+	    // set the parameter relative to the root so that it
+	    // becomes absolute, otherwise we set it as a relative
+	    // parameter.
 
-/* 	    ppar = SymbolCacheParameterDouble(phsleBase, iParameterSymbol, pcName, dValue); */
+/* 	    printf("iBase = %i\n", iBase); */
+
+/* 	    printf("iParameterSymbol = %i\n", iParameterSymbol); */
+
+	    if (iBase == 1)
+	    {
+		ppar = SymbolSetParameterFixedDouble(phsleParameter, ppistAbsoluteParameter, pcName, dValue);
+	    }
+	    else
+	    {
+		ppar = SymbolCacheParameterDouble(phsleBase, iParameterSymbol, pcName, dValue);
+	    }
 	}
 
 	//- for a string
@@ -8323,9 +8339,14 @@ static int QueryHandlerSetParameter
 
 	    //- set parameter value
 
-	    ppar = SymbolSetParameterFixedString(phsleParameter, ppistAbsoluteParameter, pcName, pc);
-
-/* 	    ppar = SymbolCacheParameterString(phsleBase, iParameterSymbol, pcName, pc); */
+	    if (iBase == 1)
+	    {
+		ppar = SymbolSetParameterFixedString(phsleParameter, ppistAbsoluteParameter, pcName, pc);
+	    }
+	    else
+	    {
+		ppar = SymbolCacheParameterString(phsleBase, iParameterSymbol, pcName, pc);
+	    }
 	}
 
 	//- else for a symbolic reference

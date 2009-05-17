@@ -90,17 +90,6 @@ int piCreatedAliases[COUNT_HIERARCHY_TYPE_symbols + 1] =
 TreespaceTraversalProcessor SymbolDeleter;
 
 
-static
-struct symtab_Parameters *
-SymbolCacheParameterDouble
-(struct symtab_HSolveListElement *phsle, int iSerial, char *pcName, double dNumber);
-
-static
-struct symtab_Parameters *
-SymbolCacheParameterString
-(struct symtab_HSolveListElement *phsle, int iSerial, char *pcName, char *pcValue);
-
-
 /// \todo would be great to put all the selectors and processors in a
 /// \todo library
 
@@ -182,7 +171,6 @@ BaseSymbolGetID(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist
 ///	parameter cache of the given symbol.
 /// 
 
-static
 struct symtab_Parameters *
 SymbolCacheParameterDouble
 (struct symtab_HSolveListElement *phsle, int iSerial, char *pcName, double dNumber)
@@ -247,7 +235,6 @@ SymbolCacheParameterDouble
 ///	parameter cache of the given symbol.
 /// 
 
-static
 struct symtab_Parameters *
 SymbolCacheParameterString
 (struct symtab_HSolveListElement *phsle, int iSerial, char *pcName, char *pcValue)
@@ -2605,7 +2592,9 @@ SymbolSetParameterFixedDouble
 
     //- set parameter value in base symbol
 
-    int iSerial = PidinStackToSerial(ppist);
+    int iSerial = PidinStackToSerial(ppist) - SymbolGetPrincipalSerialToParent(phsleBase);;
+
+/*     printf("iSerial = %i\n", iSerial); */
 
     pparResult
 	= SymbolCacheParameterDouble(phsleBase, iSerial, pcName, dValue);
@@ -2665,7 +2654,7 @@ SymbolSetParameterFixedString
 
     //- set parameter value in base symbol
 
-    int iSerial = PidinStackToSerial(ppist);
+    int iSerial = PidinStackToSerial(ppist) - SymbolGetPrincipalSerialToParent(phsleBase);;
 
     pparResult
 	= SymbolCacheParameterString(phsleBase, iSerial, pcName, pcValue);
