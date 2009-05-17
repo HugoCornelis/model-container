@@ -8308,7 +8308,9 @@ static int QueryHandlerSetParameter
 
 	    //- set parameter value
 
-	    ppar = SymbolCacheParameterDouble(phsleBase, iParameterSymbol, pcName, dValue);
+	    ppar = SymbolSetParameterFixedDouble(phsleParameter, ppistAbsoluteParameter, pcName, dValue);
+
+/* 	    ppar = SymbolCacheParameterDouble(phsleBase, iParameterSymbol, pcName, dValue); */
 	}
 
 	//- else for a symbolic reference
