@@ -228,12 +228,12 @@ struct symtab_Parameters *
 BioComponentChangeParameter
 (struct symtab_BioComponent * pbio, struct symtab_Parameters *ppar);
 
-#ifndef SWIG
-static inline
-#endif
-char *
-BioComponentGetID
-(struct symtab_BioComponent *pbio, struct PidinStack *ppist);
+/* #ifndef SWIG */
+/* static inline */
+/* #endif */
+/* char * */
+/* BioComponentGetID */
+/* (struct symtab_BioComponent *pbio, struct PidinStack *ppist); */
 
 #ifndef SWIG
 static inline
@@ -371,42 +371,42 @@ BioComponentChangeParameter
 }
 
 
-/// 
-/// get a unique string representation identifying this symbol
-/// content.
-/// 
+/* ///  */
+/* /// get a unique string representation identifying this symbol */
+/* /// content. */
+/* ///  */
 
-#ifndef SWIG
-static inline
-#endif
-char *
-BioComponentGetID
-(struct symtab_BioComponent *pbio, struct PidinStack *ppist)
-{
-    //- set default result: none
+/* #ifndef SWIG */
+/* static inline */
+/* #endif */
+/* char * */
+/* BioComponentGetID */
+/* (struct symtab_BioComponent *pbio, struct PidinStack *ppist) */
+/* { */
+/*     //- set default result: none */
 
-    char *pcResult = NULL;
+/*     char *pcResult = NULL; */
 
-    /// \todo check for availability of parameters in parameter caches
-    /// \todo if none found,
-    /// \todo   loop over prototypes,
-    /// \todo     check for parameters in this symbol
-    /// \todo     if found,
-    /// \todo       return this symbol string representation
+/*     /// \todo check for availability of parameters in parameter caches */
+/*     /// \todo if none found, */
+/*     /// \todo   loop over prototypes, */
+/*     /// \todo     check for parameters in this symbol */
+/*     /// \todo     if found, */
+/*     /// \todo       return this symbol string representation */
 
-    //- define result
+/*     //- define result */
 
-    static char pc[100];
+/*     static char pc[100]; */
 
-    if (sprintf(pc, "%p", pbio) >= 0)
-    {
-	pcResult = pc;
-    }
+/*     if (sprintf(pc, "%p", pbio) >= 0) */
+/*     { */
+/* 	pcResult = pc; */
+/*     } */
 
-    //- return result
+/*     //- return result */
 
-    return(pcResult);
-}
+/*     return(pcResult); */
+/* } */
 
 
 /// 
