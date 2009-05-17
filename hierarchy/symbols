@@ -41,7 +41,7 @@ my $class_hierarchy
 			      'all_successors_set' => 'base_symbol',
 			      'all_serials_to_parent_get' => 'base_symbol',
 			      'all_serials_to_parent_set' => 'base_symbol',
-			      'get_i_d' => 'base_symbol',
+# 			      'get_i_d' => 'base_symbol',
 			      'get_symbol' => 'base_symbol',
 			     },
 		   description => 'symbol that maintains its own identification numbers',
@@ -100,7 +100,7 @@ my $class_hierarchy
 				'count_spike_receivers' => 'bio_component',
 				'create_alias' => 'bio_component',
 				'get_child_from_input' => 'bio_component',
-				'get_i_d' => 'bio_component',
+# 				'get_i_d' => 'bio_component',
 				'get_modifiable_parameter' => 'bio_component',
 				'get_name' => 'bio_component',
 				'get_options' => 'bio_component',
@@ -1575,7 +1575,7 @@ my $object_methods
 	'get_child_from_input',
 	'get_children',
 	'get_delay',
-	'get_i_d',
+# 	'get_i_d',
 	'get_inputs',
 	'get_modifiable_parameter',
 	'get_name',
@@ -1691,9 +1691,9 @@ my $object_methods_custom_code
        'get_delay' => {
 		       simple => 1,
 		      },
-       'get_i_d' => {
-		     simple => 1,
-		    },
+#        'get_i_d' => {
+# 		     simple => 1,
+# 		    },
        'get_inputs' => {
 			simple => 1,
 		       },
@@ -1976,11 +1976,11 @@ my $object_methods_return_types
 		       selector => '.uSelector.dFunc',
 		       type => 'double',
 		      },
-       'get_i_d' => {
-		     default => 'NULL',
-		     selector => '.uSelector.pcFunc',
-		     type => 'char *',
-		    },
+#        'get_i_d' => {
+# 		     default => 'NULL',
+# 		     selector => '.uSelector.pcFunc',
+# 		     type => 'char *',
+# 		    },
        'get_inputs' => {
 			default => 'NULL',
 			selector => '.uSelector.piocFunc',
@@ -2368,10 +2368,10 @@ my $object_methods_signatures
 		       calling => '(phsle, ppist)',
 		       prototype => '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)',
 		      },
-       'get_i_d' => {
-		     calling => '(phsle, ppist)',
-		     prototype => '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)',
-		    },
+#        'get_i_d' => {
+# 		     calling => '(phsle, ppist)',
+# 		     prototype => '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)',
+# 		    },
        'get_inputs' => {
 			calling => '(phsle)',
 			prototype => '(struct symtab_HSolveListElement *phsle)',
