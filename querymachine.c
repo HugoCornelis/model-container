@@ -8313,6 +8313,21 @@ static int QueryHandlerSetParameter
 /* 	    ppar = SymbolCacheParameterDouble(phsleBase, iParameterSymbol, pcName, dValue); */
 	}
 
+	//- for a string
+
+	else if (strcmp("string", pcType) == 0)
+	{
+	    //- copy string
+
+	    char *pc = strdup(pcValue);
+
+	    //- set parameter value
+
+	    ppar = SymbolSetParameterFixedString(phsleParameter, ppistAbsoluteParameter, pcName, pc);
+
+/* 	    ppar = SymbolCacheParameterString(phsleBase, iParameterSymbol, pcName, pc); */
+	}
+
 	//- else for a symbolic reference
 
 	else if (strcmp("symbolic", pcType) == 0)

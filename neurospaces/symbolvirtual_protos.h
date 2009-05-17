@@ -168,13 +168,13 @@ int SymbolDeleter(struct TreespaceTraversal *ptstr, void *pvUserdata);
 char *
 BaseSymbolGetID(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist);
 
-struct symtab_Parameters *
-SymbolCacheParameterDouble
-(struct symtab_HSolveListElement *phsle, int iSerial, char *pcName, double dNumber);
+/* struct symtab_Parameters * */
+/* SymbolCacheParameterDouble */
+/* (struct symtab_HSolveListElement *phsle, int iSerial, char *pcName, double dNumber); */
 
-struct symtab_Parameters *
-SymbolCacheParameterString
-(struct symtab_HSolveListElement *phsle, int iSerial, char *pcName, char *pcValue);
+/* struct symtab_Parameters * */
+/* SymbolCacheParameterString */
+/* (struct symtab_HSolveListElement *phsle, int iSerial, char *pcName, char *pcValue); */
 
 struct symtab_HSolveListElement *
 SymbolCalloc(size_t nmemb, size_t size, VTable_symbols * _vtable, int iType);
@@ -254,6 +254,13 @@ SymbolSetParameterFixedDouble
  struct PidinStack *ppist,
  char *pcName,
  double dNumber);
+
+struct symtab_Parameters *
+SymbolSetParameterFixedString
+(struct symtab_HSolveListElement *phsle,
+ struct PidinStack *ppist,
+ char *pcName,
+ char *pcValue);
 
 int
 SymbolTraverseBioLevels

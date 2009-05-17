@@ -90,6 +90,17 @@ int piCreatedAliases[COUNT_HIERARCHY_TYPE_symbols + 1] =
 TreespaceTraversalProcessor SymbolDeleter;
 
 
+static
+struct symtab_Parameters *
+SymbolCacheParameterDouble
+(struct symtab_HSolveListElement *phsle, int iSerial, char *pcName, double dNumber);
+
+static
+struct symtab_Parameters *
+SymbolCacheParameterString
+(struct symtab_HSolveListElement *phsle, int iSerial, char *pcName, char *pcValue);
+
+
 /// \todo would be great to put all the selectors and processors in a
 /// \todo library
 
@@ -171,6 +182,7 @@ BaseSymbolGetID(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist
 ///	parameter cache of the given symbol.
 /// 
 
+static
 struct symtab_Parameters *
 SymbolCacheParameterDouble
 (struct symtab_HSolveListElement *phsle, int iSerial, char *pcName, double dNumber)
@@ -235,6 +247,7 @@ SymbolCacheParameterDouble
 ///	parameter cache of the given symbol.
 /// 
 
+static
 struct symtab_Parameters *
 SymbolCacheParameterString
 (struct symtab_HSolveListElement *phsle, int iSerial, char *pcName, char *pcValue)
@@ -2559,7 +2572,7 @@ SymbolSetAlgorithmInstanceInfo
 /// \arg phsle symbol to get parameter for
 /// \arg ppist context of symbol.
 /// \arg pcName name of parameter
-/// \arg dNumber: parameter value
+/// \arg dValue: parameter value
 /// 
 /// \return struct symtab_Parameters *  parameter structure
 /// 
@@ -2579,7 +2592,7 @@ SymbolSetParameterFixedDouble
 (struct symtab_HSolveListElement *phsle,
  struct PidinStack *ppist,
  char *pcName,
- double dNumber)
+ double dValue)
 {
     //- set default result : failure
 
@@ -2595,7 +2608,79 @@ SymbolSetParameterFixedDouble
     int iSerial = PidinStackToSerial(ppist);
 
     pparResult
-	= SymbolCacheParameterDouble(phsleBase, iSerial, pcName, dNumber);
+	= SymbolCacheParameterDouble(phsleBase, iSerial, pcName, dValue);
+
+    //- if the target symbol is a biocomp
+
+    if (instanceof_bio_comp(phsle))
+    {
+	struct symtab_BioComponent *pbio
+	    = (struct symtab_BioComponent *)phsle;
+
+	//- assign a unique prototype identifier
+
+	BioComponentAssignUniquePrototypeID(pbio);
+    }
+
+    //- return result
+
+    return(pparResult);
+}
+
+
+/// 
+/// \arg phsle symbol to get parameter for
+/// \arg ppist context of symbol.
+/// \arg pcName name of parameter
+/// \arg pcValue parameter value
+/// 
+/// \return struct symtab_Parameters *  parameter structure
+/// 
+/// \details 
+/// 
+///	High-level set / update parameter of symbol.
+/// 
+///	This function operates at treespace level, i.e. if you change
+///	a parameter with this function, only this symbol
+///	will have the given parameter value.  Note that references to
+///	the root of the given context will still share the parameter
+///	value.
+/// 
+
+struct symtab_Parameters *
+SymbolSetParameterFixedString
+(struct symtab_HSolveListElement *phsle,
+ struct PidinStack *ppist,
+ char *pcName,
+ char *pcValue)
+{
+    //- set default result : failure
+
+    struct symtab_Parameters * pparResult = NULL;
+
+    //- lookup base symbol
+
+    struct symtab_HSolveListElement *phsleBase
+	= PidinStackLookupBaseSymbol(ppist);
+
+    //- set parameter value in base symbol
+
+    int iSerial = PidinStackToSerial(ppist);
+
+    pparResult
+	= SymbolCacheParameterString(phsleBase, iSerial, pcName, pcValue);
+
+    //- if the target symbol is a biocomp
+
+    if (instanceof_bio_comp(phsle))
+    {
+	struct symtab_BioComponent *pbio
+	    = (struct symtab_BioComponent *)phsle;
+
+	//- assign a unique prototype identifier
+
+	BioComponentAssignUniquePrototypeID(pbio);
+    }
 
     //- return result
 

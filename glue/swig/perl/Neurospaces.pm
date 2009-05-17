@@ -186,36 +186,36 @@ sub apply_granular_parameters
 
     my $result;
 
-#     SwiggableNeurospaces::ImportedFilePrintRootImport();
+# #     SwiggableNeurospaces::ImportedFilePrintRootImport();
 
-    # the parameter context base is always the root for now
+#     # the parameter context base is always the root for now
 
-    my $root_context = SwiggableNeurospaces::PidinStackParse("/");
+#     my $root_context = SwiggableNeurospaces::PidinStackParse("/");
 
-    my $root_symbol = $root_context->PidinStackLookupTopSymbol();
+#     my $root_symbol = $root_context->PidinStackLookupTopSymbol();
 
-    if (!$root_symbol)
-    {
-	return "Cannot get a root context (has a model been loaded ?)";
-    }
+#     if (!$root_symbol)
+#     {
+# 	return "Cannot get a root context (has a model been loaded ?)";
+#     }
 
-    #! I think that roots and parameter caches are mutually
-    #! incompatible right now, so I cache at the first symbol instead of
-    #! at the root.
+#     #! I think that roots and parameter caches are mutually
+#     #! incompatible right now, so I cache at the first symbol instead of
+#     #! at the root.
 
-    my $firstcontext = $root_symbol->SymbolPrincipalSerial2Context($root_context, 1);
+#     my $firstcontext = $root_symbol->SymbolPrincipalSerial2Context($root_context, 1);
 
-    if (!defined $firstcontext)
-    {
-	return "Cannot find first symbol context (has a model been loaded ?)";
-    }
+#     if (!defined $firstcontext)
+#     {
+# 	return "Cannot find first symbol context (has a model been loaded ?)";
+#     }
 
-    my $firstsymbol = $firstcontext->PidinStackLookupTopSymbol();
+#     my $firstsymbol = $firstcontext->PidinStackLookupTopSymbol();
 
-    if (!defined $firstsymbol)
-    {
-	return "Cannot find first symbol (internal error)";
-    }
+#     if (!defined $firstsymbol)
+#     {
+# 	return "Cannot find first symbol (internal error)";
+#     }
 
     # loop over all settings
 
@@ -227,11 +227,12 @@ sub apply_granular_parameters
 
 	my $context = SwiggableNeurospaces::PidinStackParse($component_name);
 
-	$context->PidinStackLookupTopSymbol();
+	my $symbol $context->PidinStackLookupTopSymbol();
 
-	my $serial = $context->PidinStackToSerial();
+# 	my $serial = $context->PidinStackToSerial();
 
-	if ($serial eq $SwiggableNeurospaces::iINT_MAX)
+# 	if ($serial eq $SwiggableNeurospaces::iINT_MAX)
+	if (!defined $symbol)
 	{
 	    return "invalid context for $component_name (does this component exist ?)";
 	}
@@ -250,7 +251,11 @@ sub apply_granular_parameters
 	if ($value =~ /^[+-]?[0-9]*\.?[0-9]*(e[+-]?[0-9]+)?$/
 	    && $value =~ /./)
 	{
-	    my $parameter = $firstsymbol->SymbolCacheParameterDouble($serial - 1, $field, $value);
+# 	    # $serial - 1 because $firstsymbol has serial 1 ?
+
+# 	    my $parameter = $firstsymbol->SymbolCacheParameterDouble($serial - 1, $field, $value);
+
+	    my $parameter = $symbol->SymbolSetParameterFixedDouble($context, $field, $value);
 
 	    if (!$parameter)
 	    {
@@ -259,7 +264,11 @@ sub apply_granular_parameters
 	}
 	else
 	{
-	    my $parameter = $firstsymbol->SymbolCacheParameterString($serial - 1, $field, $value);
+# 	    # $serial - 1 because $firstsymbol has serial 1 ?
+
+# 	    my $parameter = $firstsymbol->SymbolCacheParameterString($serial - 1, $field, $value);
+
+	    my $parameter = $symbol->SymbolSetParameterFixedString($context, $field, $value);
 
 	    if (!$parameter)
 	    {
