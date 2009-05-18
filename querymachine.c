@@ -8269,6 +8269,17 @@ static int QueryHandlerSetParameter
 
 	pcArg = strpbrk(pcInit, pcSeparator);
 
+	if (!pcArg)
+	{
+	    PidinStackFree(ppistAbsoluteParameter);
+	    PidinStackFree(ppistBase);
+	    PidinStackFree(ppistParameter);
+
+	    fprintf(stdout, "error in command line processing, cannot determine parameeter type\n");
+
+	    return(FALSE);
+	}
+
 	char pcType[1000];
 
 	strncpy(pcType, pcInit, pcArg - pcInit);
