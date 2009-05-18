@@ -29,13 +29,13 @@ my $test
 						  },
 						  {
 						   description => "Can we identify the prototype of the channel gate, forward kinetic (has no prototype) ?",
-						   read => 'value = 0
+						   read => 'value = 2.14748e+09
 ',
 						   write => "printparameter /nap/nap/A PROTOTYPE_IDENTIFIER",
 						  },
 						  {
 						   description => "Can we identify the prototype of the channel gate, backward kinetic (has no prototype) ?",
-						   read => 'value = 0
+						   read => 'value = 2.14748e+09
 ',
 						   write => "printparameter /nap/nap/B PROTOTYPE_IDENTIFIER",
 						  },
@@ -53,13 +53,13 @@ my $test
 						  (
 						   {
 						    description => "Can we identify the prototype of the cell (has no prototype) ?",
-						    read => 'value = 0
+						    read => 'value = 2.14748e+09
 ',
 						    write => "printparameter /Purkinje PROTOTYPE_IDENTIFIER",
 						   },
 						   {
 						    description => "Can we identify the prototype of the cell (has no prototype) ?",
-						    read => 'value = 0
+						    read => 'value = 2.14748e+09
 ',
 						    write => "printparameter /Purkinje/segments PROTOTYPE_IDENTIFIER",
 						   },
@@ -166,75 +166,75 @@ my $test
 						   {
 						    description => "Can we identify the prototype of the cell (has no prototype) ?",
 						    read => '/Purkinje/segments/soma/kdr/kdr_steadystate->PROTOTYPE_IDENTIFIER = 141
-/Purkinje/segments/soma/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/soma/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/soma/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/soma/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/soma/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/soma/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 0
+/Purkinje/segments/soma/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/soma/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/soma/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/soma/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/soma/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/soma/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
 /Purkinje/segments/main[0]/kdr/kdr_steadystate->PROTOTYPE_IDENTIFIER = 141
-/Purkinje/segments/main[0]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[0]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[0]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[0]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[0]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[0]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 0
+/Purkinje/segments/main[0]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[0]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[0]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[0]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[0]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[0]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
 /Purkinje/segments/main[1]/kdr/kdr_steadystate->PROTOTYPE_IDENTIFIER = 141
-/Purkinje/segments/main[1]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[1]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[1]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[1]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[1]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[1]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 0
+/Purkinje/segments/main[1]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[1]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[1]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[1]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[1]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[1]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
 /Purkinje/segments/main[2]/kdr/kdr_steadystate->PROTOTYPE_IDENTIFIER = 141
-/Purkinje/segments/main[2]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[2]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[2]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[2]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[2]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[2]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 0
+/Purkinje/segments/main[2]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[2]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[2]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[2]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[2]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[2]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
 /Purkinje/segments/main[3]/kdr/kdr_steadystate->PROTOTYPE_IDENTIFIER = 141
-/Purkinje/segments/main[3]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[3]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[3]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[3]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[3]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[3]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 0
+/Purkinje/segments/main[3]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[3]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[3]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[3]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[3]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[3]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
 /Purkinje/segments/main[4]/kdr/kdr_steadystate->PROTOTYPE_IDENTIFIER = 141
-/Purkinje/segments/main[4]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[4]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[4]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[4]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[4]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[4]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 0
+/Purkinje/segments/main[4]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[4]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[4]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[4]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[4]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[4]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
 /Purkinje/segments/main[5]/kdr/kdr_steadystate->PROTOTYPE_IDENTIFIER = 141
-/Purkinje/segments/main[5]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[5]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[5]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[5]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[5]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[5]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 0
+/Purkinje/segments/main[5]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[5]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[5]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[5]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[5]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[5]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
 /Purkinje/segments/main[6]/kdr/kdr_steadystate->PROTOTYPE_IDENTIFIER = 141
-/Purkinje/segments/main[6]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[6]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[6]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[6]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[6]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[6]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 0
+/Purkinje/segments/main[6]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[6]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[6]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[6]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[6]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[6]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
 /Purkinje/segments/main[7]/kdr/kdr_steadystate->PROTOTYPE_IDENTIFIER = 141
-/Purkinje/segments/main[7]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[7]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[7]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[7]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[7]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[7]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 0
+/Purkinje/segments/main[7]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[7]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[7]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[7]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[7]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[7]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
 /Purkinje/segments/main[8]/kdr/kdr_steadystate->PROTOTYPE_IDENTIFIER = 141
-/Purkinje/segments/main[8]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[8]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[8]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[8]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[8]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 0
-/Purkinje/segments/main[8]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 0
+/Purkinje/segments/main[8]/kdr/kdr_steadystate/A->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[8]/kdr/kdr_steadystate/A/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[8]/kdr/kdr_steadystate/A/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[8]/kdr/kdr_steadystate/B->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[8]/kdr/kdr_steadystate/B/a->PROTOTYPE_IDENTIFIER = 2.14748e+09
+/Purkinje/segments/main[8]/kdr/kdr_steadystate/B/b->PROTOTYPE_IDENTIFIER = 2.14748e+09
 ',
 						    write => "printparameter /Purkinje/segments/**/kdr_steadystate/** PROTOTYPE_IDENTIFIER",
 						   },
