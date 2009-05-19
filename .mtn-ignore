@@ -1,5 +1,6 @@
 tests/convertors
 tests/glue
+\.dylib$
 ^neurospaces\/config\.h\.in$
 .*Makefile.in$
 Makefile$
