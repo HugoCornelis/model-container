@@ -227,7 +227,7 @@ sub apply_granular_parameters
 
 	my $context = SwiggableNeurospaces::PidinStackParse($component_name);
 
-	my $symbol $context->PidinStackLookupTopSymbol();
+	my $symbol = $context->PidinStackLookupTopSymbol();
 
 # 	my $serial = $context->PidinStackToSerial();
 

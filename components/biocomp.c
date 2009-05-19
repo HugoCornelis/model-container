@@ -575,7 +575,7 @@ BioComponentGetParameter
 
 	    //- set value
 
-	    parPrototype.uValue.dNumber = pbio->iPrototype;
+	    parPrototype.uValue.dNumber = pbio->iPrototype ? pbio->iPrototype : INT_MAX;
 
 	    //- set result : defaults to equal to zero
 
