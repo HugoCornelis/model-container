@@ -207,8 +207,37 @@ static int PostSynapticOrder(const void *pv1, const void *pv2)
 //    fprintf(stdout,"PostOrder : %i,%i\n");
 
     //- compare, set result
+    int ipv1 = *(int*)pv1;
+    int ipv2 = *(int*)pv2;
 
-    return(i1 < i2 ? -1 : i1 > i2 ? 1 : 0);
+    int iResult;
+
+    if ( i1 < i2 )
+    {
+      iResult = -1;
+    }
+    else if ( i1 > i2 )
+    {
+      iResult = 1;
+    }
+    else if ( ipv1 < ipv2 )
+    {
+      iResult = -1;
+    }
+    else if ( ipv1 > ipv2 )
+    {
+      iResult = 1;
+    }
+    else
+    {
+      fprintf(stderr,"%s",
+	      "Error: PostSynapticOrder detects invalid entries in the ordered connection cache\n");
+      iResult = 0;
+    }
+
+    return iResult;
+
+      //(i1 < i2 ? -1 : i1 > i2 ? 1 :  );
 }
 
 
@@ -230,8 +259,37 @@ static int PreSynapticOrder(const void *pv1, const void *pv2)
 //    fprintf(stdout,"PreOrder : %i,%i\n");
 
     //- compare, set result
+    int ipv1 = *(int*)pv1;
+    int ipv2 = *(int*)pv2;
 
-    return(i1 < i2 ? -1 : i1 > i2 ? 1 : 0);
+    int iResult;
+
+    if ( i1 < i2 )
+    {
+      iResult = -1;
+    }
+    else if ( i1 > i2 )
+    {
+      iResult = 1;
+    }
+    else if ( ipv1 < ipv2 )
+    {
+      iResult = -1;
+    }
+    else if ( ipv1 > ipv2 )
+    {
+      iResult = 1;
+    }
+    else
+    {
+      fprintf(stderr,"%s",
+	      "Error: PreSynapticOrder detects invalid entries in the ordered connection cache\n");
+      iResult = 0;
+    }
+
+    return iResult;
+
+    //return(i1 < i2 ? -1 : i1 > i2 ? 1 : ((*(int*)pv1)==(*(int*)pv2)));
 }
 
 
