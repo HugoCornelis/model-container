@@ -34,123 +34,12 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-/* /// ************************************************************************** */
-/* /// */
-/* /// SHORT: ConnectionAssignParameters() */
-/* /// */
-/* /// ARGS.: */
-/* /// */
-/* ///	pconn..: connection to assign parameters to */
-/* ///	ppar...: parameters to assign to connection */
-/* /// */
-/* /// \return int : success of operation. */
-/* /// */
-/* /// \brief Assign parameters to connection. */
-/// \details 
-/* /// */
-/* ///	Goes through parameter set and frees all encountered parameters. */
-/* ///	values are assigned to internal fields of the connection. */
-/* /// */
-/* /// \note  Use this function as little as possible. */
-/* /// */
-/* /// ************************************************************************** */
-
-/* int */
-/* ConnectionAssignParameters */
-/* (struct symtab_Connection *pconn,struct symtab_Parameters *ppar) */
-/* { */
-/*     //- set default result : success */
-
-/*     int iResult = TRUE; */
-
-/*     //- loop over given parameters */
-
-/*     while (ppar) */
-/*     { */
-/* 	//- remember this parameter */
-
-/* 	struct symtab_Parameters *pparLast = ppar; */
-
-/* 	//- get name of parameter */
-
-/* 	char *pcName = ParameterGetName(ppar); */
-
-/* 	//- if pre-synaptic */
-
-/* 	if (strcmp(pcName,"PRE") == 0) */
-/* 	{ */
-/* 	    //- set number */
-
-/* 	    pconn->deconn.iPreSynaptic = ParameterValue(ppar); */
-/* 	} */
-
-/* 	//- if post-synaptic */
-
-/* 	else if (strcmp(pcName,"POST") == 0) */
-/* 	{ */
-/* 	    //- set number */
-
-/* 	    pconn->deconn.iPostSynaptic = ParameterValue(ppar); */
-/* 	} */
-
-/* 	//- if weight */
-
-/* 	else if (strcmp(pcName,"WEIGHT") == 0) */
-/* 	{ */
-/* 	    //- set number */
-
-/* 	    pconn->deconn.dWeight = ParameterValue(ppar); */
-/* 	} */
-
-/* 	//- if delay */
-
-/* 	else if (strcmp(pcName,"DELAY") == 0) */
-/* 	{ */
-/* 	    //- set number */
-
-/* 	    pconn->deconn.dDelay = ParameterValue(ppar); */
-/* 	} */
-
-/* 	//- else */
-
-/* 	else */
-/* 	{ */
-/* 	    //- give diagnostics : unknown parameter */
-
-/* 	    fprintf */
-/* 		(stderr, */
-/* 		 "ConnectionAssignParameters() :" */
-/* 		 " Unknown parameter type %s\n", */
-/* 		 pcName); */
-
-/* 	    //- set result : failure */
-
-/* 	    iResult = FALSE; */
-/* 	} */
-
-/* 	//- go to next parameter */
-
-/* 	ppar = ppar->pparNext; */
-
-/* 	//- free last parameter */
-
-/* 	ParameterFree(pparLast); */
-/*     } */
-
-/*     //- return result */
-
-/*     return(iResult); */
-/* } */
-
-
-/// 
 /// 
 /// \return struct symtab_Connection * 
 /// 
 ///	Newly allocated connection, NULL for failure
 /// 
 /// \brief Allocate a new connection symbol table element
-/// \details 
 /// 
 
 struct symtab_Connection * ConnectionCalloc(void)
@@ -184,7 +73,6 @@ struct symtab_Connection * ConnectionCalloc(void)
 
 
 /// 
-/// 
 /// \arg pconn connection.
 /// \arg ppist context of connection.
 /// \arg pcName name of parameter.
@@ -194,7 +82,6 @@ struct symtab_Connection * ConnectionCalloc(void)
 ///	static parameter struct, NULL for failure.
 /// 
 /// \brief Get parameter for connection.
-/// \details 
 /// 
 
 struct symtab_Parameters *
@@ -314,16 +201,16 @@ ConnectionGetParameter
 
 
 /// 
-/// 
 /// \arg pconn connection with spike generator reference
-///	phsle.: symbol relative to which connection occurs (== population)
-///	ppist.: context of connection (== population)
+/// \arg phsle symbol relative to which connection occurs (== population)
+/// \arg ppist context of connection (== population)
 /// 
 /// \return struct PidinStack *
 /// 
 ///	spike generator, -1 for failure, NULL for none
 /// 
-/// \brief Get spike generator for connection
+/// \brief Get spike generator for connection.
+///
 /// \details 
 /// 
 ///	ppist is context of source of projection to which this connection
@@ -373,17 +260,15 @@ ConnectionGetSpikeGenerator
 
 
 /// 
-/// 
 /// \arg pconn connection with spike receiver reference
-///	phsle.: symbol relative to which connection occurs (== population)
-///	ppist.: context of connection (== population)
+/// \arg phsle symbol relative to which connection occurs (== population)
+/// \arg ppist context of connection (== population)
 /// 
 /// \return struct PidinStack *
 /// 
 ///	spike receiver, -1 for failure, NULL for none
 /// 
 /// \brief Get spike receiver for connection
-/// \details 
 /// 
 ///	ppist is context of target of projection to which this connection
 ///	belongs, phsle is referred to by ppist.
@@ -410,13 +295,11 @@ ConnectionGetSpikeReceiver
 
 
 /// 
-/// 
 /// \arg pconn connection to init
 /// 
 /// \return void
 /// 
 /// \brief init connection
-/// \details 
 /// 
 
 void ConnectionInit(struct symtab_Connection *pconn)
@@ -424,46 +307,6 @@ void ConnectionInit(struct symtab_Connection *pconn)
 }
 
 
-/* /// ************************************************************************** */
-/* /// */
-/* /// SHORT: ConnectionLookupHierarchical() */
-/* /// */
-/* /// ARGS.: */
-/* /// */
-/* ///	pconn.: connection container */
-/* ///	ppist.: name(s) to search */
-/* ///	iLevel: active level of ppist */
-/* ///	bAll..: set TRUE if next entries in ppist have to be searched */
-/* /// */
-/* /// \return struct symtab_HSolveListElement * : */
-/* /// */
-/* ///	found symbol, NULL for not found */
-/* /// */
-/* /// \brief Hierarchical lookup in connection subsymbols. */
-/// \details 
-/* /// */
-/* ///	Always fails. */
-/* /// */
-/* /// ************************************************************************** */
-
-/* struct symtab_HSolveListElement * */
-/* ConnectionLookupHierarchical */
-/* (struct symtab_Connection *pconn, */
-/*  struct PidinStack *ppist, */
-/*  int iLevel, */
-/*  int bAll) */
-/* { */
-/*     //- set default result : failure */
-
-/*     struct symtab_HSolveListElement *phsleResult = NULL; */
-
-/*     //- return result */
-
-/*     return(phsleResult); */
-/* } */
-
-
-/// 
 /// 
 ///	iPreSynaptic.: pre-synaptic serial ID
 ///	iPostSynaptic: post-synaptic serial ID
@@ -475,7 +318,6 @@ void ConnectionInit(struct symtab_Connection *pconn)
 ///	newly allocated and initialized connection
 /// 
 /// \brief Allocate connection, assign parameters.
-/// \details 
 /// 
 
 struct symtab_Connection *
@@ -504,7 +346,6 @@ ConnectionNewForStandardConnection
 
 
 /// 
-/// 
 /// \arg pconn connection.
 /// \arg ppist context of connection.
 /// \arg pcName name of parameter.
@@ -512,7 +353,6 @@ ConnectionNewForStandardConnection
 /// \return double : parameter value, FLT_MAX for failure.
 /// 
 /// \brief Resolve parameter value for connection.
-/// \details 
 /// 
 
 double
@@ -568,16 +408,14 @@ ConnectionParameterResolveValue
 
 
 /// 
-/// 
 /// \arg pconn connection to print symbols for
-///	bAll.....: TRUE == full list of symbols, FALSE == only given conn
+/// \arg bAll TRUE == full list of symbols, FALSE == only given conn
 /// \arg iIndent number of indentation spaces
 /// \arg pfile file to print output to
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Print symbol info for connection
-/// \details 
 /// 
 
 #define PrintConnectionIndent(iIndent,pfile)				\
@@ -631,7 +469,6 @@ int ConnectionPrint
 
 
 /// 
-/// 
 /// \arg ptstr initialized treespace traversal
 /// \arg pconn symbol to traverse
 /// 
@@ -642,7 +479,6 @@ int ConnectionPrint
 ///	-1 : immediate abort
 /// 
 /// \brief Traverse symbols in tree manner.
-/// \details 
 /// 
 /// \note  See IOHierarchyTraverse()
 /// 
