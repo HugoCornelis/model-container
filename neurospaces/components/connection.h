@@ -37,10 +37,6 @@ struct symtab_Connection;
 
 
 
-/* int */
-/* ConnectionAssignParameters */
-/* (struct symtab_Connection *pconn,struct symtab_Parameters *ppar); */
-
 struct symtab_Connection * ConnectionCalloc(void);
 
 struct symtab_Parameters *
@@ -62,13 +58,6 @@ ConnectionGetSpikeReceiver
  struct PidinStack *ppist);
 
 void ConnectionInit(struct symtab_Connection *pconn);
-
-/* struct symtab_HSolveListElement * */
-/* ConnectionLookupHierarchical */
-/* (struct symtab_Connection *pconn, */
-/*  struct PidinStack *ppist, */
-/*  int iLevel, */
-/*  int bAll); */
 
 struct symtab_Connection *
 ConnectionNewForStandardConnection
@@ -314,39 +303,12 @@ ConnectionAllSuccessorsSet
 }
 
 
-/* /// ************************************************************************** */
-/* /// */
-/* /// SHORT: ConnectionGetPidin() */
-/* /// */
-/* /// ARGS.: */
-/* /// */
-/* ///	pconn.: connection with pidin. */
-/* /// */
-/* /// \return struct symtab_IdentifierIndex * : pidin of connection. */
-/* /// */
-/* /// \brief Get pidin of connection. */
-/// \details 
-/* /// */
-/* /// ************************************************************************** */
-
-/* #ifndef SWIG */
-/* static inline */
-/* #endif */
-/* struct symtab_IdentifierIndex * */
-/* ConnectionGetPidin(struct symtab_Connection *pconn) */
-/* { */
-/*     return(pconn->deconn.pidin); */
-/* } */
-
-
-/// 
 /// 
 /// \arg pconn connection.
 /// 
 /// \return double : delay, FLT_MAX for failure
 /// 
 /// \brief Get connection delay.
-/// \details 
 /// 
 
 #ifndef SWIG
@@ -361,14 +323,12 @@ ConnectionGetDelay
 
 
 /// 
-/// 
 /// \arg pconn connection.
 /// \arg iTarget projection target serial.
 /// 
 /// \return int : post principal serial, -1 for failure
 /// 
 /// \brief Get connection post principal serial.
-/// \details 
 /// 
 
 #ifndef SWIG
@@ -383,14 +343,12 @@ ConnectionGetPost
 
 
 /// 
-/// 
 /// \arg pconn connection.
 /// \arg iSource projection source serial.
 /// 
 /// \return int : pre principal serial, -1 for failure
 /// 
 /// \brief Get connection pre principal serial.
-/// \details 
 /// 
 
 #ifndef SWIG
@@ -405,13 +363,11 @@ ConnectionGetPre
 
 
 /// 
-/// 
 /// \arg pconn connection.
 /// 
 /// \return double : weight, FLT_MAX for failure
 /// 
 /// \brief Get connection weight.
-/// \details 
 /// 
 
 #ifndef SWIG
