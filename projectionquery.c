@@ -47,13 +47,11 @@ ProjectionQueryBuildConnectionCache(struct ProjectionQuery *ppq);
 
 
 /// 
-/// 
 /// \arg ppq projection query
 /// 
 /// \return int : success of operation.
 /// 
 /// \brief Build caches for projection query.
-/// \details 
 /// 
 
 int ProjectionQueryBuildCaches(struct ProjectionQuery *ppq)
@@ -83,13 +81,11 @@ int ProjectionQueryBuildCaches(struct ProjectionQuery *ppq)
 
 
 /// 
-/// 
 /// \arg ppq projection query
 /// 
 /// \return int : success of operation.
 /// 
 /// \brief Build the unordered connection cache for initialized query.
-/// \details 
 /// 
 
 struct UnorderedCaching_data
@@ -264,13 +260,11 @@ ProjectionQueryBuildConnectionCache(struct ProjectionQuery *ppq)
 
 
 /// 
-/// 
 /// \arg ppq projection query
 /// 
 /// \return int : success of operation.
 /// 
 /// \brief Build the ordered connection caches for an initialized query.
-/// \details 
 /// 
 
 int
@@ -303,14 +297,12 @@ ProjectionQueryBuildOrderedConnectionCaches(struct ProjectionQuery *ppq)
 
 
 /// 
-/// 
 /// \arg ppistProjections array of projections to query
 /// \arg iProjections number of projections in array
 /// 
 /// \return struct ProjectionQuery *
 /// 
 /// \brief Construct a projection query for given projections
-/// \details 
 /// 
 /// \see ProjectionQueryInit()
 /// 
@@ -345,35 +337,6 @@ ProjectionQueryCallocFromProjections
 
 
 /// 
-/// 
-/// \arg psiSolvers array of solver registrations
-/// \arg iSolvers number of entries in array
-/// 
-/// \return struct ProjectionQuery *
-/// 
-/// \brief Construct a projection query for projections onto solvers.
-/// \details 
-/// 
-///	Constructs an array of projections on the solvers and calls
-///	ProjectionQueryCallocFromProjections().
-/// 
-
-/* struct ProjectionQuery * */
-/* ProjectionQueryCallocFromSolverRegistration */
-/* (struct SolverInfo *psiSolvers,int iSolvers) */
-/* { */
-/*     //- set default result : failure */
-
-/*     struct ProjectionQuery *ppqResult = NULL; */
-
-/*     //- return result */
-
-/*     return(ppqResult); */
-/* } */
-
-
-/// 
-/// 
 /// \arg ppq projection query to clone
 /// 
 /// \return struct ProjectionQuery *
@@ -381,6 +344,7 @@ ProjectionQueryCallocFromProjections
 ///	cloned projection query, NULL for failure
 /// 
 /// \brief Clone a projection query for new queries on same projections.
+///
 /// \details 
 /// 
 ///	Result is completely seperate from original projection query.
@@ -434,13 +398,11 @@ struct ProjectionQuery *ProjectionQueryClone(struct ProjectionQuery *ppq)
 
 
 /// 
-/// 
 /// \arg ppq projection query
 /// 
 /// \return int : number of connections, -1 for failure
 /// 
 /// \brief Count connections for all projections in query.
-/// \details 
 /// 
 
 int ProjectionQueryCountConnections(struct ProjectionQuery *ppq)
@@ -520,14 +482,12 @@ int ProjectionQueryCountConnections(struct ProjectionQuery *ppq)
 
 
 /// 
-/// 
 /// \arg ppq projection query
 /// \arg ppist spike generator
 /// 
 /// \return int : number of connections, -1 for failure
 /// 
 /// \brief Count connections attached to spikegen.
-/// \details 
 /// 
 
 static int ProjectionQueryConnectionForSpikeGeneratorCounter
@@ -580,14 +540,12 @@ ProjectionQueryCountConnectionsForSpikeGenerator
 
 
 /// 
-/// 
 /// \arg ppq projection query
 /// \arg ppist spike receiver
 /// 
 /// \return int : number of connections, -1 for failure
 /// 
 /// \brief Count connections attached to spikerec.
-/// \details 
 /// 
 
 static int ProjectionQueryConnectionForSpikeReceiverCounter
@@ -640,12 +598,12 @@ ProjectionQueryCountConnectionsForSpikeReceiver
 
 
 /// 
-/// 
 /// \arg ppist projection to query
 /// 
 /// \return void
 /// 
 /// \brief Free a projection query.
+///
 /// \details 
 /// 
 ///	It is illegal to free projection queries that have pending clones.
@@ -742,7 +700,6 @@ void ProjectionQueryFree(struct ProjectionQuery *ppq)
 
 
 /// 
-/// 
 /// \arg ppq projection query to init
 /// \arg ppistProjections array of projections to query
 /// \arg iProjections number of projections in array
@@ -750,6 +707,7 @@ void ProjectionQueryFree(struct ProjectionQuery *ppq)
 /// \return int : success of operation
 /// 
 /// \brief Init a projection query from an enumeration of projections.
+///
 /// \details 
 /// 
 ///	ppistProjections may be discarded afterwards.
@@ -931,13 +889,13 @@ int ProjectionQueryInit
 
 
 /// 
-/// 
 /// \arg ppq projection query
 /// \arg pconn connection symbol
 /// 
 /// \return int : Serial ID for connection, -1 for failure
 /// 
 /// \brief Get synapse number on synaptic target.
+///
 /// \details 
 /// 
 ///	Get serial ID of specified connection, relative to the spike 
@@ -1289,7 +1247,6 @@ ProjectionQueryLookupPostSerialIDForAbsoluteSerials
 
 
 /// 
-/// 
 /// \arg ppq projection query
 /// \arg psi solver registration
 /// \arg pfProcessor processor to be called on matching connections
@@ -1299,6 +1256,7 @@ ProjectionQueryLookupPostSerialIDForAbsoluteSerials
 /// \return see TstrTraverse()
 /// 
 /// \brief Traverse connections.
+///
 /// \details 
 /// 
 ///	Call processor on connections.  If no connections, always 
@@ -1538,7 +1496,6 @@ ProjectionQueryTraverseConnections
 
 
 /// 
-/// 
 /// \arg ppq projection query
 /// \arg psi solver registration
 /// \arg pfProcessor processor to be called on matching connections
@@ -1548,6 +1505,7 @@ ProjectionQueryTraverseConnections
 /// \return see TstrTraverse()
 /// 
 /// \brief Traverse connections, do not use any caches.
+///
 /// \details 
 /// 
 ///	Call processor on connections.  If no connections, always 
@@ -1630,7 +1588,6 @@ ProjectionQueryTraverseProjectionConnections
 
 
 /// 
-/// 
 /// \arg ppq projection query
 /// \arg iReceiver spike receiver
 /// \arg psi solver registration
@@ -1641,6 +1598,7 @@ ProjectionQueryTraverseProjectionConnections
 /// \return see TstrTraverse()
 /// 
 /// \brief Traverse connections attached to spikerec and solver.
+///
 /// \details 
 /// 
 ///	Call processor on connections attached to spikerec, but only if 
@@ -1901,7 +1859,6 @@ ProjectionQueryTraverseConnectionsForPostSerial
 
 
 /// 
-/// 
 /// \arg ppq projection query
 /// \arg ppist spike generator
 /// \arg psi solver registration
@@ -1912,6 +1869,7 @@ ProjectionQueryTraverseConnectionsForPostSerial
 /// \return see TstrTraverse()
 /// 
 /// \brief Traverse connections attached to spikegen and solver.
+///
 /// \details 
 /// 
 ///	Call processor on connections attached to spikegen, but only if 
@@ -2184,7 +2142,6 @@ ProjectionQueryTraverseConnectionsForSpikeGenerator
 
 
 /// 
-/// 
 /// \arg ppq projection query
 /// \arg ppist spike receiver
 /// \arg psi solver registration
@@ -2195,6 +2152,7 @@ ProjectionQueryTraverseConnectionsForSpikeGenerator
 /// \return see TstrTraverse()
 /// 
 /// \brief Traverse connections attached to spikerec and solver.
+///
 /// \details 
 /// 
 ///	Call processor on connections attached to spikerec, but only if 
