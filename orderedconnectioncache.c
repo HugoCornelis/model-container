@@ -26,15 +26,13 @@
 
 
 /// 
-/// 
 /// \arg pocc ordered connection cache.
 /// \arg ppq projection query that makes this call.
-///	iSerial.: pre- or post-serial to get first entry for.
+/// \arg iSerial pre- or post-serial to get first entry for.
 /// 
 /// \return int : index into ordered connection cache, -1 for failure.
 /// 
 /// \brief Get index into ordered connection cache.
-/// \details 
 /// 
 
 int
@@ -167,16 +165,16 @@ OrderedConnectionCacheGetFirstIndexForSerial
 
 
 /// 
-/// 
 /// \arg pcc connection cache to order.
 /// \arg ppq projection query that makes this call.
-///	iPost.: TRUE == post ordering, FALSE == pre ordering.
+/// \arg iPost TRUE == post ordering, FALSE == pre ordering.
 /// 
 /// \return struct OrderedConnectionCache * 
 /// 
 ///	New ordered connection cache, NULL for failure.
 /// 
 /// \brief Initialize new ordered connection cache.
+///
 /// \details 
 /// 
 ///	The connection cache pcc is kept by reference, don't free it 
