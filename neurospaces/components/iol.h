@@ -73,7 +73,7 @@ do {									\
 #include "neurospaces/iocontainer.h"
 
 
-/* ///
+/// static inline prototypes
 
 #ifndef SWIG
 static inline
