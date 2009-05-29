@@ -196,7 +196,7 @@ PoolGetParameter
 
 	    pparResult
 		= SymbolSetParameterDouble
-		  (&ppool->bio.ioh.iol.hsle, "concentration", dBase);
+		  (&ppool->bio.ioh.iol.hsle, "concen_init", dBase);
 	}
     }
 

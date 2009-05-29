@@ -1529,10 +1529,8 @@ ParameterResolveToPidinStack
 
 /* 	ppistResult = PidinStackDuplicate(ppist); */
 
-	/// \todo rewrite using only one allocation :
-	/// \todo 
-	/// \todo means we need something like 
-	/// \todo PidinStackAppendCompactFromParameterSymbols()
+	/// \todo rewrite using only one allocation, define a function
+	/// PidinStackAppendCompactFromParameterSymbols().
 
 	//- get pidinstack from parameter elements
 
