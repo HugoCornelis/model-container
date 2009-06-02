@@ -532,32 +532,21 @@ SymbolFindParentSegment
     struct symtab_HSolveListElement *phsleComp
 	= PidinStackLookupTopSymbol(ppistComp);
 
+    struct symtab_IdentifierIndex *pidinComp
+	= PidinStackTop(ppistComp);
+
     //- while not segment
 
-    while (phsleComp && !instanceof_segment(phsleComp))
+    while (pidinComp && phsleComp && !instanceof_segment(phsleComp))
     {
-/* 	/// \todo this is a realy hack, to solve need to revisit all of */
-/* 	/// \todo pidinstack and make it more consistent with: */
-/* 	/// */
-/* 	/// \todo root symbols */
-/* 	/// \todo rooted pidinstacks */
-/* 	/// \todo namespaces */
-/* 	/// \todo namespaced pidinstacks */
-/* 	/// */
-/* 	/// \todo see also pool.c for a comparable hack. */
-/* 	/// */
-
-/* 	if (instanceof_root_symbol(phsleComp)) */
-/* 	{ */
-/* 	    phsleComp = NULL; */
-/* 	} */
-
 	//- pop element
 
-	PidinStackPop(ppistComp);
+	// \note that pidinComp can be NULL while phsleComp is a root
+	// symbol, that is a perfectly legal situation.
 
-	phsleComp
-	    = PidinStackLookupTopSymbol(ppistComp);
+	pidinComp = PidinStackPop(ppistComp);
+
+	phsleComp = PidinStackLookupTopSymbol(ppistComp);
     }
 
     //- set result
