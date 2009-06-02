@@ -527,40 +527,38 @@ SymbolFindParentSegment
     struct PidinStack *ppistComp
 	= PidinStackDuplicate(ppist);
 
-    struct symtab_HSolveListElement *phsleComp;
+    //- get top symbol
 
-    //- loop
+    struct symtab_HSolveListElement *phsleComp
+	= PidinStackLookupTopSymbol(ppistComp);
 
-    do
+    //- while not segment
+
+    while (phsleComp && !instanceof_segment(phsleComp))
     {
+/* 	/// \todo this is a realy hack, to solve need to revisit all of */
+/* 	/// \todo pidinstack and make it more consistent with: */
+/* 	/// */
+/* 	/// \todo root symbols */
+/* 	/// \todo rooted pidinstacks */
+/* 	/// \todo namespaces */
+/* 	/// \todo namespaced pidinstacks */
+/* 	/// */
+/* 	/// \todo see also pool.c for a comparable hack. */
+/* 	/// */
+
+/* 	if (instanceof_root_symbol(phsleComp)) */
+/* 	{ */
+/* 	    phsleComp = NULL; */
+/* 	} */
+
 	//- pop element
 
 	PidinStackPop(ppistComp);
 
-	//- get top symbol
-
-	phsleComp = PidinStackLookupTopSymbol(ppistComp);
-
-	/// \todo this is a realy hack, to solve need to revisit all of
-	/// \todo pidinstack and make it more consistent with:
-	///
-	/// \todo root symbols
-	/// \todo rooted pidinstacks
-	/// \todo namespaces
-	/// \todo namespaced pidinstacks
-	///
-	/// \todo see also pool.c for a comparable hack.
-	///
-
-	if (instanceof_root_symbol(phsleComp))
-	{
-	    phsleComp = NULL;
-	}
+	phsleComp
+	    = PidinStackLookupTopSymbol(ppistComp);
     }
-
-    //- while not segment and more symbols to pop
-
-    while (phsleComp && !instanceof_segment(phsleComp) && PidinStackTop(ppistComp));
 
     //- set result
 
