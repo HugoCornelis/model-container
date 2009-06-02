@@ -802,51 +802,18 @@ ChannelParameterScaleValue
 
     if (0 == strcmp(pcName, "G_MAX"))
     {
-	/// parent segment
+	/// find parent segment
 
-	struct symtab_HSolveListElement *phsle = NULL;
-
-	//- copy context stack
-
-	struct PidinStack *ppistComp = PidinStackDuplicate(ppist);
-
-	//- loop
-
-	do
-	{
-	    //- pop element
-
-	    PidinStackPop(ppistComp);
-
-	    //- get top symbol
-
-	    phsle = PidinStackLookupTopSymbol(ppistComp);
-
-	    /// \todo this is a realy hack, to solve need to revisit all of
-	    /// \todo pidinstack and make it more consistent with:
-	    ///
-	    /// \todo root symbols
-	    /// \todo rooted pidinstacks
-	    /// \todo namespaces
-	    /// \todo namespaced pidinstacks
-	    ///
-	    /// \todo see also pool.c for a comparable hack.
-	    ///
-
-	    if (instanceof_root_symbol(phsle))
-	    {
-		phsle = NULL;
-	    }
-	}
-
-	//- while not segment and more symbols to pop
-
-	while (phsle && !instanceof_segment(phsle) && PidinStackTop(ppistComp));
+	struct PidinStack *ppistComp
+	    = SymbolFindParentSegment(&pchan->bio.ioh.iol.hsle, ppist);
 
 	//- if found segment
 
-	if (phsle && instanceof_segment(phsle))
+	if (ppistComp)
 	{
+	    struct symtab_HSolveListElement *phsle
+		= PidinStackLookupTopSymbol(ppistComp);
+
 	    /// surface
 
 	    double dSurface;
@@ -882,6 +849,10 @@ ChannelParameterScaleValue
 	    //- scale conductance to surface of segment
 
 	    dResult = dValue * dSurface;
+
+	    //- free allocated memory
+
+	    PidinStackFree(ppistComp);
 	}
     }
 

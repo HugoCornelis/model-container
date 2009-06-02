@@ -506,6 +506,80 @@ SymbolFindParameter
 
 
 /// 
+/// \arg phsle symbol.
+/// \arg ppist symbol context.
+/// 
+/// \return struct PidinStack *
+/// 
+///	Context of parent segment, NULL for failure.
+/// 
+/// \brief Find the parent segment that contains the given symbol.
+/// 
+
+struct PidinStack *
+SymbolFindParentSegment
+(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)
+{
+    //- set default result: failure
+
+    struct PidinStack *ppistResult = NULL;
+
+    struct PidinStack *ppistComp
+	= PidinStackDuplicate(ppist);
+
+    struct symtab_HSolveListElement *phsleComp;
+
+    //- loop
+
+    do
+    {
+	//- pop element
+
+	PidinStackPop(ppistComp);
+
+	//- get top symbol
+
+	phsleComp = PidinStackLookupTopSymbol(ppistComp);
+
+	/// \todo this is a realy hack, to solve need to revisit all of
+	/// \todo pidinstack and make it more consistent with:
+	///
+	/// \todo root symbols
+	/// \todo rooted pidinstacks
+	/// \todo namespaces
+	/// \todo namespaced pidinstacks
+	///
+	/// \todo see also pool.c for a comparable hack.
+	///
+
+	if (instanceof_root_symbol(phsleComp))
+	{
+	    phsleComp = NULL;
+	}
+    }
+
+    //- while not segment and more symbols to pop
+
+    while (phsleComp && !instanceof_segment(phsleComp) && PidinStackTop(ppistComp));
+
+    //- set result
+
+    if (phsleComp && instanceof_segment(phsleComp))
+    {
+	ppistResult = ppistComp;
+    }
+    else
+    {
+	PidinStackFree(ppistComp);
+    }
+
+    //- return result
+
+    return(ppistResult);
+}
+
+
+/// 
 /// \arg phsle symbol to free.
 /// 
 /// \return int

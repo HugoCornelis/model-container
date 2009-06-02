@@ -295,10 +295,6 @@ PoolParameterScaleValue
 
     if (0 == strcmp(pcName,"BETA"))
     {
-	/// parent segment
-
-	struct symtab_HSolveListElement *phsleComp = NULL;
-
 	//- get pool diameter
 
 	struct symtab_Parameters *pparPoolDia
@@ -326,49 +322,20 @@ PoolParameterScaleValue
 
 	double dDia = 2 * dThickness;
 
-	//- copy context stack
+	/// find parent segment
 
-	struct PidinStack *ppistComp = PidinStackDuplicate(ppist);
-
-	//- loop
-
-	do
-	{
-	    //- pop element
-
-	    PidinStackPop(ppistComp);
-
-	    //- get top symbol
-
-	    phsleComp = PidinStackLookupTopSymbol(ppistComp);
-
-	    /// \todo this is a realy hack, to solve need to revisit all of
-	    /// \todo pidinstack and make it more consistent with:
-	    ///
-	    /// \todo root symbols
-	    /// \todo rooted pidinstacks
-	    /// \todo namespaces
-	    /// \todo namespaced pidinstacks
-	    ///
-	    /// \todo see also channel.c for a comparable hack.
-	    ///
-
-	    if (instanceof_root_symbol(phsleComp))
-	    {
-		phsleComp = NULL;
-	    }
-	}
-
-	//- while not segment and more symbols to pop
-
-	while (phsleComp && !instanceof_segment(phsleComp) && PidinStackTop(ppistComp));
+	struct PidinStack *ppistComp
+	    = SymbolFindParentSegment(&ppool->bio.ioh.iol.hsle, ppist);
 
 	int iSpherical = 0;
 
 	//- if found segment
 
-	if (phsleComp && instanceof_segment(phsleComp))
+	if (ppistComp)
 	{
+	    struct symtab_HSolveListElement *phsleComp
+		= PidinStackLookupTopSymbol(ppistComp);
+
 	    if (SegmenterIsSpherical((struct symtab_Segmenter *)phsleComp))
 	    {
 		iSpherical = 1;
@@ -420,7 +387,10 @@ PoolParameterScaleValue
 
 	//- free context of compartment
 
-	PidinStackFree(ppistComp);
+	if (ppistComp)
+	{
+	    PidinStackFree(ppistComp);
+	}
     }
 
     //- return result

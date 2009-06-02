@@ -191,6 +191,10 @@ SymbolFindParameter
  struct PidinStack *ppist,
  char *pcName);
 
+struct PidinStack *
+SymbolFindParentSegment
+(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist);
+
 int SymbolFree(struct symtab_HSolveListElement *phsle);
 
 struct AlgorithmInstance *
