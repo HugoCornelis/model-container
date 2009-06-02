@@ -76,13 +76,11 @@ SegmentGetVolume
 
 
 /// 
-/// 
 /// \return struct symtab_Segment * 
 /// 
 ///	Newly allocated segment, NULL for failure
 /// 
 /// \brief Allocate a new segment symbol table element
-/// \details 
 /// 
 
 struct symtab_Segment * SegmentCalloc(void)
@@ -112,14 +110,12 @@ struct symtab_Segment * SegmentCalloc(void)
 
 
 /// 
-/// 
 /// \arg psegment symbol to alias
 /// \arg pidin name of new symbol
 /// 
 /// \return struct symtab_HSolveListElement * : alias for original symbol
 /// 
 /// \brief Create alias to given symbol
-/// \details 
 /// 
 
 struct symtab_HSolveListElement * 
@@ -153,7 +149,6 @@ SegmentCreateAlias
 
 
 /// 
-/// 
 /// \arg psegment segment to get length for.
 /// \arg ppist context of segment.
 /// 
@@ -162,7 +157,6 @@ SegmentCreateAlias
 ///	1, 2, 3 ... if this is a branch point, 0 if not, FLT_MAX if unknown.
 /// 
 /// \brief Get branch point flag of this segment.
-/// \details 
 /// 
 
 static
@@ -251,14 +245,12 @@ SegmentGetBranchpointFlag
 
 
 /// 
-/// 
 /// \arg psegment segment to get length for.
 /// \arg ppist context of segment.
 /// 
 /// \return double : segment length, FLT_MAX for failure.
 /// 
 /// \brief Get length of segment.
-/// \details 
 /// 
 /// \note 
 /// 
@@ -318,7 +310,6 @@ SegmentGetLength
 
 
 /// 
-/// 
 /// \arg psegment symbol to get parameter for
 /// \arg ppist context of symbol.
 /// \arg pcName name of parameter
@@ -328,7 +319,6 @@ SegmentGetLength
 ///	Parameter structure, NULL for failure.
 /// 
 /// \brief Get specific parameter of symbol.
-/// \details 
 /// 
 
 struct symtab_Parameters * 
@@ -472,14 +462,12 @@ SegmentGetParameter
 
 
 /// 
-/// 
 /// \arg psegment segment to get somatopetal branchpoints for.
 /// \arg ppist context of segment.
 /// 
 /// \return double : segment somatopetal branchpoints, FLT_MAX for failure.
 /// 
 /// \brief get somatopetal branchpoints of segment.
-/// \details 
 /// 
 
 static
@@ -591,14 +579,12 @@ SegmentGetSomatopetalBranchpoints
 
 
 /// 
-/// 
 /// \arg psegment segment to get somatopetal distance for.
 /// \arg ppist context of segment.
 /// 
 /// \return double : segment somatopetal distance, FLT_MAX for failure.
 /// 
 /// \brief get somatopetal distance of segment.
-/// \details 
 /// 
 
 static
@@ -714,14 +700,12 @@ SegmentGetSomatopetalDistance
 
 
 /// 
-/// 
 /// \arg psegment segment to get surface for.
 /// \arg ppist context of segment.
 /// 
 /// \return double : segment surface, FLT_MAX for failure.
 /// 
 /// \brief get surface of segment.
-/// \details 
 /// 
 
 /* static */
@@ -783,14 +767,12 @@ SegmentGetSurface
 
 
 /// 
-/// 
 /// \arg psegment segment to get time constant for.
 /// \arg ppist context of segment.
 /// 
 /// \return double : segment time constant, FLT_MAX for failure.
 /// 
 /// \brief Get time constant of segment.
-/// \details 
 /// 
 
 static
@@ -833,14 +815,12 @@ SegmentGetTau
 
 
 /// 
-/// 
 /// \arg psegment segment to get volume for.
 /// \arg ppist context of segment.
 /// 
 /// \return double : segment volume, FLT_MAX for failure.
 /// 
 /// \brief get volume of segment.
-/// \details 
 /// 
 
 static
@@ -899,13 +879,11 @@ SegmentGetVolume
 
 
 /// 
-/// 
 /// \arg psegment segment to init
 /// 
 /// \return void
 /// 
 /// \brief init segment
-/// \details 
 /// 
 
 void SegmentInit(struct symtab_Segment *psegment)
