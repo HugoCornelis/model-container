@@ -59,7 +59,7 @@ double
 SegmentGetSomatopetalDistance
 (struct symtab_Segment *psegment, struct PidinStack *ppist);
 
-static
+/* static */
 double
 SegmentGetSurface
 (struct symtab_Segment *psegment, struct PidinStack *ppist);

@@ -55,6 +55,11 @@ SegmentGetParameter
  struct PidinStack *ppist,
  char *pcName);
 
+/* static */
+double
+SegmentGetSurface
+(struct symtab_Segment *psegment, struct PidinStack *ppist);
+
 void SegmentInit(struct symtab_Segment *psegment);
 
 
