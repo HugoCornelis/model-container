@@ -95,13 +95,11 @@ ProjectionSpikeRecSelector
 
 
 /// 
-/// 
 /// \return struct symtab_Projection * 
 /// 
 ///	Newly allocated projection, NULL for failure
 /// 
 /// \brief Allocate a new projection symbol table element
-/// \details 
 /// 
 
 struct symtab_Projection * ProjectionCalloc(void)
@@ -131,14 +129,12 @@ struct symtab_Projection * ProjectionCalloc(void)
 
 
 /// 
-/// 
 /// \arg ptstr treespace traversal
 /// \arg pvUserdata any user data
 /// 
 /// \return int : treespace traversal callback return value
 /// 
 /// \brief Selects connections if they come from a registered spikerec.
-/// \details 
 /// 
 
 static int 
@@ -191,14 +187,12 @@ ProjectionConnectionForPostSerialSelector
 
 
 /// 
-/// 
 /// \arg ptstr treespace traversal
 /// \arg pvUserdata any user data
 /// 
 /// \return int : treespace traversal callback return value
 /// 
 /// \brief Selects connections if they come from a registered spikegen.
-/// \details 
 /// 
 
 static int 
@@ -252,13 +246,13 @@ ProjectionConnectionForPreSerialSelector
 
 
 /// 
-/// 
 /// \arg ptstr treespace traversal
 /// \arg pvUserdata any user data
 /// 
 /// \return int : treespace traversal callback return value
 /// 
 /// \brief Translate vector traversal to traversal over connection sources.
+///
 /// \details 
 /// 
 ///	The user data is supposed to have registered preprocesor and 
@@ -307,7 +301,7 @@ ProjectionConnectionSourceProcessor
 
 	//- traverse connections for spikegen
 
-	int iResult2 = TstrGo(ptstrConns,phsle);
+	int iResult2 = TstrGo(ptstrConns, phsle);
 
 	//- delete treespace traversal
 
@@ -329,9 +323,9 @@ ProjectionConnectionSourceProcessor
     {
 	//- call processor and finalizer in order
 
-	ppqr->pfProcessor(ptstr,ppqr->pvUserdata);
+	ppqr->pfProcessor(ptstr, ppqr->pvUserdata);
 
-	ppqr->pfFinalizer(ptstr,ppqr->pvUserdata);
+	ppqr->pfFinalizer(ptstr, ppqr->pvUserdata);
     }
 
     //- return result : remember won't go any deeper to traverse connections
@@ -341,13 +335,13 @@ ProjectionConnectionSourceProcessor
 
 
 /// 
-/// 
 /// \arg ptstr treespace traversal
 /// \arg pvUserdata any user data
 /// 
 /// \return int : treespace traversal callback return value
 /// 
 /// \brief Translate vector traversal to traversal over connection targets.
+///
 /// \details 
 /// 
 ///	The user data is supposed to have registered procesor and 
@@ -395,7 +389,7 @@ ProjectionConnectionTargetProcessor
 
 	//- traverse connections for spikerec
 
-	int iResult2 = TstrGo(ptstrConns,phsle);
+	int iResult2 = TstrGo(ptstrConns, phsle);
 
 	//- delete treespace traversal
 
@@ -417,9 +411,9 @@ ProjectionConnectionTargetProcessor
     {
 	//- call processor and finalizer in order
 
-	ppqr->pfProcessor(ptstr,ppqr->pvUserdata);
+	ppqr->pfProcessor(ptstr, ppqr->pvUserdata);
 
-	ppqr->pfFinalizer(ptstr,ppqr->pvUserdata);
+	ppqr->pfFinalizer(ptstr, ppqr->pvUserdata);
     }
 
     //- return result : remember won't go any deeper to traverse connections
@@ -429,20 +423,20 @@ ProjectionConnectionTargetProcessor
 
 
 /// 
-/// 
 /// \arg pproj projection
 /// \arg ppist context of projection
 /// 
 /// \return int : number of connections, -1 for failure
 /// 
 /// \brief Get number of connections in projection
+///
 /// \details 
 /// 
 ///	connections == synapses
 /// 
 
 int ProjectionCountConnections
-(struct symtab_Projection *pproj,struct PidinStack *ppist)
+(struct symtab_Projection *pproj, struct PidinStack *ppist)
 {
     //- set default result : none
 
@@ -469,14 +463,12 @@ int ProjectionCountConnections
 
 
 /// 
-/// 
 /// \arg pproj symbol to alias
 /// \arg pidin name of new symbol
 /// 
 /// \return struct symtab_HSolveListElement * : alias for original symbol
 /// 
 /// \brief Create alias to given symbol
-/// \details 
 /// 
 
 struct symtab_HSolveListElement * 
@@ -506,7 +498,6 @@ ProjectionCreateAlias
 
 
 /// 
-/// 
 /// \arg pproj projection
 /// \arg ppist context of projection
 /// \arg ppistSpikeGen spike generator
@@ -514,6 +505,7 @@ ProjectionCreateAlias
 /// \return int : number of connections, -1 for failure
 /// 
 /// \brief Get number of connections for a single spikegen
+///
 /// \details 
 /// 
 ///	connections == affected synapses attached to a spikegen
@@ -552,7 +544,6 @@ ProjectionGetNumberOfConnectionsForSpikeGenerator
 
 
 /// 
-/// 
 /// \arg pproj projection
 /// \arg ppist context of projection
 /// \arg ppistSpikeRec spike receiver (attachment point)
@@ -560,6 +551,7 @@ ProjectionGetNumberOfConnectionsForSpikeGenerator
 /// \return int : number of connections, -1 for failure
 /// 
 /// \brief Get number of connections for a single spike receiver
+///
 /// \details 
 /// 
 ///	connections == affected synapses attached to a spike receiver
@@ -620,7 +612,7 @@ ProjectionGetNumberOfConnectionsForSpikeReceiver
 
 /* static int  */
 /* ProjectionConnectionTargetCounter */
-/* (struct TreespaceTraversal *ptstr,void *pvUserdata) */
+/* (struct TreespaceTraversal *ptstr, void *pvUserdata) */
 /* { */
 /*     //- set default result : ok, but process sibling afterwards */
 
@@ -649,7 +641,7 @@ ProjectionGetNumberOfConnectionsForSpikeReceiver
 
 /* static int  */
 /* ProjectionConnectionTargetCounterGroupProcessor */
-/* (struct TreespaceTraversal *ptstr,void *pvUserdata) */
+/* (struct TreespaceTraversal *ptstr, void *pvUserdata) */
 /* { */
 /*     //- set default result : ok, but process sibling afterwards */
 
@@ -674,7 +666,7 @@ ProjectionGetNumberOfConnectionsForSpikeReceiver
 
 /* 	//- init treespace traversal */
 
-/* 	memset(&tstr,0,sizeof(tstr)); */
+/* 	memset(&tstr, 0, sizeof(tstr)); */
 
 /* 	tstr.pfPreSelector = NULL; */
 /* 	tstr.pfProcesor = ProjectionConnectionTargetCounter; */
@@ -687,7 +679,7 @@ ProjectionGetNumberOfConnectionsForSpikeReceiver
 
 /* 	//- count connections for spikegen */
 
-/* 	iResult2 = TstrTraverse(&tstr,phsle); */
+/* 	iResult2 = TstrTraverse(&tstr, phsle); */
 
 /* 	//- delete treespace traversal */
 
@@ -761,19 +753,17 @@ ProjectionGetNumberOfConnectionsForSpikeReceiver
 
 
 /// 
-/// 
 /// \arg pproj projection.
 /// \arg ppist context of projection.
 /// 
 /// \return int : Serial for source population, -1 for failure.
 /// 
 /// \brief Calculate serial for source population.
-/// \details 
 /// 
 
 int
 ProjectionGetSourceSerial
-(struct symtab_Projection *pproj,struct PidinStack *ppist)
+(struct symtab_Projection *pproj, struct PidinStack *ppist)
 {
     //- set default result : failure
 
@@ -785,10 +775,10 @@ ProjectionGetSourceSerial
     //- get source population context
 
     struct symtab_Parameters *pparSource
-	= SymbolFindParameter(phsle,ppist,"SOURCE");
+	= SymbolFindParameter(phsle, ppist, "SOURCE");
 
     struct PidinStack *ppistSource
-	= ParameterResolveToPidinStack(pparSource,ppist);
+	= ParameterResolveToPidinStack(pparSource, ppist);
 
     //- try to update cache
 
@@ -814,19 +804,17 @@ ProjectionGetSourceSerial
 
 
 /// 
-/// 
 /// \arg pproj projection.
 /// \arg ppist context of projection.
 /// 
 /// \return int : Serial for target population, -1 for failure.
 /// 
 /// \brief Calculate serial for target population.
-/// \details 
 /// 
 
 int
 ProjectionGetTargetSerial
-(struct symtab_Projection *pproj,struct PidinStack *ppist)
+(struct symtab_Projection *pproj, struct PidinStack *ppist)
 {
     //- set default result : failure
 
@@ -838,10 +826,10 @@ ProjectionGetTargetSerial
     //- get target population context
 
     struct symtab_Parameters *pparTarget
-	= SymbolFindParameter(phsle,ppist,"TARGET");
+	= SymbolFindParameter(phsle, ppist, "TARGET");
 
     struct PidinStack *ppistTarget
-	= ParameterResolveToPidinStack(pparTarget,ppist);
+	= ParameterResolveToPidinStack(pparTarget, ppist);
 
     //- try to update cache
 
@@ -867,13 +855,11 @@ ProjectionGetTargetSerial
 
 
 /// 
-/// 
 /// \arg pproj projection to init
 /// 
 /// \return void
 /// 
 /// \brief init projection
-/// \details 
 /// 
 
 void ProjectionInit(struct symtab_Projection *pproj)
@@ -901,7 +887,6 @@ void ProjectionInit(struct symtab_Projection *pproj)
 /* /// \return int : serial ID, -1 for failure */
 /* /// */
 /* /// \brief Lookup serial ID for a connection */
-/// \details 
 /* /// */
 /* /// ************************************************************************** */
 
@@ -922,14 +907,14 @@ void ProjectionInit(struct symtab_Projection *pproj)
 
 /* 	struct PidinStack *ppistTarget = PidinStackCalloc(); */
 
-/* 	PidinStackPushCompactAll(ppistTarget,ConnectionTargetPidin(pconn)); */
+/* 	PidinStackPushCompactAll(ppistTarget, ConnectionTargetPidin(pconn)); */
 
 /* 	//- count connections for target of this connection */
 
 /* 	/// \note this caches the serial ID for this target in the connections */
 
 /* 	ProjectionGetNumberOfConnectionsForSpikeReceiver */
-/* 	    (pproj,ppist,ppistTarget); */
+/* 	    (pproj, ppist, ppistTarget); */
 
 /* 	//- free pidinstack */
 
@@ -947,14 +932,12 @@ void ProjectionInit(struct symtab_Projection *pproj)
 
 
 /// 
-/// 
 /// \arg ptstr treespace traversal
 /// \arg pvUserdata any user data
 /// 
 /// \return int : treespace traversal callback return value
 /// 
 /// \brief Increments (int *)ppqr->pvUserdata.
-/// \details 
 /// 
 
 static int 
@@ -988,14 +971,12 @@ ProjectionSpikeGenConnectionCounter
 
 
 /// 
-/// 
 /// \arg ptstr treespace traversal
 /// \arg pvUserdata any user data
 /// 
 /// \return int : treespace traversal callback return value
 /// 
 /// \brief Selects connections if they come from a registered spikegen.
-/// \details 
 /// 
 
 static int 
@@ -1029,16 +1010,16 @@ ProjectionSpikeGenSelector
 	//- get projection symbol
 
 	struct symtab_HSolveListElement *phsleProjection
-/* 	    = SymbolsLookupHierarchical(NULL,ppistProjection); */
+/* 	    = SymbolsLookupHierarchical(NULL, ppistProjection); */
 	    = PidinStackLookupTopSymbol(ppistProjection);
 
 	//- get source population context
 
 	struct symtab_Parameters *pparSource
-	    = SymbolFindParameter(phsleProjection,ppistProjection,"SOURCE");
+	    = SymbolFindParameter(phsleProjection, ppistProjection, "SOURCE");
 
 	struct PidinStack *ppistSource
-	    = ParameterResolveToPidinStack(pparSource,ppistProjection);
+	    = ParameterResolveToPidinStack(pparSource, ppistProjection);
 
 /* 	ppistConnection = PidinStackDuplicate(ppistSource); */
 
@@ -1049,11 +1030,11 @@ ProjectionSpikeGenSelector
 
 	ppistConnection
 	    = ConnectionGetSpikeGenerator
-	      ((struct symtab_Connection *)phsle,phsleSource,ppistSource);
+	      ((struct symtab_Connection *)phsle, phsleSource, ppistSource);
 
 	//- cat spikegen context
 
-	PidinStackAppendCompact(ppistSource,ppqr->ppistSpikegen);
+	PidinStackAppendCompact(ppistSource, ppqr->ppistSpikegen);
 
 /* 	//- get context for source of connection */
 
@@ -1063,7 +1044,7 @@ ProjectionSpikeGenSelector
 
 	//- if connection source is spikegen
 
-	if (PidinStackEqual(ppistSource,ppistConnection))
+	if (PidinStackEqual(ppistSource, ppistConnection))
 	{
 	    //- set result : selected
 
@@ -1083,14 +1064,12 @@ ProjectionSpikeGenSelector
 
 
 /// 
-/// 
 /// \arg ptstr treespace traversal
 /// \arg pvUserdata any user data
 /// 
 /// \return int : treespace traversal callback return value
 /// 
 /// \brief Increments (int *)ppqr->pvUserdata.
-/// \details 
 /// 
 
 static int 
@@ -1122,14 +1101,12 @@ ProjectionSpikeRecConnectionCounter
 
 
 /// 
-/// 
 /// \arg ptstr treespace traversal
 /// \arg pvUserdata any user data
 /// 
 /// \return int : treespace traversal callback return value
 /// 
 /// \brief Selects connections if they come from a given spikerec.
-/// \details 
 /// 
 
 static int 
@@ -1163,16 +1140,16 @@ ProjectionSpikeRecSelector
 	//- get projection symbol
 
 	struct symtab_HSolveListElement *phsleProjection
-/* 	    = SymbolsLookupHierarchical(NULL,ppistProjection); */
+/* 	    = SymbolsLookupHierarchical(NULL, ppistProjection); */
 	    = PidinStackLookupTopSymbol(ppistProjection);
 
 	//- get target population context
 
 	struct symtab_Parameters *pparTarget
-	    = SymbolFindParameter(phsleProjection,ppistProjection,"TARGET");
+	    = SymbolFindParameter(phsleProjection, ppistProjection, "TARGET");
 
 	struct PidinStack *ppistTarget
-	    = ParameterResolveToPidinStack(pparTarget,ppistProjection);
+	    = ParameterResolveToPidinStack(pparTarget, ppistProjection);
 
 /* 	ppistConnection = PidinStackDuplicate(ppistTarget); */
 
@@ -1183,11 +1160,11 @@ ProjectionSpikeRecSelector
 
 	ppistConnection
 	    = ConnectionGetSpikeReceiver
-	      ((struct symtab_Connection *)phsle,phsleTarget,ppistTarget);
+	      ((struct symtab_Connection *)phsle, phsleTarget, ppistTarget);
 
 	//- cat spikerec context
 
-	PidinStackAppendCompact(ppistTarget,ppqr->ppistSpikerec);
+	PidinStackAppendCompact(ppistTarget, ppqr->ppistSpikerec);
 
 /* 	//- get context for target of connection */
 
@@ -1197,7 +1174,7 @@ ProjectionSpikeRecSelector
 
 	//- if connection target is spikerec
 
-	if (PidinStackEqual(ppistTarget,ppistConnection))
+	if (PidinStackEqual(ppistTarget, ppistConnection))
 	{
 	    //- set result : selected
 
@@ -1217,7 +1194,6 @@ ProjectionSpikeRecSelector
 
 
 /// 
-/// 
 /// \arg pproj projection to traverse connections for
 ///	ppist.......: context of projection, projection assumed to be on top
 /// \arg pfProcessor mechanism processor
@@ -1227,6 +1203,7 @@ ProjectionSpikeRecSelector
 /// \return see TstrTraverse()
 /// 
 /// \brief Traverse connections, call pfProcesor on each of them
+///
 /// \details 
 /// 
 ///	Does not use a selector to select connections yet, so calls 
@@ -1261,7 +1238,7 @@ ProjectionTraverseConnections
 
     //- traverse projection symbol
 
-    iResult = TstrGo(ptstr,&pproj->bio.ioh.iol.hsle);
+    iResult = TstrGo(ptstr, &pproj->bio.ioh.iol.hsle);
 
     //- delete treespace traversal
 
@@ -1274,7 +1251,6 @@ ProjectionTraverseConnections
 
 
 /// 
-/// 
 /// \arg pproj projection
 /// \arg ppist context of projection
 /// \arg iReceiver rooted serial of spike receiver
@@ -1285,6 +1261,7 @@ ProjectionTraverseConnections
 /// \return see TstrTraverse()
 /// 
 /// \brief Call processor on connections attached to spikerec.
+///
 /// \details 
 /// 
 ///	If ppistSpikerec is rooted, ppist must be rooted to.
@@ -1326,7 +1303,7 @@ ProjectionTraverseConnectionsForPostSerial
 
 /*     if (TRUE /* && PidinStackIsRooted(ppistSpikerec) *) */
 /*     { */
-/* 	pqr.iPost -= ProjectionGetTargetSerial(pproj,ppist); */
+/* 	pqr.iPost -= ProjectionGetTargetSerial(pproj, ppist); */
 /*     } */
 
     //- init projection treespace traversal
@@ -1343,7 +1320,7 @@ ProjectionTraverseConnectionsForPostSerial
 
     //- traverse projection symbol
 
-    iResult = TstrGo(ptstr,&pproj->bio.ioh.iol.hsle);
+    iResult = TstrGo(ptstr, &pproj->bio.ioh.iol.hsle);
 
     //- delete treespace traversal
 
@@ -1379,7 +1356,6 @@ ProjectionTraverseConnectionsForPostSerial
 
 
 /// 
-/// 
 /// \arg ppq projection query
 /// \arg ppistSpikeGen spike generator
 /// \arg pfProcessor processor to be called on matching connections
@@ -1389,6 +1365,7 @@ ProjectionTraverseConnectionsForPostSerial
 /// \return see TstrTraverse()
 /// 
 /// \brief Call processor on connections attached to spikegen.
+///
 /// \details 
 /// 
 ///	If ppistSpikeGen is rooted, ppist must be rooted to.
@@ -1431,7 +1408,7 @@ ProjectionTraverseConnectionsForSpikeGenerator
 
 /*     if (PidinStackIsRooted(ppistSpikeGen)) */
 /*     { */
-/* 	pqr.iPre -= ProjectionGetSourceSerial(pproj,ppist); */
+/* 	pqr.iPre -= ProjectionGetSourceSerial(pproj, ppist); */
 /*     } */
 
     //- init projection treespace traversal
@@ -1448,7 +1425,7 @@ ProjectionTraverseConnectionsForSpikeGenerator
 
     //- traverse projection symbol
 
-    iResult = TstrGo(ptstr,&pproj->bio.ioh.iol.hsle);
+    iResult = TstrGo(ptstr, &pproj->bio.ioh.iol.hsle);
 
     //- delete treespace traversal
 
@@ -1541,24 +1518,24 @@ ProjectionTraverseConnectionsForSpikeGenerator
 /*     //- get projection symbol */
 
 /*     struct symtab_HSolveListElement *phsleProjection */
-/* /* 	= SymbolsLookupHierarchical(NULL,ppistProjection); * */
+/* /* 	= SymbolsLookupHierarchical(NULL, ppistProjection); * */
 /* 	= PidinStackLookupTopSymbol(ppistProjection); */
 
 /*     //- get source population context */
 
 /*     struct symtab_Parameters *pparSource */
-/* 	= SymbolFindParameter(phsleProjection,ppistProjection,"SOURCE"); */
+/* 	= SymbolFindParameter(phsleProjection, ppistProjection, "SOURCE"); */
 
 /*     struct PidinStack *ppistSource */
-/* 	= ParameterResolveToPidinStack(pparSource,ppistProjection); */
+/* 	= ParameterResolveToPidinStack(pparSource, ppistProjection); */
 
 /*     //- cat spikegen context */
 
-/*     PidinStackAppendCompact(ppistSource,ppqr->ppistSpikegen); */
+/*     PidinStackAppendCompact(ppistSource, ppqr->ppistSpikegen); */
 
 /*     //- if solved by registered solver */
 
-/*     if (PidinStackMatch(ppistSource,ppistSolver)) */
+/*     if (PidinStackMatch(ppistSource, ppistSolver)) */
 /*     { */
 /* /* 	struct TreespaceTraversal tstr; * */
 
@@ -1566,7 +1543,7 @@ ProjectionTraverseConnectionsForSpikeGenerator
 
 /* /* 	//- init treespace traversal to traverse spikegen * */
 
-/* /* 	memset(&tstr,0,sizeof(tstr)); * */
+/* /* 	memset(&tstr, 0, sizeof(tstr)); * */
 
 /* /* 	tstr.pfPreSelector = NULL; * */
 /* /* 	tstr.pfProcesor = ppqr->pfProcessor; * */
@@ -1579,7 +1556,7 @@ ProjectionTraverseConnectionsForSpikeGenerator
 
 /* /* 	//- traverse spikerec (calls processor and finalizer) * */
 
-/* /* 	iResult2 = TstrTraverse(&tstr,phsle); * */
+/* /* 	iResult2 = TstrTraverse(&tstr, phsle); * */
 
 /* /* 	//- free symbol stack * */
 
@@ -1596,7 +1573,7 @@ ProjectionTraverseConnectionsForSpikeGenerator
 
 /* 	//- call processor */
 
-/* 	int iResult2 = ppqr->pfProcessor(ptstr,ppqr->pvUserdata); */
+/* 	int iResult2 = ppqr->pfProcessor(ptstr, ppqr->pvUserdata); */
 /*     } */
 
 /*     //- free pidinstacks */
@@ -1651,7 +1628,6 @@ ProjectionTraverseConnectionsForSpikeGenerator
 
 
 /// 
-/// 
 /// \arg pproj projection
 /// \arg ppist context of projection
 /// \arg ppistSpikerec spike receiver
@@ -1662,6 +1638,7 @@ ProjectionTraverseConnectionsForSpikeGenerator
 /// \return see TstrTraverse()
 /// 
 /// \brief Call processor on connections attached to spikerec.
+///
 /// \details 
 /// 
 ///	If ppistSpikerec is rooted, ppist must be rooted to.
@@ -1704,7 +1681,7 @@ ProjectionTraverseConnectionsForSpikeReceiver
 
 /*     if (PidinStackIsRooted(ppistSpikerec)) */
 /*     { */
-/* 	pqr.iPost -= ProjectionGetTargetSerial(pproj,ppist); */
+/* 	pqr.iPost -= ProjectionGetTargetSerial(pproj, ppist); */
 /*     } */
 
     //- init projection treespace traversal
@@ -1721,7 +1698,7 @@ ProjectionTraverseConnectionsForSpikeReceiver
 
     //- traverse projection symbol
 
-    iResult = TstrGo(ptstr,&pproj->bio.ioh.iol.hsle);
+    iResult = TstrGo(ptstr, &pproj->bio.ioh.iol.hsle);
 
     //- delete treespace traversal
 
@@ -1814,24 +1791,24 @@ ProjectionTraverseConnectionsForSpikeReceiver
 /*     //- get projection symbol */
 
 /*     struct symtab_HSolveListElement *phsleProjection */
-/* /* 	= SymbolsLookupHierarchical(NULL,ppistProjection); * */
+/* /* 	= SymbolsLookupHierarchical(NULL, ppistProjection); * */
 /* 	= PidinStackLookupTopSymbol(ppistProjection); */
 
 /*     //- get target population context */
 
 /*     struct symtab_Parameters *pparTarget */
-/* 	= SymbolFindParameter(phsleProjection,ppistProjection,"TARGET"); */
+/* 	= SymbolFindParameter(phsleProjection, ppistProjection, "TARGET"); */
 
 /*     struct PidinStack *ppistTarget */
-/* 	= ParameterResolveToPidinStack(pparTarget,ppistProjection); */
+/* 	= ParameterResolveToPidinStack(pparTarget, ppistProjection); */
 
 /*     //- cat spikerec context */
 
-/*     PidinStackAppendCompact(ppistTarget,ppqr->ppistSpikerec); */
+/*     PidinStackAppendCompact(ppistTarget, ppqr->ppistSpikerec); */
 
 /*     //- if solved by registered solver */
 
-/*     if (PidinStackMatch(ppistTarget,ppistSolver)) */
+/*     if (PidinStackMatch(ppistTarget, ppistSolver)) */
 /*     { */
 /* /* 	struct TreespaceTraversal tstr; * */
 
@@ -1839,7 +1816,7 @@ ProjectionTraverseConnectionsForSpikeReceiver
 
 /* /* 	//- init treespace traversal to traverse spikerec * */
 
-/* /* 	memset(&tstr,0,sizeof(tstr)); * */
+/* /* 	memset(&tstr, 0, sizeof(tstr)); * */
 
 /* /* 	tstr.pfPreSelector = NULL; * */
 /* /* 	tstr.pfProcesor = ppqr->pfProcessor; * */
@@ -1852,7 +1829,7 @@ ProjectionTraverseConnectionsForSpikeReceiver
 
 /* /* 	//- traverse spikerec (calls processor and finalizer) * */
 
-/* /* 	iResult2 = TstrTraverse(&tstr,phsle); * */
+/* /* 	iResult2 = TstrTraverse(&tstr, phsle); * */
 
 /* /* 	//- free symbol stack * */
 
@@ -1869,7 +1846,7 @@ ProjectionTraverseConnectionsForSpikeReceiver
 
 /* 	//- call processor */
 
-/* 	int iResult2 = ppqr->pfProcessor(ptstr,ppqr->pvUserdata); */
+/* 	int iResult2 = ppqr->pfProcessor(ptstr, ppqr->pvUserdata); */
 /*     } */
 
 /*     //- free pidinstacks */
