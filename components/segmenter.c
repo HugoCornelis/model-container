@@ -54,13 +54,11 @@ SegmenterGetTotalVolume
 
 
 /// 
-/// 
 /// \return struct symtab_Segmenter * 
 /// 
 ///	Newly allocated segmenter, NULL for failure
 /// 
 /// \brief Allocate a new segmenter symbol table element
-/// \details 
 /// 
 
 struct symtab_Segmenter * SegmenterCalloc(void)
@@ -90,13 +88,11 @@ struct symtab_Segmenter * SegmenterCalloc(void)
 
 
 /// 
-/// 
 /// \arg psegr segmenter to count segments for
 /// 
 /// \return int : number of segments in segmenter, -1 for failure
 /// 
 /// \brief count segments in segmenter
-/// \details 
 /// 
 
 static
@@ -159,14 +155,12 @@ SegmenterCountSegments
 
 
 /// 
-/// 
 /// \arg psegr segmenter to count spike generators for
-///	ppist.: context, segmenter on top
+/// \arg ppist context, segmenter on top
 /// 
 /// \return int : number of spike generators in segmenter, -1 for failure
 /// 
 /// \brief count spike generators in segmenter
-/// \details 
 /// 
 
 static
@@ -225,7 +219,6 @@ int SegmenterCountSpikeGenerators
 
 
 /// 
-/// 
 /// \arg psegr symbol to get parameter for.
 /// \arg ppist context of symbol.
 /// \arg pcName name of parameter.
@@ -233,7 +226,6 @@ int SegmenterCountSpikeGenerators
 /// \return struct symtab_Parameters * : parameter structure
 /// 
 /// \brief Get parameter of symbol.
-/// \details 
 /// 
 
 struct symtab_Parameters * 
@@ -308,14 +300,12 @@ SegmenterGetParameter
 
 
 /// 
-/// 
 /// \arg psegr segment to get length for.
 /// \arg ppist context of segment.
 /// 
 /// \return double : segment length, FLT_MAX for failure.
 /// 
 /// \brief get total length of segmenter.
-/// \details 
 /// 
 
 static
@@ -379,14 +369,12 @@ SegmenterGetTotalLength
 
 
 /// 
-/// 
 /// \arg psegr segment to get surface for.
 /// \arg ppist context of segment.
 /// 
 /// \return double : segment surface, FLT_MAX for failure.
 /// 
 /// \brief get total surface of segmenter.
-/// \details 
 /// 
 
 static
@@ -450,14 +438,12 @@ SegmenterGetTotalSurface
 
 
 /// 
-/// 
 /// \arg psegr segment to get volume for.
 /// \arg ppist context of segment.
 /// 
 /// \return double : segment volume, FLT_MAX for failure.
 /// 
 /// \brief get total volume of segmenter.
-/// \details 
 /// 
 
 static
@@ -521,13 +507,11 @@ SegmenterGetTotalVolume
 
 
 /// 
-/// 
 /// \arg psegr segmenter to init
 /// 
 /// \return void
 /// 
 /// \brief init segmenter
-/// \details 
 /// 
 
 void SegmenterInit(struct symtab_Segmenter *psegr)
@@ -555,15 +539,15 @@ void SegmenterInit(struct symtab_Segmenter *psegr)
 
 
 /// 
-/// 
 /// \arg psegr segmenter to traverse segments for
-///	ppist.......: context of segmenter, segmenter assumed to be on top
+/// \arg ppist context of segmenter, segmenter assumed to be on top
 /// 
 /// \return int
 /// 
 ///	success of operation.
 /// 
 /// \brief Linearize the segments of the segmenter.
+///
 /// \details 
 /// 
 ///	If the linearization has already been done, return success.
@@ -951,7 +935,6 @@ SegmenterLinearize
 
 
 /// 
-/// 
 /// \arg psegr segmenter to mesh.
 /// \arg ppist context of given element.
 /// \arg dLength maximum length of a segment.
@@ -961,7 +944,6 @@ SegmenterLinearize
 ///	Number of generated segments, -1 for failure.
 /// 
 /// \brief Remesh a segmenter.
-/// \details 
 /// 
 
 struct SegmenterMesherOnLength_data
@@ -1627,7 +1609,6 @@ SegmenterMesherOnLength
 
 
 /// 
-/// 
 /// \arg psegr segment to scale value for
 /// \arg ppist context of given element
 /// \arg dValue value to scale
@@ -1636,7 +1617,6 @@ SegmenterMesherOnLength
 /// \return double : scaled value, FLT_MAX for failure
 /// 
 /// \brief Scale value according to parameter type and symbol type
-/// \details 
 /// 
 
 double
@@ -1780,16 +1760,14 @@ SegmenterParameterScaleValue
 
 
 /// 
-/// 
 /// \arg psegr segmenter to check.
-///	ppist...: context of segmenter, segmenter assumed to be on top
+/// \arg ppist context of segmenter, segmenter assumed to be on top
 /// 
 /// \return int
 /// 
 ///	1 if segmenter has a tree structure, 0 otherwise.
 /// 
 /// \brief Check if a segmenter has a tree structure.
-/// \details 
 /// 
 
 int
@@ -1831,16 +1809,14 @@ SegmenterParentCount
 
 
 /// 
-/// 
 /// \arg psegr segmenter to set as base container.
-///	ppist...: context of segmenter, segmenter assumed to be on top
+/// \arg ppist context of segmenter, segmenter assumed to be on top
 /// 
 /// \return int
 /// 
 ///	success of operation.
 /// 
 /// \brief Set this segmenter as base for all the segments it contains.
-/// \details 
 /// 
 
 static
@@ -1917,16 +1893,14 @@ SegmenterSetBase
 
 
 /// 
-/// 
 /// \arg psegr segmenter to get tips for.
-///	ppist...: context of segmenter, segmenter assumed to be on top
+/// \arg ppist context of segmenter, segmenter assumed to be on top
 /// 
 /// \return int
 /// 
 ///	success of operation.
 /// 
 /// \brief Print tips of the segmenter to stdout.
-/// \details 
 /// 
 
 int
@@ -2025,9 +1999,8 @@ SegmenterTips
 
 
 /// 
-/// 
 /// \arg phsle segmenter to traverse segments for
-///	ppist.......: context of segmenter, segmenter assumed to be on top
+/// \arg ppist context of segmenter, segmenter assumed to be on top
 /// \arg pfProcesor segment processor
 /// \arg pfFinalizer segment finalizer
 /// \arg pvUserdata any user data
@@ -2039,7 +2012,6 @@ SegmenterTips
 ///	-1 : immediate abort
 /// 
 /// \brief Traverse segments, call pfProcessor on each of them
-/// \details 
 /// 
 
 static int 
