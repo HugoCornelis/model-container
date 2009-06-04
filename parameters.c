@@ -898,7 +898,7 @@ ParameterPrintInfoRecursive
 	struct symtab_Parameters *pparFunCurr
 	    = pfun->pparc->ppars;
 
-	for( ; pparFunCurr ; pparFunCurr = pparFunCurr->pparNext)
+	for ( ; pparFunCurr ; pparFunCurr = pparFunCurr->pparNext)
 	{
 	    PrintIndent(iIndent, pfile);
 	    fprintf(pfile, "  -\n");
@@ -1101,7 +1101,7 @@ ParameterExport
 	struct symtab_Parameters *pparFunCurr
 	    = pfun->pparc->ppars;
 
-	for( ; pparFunCurr ; pparFunCurr = pparFunCurr->pparNext)
+	for ( ; pparFunCurr ; pparFunCurr = pparFunCurr->pparNext)
 	{
 	    ParameterExport(pparFunCurr, ppist, iLevel + 8, iType, pfile); 
 	}

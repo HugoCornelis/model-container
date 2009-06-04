@@ -863,12 +863,12 @@ ChannelParameterScaleValue
 
 
 /// 
-/// \arg pchan channel to check
-/// \arg ppist context of channel
+/// \arg pchan channel to check.
+/// \arg ppist context of channel.
 /// 
-/// \return int : TRUE if receives spikes
+/// \return int : TRUE if receives spikes.
 /// 
-/// \brief Check if channel receives spikes
+/// \brief Check if channel receives spikes.
 /// 
 
 int ChannelReceivesSpikes
@@ -877,6 +877,60 @@ int ChannelReceivesSpikes
     //- check for incoming attachment and return if found
 
     return(ChannelGetIncomingVirtual(pchan, ppist) != NULL);
+}
+
+
+/// 
+/// \arg pchan channel to reduce.
+/// \arg ppist context of channel.
+/// 
+/// \return int success of operation.
+/// 
+/// \brief Reduce the parameters of a channel.
+///
+/// \details Reduces:
+///
+///	CHANNEL_TYPE
+/// 
+
+int
+ChannelReduce
+(struct symtab_Channel *pchan, struct PidinStack *ppist)
+{
+    //- set default result: success
+
+    int iResult = 1;
+
+    //- get CHANNEL_TYPE parameter
+
+    struct symtab_Parameters *pparType
+	= SymbolGetParameter(&pchan->bio.ioh.iol.hsle, ppist, "CHANNEL_TYPE");
+
+    //- get inferred channel type
+
+    char *pcType = ChannelGetChannelType(pchan, ppist);
+
+    //- if they read the same
+
+    if (strcmp(ParameterGetString(pparType), pcType) == 0)
+    {
+	//- remove channel type parameter
+
+	iResult = iResult && ParContainerDelete(pchan->bio.pparc, pparType);
+
+	if (iResult)
+	{
+	    ParameterFree(pparType);
+	}
+    }
+
+    //- reduce bio component
+
+    iResult = iResult && BioComponentReduce(&pchan->bio, ppist);
+
+    //- return result
+
+    return(iResult);
 }
 
 

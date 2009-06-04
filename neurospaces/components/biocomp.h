@@ -158,6 +158,9 @@ int BioComponentLookupSerialID
 int BioComponentPrint
 (struct symtab_BioComponent *pbio, int bAll, int iIndent, FILE *pfile);
 
+int BioComponentReduce
+(struct symtab_BioComponent *pbio, struct PidinStack *ppist);
+
 struct symtab_HSolveListElement *
 BioComponentResolveParameterFunctionalInput
 (struct symtab_BioComponent *pbio,

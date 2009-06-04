@@ -234,6 +234,8 @@ NeurospacesQualifyToConfiguration(struct Neurospaces *pneuro, char *pc);
 
 int NeurospacesRead(struct Neurospaces *pneuro, int argc, char **argv);
 
+int NeurospacesReduce(struct Neurospaces *pneuro);
+
 int NeurospacesRemoveProjectionQuery(struct Neurospaces *pneuro);
 
 int

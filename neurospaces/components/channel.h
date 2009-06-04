@@ -89,6 +89,10 @@ int ChannelReceivesSpikes
 (struct symtab_Channel *pchan, struct PidinStack *ppist);
 
 int
+ChannelReduce
+(struct symtab_Channel *pchan, struct PidinStack *ppist);
+
+int
 ChannelSetTableParameters
 (struct symtab_Channel *pchan, struct ParserContext *pac,char *pcFilename);
 

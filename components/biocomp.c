@@ -550,6 +550,8 @@ BioComponentGetParameter
 
 		NULL,
 
+		NULL,
+
 		/// first parameter of list
 
 		NULL,
@@ -620,6 +622,8 @@ BioComponentGetParameter
 
 		NULL,
 
+		NULL,
+
 		/// first parameter of list
 
 		NULL,
@@ -649,6 +653,8 @@ BioComponentGetParameter
 
 		NULL,
 
+		NULL,
+
 		/// first parameter of list
 
 		NULL,
@@ -675,6 +681,8 @@ BioComponentGetParameter
 	    static struct symtab_Parameters parZ =
 	    {
 		/// link structures into list
+
+		NULL,
 
 		NULL,
 
@@ -718,6 +726,8 @@ BioComponentGetParameter
 	    static struct symtab_Parameters parSerial =
 	    {
 		/// link structures into list
+
+		NULL,
 
 		NULL,
 
@@ -896,10 +906,9 @@ BioComponentLookupHierarchical
 /// 
 /// \brief Print symbol info for biological component
 ///
-/// \details 
-/// 
 
-int BioComponentPrint
+int
+BioComponentPrint
 (struct symtab_BioComponent *pbio, int bAll, int iIndent, FILE *pfile)
 {
     //- set default result : ok
@@ -1001,6 +1010,38 @@ int BioComponentPrint
 
 
 /// 
+/// \arg pbio biological component to reduce.
+/// \arg ppist context of given element.
+/// 
+/// \return int success of operation.
+/// 
+/// \brief Reduce the parameters of a bio component.
+///
+
+int
+BioComponentReduce
+(struct symtab_BioComponent *pbio, struct PidinStack *ppist)
+{
+    //- set default result: ok
+
+    int iResult = 1;
+
+    //- do trivial reductions on the parameters
+
+    struct symtab_ParContainer *pparc = pbio->pparc;
+
+    if (!ParContainerReduce(pparc))
+    {
+	return(0);
+    }
+
+    //- return result
+
+    return(iResult);
+}
+
+
+/// 
 /// \arg pbio biological component to resolve input for
 /// \arg ppist context of given element
 /// \arg pcParameter: name of parameter with function
@@ -1011,8 +1052,6 @@ int BioComponentPrint
 /// 
 /// \brief Find input to functional parameter
 ///
-/// \details 
-/// 
 
 struct symtab_HSolveListElement *
 BioComponentResolveParameterFunctionalInput
@@ -1188,8 +1227,6 @@ int BioComponentLookupSerialID
 /// 
 /// \brief Set parameter with given name.
 ///
-/// \details 
-/// 
 
 struct symtab_Parameters * 
 BioComponentSetParameterContext
@@ -1262,8 +1299,6 @@ BioComponentSetParameterContext
 /// 
 /// \brief Set parameter with given name.
 ///
-/// \details 
-/// 
 
 struct symtab_Parameters * 
 BioComponentSetParameterDouble
@@ -1327,8 +1362,6 @@ BioComponentSetParameterDouble
 /// 
 /// \brief Set parameter with given name.
 ///
-/// \details 
-/// 
 
 struct symtab_Parameters * 
 BioComponentSetParameterString
@@ -1394,8 +1427,6 @@ BioComponentSetParameterString
 /// 
 /// \brief Traverse biological symbols in tree manner
 ///
-/// \details 
-/// 
 
 int
 BioComponentTraverse
@@ -1488,8 +1519,6 @@ BioComponentTraverse
 /// 
 /// \brief Traverse spike generators, call pfProcessor on each of them
 ///
-/// \details 
-/// 
 
 static int 
 SymbolSpikeGeneratorSelector
@@ -1568,8 +1597,6 @@ BioComponentTraverseSpikeGenerators
 /// 
 /// \brief Traverse spike receivers, call pfProcessor on each of them
 ///
-/// \details 
-/// 
 
 static int 
 SymbolSpikeReceiverSelector

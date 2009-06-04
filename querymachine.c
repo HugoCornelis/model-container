@@ -189,6 +189,7 @@ static QueryHandler QueryHandlerPrintSpikeSenderCount;
 static QueryHandler QueryHandlerPrintSymbolParameters;
 static QueryHandler QueryHandlerProjectionQuery;
 static QueryHandler QueryHandlerProjectionQueryCount;
+static QueryHandler QueryHandlerReduce;
 static QueryHandler QueryHandlerResolveSolverID;
 static QueryHandler QueryHandlerSegmenterLinearize;
 static QueryHandler QueryHandlerSegmenterParentCount;
@@ -684,6 +685,17 @@ static QueryHandlerAssociation pquhasTable[] =
     {
 	"projectionquerycount",
 	QueryHandlerProjectionQueryCount,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    /// reduce parameters of a component
+
+    {
+	"reduce",
+	QueryHandlerReduce,
 #ifdef USE_READLINE
 	1,
 	QueryMachineSymbolGenerator,
@@ -1484,7 +1496,7 @@ static int QueryHandlerCountAllocatedSymbols
 ///
 /// \details 
 /// 
-///	delete <component>
+///	delete <symbol>
 /// 
 
 static
@@ -6935,6 +6947,87 @@ static int QueryHandlerProjectionQueryCount
     //- return result
 
     return(bResult);
+}
+
+
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Reduce parameters of a component, all if no component
+/// given.
+///
+/// \details 
+/// 
+///	reduce <component>
+/// 
+
+static
+int
+QueryHandlerReduce
+(char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
+{
+    //- set result : ok
+
+    int iResult = 1;
+
+    struct PidinStack *ppist = NULL;
+    struct symtab_HSolveListElement *phsle = NULL;
+
+    if (pcLine[iLength])
+    {
+	//- parse command line element
+
+	ppist = PidinStackParse(&pcLine[iLength]);
+
+	//- lookup symbol
+
+	/// \note allows namespacing, yet incompatible with parameter caches.
+
+	phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
+
+	if (!phsle)
+	{
+	    //- diag's
+
+	    fprintf(stdout, "symbol not found\n");
+
+	    //- return failure
+
+	    return(0);
+	}
+
+    }
+
+    //- if symbol found
+
+    if (phsle)
+    {
+	//- reduce parameters of only this symbol
+
+	iResult = SymbolReduce(phsle, ppist);
+    }
+
+    //- else
+
+    else
+    {
+	//- reduce everything
+
+	iResult = NeurospacesReduce(pneuro);
+    }
+
+    if (ppist)
+    {
+	//- free context
+
+	PidinStackFree(ppist);
+    }
+
+    //- return result
+
+    return(iResult);
 }
 
 

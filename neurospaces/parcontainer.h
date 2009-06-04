@@ -143,6 +143,10 @@ ParContainerAssignParameters
 struct symtab_ParContainer * ParContainerCalloc(void);
 
 int
+ParContainerDelete
+(struct symtab_ParContainer *pparc, struct symtab_Parameters *ppar);
+
+int
 ParContainerExport
 (struct symtab_ParContainer *pparc, struct PidinStack *ppist, int iIndent, int iType, FILE *pfile);
 
@@ -157,6 +161,9 @@ void ParContainerInsert
 
 void ParContainerLinkAtEnd
 (struct symtab_ParContainer *pparc, struct symtab_Parameters *pparNew);
+
+int
+ParContainerReduce(struct symtab_ParContainer *pparc);
 
 
 #endif

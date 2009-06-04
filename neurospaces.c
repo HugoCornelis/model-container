@@ -1,4 +1,4 @@
-static char *pcVersionTime="(09/04/29) Wednesday, April 29, 2009 03:48:28 hugo";
+static char *pcVersionTime="(09/06/04) Thursday, June 4, 2009 15:27:13 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -111,6 +111,11 @@ static struct NeurospacesConfig *pnscGlobal = NULL;
 
 
 // prototypes
+
+static
+int 
+SymbolReducer
+(struct TreespaceTraversal *ptstr, void *pvUserdata);
 
 static
 struct NeurospacesConfig *
@@ -1281,6 +1286,85 @@ int NeurospacesRead(struct Neurospaces *pneuro, int argc, char *argv[])
 /*     fprintf(stdout, "Neurospaces: root import is %p\n", ImportedFileGetRootImport()); */
 
     //- return success
+
+    return(iResult);
+}
+
+
+/// 
+/// \arg pneuro neurospaces.
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Reduce the parameter in the model container.
+///
+///	Unscale, remove undefined values.
+/// 
+
+static
+int 
+SymbolReducer
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
+{
+    //- set default result : ok, but process sibling afterwards
+
+    int iResult = TSTR_PROCESSOR_SUCCESS;
+
+    //- set actual symbol
+
+    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
+
+    //- reduce this symbol
+
+    SymbolReduce(phsle, ptstr->ppist);
+
+    //- return result
+
+    return(iResult);
+}
+
+
+int NeurospacesReduce(struct Neurospaces *pneuro)
+{
+    //- set default result: ok
+
+    int iResult = 1;
+
+    //- get root of symbol table
+
+    struct PidinStack *ppist = PidinStackParse("/");
+
+    struct symtab_HSolveListElement *phsle
+	= PidinStackLookupTopSymbol(ppist);
+
+    //- reduce
+
+    //- init treespace traversal
+
+    struct TreespaceTraversal *ptstr
+	= TstrNew
+	  (ppist,
+	   NULL,
+	   NULL,
+	   SymbolReducer,
+	   NULL,
+	   NULL,
+	   NULL);
+
+    //- traverse symbol
+
+    int iTraverse = TstrGo(ptstr, phsle);
+
+    //- delete treespace traversal
+
+    TstrDelete(ptstr);
+
+    //- return result
+
+    if (iTraverse != 1)
+    {
+	iResult = 0;
+    }
 
     return(iResult);
 }

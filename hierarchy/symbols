@@ -112,6 +112,7 @@ my $class_hierarchy
 				'parameter_link_at_end' => 'bio_component',
 				'parameter_resolve_value' => 'bio_component',
 				'print' => 'bio_component',
+				'reduce' => 'bio_component',
 				'resolve_parameter_functional_input' => 'bio_component',
 				'traverse_spike_generators' => 'bio_component',
 				'traverse_spike_receivers' => 'bio_component',
@@ -166,6 +167,7 @@ my $class_hierarchy
 				'has_m_g_block_g_m_a_x' => 'channel',
 				'has_nernst_erev' => 'channel',
 				'parameter_scale_value' => 'channel',
+				'reduce' => 'channel',
 			       },
 		     annotations => {
 				     'piSymbolType2Biolevel' => 'BIOLEVEL_MECHANISM',
@@ -1602,6 +1604,7 @@ my $object_methods
 #        'parameter_transform_value',
 #        'principal_serial_2_context',
 	'print',
+	'reduce',
 	'resolve_input',
 	'resolve_parameter_functional_input',
 	'set_at_x_y_z',
@@ -1807,6 +1810,9 @@ my $object_methods_custom_code
 ',
 			   },
 		  },
+       'reduce' => {
+		    simple => 1,
+		   },
        'resolve_input' => {
 			   simple => 1,
 			  },
@@ -2111,6 +2117,11 @@ my $object_methods_return_types
 		   selector => '.uSelector.iFunc',
 		   type => 'int',
 		  },
+       'reduce' => {
+		    default => 'TRUE',
+		    selector => '.uSelector.iFunc',
+		    type => 'int',
+		   },
        'resolve_input' => {
 			   default => 'NULL',
 			   selector => '.uSelector.ppistFunc',
@@ -2485,6 +2496,11 @@ my $object_methods_signatures
 		   calling => '(phsle, TRUE, iIndent, pfile)',
 		   prototype => '(struct symtab_HSolveListElement *phsle,int iIndent,FILE *pfile)',
 		  },
+       'reduce' => {
+		    calling => '(phsle, ppist)',
+		    prototype => '(struct symtab_HSolveListElement *phsle,
+ struct PidinStack *ppist)',
+		   },
        'resolve_input' => {
 			   calling => '(phsle, ppist, pcName, iPosition)',
 			   prototype => '(struct symtab_HSolveListElement *phsle,

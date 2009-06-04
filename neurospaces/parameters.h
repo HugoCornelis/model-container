@@ -57,6 +57,8 @@ struct symtab_Parameters
 
     struct symtab_Parameters *pparNext;
 
+    struct symtab_Parameters *pparPrev;
+
     /// first parameter of list
 
     struct symtab_Parameters *pparFirst;

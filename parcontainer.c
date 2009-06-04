@@ -78,6 +78,83 @@ struct symtab_ParContainer * ParContainerCalloc(void)
 
 /// 
 /// \arg pparc parameter container.
+/// \arg ppar parameter.
+/// 
+/// \return int success of operations.
+/// 
+/// \brief Delete a parameter from its container.
+/// 
+
+int
+ParContainerDelete
+(struct symtab_ParContainer *pparc, struct symtab_Parameters *ppar)
+{
+    //- set default result: success
+
+    int iResult = 1;
+
+    //- if not first in list
+
+    if (ppar->pparPrev)
+    {
+	//- remove from forward list
+
+	ppar->pparPrev->pparNext = ppar->pparNext;
+    }
+
+    //- first in list
+
+    else
+    {
+	//- set first in list
+
+	pparc->ppars = ppar->pparNext;
+
+	//- loop over all parameters
+
+	struct symtab_Parameters *pparLoop = pparc->ppars;
+
+	while (pparLoop)
+	{
+	    //- set first in list
+
+	    pparLoop->pparFirst = pparc->ppars;
+
+	    //- next
+
+	    pparLoop = pparLoop->pparNext;
+	}
+    }
+
+    //- if not last in list
+
+    if (ppar->pparNext)
+    {
+	//- remove from reverse list
+
+	ppar->pparNext->pparPrev = ppar->pparPrev;
+    }
+
+    //- last in list
+
+    else
+    {
+    }
+
+    //- mark the parameter as deleted
+
+    ppar->pparNext = NULL;
+    ppar->pparPrev = NULL;
+    ppar->pparFirst = NULL;
+
+    //- return result
+
+    return(iResult);
+}
+
+
+/// 
+/// \arg pparc parameter container.
 /// \arg ppist context.
 /// \arg iIndent start indentation level.
 /// \arg pfile file to export to, NULL for stdout.
@@ -254,6 +331,8 @@ void ParContainerInsert
     //- insert
 
     ppar->pparNext = pparc->ppars;
+    ppar->pparPrev = NULL;
+    pparc->ppars->pparPrev = ppar;
     pparc->ppars = ppar;
 
     //- update ->pparFirst for entire list
@@ -277,7 +356,8 @@ void ParContainerInsert
 /// \brief Link new parameter at end of parameter list
 /// 
 
-void ParContainerLinkAtEnd
+void
+ParContainerLinkAtEnd
 (struct symtab_ParContainer *pparc, struct symtab_Parameters *ppar)
 {
     //- if already parameters
@@ -295,6 +375,7 @@ void ParContainerLinkAtEnd
 	ppar->pparFirst = pparc->ppars;
 
 	pparLoop->pparNext = ppar;
+	ppar->pparPrev = pparLoop;
     }
 
     //- else
@@ -306,6 +387,86 @@ void ParContainerLinkAtEnd
 	ppar->pparFirst = ppar;
 	pparc->ppars = ppar;
     }
+}
+
+
+/// 
+/// \arg pparc container
+/// 
+/// \return int success of operation.
+/// 
+/// \brief Remove all undefined parameters.
+/// 
+
+int
+ParContainerReduce(struct symtab_ParContainer *pparc)
+{
+    //- if there are parameters
+
+    if (pparc->ppars)
+    {
+	//- loop
+
+	struct symtab_Parameters *pparPrev = NULL;
+
+	struct symtab_Parameters *ppar = pparc->ppars;
+
+	while (ppar)
+	{
+	    //- if this parameter is numerical
+
+	    if (ParameterIsNumber(ppar))
+	    {
+		//- if is undefined
+
+		if (ppar->uValue.dNumber == FLT_MAX)
+		{
+		    //- remove this parameter from the list
+
+		    struct symtab_Parameters *pparNext = ppar->pparNext;
+
+		    ParContainerDelete(pparc, ppar);
+
+		    ppar = pparNext;
+		}
+
+		//- parameter is defined
+
+		else
+		{
+		    //- go to next parameter
+
+		    ppar = ppar->pparNext;
+		}
+	    }
+
+	    //- not numerical
+
+	    else
+	    {
+		//- go to next parameter
+
+		ppar = ppar->pparNext;
+	    }
+	}
+
+	//- now set the first parameter for all
+
+	{
+	    struct symtab_Parameters *ppar = pparc->ppars;
+
+	    while (ppar)
+	    {
+		ppar->pparFirst = pparc->ppars;
+
+		ppar = ppar->pparNext;
+	    }
+	}
+    }
+
+    //- return success
+
+    return(1);
 }
 
 
