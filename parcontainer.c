@@ -332,7 +332,10 @@ void ParContainerInsert
 
     ppar->pparNext = pparc->ppars;
     ppar->pparPrev = NULL;
-    pparc->ppars->pparPrev = ppar;
+    if (pparc->ppars)
+    {
+	pparc->ppars->pparPrev = ppar;
+    }
     pparc->ppars = ppar;
 
     //- update ->pparFirst for entire list
