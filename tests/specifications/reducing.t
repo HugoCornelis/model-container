@@ -241,6 +241,7 @@ END PUBLIC_MODELS
 						   write => 'export ndf STDOUT /**',
 						  },
 						 ],
+				description => 'reducing model parameters in a simple cell model',
 			       },
 			      ],
        description => "reducing model parameters",
