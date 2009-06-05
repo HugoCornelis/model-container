@@ -1045,8 +1045,8 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
 
 /// 
-///	ppist1: pidin stack to test
-///	ppist2: pidin stack to test, wildcards recognized
+/// \arg ppist1 pidin stack to test
+/// \arg ppist2 pidin stack to test, wildcards recognized
 /// 
 /// \return int : TRUE if match
 /// 
