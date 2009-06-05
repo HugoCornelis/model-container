@@ -802,7 +802,7 @@ ChannelParameterScaleValue
 
     if (0 == strcmp(pcName, "G_MAX"))
     {
-	/// find parent segment
+	//- find parent segment
 
 	struct PidinStack *ppistComp
 	    = SymbolFindParentSegment(&pchan->bio.ioh.iol.hsle, ppist);
@@ -901,26 +901,106 @@ ChannelReduce
 
     int iResult = 1;
 
-    //- get CHANNEL_TYPE parameter
-
-    struct symtab_Parameters *pparType
-	= SymbolGetParameter(&pchan->bio.ioh.iol.hsle, ppist, "CHANNEL_TYPE");
-
-    //- get inferred channel type
-
-    char *pcType = ChannelGetChannelType(pchan, ppist);
-
-    //- if they read the same
-
-    if (strcmp(ParameterGetString(pparType), pcType) == 0)
     {
-	//- remove channel type parameter
+	//- get CHANNEL_TYPE parameter
 
-	iResult = iResult && ParContainerDelete(pchan->bio.pparc, pparType);
+	struct symtab_Parameters *pparType
+	    = SymbolGetParameter(&pchan->bio.ioh.iol.hsle, ppist, "CHANNEL_TYPE");
 
-	if (iResult)
+	//- get inferred channel type
+
+	char *pcType = ChannelGetChannelType(pchan, ppist);
+
+	//- if they read the same
+
+	if (strcmp(ParameterGetString(pparType), pcType) == 0)
 	{
-	    ParameterFree(pparType);
+	    //- remove channel type parameter
+
+	    iResult = iResult && ParContainerDelete(pchan->bio.pparc, pparType);
+
+	    if (iResult)
+	    {
+		ParameterFree(pparType);
+	    }
+	}
+    }
+
+    {
+	//- get G_MAX parameter
+
+	struct symtab_Parameters *pparG
+	    = SymbolGetParameter(&pchan->bio.ioh.iol.hsle, ppist, "G_MAX");
+
+	//- if has GENESIS2 function
+
+	if (ParameterIsFunction(pparG)
+	    && strcmp(FunctionGetName(ParameterGetFunction(pparG)), "GENESIS2") == 0)
+	{
+	    //- get scaled conductance
+
+	    double dGScaled = ParameterResolveScaledValue(pparG, ppist);
+
+	    //- find parent segment
+
+	    struct PidinStack *ppistComp
+		= SymbolFindParentSegment(&pchan->bio.ioh.iol.hsle, ppist);
+
+	    //- if found segment
+
+	    if (ppistComp)
+	    {
+		struct symtab_HSolveListElement *phsle
+		    = PidinStackLookupTopSymbol(ppistComp);
+
+		/// surface
+
+		double dSurface;
+
+		//- get segment diameter
+
+		double dDia
+		    = SymbolParameterResolveValue(phsle, ppistComp, "DIA");
+
+		//- if spherical
+
+		if (SegmenterIsSpherical((struct symtab_Segmenter *)phsle))
+		{
+		    //- calculate surface
+
+		    dSurface = dDia * dDia * M_PI;
+		}
+
+		//- else
+
+		else
+		{
+		    //- get segment length
+
+		    double dLength
+			= SymbolParameterResolveValue(phsle, ppistComp, "LENGTH");
+
+		    //- calculate surface
+
+		    dSurface = dDia * dLength * M_PI;
+		}
+
+		//- free allocated memory
+
+		PidinStackFree(ppistComp);
+
+		//- unscale conductance to surface of segment
+
+		double dG = dGScaled / dSurface;
+
+		//- set this as G_MAX
+
+		SymbolSetParameterDouble(&pchan->bio.ioh.iol.hsle, "G_MAX", dG);
+
+		//- remove the previous G_MAX parameter
+
+		ParContainerDelete(pchan->bio.pparc, pparG);
+	    }
 	}
     }
 
