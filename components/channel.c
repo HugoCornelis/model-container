@@ -951,14 +951,18 @@ ChannelReduce
 
 	    if (ppistComp)
 	    {
-		struct symtab_HSolveListElement *phsle
-		    = PidinStackLookupTopSymbol(ppistComp);
+		//- remove the previous G_MAX parameter
+
+		ParContainerDelete(pchan->bio.pparc, pparG);
 
 		/// surface
 
 		double dSurface;
 
 		//- get segment diameter
+
+		struct symtab_HSolveListElement *phsle
+		    = PidinStackLookupTopSymbol(ppistComp);
 
 		double dDia
 		    = SymbolParameterResolveValue(phsle, ppistComp, "DIA");
@@ -998,9 +1002,6 @@ ChannelReduce
 
 		SymbolSetParameterDouble(&pchan->bio.ioh.iol.hsle, "G_MAX", dGUnscaled);
 
-		//- remove the previous G_MAX parameter
-
-		ParContainerDelete(pchan->bio.pparc, pparG);
 	    }
 	}
     }
