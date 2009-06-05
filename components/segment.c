@@ -27,6 +27,7 @@
 #include <string.h>
 
 #include "neurospaces/components/segment.h"
+#include "neurospaces/function.h"
 #include "neurospaces/hines_list.h"
 #include "neurospaces/idin.h"
 #include "neurospaces/parameters.h"
@@ -895,6 +896,256 @@ void SegmentInit(struct symtab_Segment *psegment)
     //- set type
 
     psegment->segr.bio.ioh.iol.hsle.iType = HIERARCHY_TYPE_symbols_segment;
+}
+
+
+/// 
+/// \arg psegment segment to reduce.
+/// \arg ppist context of segment.
+/// 
+/// \return int success of operation.
+/// 
+/// \brief Reduce the parameters of a segment.
+///
+/// \details Reduces:
+///
+///	LENGTH		0.0 sets spherical option.
+///	CM		check for GENESIS2 (unscaling).
+///	RM		check for GENESIS2 (unscaling).
+///	RA		check for GENESIS2 (unscaling).
+///	SURFACE		compare with surface calculated from length and dia.
+/// 
+
+int
+SegmentReduce
+(struct symtab_Segment *psegment, struct PidinStack *ppist)
+{
+    //- set default result: success
+
+    int iResult = 1;
+
+    {
+	//- get LENGTH parameter
+
+	struct symtab_Parameters *pparLength
+	    = SymbolGetParameter(&psegment->segr.bio.ioh.iol.hsle, ppist, "LENGTH");
+
+	//- if has GENESIS2 function
+
+	if (pparLength
+	    && ParameterIsNumber(pparLength)
+	    && ParameterValue(pparLength) == 0)
+	{
+	    //- remove length parameter
+
+	    ParContainerDelete(psegment->segr.bio.pparc, pparLength);
+
+	    //- mark segment as spherical
+
+	    SymbolSetOptions(&psegment->segr.bio.ioh.iol.hsle, FLAG_SEGMENTER_SPHERICAL);
+	}
+    }
+
+    {
+	//- get CM parameter
+
+	struct symtab_Parameters *pparCM
+	    = SymbolGetParameter(&psegment->segr.bio.ioh.iol.hsle, ppist, "CM");
+
+	//- if has GENESIS2 function
+
+	if (pparCM
+	    && ParameterIsFunction(pparCM)
+	    && strcmp(FunctionGetName(ParameterGetFunction(pparCM)), "GENESIS2") == 0)
+	{
+	    //- remove CM parameter
+
+	    ParContainerDelete(psegment->segr.bio.pparc, pparCM);
+
+	    //- get scaled capacitance
+
+	    double dCMScaled = ParameterResolveScaledValue(pparCM, ppist);
+
+	    //- get surface
+
+	    double dSurface = SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "SURFACE");
+
+	    //- unscale capacitance to surface of segment
+
+	    double dCMUnscaled = dCMScaled / dSurface;
+
+	    //- set this as CM
+
+	    SymbolSetParameterDouble(&psegment->segr.bio.ioh.iol.hsle, "CM", dCMUnscaled);
+
+	}
+    }
+
+    {
+	//- get RM parameter
+
+	struct symtab_Parameters *pparRM
+	    = SymbolGetParameter(&psegment->segr.bio.ioh.iol.hsle, ppist, "RM");
+
+	//- if has GENESIS2 function
+
+	if (pparRM
+	    && ParameterIsFunction(pparRM)
+	    && strcmp(FunctionGetName(ParameterGetFunction(pparRM)), "GENESIS2") == 0)
+	{
+	    //- remove RM parameter
+
+	    ParContainerDelete(psegment->segr.bio.pparc, pparRM);
+
+	    //- get scaled resistance
+
+	    double dRMScaled = ParameterResolveScaledValue(pparRM, ppist);
+
+	    //- get surface
+
+	    double dSurface = SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "SURFACE");
+
+	    //- unscale resistance to surface of segment
+
+	    double dRMUnscaled = dRMScaled * dSurface;
+
+	    //- set this as RM
+
+	    SymbolSetParameterDouble(&psegment->segr.bio.ioh.iol.hsle, "RM", dRMUnscaled);
+
+	}
+    }
+
+    {
+	//- get RA parameter
+
+	struct symtab_Parameters *pparRA
+	    = SymbolGetParameter(&psegment->segr.bio.ioh.iol.hsle, ppist, "RA");
+
+	//- if has GENESIS2 function
+
+	if (pparRA
+	    && ParameterIsFunction(pparRA)
+	    && strcmp(FunctionGetName(ParameterGetFunction(pparRA)), "GENESIS2") == 0)
+	{
+	    //- remove RA parameter
+
+	    ParContainerDelete(psegment->segr.bio.pparc, pparRA);
+
+	    //- get scaled resistance
+
+	    double dRAScaled = ParameterResolveScaledValue(pparRA, ppist);
+
+	    //- get length and dia
+
+	    double dLength = SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "LENGTH");
+
+	    double dDia = SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "DIA");
+
+	    //- unscale resistance to length and dia of segment
+
+	    double dRAUnscaled = FLT_MAX;
+
+	    if (SegmenterIsSpherical(&psegment->segr))
+	    {
+		/* Thinking of the 'one-dimensional' cable resistance of a 
+		** sphere is a bit of a challenge...  As an approximation we
+		** choose here the Ra of an equivalent cylinder C with the same
+		** surface and volume as the sphere S: 
+		**  lenC = 3/2 diaS  and  diaC = 2/3 diaS
+		*/
+
+		dRAUnscaled = dRAScaled / 13.50 * (dDia * M_PI);
+	    }
+	    else
+	    {
+		dRAUnscaled = dRAScaled / 4.0 / dLength * (dDia * dDia * M_PI);
+	    }
+
+	    //- set this as RA
+
+	    SymbolSetParameterDouble(&psegment->segr.bio.ioh.iol.hsle, "RA", dRAUnscaled);
+
+	}
+    }
+
+    {
+	/// accuracy constant
+
+	static double dGeoRoundOff = 0.00000001;
+
+#define MMGParmEQzero(d)				(int)( fabs(d) <= (dGeoRoundOff) )
+#define MMGParmEQ(d1, d2)				(int)( (MMGParmEQzero((d1))  && MMGParmEQzero((d2))) || fabs((d1) - (d2)) <= ((dGeoRoundOff) * fabs((d2))) )
+
+	//- get SURFACE parameter
+
+	struct symtab_Parameters *pparSurface
+	    = SymbolGetParameter(&psegment->segr.bio.ioh.iol.hsle, ppist, "SURFACE");
+
+	double dSurface = ParameterResolveValue(pparSurface, ppist);
+
+	//- if present
+
+	if (dSurface != FLT_MAX)
+	{
+	    //- if spherical
+
+	    if (SegmenterIsSpherical(&psegment->segr))
+	    {
+		//- get length and dia
+
+		double dDia = SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "DIA");
+
+		if (dDia != FLT_MAX)
+		{
+		    //- if surface matches with spherical surface
+
+		    double d = dDia * dDia * M_PI;
+
+		    if (MMGParmEQ(dSurface, d))
+		    {
+			//- remove SURFACE parameter
+
+			ParContainerDelete(psegment->segr.bio.pparc, pparSurface);
+		    }
+		}
+	    }
+
+	    //- if cylindrical
+
+	    else
+	    {
+		//- get length and dia
+
+		double dLength = SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "LENGTH");
+
+		double dDia = SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "DIA");
+
+		if (dLength != FLT_MAX
+		    && dDia != FLT_MAX)
+		{
+		    //- if surface matches with cylindrical surface
+
+		    double d = M_PI * dDia * dLength;
+
+		    if (MMGParmEQ(dSurface, d))
+		    {
+			//- remove SURFACE parameter
+
+			ParContainerDelete(psegment->segr.bio.pparc, pparSurface);
+		    }
+		}
+	    }
+	}
+    }
+
+    //- reduce bio component
+
+    iResult = iResult && BioComponentReduce(&psegment->segr.bio, ppist);
+
+    //- return result
+
+    return(iResult);
 }
 
 

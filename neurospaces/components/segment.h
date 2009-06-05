@@ -62,6 +62,10 @@ SegmentGetSurface
 
 void SegmentInit(struct symtab_Segment *psegment);
 
+int
+SegmentReduce
+(struct symtab_Segment *psegment, struct PidinStack *ppist);
+
 
 /* #include "equation.h" */
 #include "neurospaces/idin.h"

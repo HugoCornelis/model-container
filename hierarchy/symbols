@@ -751,6 +751,7 @@ my $class_hierarchy
 		      allows => {
 				 'create_alias' => 'segment',
 				 'get_parameter' => 'segment',
+				 'reduce' => 'segment',
 				},
 		      annotations => {
 				      'piSymbolType2Biolevel' => 'BIOLEVEL_SEGMENT',

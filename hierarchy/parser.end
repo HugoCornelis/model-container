@@ -511,6 +511,7 @@ Attributes	/* <ppar> */
 		    //- link new parameter in list
 
 		    $1->pparNext = ppar;
+		    ppar->pparPrev = $1;
 		    ppar->pparFirst = $1->pparFirst;
 
 		    //- push last parameter on stack
@@ -549,6 +550,7 @@ ParametersEnumerated	/* <ppar> */
 		    //- allocate room for symbolic parameter
 
 		    $1->pparNext = $3;
+		    $3->pparPrev = $1;
 		    $3->pparFirst = $1->pparFirst;
 
 		    //- put last parameter onto stack
@@ -563,6 +565,7 @@ ParametersEnumerated	/* <ppar> */
 		    //- allocate room for symbolic parameter
 
 		    $1->pparNext = NULL;
+		    $1->pparPrev = NULL;
 
 		    //- put last parameter onto stack
 

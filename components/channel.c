@@ -891,6 +891,7 @@ int ChannelReceivesSpikes
 /// \details Reduces:
 ///
 ///	CHANNEL_TYPE
+///	G_MAX
 /// 
 
 int
@@ -991,11 +992,11 @@ ChannelReduce
 
 		//- unscale conductance to surface of segment
 
-		double dG = dGScaled / dSurface;
+		double dGUnscaled = dGScaled / dSurface;
 
 		//- set this as G_MAX
 
-		SymbolSetParameterDouble(&pchan->bio.ioh.iol.hsle, "G_MAX", dG);
+		SymbolSetParameterDouble(&pchan->bio.ioh.iol.hsle, "G_MAX", dGUnscaled);
 
 		//- remove the previous G_MAX parameter
 
