@@ -94,13 +94,13 @@ my $test
 						  },
 						  {
 						   comment => "this value is close to the value in table 2 of the Rapp paper, when shrinkage correction is not applied and spines are not added, yet there is an unexplained anomaly in the difference for surface and volume.",
-						   description => "What is the total surface of the purkinje cell ?",
+						   description => "What is the total dendritic length of the purkinje cell ?",
 						   read => '= 0.0140198',
 						   write => "printparameter /Purkinje TOTALLENGTH",
 						  },
 						  {
 						   comment => "See developer TODOs",
-						   description => "What is the total surface of all the segments the purkinje cell ?",
+						   description => "What is the total dendritic length of all the segments the purkinje cell ?",
 						   disabled => "See developer TODOs",
 						   read => '= 0.0140198',
 						   write => "printparameter /Purkinje/segments TOTALLENGTH",
@@ -273,13 +273,13 @@ Solver serial context for 1138 =
 						  },
 						  {
 						   comment => "this value is close to the value in table 2 of the Rapp paper, when shrinkage correction is not applied and spines are not added, yet there is an unexplained anomaly in the difference for surface and volume.",
-						   description => "What is the total surface of the purkinje cell ?",
+						   description => "What is the total dendritic length of the purkinje cell ?",
 						   read => '= 0.0140198',
 						   write => "printparameter /Purkinje TOTALLENGTH",
 						  },
 						  {
 						   comment => "See developer TODOs",
-						   description => "What is the total surface of all the segments the purkinje cell ?",
+						   description => "What is the total dendritic length of all the segments the purkinje cell ?",
 						   disabled => "See developer TODOs",
 						   read => '= 0.0140198',
 						   write => "printparameter /Purkinje/segments TOTALLENGTH",
