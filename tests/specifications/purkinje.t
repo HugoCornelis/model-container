@@ -339,7 +339,7 @@ Principal serial ID = 3035 of 65622 Principal successors
 						   write => "serialMapping /Purkinje Purkinje/segments/b0s01[1]/Purkinje_spine_0/neck",
 						  },
 						  {
-						   description => "What are the forestspace IDs for the main dendrite ?",
+						   description => "What are the forestspace IDs for the segment b0s01[1] ?",
 						   read => 'Traversal serial ID = 2999
 Principal serial ID = 2999 of 65622 Principal successors
 ',
