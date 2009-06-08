@@ -162,6 +162,7 @@ Principal serial ID = 1138 of 25525 Principal successors
 						   write => "serialMapping /Purkinje Purkinje/segments/b0s01[1]/Purkinje_spine_0/neck",
 						  },
 						  {
+						   comment => 'note the differences when using G2 tabchans, G3 ns-sli and plain G3',
 						   description => "What are the forestspace IDs for the segment b0s01[1] ?",
 						   read => 'Traversal serial ID = 1127
 Principal serial ID = 1127 of 25525 Principal successors
@@ -339,6 +340,7 @@ Principal serial ID = 3035 of 65622 Principal successors
 						   write => "serialMapping /Purkinje Purkinje/segments/b0s01[1]/Purkinje_spine_0/neck",
 						  },
 						  {
+						   comment => 'note the differences when using G2 tabchans, G3 ns-sli and plain G3',
 						   description => "What are the forestspace IDs for the segment b0s01[1] ?",
 						   read => 'Traversal serial ID = 2999
 Principal serial ID = 2999 of 65622 Principal successors
