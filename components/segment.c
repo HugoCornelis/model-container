@@ -1074,8 +1074,8 @@ SegmentReduce
 
 	static double dGeoRoundOff = 0.00000001;
 
-#define MMGParmEQzero(d)				(int)( fabs(d) <= (dGeoRoundOff) )
-#define MMGParmEQ(d1, d2)				(int)( (MMGParmEQzero((d1))  && MMGParmEQzero((d2))) || fabs((d1) - (d2)) <= ((dGeoRoundOff) * fabs((d2))) )
+/* #define MMGParmEQzero(d)				(int)( fabs(d) <= (dGeoRoundOff) ) */
+#define MMGParmEQ(d1, d2)				(int)( /* (MMGParmEQzero((d1))  && MMGParmEQzero((d2))) || */ fabs((d1) - (d2)) <= ((dGeoRoundOff) * fabs((d2))) )
 
 	//- get SURFACE parameter
 
