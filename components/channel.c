@@ -951,9 +951,9 @@ ChannelReduce
 
 	    if (ppistComp)
 	    {
-		//- remove the previous G_MAX parameter
+/* 		//- remove the previous G_MAX parameter */
 
-		ParContainerDelete(pchan->bio.pparc, pparG);
+/* 		ParContainerDelete(pchan->bio.pparc, pparG); */
 
 		/// surface
 
