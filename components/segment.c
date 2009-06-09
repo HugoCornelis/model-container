@@ -1072,7 +1072,7 @@ SegmentReduce
     {
 	/// accuracy constant
 
-	static double dGeoRoundOff = 0.00000001;
+	static double dGeoRoundOff = 0.00001;
 
 /* #define MMGParmEQzero(d)				(int)( fabs(d) <= (dGeoRoundOff) ) */
 #define MMGParmEQ(d1, d2)				(int)( /* (MMGParmEQzero((d1))  && MMGParmEQzero((d2))) || */ fabs((d1) - (d2)) <= ((dGeoRoundOff) * fabs((d2))) )
