@@ -180,7 +180,9 @@ int
 SpinesSurfaceCalculator
 (struct TreespaceTraversal *ptstr, void *pvUserdata);
 
-static int SpinesDoPhysicalAdjustments
+static
+int
+SpinesDoPhysicalAdjustments
 (struct SpinesInstance *psi,
  struct TreespaceTraversal *ptstr,
 /* struct PidinStack *ppist, */
@@ -212,7 +214,7 @@ SpinesSurfaceCalculator
 
     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
 
-    //- add surface of segment to surface of spine
+    //- add surface of this segment to the total surface of the spine
 
     psi->sv.dSpineSurface += SymbolParameterResolveValue(phsle, NULL, "SURFACE");
 
@@ -223,7 +225,6 @@ SpinesSurfaceCalculator
 
 
 /// 
-/// 
 /// \arg std AlgorithmHandler args
 /// 
 /// \return struct AlgorithmInstance *  
@@ -231,7 +232,6 @@ SpinesSurfaceCalculator
 ///	created algorithm instance, NULL for failure
 /// 
 /// \brief Algorithm handler to create instance of spines algorithm.
-/// \details 
 /// 
 
 struct AlgorithmInstance *
@@ -383,12 +383,12 @@ SpinesInstanceNew
 
 
 /// 
-/// 
 /// \arg pioh parent to which children have been added.
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Register that children have been added.
+///
 /// \details 
 /// 
 ///	This is needed to recalculate the serial ID relative to parent
@@ -437,12 +437,12 @@ static int SpinesRegisterModified(struct symtab_IOHierarchy *pioh)
 
 
 /// 
-/// 
-///	SymbolProcessor args
+/// \arg SymbolProcessor args
 /// 
 /// \return int : SymbolProcessor return value
 /// 
 /// \brief Add physical to segment
+///
 /// \details 
 /// 
 ///	dSpines is the number of spines that influence the surface of the
@@ -543,15 +543,13 @@ static int SpinesRegisterModified(struct symtab_IOHierarchy *pioh)
 
 
 /// 
-/// 
-///	SymbolProcessor args
+/// \arg SymbolProcessor args
 /// 
 /// \return int : 
 /// 
 ///	SymbolProcessor return value, always SYMBOL_PROCESSOR_SUCCESS
 /// 
 /// \brief Dummy processor which always succeeds
-/// \details 
 /// 
 
 static int SpinesSegmentProcessor
@@ -598,18 +596,16 @@ static int SpinesSegmentProcessor
 
 
 /// 
-/// 
-///	SymbolProcessor args
+/// \arg SymbolProcessor args
 /// 
 /// \return int : SymbolProcessor return value
 /// 
 /// \brief Record if segment needs spines
-/// \details 
-/// 
-///	See hines_read.c
-/// 
+///
 
-static int SpinesSegmentRecorder
+static
+int
+SpinesSegmentRecorder
 (struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : abort
@@ -633,10 +629,6 @@ static int SpinesSegmentRecorder
 
     struct symtab_Segmenter *psegr = (struct symtab_Segmenter *)phsle;
 
-    /// duplicate of actual context
-
-    struct PidinStack *ppist = NULL;
-
     //- if segment spherical
 
     if (SegmenterIsSpherical(psegr))
@@ -658,15 +650,10 @@ static int SpinesSegmentRecorder
 	return(TSTR_PROCESSOR_SUCCESS);
     }
 
-    //- duplicate actual context
-
-    ppist = PidinStackDuplicate(ptstr->ppist);
-
     //- get segment diameter
 
     dDia
 	= SymbolParameterResolveValue
-/* 	  (&psegm->bio.ioh.iol.hsle, "DIA", ppist); */
 	  (&psegr->bio.ioh.iol.hsle, NULL, "DIA");
 
     //- if not found
@@ -677,10 +664,6 @@ static int SpinesSegmentRecorder
 	    (stderr,
 	     "Purkinje spines : %s doesn't have a diameter\n",
 	     IdinName(SymbolGetPidin(phsle)));
-
-	//- free context stack
-
-	PidinStackFree(ppist);
 
 	//- return result
 
@@ -706,15 +689,14 @@ static int SpinesSegmentRecorder
 	    //- if add physical spines
 
 	    iSpines
-		= SpinesDoPhysicalAdjustments(psi, ptstr/* , ppist */, psegr);
+		= SpinesDoPhysicalAdjustments(psi, ptstr, psegr);
 
 	    if (iSpines != -1)
 	    {
 		//- if do virtual spine adjustments
 
 		if (SpinesDoVirtualAdjustments
-/* 		    (psi, ppist, psegm, iSpines) != -1) */
-		    (psi, NULL, psegr, iSpines) != -1)
+		    (psi, ptstr->ppist, psegr, iSpines) != -1)
 		{
 		    //- set result : ok
 
@@ -733,10 +715,6 @@ static int SpinesSegmentRecorder
 	iResult = TSTR_PROCESSOR_SUCCESS;
     }
 
-    //- free context stack
-
-    PidinStackFree(ppist);
-
     //- return result
 
     return(iResult);
@@ -744,22 +722,19 @@ static int SpinesSegmentRecorder
 
 
 /// 
-/// 
 /// \arg ppist context of segment
 /// \arg psegr segmenter candidate for spines
 /// 
 /// \return int : number of added physical spines, -1 for failure
 /// 
 /// \brief Do physical spine adjustment on segment
-/// \details 
-/// 
-///	See hines_read.c
 /// 
 
-static int SpinesDoPhysicalAdjustments
+static
+int
+SpinesDoPhysicalAdjustments
 (struct SpinesInstance *psi,
  struct TreespaceTraversal *ptstr,
-/* struct PidinStack *ppist, */
  struct symtab_Segmenter *psegr)
 {
     //- set default result : none added
@@ -908,7 +883,7 @@ static int SpinesDoPhysicalAdjustments
 
 
 /// 
-/// 
+/// \arg psi spines algorithm instance.
 /// \arg ppist context of segment
 /// \arg psegr segment candidate for spines
 /// \arg iSpines: number of physical spines added to this segment
@@ -916,9 +891,6 @@ static int SpinesDoPhysicalAdjustments
 /// \return double  number of added virtual spines, -1 for failure
 /// 
 /// \brief Do virtual spine adjustment on segment
-/// \details 
-/// 
-///	See hines_read.c
 /// 
 
 static
@@ -1008,13 +980,11 @@ SpinesDoVirtualAdjustments
 
 
 /// 
-/// 
 /// \arg std AlgorithmHandler args
 /// 
 /// \return int  std AlgorithmHandler return value
 /// 
 /// \brief Algorithm handler to print info on spines instance.
-/// \details 
 /// 
 
 static int SpinesInstancePrintInfo
@@ -1068,13 +1038,13 @@ static int SpinesInstancePrintInfo
 
 
 /// 
-/// 
-///	AlgorithmInstanceSymbolHandler args.
+/// \arg AlgorithmInstanceSymbolHandler args.
 /// 
 /// \return int : std AlgorithmHandler return value
 /// 
 /// \brief Algorithm handler to add spines on given symbol
-/// \details 
+///
+/// \todo 
 /// 
 ///	Does it do a clean update of serials ?
 /// 
