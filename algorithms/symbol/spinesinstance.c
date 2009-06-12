@@ -53,6 +53,10 @@ struct SpinesOptions_type
 
     char *pcRandomSpineProto;
 
+    /*m spine surface option */
+
+    float fSpineSurface;
+
     /*m random spines maximal dendritic diameter for segment */
 
     float fDendrDiaMax;
@@ -164,13 +168,8 @@ int
 SpinesInstanceSymbolHandler
 (struct AlgorithmInstance *palgi, struct ParserContext *pac);
 
-static int SpinesRegisterModified(struct symtab_IOHierarchy *pioh);
-
 static int SpinesSegmentProcessor
 (struct TreespaceTraversal *ptstr,void *pvUserdata);
-
-/* static int SpinesSegmentFinalizer */
-/* (struct TreespaceTraversal *ptstr,void *pvUserdata); */
 
 static int SpinesSegmentRecorder
 (struct TreespaceTraversal *ptstr,void *pvUserdata);
@@ -185,7 +184,6 @@ int
 SpinesDoPhysicalAdjustments
 (struct SpinesInstance *psi,
  struct TreespaceTraversal *ptstr,
-/* struct PidinStack *ppist, */
  struct symtab_Segmenter *psegr);
 
 static
@@ -273,9 +271,22 @@ SpinesInstanceNew
 
 	psi->so.pcRandomSpineProto = pparProto ? ParameterGetString(pparProto) : NULL ;
 
+	//- scan surface of spine
+
+	psi->so.fSpineSurface = 1e-6 * SymbolParameterResolveValue(&palgs->hsle, ppist, "SPINE_SURFACE");
+
 	//- scan min dia
 
-	psi->so.fDendrDiaMin = 1e-6 * SymbolParameterResolveValue(&palgs->hsle, ppist, "DIA_MIN");
+	psi->so.fDendrDiaMin = SymbolParameterResolveValue(&palgs->hsle, ppist, "DIA_MIN");
+
+	if (psi->so.fDendrDiaMin == FLT_MAX)
+	{
+	    psi->so.fDendrDiaMin = 0;
+	}
+	else
+	{
+	    psi->so.fDendrDiaMin *=  1e-6;
+	}
 
 	//- scan max dia
 
@@ -323,8 +334,11 @@ SpinesInstanceNew
 
     //- if lookup prototype in symbol table
 
-    psi->sv.phsleSpineProto
-	= ParserLookupPrivateModel(psi->so.pcRandomSpineProto);
+    if (psi->so.pcRandomSpineProto)
+    {
+	psi->sv.phsleSpineProto
+	    = ParserLookupPrivateModel(psi->so.pcRandomSpineProto);
+    }
 
     if (psi->sv.phsleSpineProto)
     {
@@ -345,13 +359,13 @@ SpinesInstanceNew
 	     (void *)psi)
 	    == FALSE)
 	{
-	    //- give diag's : prototype not found
-
 	    NeurospacesError
 		(pacContext,
 		 "Spines algorithm instance",
-		 "Private model %s not found\n",
+		 "Spine surface calculation of %s failed\n",
 		 psi->so.pcRandomSpineProto);
+
+	    psi->sv.dSpineSurface = FLT_MAX;
 
 	    /// \todo memory leak
 
@@ -363,13 +377,37 @@ SpinesInstanceNew
 
     else
     {
-	//- give diag's : prototype not found
+	if (psi->so.pcRandomSpineProto)
+	{
+	    //- give diag's : prototype not found
+
+	    NeurospacesError
+		(pacContext,
+		 "Spines algorithm instance",
+		 "Private model %s not found\n",
+		 psi->so.pcRandomSpineProto);
+	}
+    }
+
+    //- if there was an option setting the spine surface
+
+    if (psi->so.fSpineSurface != FLT_MAX)
+    {
+	//- set spine surface, possibly overwrites calculated surface
+
+	psi->sv.dSpineSurface = psi->so.fSpineSurface;
+    }
+
+    //- if spine surface not set
+
+    if (psi->sv.dSpineSurface == FLT_MAX)
+    {
+	//- give diag's
 
 	NeurospacesError
 	    (pacContext,
 	     "Spines algorithm instance",
-	     "Private model %s not found\n",
-	     psi->so.pcRandomSpineProto);
+	     "Is not able to determine the spine surface\n");
     }
 
     //- set result
@@ -383,166 +421,6 @@ SpinesInstanceNew
 
 
 /// 
-/// \arg pioh parent to which children have been added.
-/// 
-/// \return int : success of operation
-/// 
-/// \brief Register that children have been added.
-///
-/// \details 
-/// 
-///	This is needed to recalculate the serial ID relative to parent
-///	for all children for the given symbol.
-/// 
-
-static int SpinesRegisterModified(struct symtab_IOHierarchy *pioh)
-{
-    //- set default result : ok
-
-    int iResult = TRUE;
-
-    //- if registered
-
-    int i;
-
-/*     for (i = 0 ; i < iModified ; i++) */
-/*     { */
-/* 	if (ppiohModified[i] == pioh) */
-/* 	{ */
-/* 	    //- return success */
-
-/* 	    return(TRUE); */
-/* 	} */
-/*     } */
-
-/*     //- if overflow */
-
-/*     if (i == MAX_NUM_MODIFIED) */
-/*     { */
-/* 	//- return failure */
-
-/* 	return(FALSE); */
-/*     } */
-
-/*     //- register as modified */
-
-/*     ppiohModified[iModified] = pioh; */
-
-/*     iModified++; */
-
-    //- return result
-
-    return(iResult);
-}
-
-
-/// 
-/// \arg SymbolProcessor args
-/// 
-/// \return int : SymbolProcessor return value
-/// 
-/// \brief Add physical to segment
-///
-/// \details 
-/// 
-///	dSpines is the number of spines that influence the surface of the
-///	segment if no physical spines would be added.
-/// 
-
-/* static int SpinesSegmentFinalizer */
-/* (struct TreespaceTraversal *ptstr,void *pvUserdata) */
-/* { */
-/*     //- set default result : no spines added */
-
-/*     int iResult = SYMBOL_PROCESSOR_SUCCESS; */
-
-/*     /// segment */
-
-/*     char *pcSegment = NULL; */
-
-/*     /// name of segment */
-
-/*     struct symtab_IdentifierIndex * pidinName = NULL; */
-
-/*     /// parent of symbol we are adding to */
-
-/*     struct symtab_HSolveListElement *phsleParent = NULL; */
-
-/*     //- get pointer to algorithm instance */
-
-/*     struct SpinesInstance *psi = (struct SpinesInstance *)pvUserdata; */
-
-/*     //- get pointer to spine prototype */
-
-/*     struct symtab_HSolveListElement *phsleSpine = NULL; */
-/* 	= psi->sv.phsleSpineProto; */
-
-/*     //- get pointer to actual symbol */
-
-/*     struct symtab_HSolveListElement *phsleActual = TstrGetActual(ptstr); */
-
-/*     //- get pointer to segment */
-
-/*     struct symtab_D3Segment * pD3segm = (struct symtab_D3Segment *)phsleActual; */
-
-/*     //- create an alias to spine */
-
-/*     struct symtab_BioComponent *pbioNew */
-/* 	= SymbolCreateAlias */
-/* 	  ((struct symtab_BioComponent *)phsleSpine, */
-/* 	   NULL, */
-/* 	   IdinDuplicate(SymbolGetPidin(phsleSpine))); */
-
-/*     //- add algorithm info */
-
-/*     if (SymbolSetAlgorithmInstanceInfo(&pbioNew->ioh.iol.hsle, &psi->modi) */
-/* 	&& SymbolSetAlgorithmInstanceInfo */
-/* 	   (&pD3segm->segment.bio.ioh.iol.hsle,&psi->modi)) */
-/*     { */
-/* 	//- link symbol to segment */
-
-/* 	SymbolEntailChild(&pD3segm->segment.bio.ioh, &pbioNew->ioh); */
-    
-/* 	//- increment spine count */
-
-/* 	psi->sv.iPhysicalSpines++; */
-/*     } */
-
-/*     //- else */
-
-/*     else */
-/*     { */
-/* 	//- increment failure count */
-
-/* 	psi->sv.iPhysicalSpinesFailures++; */
-/*     } */
-
-/*     //- increment tries count */
-
-/*     psi->sv.iPhysicalSpinesTries++; */
-
-/*     //- get parent symbol of current context */
-
-/*     /// \note top is at -1, parent is -2 */
-
-/*     phsleParent */
-/* 	= PSymbolStackElementSymbol */
-/* 	  (ptstr->psymst, PSymbolStackNumberOfEntries(ptstr->psymst) - 2); */
-
-/*     //- add parent to symbols to recalculate serials for */
-
-/*     if (!SpinesRegisterModified((struct symtab_IOHierarchy *)phsleParent)) */
-/*     { */
-/* 	iResult = SYMBOL_PROCESSOR_ABORT; */
-/*     } */
-
-/*     //- return result */
-
-/*     return (iResult); */
-/* } */
-
-
-/// 
 /// \arg SymbolProcessor args
 /// 
 /// \return int : 
@@ -552,7 +430,9 @@ static int SpinesRegisterModified(struct symtab_IOHierarchy *pioh)
 /// \brief Dummy processor which always succeeds
 /// 
 
-static int SpinesSegmentProcessor
+static
+int
+SpinesSegmentProcessor
 (struct TreespaceTraversal *ptstr,void *pvUserdata)
 {
     //- set default result : ok
