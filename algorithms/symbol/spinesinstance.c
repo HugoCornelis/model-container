@@ -264,7 +264,12 @@ SpinesInstanceNew
 
 	//- scan surface of spine
 
-	psi->so.fSpineSurface = 1e-6 * SymbolParameterResolveValue(&palgs->hsle, ppist, "SPINE_SURFACE");
+	psi->so.fSpineSurface = SymbolParameterResolveValue(&palgs->hsle, ppist, "SPINE_SURFACE");
+
+	if (psi->so.fSpineSurface != FLT_MAX)
+	{
+	    psi->so.fSpineSurface *= 1e-12;
+	}
 
 	//- scan min dia
 
