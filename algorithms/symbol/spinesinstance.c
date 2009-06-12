@@ -149,15 +149,6 @@ struct SpinesInstance
 };
 
 
-/// \struct number of symbol that have been modified
-
-/* static int iModified = 0; */
-
-/* #define MAX_NUM_MODIFIED	10 */
-
-/* static struct symtab_IOHierarchy *ppiohModified[MAX_NUM_MODIFIED]; */
-
-
 // local functions
 
 static int SpinesInstancePrintInfo
