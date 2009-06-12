@@ -362,7 +362,6 @@ Solver serial context for 3035 =
 						  },
 						 ],
 				description => "elementary tests for the purkinje cell model with parameterized channels",
-# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			      ],
        description => "EDS purkinje cell model",
