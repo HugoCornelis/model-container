@@ -19,8 +19,9 @@
 
 
 #include <math.h>
-#include <stdlib.h>
+#include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "neurospaces/exporter.h"
 #include "neurospaces/parcontainer.h"
@@ -390,6 +391,59 @@ ParContainerLinkAtEnd
 	ppar->pparFirst = ppar;
 	pparc->ppars = ppar;
     }
+}
+
+
+/// 
+/// \arg ppars parameter list, NULL terminated.
+/// 
+/// \return struct symtab_ParContainer parameter container, NULL if
+/// failure.
+/// 
+/// \brief Allocate a parameter container and insert the given
+/// parameters.
+/// 
+
+struct symtab_ParContainer *
+ParContainerNewFromList
+(struct symtab_Parameters *ppar, ... )
+{
+    //- allocate default result: empty container
+
+    struct symtab_ParContainer *pparcResult = NULL;
+
+    //- allocate a container
+
+    pparcResult = ParContainerCalloc();
+
+    //- get start of stdargs
+
+    va_list vaList;
+
+    va_start(vaList, ppar);
+
+    //- loop over parameters
+
+    struct symtab_Parameters *pparLoop = ppar;
+
+    while (pparLoop)
+    {
+	//- insert parameters
+
+	ParContainerInsert(pparcResult, pparLoop);
+
+	//- next parameter
+
+	pparLoop = va_arg(vaList, struct symtab_Parameters *);
+    }
+
+    //- end stdargs
+
+    va_end(vaList);
+
+    //- return result
+
+    return(pparcResult);
 }
 
 

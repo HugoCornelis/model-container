@@ -1,4 +1,4 @@
-static char *pcVersionTime="(09/06/04) Thursday, June 4, 2009 15:27:13 hugo";
+static char *pcVersionTime="(09/06/16) Tuesday, June 16, 2009 14:11:46 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -647,7 +647,7 @@ int NeurospacesHelp(int argc, char *argv[])
 
 int
 NeurospacesLogFileTree
-(PARSERCONTEXT *pacContext, char *pcError,...)
+(PARSERCONTEXT *pacContext, char *pcError, ...)
 {
     //- set default result : continue parsing
 

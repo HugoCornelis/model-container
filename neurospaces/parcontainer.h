@@ -162,6 +162,10 @@ void ParContainerInsert
 void ParContainerLinkAtEnd
 (struct symtab_ParContainer *pparc, struct symtab_Parameters *pparNew);
 
+struct symtab_ParContainer *
+ParContainerNewFromList
+(struct symtab_Parameters *ppar, ... );
+
 int
 ParContainerReduce(struct symtab_ParContainer *pparc);
 
