@@ -1136,10 +1136,6 @@ AlgorithmListPush
 		    {
 			//- import & init algorithm
 
-			//! because TOKEN_ALGORITHMPARAMETERS returns a string,
-			//! we loose some bytes here
-			//! perhaps they are on the stack, still needs a check
-
 			//t error checking
 
 			struct symtab_AlgorithmSymbol *palgs
