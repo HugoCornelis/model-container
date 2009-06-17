@@ -33,13 +33,11 @@
 
 
 /// 
-/// 
 /// \arg pfun function
 /// 
 /// \return int : TRUE if function allows scaling.
 /// 
 /// \brief Check if function allows scaling.
-/// \details 
 /// 
 
 int FunctionAllowsScaling(struct symtab_Function *pfun)
@@ -69,14 +67,12 @@ int FunctionAllowsScaling(struct symtab_Function *pfun)
 
 
 /// 
-/// 
 /// \arg pfun function.
 /// \arg ppar new parameters.
 /// 
 /// \return int : success of operation.
 /// 
 /// \brief Assign parameters.
-/// \details 
 /// 
 
 int
@@ -88,13 +84,11 @@ FunctionAssignParameters
 
 
 /// 
-/// 
 /// \return struct symtab_Function * 
 /// 
 ///	Newly allocated input, NULL for failure
 /// 
 /// \brief Allocate a new function symbol table element
-/// \details 
 /// 
 
 struct symtab_Function * FunctionCalloc(void)
@@ -120,7 +114,6 @@ struct symtab_Function * FunctionCalloc(void)
 
 
 /// 
-/// 
 /// \arg pfun function.
 /// 
 /// \return char *
@@ -128,7 +121,6 @@ struct symtab_Function * FunctionCalloc(void)
 ///	Name of the function.
 /// 
 /// \brief Get name of function.
-/// \details 
 /// 
 
 char *
@@ -139,7 +131,6 @@ FunctionGetName(struct symtab_Function *pfun)
 
 
 /// 
-/// 
 /// \arg pfun function.
 /// \arg pc name of parameter.
 /// 
@@ -148,7 +139,6 @@ FunctionGetName(struct symtab_Function *pfun)
 ///	Searched parameter, NULL for not found.
 /// 
 /// \brief Get name function parameter.
-/// \details 
 /// 
 
 struct symtab_Parameters *
@@ -159,13 +149,11 @@ FunctionGetParameter(struct symtab_Function *pfun, char *pc)
 
 
 /// 
-/// 
 /// \arg pfun function to init
 /// 
 /// \return void
 /// 
 /// \brief init input
-/// \details 
 /// 
 
 void FunctionInit(struct symtab_Function *pfun)
@@ -181,7 +169,6 @@ void FunctionInit(struct symtab_Function *pfun)
 
 
 /// 
-/// 
 /// \arg pfun function to print symbols for
 ///	bAll.....: TRUE print full list of symbols, FALSE print only given cell
 /// \arg iIndent number of indentation spaces
@@ -190,7 +177,6 @@ void FunctionInit(struct symtab_Function *pfun)
 /// \return int : success of operation
 /// 
 /// \brief Print symbol info for function
-/// \details 
 /// 
 
 #define PrintFunctionIndent(iIndent, pfile)				\
@@ -231,7 +217,6 @@ int FunctionPrint
 
 
 /// 
-/// 
 /// \arg pfun function to resolve input for
 /// \arg ppist context of function
 /// \arg pcInput name of input to function
@@ -239,7 +224,8 @@ int FunctionPrint
 /// 
 /// \return struct symtab_HSolveListElement * : symbol that gives input
 /// 
-/// \brief Find input to function
+/// \brief Find the specified input to function.
+///
 /// \details 
 /// 
 ///	Function parameters are searched for a parameter with fieldname
@@ -347,14 +333,12 @@ FunctionResolveInput
 
 
 /// 
-/// 
 /// \arg pfun function to set name of.
 /// \arg pcName new name.
 /// 
 /// \return int : success of operation.
 /// 
 /// \brief Set name of function.
-/// \details 
 /// 
 
 int
@@ -376,14 +360,12 @@ FunctionSetName
 
 
 /// 
-/// 
 /// \arg pfun function to resolve input for
 /// \arg ppist context of function
 /// 
 /// \return double : value of function, FLT_MAX if failure.
 /// 
 /// \brief Resolve value for given function in given context.
-/// \details 
 /// 
 /// \todo  
 /// 
