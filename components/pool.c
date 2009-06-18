@@ -591,7 +591,8 @@ PoolReduce
 
 	//- if has GENESIS2 function
 
-	if (ParameterIsFunction(pparBeta)
+	if (0
+	    && ParameterIsFunction(pparBeta)
 	    && strcmp(FunctionGetName(ParameterGetFunction(pparBeta)), "GENESIS2") == 0)
 	{
 /* 	    //- get scaled conductance */
@@ -631,7 +632,8 @@ PoolReduce
 
 	//- if present
 
-	if (dVolume != FLT_MAX)
+	if (0
+	    && dVolume != FLT_MAX)
 	{
 	    //- find parent segment
 
