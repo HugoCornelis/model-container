@@ -65,6 +65,10 @@ PoolParameterScaleValue
  double dValue,
  struct symtab_Parameters *ppar);
 
+int
+PoolReduce
+(struct symtab_Pool *ppool, struct PidinStack *ppist);
+
 
 /* #include "equationexponential.h" */
 #include "neurospaces/idin.h"

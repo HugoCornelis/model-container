@@ -452,6 +452,7 @@ my $class_hierarchy
 			     'create_alias' => 'pool',
 			     'get_parameter' => 'pool',
 			     'parameter_scale_value' => 'pool',
+			     'reduce' => 'pool',
 			    },
 		  annotations => {
 				  'piSymbolType2Biolevel' => 'BIOLEVEL_MECHANISM',

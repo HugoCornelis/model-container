@@ -189,6 +189,7 @@ static QueryHandler QueryHandlerPrintSpikeSenderCount;
 static QueryHandler QueryHandlerPrintSymbolParameters;
 static QueryHandler QueryHandlerProjectionQuery;
 static QueryHandler QueryHandlerProjectionQueryCount;
+static QueryHandler QueryHandlerRecalculate;
 static QueryHandler QueryHandlerReduce;
 static QueryHandler QueryHandlerResolveSolverID;
 static QueryHandler QueryHandlerSegmenterLinearize;
@@ -685,6 +686,17 @@ static QueryHandlerAssociation pquhasTable[] =
     {
 	"projectionquerycount",
 	QueryHandlerProjectionQueryCount,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    /// recalc serials of a component
+
+    {
+	"recalculate",
+	QueryHandlerRecalculate,
 #ifdef USE_READLINE
 	1,
 	QueryMachineSymbolGenerator,
@@ -6942,6 +6954,87 @@ static int QueryHandlerProjectionQueryCount
     if (ppistAttachment)
     {
 	PidinStackFree(ppistAttachment);
+    }
+
+    //- return result
+
+    return(bResult);
+}
+
+
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Recalculate serial mappings for a symbol relative.
+///
+/// \details 
+/// 
+///	recalculate <context>
+/// 
+
+static
+int
+QueryHandlerRecalculate
+(char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
+{
+    //- set result : ok
+
+    int bResult = TRUE;
+
+    //- if there is a context argument
+
+    if (pcLine[iLength])
+    {
+	//- parse command line element
+
+	struct PidinStack *ppist = PidinStackParse(&pcLine[iLength]);
+
+	//- lookup symbol
+
+	/// \note allows namespacing, yet incompatible with parameter caches.
+	/// \note note : can be lookup for root, so PidinStackLookupTopSymbol()
+	/// \note does not work, should be fixed ?
+
+	struct symtab_HSolveListElement *phsle
+	    = SymbolsLookupHierarchical(pneuro->psym, ppist);
+
+	//- if found
+
+	if (phsle)
+	{
+	    char pc[1000];
+
+	    PidinStackString(ppist, pc, 1000);
+
+	    fprintf(stdout, "recalc serials for %s\n", pc);
+
+	    //- recalc serials
+
+	    SymbolRecalcAllSerials(phsle, ppist);
+	}
+
+	//- else
+
+	else
+	{
+	    //- diag's
+
+	    fprintf(stdout, "symbol not found\n");
+	}
+
+	//- free allocated memory
+
+	PidinStackFree(ppist);
+    }
+    else
+    {
+	fprintf(stdout, "recalc all serials\n");
+
+	//- recalc all serials
+
+	SymbolRecalcAllSerials(NULL, NULL);
     }
 
     //- return result
