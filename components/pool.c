@@ -292,8 +292,6 @@ PoolGetVolume
 	if (dDiaSegment == FLT_MAX
 	    || dThickness == FLT_MAX)
 	{
-	    PidinStackFree(ppistComp);
-
 	    return(FLT_MAX);
 	}
 
@@ -323,8 +321,6 @@ PoolGetVolume
 	    || dLengthSegment == FLT_MAX
 	    || dThickness == FLT_MAX)
 	{
-	    PidinStackFree(ppistComp);
-
 	    return(FLT_MAX);
 	}
 
@@ -591,8 +587,7 @@ PoolReduce
 
 	//- if has GENESIS2 function
 
-	if (0
-	    && ParameterIsFunction(pparBeta)
+	if (ParameterIsFunction(pparBeta)
 	    && strcmp(FunctionGetName(ParameterGetFunction(pparBeta)), "GENESIS2") == 0)
 	{
 /* 	    //- get scaled conductance */
@@ -632,8 +627,7 @@ PoolReduce
 
 	//- if present
 
-	if (0
-	    && dVolume != FLT_MAX)
+	if (dVolume != FLT_MAX)
 	{
 	    //- find parent segment
 
