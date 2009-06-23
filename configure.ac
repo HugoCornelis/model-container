@@ -372,7 +372,7 @@ case "$host_os" in
     PERLLIB_EXTENSION='dylib'
     AC_SUBST(PERLLIB_EXTENSION)
 
-    SWIGCOMPILELINKSFORPERL='-g -Wdeclaration-after-statement -DPRE_PROTO_TRAVERSAL -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols/ -fPIC -dynamic $(PERL_CCOPTS)'
+    SWIGCOMPILELINKSFORPERL='-g -Wno-declaration-after-statement -DPRE_PROTO_TRAVERSAL -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols/ -fPIC -dynamic $(PERL_CCOPTS)'
     AC_SUBST(SWIGCOMPILELINKSFORPERL)
 
     SWIGCOMPILECOMMAND_PERL='gcc -Wno-declaration-after-statement $(SWIGCOMPILELINKSFORPERL) -c swiggable_neurospaces_wrap.c'
