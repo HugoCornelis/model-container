@@ -375,7 +375,7 @@ case "$host_os" in
     SWIGCOMPILELINKSFORPERL='-g -Wdeclaration-after-statement -DPRE_PROTO_TRAVERSAL -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols/ -fPIC -dynamic $(PERL_CCOPTS)'
     AC_SUBST(SWIGCOMPILELINKSFORPERL)
 
-    SWIGCOMPILECOMMAND_PERL='gcc $(SWIGCOMPILELINKSFORPERL) -c swiggable_neurospaces_wrap.c'
+    SWIGCOMPILECOMMAND_PERL='gcc -Wno-declaration-after-statement $(SWIGCOMPILELINKSFORPERL) -c swiggable_neurospaces_wrap.c'
     AC_SUBST(SWIGCOMPILECOMMAND_PERL)
 
     SWIGLDLINKSFORPERL='-L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -bundle -undefined suppress -flat_namespace $(PERL_LDFLAGS)'
@@ -394,7 +394,7 @@ case "$host_os" in
     SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL -I$(PYTHON_HEADERS) -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols -fPIC'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
 
-    SWIGCOMPILECOMMAND_PYTHON='gcc $(SWIGCOMPILELINKSFORPYTHON) -c swiggable_neurospaces_wrap.c'
+    SWIGCOMPILECOMMAND_PYTHON='gcc -Wno-declaration-after-statement $(SWIGCOMPILELINKSFORPYTHON) -c swiggable_neurospaces_wrap.c'
     AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
 
     SWIGLDLINKSFORPYTHON='-L$(PYTHON_HEADERS) -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -lreadline -framework Python -flat_namespace -undefined suppress -bundle -bundle_loader $(PYTHON_EXE)'
@@ -425,13 +425,13 @@ case "$host_os" in
     SWIGCOMPILELINKSFORPERL='-g 	-DPRE_PROTO_TRAVERSAL 	-I$(builddir)../../.. 	-I$(srcdir)/../../.. 	-I$(builddir)../../../hierarchy/output/symbols 	-I$(srcdir)/../../../hierarchy/output/symbols/ 	-fPIC 	`perl -MExtUtils::Embed -e ccopts`'
     AC_SUBST(SWIGCOMPILELINKSFORPERL)
 
-    SWIGCOMPILECOMMAND_PERL='gcc         $(SWIGCOMPILELINKSFORPERL)         -c swiggable_neurospaces_wrap.c' 
+    SWIGCOMPILECOMMAND_PERL='gcc -Wno-declaration-after-statement        $(SWIGCOMPILELINKSFORPERL)         -c swiggable_neurospaces_wrap.c' 
     AC_SUBST(SWIGCOMPILECOMMAND_PERL)
 
     SWIGLDLINKSFORPERL='-g 	-shared swiggable_neurospaces_wrap.o 	-L../../.. 	-lneurospacesread 	-L../../../algorithms/event 	-levent_algorithms 	-L../../../algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline'
     AC_SUBST(SWIGLDLINKSFORPERL)
 
-    SWIGLINKCOMMAND_PERL='gcc         $(SWIGLDLINKSFORPERL)         -o SwiggableNeurospaces.$(PERLLIB_EXTENSION)'
+    SWIGLINKCOMMAND_PERL='gcc -Wno-declaration-after-statement        $(SWIGLDLINKSFORPERL)         -o SwiggableNeurospaces.$(PERLLIB_EXTENSION)'
     AC_SUBST(SWIGCOMPILECOMMAND_PERL)
 
 
@@ -444,13 +444,13 @@ case "$host_os" in
     SWIGCOMPILELINKSFORPYTHON='-g 	-DPRE_PROTO_TRAVERSAL 	-I$(PYTHON_HEADERS) 	-I$(builddir)../../.. 	-I$(srcdir)/../../.. 	-I$(builddir)../../../hierarchy/output/symbols 	-I$(srcdir)/../../../hierarchy/output/symbols/ 	-fPIC 	-Xlinker 	-export-dynamic'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
    
-    SWIGCOMPILECOMMAND_PYTHON='gcc        $(SWIGCOMPILELINKSFORPYTHON)        -c swiggable_neurospaces_wrap.c'
+    SWIGCOMPILECOMMAND_PYTHON='gcc -Wno-declaration-after-statement       $(SWIGCOMPILELINKSFORPYTHON)        -c swiggable_neurospaces_wrap.c'
     AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
 
     SWIGLDLINKSFORPYTHON='-g 	-shared swiggable_neurospaces_wrap.o 	-L../../.. 	-lneurospacesread 	-L../../../algorithms/event 	-levent_algorithms 	-L../../../algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline 	-fPIC 	-Xlinker 	-export-dynamic'
     AC_SUBST(SWIGLDLINKSFORPYTHON)
   
-    SWIGLINKCOMMAND_PYTHON='gcc 	$(SWIGLDLINKSFORPYTHON) 	-o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
+    SWIGLINKCOMMAND_PYTHON='gcc -Wno-declaration-after-statement 	$(SWIGLDLINKSFORPYTHON) 	-o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
     AC_SUBST(SWIGLINKCOMMAND_PYTHON)
 
     dnl }}} End of General Settings

@@ -27,7 +27,7 @@ dist_bin_SCRIPTS = bin/model-container
 LEX_OUTPUT_ROOT = lex.parser
 LFLAGS=-i -l -Pparser
 YFLAGS=-dv -p parser
-AM_CFLAGS=-g3 -fPIC -Wmissing-prototypes -Wmissing-declarations -include neurospaces/config.h -DPRE_PROTO_TRAVERSAL @PERL_CCOPTS@ -I$(top_builddir)
+AM_CFLAGS=-g3 -fPIC -Wmissing-prototypes -Wmissing-declarations -Wno-declaration-after-statement -include neurospaces/config.h -DPRE_PROTO_TRAVERSAL @PERL_CCOPTS@ -I$(top_builddir)
 CFLAGS = -O0
 
 # 140 -rw-r--r--  1 hugo hugo  138708 2009-04-19 16:03 analyzer.o
