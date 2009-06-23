@@ -914,7 +914,9 @@ ChannelReduce
 
 	//- if they read the same
 
-	if (strcmp(ParameterGetString(pparType), pcType) == 0)
+	if (pparType
+	    && pcType
+	    && strcmp(ParameterGetString(pparType), pcType) == 0)
 	{
 	    //- remove channel type parameter
 
