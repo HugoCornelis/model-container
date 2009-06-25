@@ -309,14 +309,22 @@ PoolGetVolume
 
 	double dDiaPool = 2 * dThickness;
 
-	dResult
-	    = ((
-		   3 * dDiaSegment * dDiaSegment * dDiaPool
-		   - 3 * dDiaSegment * dDiaPool * dDiaPool
-		   + dDiaPool * dDiaPool * dDiaPool
-		   )
-	       * M_PI
-	       / 6.0);
+	double d = dDiaSegment - dDiaPool;
+
+	double d1 = dDiaSegment * dDiaSegment * dDiaSegment;
+
+	double d2 = d * d * d;
+
+	dResult = (d1 - d2) * M_PI / 6.0;
+
+/* 	dResult */
+/* 	    = (( */
+/* 		   3 * dDiaSegment * dDiaSegment * dDiaPool */
+/* 		   - 3 * dDiaSegment * dDiaPool * dDiaPool */
+/* 		   + dDiaPool * dDiaPool * dDiaPool */
+/* 		   ) */
+/* 	       * M_PI */
+/* 	       / 6.0); */
     }
     else
     {
@@ -336,16 +344,41 @@ PoolGetVolume
 	    return(FLT_MAX);
 	}
 
+/* 	if (thick>0.0) { */
+/* 		d=dia-2*thick; */
+/*                 if (d<0.0) d=0.0; /* JMI * */
+/* 	} else { */
+/* 		d=0.0; */
+/* 	} */
+/* 	if (len == 0.0) {       /* SPHERICAL * */
+/* 	    v1 =  dia * dia * dia; */
+/* 	    v2 =  d * d * d; */
+/* 	    volume=(v1-v2)*PI/6.0; */
+/* 	} else {            /* CYLINDRICAL * */
+/* 	    v1 = dia * dia; */
+/* 	    v2 = d * d; */
+/* 	    volume=len*(v1-v2)*PI/4.0; */
+/* 	} */
+/* 	return(volume); */
+
 	double dDiaPool = 2 * dThickness;
 
-	dResult
-	    = ((
-		   2 * dDiaSegment * dDiaPool
-		   - dDiaPool * dDiaPool
-		   )
-	       * dLengthSegment
-	       * M_PI
-	       / 4.0);
+	double d = dDiaSegment - dDiaPool;
+
+	double d1 = dDiaSegment * dDiaSegment;
+
+	double d2 = d * d;
+
+	dResult = dLengthSegment * (d1 - d2) * M_PI / 4.0;
+
+/* 	dResult */
+/* 	    = (( */
+/* 		   2 * dDiaSegment * dDiaPool */
+/* 		   - dDiaPool * dDiaPool */
+/* 		   ) */
+/* 	       * dLengthSegment */
+/* 	       * M_PI */
+/* 	       / 4.0); */
     }
 
     //- return result
