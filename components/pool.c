@@ -260,6 +260,8 @@ PoolGetVolume
     struct PidinStack *ppistComp
 	= SymbolFindParentSegment(&ppool->bio.ioh.iol.hsle, ppist);
 
+    double dDiaFromParent = FLT_MAX;
+
     if (ppistComp)
     {
 	struct symtab_HSolveListElement *phsleComp
@@ -273,6 +275,9 @@ PoolGetVolume
 	    {
 		iSpherical = 1;
 	    }
+
+	    dDiaFromParent
+		= SymbolParameterResolveValue(phsleComp, ppistComp, "DIA");
 	}
 
 	PidinStackFree(ppistComp);
@@ -285,6 +290,13 @@ PoolGetVolume
     {
 	double dDiaSegment
 	    = SymbolParameterResolveValue(&ppool->bio.ioh.iol.hsle, ppist, "DIA");
+
+	//t not really sure if this is correct...
+
+	if (dDiaSegment == FLT_MAX)
+	{
+	    dDiaSegment = dDiaFromParent;
+	}
 
 	double dThickness
 	    = SymbolParameterResolveValue(&ppool->bio.ioh.iol.hsle, ppist, "THICK");
