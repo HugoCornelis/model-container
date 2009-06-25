@@ -579,7 +579,7 @@ PoolReduce
     double dVolume = SymbolParameterResolveValue(&ppool->bio.ioh.iol.hsle, ppist, "VOLUME");
 
     {
-	//- get G_MAX parameter
+	//- get BETA parameter
 
 	struct symtab_Parameters *pparBeta
 	    = SymbolGetParameter(&ppool->bio.ioh.iol.hsle, ppist, "BETA");
@@ -641,66 +641,13 @@ PoolReduce
 
 	if (dVolume != FLT_MAX)
 	{
-	    //- find parent segment
+	    double d = PoolGetVolume(ppool, ppist);
 
-	    struct PidinStack *ppistSegment
-		= SymbolFindParentSegment(&ppool->bio.ioh.iol.hsle, ppist);
-
-	    struct symtab_HSolveListElement *phsleSegment
-		= PidinStackLookupTopSymbol(ppistSegment);
-
-	    //- if found segment
-
-	    if (ppistSegment && phsleSegment)
+	    if (MMGParmEQ(dVolume, d))
 	    {
-		//- if spherical
+		//- remove VOLUME parameter
 
-		if (SegmenterIsSpherical((struct symtab_Segmenter *)phsleSegment))
-		{
-		    //- get length and dia
-
-		    double dDia = SymbolParameterResolveValue(phsleSegment, ppist, "DIA");
-
-		    if (dDia != FLT_MAX)
-		    {
-			//- if volume matches with spherical volume
-
-			double d = dDia * dDia * M_PI;
-
-			if (MMGParmEQ(dVolume, d))
-			{
-			    //- remove VOLUME parameter
-
-			    ParContainerDelete(ppool->bio.pparc, pparVolume);
-			}
-		    }
-		}
-
-		//- if cylindrical
-
-		else
-		{
-		    //- get length and dia
-
-		    double dLength = SymbolParameterResolveValue(phsleSegment, ppist, "LENGTH");
-
-		    double dDia = SymbolParameterResolveValue(phsleSegment, ppist, "DIA");
-
-		    if (dLength != FLT_MAX
-			&& dDia != FLT_MAX)
-		    {
-			//- if volume matches with cylindrical volume
-
-			double d = M_PI * dDia * dLength;
-
-			if (MMGParmEQ(dVolume, d))
-			{
-			    //- remove VOLUME parameter
-
-			    ParContainerDelete(ppool->bio.pparc, pparVolume);
-			}
-		    }
-		}
+		ParContainerDelete(ppool->bio.pparc, pparVolume);
 	    }
 	}
     }
