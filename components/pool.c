@@ -602,20 +602,6 @@ PoolReduce
 	if (ParameterIsFunction(pparBeta)
 	    && strcmp(FunctionGetName(ParameterGetFunction(pparBeta)), "GENESIS2") == 0)
 	{
-/* 	    //- get scaled conductance */
-
-/* 	    double dBetaScaled = ParameterResolveScaledValue(pparBeta, ppist); */
-
-/* 	    scaled = 1.0 / (2.0 * 96494 * dVolume); */
-
-/* 	    //- unscale conductance to surface of segment */
-
-/* 	    double dBetaUnscaled = dBetaScaled / dSurface; */
-
-/* 	    //- set this as BETA */
-
-/* 	    SymbolSetParameterDouble(&ppool->bio.ioh.iol.hsle, "BETA", dBetaUnscaled); */
-		0;
 	    //- remove BETA parameter
 
 	    ParContainerDelete(ppool->bio.pparc, pparBeta);
