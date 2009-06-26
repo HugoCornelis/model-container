@@ -27,26 +27,6 @@ PUBLIC_MODELS
 
 	CELL purk_test_soma
 
-		// original model had 3.17 as max dia, I changed this to 3.18 to
-		// get around rounding differences between the genesis based model
-		// and this one.
-
-// 		ALGORITHM Spines
-// 			ALGORITHM_INSTANCE SpinesNormal_13_1
-// 			{ Purkinje_spine 0.00 3.18 13 1}
-// 		END ALGORITHM
-
-		ALGORITHM Spines
-			SpinesNormal_13_1
-			PARAMETERS
-				PARAMETER ( PROTOTYPE = "Purkinje_spine" ),
-				PARAMETER ( DIA_MIN = 0.0 ),
-				PARAMETER ( DIA_MAX = 3.18 ),
-				PARAMETER ( SPINE_DENSITY = 13.0 ),
-				PARAMETER ( SPINE_FREQUENCY = 1.0 ),
-			END PARAMETERS
-		END ALGORITHM
-
 		SEGMENT_GROUP segments
 
 			CHILD soma soma
