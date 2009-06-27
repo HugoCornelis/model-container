@@ -2649,7 +2649,7 @@ SV * swig_get_workload(int iContext, int iNodes, int iLevel)
 
     AV * pavWorkload = swigi_workload(phsleContext, ppistContext, iNodes, iLevel);
 
-    printf("Done workload for %s, %i entries\n", pcContext, av_len(pavWorkload));
+    printf("Done workload for %s, %li entries\n", pcContext, (long int)av_len(pavWorkload));
 
     //- free allocated memory
 
