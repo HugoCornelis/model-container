@@ -197,7 +197,7 @@ PoolGetParameter
 
 	//- if volume
 
-	if (0 == strcmp(pcName, "VOLUME"))
+	else if (0 == strcmp(pcName, "VOLUME"))
 	{
 	    //- get volume
 
@@ -463,6 +463,8 @@ PoolParameterScaleValue
 
     double dResult = FLT_MAX;
 
+    struct PidinStack *ppistComp = NULL;
+
     //- get pool parameter field name
 
     char *pcName = ParameterGetName(ppar);
@@ -474,96 +476,101 @@ PoolParameterScaleValue
 
     //- if beta
 
-    if (0 == strcmp(pcName,"BETA"))
+    if (0 == strcmp(pcName, "BETA"))
     {
-/* 	//- get pool diameter */
+	//- get pool diameter
 
-/* 	struct symtab_Parameters *pparPoolDia */
-/* 	    = SymbolFindParameter */
-/* 	      ((struct symtab_HSolveListElement *)ppool, ppist, "DIA"); */
+	double dPoolDia
+	    = SymbolParameterResolveValue
+	      ((struct symtab_HSolveListElement *)ppool, ppist, "DIA");
 
-/* 	double dPoolDia = ParameterResolveValue(pparPoolDia, ppist); */
-
-/* 	//- get shell thickness */
-
-/* 	struct symtab_Parameters *pparThickness */
-/* 	    = SymbolFindParameter */
-/* 	      ((struct symtab_HSolveListElement *)ppool, ppist, "THICK"); */
-
-/* 	double dThickness */
-/* 	    = ParameterResolveValue(pparThickness, ppist); */
-
-/* 	if (dPoolDia == FLT_MAX */
-/* 	    || dThickness == FLT_MAX) */
-/* 	{ */
-/* 	    return(dResult); */
-/* 	} */
-
-/* 	//- calculate pseudo diameter */
-
-/* 	double dDia = 2 * dThickness; */
-
-/* 	/// find parent segment */
-
-/* 	struct PidinStack *ppistComp */
-/* 	    = SymbolFindParentSegment(&ppool->bio.ioh.iol.hsle, ppist); */
-
-/* 	int iSpherical = 0; */
-
-/* 	//- if found segment */
-
-/* 	if (ppistComp) */
-/* 	{ */
-/* 	    struct symtab_HSolveListElement *phsleComp */
-/* 		= PidinStackLookupTopSymbol(ppistComp); */
-
-/* 	    if (SegmenterIsSpherical((struct symtab_Segmenter *)phsleComp)) */
-/* 	    { */
-/* 		iSpherical = 1; */
-/* 	    } */
-/* 	} */
-
-	//- get volume
-
-	double dVolume = SymbolParameterResolveValue(&ppool->bio.ioh.iol.hsle, ppist, "VOLUME");
-
-	if (dVolume == FLT_MAX)
+	if (dPoolDia == FLT_MAX)
 	{
-	    return(FLT_MAX);
+	    ppistComp = SymbolFindParentSegment(&ppool->bio.ioh.iol.hsle, ppist);
+
+	    struct symtab_HSolveListElement *phsleComp
+		= PidinStackLookupTopSymbol(ppistComp);
+
+	    dPoolDia = SymbolParameterResolveValue(phsleComp, ppistComp, "DIA");
 	}
 
-/* 	if (iSpherical) */
-/* 	{ */
-/* 	    /// \note calculation of shell volume when compartment is spherical, */
-/* 	    /// \note factor between parentheses comes from */
-/* 	    /// \note (dCompDia^3 - (dCompDia - dDia)^3) */
-/* 	    /// \note (optimized to minimize cancellations) */
+	//- get shell thickness
 
-/* 	    dVolume */
-/* 		= (3 * dPoolDia * dPoolDia * dDia */
-/* 		   - 3 * dPoolDia * dDia * dDia */
-/* 		   + dDia * dDia * dDia) */
-/* 		* M_PI */
-/* 		/ 6.0; */
-/* 	} */
-/* 	else */
-/* 	{ */
-/* 	    //- get pool length */
+	struct symtab_Parameters *pparThickness
+	    = SymbolFindParameter
+	      ((struct symtab_HSolveListElement *)ppool, ppist, "THICK");
 
-/* 	    struct symtab_Parameters *pparPoolLength */
-/* 		= SymbolFindParameter */
-/* 		  ((struct symtab_HSolveListElement *)ppool, ppist, "LENGTH"); */
+	double dThickness
+	    = ParameterResolveValue(pparThickness, ppist);
 
-/* 	    double dPoolLength */
-/* 		= ParameterResolveValue(pparPoolLength, ppist); */
+	if (dPoolDia == FLT_MAX
+	    || dThickness == FLT_MAX)
+	{
+	    return(dResult);
+	}
 
-/* 	    /// \note factor between parentheses comes from (see above) */
-/* 	    /// \note (dCompDia^2 - (dCompDia - dDia)^2) */
+	//- calculate pseudo diameter
 
-/* 	    dVolume */
-/* 		= (2 * dPoolDia * dDia */
-/* 		   - dDia * dDia) * dPoolLength * M_PI / 4.0; */
-/* 	} */
+	double dDia = 2 * dThickness;
+
+	//- find parent segment
+
+	if (!ppistComp)
+	{
+	    ppistComp = SymbolFindParentSegment(&ppool->bio.ioh.iol.hsle, ppist);
+	}
+
+	int iSpherical = 0;
+
+	//- if found segment
+
+	if (ppistComp)
+	{
+	    struct symtab_HSolveListElement *phsleComp
+		= PidinStackLookupTopSymbol(ppistComp);
+
+	    if (SegmenterIsSpherical((struct symtab_Segmenter *)phsleComp))
+	    {
+		iSpherical = 1;
+	    }
+	}
+
+	/// volume
+
+	double dVolume;
+
+	if (iSpherical)
+	{
+	    /// \note calculation of shell volume when compartment is spherical,
+	    /// \note factor between parentheses comes from
+	    /// \note (dCompDia^3 - (dCompDia - dDia)^3)
+	    /// \note (optimized to minimize cancellations)
+
+	    dVolume
+		= (3 * dPoolDia * dPoolDia * dDia
+		   - 3 * dPoolDia * dDia * dDia
+		   + dDia * dDia * dDia)
+		* M_PI
+		/ 6.0;
+	}
+	else
+	{
+	    //- get pool length
+
+	    struct symtab_Parameters *pparPoolLength
+		= SymbolFindParameter
+		  ((struct symtab_HSolveListElement *)ppool, ppist, "LENGTH");
+
+	    double dPoolLength
+		= ParameterResolveValue(pparPoolLength, ppist);
+
+	    /// \note factor between parentheses comes from (see above)
+	    /// \note (dCompDia^2 - (dCompDia - dDia)^2)
+
+	    dVolume
+		= (2 * dPoolDia * dDia
+		   - dDia * dDia) * dPoolLength * M_PI / 4.0;
+	}
 
 	//- scale valency to pool volume of segment
 
@@ -571,12 +578,12 @@ PoolParameterScaleValue
 
 	dResult = 1.0 / (2.0 * 96494 * dVolume);
 
-/* 	//- free context of compartment */
+	//- free context of compartment
 
-/* 	if (ppistComp) */
-/* 	{ */
-/* 	    PidinStackFree(ppistComp); */
-/* 	} */
+	if (ppistComp)
+	{
+	    PidinStackFree(ppistComp);
+	}
     }
 
     //- return result
@@ -595,8 +602,8 @@ PoolParameterScaleValue
 ///
 /// \details Reduces:
 ///
-///	POOL_TYPE
-///	G_MAX
+///	BETA
+///	VOLUME
 /// 
 
 int
@@ -609,8 +616,14 @@ PoolReduce
 
     //- get volume
 
-    double dVolume = SymbolParameterResolveValue(&ppool->bio.ioh.iol.hsle, ppist, "VOLUME");
+/*     double dVolume = SymbolParameterResolveValue(&ppool->bio.ioh.iol.hsle, ppist, "VOLUME"); */
 
+    //t if this one is enabled, PoolParameterScaleValue() for BETA
+    //t will not find a pparPoolDia, and SEGV.
+
+    //t when running tests/scripts/PurkM9_model/ACTIVE-soma1.g
+
+    if (1)
     {
 	//- get BETA parameter
 
@@ -641,6 +654,12 @@ PoolReduce
 	}
     }
 
+    //t if this one is enabled, 'Running the purkinje cell soma by
+    //t itself, active channels, current injections' fails.
+
+    //t when running tests/scripts/PurkM9_model/ACTIVE-soma1.g
+
+    if (1)
     {
 	/// accuracy constant
 
