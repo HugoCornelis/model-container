@@ -488,10 +488,13 @@ PoolParameterScaleValue
 	{
 	    ppistComp = SymbolFindParentSegment(&ppool->bio.ioh.iol.hsle, ppist);
 
-	    struct symtab_HSolveListElement *phsleComp
-		= PidinStackLookupTopSymbol(ppistComp);
+	    if (ppistComp)
+	    {
+		struct symtab_HSolveListElement *phsleComp
+		    = PidinStackLookupTopSymbol(ppistComp);
 
-	    dPoolDia = SymbolParameterResolveValue(phsleComp, ppistComp, "DIA");
+		dPoolDia = SymbolParameterResolveValue(phsleComp, ppistComp, "DIA");
+	    }
 	}
 
 	//- get shell thickness
