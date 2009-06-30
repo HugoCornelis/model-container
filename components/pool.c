@@ -560,12 +560,22 @@ PoolParameterScaleValue
 	{
 	    //- get pool length
 
-	    struct symtab_Parameters *pparPoolLength
-		= SymbolFindParameter
+	    double dPoolLength
+		= SymbolParameterResolveValue
 		  ((struct symtab_HSolveListElement *)ppool, ppist, "LENGTH");
 
-	    double dPoolLength
-		= ParameterResolveValue(pparPoolLength, ppist);
+	    if (dPoolLength == FLT_MAX)
+	    {
+		ppistComp = SymbolFindParentSegment(&ppool->bio.ioh.iol.hsle, ppist);
+
+		if (ppistComp)
+		{
+		    struct symtab_HSolveListElement *phsleComp
+			= PidinStackLookupTopSymbol(ppistComp);
+
+		    dPoolLength = SymbolParameterResolveValue(phsleComp, ppistComp, "LENGTH");
+		}
+	    }
 
 	    /// \note factor between parentheses comes from (see above)
 	    /// \note (dCompDia^2 - (dCompDia - dDia)^2)
