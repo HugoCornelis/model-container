@@ -1995,6 +1995,11 @@ QueryHandlerInsert
 	return(FALSE);
     }
 
+    //- register the name of the target
+
+    struct symtab_IdentifierIndex *pidinTarget
+	= PidinStackPop(ppistTarget);
+
     //- lookup target symbol
 
     struct symtab_HSolveListElement *phsleTarget
@@ -2009,9 +2014,6 @@ QueryHandlerInsert
 
     //- create an alias of the source
 
-    struct symtab_IdentifierIndex *pidinTarget
-	= PidinStackTop(ppistTarget);
-
     struct symtab_IdentifierIndex *pidinNew
 	= IdinCallocUnique(IdinName(pidinTarget));
 
@@ -2024,7 +2026,7 @@ QueryHandlerInsert
 
     int iSuccess1 = SymbolAddChild(phsleTarget, phsleAlias);
 
-    if (iSuccess1)
+    if (!iSuccess1)
     {
 	fprintf(stdout, "SymbolAddChild() failed\n");
 
@@ -2033,7 +2035,7 @@ QueryHandlerInsert
 
     int iSuccess2 = SymbolRecalcAllSerials(NULL, NULL);
 
-    if (iSuccess2)
+    if (!iSuccess2)
     {
 	fprintf(stdout, "SymbolRecalcAllSerials() failed");
 
