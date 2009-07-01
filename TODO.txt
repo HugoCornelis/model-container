@@ -1,5 +1,7 @@
 -*- outline -*-
 
+* Reenable the support for readline
+
 * MAC OSX bug
 ** There is an issue with executing "./neurospacesparse -v 1 -q legacy/networks/supernetwork.ndf"
 ** on mac osx. The system stalls on a call to the function QueryHandlerPrintSpikeRecieverCount
