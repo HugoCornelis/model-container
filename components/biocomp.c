@@ -1442,7 +1442,9 @@ BioComponentTraverse
     //- if prototype
 
     struct symtab_BioComponent *pbioProto
-	= (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
+	= ((pbio->iOptions & BIOCOMP_OPTION_NO_PROTOTYPE_TRAVERSAL)
+	   ? (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle)
+	   : NULL);
 
     if (pbioProto)
     {

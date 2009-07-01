@@ -88,6 +88,14 @@ struct symtab_BioComponent
 };
 
 
+// \def option to disable the prototype traversal of this bio component
+
+// if I am correct the use of the option field overlaps with
+// FLAG_SEGMENTER_SPHERICAL, what a mess ...
+
+#define BIOCOMP_OPTION_NO_PROTOTYPE_TRAVERSAL 2
+
+
 #include "neurospaces/pidinstack.h"
 
 
