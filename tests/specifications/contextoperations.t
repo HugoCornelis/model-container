@@ -267,19 +267,43 @@ my $test
 ",
 						   write => "expand /**/**/spikegen",
 						  },
-# 						  {
-# 						   description => "A selective single population expansion on spike generators using multiple wildcards, with a intermediate null match",
-# 						   read => "/CerebellarCortex/Golgis/0/Golgi_soma/spikegen
-# - /CerebellarCortex/Golgis/1/Golgi_soma/spikegen
-# ",
-# 						   write => "expand /CerebellarCortex/**/Golgis/**/spikegen",
-# 						  },
 						  {
-						   description => "Namespaces and wildcards cannot be combined (yet).",
-						   disabled => "Namespaces and wildcards cannot be combined (yet).",
-						   read => "wildcard expansion cannot be combined with namespaces.",
+						   description => "A selective single population expansion on spike generators using multiple wildcards, with a intermediate null match",
+						   read => "
+- /CerebellarCortex/Golgis/0/Golgi_soma/spikegen
+- /CerebellarCortex/Golgis/1/Golgi_soma/spikegen
+",
+						   write => "expand /CerebellarCortex/Golgis/**/spikegen",
+						  },
+						  {
+						   description => "Can we find the spikegenerator in the Golgi namespace ?",
+						   read => "
+- /Golgi::/G::/Golgi/Golgi_soma/spikegen
+",
 						   write => "expand ::Golgi::G::/Golgi/**/spikegen",
 						  },
+						  {
+						   description => "Can we find the soma in the Golgi namespace ?",
+						   read => "
+- /Golgi::/G::/Golgi/Golgi_soma",
+						   write => "expand ::Golgi::G::/Golgi/*",
+						  },
+						  {
+						   description => "Can we find the channels in the Golgi namespace ?",
+						   read => "
+- /Golgi::/G::/Golgi/Golgi_soma/spikegen
+- /Golgi::/G::/Golgi/Golgi_soma/Ca_pool
+- /Golgi::/G::/Golgi/Golgi_soma/CaHVA
+- /Golgi::/G::/Golgi/Golgi_soma/H
+- /Golgi::/G::/Golgi/Golgi_soma/InNa
+- /Golgi::/G::/Golgi/Golgi_soma/KA
+- /Golgi::/G::/Golgi/Golgi_soma/KDr
+- /Golgi::/G::/Golgi/Golgi_soma/Moczyd_KC
+- /Golgi::/G::/Golgi/Golgi_soma/mf_AMPA
+- /Golgi::/G::/Golgi/Golgi_soma/pf_AMPA
+",
+						   write => "expand ::Golgi::G::/Golgi/Golgi_soma/*",
+						  }
 						 ],
 				description => "wildcard expansions",
 			       },

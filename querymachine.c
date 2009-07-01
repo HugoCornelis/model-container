@@ -1670,6 +1670,10 @@ QueryHandlerExpand
 
     struct symtab_HSolveListElement *phsle = NULL;
 
+    struct symtab_HSolveListElement *phsleTraversal = NULL;
+
+    struct PidinStack *ppistTraversal = NULL;
+
     //- parse command line element
 
     struct PidinStack *ppist = PidinStackParse(&pcLine[iLength]);
@@ -1687,28 +1691,58 @@ QueryHandlerExpand
 
     if (IdinIsNamespaced(pidin))
     {
-	fprintf(stdout, "wildcard expansion cannot be combined with namespaces.\n");
+	//- find namespace
 
-	return(FALSE);
+	struct ImportedFile *pif = SymbolsLookupNameSpace(pneuro->psym, ppist);
+
+	struct symtab_RootSymbol *prootNamespace = ImportedFileGetRootSymbol(pif);
+
+	//- set variables for traversal
+
+	phsleTraversal = &prootNamespace->hsle;
+	ppistTraversal = PidinStackDuplicate(ppist);
+
+	//- convert full context to one with only namespaces
+
+	struct symtab_IdentifierIndex *pidinTraversal
+	    = PidinStackTop(ppistTraversal);
+
+	while (!IdinIsNamespaced(pidinTraversal))
+	{
+	    PidinStackPop(ppistTraversal);
+
+	    pidinTraversal
+		= PidinStackTop(ppistTraversal);
+	}
     }
 
-    //- allocate pidin stack pointing to root
+    //- without namespace
 
-    struct PidinStack *ppistRoot = PidinStackCalloc();
-
-    if (!ppistRoot)
+    else
     {
-	return(FALSE);
+	//- allocate pidin stack pointing to root
+
+	struct PidinStack *ppistRoot = PidinStackCalloc();
+
+	if (!ppistRoot)
+	{
+	    return(FALSE);
+	}
+
+	PidinStackSetRooted(ppistRoot);
+
+	struct symtab_HSolveListElement *phsleRoot
+	    = PidinStackLookupTopSymbol(ppistRoot);
+
+	//- set variables for traversal
+
+	phsleTraversal = phsleRoot;
+	ppistTraversal = ppistRoot;
     }
-
-    PidinStackSetRooted(ppistRoot);
-
-    struct symtab_HSolveListElement *phsleRoot
-	= PidinStackLookupTopSymbol(ppistRoot);
 
     /// \note so phsleRoot can be NULL if the model description file was not found
 
-    if (phsleRoot)
+    if (phsleTraversal)
     {
 	//- start yaml output
 
@@ -1718,8 +1752,8 @@ QueryHandlerExpand
 
 	int iResult
 	    = SymbolTraverseWildcard
-	      (phsleRoot,
-	       ppistRoot,
+	      (phsleTraversal,
+	       ppistTraversal,
 	       ppist,
 	       QueryMachineWildcardTraverser,
 	       NULL,
@@ -1739,7 +1773,8 @@ QueryHandlerExpand
 
     //- free allocated memory
 
-    PidinStackFree(ppistRoot);
+    PidinStackFree(ppistTraversal);
+    PidinStackFree(ppist);
 
     //- return result
 
