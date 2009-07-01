@@ -1740,6 +1740,8 @@ QueryHandlerExpand
 	ppistTraversal = ppistRoot;
     }
 
+    //- if there is a symbol candidate for traversal
+
     /// \note so phsleRoot can be NULL if the model description file was not found
 
     if (phsleTraversal)
