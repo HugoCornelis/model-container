@@ -155,6 +155,7 @@ static QueryHandler QueryHandlerDelete;
 static QueryHandler QueryHandlerEcho;
 static QueryHandler QueryHandlerExpand;
 static QueryHandler QueryHandlerExport;
+static QueryHandler QueryHandlerInsert;
 static QueryHandler QueryHandlerInputInfo;
 static QueryHandler QueryHandlerHelpCommands;
 static QueryHandler QueryHandlerImportFile;
@@ -397,6 +398,15 @@ static QueryHandlerAssociation pquhasTable[] =
     {
 	"export",
 	QueryHandlerExport,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    {
+	"insert",
+	QueryHandlerInsert,
 #ifdef USE_READLINE
 	1,
 	QueryMachineSymbolGenerator,
@@ -1926,6 +1936,109 @@ QueryHandlerExport
     //- free allocated memory
 
     PidinStackFree(ppistWildcard);
+
+    //- return result
+
+    return(bResult);
+}
+
+
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Insert a new component.
+///
+/// \details 
+/// 
+///	insert <source> <target>
+/// 
+
+static
+int
+QueryHandlerInsert
+(char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
+{
+    //- set result : ok
+
+    int bResult = TRUE;
+
+    //- parse command line element
+
+    struct PidinStack *ppistSource = PidinStackParse(&pcLine[iLength]);
+
+    //- get target context
+
+    char *pcBreak = strpbrk(&pcLine[iLength + 1], " \t");
+
+    if (!pcBreak)
+    {
+	fprintf(stdout, "please specify a target\n");
+
+	return(FALSE);
+    }
+
+    struct PidinStack *ppistTarget = PidinStackParse(pcBreak);
+
+    //- lookup source symbol
+
+    /// \note allows namespacing, yet incompatible with parameter caches.
+
+    struct symtab_HSolveListElement *phsleSource
+	= SymbolsLookupHierarchical(pneuro->psym, ppistSource);
+
+    if (!phsleSource)
+    {
+	fprintf(stdout, "source symbol not found\n");
+
+	return(FALSE);
+    }
+
+    //- lookup target symbol
+
+    struct symtab_HSolveListElement *phsleTarget
+	= SymbolsLookupHierarchical(pneuro->psym, ppistTarget);
+
+    if (!phsleTarget)
+    {
+	fprintf(stdout, "target symbol not found\n");
+
+	return(FALSE);
+    }
+
+    //- create an alias of the source
+
+    struct symtab_IdentifierIndex *pidinTarget
+	= PidinStackTop(ppistTarget);
+
+    struct symtab_IdentifierIndex *pidinNew
+	= IdinCallocUnique(IdinName(pidinTarget));
+
+    //t have to fill in namespace
+
+    struct symtab_HSolveListElement *phsleAlias
+	= SymbolCreateAlias(phsleSource, NULL, pidinNew);
+
+    //- link the alias into the symbol table
+
+    int iSuccess1 = SymbolAddChild(phsleTarget, phsleAlias);
+
+    if (iSuccess1)
+    {
+	fprintf(stdout, "SymbolAddChild() failed\n");
+
+	return(FALSE);
+    }
+
+    int iSuccess2 = SymbolRecalcAllSerials(NULL, NULL);
+
+    if (iSuccess2)
+    {
+	fprintf(stdout, "SymbolRecalcAllSerials() failed");
+
+	return(FALSE);
+    }
 
     //- return result
 
