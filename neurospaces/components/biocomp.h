@@ -93,7 +93,7 @@ struct symtab_BioComponent
 // if I am correct the use of the option field overlaps with
 // FLAG_SEGMENTER_SPHERICAL, what a mess ...
 
-#define BIOCOMP_OPTION_NO_PROTOTYPE_TRAVERSAL 2
+#define BIOCOMP_OPTION_NO_PROTOTYPE_TRAVERSAL 128
 
 
 #include "neurospaces/pidinstack.h"
