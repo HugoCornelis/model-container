@@ -186,7 +186,7 @@ PidinStackAppendCompact
 /* 	struct ImportedFile *pif = ImportedFileGetRootImport(); */
 
 /* 	struct symtab_HypotheticalRoot *phyroRoot */
-/* 	    = ImportedFileGetHypotheticalRoot(pif); */
+/* 	    = ImportedFileGetRootSymbol(pif); */
 
 /* 	//- set start of symbol queue */
 
