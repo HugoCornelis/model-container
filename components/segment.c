@@ -137,7 +137,11 @@ SegmentCreateAlias
 
     //- set options
 
-    SymbolSetOptions(&psegmentResult->segr.bio.ioh.iol.hsle, SymbolGetOptions(&psegment->segr.bio.ioh.iol.hsle));
+    int iOptions = SymbolGetOptions(&psegment->segr.bio.ioh.iol.hsle);
+
+    iOptions &= ~(BIOCOMP_OPTION_NO_PROTOTYPE_TRAVERSAL);
+
+    SymbolSetOptions(&psegmentResult->segr.bio.ioh.iol.hsle, iOptions);
 
     //- increment number of created aliases
 
