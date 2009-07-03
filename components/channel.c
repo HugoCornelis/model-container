@@ -937,7 +937,8 @@ ChannelReduce
 
 	//- if has GENESIS2 function
 
-	if (ParameterIsFunction(pparG)
+	if (pparG
+	    && ParameterIsFunction(pparG)
 	    && strcmp(FunctionGetName(ParameterGetFunction(pparG)), "GENESIS2") == 0)
 	{
 	    //- get scaled conductance
