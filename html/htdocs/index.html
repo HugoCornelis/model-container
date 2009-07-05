@@ -169,7 +169,7 @@ This web page reflects the status as for project version 16e23f15d78f5309ea81838
 
 	  The <a href="#section-genesis-sli">Genesis Script Language
 	  Interface</a>: a scripting component that reads <a
-	  href="http://www.genesis-sim.org">Genesis</a> scripts and
+	  href="http://www.genesis-sim.org">Genesis 2</a> scripts and
 	  feeds them to the Neurospaces model container.
 
 	<li>
@@ -1014,28 +1014,34 @@ $ neurospaces cells/purkinje/edsjb1994.ndf --traversal-symbol / --reporting-fiel
       rather allows one to start simple modeling projects.  The model
       description and the way to simulate the model can be exported to
       the project browser when the modeling project becomes mature.
+      One of the main targets of the gshell is to become a
+      communication abstraction layer on top of the model-container /
+      Heccer / SSP.
       <p>
 
-	You can see the output of the tests <a
+	You can see the output of the gshell tests <a
 	href="neurospaces_project/gshell/tests/html/index.html">here</a>.
 
-    </p><h2><a name="section-genesis-sli">Genesis Script Layer</a></h2>
+    </p><h2><a name="section-genesis-sli">Genesis 2 Script Layer</a></h2>
 
-      The <em>Genesis Script Layer</em> is a scripting interface that
-      reads <a href="http://www.genesis-sim.org">Genesis</a> scripts
-      and feeds them to Neurospaces software components.  The Genesis
-      scripts that create a model and run a simulation in Genesis,
-      will also create a model and run a simulation in Neurospaces.
+      The <em>Genesis 2 Script Layer</em> is a scripting interface
+      that reads <a href="http://www.genesis-sim.org">Genesis 2
+      SLI</a> scripts and feeds them to Neurospaces software
+      components.  The Genesis scripts that create a model and run a
+      simulation in Genesis, also create a model and run a simulation
+      in Neurospaces.
 
       <p>
 
-	From principle, this component is a specific version of the
-	Genesis simulator that binds to Neurospaces components, and
-	delegates all model construction statements to the <a
-	href="#section-neurospaces">Neurospaces model container</a>,
-	delegates simulation management statements to <a
-	href="#section-ssp">SSP</a>, and delegates statements related
-	to temporal accuracy to <a href="#section-heccer">Heccer</a>.
+	From principle, this component is a reconfigured version of
+	the Genesis 2 simulator that binds to Neurospaces components
+	for the real work.  It delegates all model construction
+	statements to the <a href="#section-neurospaces">Neurospaces
+	model container</a>, delegates simulation management
+	statements to <a href="#section-ssp">SSP</a>, and delegates
+	statements related to temporal accuracy to <a
+	href="#section-heccer">Heccer</a>.  The simulation itself is
+	run by (a) Heccer instance(s).
 
       <p>
 
@@ -1044,8 +1050,8 @@ $ neurospaces cells/purkinje/edsjb1994.ndf --traversal-symbol / --reporting-fiel
 
       <p>
 
-	This component is under construction.  Output of the
-	regression tests can be found <a
+	The Output of the regression tests for the backward
+	compatibility module can be found <a
 	href="neurospaces_project/ns-sli/tests/html/index.html">here</a>.
 
     </p><h2><a name="section-geometry">Geometry Library</a></h2>
@@ -1322,7 +1328,7 @@ $ neurospaces cells/purkinje/edsjb1994.ndf --traversal-symbol / --reporting-fiel
       <address><a href="mailto:hugo.cornelis@gmail.com"></a></address>
 <!-- Created: Thu Apr  6 11:31:32 CDT 2006 -->
 <!-- hhmts start -->
-Last modified: Thu Jun 25 14:34:23 CDT 2009
+Last modified: Sun Jul  5 13:59:14 CDT 2009
 <!-- hhmts end -->
       <script type="text/javascript">
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
