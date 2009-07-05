@@ -338,7 +338,7 @@ AC_SUBST(TEST_SPECIFICATION_FILES)
 
 
 
-dnl This does macro substitutions for certain opertaing systems and 
+dnl This does macro substitutions for certain operating systems and 
 dnl architectures 
 AC_MSG_CHECKING([OS specifics...])
 AC_MSG_RESULT([Host is running $host_os.])
