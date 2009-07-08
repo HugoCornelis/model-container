@@ -1,4 +1,4 @@
-static char *pcVersionTime="(09/07/07) Tuesday, July 7, 2009 22:35:39 hugo";
+static char *pcVersionTime="(09/07/07) Tuesday, July 7, 2009 22:37:54 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -909,7 +909,7 @@ NeurospacesImport
 	//- open given file
 
 	// \todo do the xml conversion here:
-	// if pcQualified ends with xml
+	// if pcQualified ends with '.xml'
 	//   convert pcQualified to pcToParse
 	// else
 	//   pcToParse = pcQualified
