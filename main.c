@@ -27,19 +27,19 @@
 
 
 /// 
-/// 
 /// \arg std. ANSI main() args
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Construct neurospaces from given command line.
+/// 
 /// \details 
 /// 
 ///	Constructs a struct NeuroSpaces {} with NeuroSpacesNewFromCmdLine()
 ///	from given command line.
 /// 
 
-int main(int argc,char *argv[])
+int main(int argc, char *argv[])
 {
 
 #if !defined(__APPLE__)
@@ -50,7 +50,7 @@ int main(int argc,char *argv[])
 
     //- call parser routine
 
-    struct Neurospaces *pneuro = NeurospacesNewFromCmdLine(argc,argv);
+    struct Neurospaces *pneuro = NeurospacesNewFromCmdLine(argc, argv);
 
     if (pneuro && pneuro->iErrorCount)
     {

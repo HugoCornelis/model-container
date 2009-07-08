@@ -82,10 +82,11 @@ ImportedFileGetQualified(struct ImportedFile *pif);
 char *
 ImportedFileGetRelative(struct ImportedFile *pif);
 
+struct ImportedFile *
+ImportedFileGetRootImport(void);
+
 struct symtab_RootSymbol *
 ImportedFileGetRootSymbol(struct ImportedFile *pif);
-
-struct ImportedFile *ImportedFileGetRootImport(void);
 
 struct symtab_HSolveListElement *
 ImportedFileLookupHierarchical

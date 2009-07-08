@@ -242,6 +242,21 @@ ImportedFileGetRelative(struct ImportedFile *pif)
 
 
 /// 
+/// \return struct ImportedFile * : root imported file
+/// 
+/// \brief Get main imported file.
+/// 
+
+struct ImportedFile *
+ImportedFileGetRootImport(void)
+{
+    //- set result
+
+    return(pifRootImport);
+}
+
+
+/// 
 /// \arg pif imported file.
 /// 
 /// \return struct symtab_HSolveListElement *
@@ -262,20 +277,6 @@ ImportedFileGetRootSymbol(struct ImportedFile *pif)
     //- return result
 
     return(prootResult);
-}
-
-
-/// 
-/// \return struct ImportedFile * : root imported file
-/// 
-/// \brief Get main imported file.
-/// 
-
-struct ImportedFile *ImportedFileGetRootImport(void)
-{
-    //- set result
-
-    return(pifRootImport);
 }
 
 
