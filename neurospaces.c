@@ -1,4 +1,4 @@
-static char *pcVersionTime="(09/06/16) Tuesday, June 16, 2009 14:11:46 hugo";
+static char *pcVersionTime="(09/07/07) Tuesday, July 7, 2009 22:35:39 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -851,11 +851,7 @@ NeurospacesImport
 
 	//- set input filename
 
-	/// \todo why again was this one static ?
-
-	/* static */ char *pcInputName = NULL;
-
-	pcInputName = &pnsc->pcFiles[iFilePos];
+	char *pcInputName = &pnsc->pcFiles[iFilePos];
 
 	//- qualify input file name
 
@@ -911,6 +907,12 @@ NeurospacesImport
 	ParserSetRootContext(pacRootContext);
 
 	//- open given file
+
+	// \todo do the xml conversion here:
+	// if pcQualified ends with xml
+	//   convert pcQualified to pcToParse
+	// else
+	//   pcToParse = pcQualified
 
 	if ((inputfile = fopen(pcQualified, "r")) == NULL)
 	{
