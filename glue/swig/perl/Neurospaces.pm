@@ -786,6 +786,37 @@ sub version
 }
 
 
+sub write
+{
+    my $self = shift;
+
+    my $scheduler = shift;
+
+    my $component_name = shift;
+
+    my $type = shift;
+
+    my $filename = shift;
+
+    my $context = SwiggableNeurospaces::PidinStackParse($component_name);
+
+    my $types
+	= {
+	   info => $SwiggableNeurospaces::EXPORTER_TYPE_INFO,
+	   ndf => $SwiggableNeurospaces::EXPORTER_TYPE_NDF,
+	   xml => $SwiggableNeurospaces::EXPORTER_TYPE_XML,
+	  };
+
+    $type = $types->{$type} || $type;
+
+    my $result = SwiggableNeurospaces::ExporterModel($context, $type, $filename);
+
+#  $self->{neurospaces}->NeurospacesWrite($#$argv + 1, $argv, @_);
+
+    return $result;
+}
+
+
 1;
 
 
