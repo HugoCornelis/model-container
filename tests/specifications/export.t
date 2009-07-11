@@ -113,12 +113,14 @@ END PUBLIC_MODELS
 						    description => "Does the exported XML file contain the correct model ?",
 						    read => {
 							     application_output_file => '/tmp/1.xml',
-							     expected_output => '<import>
+							     expected_output => '<neurospaces type="ndf"/>
+
+<import>
     <file> <namespace>mapper</namespace> <filename>mappers/spikereceiver.ndf</filename> </file>
 </import>
 
 <private_models>
-  <alias> <namespace>mapper</namespace><prototype>/Synapse</prototype> <name>Synapse</name>
+  <alias> <namespace>mapper::</namespace><prototype>/Synapse</prototype> <name>Synapse</name>
   </alias>
 </private_models>
 
@@ -241,15 +243,17 @@ END PUBLIC_MODELS
 						    description => "Does the exported XML file contain the correct model ?",
 						    read => {
 							     application_output_file => '/tmp/1.xml',
-							     expected_output => '<import>
+							     expected_output => '<neurospaces type="ndf"/>
+
+<import>
     <file> <namespace>k</namespace> <filename>channels/hodgkin-huxley/potassium.ndf</filename> </file>
     <file> <namespace>na</namespace> <filename>channels/hodgkin-huxley/sodium.ndf</filename> </file>
 </import>
 
 <private_models>
-  <alias> <namespace>k</namespace><prototype>/k</prototype> <name>k</name>
+  <alias> <namespace>k::</namespace><prototype>/k</prototype> <name>k</name>
   </alias>
-  <alias> <namespace>na</namespace><prototype>/na</prototype> <name>na</name>
+  <alias> <namespace>na::</namespace><prototype>/na</prototype> <name>na</name>
   </alias>
 </private_models>
 
@@ -370,12 +374,14 @@ END PUBLIC_MODELS
 						    description => "Does the exported XML file contain the correct model ?",
 						    read => {
 							     application_output_file => '/tmp/1.xml',
-							     expected_output => '<import>
+							     expected_output => '<neurospaces type="ndf"/>
+
+<import>
     <file> <namespace>mapper</namespace> <filename>mappers/spikereceiver.ndf</filename> </file>
 </import>
 
 <private_models>
-  <alias> <namespace>mapper</namespace><prototype>/Synapse</prototype> <name>Synapse</name>
+  <alias> <namespace>mapper::</namespace><prototype>/Synapse</prototype> <name>Synapse</name>
   </alias>
 </private_models>
 
@@ -518,14 +524,16 @@ END PUBLIC_MODELS
 						   },
 						   {
 						    description => 'Are the imported namespaces present in the xml export ?',
-						    read => '<import>
+						    read => '<neurospaces type="ndf"/>
+
+<import>
     <file> <namespace>mapper</namespace> <filename>mappers/spikereceiver.ndf</filename> </file>
     <file> <namespace>gaba</namespace> <filename>channels/gaba.ndf</filename> </file>
     <file> <namespace>basket</namespace> <filename>channels/purkinje_basket.ndf</filename> </file>
 </import>
 
 <private_models>
-  <alias> <namespace>mapper</namespace><prototype>/Synapse</prototype> <name>Synapse</name>
+  <alias> <namespace>mapper::</namespace><prototype>/Synapse</prototype> <name>Synapse</name>
   </alias>
 </private_models>
 
@@ -672,16 +680,18 @@ END PUBLIC_MODELS
 						   },
 						   {
 						    description => "Can we export the model as XML ?",
-						    read => '<import>
+						    read => '<neurospaces type="ndf"/>
+
+<import>
     <file> <namespace>soma</namespace> <filename>tests/segments/soma.ndf</filename> </file>
     <file> <namespace>gate1</namespace> <filename>gates/naf_activation.ndf</filename> </file>
     <file> <namespace>gate2</namespace> <filename>gates/naf_inactivation.ndf</filename> </file>
 </import>
 
 <private_models>
-  <alias> <namespace>gate1</namespace><prototype>/naf_activation</prototype> <name>naf_gate_activation</name>
+  <alias> <namespace>gate1::</namespace><prototype>/naf_activation</prototype> <name>naf_gate_activation</name>
   </alias>
-  <alias> <namespace>gate2</namespace><prototype>/naf_inactivation</prototype> <name>naf_gate_inactivation</name>
+  <alias> <namespace>gate2::</namespace><prototype>/naf_inactivation</prototype> <name>naf_gate_inactivation</name>
   </alias>
   <CHANNEL> <name>NaF</name>
     <bindables>

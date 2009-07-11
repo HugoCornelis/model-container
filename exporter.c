@@ -274,14 +274,22 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 	pfile = fopen(pcFilename, "w");
     }
 
+    if (!pfile)
+    {
+	fprintf(stderr, "*** Error: cannot open %s for writing\n", pcFilename);
+
+	return(0);
+    }
+
     //- start output
 
     if (iType == EXPORTER_TYPE_NDF)
     {
 	fprintf(pfile, "#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n");
     }
-    else
+    else if (iType == EXPORTER_TYPE_XML)
     {
+	fprintf(pfile, "<neurospaces type=\"ndf\"/>\n\n");
     }
 
     //- export dependencies
@@ -485,7 +493,7 @@ ExporterSymbolStarter
 		{
 		    char pc[1000];
 
-		    sprintf(pc, "<namespace>%s</namespace>", pcNamespace);
+		    sprintf(pc, "<namespace>%s::</namespace>", pcNamespace);
 
 		    pcNamespace = &pc[0];
 		}

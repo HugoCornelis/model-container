@@ -1,4 +1,4 @@
-static char *pcVersionTime="(09/07/07) Tuesday, July 7, 2009 22:37:54 hugo";
+static char *pcVersionTime="(09/07/10) Friday, July 10, 2009 22:35:18 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -80,6 +80,7 @@ static char *pcVersionTime="(09/07/07) Tuesday, July 7, 2009 22:37:54 hugo";
 
 
 #include <stdarg.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -906,7 +907,29 @@ NeurospacesImport
 	ParserSetContext(pacRootContext);
 	ParserSetRootContext(pacRootContext);
 
-	//- open given file
+	//- if this is an xml file
+
+	char *pcToParse = pcQualified;
+
+	int iLength = strlen(pcQualified);
+
+	if (strcmp(&pcQualified[iLength - 4], ".xml") == 0)
+	{
+	    // \todo let's take a risk here: for the moment way to
+	    // much work to implement this security free.
+
+	    char pcTemp[L_tmpnam + 1] = "";
+
+	    char *pcTemp2 = tmpnam(pcTemp);
+
+	    char pcCommand[1000];
+
+	    sprintf(pcCommand, "perl <%s >%s -pe 's(<neurospaces type=\"ndf\"/>)(#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n)gi; s(->)(--##--)gi; s(</(input|output)>)(, )gi; s(<namespace>)()gi; s(</namespace>)()gi; s(</file>)()gi; s(<filename>)(\")gi; s(</filename>)(\")gi; s(<prototype>)()gi; s(</prototype>)()gi; s/<parameter>/parameter ( /gi; s|</parameter>| ), |gi; s|<function>\\s*<name>([^<]*)</name>| = $1 (|gi; s|</function>|), |gi; s(</value>)()gi; s(<value>)( = )gi; s(<name>)()gi; s(</name>)(); s(</)( end )gi; s((<|>))()gi; s(\\/\\/)(//)gi; s(--##--)(->)gi; '", pcQualified, pcTemp);
+
+	    system(pcCommand);
+
+	    pcToParse = pcTemp;
+	}
 
 	// \todo do the xml conversion here:
 	// if pcQualified ends with '.xml'
@@ -914,14 +937,16 @@ NeurospacesImport
 	// else
 	//   pcToParse = pcQualified
 
-	if ((inputfile = fopen(pcQualified, "r")) == NULL)
+	//- open given file
+
+	if ((inputfile = fopen(pcToParse, "r")) == NULL)
 	{
 	    fprintf
 		(stderr,
 		 "%s: %s filename qualified to %s, but cannot be opened\n",
 		 pcAppl,
 		 pcInputName,
-		 pcQualified);
+		 pcToParse);
 
 	    pneuro->iErrorCount++;
 

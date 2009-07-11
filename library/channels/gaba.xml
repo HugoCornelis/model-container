@@ -1,147 +1,38 @@
-<?xml version="1.0"?>
-<!-- -*- NEUROSPACES-XML -*- -->
-<neurospaces-xml version="0.2" >
+<neurospaces type="ndf"/>
 
-<specification>
+<import>
+    <file> <namespace>mapper</namespace> <filename>mappers/spikereceiver.ndf</filename> </file>
+</import>
 
-	<type>
-		<level> mechanism </level>
-		<domain> continuous </domain>
-	</type>
+<private_models>
+  <alias> <namespace>mapper::</namespace><prototype>/Synapse</prototype> <name>Synapse</name>
+  </alias>
+</private_models>
 
-</specification>
-
-<documentation>
-
-	<author name="hugo" />
-
-	<date value="Thu Sep 20 10:07:16 CEST 2001" />
-
-	<comments type="ascii" >
-
-#!neurospacesparse
-// -*- NEUROSPACES-XML -*-
-// Equations for Pukeinje cell GABA synapse.
-// Based on Miles R: . J Physiol 1990
-
-	</comments>
-
-</documentation>
-
-<unitset>
-
-	<unit name="temperature" units="celsius" short="Ce" />
-	<unit name="charge" units="coulomb" short="Co" />
-	<unit name="time" units="seconds" short="s" />
-	<unit name="space" units="meters" short="m" />
-	<unit name="surface" units="meters^2" short="m^2" />
-	<unit name="volume" units="meters^3" short="m^3" />
-	<unit name="potential" units="voltage" short="V" />
-	<unit name="conductance" units="siemens" short="S" />
-
-<!-- 	<conductance-density units="siemens / surface" short="S / m^2" /> -->
-
-<!-- or alternative with dependencies on other unit declarations -->
-
-<!-- 	<conductance-density type="derived" > -->
-<!--		<operation name="divide" type="/" /> -->
-<!--		<element name="conductance" /> -->
-<!--		<element name="surface" /> -->
-<!--	</conductance-density> -->
-
-	<unit name="current" units="ampere" short="A" />
-	<unit name="concentration" units="molaire" short="concen" />
-
-	<unit name="discrete-events" units="events" />
-
-</unitset>
-
-
-<!-- domain declarations --> 
-
-<!-- also contains declarations of element -->
-<!-- type that map one domain to another. -->
-
-<domains>
-
-	<continuous dimension="time" />
-
-	<discrete dimension="discrete-events" />
-
-	<mappers>
-		<mapper name="Synapse" >
-			<source name="discrete" units="events" />
-			<target name="continuous" units="activation" />
-		</mapper>
-
-		<mapper name="SpikeGenerator" >
-			<source name="continuous" units="V" />
-			<target name="discrete" units="events" />
-		</mapper>
-	</mappers>
-
-</domains>
-
-<imports>
-
-	<file 
-		namespace="mapper" 
-		name="mappers/spikereceiver.ndf" />
-
-</imports>
-
-<private-models>
-
-	<alias 
-		namespace="mapper"
-		source="/Synapse"
-		private-model="Synapse" />
-
-</private-models>
-
-<public-models>
-
-	<channel name="Purk-GABA" >
-		<bindables>
-			<input name="V" />
-			<output name="G" />
-		</bindables>
-
-<!-- A <parameter-set> is a set of elements derived from <parameter> or -->
-<!-- <parameter-set>.  <symbol-parameter>, <reference-parameter> and -->
-<!-- <algorithm-parameter> are all derived from parameter.  <parameter-set> -->
-<!-- has an attribute 'name' to allow hierarchical parameters which (I -->
-<!-- hope) will ease parameter passing to algorithms.  Of course <parameter> -->
-<!-- also has a 'name' attribute, which is inherited by all other parameter -->
-<!-- elements. -->
-
-		<parameter-set>
-			<symbol-parameter name="G_MAX" unit="S / m^2" value="1.077" />
-			<symbol-parameter name="Erev" unit="V" value="0.0" />
-		</parameter-set>
-
-		<insert-child source="Synapse" name="synapse" />
-
-		<exponential-equation name="exp2" >
-			<bindables>
-				<input name="activation" />
-				<output name="G" />
-			</bindables>
-			<bindings>
-                		<input source="^/synapse" field="activation" />
-			</bindings>
-
-			<parameter-set>
-				<symbol-parameter name="TAU1" value="0.93e-3" />
-				<symbol-parameter name="TAU2" value="26.50e-3" />
-			</parameter-set>
-
-		</exponential-equation>
-
-	</channel>
-
-</public-models>
-
-</neurospaces-xml>
-
-
+<public_models>
+  <CHANNEL> <name>Purk_GABA</name>
+    <bindables>
+      <input> <name>Vm</name> </input>
+      <output> <name>I</name> </output>
+    </bindables>
+    <parameters>
+      <parameter> <name>G_MAX</name><value>1.077</value> </parameter>
+      <parameter> <name>Erev</name><value>-0.08</value> </parameter>
+    </parameters>
+    <child> <prototype>Synapse</prototype> <name>synapse</name>
+    </child>
+    <EQUATION_EXPONENTIAL> <name>exp2</name>
+      <bindables>
+        <input> <name>activation</name> </input>
+        <output> <name>G</name> </output>
+      </bindables>
+      <bindings>
+        <input> <name>../synapse->activation</name> </input>
+      </bindings>
+      <parameters>
+        <parameter> <name>TAU1</name><value>0.00093</value> </parameter>
+        <parameter> <name>TAU2</name><value>0.0265</value> </parameter>
+      </parameters>
+    </EQUATION_EXPONENTIAL>
+  </CHANNEL>
+</public_models>
