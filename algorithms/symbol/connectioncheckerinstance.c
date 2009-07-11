@@ -249,15 +249,14 @@ ConnectionCheckerInstanceSymbolHandler
 
 
 /// 
-/// 
 /// \arg std AlgorithmHandler args
 /// 
 /// \return struct AlgorithmInstance *  
 /// 
 ///	created algorithm instance, NULL for failure
 /// 
-/// \brief Algorithm handler to create instance of connection checker algorithm.
-/// \details 
+/// \brief Algorithm handler to create instance of connection checker
+/// algorithm.
 /// 
 
 struct AlgorithmInstance *
@@ -311,19 +310,17 @@ ConnectionCheckerInstanceNew
 
 
 /// 
-/// 
 /// \arg pcci connection checker instance.
 /// \arg pproj projection symbol to check connections for.
 /// \arg ppistProjection 
-///	phsleSource.....: source population / cell of projection.
+/// \arg phsleSource source population / cell of projection.
 /// \arg ppistSource 
-///	phsleTarget.....: target population / cell of projection.
-///	ppistTarget.....: 
+/// \arg phsleTarget target population / cell of projection.
+/// \arg ppistTarget
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Checks connection groups with connections in projection.
-/// \details 
 /// 
 
 struct ConnectionCheckerInstanceCheckConnectionGroups_data
@@ -791,13 +788,11 @@ ConnectionCheckerInstanceCheckConnectionGroups
 
 
 /// 
-/// 
 /// \arg std AlgorithmHandler args
 /// 
 /// \return int  std AlgorithmHandler return value
 /// 
 /// \brief Algorithm handler to print info on connection checker instance.
-/// \details 
 /// 
 
 static int ConnectionCheckerInstancePrintInfo
@@ -854,13 +849,11 @@ static int ConnectionCheckerInstancePrintInfo
 
 
 /// 
-/// 
-///	AlgorithmInstanceSymbolHandler args.
+/// \arg AlgorithmInstanceSymbolHandler args.
 /// 
 /// \return int : std AlgorithmHandler return value
 /// 
 /// \brief Algorithm handler to check connections of given symbol
-/// \details 
 /// 
 
 static 
