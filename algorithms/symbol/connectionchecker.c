@@ -155,7 +155,7 @@ ConnectionCheckerClassCreateInstance
 /// 
 
 static int ConnectionCheckerClassPrintInfo
-(struct AlgorithmClass *palgc,char *pcName,void *pvGlobal,void *pvData)
+(struct AlgorithmClass *palgc, char *pcName, void *pvGlobal, void *pvData)
 {
     //- set default result
 
