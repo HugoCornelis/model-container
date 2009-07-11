@@ -106,7 +106,6 @@ struct AlgorithmClass *palgcConnectionChecker = &scConnectionChecker.algc;
 
 
 /// 
-/// 
 /// \arg std AlgorithmHandler args
 /// 
 /// \return struct AlgorithmInstance *  
@@ -114,7 +113,6 @@ struct AlgorithmClass *palgcConnectionChecker = &scConnectionChecker.algc;
 ///	created algorithm instance, NULL for failure
 /// 
 /// \brief Algorithm handler to create instance of connection checker algorithm.
-/// \details 
 /// 
 
 static
@@ -149,13 +147,11 @@ ConnectionCheckerClassCreateInstance
 
 
 /// 
-/// 
 /// \arg std AlgorithmHandler args
 /// 
 /// \return int  std AlgorithmHandler return value
 /// 
 /// \brief Algorithm handler to print info on connection checker algorithm class.
-/// \details 
 /// 
 
 static int ConnectionCheckerClassPrintInfo
