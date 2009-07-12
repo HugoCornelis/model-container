@@ -29,6 +29,8 @@ libsymbol_algorithms_a_SOURCES = \
 	connectioncheckerinstance.c \
 	connectionworkerinstance.c \
 	contextworkerinstance.c \
+	dendrogram.c \
+	dendrograminstance.c \
 	grid3d.c \
 	grid3dinstance.c \
 	inserter.c \
@@ -49,6 +51,8 @@ pkginclude_HEADERS = \
 	connectioncheckerinstance.h \
 	connectionworkerinstance.h \
 	contextworkerinstance.h \
+	dendrogram.h \
+	dendrograminstance.h \
 	grid3d.h \
 	grid3dinstance.h \
 	inserter.h \

@@ -53,6 +53,18 @@ my $class_hierarchy
        # instances that need an appropriate context
 
        (
+	dendrogram => {
+		       allows => {
+				  'print_info' => 'dendrogram_instance',
+				  'symbol_handler' => 'dendrogram_instance',
+				 },
+		       description => 'an algorithm that generates a dendrogram',
+		       isa => 'context_worker_instance',
+		       name => 'Dendrogram',
+		       parameters => {
+				      CELL_NAME => 'reference to the biological component to generate a dendrogram for',
+				     },
+		      },
 	grid3d => {
 		   allows => {
 			      'print_info' => 'grid3_d_instance',
