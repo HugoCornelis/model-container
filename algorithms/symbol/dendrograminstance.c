@@ -92,8 +92,8 @@ struct DendrogramVariables_type
     } dp_arr[MAXSIZE];
 
     struct intermediate{
-	double name[80];
-	double parent[80];
+	char name[80];
+	char parent[80];
 	char type;
 	double d;
 	double len;
@@ -101,8 +101,8 @@ struct DendrogramVariables_type
     } inter_arr[MAXSIZE];
 
     struct m_plot{
-	double name[80];
-	double parent[80];
+	char name[80];
+	char parent[80];
 	char type;  
 	double x1;
 	double y1;
@@ -839,13 +839,15 @@ are loaded into an array which contains x values of children.
 
 ************************************************************************/
 
+static int child_info_request[100];
+
 int *children_have_x(int index, int size)
 {
-  int i, child_info[100];
+  int i;
 
   if(m_arr[index+1].x1>0.0000){
-    child_info[0]=1;
-    child_info[1]=index+1;    
+    child_info_request[0]=1;
+    child_info_request[1]=index+1;    
   }
   else
     return(NULL);
@@ -853,15 +855,15 @@ int *children_have_x(int index, int size)
   i=0;    
   for(i=0;i<size;i++){
     if(!strcmp(m_arr[index].name,m_arr[i].parent)&&(m_arr[i].x1>0.0000)){
-      child_info[0]++;
-      child_info[child_info[0]]=i;
+      child_info_request[0]++;
+      child_info_request[child_info_request[0]]=i;
     }
   }
 
-  if(child_info[0]<=1){
+  if(child_info_request[0]<=1){
     return(NULL);
   }
-  return(child_info);
+  return(child_info_request);
 }
 
      
@@ -1185,7 +1187,7 @@ void calc_T_x(int index,double x_tab, int size)
   if(flag)
     x_tab+=inc;
 
-  if(!m_arr[0].t_mark)
+  if(!m_arr[i].t_mark)
     calc_T_x(other_T(branch_index,size),x_tab,size);
 }
 

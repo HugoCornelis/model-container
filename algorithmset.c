@@ -28,6 +28,7 @@
 #include "neurospaces/algorithmset.h"
 
 #include "algorithms/symbol/connectionchecker.h"
+#include "algorithms/symbol/dendrogram.h"
 #include "algorithms/symbol/grid3d.h"
 #include "algorithms/symbol/inserter.h"
 #include "algorithms/symbol/projectionvolume.h"
@@ -37,11 +38,9 @@
 
 
 /// 
-/// 
 /// \return AlgorithmSet * : Set of algorithms.
 /// 
 /// \brief Allocate algorithm set, init with default algorithm classes.
-/// \details 
 /// 
 
 AlgorithmSet * AlgorithmSetCalloc(void)
@@ -70,13 +69,11 @@ AlgorithmSet * AlgorithmSetCalloc(void)
 
 
 /// 
-/// 
 /// \arg pas set of algorithms
 /// 
 /// \return void
 /// 
 /// \brief Free algorithms list.
-/// \details 
 /// 
 
 void AlgorithmSetFree(AlgorithmSet *pas)
@@ -92,7 +89,6 @@ void AlgorithmSetFree(AlgorithmSet *pas)
 
 
 /// 
-/// 
 /// \arg pas set of algorithms
 /// \arg pcName name of algorithm class to import
 /// \arg pcInstance name of algorithm instance to create
@@ -105,7 +101,6 @@ void AlgorithmSetFree(AlgorithmSet *pas)
 ///	Instantiated algorithm, NULL for failure.
 /// 
 /// \brief Instantiat an algorithm from given algorithm class.
-/// \details 
 /// 
 
 struct AlgorithmInstance *
@@ -177,7 +172,6 @@ AlgorithmSetInstantiateAlgorithm
 
 
 /// 
-/// 
 /// \arg pas set of algorithms
 /// 
 /// \return int
@@ -185,7 +179,6 @@ AlgorithmSetInstantiateAlgorithm
 ///	success of operation
 /// 
 /// \brief init algorithms
-/// \details 
 /// 
 
 int AlgorithmSetInit(AlgorithmSet *pas)
@@ -233,6 +226,12 @@ int AlgorithmSetInit(AlgorithmSet *pas)
 /*     //- add cerebellum algorithm */
 
 /*     HSolveListEnqueue(&pas->hslClasses,&palgCerebellum->hsleLink); */
+
+    //- add regular dendrogram algorithm
+
+    HSolveListEnqueue(&pas->hslClasses,&palgcDendrogram->hsleLink);
+
+    pas->iClasses++;
 
     //- add regular grid 3D algorithm
 
@@ -349,7 +348,6 @@ int AlgorithmSetInit(AlgorithmSet *pas)
 
 
 /// 
-/// 
 /// \arg pas algorithm set
 /// \arg pcName name of algorithm class to load
 /// 
@@ -358,7 +356,6 @@ int AlgorithmSetInit(AlgorithmSet *pas)
 ///	Newly loaded algorithm class, NULL for failure
 /// 
 /// \brief Load algorithm class with given name
-/// \details 
 /// 
 
 struct AlgorithmClass * AlgorithmSetLoadAlgorithmClass(AlgorithmSet *pas,char *pcName)
@@ -390,7 +387,6 @@ struct AlgorithmClass * AlgorithmSetLoadAlgorithmClass(AlgorithmSet *pas,char *p
 
 
 /// 
-/// 
 /// \arg pas algorithm set
 /// \arg pcName name of algorithm to search for
 /// 
@@ -399,7 +395,6 @@ struct AlgorithmClass * AlgorithmSetLoadAlgorithmClass(AlgorithmSet *pas,char *p
 ///	algorithm class with given name, NULL for not found
 /// 
 /// \brief search for a algorithm class in the class list
-/// \details 
 /// 
 
 struct AlgorithmClass * AlgorithmSetLookupAlgorithmClass(AlgorithmSet *pas,char *pcName)
@@ -440,7 +435,6 @@ struct AlgorithmClass * AlgorithmSetLookupAlgorithmClass(AlgorithmSet *pas,char 
 
 
 /// 
-/// 
 /// \arg pas set of algorithms
 /// \arg pfile file to print algorithm info to
 /// \arg pc name of classes to print
@@ -450,7 +444,6 @@ struct AlgorithmClass * AlgorithmSetLookupAlgorithmClass(AlgorithmSet *pas,char 
 ///	success of operation
 /// 
 /// \brief print algorithm class info.
-/// \details 
 /// 
 
 int AlgorithmSetClassPrint(AlgorithmSet *pas, char *pc, FILE *pfile)
@@ -502,7 +495,6 @@ int AlgorithmSetClassPrint(AlgorithmSet *pas, char *pc, FILE *pfile)
 
 
 /// 
-/// 
 /// \arg pas set of algorithms
 /// \arg pfile file to print algorithm info to
 /// \arg pc name of instances to print
@@ -512,7 +504,6 @@ int AlgorithmSetClassPrint(AlgorithmSet *pas, char *pc, FILE *pfile)
 ///	success of operation
 /// 
 /// \brief print algorithm info for algorithm classes and instances.
-/// \details 
 /// 
 
 int AlgorithmSetInstancePrint(AlgorithmSet *pas, char *pc, FILE *pfile)
@@ -556,7 +547,6 @@ int AlgorithmSetInstancePrint(AlgorithmSet *pas, char *pc, FILE *pfile)
 
 
 /// 
-/// 
 /// \arg pas set of algorithms
 /// \arg pfile file to print algorithm info to
 /// 
@@ -565,7 +555,6 @@ int AlgorithmSetInstancePrint(AlgorithmSet *pas, char *pc, FILE *pfile)
 ///	success of operation
 /// 
 /// \brief print algorithm info for algorithm classes and instances.
-/// \details 
 /// 
 
 int AlgorithmSetPrint(AlgorithmSet *pas,FILE *pfile)
@@ -634,7 +623,6 @@ int AlgorithmSetPrint(AlgorithmSet *pas,FILE *pfile)
 
 
 /// 
-/// 
 /// \arg pas algorithm set
 /// \arg pev event to propagate
 /// 
@@ -643,7 +631,6 @@ int AlgorithmSetPrint(AlgorithmSet *pas,FILE *pfile)
 ///	success of operation
 /// 
 /// \brief propagate event through algorithms registered for this event type
-/// \details 
 /// 
 
 /* int AlgorithmSetPropagateParserEvent(AlgorithmSet *pas,ParserEvent *pev) */
