@@ -113,6 +113,18 @@ report:
 						   write => "algorithmclass Grid3D",
 						  },
 						  {
+						   description => "What do the algorithm classes and instances report of what they have done, DendrogramClass ?",
+						   read => [
+							    "-re",
+							    "---
+name: DendrogramClass
+report:
+    number_of_created_instances: 0
+",
+							   ],
+						   write => "algorithmclass Dendrogram",
+						  },
+						  {
 						   description => "What do the algorithm classes and instances report of what they have done, Golgis2Granules_GABAB ?",
 						   read => [
 							    "-re",
@@ -417,7 +429,7 @@ report:
 						   read => [
 							    "-re",
 							    "---
-number_of_algorithm_classes: 7
+number_of_algorithm_classes: 8
 ---
 name: ConnectionCheckerClass
 report:
@@ -446,6 +458,10 @@ report:
 name: Grid3DClass
 report:
     number_of_created_instances: 4
+---
+name: DendrogramClass
+report:
+    number_of_created_instances: 0
 ---
 number_of_algorithm_instances: 16
 ---

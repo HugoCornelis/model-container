@@ -27,7 +27,7 @@ my $test
 						   read => [
 							    "-re",
 							    "---
-number_of_algorithm_classes: 7
+number_of_algorithm_classes: 8
 ---
 name: ConnectionCheckerClass
 report:
@@ -54,6 +54,10 @@ report:
     number_of_created_instances: 3
 ---
 name: Grid3DClass
+report:
+    number_of_created_instances: 0
+---
+name: DendrogramClass
 report:
     number_of_created_instances: 0
 ---
