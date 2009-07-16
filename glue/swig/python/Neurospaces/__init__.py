@@ -18,7 +18,7 @@ for class_name in classes.keys():
         string = ("class " + class_name + ":\n"
                   + "    def " + method_name + "(self):"
                   + "        return " + method_definition + "\n")
-        print "exec " + string
+#         print "exec " + string
         exec string
 
 
