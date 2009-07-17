@@ -102,6 +102,19 @@ class Channel(Symbol):
     def parameter(self, name, value):
         SwiggableNeurospaces.SymbolSetParameterDouble(self.backend.bio.ioh.iol.hsle, name, value)
 
+class GateKinetic(Symbol):
+    "GateKinetic class"
+    def __init__(self, name):
+        gk = SwiggableNeurospaces.GateKineticCalloc()
+        SwiggableNeurospaces.SymbolSetName(gk.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
+        self.backend = gk
+
+    def backend_object(self):
+        return self.backend.bio.ioh.iol.hsle
+
+    def parameter(self, name, value):
+        SwiggableNeurospaces.SymbolSetParameterDouble(self.backend.bio.ioh.iol.hsle, name, value)
+
 # should remain here
 
 class Context:
@@ -114,9 +127,12 @@ class ModelContainer:
         if backend == None:
             print "Constructing a new ModelContainer for the python interface"
             self.backend = SwiggableNeurospaces.NeurospacesNew()
+            global nmcGlobal
+            nmcGlobal = self
         else:
             print "Recycling an existing ModelContainer for the python interface"
             self.backend = backend
+            nmcGlobal = self
             
     def import_file(self, filename):
         pass
@@ -137,17 +153,59 @@ class ModelContainer:
         "read an NDF model file"
         SwiggableNeurospaces.NeurospacesRead(self.backend, 2, [ "python", filename ] )
 
+    def read_python(self, filename):
+        "read an NPY model file"
+#         execfile("/usr/local/neurospaces/models/library/" + filename)
+        execfile("/local_home/local_home/hugo/neurospaces_project/model-container/source/snapshots/0/library/" + filename)
+
+    class Channel(Symbol):
+        "ModelContainer.Channel constructor"
+        def __init__(self, path):
+            [ name, top_symbol ] = prepare(path)
+            import Neurospaces
+            channel = Neurospaces.Channel(name.pcIdentifier)
+            if top_symbol == None:
+                print "Error: top_symbol is None"
+            else:
+                SwiggableNeurospaces.SymbolAddChild(top_symbol, channel.backend.bio.ioh.iol.hsle)
+            self.backend = channel
+        
+        def parameter(self, name, value):
+            self.backend.parameter(name, value)
+
+    class GateKinetic(Symbol):
+        "ModelContainer.GateKinetic constructor"
+        def __init__(self, path):
+            [ name, top_symbol ] = prepare(path)
+            import Neurospaces
+            gk = Neurospaces.GateKinetic(name.pcIdentifier)
+            if top_symbol == None:
+                print "Error: top_symbol is None"
+            else:
+                SwiggableNeurospaces.SymbolAddChild(top_symbol, gk.backend.bio.ioh.iol.hsle)
+            self.backend = gk
+        
+        def parameter(self, name, value):
+            self.backend.parameter(name, value)
+
+def prepare(path):
+    context = SwiggableNeurospaces.PidinStackParse(path)
+    name = SwiggableNeurospaces.PidinStackTop(context)
+    SwiggableNeurospaces.PidinStackPop(context)
+    top_symbol = SwiggableNeurospaces.PidinStackLookupTopSymbol(context)
+    return [ name, top_symbol ]
+
 # def new():
 #     "Construct a model container"
 #     self.backend = SwiggableNeurospaces.NeurospacesNew()
 #     return self
 
-# globalNmc = None
+nmcGlobal = None
 
-# def setModelContainer(nmc):
-#     "Set the reference to the model-container"
-#     globalNmc = nmc
+def setModelContainer(nmc):
+    "Set the reference to the model-container"
+    nmcGlobal = nmc
 
-# def getModelContainer():
-#     "Produce a reference to the active model-container"
-#     return nmc
+def getModelContainer():
+    "Produce a reference to the active model-container"
+    return nmcGlobal
