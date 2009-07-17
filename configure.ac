@@ -309,6 +309,12 @@ AC_SUBST(MODEL_DESCRIPTION_FILES)
 MODEL_XML_FILES=`find library -iname "*.xml" | perl -pe 's/\n/ /g' | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
 AC_SUBST(MODEL_XML_FILES)
 
+MODEL_NPY_FILES=`find library -iname "*.npy" | perl -pe 's/\n/ /g' | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
+AC_SUBST(MODEL_NPY_FILES)
+
+MODEL_NPL_FILES=`find library -iname "*.npl" | perl -pe 's/\n/ /g' | perl -pe 's(library/gates/kdr\S* )()g' | perl -pe 's(library/gates/kh\S* )()g' | perl -pe 's(library/gates/km\S* )()g'`
+AC_SUBST(MODEL_NPL_FILES)
+
 MODEL_PROJECTIONCACHES=`find library/projectionqueries -type f | perl -pe 's/\n/ /g'`
 AC_SUBST(MODEL_PROJECTIONCACHES)
 
