@@ -248,10 +248,10 @@ PRIVATE_MODELS
 
 		PARAMETERS
 			PARAMETER ( Vm_init = -0.028 ),
-			PARAMETER ( RM = 0.33333 ),
-			PARAMETER ( RA = 0.3 ),
-			PARAMETER ( CM = 0.01 ),
-			PARAMETER ( ELEAK = -0.0594 ),
+			PARAMETER ( RM = 1.000 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 ),
 		END PARAMETERS
 
 		CHILD naf
@@ -274,7 +274,7 @@ PRIVATE_MODELS
 					PARAMETER ( rel_X = 0.000e-6 ),
 					PARAMETER ( rel_Y = 0.000e-6 ),
 					PARAMETER ( rel_Z = 0.000e-6 ),
-					PARAMETER ( DIA = 30e-6 ),
+					PARAMETER ( DIA = 29.80e-6 ),
 				END PARAMETERS
 			END CHILD
 
@@ -293,7 +293,7 @@ PRIVATE_MODELS
 					PARAMETER ( rel_X = 0.000e-6 ),
 					PARAMETER ( rel_Y = 0.000e-6 ),
 					PARAMETER ( rel_Z = 0.000e-6 ),
-					PARAMETER ( DIA = 30e-6 ),
+					PARAMETER ( DIA = 29.80e-6 ),
 					PARAMETER ( LENGTH = 30e-6 ),
 				END PARAMETERS
 			END CHILD
