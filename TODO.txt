@@ -1,5 +1,9 @@
 -*- outline -*-
 
+* Add an ANNOTATION element
+** 3D coordinates for network annotation and visualization
+** CONTENT parameter that points to the free style content of the annotation
+
 * Reenable the support for readline
 
 * MAC OSX bug
