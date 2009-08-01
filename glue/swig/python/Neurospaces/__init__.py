@@ -127,12 +127,9 @@ class ModelContainer:
         if backend == None:
             print "Constructing a new ModelContainer for the python interface"
             self.backend = SwiggableNeurospaces.NeurospacesNew()
-            global nmcGlobal
-            nmcGlobal = self
         else:
             print "Recycling an existing ModelContainer for the python interface"
             self.backend = backend
-            nmcGlobal = self
             
     def import_file(self, filename):
         pass
@@ -195,17 +192,3 @@ def prepare(path):
     top_symbol = SwiggableNeurospaces.PidinStackLookupTopSymbol(context)
     return [ name, top_symbol ]
 
-# def new():
-#     "Construct a model container"
-#     self.backend = SwiggableNeurospaces.NeurospacesNew()
-#     return self
-
-nmcGlobal = None
-
-def setModelContainer(nmc):
-    "Set the reference to the model-container"
-    nmcGlobal = nmc
-
-def getModelContainer():
-    "Produce a reference to the active model-container"
-    return nmcGlobal

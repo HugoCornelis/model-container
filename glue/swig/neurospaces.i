@@ -100,6 +100,12 @@ void * NeurospacesGetObject(struct Neurospaces *pneuro)
 }
 
 
+struct Neurospaces * NeurospacesSetObject(void *pv)
+{
+    return((struct Neurospaces *)pv);
+}
+
+
 int treespace_traversal_go(struct traversal *pt)
 {
     int iResult = 0;
