@@ -96,13 +96,19 @@ int int_get(int *a, int i)
 
 void * NeurospacesGetObject(struct Neurospaces *pneuro)
 {
+    fprintf(stdout, "NeurospacesGetObject(): pneuro (%p), root import (%p)\n", pneuro, pneuro->pifRootImport);
+
     return((void *)pneuro);
 }
 
 
 struct Neurospaces * NeurospacesSetObject(void *pv)
 {
-    return((struct Neurospaces *)pv);
+    struct Neurospaces *pneuro = (struct Neurospaces *)pv;
+
+    fprintf(stdout, "NeurospacesSetObject(): pneuro (%p), root import (%p)\n", pneuro, pneuro->pifRootImport);
+
+    return(pneuro);
 }
 
 

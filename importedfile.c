@@ -742,6 +742,8 @@ void ImportedFileSetRootImport(struct ImportedFile *pif)
 	     NULL);
     }
 
+    fprintf(stdout, "ImportedFileSetRootImport(): root import (%p)\n", pif);
+
     //- register pif as root pif
 
     pifRootImport = pif;

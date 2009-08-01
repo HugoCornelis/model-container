@@ -130,6 +130,8 @@ class ModelContainer:
         else:
             print "Recycling an existing ModelContainer for the python interface"
             self.backend = backend
+            pif = backend.pifRootImport
+            SwiggableNeurospaces.ImportedFileSetRootImport(pif)
             
     def import_file(self, filename):
         pass
