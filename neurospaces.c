@@ -1,4 +1,4 @@
-static char *pcVersionTime="(09/07/10) Friday, July 10, 2009 22:35:18 hugo";
+static char *pcVersionTime="(09/08/01) Saturday, August 1, 2009 06:44:00 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -890,6 +890,8 @@ NeurospacesImport
 	//- link imported file its symbols into parser context
 
 	ParserContextSetImportedFile(pacRootContext, pifFile);
+
+	pneuro->pifRootImport = pifFile;
 
 	//- if not first file
 

@@ -151,6 +151,10 @@ struct Neurospaces
     /// cache registry
 
     struct CacheRegistry *pcr;
+
+    /// root imported file
+
+    struct ImportedFile *pifRootImport;
 };
 
 
