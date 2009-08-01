@@ -94,6 +94,12 @@ int int_get(int *a, int i)
    return a[i];
 }
 
+void * NeurospacesGetObject(struct Neurospaces *pneuro)
+{
+    return((void *)pneuro);
+}
+
+
 int treespace_traversal_go(struct traversal *pt)
 {
     int iResult = 0;
