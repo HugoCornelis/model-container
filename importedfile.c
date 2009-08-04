@@ -586,11 +586,9 @@ ImportedFilePrintNameSpaces
 
 
 /// 
-/// \arg pif new root import file
-/// 
 /// \return void
 /// 
-/// \brief Set new root import file
+/// \brief Print root import file to stdout.
 ///
 /// \details 
 /// 
@@ -742,7 +740,7 @@ void ImportedFileSetRootImport(struct ImportedFile *pif)
 	     NULL);
     }
 
-    fprintf(stdout, "ImportedFileSetRootImport(): root import (%p)\n", pif);
+/*     fprintf(stdout, "ImportedFileSetRootImport(): root import (%p)\n", pif); */
 
     //- register pif as root pif
 
