@@ -219,7 +219,7 @@ sub test_library_construct
 
     my $library = $0;
 
-    $library =~ s/$program_name$/library/;
+    $library =~ s/$program_name$/specifications/;
 
     my $test_modules
 	= [
