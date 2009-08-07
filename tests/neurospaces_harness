@@ -517,7 +517,7 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 		}
 	    }
 
-	    # loop over all tests for this module
+	    # loop over all tests for this command
 
 	    my $command_tests = $command_definition->{command_tests};
 
