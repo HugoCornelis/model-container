@@ -43812,7 +43812,7 @@ variables:
 			      ],
        comment => "Note: see also <a href=\"http://neuromorpho.org/neuroMorpho/StdSwc1.21.jsp\">information about SWC files</a> and <a href=\"http://www.genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.131\">information about Genesis .p files</a>.",
        description => "morphology conversion utilities",
-       name => 'morphology2ndf.t',
+       name => 'convertors/morphology2ndf.t',
       };
 
 

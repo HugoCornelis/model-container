@@ -94,7 +94,7 @@ my $test
 			       },
 			      ],
        description => "C code parameter types",
-       name => 'parametertypes.t',
+       name => 'code/parametertypes.t',
       };
 
 

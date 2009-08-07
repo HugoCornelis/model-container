@@ -83,7 +83,7 @@ my $test
 			       },
 			      ],
        description => "C code biolevels and biogroups",
-       name => 'biolevels.t',
+       name => 'code/biolevels.t',
       };
 
 

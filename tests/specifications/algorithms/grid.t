@@ -321,7 +321,7 @@ report:
 			       },
 			      ],
        description => "grid algorithm",
-       name => 'grid.t',
+       name => 'algorithms/grid.t',
       };
 
 

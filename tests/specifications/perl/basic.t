@@ -352,7 +352,7 @@ query: 'expand /C170897A_P3_CNG/segments/s_1666/**'
        disabled => ((`perl -e '    push \@INC, "../glue/swig/perl";    push \@INC, "glue/swig/perl";    require Neurospaces;    print 1;'` eq 1)
 		    ? ''
 		    : 'Neurospaces.pm cannot be loaded, probably the swig glue has not been built yet'),
-       name => 'basic.t',
+       name => 'perl/basic.t',
       };
 
 

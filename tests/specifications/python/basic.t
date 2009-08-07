@@ -43,7 +43,7 @@ simulation finished
        disabled => ((`python -c 'import Neurospaces ; print 1'` =~ /^1$/)
 		    ? ''
 		    : 'Neurospaces.py cannot be loaded, probably the swig glue has not been built yet'),
-       name => 'basic.t',
+       name => 'python/basic.t',
       };
 
 

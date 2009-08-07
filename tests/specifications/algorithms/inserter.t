@@ -249,7 +249,7 @@ Principal serial ID = 2 of 2 Principal successors
 			       },
 			      ],
        description => "inserter algorithm",
-       name => 'inserter.t',
+       name => 'algorithms/inserter.t',
       };
 
 

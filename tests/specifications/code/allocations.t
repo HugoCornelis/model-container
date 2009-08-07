@@ -130,7 +130,7 @@ my $test
 			       },
 			      ],
        description => "symbol allocations and alias creation",
-       name => 'allocations.t',
+       name => 'code/allocations.t',
       };
 
 

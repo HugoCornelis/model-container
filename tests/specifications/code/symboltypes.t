@@ -140,7 +140,7 @@ my $test
 			       },
 			      ],
        description => "C code symbol types",
-       name => 'symboltypes.t',
+       name => 'code/symboltypes.t',
       };
 
 
