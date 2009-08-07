@@ -1,0 +1,509 @@
+#!/usr/bin/perl -w
+#!/usr/bin/perl -d:ptkdb
+#
+
+use strict;
+
+
+our $core_directory;
+
+our $built_exe_directory;
+
+# our $perl_modules_directory;
+
+our $config;
+
+
+BEGIN
+{
+    # default : running stand-alone
+
+    my $test_mode = 'stand-alone';
+
+    # find the package core directory
+
+    $config = do 'tests.config';
+
+    if (!defined $config)
+    {
+	if ($ENV{srcdir})
+	{
+	    $config = do "$ENV{srcdir}/tests.config";
+
+	    # register that we are running from automake
+
+	    $test_mode = 'automake';
+	}
+    }
+
+    if (!defined $config)
+    {
+	die "No test configuration found";
+    }
+
+    # protect for automake
+
+    if ($test_mode eq 'stand-alone')
+    {
+	$core_directory = $config->{core_directory};
+    }
+    else
+    {
+	$core_directory = "$ENV{srcdir}/$config->{core_directory}";
+
+	$core_directory = $config->{core_directory};
+
+    }
+
+    # remove parent and current directories
+
+    $core_directory =~ s(([^\.])\./)($1)g;
+
+    $core_directory =~ s([^/\.]+/\.\./)()g;
+
+    print "$0: core_directory is $core_directory\n";
+
+    # add to tests directory to include paths
+
+    if (!exists $config->{tests_directory})
+    {
+	$config->{tests_directory} = "${core_directory}tests/specifications";
+    }
+
+    unshift @INC, $config->{tests_directory};
+
+#     # find the perl modules directory
+
+#     $perl_modules_directory = $core_directory;
+
+#     $perl_modules_directory .= "perl";
+
+#     # add to include path
+
+#     unshift @INC, $perl_modules_directory;
+
+    # more automake hacking : if there is a special _build directory
+    # that separates sources and derived files, we assume that the
+    # _build directory will contain the executables.
+
+    $built_exe_directory = $core_directory . "_build/";
+
+    if (!-d $built_exe_directory)
+    {
+	$built_exe_directory = $core_directory;
+    }
+}
+
+
+use Clone qw(clone);
+
+use Getopt::Long;
+
+use YAML;
+
+
+my $option_contents_selector = ".*";
+my $option_flattenout;
+my $option_help;
+my $option_key;
+my $option_regex_selector = ".*";
+my $option_verbose;
+
+
+sub main
+{
+    read_cmd_line();
+
+    my $test_modules = test_library_construct();
+
+    $test_modules = test_library_expand($test_modules);
+
+    # start with an empty result
+
+    my $result = [];
+
+    # default: items are not selected
+
+    my $selected;
+
+    # loop over all test modules
+
+    foreach my $module_definition (@$test_modules)
+    {
+	my $module_result;
+
+	# loop over all keys of this module
+
+	foreach my $key (keys %$module_definition)
+	{
+	    # if the key matches
+
+	    if (defined $option_key
+		and $key =~ /$option_key/)
+	    {
+		$module_result->{$key} = clone($module_definition->{$key});
+	    }
+	}
+
+	# loop over commands for this module
+
+	my $command_definitions = $module_definition->{command_definitions};
+
+	foreach my $command_definition (@$command_definitions)
+	{
+	    my $command_result;
+
+	    # loop over all keys of this command_definition
+
+	    foreach my $key (keys %$command_definition)
+	    {
+		# if the key matches
+
+		if (defined $option_key
+		    and $key =~ /$option_key/)
+		{
+		    $command_result->{$key} = clone($command_definition->{$key});
+		}
+	    }
+
+	    # loop over all tests for this command
+
+	    my $command_tests = $command_definition->{command_tests};
+
+	    foreach my $command_test (@$command_tests)
+	    {
+		my $command_test_result = [];
+
+		# loop over all the keys in this command_test
+
+		foreach my $key (keys %$command_test)
+		{
+		    # if the key matches
+
+		    if (defined $option_key
+			and $key =~ /$option_key/)
+		    {
+			push @$command_test_result, clone($command_test);
+		    }
+		}
+
+		# if there is a result for this command test
+
+		if (@$command_test_result)
+		{
+		    # we add it to the command_result
+
+		    $command_result->{command_tests} = $command_test_result;
+		}
+	    }
+
+	    # if there is a result for this command
+
+	    if ($command_result)
+	    {
+		# we add it to the module result
+
+		$module_result->{command_definitions} = clone($command_result);
+	    }
+	}
+
+	# if there is a result for this module
+
+	if ($module_result)
+	{
+	    # we keep its name
+
+	    $module_result->{name} = clone($module_definition->{name});
+	}
+
+	# if there is a result for this module
+
+	if ($module_result)
+	{
+	    # we add it to the global result
+
+	    push @$result, $module_result;
+	}
+    }
+
+    # if there is a result
+
+    if (@$result)
+    {
+	# print it
+
+	print YAML::Dump( { 'result is' => $result, }, );
+    }
+}
+
+
+sub read_cmd_line
+{
+    my $result
+	= GetOptions
+	    (
+	     "contents=s" => \$option_contents_selector,
+	     "flattenout" => \$option_flattenout,
+	     "help!" => \$option_help,
+	     "key=s" => \$option_key,
+	     "regex-selector=s" => \$option_regex_selector,
+	     "v|verbose+" => \$option_verbose,
+	    );
+
+    if ($option_help)
+    {
+	print
+	    "
+$0: neurospaces test specification query engine.
+
+options :
+    --contents        regex to select the contents of interest (default .*)
+    --flattenout      flattenout the test definitions before testing,
+                      this experimental feature might increase test performance,
+                      by recycling test definitions.
+    --help            print usage information.
+    --regex-selector  defines a regex to run specific tests.
+    --verbose         set verbosity level.
+";
+
+	exit 1;
+    }
+
+}
+
+
+sub report_message
+{
+    my $header = shift;
+
+    my $trailer = shift;
+
+    my $message = shift;
+
+    my $lines = [ split '\n', $message, ];
+
+    my $longest = 0;
+
+    map
+    {
+	($longest < length) && ($longest = length)
+    }
+	@$lines;
+
+    my $line = '-' x $longest;
+
+    print "\n";
+    print "$line\n" for 0 .. $header;
+    print "\n";
+    print "$message\n\n";
+    print "$line\n" for 0 .. $trailer;
+    print "\n";
+}
+
+
+sub test_library_construct
+{
+    # define the tests
+
+    my $additional_test_modules
+	= [
+	  ];
+
+    my $program_name = $0;
+
+    $program_name =~ s/.*\///;
+
+    my $library = $0;
+
+    $library =~ s/$program_name$/specifications/;
+
+    my $test_modules
+	= [
+	   @$additional_test_modules,
+	   map
+	   {
+	       chomp; $_;
+	   }
+	   `find $library -name "*.t"`,
+	  ];
+
+    return $test_modules;
+}
+
+
+sub test_library_expand
+{
+    my $library = shift;
+
+    my $result = [];
+
+    # parse all modules
+
+    foreach my $test_module (@$library)
+    {
+	if ($test_module !~ /$option_regex_selector/i)
+	{
+	    next;
+	}
+
+	my $module_definition = do $test_module;
+
+	if ($@)
+	{
+	    report_error_add
+		(
+		 {
+		  description => $@,
+		  error => $@,
+		  module_name => $test_module,
+		 },
+		);
+	}
+	else
+	{
+# 	    if (!$module_definition->{disabled})
+	    {
+		push @$result, $module_definition;
+	    }
+	}
+    }
+
+    if ($option_flattenout)
+    {
+	# sort modules
+
+	#t first need to transform: select command_definitions, flatten
+	#t out, keep the module names (for referencing errors).
+
+	my $transformator
+	    = Data::Transformator->new
+		(
+		 apply_identity_transformation => 0,
+		 name => 'test-module-selector',
+		 contents => $result,
+		 separator => '`',
+		 array_filter =>
+		 sub
+		 {
+		     my ($context, $component) = @_;
+
+		     # never filter for the first two component in the path
+
+		     my $depth = $context->{array};
+		     $depth = $#$depth;
+
+		     if ($depth < 2)
+		     {
+			 return 1;
+		     }
+
+		     # extract the data: command definitions with test commands
+
+		     $context->{path} =~ m|^[^/]*/([^/]*)/([^/]*)|;
+
+		     my $content = Data::Transformator::_context_get_current_content($context);
+
+		     # push it onto the result
+
+		     my $result = Data::Transformator::_context_get_main_result($context);
+
+		     if (!$result->{content})
+		     {
+			 $result->{content} = [];
+		     }
+
+		     push @{$result->{content}}, $content;
+
+		     # add the module name
+
+		     my $module_name = $context->{array}->[1]->{content}->{name};
+
+		     $content->{module_name} = $module_name;
+
+		     # add the module description
+
+		     my $module_description = $context->{array}->[1]->{content}->{description};
+
+		     $content->{module_description} = $module_description;
+
+		     # result is known, everything gets filtered
+
+		     0;
+		 },
+		);
+
+	#t for an empty array as content, the transformator returns an
+	#t undef, this is a bug that still needs fixing.
+
+	my $tests = $transformator->transform() || [];
+
+	# sort the flattened test definitions
+
+	$tests
+	    = [
+	       sort
+	       {
+		   my $module1 = $a;
+		   my $module2 = $b;
+
+		   my $command1 = $module1->{command};
+		   my $command2 = $module2->{command};
+
+		   my $command1_arguments = $module1->{arguments} || [];
+		   my $command2_arguments = $module2->{arguments} || [];
+
+		   my $command1_string = join ' ', $command1, @$command1_arguments;
+		   my $command2_string = join ' ', $command2, @$command2_arguments;
+
+		   my $comparison = $command1_string cmp $command2_string;
+
+		   if ($module1->{tester_head})
+		   {
+		       $comparison = -1;
+		   }
+		   elsif ($module2->{tester_head})
+		   {
+		       $comparison = 1;
+		   }
+
+		   $comparison;
+	       }
+	       @$tests,
+	      ];
+
+	# transform back to the regular test module format by putting
+	# every command definition in its own module
+
+	$tests
+	    = [
+	       map
+	       {
+		   my $command_definition = $_;
+
+		   (
+		    {
+		     command_definitions => [
+					     $command_definition,
+					    ],
+		     description => $command_definition->{module_description},
+		     name => $command_definition->{module_name},
+		    }
+		   );
+	       }
+	       @$tests,
+	      ];
+
+	# set result
+
+	$result = $tests;
+    }
+
+    # return result
+
+    return $result;
+}
+
+
+main();
+
+
