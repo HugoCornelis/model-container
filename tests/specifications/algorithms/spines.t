@@ -2554,7 +2554,6 @@ report:
 						  },
 						  {
 						   description => "Can we find physical spines (should be there) ?",
-						   disabled1 => "the expand command does not allow this operation correctly (TODO).",
 						   read => "/Purkinje/segments/b0s01[1]/Purkinje_spine_0
 - /Purkinje/segments/b0s01[2]/Purkinje_spine_0
 - /Purkinje/segments/b0s01[2]/Purkinje_spine_1
@@ -4848,7 +4847,6 @@ report:
 						  },
 						  {
 						   description => "Can we find physical spines (should be there) ?",
-						   disabled1 => "the expand command does not allow this operation correctly (TODO).",
 						   read => "/Purkinje/segments/b0s01[1]/Purkinje_spine_0
 - /Purkinje/segments/b0s01[2]/Purkinje_spine_0
 - /Purkinje/segments/b0s01[3]/Purkinje_spine_0
@@ -4919,7 +4917,7 @@ report:
 			       },
 			      ],
        description => "spines algorithm",
-       name => 'spines.t',
+       name => 'algorithms/spines.t',
       };
 
 
