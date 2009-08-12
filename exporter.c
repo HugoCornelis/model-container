@@ -441,6 +441,8 @@ ExporterSymbolStarter
 
     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
 
+    //- only for bio components
+
     int iType = TstrGetActualType(ptstr);
 
     if (subsetof_bio_comp(iType))
@@ -553,6 +555,38 @@ ExporterSymbolStarter
 	}
     }
 
+    //- for algorithm
+
+    else if (subsetof_algorithm_symbol(iType))
+    {
+	//- export component
+
+	PrintIndent(pexd->iIndent, pexd->pfile);
+
+	if (pexd->iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pexd->pfile, "%s %s\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
+	}
+	else
+	{
+	    fprintf(pexd->pfile, "<%s> <name>%s</name>\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
+	}
+
+	//- export parameter of this algorithm instance
+
+	struct symtab_AlgorithmSymbol *palgs = (struct symtab_AlgorithmSymbol *)phsle;
+
+	struct symtab_ParContainer *pparc = palgs->pparc;
+
+	if (pparc)
+	{
+	    if (!ParContainerExport(pparc, ptstr->ppist, pexd->iIndent + 2, pexd->iType, pexd->pfile))
+	    {
+		iResult = TSTR_PROCESSOR_ABORT;
+	    }
+	}
+    }
+
     //- increase indent
 
     pexd->iIndent += 2;
@@ -643,6 +677,8 @@ ExporterSymbolStopper
 
     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
 
+    //- if a bio component
+
     int iType = TstrGetActualType(ptstr);
 
     if (subsetof_bio_comp(iType))
@@ -699,6 +735,24 @@ ExporterSymbolStopper
 	    {
 		fprintf(pexd->pfile, "</%s>\n", SymbolHSLETypeDescribeNDF(phsle->iType));
 	    }
+	}
+    }
+
+    //- for an algorithm
+
+    else if (subsetof_algorithm_symbol(iType))
+    {
+	//- end algorithm instance
+
+	PrintIndent(pexd->iIndent, pexd->pfile);
+
+	if (pexd->iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pexd->pfile, "END %s\n", SymbolHSLETypeDescribeNDF(phsle->iType));
+	}
+	else
+	{
+	    fprintf(pexd->pfile, "</%s>\n", SymbolHSLETypeDescribeNDF(phsle->iType));
 	}
     }
 
