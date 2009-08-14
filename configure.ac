@@ -153,6 +153,13 @@ AC_CHECK_HEADERS([limits.h sys/time.h unistd.h float.h stddef.h ],[],[
    exit -1
 ])
 
+dnl
+dnl There is no clause to make the configure script stop because
+dnl on red hat machines (others?) readline is built into stdio. This
+dnl causes detection of the readline library to fail. 
+dnl Additions to the case statement for earlier and newer versions of redhat
+dnl need to be added to accomodate this discrepancy. 
+dnl
 AC_CHECK_HEADERS([readline/readline.h],[],[])
 
 dnl Check for Python
