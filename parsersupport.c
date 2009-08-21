@@ -2155,12 +2155,7 @@ int ParserParse
     {
 	//- allocate for new parser context
 
-	PARSERCONTEXT *pacContext
-	    = (PARSERCONTEXT *)malloc(sizeof(PARSERCONTEXT));
-
-	//- initialize parser context
-
-	ParserContextInit(pacContext);
+	PARSERCONTEXT *pacContext = ParserContextCalloc();
 
 	//- register globals with symbol table
 

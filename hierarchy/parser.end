@@ -1161,6 +1161,20 @@ AlgorithmListPush
 			ParserContextPushAlgorithmState(NULL);
 
 			ParserContextPushAlgorithmState(PARSERSTATE_ALGORITHM);
+
+/* 			//- insert algorithm instance in the symbol table */
+
+/* 			//t I prefer to move this code to the */
+/* 			//t AlgorithmListPush non-terminal, but that */
+/* 			//t does not work because */
+/* 			//t ParserContextGetActual() sometimes returns */
+/* 			//t NULL overthere, don't know why. */
+
+/* 			struct symtab_HSolveListElement *phsleActual */
+/* 			    = ParserContextGetActual((PARSERCONTEXT *)pacParserContext); */
+
+/* 			SymbolAddChild(phsleActual, &palgs->hsle); */
+
 		    }
 		}
 	;
