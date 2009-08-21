@@ -1220,8 +1220,10 @@ AlgorithmListPop
 			//t ParserContextGetActual() sometimes returns
 			//t NULL overthere, don't know why.
 
-			SymbolAddChild
-			    (ParserContextGetActual((PARSERCONTEXT *)pacParserContext), &palgs->hsle);
+			struct symtab_HSolveListElement *phsleActual
+			    = ParserContextGetActual((PARSERCONTEXT *)pacParserContext);
+
+			SymbolAddChild(phsleActual, &palgs->hsle);
 
 /* 			int iResult = ParserAddModel((PARSERCONTEXT *)pacParserContext, &palgs->hsle); */
 
