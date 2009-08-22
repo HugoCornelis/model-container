@@ -2149,7 +2149,9 @@ int ParserParse
 
     //- if file can be opened
 
-    pFILE = fopen(ImportedFileGetQualified(pifToParse), "r");
+    char *pcFilename = ImportedFileGetQualified(pifToParse);
+
+    pFILE = fopen(pcFilename, "r");
 
     if (pFILE)
     {

@@ -1234,6 +1234,15 @@ AlgorithmListPop
 			//t ParserContextGetActual() sometimes returns
 			//t NULL overthere, don't know why.
 
+			//t it looks like that the symbol that should
+			//t go into phsleActual is allocated to late, ie
+			//t in .*Description, and AlgorithmListPush is
+			//t called for in .*Front.  But, in .*Front the
+			//t type of the symbol to be allocated is
+			//t already known, so it is possible to allocate
+			//t the correct symbol type, and put it in
+			//t phsleActual.
+
 			struct symtab_HSolveListElement *phsleActual
 			    = ParserContextGetActual((PARSERCONTEXT *)pacParserContext);
 
