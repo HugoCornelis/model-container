@@ -41,12 +41,12 @@ PUBLIC_MODELS
 	NETWORK CerebellarCortex
 
 // 		ALGORITHM ConnectionChecker
-// 			ALGORITHM_INSTANCE BackwardProjectionA
+// 			ALGORITHM_INSTANCE BackwardProjectionA_algorithm
 // 			{ -name BackwardProjection/GABAA }
 // 		END ALGORITHM
 
 		ALGORITHM ConnectionChecker
-			BackwardProjectionA
+			BackwardProjectionA_algorithm
 			PARAMETERS
 				PARAMETER ( PROJECTION_NAME = "BackwardProjection/GABAA" ),
 			END PARAMETERS
@@ -54,12 +54,12 @@ PUBLIC_MODELS
 		END ALGORITHM
 
 // 		ALGORITHM ConnectionChecker
-// 			ALGORITHM_INSTANCE BackwardProjectionB
+// 			ALGORITHM_INSTANCE BackwardProjectionB_algorithm
 // 			{ -name BackwardProjection/GABAB }
 // 		END ALGORITHM
 
 		ALGORITHM ConnectionChecker
-			BackwardProjectionB
+			BackwardProjectionB_algorithm
 			PARAMETERS
 				PARAMETER ( PROJECTION_NAME = "BackwardProjection/GABAB" ),
 			END PARAMETERS
@@ -67,12 +67,12 @@ PUBLIC_MODELS
 		END ALGORITHM
 
 // 		ALGORITHM ConnectionChecker
-// 			ALGORITHM_INSTANCE ForwardProjection
+// 			ALGORITHM_INSTANCE ForwardProjection_algorithm
 // 			{ -name ForwardProjection }
 // 		END ALGORITHM
 
 		ALGORITHM ConnectionChecker
-			ForwardProjection
+			ForwardProjection_algorithm
 			PARAMETERS
 				PARAMETER ( PROJECTION_NAME = "ForwardProjection" ),
 			END PARAMETERS
@@ -80,17 +80,17 @@ PUBLIC_MODELS
 		END ALGORITHM
 
 // 		ALGORITHM ProjectionVolume
-// 			ALGORITHM_INSTANCE Granules2Purkinjes
+// 			ALGORITHM_INSTANCE Granules2Purkinjes_algorithm
 // 			{ -name ParallelFiberProjection -randseed 1212 -prob 0.005 -pre spikegen -post par -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -15 -15 -15 15 15 15 -weight 2.0 -delay radial 0.5 }
 // 		END ALGORITHM
 
 // 		ALGORITHM ProjectionVolume
-// 			ALGORITHM_INSTANCE Mossies2Golgis
+// 			ALGORITHM_INSTANCE Mossies2Golgis_algorithm
 // 			{ -name MossyFiberProjection/GolgiComponent -randseed 1212 -prob 1 -pre spikegen -post mf_AMPA -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -5 -5 -5 5 5 5 -weight 0.0 -delay fixed 0.0 }
 // 		END ALGORITHM
 
 		ALGORITHM ProjectionVolume
-			Mossies2Golgis
+			Mossies2Golgis_algorithm
 			PARAMETERS
 				PARAMETER ( PROJECTION_NAME = "MossyFiberProjection/GolgiComponent" ),
 				PARAMETER ( RANDOMSEED = 1212.0 ),
@@ -119,12 +119,12 @@ PUBLIC_MODELS
 		END ALGORITHM
 
 // 		ALGORITHM ProjectionVolume
-// 			ALGORITHM_INSTANCE Mossies2Granules_NMDA
+// 			ALGORITHM_INSTANCE Mossies2Granules_NMDA_algorithm
 // 			{ -name MossyFiberProjection/GranuleComponent/NMDA -randseed 1212 -prob 0.3061 -pre spikegen -post mf_NMDA -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -0.0006 -0.0006 -0.0006 0.0006 0.0006 0.0006 -weight 4.0 -delay fixed 0.0 }
 // 		END ALGORITHM
 
 		ALGORITHM ProjectionVolume
-			Mossies2Granules_NMDA
+			Mossies2Granules_NMDA_algorithm
 			PARAMETERS
 				PARAMETER ( PROJECTION_NAME = "MossyFiberProjection/GranuleComponent/NMDA" ),
 				PARAMETER ( RANDOMSEED = 1212.0 ),
@@ -153,12 +153,12 @@ PUBLIC_MODELS
 		END ALGORITHM
 
 // 		ALGORITHM ProjectionVolume
-// 			ALGORITHM_INSTANCE Mossies2Granules_AMPA
+// 			ALGORITHM_INSTANCE Mossies2Granules_AMPA_algorithm
 // 			{ -name MossyFiberProjection/GranuleComponent/AMPA -randseed 1212 -prob 0.3061 -pre spikegen -post mf_AMPA -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -0.0006 -0.0006 -0.0006 0.0006 0.0006 0.0006 -weight 6.0 -delay fixed 0.0 }
 // 		END ALGORITHM
 
 		ALGORITHM ProjectionVolume
-			Mossies2Granules_AMPA
+			Mossies2Granules_AMPA_algorithm
 			PARAMETERS
 				PARAMETER ( PROJECTION_NAME = "MossyFiberProjection/GranuleComponent/AMPA" ),
 				PARAMETER ( RANDOMSEED = 1212.0 ),
@@ -188,12 +188,12 @@ PUBLIC_MODELS
 
 
 // 		ALGORITHM ProjectionVolume
-// 			ALGORITHM_INSTANCE Granules2Golgis
+// 			ALGORITHM_INSTANCE Granules2Golgis_algorithm
 // 			{ -name ForwardProjection -randseed 1212 -prob 1.0 -pre spikegen -post pf_AMPA -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -0.0025 -0.0003 -0.0025 0.0025 0.0003 0.0025 -weight 45.0 -delay radial 0.5 }
 // 		END ALGORITHM
 
 		ALGORITHM ProjectionVolume
-			Granules2Golgis
+			Granules2Golgis_algorithm
 			PARAMETERS
 				PARAMETER ( PROJECTION_NAME = "ForwardProjection" ),
 				PARAMETER ( RANDOMSEED = 1212.0 ),
@@ -222,12 +222,12 @@ PUBLIC_MODELS
 		END ALGORITHM
 
 // 		ALGORITHM ProjectionVolume
-// 			ALGORITHM_INSTANCE Golgis2Granules_GABAA
+// 			ALGORITHM_INSTANCE Golgis2Granules_GABAA_algorithm
 // 			{ -name BackwardProjection/GABAA -randseed 1212 -prob 1 -pre spikegen -post GABAA -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -0.00015 -0.00015 -0.00015 0.00015 0.00015 0.00015 -weight 45.0 -delay fixed 0.0 }
 // 		END ALGORITHM
 
 		ALGORITHM ProjectionVolume
-			Golgis2Granules_GABAA
+			Golgis2Granules_GABAA_algorithm
 			PARAMETERS
 				PARAMETER ( PROJECTION_NAME = "BackwardProjection/GABAA" ),
 				PARAMETER ( RANDOMSEED = 1212.0 ),
@@ -256,12 +256,12 @@ PUBLIC_MODELS
 		END ALGORITHM
 
 // 		ALGORITHM ProjectionVolume
-// 			ALGORITHM_INSTANCE Golgis2Granules_GABAB
+// 			ALGORITHM_INSTANCE Golgis2Granules_GABAB_algorithm
 // 			{ -name BackwardProjection/GABAB -randseed 1212 -prob 1 -pre spikegen -post GABAB -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest box -0.00015 -0.00015 -0.00015 0.00015 0.00015 0.00015 -weight 9.0 -delay fixed 0.0 }
 // 		END ALGORITHM
 
 		ALGORITHM ProjectionVolume
-			Golgis2Granules_GABAB
+			Golgis2Granules_GABAB_algorithm
 			PARAMETERS
 				PARAMETER ( PROJECTION_NAME = "BackwardProjection/GABAB" ),
 				PARAMETER ( RANDOMSEED = 1212.0 ),
