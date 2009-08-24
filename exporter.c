@@ -559,22 +559,22 @@ ExporterSymbolStarter
 
     else if (subsetof_algorithm_symbol(iType))
     {
+	struct symtab_AlgorithmSymbol *palgs = (struct symtab_AlgorithmSymbol *)phsle;
+
 	//- export component
 
 	PrintIndent(pexd->iIndent, pexd->pfile);
 
 	if (pexd->iType == EXPORTER_TYPE_NDF)
 	{
-	    fprintf(pexd->pfile, "%s %s\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
+	    fprintf(pexd->pfile, "%s %s %s\n", palgs->dealgs.palgi->palgc->pcIdentifier, SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
 	}
 	else
 	{
-	    fprintf(pexd->pfile, "<%s> <name>%s</name>\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
+	    fprintf(pexd->pfile, "<%s> <algorithm>%s</algorithm> <name>%s</name>\n", palgs->dealgs.palgi->palgc->pcIdentifier, SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
 	}
 
 	//- export parameter of this algorithm instance
-
-	struct symtab_AlgorithmSymbol *palgs = (struct symtab_AlgorithmSymbol *)phsle;
 
 	struct symtab_ParContainer *pparc = palgs->pparc;
 

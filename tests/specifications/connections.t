@@ -2688,7 +2688,7 @@ Principal serial ID = 1141 of 153157 Principal successors
 						  },
 						  {
 						   description => "Can the mossy fiber forestspace IDs be found ?",
-						   read => "serial id /CerebellarCortex,12 -> /CerebellarCortex/MossyFibers/3/value
+						   read => "serial id /CerebellarCortex,22 -> /CerebellarCortex/MossyFibers/3/value
 ",
 						   write => "serial2context /CerebellarCortex 22",
 						  },
