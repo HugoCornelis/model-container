@@ -217,7 +217,7 @@ AC_CHECK_PROGS(PERL, perl5 perl)
 
 AC_PATH_PROGS(DOXYGEN,doxygen,[NULL])
 
-
+AC_PATH_PROGS(DOT,dot)
 
 # search lisp dir for installing the emacs major mode
 
