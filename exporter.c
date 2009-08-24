@@ -567,11 +567,11 @@ ExporterSymbolStarter
 
 	if (pexd->iType == EXPORTER_TYPE_NDF)
 	{
-	    fprintf(pexd->pfile, "%s %s %s\n", palgs->dealgs.palgi->palgc->pcIdentifier, SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
+	    fprintf(pexd->pfile, "%s %s %s\n", SymbolHSLETypeDescribeNDF(phsle->iType), palgs->dealgs.palgi->palgc->pcIdentifier, SymbolName(phsle));
 	}
 	else
 	{
-	    fprintf(pexd->pfile, "<%s> <algorithm>%s</algorithm> <name>%s</name>\n", palgs->dealgs.palgi->palgc->pcIdentifier, SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
+	    fprintf(pexd->pfile, "<%s> <algorithm>%s</algorithm> <name>%s</name>\n", SymbolHSLETypeDescribeNDF(phsle->iType), palgs->dealgs.palgi->palgc->pcIdentifier, SymbolName(phsle));
 	}
 
 	//- export parameter of this algorithm instance

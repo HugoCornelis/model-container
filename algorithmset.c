@@ -142,6 +142,10 @@ AlgorithmSetInstantiateAlgorithm
 
 	if (palgiResult)
 	{
+	    //- fill in the algorithm class in the instance
+
+	    palgiResult->palgc = palgc;
+
 /* 	    //- set flag : algorithm active */
 
 /* 	    palgiResult->iFlags |= ALGORITHM_FLAG_MODELACTIVE; */
