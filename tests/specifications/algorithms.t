@@ -129,7 +129,7 @@ report:
 						   read => [
 							    "-re",
 							    "---
-name: ProjectionVolumeInstance Golgis2Granules_GABAB
+name: ProjectionVolumeInstance Golgis2Granules_GABAB_algorithm
 report:
     number_of_added_connection_groups: 1
     number_of_added_connections: 6240
@@ -153,7 +153,7 @@ report:
 						   read => [
 							    "-re",
 							    "---
-name: ProjectionVolumeInstance Golgis2Granules_GABAA
+name: ProjectionVolumeInstance Golgis2Granules_GABAA_algorithm
 report:
     number_of_added_connection_groups: 1
     number_of_added_connections: 6240
@@ -177,7 +177,7 @@ report:
 						   read => [
 							    "-re",
 							    "---
-name: ProjectionVolumeInstance Granules2Golgis
+name: ProjectionVolumeInstance Granules2Golgis_algorithm
 report:
     number_of_added_connection_groups: 1
     number_of_added_connections: 98112
@@ -201,7 +201,7 @@ report:
 						   read => [
 							    "-re",
 							    "---
-name: ProjectionVolumeInstance Mossies2Granules_AMPA
+name: ProjectionVolumeInstance Mossies2Granules_AMPA_algorithm
 report:
     number_of_added_connection_groups: 1
     number_of_added_connections: 18734
@@ -225,7 +225,7 @@ report:
 						   read => [
 							    "-re",
 							    "---
-name: ProjectionVolumeInstance Mossies2Granules_NMDA
+name: ProjectionVolumeInstance Mossies2Granules_NMDA_algorithm
 report:
     number_of_added_connection_groups: 1
     number_of_added_connections: 18734
@@ -249,7 +249,7 @@ report:
 						   read => [
 							    "-re",
 							    "---
-name: ProjectionVolumeInstance Mossies2Golgis
+name: ProjectionVolumeInstance Mossies2Golgis_algorithm
 report:
     number_of_added_connection_groups: 1
     number_of_added_connections: 600
@@ -273,7 +273,7 @@ report:
 						   read => [
 							    "-re",
 							    "---
-name: ConnectionCheckerInstance ForwardProjection
+name: ConnectionCheckerInstance ForwardProjection_algorithm
 report:
     number_of_checked_connection_groups: 0
     number_of_checked_connections: 98112
@@ -290,7 +290,7 @@ report:
 						   read => [
 							    "-re",
 							    "---
-name: ConnectionCheckerInstance BackwardProjectionB
+name: ConnectionCheckerInstance BackwardProjectionB_algorithm
 report:
     number_of_checked_connection_groups: 0
     number_of_checked_connections: 6240
@@ -307,7 +307,7 @@ report:
 						   read => [
 							    "-re",
 							    "---
-name: ConnectionCheckerInstance BackwardProjectionA
+name: ConnectionCheckerInstance BackwardProjectionA_algorithm
 report:
     number_of_checked_connection_groups: 0
     number_of_checked_connections: 6240
@@ -386,7 +386,7 @@ report:
 name: RandomizeInstance Golgi_CaHVA
 report:
     number_of_randomized_components: 20
-    number_of_non-randomized_components_algorithm_symbols: 1
+    number_of_non-randomized_components_algorithm_symbols: 3
     number_of_non-randomized_components_unexpected: 0
     RandomizeInstance_prototype: CaHVA
     RandomizeInstance_options: Golgi_cell->G_MAX 213.000000 8.317569 9.317569
@@ -402,7 +402,7 @@ report:
 name: RandomizeInstance GolgiLeak
 report:
     number_of_randomized_components: 20
-    number_of_non-randomized_components_algorithm_symbols: 2
+    number_of_non-randomized_components_algorithm_symbols: 3
     number_of_non-randomized_components_unexpected: 0
     RandomizeInstance_prototype: Golgi_soma
     RandomizeInstance_options: Golgi_cell->ELEAK 213.000000 -0.060000 -0.050000
@@ -465,7 +465,7 @@ report:
 ---
 number_of_algorithm_instances: 16
 ---
-name: ProjectionVolumeInstance Golgis2Granules_GABAB
+name: ProjectionVolumeInstance Golgis2Granules_GABAB_algorithm
 report:
     number_of_added_connection_groups: 1
     number_of_added_connections: 6240
@@ -481,7 +481,7 @@ report:
     ProjectionVolumeInstance_post: GABAB
     ProjectionVolumeInstance_weight: 9.000000
 ---
-name: ProjectionVolumeInstance Golgis2Granules_GABAA
+name: ProjectionVolumeInstance Golgis2Granules_GABAA_algorithm
 report:
     number_of_added_connection_groups: 1
     number_of_added_connections: 6240
@@ -497,7 +497,7 @@ report:
     ProjectionVolumeInstance_post: GABAA
     ProjectionVolumeInstance_weight: 45.000000
 ---
-name: ProjectionVolumeInstance Granules2Golgis
+name: ProjectionVolumeInstance Granules2Golgis_algorithm
 report:
     number_of_added_connection_groups: 1
     number_of_added_connections: 98112
@@ -513,7 +513,7 @@ report:
     ProjectionVolumeInstance_post: pf_AMPA
     ProjectionVolumeInstance_weight: 45.000000
 ---
-name: ProjectionVolumeInstance Mossies2Granules_AMPA
+name: ProjectionVolumeInstance Mossies2Granules_AMPA_algorithm
 report:
     number_of_added_connection_groups: 1
     number_of_added_connections: 18734
@@ -529,7 +529,7 @@ report:
     ProjectionVolumeInstance_post: mf_AMPA
     ProjectionVolumeInstance_weight: 6.000000
 ---
-name: ProjectionVolumeInstance Mossies2Granules_NMDA
+name: ProjectionVolumeInstance Mossies2Granules_NMDA_algorithm
 report:
     number_of_added_connection_groups: 1
     number_of_added_connections: 18734
@@ -545,7 +545,7 @@ report:
     ProjectionVolumeInstance_post: mf_NMDA
     ProjectionVolumeInstance_weight: 4.000000
 ---
-name: ProjectionVolumeInstance Mossies2Golgis
+name: ProjectionVolumeInstance Mossies2Golgis_algorithm
 report:
     number_of_added_connection_groups: 1
     number_of_added_connections: 600
@@ -561,7 +561,7 @@ report:
     ProjectionVolumeInstance_post: mf_AMPA
     ProjectionVolumeInstance_weight: 0.000000
 ---
-name: ConnectionCheckerInstance ForwardProjection
+name: ConnectionCheckerInstance ForwardProjection_algorithm
 report:
     number_of_checked_connection_groups: 0
     number_of_checked_connections: 98112
@@ -570,7 +570,7 @@ report:
     ConnectionCheckerInstance_network: CerebellarCortex
     ConnectionCheckerInstance_projection: ForwardProjection
 ---
-name: ConnectionCheckerInstance BackwardProjectionB
+name: ConnectionCheckerInstance BackwardProjectionB_algorithm
 report:
     number_of_checked_connection_groups: 0
     number_of_checked_connections: 6240
@@ -579,7 +579,7 @@ report:
     ConnectionCheckerInstance_network: CerebellarCortex
     ConnectionCheckerInstance_projection: GABAB
 ---
-name: ConnectionCheckerInstance BackwardProjectionA
+name: ConnectionCheckerInstance BackwardProjectionA_algorithm
 report:
     number_of_checked_connection_groups: 0
     number_of_checked_connections: 6240
@@ -618,7 +618,7 @@ report:
 name: RandomizeInstance Golgi_CaHVA
 report:
     number_of_randomized_components: 20
-    number_of_non-randomized_components_algorithm_symbols: 1
+    number_of_non-randomized_components_algorithm_symbols: 3
     number_of_non-randomized_components_unexpected: 0
     RandomizeInstance_prototype: CaHVA
     RandomizeInstance_options: Golgi_cell->G_MAX 213.000000 8.317569 9.317569
@@ -626,7 +626,7 @@ report:
 name: RandomizeInstance GolgiLeak
 report:
     number_of_randomized_components: 20
-    number_of_non-randomized_components_algorithm_symbols: 2
+    number_of_non-randomized_components_algorithm_symbols: 3
     number_of_non-randomized_components_unexpected: 0
     RandomizeInstance_prototype: Golgi_soma
     RandomizeInstance_options: Golgi_cell->ELEAK 213.000000 -0.060000 -0.050000

@@ -217,8 +217,8 @@ report:
 						  },
 						  {
 						   description => "Is the structure of the symbol table correct, start at root ?",
-						   read => "Traversal serial ID = 37
-Principal serial ID = 37 of 244 Principal successors
+						   read => "Traversal serial ID = 40
+Principal serial ID = 40 of 244 Principal successors
 ",
 						   write => "serialMapping / /in12_1/mat_1/inserted_spine_0",
 						  },

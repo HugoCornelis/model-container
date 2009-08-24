@@ -194,7 +194,7 @@ my $class_hierarchy
 
 		    //- put channel description on stack
 
-		    $$ = ChannelCalloc();
+		    $$ = ParserContextGetActual((PARSERCONTEXT *)pacParserContext);
 
 		    //- fill in table parameters
 
@@ -978,10 +978,6 @@ my $class_hierarchy
 								 'specific_end',
 								],
 						       semantic => '#line
-		    //- assign name to symbol
-
-		    SymbolSetName(&$4specific_to_base, $1);
-
 		    //- link input/output relations
 
 		    SymbolAssignBindableIO(&$4specific_to_base, $2);
@@ -1366,15 +1362,8 @@ my $grammar_rules
 				a_allocator_constructor => {
 							    parts => [],
 							    semantic => '#line
-		    //- prepare struct for symbol table
 
-		    $$ = specific_allocator();
-
-		    //- set actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$$specific_to_base);
+		    $$ = ParserContextGetActual((PARSERCONTEXT *)pacParserContext);
 ',
 							   },
 				b_reference_constructor => {
@@ -1454,15 +1443,54 @@ my $grammar_rules
 		       },
        specific_front => {
 			  parts => [
-				    'specific_token',
-				    'IdentifierOptionIndexPushedPidin',
+				    'specific_front1',
+				    'specific_front2',
 				   ],
-			  semantic => '#line
-		    //- put identifier on stack
+			   semantic => '#line
 
-		    $$ = $2;
+		    //- prepare struct for symbol table
+
+		    $$ = $1;
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$specific_to_base);
+
+		    //- assign name to symbol
+
+		    SymbolSetName(&$$specific_to_base, $2);
 ',
 			 },
+       specific_front1 => {
+			   parts => [
+				     'specific_token',
+				    ],
+			   semantic => '#line
+
+		    //- prepare struct for symbol table
+
+		    $$ = specific_allocator();
+
+		    //- set actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$$specific_to_base);
+',
+			  },
+       specific_front2 => {
+			   parts => [
+				     'IdentifierOptionIndexPushedPidin',
+				    ],
+			   semantic => '#line
+
+		    //- put identifier on stack
+
+		    $$ = $1;
+',
+			  },
        specific_section => {
 			    parts => [
 				      'specific_front',
@@ -1472,10 +1500,6 @@ my $grammar_rules
 				      'specific_end',
 				     ],
 			    semantic => '#line
-		    //- assign name to symbol
-
-		    SymbolSetName(&$4specific_to_base, $1);
-
 		    //- link input/output relations
 
 		    SymbolAssignBindableIO(&$4specific_to_base, $2);

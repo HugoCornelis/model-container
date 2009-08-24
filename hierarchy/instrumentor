@@ -678,7 +678,16 @@ sub generate_grammar_specific_symbol_types
 	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{base}> ${symbol_name}Symbol
 ";
 
-	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{id}> ${symbol_name}SectionFront
+	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{spec}> ${symbol_name}SectionFront
+";
+	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{spec}> ${symbol_name}SectionFront1
+";
+# 	print $file "%type <$definitions->{typing}->{typer}->{name}> ${symbol_name}SectionFront
+# ";
+# 	print $file "%type <$definitions->{typing}->{typer}->{name}> ${symbol_name}SectionFront1
+# ";
+
+	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{id}> ${symbol_name}SectionFront2
 ";
 	print $file "%type <$grammar_symbols->{$symbol_name}->{typing}->{spec}> ${symbol_name}Description
 ";
@@ -919,31 +928,122 @@ sub generate_grammar_specific_section_2_rules
 
 # ";
 
-	    print $file "${symbol_name}SectionFront	/* <$grammar_symbols->{$symbol_name}->{typing}->{id}> */
-";
-
-	    print $file "	:
-";
-
-	    my $specific_front = $grammar_rules->{specific_front};
-
-	    my $parts = $specific_front->{parts};
-
-	    #! note the subtle copy operation, expect the unexpected otherwise
-
-	    foreach my $part ( @{ [ @$parts, ] }, )
 	    {
-		$part =~ s/specific_description/${symbol_name}Description/g;
-		$part =~ s/specific_end/${symbol_name}SectionEnd/g;
-		$part =~ s/specific_front/${symbol_name}SectionFront/g;
-		$part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}->{lexical}/g;
+		print $file "${symbol_name}SectionFront	/* <$grammar_symbols->{$symbol_name}->{typing}->{spec}> */
+";
 
-		print $file "\t\t$part\n";
+		print $file "	:
+";
+
+		my $specific_front = $grammar_rules->{specific_front};
+
+		my $parts = $specific_front->{parts};
+
+		#! note the subtle copy operation, expect the unexpected otherwise
+
+		foreach my $part ( @{ [ @$parts, ] }, )
+		{
+		    $part =~ s/specific_description/${symbol_name}Description/g;
+		    $part =~ s/specific_end/${symbol_name}SectionEnd/g;
+		    $part =~ s/specific_front/${symbol_name}SectionFront/g;
+		    $part =~ s/specific_to_base/$grammar_symbols->{$symbol_name}->{typing}->{to_base}/g;
+		    $part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}->{lexical}/g;
+
+		    print $file "\t\t$part\n";
+		}
+
+		my $semantic = $specific_front->{semantic};
+
+		$semantic =~ s/specific_allocator/$grammar_symbols->{$symbol_name}->{specific_allocator}/g;
+		$semantic =~ s/specific_component/${symbol_name}Component/g;
+		$semantic =~ s/specific_description/${symbol_name}Description/g;
+		$semantic =~ s/specific_end/${symbol_name}SectionEnd/g;
+		$semantic =~ s/specific_front/${symbol_name}SectionFront/g;
+		$semantic =~ s/specific_to_base/$grammar_symbols->{$symbol_name}->{typing}->{to_base}/g;
+		$semantic =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}->{lexical}/g;
+
+		print $file "		{\n";
+		print $file $semantic;
+		print $file "		}\n\t;\n\n";
 	    }
 
-	    print $file "		{\n";
-	    print $file $specific_front->{semantic};
-	    print $file "		}\n\t;\n\n";
+	    {
+		print $file "${symbol_name}SectionFront1	/* <$grammar_symbols->{$symbol_name}->{typing}->{spec}> */
+";
+
+		print $file "	:
+";
+
+		my $specific_front1 = $grammar_rules->{specific_front1};
+
+		my $parts = $specific_front1->{parts};
+
+		#! note the subtle copy operation, expect the unexpected otherwise
+
+		foreach my $part ( @{ [ @$parts, ] }, )
+		{
+		    $part =~ s/specific_description/${symbol_name}Description/g;
+		    $part =~ s/specific_end/${symbol_name}SectionEnd/g;
+		    $part =~ s/specific_front/${symbol_name}SectionFront/g;
+		    $part =~ s/specific_to_base/$grammar_symbols->{$symbol_name}->{typing}->{to_base}/g;
+		    $part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}->{lexical}/g;
+
+		    print $file "\t\t$part\n";
+		}
+
+		my $semantic = $specific_front1->{semantic};
+
+		$semantic =~ s/specific_allocator/$grammar_symbols->{$symbol_name}->{specific_allocator}/g;
+		$semantic =~ s/specific_component/${symbol_name}Component/g;
+		$semantic =~ s/specific_description/${symbol_name}Description/g;
+		$semantic =~ s/specific_end/${symbol_name}SectionEnd/g;
+		$semantic =~ s/specific_front/${symbol_name}SectionFront/g;
+		$semantic =~ s/specific_to_base/$grammar_symbols->{$symbol_name}->{typing}->{to_base}/g;
+		$semantic =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}->{lexical}/g;
+
+		print $file "		{\n";
+		print $file $semantic;
+		print $file "		}\n\t;\n\n";
+	    }
+
+	    {
+		print $file "${symbol_name}SectionFront2	/* <$grammar_symbols->{$symbol_name}->{typing}->{spec}> */
+";
+
+		print $file "	:
+";
+
+		my $specific_front2 = $grammar_rules->{specific_front2};
+
+		my $parts = $specific_front2->{parts};
+
+		#! note the subtle copy operation, expect the unexpected otherwise
+
+		foreach my $part ( @{ [ @$parts, ] }, )
+		{
+		    $part =~ s/specific_description/${symbol_name}Description/g;
+		    $part =~ s/specific_end/${symbol_name}SectionEnd/g;
+		    $part =~ s/specific_front/${symbol_name}SectionFront/g;
+		    $part =~ s/specific_to_base/$grammar_symbols->{$symbol_name}->{typing}->{to_base}/g;
+		    $part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}->{lexical}/g;
+
+		    print $file "\t\t$part\n";
+		}
+
+		my $semantic = $specific_front2->{semantic};
+
+		$semantic =~ s/specific_allocator/$grammar_symbols->{$symbol_name}->{specific_allocator}/g;
+		$semantic =~ s/specific_component/${symbol_name}Component/g;
+		$semantic =~ s/specific_description/${symbol_name}Description/g;
+		$semantic =~ s/specific_end/${symbol_name}SectionEnd/g;
+		$semantic =~ s/specific_front/${symbol_name}SectionFront/g;
+		$semantic =~ s/specific_to_base/$grammar_symbols->{$symbol_name}->{typing}->{to_base}/g;
+		$semantic =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}->{lexical}/g;
+
+		print $file "		{\n";
+		print $file $semantic;
+		print $file "		}\n\t;\n\n";
+	    }
 
 	    $file->close();
 	}
@@ -990,6 +1090,7 @@ sub generate_grammar_specific_section_2_rules
 		$part =~ s/specific_description/${symbol_name}Description/g;
 		$part =~ s/specific_end/${symbol_name}SectionEnd/g;
 		$part =~ s/specific_front/${symbol_name}SectionFront/g;
+		$part =~ s/specific_to_base/$grammar_symbols->{$symbol_name}->{typing}->{to_base}/g;
 		$part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}->{lexical}/g;
 
 		print $file "\t\t$part\n";
@@ -1086,6 +1187,7 @@ sub generate_grammar_specific_section_2_rules
 		    $part =~ s/specific_description/${symbol_name}Description/g;
 		    $part =~ s/specific_end/${symbol_name}SectionEnd/g;
 		    $part =~ s/specific_front/${symbol_name}SectionFront/g;
+		    $part =~ s/specific_to_base/$grammar_symbols->{$symbol_name}->{typing}->{to_base}/g;
 		    $part =~ s/specific_token/$grammar_symbols->{$symbol_name}->{specific_token}->{lexical}/g;
 
 # 		    print $file "$part\n";

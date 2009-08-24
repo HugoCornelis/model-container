@@ -187,7 +187,9 @@ my $test
 						  },
 						  {
 						   description => "A small population expansion",
-						   read => "/CerebellarCortex/MossyFibers
+						   read => "
+- /CerebellarCortex/MossyFibers
+- /CerebellarCortex/MossyFibers/MossyGrid
 - /CerebellarCortex/MossyFibers/0
 - /CerebellarCortex/MossyFibers/0/value
 - /CerebellarCortex/MossyFibers/0/spikegen

@@ -1162,18 +1162,18 @@ AlgorithmListPush
 
 			ParserContextPushAlgorithmState(PARSERSTATE_ALGORITHM);
 
-/* 			//- insert algorithm instance in the symbol table */
+			//- insert algorithm instance in the symbol table
 
-/* 			//t I prefer to move this code to the */
-/* 			//t AlgorithmListPush non-terminal, but that */
-/* 			//t does not work because */
-/* 			//t ParserContextGetActual() sometimes returns */
-/* 			//t NULL overthere, don't know why. */
+			//t I prefer to move this code to the
+			//t AlgorithmListPush non-terminal, but that
+			//t does not work because
+			//t ParserContextGetActual() sometimes returns
+			//t NULL overthere, don't know why.
 
-/* 			struct symtab_HSolveListElement *phsleActual */
-/* 			    = ParserContextGetActual((PARSERCONTEXT *)pacParserContext); */
+			struct symtab_HSolveListElement *phsleActual
+			    = ParserContextGetActual((PARSERCONTEXT *)pacParserContext);
 
-/* 			SymbolAddChild(phsleActual, &palgs->hsle); */
+			SymbolAddChild(phsleActual, &palgs->hsle);
 
 		    }
 		}
@@ -1226,27 +1226,27 @@ AlgorithmListPop
 
 			//t I could free pcName, pcInstance and pcInit here ?
 
-			//- insert algorithm instance in the symbol table
+/* 			//- insert algorithm instance in the symbol table */
 
-			//t I prefer to move this code to the
-			//t AlgorithmListPush non-terminal, but that
-			//t does not work because
-			//t ParserContextGetActual() sometimes returns
-			//t NULL overthere, don't know why.
+/* 			//t I prefer to move this code to the */
+/* 			//t AlgorithmListPush non-terminal, but that */
+/* 			//t does not work because */
+/* 			//t ParserContextGetActual() sometimes returns */
+/* 			//t NULL overthere, don't know why. */
 
-			//t it looks like that the symbol that should
-			//t go into phsleActual is allocated to late, ie
-			//t in .*Description, and AlgorithmListPush is
-			//t called for in .*Front.  But, in .*Front the
-			//t type of the symbol to be allocated is
-			//t already known, so it is possible to allocate
-			//t the correct symbol type, and put it in
-			//t phsleActual.
+/* 			//t it looks like that the symbol that should */
+/* 			//t go into phsleActual is allocated to late, ie */
+/* 			//t in .*Description, and AlgorithmListPush is */
+/* 			//t called for in .*Front.  But, in .*Front the */
+/* 			//t type of the symbol to be allocated is */
+/* 			//t already known, so it is possible to allocate */
+/* 			//t the correct symbol type, and put it in */
+/* 			//t phsleActual. */
 
-			struct symtab_HSolveListElement *phsleActual
-			    = ParserContextGetActual((PARSERCONTEXT *)pacParserContext);
+/* 			struct symtab_HSolveListElement *phsleActual */
+/* 			    = ParserContextGetActual((PARSERCONTEXT *)pacParserContext); */
 
-			SymbolAddChild(phsleActual, &palgs->hsle);
+/* 			SymbolAddChild(phsleActual, &palgs->hsle); */
 
 /* 			int iResult = ParserAddModel((PARSERCONTEXT *)pacParserContext, &palgs->hsle); */
 
