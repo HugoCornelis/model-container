@@ -90,7 +90,7 @@ my $test
 				command_tests => [
 						  {
 						   description => "Can we find spines attached to a spiny dendrite in the model purkinje cell ?",
-						   read => '= 1140
+						   read => '= 1141
 ',
 						   write => "serialID /Purkinje Purkinje/segments/b0s01[1]/Purkinje_spine_0/head/par",
 						  },
@@ -276,7 +276,7 @@ my $test
 				 command_tests => [
 						   {
 						    description => "Can we find spines attached to a spiny dendrite in the model purkinje cell ?",
-						    read => '= 3037
+						    read => '= 3038
 ',
 						    write => "serialID /Purkinje Purkinje/segments/b0s01[1]/Purkinje_spine_0/head/par",
 						   },
