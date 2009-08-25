@@ -512,7 +512,7 @@ doxygen: doxygen.cfg
 	$(DOXYGEN) doxygen.cfg
 
 docs: doxygen html-upload-prepare
-	echo Not implemented  yet
+	echo "Generated doxygen and regression tests."
 
 
 
