@@ -408,7 +408,7 @@ test: check
 
 html-upload-prepare:
 	rm -fr html/htdocs/neurospaces_project/neurospaces
-	mkdir --parents html/htdocs/neurospaces_project/neurospaces
+	mkdir -p html/htdocs/neurospaces_project/neurospaces
 # $Format: "	( cd tests && ./tests_2_html --header '<img src=\"ns-main-logo-dark2-notext-32x32.jpg\" alt=\"Main Neurospaces logo\"> ${package}, ${label}, ${email} <hr>' --introduction introduction.html )" $
 	( cd tests && ./tests_2_html --header '<img src="ns-main-logo-dark2-notext-32x32.jpg" alt="Main Neurospaces logo"> neurospaces 0.1675 Thu, 27 Dec 2007 15:58:18 -0600 hugo<hr>' --introduction introduction.html )
 	tar cfh - tests/html | ( cd html/htdocs/neurospaces_project/neurospaces && tar vxf - )
