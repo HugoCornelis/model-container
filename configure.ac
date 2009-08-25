@@ -216,8 +216,8 @@ dnl Check for some needed programs.
 AC_CHECK_PROGS(PERL, perl5 perl)
 
 AC_PATH_PROGS(DOXYGEN,doxygen,[NULL])
-
 AC_PATH_PROGS(DOT,dot)
+AC_PATH_PROGS(SOURCE_HIGHLIGHT,source-highlight)
 
 # search lisp dir for installing the emacs major mode
 
