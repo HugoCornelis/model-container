@@ -40,16 +40,16 @@ File (/tmp/neurospaces/test/models/legacy/populations/purkinje.ndf) --> Namespac
 						  {
 						   description => "Do we find subnetworks and no inputs in the main network ?",
 						   read => 'children (if any) :
-Child 0 : 0,T_sym_network
-Child 1 : 1,T_sym_network
-Child 2 : 2,T_sym_network
-Child 3 : 3,T_sym_network
-Child 4 : 4,T_sym_network
-Child 5 : 5,T_sym_network
-Child 6 : 6,T_sym_network
-Child 7 : 7,T_sym_network
-Child 8 : 8,T_sym_network
-Child 9 : NetworkGrid,T_sym_algorithm
+Child 0 : NetworkGrid,T_sym_algorithm
+Child 1 : 0,T_sym_network
+Child 2 : 1,T_sym_network
+Child 3 : 2,T_sym_network
+Child 4 : 3,T_sym_network
+Child 5 : 4,T_sym_network
+Child 6 : 5,T_sym_network
+Child 7 : 6,T_sym_network
+Child 8 : 7,T_sym_network
+Child 9 : 8,T_sym_network
 inputs (if any) :
  neurospaces ',
 						   timeout => 10,
@@ -159,21 +159,21 @@ inputs (if any) :
 						   description => "Can we succesfully initialize a projectionquery that indexes all projections ?",
 						   read => "caching = yes
 ",
-						   timeout => 30,
+						   timeout => 40,
 						   write => "pqsetall c",
 						  },
 						  {
 						   description => "Can we succesfully reinitialize a projectionquery that indexes all projections ?",
 						   read => "caching = yes
 ",
-						   timeout => 30,
+						   timeout => 40,
 						   write => "pqsetall c",
 						  },
 						  {
 						   description => "Can we succesfully reinitialize a projectionquery that indexes all projections ?",
 						   read => "caching = yes
 ",
-						   timeout => 30,
+						   timeout => 40,
 						   write => "pqsetall c",
 						  },
 						  {
@@ -184,7 +184,7 @@ inputs (if any) :
 #memory used by connection cache = 10703532
 #memory used by ordered cache 1  = 5351780
 #memory used by ordered cache 2  = 5351780
-						   timeout => 30,
+						   timeout => 40,
 						   write => "pqcount c /CerebellarCortex/0/MossyFibers/1/spikegen",
 						  },
 						  {
