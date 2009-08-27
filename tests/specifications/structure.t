@@ -347,7 +347,7 @@ my $test
 						   #t 			  },
 						  {
 						   description => "What is the treespaces ID of a synaptic channel on a spine of the second Purkinje cell ?",
-						   read => "serial ID = 25522
+						   read => "serial ID = 25523
 ",
 						   write => "serialID /CerebellarCortex/Purkinjes/1 /CerebellarCortex/Purkinjes/1/segments/b3s46[15]/Purkinje_spine_0/head/par",
 						  },
