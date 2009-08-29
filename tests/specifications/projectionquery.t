@@ -247,6 +247,7 @@ Connection (00031)
 						  },
 						 ],
 				description => "projection query caches : saving, loading and examination of projection queries",
+				disabled => 'the projectionquery cache needs to be regenerated with serials that are corrected for the order corrections of algorithm symbols that were recently made',
 			       },
 			      ],
        description => "projection query caching",
