@@ -355,8 +355,8 @@ my $test
 						  (
 						   {
 						    description => "What is the serial mapping for the fifth Purkine cell ?",
-						    read => "Traversal serial ID = 265331
-Principal serial ID = 265331 of 439542 Principal successors
+						    read => "Traversal serial ID = 265341
+Principal serial ID = 265341 of 439542 Principal successors
 ",
 # Mechanism serial ID = 133390 of 146304 Mechanism successors
 # Segment  serial  ID = 29000 of 33548  Segment  successors
@@ -364,8 +364,8 @@ Principal serial ID = 265331 of 439542 Principal successors
 						   },
 						   {
 						    description => "What is the serial mapping for the fifth Purkine cell when referenced with a parent reference ?",
-						    read => "Traversal serial ID = 265331
-Principal serial ID = 265331 of 439542 Principal successors
+						    read => "Traversal serial ID = 265341
+Principal serial ID = 265341 of 439542 Principal successors
 ",
 # Mechanism serial ID = 133390 of 146304 Mechanism successors
 # Segment  serial  ID = 29000 of 33548  Segment  successors
@@ -373,8 +373,8 @@ Principal serial ID = 265331 of 439542 Principal successors
 						   },
 						   {
 						    description => "What is the serial mapping for the fifth Purkine cell segments ?",
-						    read => "Traversal serial ID = 265332
-Principal serial ID = 265332 of 439542 Principal successors
+						    read => "Traversal serial ID = 265343
+Principal serial ID = 265343 of 439542 Principal successors
 ",
 # Mechanism serial ID = 133390 of 146304 Mechanism successors
 # Segment  serial  ID = 29000 of 33548  Segment  successors
@@ -382,8 +382,8 @@ Principal serial ID = 265332 of 439542 Principal successors
 						   },
 						   {
 						    description => "What is the serial mapping for the fifth Purkine cell segments when referenced using a parent reference ?",
-						    read => "Traversal serial ID = 265332
-Principal serial ID = 265332 of 439542 Principal successors
+						    read => "Traversal serial ID = 265343
+Principal serial ID = 265343 of 439542 Principal successors
 ",
 # Mechanism serial ID = 133390 of 146304 Mechanism successors
 # Segment  serial  ID = 29000 of 33548  Segment  successors
@@ -391,8 +391,8 @@ Principal serial ID = 265332 of 439542 Principal successors
 						   },
 						   {
 						    description => "What is the serial mapping for the fifth Purkine cell when referenced using two parent references ?",
-						    read => "Traversal serial ID = 265331
-Principal serial ID = 265331 of 439542 Principal successors
+						    read => "Traversal serial ID = 265341
+Principal serial ID = 265341 of 439542 Principal successors
 ",
 # Mechanism serial ID = 133390 of 146304 Mechanism successors
 # Segment  serial  ID = 29000 of 33548  Segment  successors
@@ -406,8 +406,8 @@ Principal serial ID = 265331 of 439542 Principal successors
 						   },
 						   {
 						    description => "What is the serial mapping for a symbol that does exist using parent references, yet with one intermediate reference to a symbol that does not exist ?",
-						    read => "Traversal serial ID = 265331
-Principal serial ID = 265331 of 439542 Principal successors
+						    read => "Traversal serial ID = 265341
+Principal serial ID = 265341 of 439542 Principal successors
 ",
 # Mechanism serial ID = 133390 of 146304 Mechanism successors
 # Segment  serial  ID = 29000 of 33548  Segment  successors
@@ -415,8 +415,8 @@ Principal serial ID = 265331 of 439542 Principal successors
 						   },
 						   {
 						    description => "What is the serial mapping for a symbol that does exist using parent references, yet with intermediate references to symbols that do not exist ?",
-						    read => "Traversal serial ID = 265331
-Principal serial ID = 265331 of 439542 Principal successors
+						    read => "Traversal serial ID = 265341
+Principal serial ID = 265341 of 439542 Principal successors
 ",
 # Mechanism serial ID = 133390 of 146304 Mechanism successors
 # Segment  serial  ID = 29000 of 33548  Segment  successors
@@ -424,8 +424,8 @@ Principal serial ID = 265331 of 439542 Principal successors
 						   },
 						   {
 						    description => "What is the serial mapping for a symbol that does exist using parent references, yet with intermediate references to symbols that do not exist and using the root namespace operator ?",
-						    read => "Traversal serial ID = 265331
-Principal serial ID = 265331 of 439542 Principal successors
+						    read => "Traversal serial ID = 265341
+Principal serial ID = 265341 of 439542 Principal successors
 ",
 # Mechanism serial ID = 133390 of 146304 Mechanism successors
 # Segment  serial  ID = 29000 of 33548  Segment  successors
@@ -488,23 +488,23 @@ inputs (if any) :
 						  {
 						   description => "Describe the children of the cerebellar cortex network.",
 						   read => "children (if any) :
-Child 0 : MossyFibers,T_sym_population
-Child 1 : Granules,T_sym_population
-Child 2 : Golgis,T_sym_population
-Child 3 : Purkinjes,T_sym_population
-Child 4 : MossyFiberProjection,T_sym_projection
-Child 5 : ForwardProjection,T_sym_projection
-Child 6 : BackwardProjection,T_sym_projection
-Child 7 : ParallelFiberProjection,T_sym_projection
-Child 8 : Golgis2Granules_GABAB,T_sym_algorithm
-Child 9 : Golgis2Granules_GABAA,T_sym_algorithm
-Child 10 : Granules2Golgis,T_sym_algorithm
-Child 11 : Mossies2Granules_AMPA,T_sym_algorithm
-Child 12 : Mossies2Granules_NMDA,T_sym_algorithm
-Child 13 : Mossies2Golgis,T_sym_algorithm
-Child 14 : ForwardProjection,T_sym_algorithm
-Child 15 : BackwardProjectionB,T_sym_algorithm
-Child 16 : BackwardProjectionA,T_sym_algorithm
+Child 0 : BackwardProjectionA_algorithm,T_sym_algorithm
+Child 1 : BackwardProjectionB_algorithm,T_sym_algorithm
+Child 2 : ForwardProjection_algorithm,T_sym_algorithm
+Child 3 : Mossies2Golgis_algorithm,T_sym_algorithm
+Child 4 : Mossies2Granules_NMDA_algorithm,T_sym_algorithm
+Child 5 : Mossies2Granules_AMPA_algorithm,T_sym_algorithm
+Child 6 : Granules2Golgis_algorithm,T_sym_algorithm
+Child 7 : Golgis2Granules_GABAA_algorithm,T_sym_algorithm
+Child 8 : Golgis2Granules_GABAB_algorithm,T_sym_algorithm
+Child 9 : MossyFibers,T_sym_population
+Child 10 : Granules,T_sym_population
+Child 11 : Golgis,T_sym_population
+Child 12 : Purkinjes,T_sym_population
+Child 13 : MossyFiberProjection,T_sym_projection
+Child 14 : ForwardProjection,T_sym_projection
+Child 15 : BackwardProjection,T_sym_projection
+Child 16 : ParallelFiberProjection,T_sym_projection
 inputs (if any) :
 ",
 						   write => "childreninfo /CerebellarCortex"
@@ -538,8 +538,8 @@ File (/tmp/neurospaces/test/models/legacy/populations/purkinje.ndf) --> Namespac
 						  },
 						  {
 						   description => "What are the forestspace IDs for the spine neck ?",
-						   read => "Traversal serial ID = 1139
-Principal serial ID = 1139 of 153157 Principal successors
+						   read => "Traversal serial ID = 1141
+Principal serial ID = 1141 of 153157 Principal successors
 ",
 # Mechanism serial ID = 656 of 77484 Mechanism successors
 # Segment  serial  ID = 73 of 27288  Segment  successors

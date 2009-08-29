@@ -154,8 +154,8 @@ my $test
 						  },
 						  {
 						   description => "What are the forestspace IDs for the spine neck ?",
-						   read => 'Traversal serial ID = 1138
-Principal serial ID = 1138 of 25525 Principal successors
+						   read => 'Traversal serial ID = 1139
+Principal serial ID = 1139 of 25525 Principal successors
 ',
 # Mechanism serial ID = 656 of 12914 Mechanism successors
 # Segment  serial  ID = 73 of 4548  Segment  successors
@@ -164,8 +164,8 @@ Principal serial ID = 1138 of 25525 Principal successors
 						  {
 						   comment => 'note the differences when using G2 tabchans, G3 ns-sli and plain G3',
 						   description => "What are the forestspace IDs for the segment b0s01[1] ?",
-						   read => 'Traversal serial ID = 1127
-Principal serial ID = 1127 of 25525 Principal successors
+						   read => 'Traversal serial ID = 1128
+Principal serial ID = 1128 of 25525 Principal successors
 ',
 # Mechanism serial ID = 649 of 12914 Mechanism successors
 # Segment  serial  ID = 72 of 4548  Segment  successors
@@ -178,8 +178,8 @@ Principal serial ID = 1127 of 25525 Principal successors
 						  },
 						  {
 						   description => "Can the solver for the spine neck be found, is it the one we just assigned to it ?",
-						   read => 'Solver = purk_solver, solver serial ID = 1138
-Solver serial context for 1138 = 
+						   read => 'Solver = purk_solver, solver serial ID = 1139
+Solver serial context for 1139 = 
 	/Purkinje/segments/b0s01[1]/Purkinje_spine_0/neck
 ',
 						   write => "resolvesolver /Purkinje/segments/b0s01[1]/Purkinje_spine_0/neck",
@@ -334,16 +334,16 @@ Solver serial context for 1138 =
 						  },
 						  {
 						   description => "What are the forestspace IDs for the spine neck ?",
-						   read => 'Traversal serial ID = 3035
-Principal serial ID = 3035 of 65622 Principal successors
+						   read => 'Traversal serial ID = 3036
+Principal serial ID = 3036 of 65622 Principal successors
 ',
 						   write => "serialMapping /Purkinje Purkinje/segments/b0s01[1]/Purkinje_spine_0/neck",
 						  },
 						  {
 						   comment => 'note the differences when using G2 tabchans, G3 ns-sli and plain G3',
 						   description => "What are the forestspace IDs for the segment b0s01[1] ?",
-						   read => 'Traversal serial ID = 2999
-Principal serial ID = 2999 of 65622 Principal successors
+						   read => 'Traversal serial ID = 3000
+Principal serial ID = 3000 of 65622 Principal successors
 ',
 						   write => "serialMapping /Purkinje Purkinje/segments/b0s01[1]",
 						  },
@@ -354,8 +354,8 @@ Principal serial ID = 2999 of 65622 Principal successors
 						  },
 						  {
 						   description => "Can the solver for the spine neck be found, is it the one we just assigned to it ?",
-						   read => 'Solver = purk_solver, solver serial ID = 3035
-Solver serial context for 3035 = 
+						   read => 'Solver = purk_solver, solver serial ID = 3036
+Solver serial context for 3036 = 
 	/Purkinje/segments/b0s01[1]/Purkinje_spine_0/neck
 ',
 						   write => "resolvesolver /Purkinje/segments/b0s01[1]/Purkinje_spine_0/neck",
@@ -511,8 +511,8 @@ Solver serial context for 3035 =
 						  {
 						   comment => 'note the differences when using G2 tabchans, G3 ns-sli and plain G3',
 						   description => "What are the forestspace IDs for the segment b0s01[1] ?",
-						   read => 'Traversal serial ID = 2999
-Principal serial ID = 2999 of 56778 Principal successors
+						   read => 'Traversal serial ID = 3000
+Principal serial ID = 3000 of 56778 Principal successors
 ',
 						   write => "serialMapping /Purkinje Purkinje/segments/b0s01[1]",
 						  },
