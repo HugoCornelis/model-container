@@ -247,7 +247,7 @@ Connection (00031)
 						  },
 						 ],
 				description => "projection query caches : saving, loading and examination of projection queries",
-				disabled => 'the projectionquery cache needs to be regenerated with serials that are corrected for the order corrections of algorithm symbols that were recently made',
+				disabled => 'The projectionquery cache needs to be regenerated with serials that are corrected for the order corrections of algorithm symbols that were recently made.  This means that first (struct symtab_Connection *) must use alien typing such that SymbolParameterResolveValue() can be called correctly.  Currently QueryMachineNeuroConnectionStore() gives a SEGV after calling the pqsave command.',
 			       },
 			      ],
        description => "projection query caching",
