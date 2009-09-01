@@ -27,13 +27,11 @@
 
 
 /// 
-/// 
 /// \return struct AlgorithmClass * 
 /// 
 ///	Newly allocated algorithm, NULL for failure
 /// 
 /// \brief Allocate a new algorithm symbol table element
-/// \details 
 /// 
 
 struct AlgorithmClass * AlgorithmClassCalloc(void)
@@ -59,12 +57,12 @@ struct AlgorithmClass * AlgorithmClassCalloc(void)
 
 
 /// 
-/// 
 /// \arg palgc algorithm to get name for
 /// 
 /// \return char * : name of algorithm, NULL for failure
 /// 
 /// \brief get name of algorithm
+///
 /// \details 
 /// 
 ///	Return value is pointer to symbol table read only data
@@ -87,13 +85,11 @@ char * AlgorithmClassGetName(struct AlgorithmClass *palgc)
 
 
 /// 
-/// 
 /// \arg palgc algorithm to init
 /// 
 /// \return void
 /// 
 /// \brief init algorithm
-/// \details 
 /// 
 
 void AlgorithmClassInit(struct AlgorithmClass *palgc)

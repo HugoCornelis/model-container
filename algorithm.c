@@ -59,13 +59,11 @@ static HSolveList * phslAlgorithmsList = NULL;
 
 
 /// 
-/// 
 /// \return struct symtab_Algorithm * 
 /// 
 ///	Newly allocated algorithm, NULL for failure
 /// 
 /// \brief Allocate a new algorithm symbol table element
-/// \details 
 /// 
 
 struct symtab_Algorithm * AlgorithmCalloc(void)
@@ -91,14 +89,12 @@ struct symtab_Algorithm * AlgorithmCalloc(void)
 
 
 /// 
-/// 
 /// \arg pcName name of algorithm to import
 /// \arg pcInit init string for algorithm
 /// 
 /// \return int : success of operation
 /// 
 /// \brief disable algorithm with given name
-/// \details 
 /// 
 
 int
@@ -145,7 +141,6 @@ AlgorithmDisable
 /* /// \return int : success of operation */
 /* /// */
 /* /// \brief Ask algorithm to handle a symbol. */
-/// \details 
 /* /// */
 /* /// ************************************************************************** */
 
@@ -167,7 +162,6 @@ AlgorithmDisable
 
 
 /// 
-/// 
 /// \arg pcName name of algorithm to import
 /// \arg pcInit init string for algorithm
 /// 
@@ -176,6 +170,7 @@ AlgorithmDisable
 ///	Imported & inited algorithm, NULL for failure
 /// 
 /// \brief import algorithm with given name
+///
 /// \details 
 /// 
 ///	Look for algorithm in imported algorithm list, if not already loaded,
@@ -238,13 +233,11 @@ AlgorithmImport
 
 
 /// 
-/// 
 /// \arg palg algorithm to init
 /// 
 /// \return void
 /// 
 /// \brief init algorithm
-/// \details 
 /// 
 
 void AlgorithmInit(struct symtab_Algorithm *palg)
@@ -256,13 +249,11 @@ void AlgorithmInit(struct symtab_Algorithm *palg)
 
 
 /// 
-/// 
 /// \return struct symtab_Algorithm * 
 /// 
 ///	Newly loaded algorithm, NULL for failure
 /// 
 /// \brief Load algorithm with given name
-/// \details 
 /// 
 
 struct symtab_Algorithm * AlgorithmLoad(HSolveList *phsl,char *pcName)
@@ -294,7 +285,6 @@ struct symtab_Algorithm * AlgorithmLoad(HSolveList *phsl,char *pcName)
 
 
 /// 
-/// 
 /// \arg phsl list of algorithms
 /// \arg pcName name of algorithm to search for
 /// 
@@ -303,7 +293,6 @@ struct symtab_Algorithm * AlgorithmLoad(HSolveList *phsl,char *pcName)
 ///	algorithm with given name, NULL for not found
 /// 
 /// \brief search for a algorithm in the algorithm list
-/// \details 
 /// 
 
 struct symtab_Algorithm * AlgorithmLookup(HSolveList *phsl,char *pcName)
@@ -344,12 +333,12 @@ struct symtab_Algorithm * AlgorithmLookup(HSolveList *phsl,char *pcName)
 
 
 /// 
-/// 
 /// \arg palg algorithm to get name for
 /// 
 /// \return char * : name of algorithm, NULL for failure
 /// 
 /// \brief get name of algorithm
+///
 /// \details 
 /// 
 ///	Return value is pointer to symbol table read only data
@@ -372,7 +361,6 @@ char * AlgorithmName(struct symtab_Algorithm *palg)
 
 
 /// 
-/// 
 /// \arg phslAlgorithms algorithm list to initialize
 /// 
 /// \return int
@@ -380,7 +368,6 @@ char * AlgorithmName(struct symtab_Algorithm *palg)
 ///	success of operation
 /// 
 /// \brief init algorithms
-/// \details 
 /// 
 
 int AlgorithmsInit(HSolveList *phslAlgorithms,struct Symbols *pisSymbols)
@@ -510,7 +497,6 @@ int AlgorithmsInit(HSolveList *phslAlgorithms,struct Symbols *pisSymbols)
 
 
 /// 
-/// 
 /// \arg phsl list of algorithms
 /// \arg pfile file to print algorithm info to
 /// 
@@ -519,7 +505,6 @@ int AlgorithmsInit(HSolveList *phslAlgorithms,struct Symbols *pisSymbols)
 ///	success of operation
 /// 
 /// \brief print algorithm info for registered algorithms
-/// \details 
 /// 
 
 int AlgorithmsPrint(HSolveList *phsl,FILE *pfile)
@@ -559,15 +544,14 @@ int AlgorithmsPrint(HSolveList *phsl,FILE *pfile)
 
 
 /// 
-/// 
 /// \arg pev event to propagate
 /// 
 /// \return int
 /// 
 ///	success of operation
 /// 
-/// \brief propagate event through registered algorithms for this event type
-/// \details 
+/// \brief propagate event through registered algorithms for this
+/// event type.
 /// 
 
 int AlgorithmsPropagateParserEvent(ParserEvent *pev)

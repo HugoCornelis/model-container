@@ -31,13 +31,11 @@
 
 
 /// 
-/// 
 /// \return struct AlgorithmInstance * 
 /// 
 ///	Newly allocated algorithm, NULL for failure
 /// 
 /// \brief Allocate a new algorithm symbol table element
-/// \details 
 /// 
 
 struct AlgorithmInstance * AlgorithmInstanceCalloc/* (void) */
@@ -86,14 +84,12 @@ struct AlgorithmInstance * AlgorithmInstanceCalloc/* (void) */
 
 
 /// 
-/// 
 /// \arg pcName name of algorithm to import
 /// \arg pcInit init string for algorithm
 /// 
 /// \return int : success of operation
 /// 
 /// \brief disable algorithm with given name
-/// \details 
 /// 
 
 int
@@ -117,12 +113,12 @@ AlgorithmInstanceDisable
 
 
 /// 
-/// 
 /// \arg palgi algorithm to get name for
 /// 
 /// \return char * : name of algorithm, NULL for failure
 /// 
 /// \brief get name of algorithm
+///
 /// \details 
 /// 
 ///	Return value is pointer to symbol table read only data
@@ -145,7 +141,6 @@ AlgorithmInstanceDisable
 
 
 /// 
-/// 
 /// \arg palgi algorithm to init
 /// \arg pc name of instance.
 /// \arg ppf algorithm instance handlers.
@@ -153,7 +148,6 @@ AlgorithmInstanceDisable
 /// \return void
 /// 
 /// \brief init algorithm instance.
-/// \details 
 /// 
 
 void
@@ -177,14 +171,12 @@ AlgorithmInstanceInit(struct AlgorithmInstance *palgi)
 
 
 /// 
-/// 
 /// \arg palgi algorithm to handle symbol.
 /// \arg pfile file to print to.
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Print info about algorithm instance.
-/// \details 
 /// 
 
 /// \todo extract function todo :
@@ -247,14 +239,12 @@ int AlgorithmInstancePrintInfo(struct AlgorithmInstance *palgi, FILE *pfile)
 
 
 /// 
-/// 
 /// \arg palgi algorithm to handle symbol.
 /// \arg pac parser context.
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Ask algorithm to handle a current symbol in the parser context.
-/// \details 
 /// 
 
 int AlgorithmInstanceSymbolHandler
