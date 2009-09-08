@@ -11,7 +11,7 @@ use strict;
 
 {
     # $Format: "system 'mkdir --parents \"/tmp/neurospaces/${package}-${label}\"';"$
-system 'mkdir --parents "/tmp/neurospaces/model-container-userdocs-5"';
+system 'mkdir --parents "/tmp/neurospaces/model-container-userdocs-6"';
 }
 
 if ($?)
@@ -22,7 +22,7 @@ if ($?)
 
 {
     # $Format: "system \"cp '/local_home/local_home/hugo/neurospaces_project/model_container/source/c/snapshots/0/${package}-${label}.tar.gz' '/tmp/neurospaces/${package}-${label}'\";"$
-system "cp '/local_home/local_home/hugo/neurospaces_project/model_container/source/c/snapshots/0/model-container-userdocs-5.tar.gz' '/tmp/neurospaces/model-container-userdocs-5'";
+system "cp '/local_home/local_home/hugo/neurospaces_project/model_container/source/c/snapshots/0/model-container-userdocs-6.tar.gz' '/tmp/neurospaces/model-container-userdocs-6'";
 }
 
 if ($?)
@@ -33,7 +33,7 @@ if ($?)
 
 {
     # $Format: "chdir \"/tmp/neurospaces/${package}-${label}\";"$
-chdir "/tmp/neurospaces/model-container-userdocs-5";
+chdir "/tmp/neurospaces/model-container-userdocs-6";
 }
 
 if ($?)
@@ -44,7 +44,7 @@ if ($?)
 
 {
     # $Format: "system \"tar xfz '${package}-${label}.tar.gz'\";"$
-system "tar xfz 'model-container-userdocs-5.tar.gz'";
+system "tar xfz 'model-container-userdocs-6.tar.gz'";
 }
 
 if ($?)
@@ -55,7 +55,7 @@ if ($?)
 
 {
     # $Format: "chdir \"${package}-${label}\";"$
-chdir "model-container-userdocs-5";
+chdir "model-container-userdocs-6";
 }
 
 if ($?)

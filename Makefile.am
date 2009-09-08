@@ -420,7 +420,7 @@ html-upload: html-upload-prepare
 
 internal-library:
 # $Format: "	tar cfz library-${package}-${label}.tar.gz library/"$
-	tar cfz library-model-container-userdocs-5.tar.gz library/
+	tar cfz library-model-container-userdocs-6.tar.gz library/
 
 libneurospacesread.so: libneurospacesread.a
 	$(CC) \
