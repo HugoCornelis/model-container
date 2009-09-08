@@ -26,7 +26,7 @@ SUBDIRS =
 
 dist-hook:
 	cp $(srcdir)/neurospaces.i $(distdir)
-	$(INSTALL) -d $(distdir)/testspwd
+	$(INSTALL) -d $(distdir)/tests
 	cp $(srcdir)/tests/*.py $(distdir)/tests
 
 pythondir = $(prefix)/glue/swig/python
