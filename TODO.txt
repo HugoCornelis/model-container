@@ -1,5 +1,8 @@
 -*- outline -*-
 
+* reduce flag
+For elements that have been reduced.  Applies to the whole subtree.
+
 * Add an ANNOTATION element
 ** 3D coordinates for network annotation and visualization
 ** CONTENT parameter that points to the free style content of the annotation
