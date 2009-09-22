@@ -19,7 +19,7 @@ dnl //////////////////////////////////////////////////////////////////////////
 
 dnl Process this file with autoconf to produce a configure script.
 # $Format: "AC_REVISION(${package}, ${label}, ${email})"$
-AC_REVISION(model-container, userdocs-6, hugo.cornelis@gmail.com)
+AC_REVISION(model-container, c29add6329c4c4fd3576b1885c36df996c00ecaa-0, hugo.cornelis@gmail.com)
 dnl AC_REVISION($Id: configure.ac 1.40 Wed, 10 Oct 2007 16:57:00 -0500 hugo $)
 AC_INIT
 AC_CONFIG_SRCDIR([neurospaces.c])
@@ -96,7 +96,7 @@ AC_SUBST(PERL_LDFLAGS)
 
 
 # $Format: "AM_INIT_AUTOMAKE(${package}, ${label}, ${email})"$
-AM_INIT_AUTOMAKE(model-container, userdocs-6, hugo.cornelis@gmail.com)
+AM_INIT_AUTOMAKE(model-container, c29add6329c4c4fd3576b1885c36df996c00ecaa-0, hugo.cornelis@gmail.com)
 
 
 

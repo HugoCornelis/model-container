@@ -780,7 +780,7 @@ sub register_engine
 sub version
 {
     # $Format: "    my $version=\"${package}-${label}\";"$
-    my $version="model-container-userdocs-6";
+    my $version="model-container-c29add6329c4c4fd3576b1885c36df996c00ecaa-0";
 
     return $version;
 }
