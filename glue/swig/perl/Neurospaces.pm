@@ -744,7 +744,7 @@ sub register_engine
 
     # set default result : failure
 
-    my $result = 0;
+    my $result = 'register_engine(): default failure';
 
     # convert the modelname to a context
 
@@ -766,9 +766,21 @@ sub register_engine
 	    {
 		# set result
 
-		$result = 1;
+		$result = '';
+	    }
+	    else
+	    {
+		$result = "register_engine(): unable to create solver_info for $modelname";
 	    }
 	}
+	else
+	{
+	    $result = "register_engine(): unable to find the solver engine name for $modelname";
+	}
+    }
+    else
+    {
+	$result = "register_engine(): unable to create a model-container context for $modelname";
     }
 
     # return result
