@@ -1,4 +1,4 @@
-static char *pcVersionTime="(09/08/01) Saturday, August 1, 2009 06:44:00 hugo";
+static char *pcVersionTime="(09/09/29) Tuesday, September 29, 2009 18:41:23 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -297,14 +297,28 @@ static int ConfigParse(struct NeurospacesConfig *pnsc, int argc, char *argv[])
 
 		    i++;
 
-		    //- parse verbosity number
+		    //- if it exists
 
-		    /// \todo could do a ascii->int mapping here to allow ascii
-		    /// \todo command line options
+		    if (argv[i])
+		    {
+			//- parse verbosity number
 
-		    /// \todo use strtol() to detect errors
+			/// \todo could do a ascii->int mapping here to allow ascii
+			/// \todo command line options
 
-		    pnsc->nso.iVerbosity = atoi(argv[i]);
+			/// \todo use strtol() to detect errors
+
+			pnsc->nso.iVerbosity = atoi(argv[i]);
+		    }
+
+		    //- else
+
+		    else
+		    {
+			//- increment verbosity level
+
+			pnsc->nso.iVerbosity++;
+		    }
 
 		    break;
 		}
