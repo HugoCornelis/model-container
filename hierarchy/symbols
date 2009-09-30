@@ -83,7 +83,7 @@ my $class_hierarchy
 	iohier => {
 		   allows => {
 			      'add_child' => 'i_o_hierarchy',
-			      (`cat neurospaces/config.h` =~ /define DELETE_OPERATION 1/ ? ('delete_child' => 'i_o_hierarchy') : ()),
+			      (`cat neurospaces/config.h || cat /usr/local/include/neurospaces/config.h` =~ /define DELETE_OPERATION 1/ ? ('delete_child' => 'i_o_hierarchy') : ()),
 			      'get_children' => 'i_o_hierarchy',
 			      'lookup_hierarchical' => 'i_o_hierarchy',
 			      'print' => 'i_o_hierarchy',
