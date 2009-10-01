@@ -19,6 +19,7 @@
 
 SUBDIRS = algorithms . glue/swig convertors
 
+
 #add glue/swig convertors subdirs back after this works.
 
 dist_bin_SCRIPTS = bin/model-container
