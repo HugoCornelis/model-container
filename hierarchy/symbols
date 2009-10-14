@@ -2745,6 +2745,7 @@ my $tokens
 	      },
        neuron => {
 		  lexical => 'TOKEN_NEURON',
+		  purpose => 'physical',
 		 },
        neurospaces => {
 		       lexical => 'TOKEN_NEUROSPACES',
