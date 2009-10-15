@@ -650,6 +650,7 @@ void ParameterTo_stdout(struct symtab_Parameters *ppar);
 
 double ParameterValue(struct symtab_Parameters *ppar);
 
+int PrintParameterTraversal(struct PidinStack *ppist);
 
 #endif
 
