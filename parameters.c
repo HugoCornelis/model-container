@@ -2015,15 +2015,10 @@ int PrintParameterTraversal(struct PidinStack *ppist)
 
 	while (ppar)
 	{
-	  //- get parameter name
 
-	  char *pc = ParameterGetName(ppar);
+	  ParameterPrintInfoRecursive(ppar, ppist, 0, stdout);
 
-	  //- print parameter info
-
-	  fprintf(stdout, "  - component_name: %s\n", pcContext);
-	  fprintf(stdout, "    field: %s\n", ParameterGetName(ppar));
-	  fprintf(stdout, "    value: %s\n", ParameterGetString(ppar));
+	  fprintf(stdout,"%s","\n");
 
 	  //- go to next parameter
 
