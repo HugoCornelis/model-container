@@ -211,7 +211,7 @@ static QueryHandler QueryHandlerVersion;
 static QueryHandler QueryHandlerWriteLibrary;
 static QueryHandler QueryHandlerWriteModular;
 static QueryHandler QueryHandlerWriteSymbol;
-
+static QueryHandler QueryHandlerPrintParameterTraversal;
 
 /// query association table
 
@@ -982,6 +982,18 @@ static QueryHandlerAssociation pquhasTable[] =
     {
 	"writesymbol",
 	QueryHandlerWriteSymbol,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    /// print out all parameters 
+    /// associated with  a symbol
+
+    {
+	"printparametertraversal",
+	QueryHandlerPrintParameterTraversal,
 #ifdef USE_READLINE
 	1,
 	QueryMachineSymbolGenerator,
@@ -10432,3 +10444,36 @@ void QueryMachineStart(struct Neurospaces *pneuro, int iReadline)
 }
 
 
+
+
+
+
+/*
+* \fun static int QueryHandlerPrintParameterTraversal
+          (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
+* 
+*  Prints out all parameters associated with a given symbol.
+*/
+static int QueryHandlerPrintParameterTraversal
+(char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
+{
+    //- set result : ok
+
+    int bResult = TRUE;
+
+    struct symtab_HSolveListElement *phsle = NULL;
+
+    //- parse command line element
+
+    struct PidinStack *ppist = PidinStackParse(&pcLine[iLength]);
+ 
+    bResult = PrintParameterTraversal(ppist);
+
+    //- free stacks
+
+    PidinStackFree(ppist);
+
+    //- return result
+
+    return(bResult);
+}
