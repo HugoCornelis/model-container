@@ -1830,7 +1830,7 @@ options :
     --yaml                    yaml output instead of ndf.
 ";
 
-	exit 1;
+	exit 0;
     }
 
     # figure out the cell name

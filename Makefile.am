@@ -530,6 +530,9 @@ docs-level3: html-upload-prepare
 	echo "Converted the regression tests to HTML"
 
 docs-level4:
+	mkdir -p html/htdocs/neurospaces_project/neurospaces/docs-level4
+	( echo 'help' && echo 'quit' ) | neurospacesparse -q >html/htdocs/neurospaces_project/neurospaces/docs-level4/neurospacesparse.txt
+	convertors/morphology2ndf --help >html/htdocs/neurospaces_project/neurospaces/docs-level4/morpohology2ndf.txt
 
 docs-level5:
 
