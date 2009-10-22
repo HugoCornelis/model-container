@@ -529,10 +529,16 @@ docs-level2:
 docs-level3: html-upload-prepare
 	echo "Converted the regression tests to HTML"
 
+# the following commented out code breaks the cron job: because
+# neurospacesparse is removed by a make clean, it cannot produce its
+# help pages anymore.  So we can only generate docs-level4 after a
+# successful compilation.  Note that this holds for other software
+# components too.
+
 docs-level4:
-	mkdir -p html/htdocs/neurospaces_project/neurospaces/docs-level4
-	( echo 'help' && echo 'quit' ) | neurospacesparse -q >html/htdocs/neurospaces_project/neurospaces/docs-level4/neurospacesparse.txt
-	convertors/morphology2ndf --help >html/htdocs/neurospaces_project/neurospaces/docs-level4/morpohology2ndf.txt
+#	mkdir -p html/htdocs/neurospaces_project/neurospaces/docs-level4
+#	( echo 'help' && echo 'quit' ) | neurospacesparse -q >html/htdocs/neurospaces_project/neurospaces/docs-level4/neurospacesparse.txt
+#	convertors/morphology2ndf --help >html/htdocs/neurospaces_project/neurospaces/docs-level4/morpohology2ndf.txt
 
 docs-level5:
 
