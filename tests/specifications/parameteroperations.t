@@ -105,6 +105,39 @@ type: function
 ",
 						   write => "printparameterinfo /Purkinje/segments/soma/cat Erev",
 						  },
+
+						  {
+						   description => "Can we print all parameters on a given symbol?",
+						   read => "
+'parameter name': Erev
+type: function
+'function name': NERNST
+'function parameters':
+
+  -
+    'parameter name': Cin
+    'field name': concen
+    type: field
+    value: ../ca_pool->concen
+    'resolved value': /Purkinje/segments/soma/ca_pool->concen
+  -
+    'parameter name': Cout
+    type: number
+    value: 2.4
+  -
+    'parameter name': valency
+    'field name': VAL
+    type: field
+    value: ../ca_pool->VAL
+    'resolved value': /Purkinje/segments/soma/ca_pool->VAL
+  -
+    'parameter name': T
+    type: number
+    value: 37
+",
+						   write => "printparametertraversal /Purkinje/segments/soma/cat",
+						  },
+
 						  {
 						   description => "Can we find extended information for a segment's parameters ?",
 						   read => "  -
@@ -162,6 +195,12 @@ type: function
 ",
 						   write => "symbolparameters /Purkinje/segments/main[2]",
 						  },
+
+
+
+						  
+
+
 						  {
 						   description => "Can we find extended information for a channel's parameters ?",
 						   read => "  -
@@ -417,6 +456,9 @@ Parameter (Z)
 ',
 						   write => "printparameterset /CerebellarCortex/MossyFibers/1",
 						  },
+
+
+
 						 ],
 				description => "finding parameter names, small network",
 			       },
