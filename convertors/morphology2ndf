@@ -1808,29 +1808,29 @@ $0 <options> <genesis .p file | .swc file>
 $0: convert morphology files to neurospaces morphology files.
 
 options :
-    configuration-filename  configuration filename (if none, a default configuration is used,
+    --configuration-filename  configuration filename (if none, a default configuration is used,
                                 or a library configuration (in /etc) is used,
                                 use the show-configuration option to see what it looks like).
-    force-library           force the use of library values, ignoring command line options.
-    help                    print usage information.
-    input-format-list       list all input formats and exit.
-    optional-configuration-filename
-                            an configuration filename that is used if it is available,
-                            overriding the configuration-filename option.
-    output-format           output format, default is 'ndf'.
-    output-format-list      list all output formats and exit.
-    prototypes              prototype configuration (filename or code).
-    show-configuration      show the configuration after applying morphology logic and exit.
-    show-library            show the library with specific settings for each morphology.
-    shrinkage               shrinkage correction factor (1 is default)
-    soma-offset             apply soma offset to all compartments (puts the soma at the origin)
-    spine-prototypes        add spines with this prototype.
-    no-use-library          do not use the library with specific settings for each morphology.
-    verbose                 set verbosity level.
-    yaml                    yaml output instead of ndf.
+    --force-library           force the use of library values, ignoring command line options.
+    --help                    print usage information.
+    --input-format-list       list all input formats and exit.
+    --optional-configuration-filename
+                              an configuration filename that is used if it is available,
+                              overriding the configuration-filename option.
+    --output-format           output format, default is 'ndf'.
+    --output-format-list      list all output formats and exit.
+    --prototypes              prototype configuration (filename or code).
+    --show-configuration      show the configuration after applying morphology logic and exit.
+    --show-library            show the library with specific settings for each morphology.
+    --shrinkage               shrinkage correction factor (1 is default)
+    --soma-offset             apply soma offset to all compartments (puts the soma at the origin)
+    --spine-prototypes        add spines with this prototype.
+    --no-use-library          do not use the library with specific settings for each morphology.
+    --verbose                 set verbosity level.
+    --yaml                    yaml output instead of ndf.
 ";
 
-	exit 1;
+	exit 0;
     }
 
     # figure out the cell name
