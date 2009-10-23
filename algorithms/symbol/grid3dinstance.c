@@ -59,6 +59,12 @@ struct Grid3DOptions_type
 
     char *pcGrid3DProtoPublic;
 
+    /*m name of instances to be created */
+
+    /// this was added for the purpose of backward compatibility
+
+    char *pcInstanceName;
+
     /*m X count */
 
     int ix;
@@ -208,6 +214,22 @@ Grid3DInstanceNew
 	if (pparProtoPublic)
 	{
 	    pg3i->g3o.pcGrid3DProtoPublic = ParameterGetString(pparProtoPublic);
+	}
+
+	/// \todo should use ParameterResolveSymbol()
+
+	struct symtab_Parameters *pparInstanceName
+	    = SymbolFindParameter(&palgs->hsle, ppist, "INSTANCE_NAME");
+
+	//- scan prototype name
+
+	if (pparInstanceName)
+	{
+	    pg3i->g3o.pcInstanceName = ParameterGetString(pparInstanceName);
+	}
+	else
+	{
+	    pg3i->g3o.pcInstanceName = "%i";
 	}
 
 	//- scan x count
@@ -378,7 +400,7 @@ Grid3DAddComponents
 		/// \todo or perhaps by making the element pidin valid only
 		/// \todo if the element belongs to the principal subset ?
 
-		sprintf(pcTmp,"%i",pg3i->g3v.iAdded);
+		sprintf(pcTmp, pg3i->g3o.pcInstanceName, pg3i->g3v.iAdded);
 
 		pc = (char *)calloc(1 + strlen(pcTmp),sizeof(char));
 
