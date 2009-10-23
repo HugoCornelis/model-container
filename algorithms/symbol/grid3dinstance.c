@@ -53,6 +53,12 @@ struct Grid3DOptions_type
 
     char *pcGrid3DProto;
 
+    /*m name of public prototype for random Grid3Ds */
+
+    /// this was added for the purpose of backward compatibility
+
+    char *pcGrid3DProtoPublic;
+
     /*m X count */
 
     int ix;
@@ -187,7 +193,22 @@ Grid3DInstanceNew
 
 	//- scan prototype name
 
-	pg3i->g3o.pcGrid3DProto = ParameterGetString(pparProto);
+	if (pparProto)
+	{
+	    pg3i->g3o.pcGrid3DProto = ParameterGetString(pparProto);
+	}
+
+	/// \todo should use ParameterResolveSymbol()
+
+	struct symtab_Parameters *pparProtoPublic
+	    = SymbolFindParameter(&palgs->hsle, ppist, "PUBLIC_PROTOTYPE");
+
+	//- scan prototype name
+
+	if (pparProtoPublic)
+	{
+	    pg3i->g3o.pcGrid3DProtoPublic = ParameterGetString(pparProtoPublic);
+	}
 
 	//- scan x count
 
@@ -215,20 +236,23 @@ Grid3DInstanceNew
 
     }
 
+    //- initialize Grid3D count
+
+    pg3i->g3v.iAdded = 0;
+
+    //- if lookup prototype in symbol table
+
+    if (pg3i->g3o.pcGrid3DProto)
     {
-	//- initialize Grid3D count
-
-	pg3i->g3v.iAdded = 0;
-
-	//- if lookup prototype in symbol table
-
 	pg3i->g3v.phsleProto
 	    = ParserLookupPrivateModel(pg3i->g3o.pcGrid3DProto);
+    }
+    else if (pg3i->g3o.pcGrid3DProtoPublic)
+    {
+	struct PidinStack *ppistProto
+	    = PidinStackParse(pg3i->g3o.pcGrid3DProtoPublic);
 
-	//- set result
-
-	palgiResult = &pg3i->algi;
-
+	pg3i->g3v.phsleProto = PidinStackLookupTopSymbol(ppistProto);
     }
 
     if (!pg3i->g3v.phsleProto)
@@ -268,6 +292,10 @@ Grid3DInstanceNew
 
 	return(NULL);
     }
+
+    //- set result
+
+    palgiResult = &pg3i->algi;
 
     //- return result
 
@@ -501,12 +529,10 @@ Grid3DInstanceSymbolHandler
 
     struct symtab_HSolveListElement *phsle = PidinStackLookupTopSymbol(ppist);
 
-    //- if population or network
+/*     //- if population or network */
 
-    if (instanceof_population(phsle) || instanceof_network(phsle))
+/*     if (instanceof_population(phsle) || instanceof_network(phsle)) */
     {
-	int i = 0;
-
 	//- add cells to population
 
 	struct symtab_IOHierarchy *pioh = (struct symtab_IOHierarchy *)phsle;
@@ -516,20 +542,20 @@ Grid3DInstanceSymbolHandler
 	      ((struct Grid3DInstance *)palgi, pioh, ppist);
     }
 
-    //- else
+/*     //- else */
 
-    else
-    {
-	//- give some diag's
+/*     else */
+/*     { */
+/* 	//- give some diag's */
 
-	NeurospacesError
-	    (pac,
-	     "Grid3DInstance",
-	     "(%s) Grid3DInstance symbol handler on"
-	     " non population and non network %s\n",
-	     AlgorithmInstanceGetName(palgi),
-	     SymbolName(phsle));
-    }
+/* 	NeurospacesError */
+/* 	    (pac, */
+/* 	     "Grid3DInstance", */
+/* 	     "(%s) Grid3DInstance symbol handler on" */
+/* 	     " non population and non network %s\n", */
+/* 	     AlgorithmInstanceGetName(palgi), */
+/* 	     SymbolName(phsle)); */
+/*     } */
 
     //- return result
 
