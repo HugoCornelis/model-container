@@ -94,21 +94,29 @@ int int_get(int *a, int i)
    return a[i];
 }
 
-void * NeurospacesGetObject(struct Neurospaces *pneuro)
+char * NeurospacesGetObject(struct Neurospaces *pneuro)
 {
-    fprintf(stdout, "NeurospacesGetObject(): pneuro (%p), root import (%p)\n", pneuro, pneuro->pifRootImport);
+    static char pcResult[100];
 
-    return((void *)pneuro);
+    sprintf(pcResult, "pneuro (%p), root import (%p)\n", pneuro, pneuro->pifRootImport);
+
+/*     fprintf(stdout, "NeurospacesGetObject(): %s", pcResult); */
+
+    return(pcResult);
 }
 
 
-struct Neurospaces * NeurospacesSetObject(void *pv)
+struct Neurospaces * NeurospacesSetObject(char *pcNeurospaces)
 {
-    struct Neurospaces *pneuro = (struct Neurospaces *)pv;
+    void *pv;
 
-    fprintf(stdout, "NeurospacesSetObject(): pneuro (%p), root import (%p)\n", pneuro, pneuro->pifRootImport);
+    struct Neurospaces *pneuroResult = NULL;
 
-    return(pneuro);
+    sscanf(pcNeurospaces, "pneuro (%p), root import (%p)", &pneuroResult, &pv);
+
+/*     fprintf(stdout, "NeurospacesSetObject(): pneuro (%p), root import (%p)\n", pneuroResult, pneuroResult->pifRootImport); */
+
+    return(pneuroResult);
 }
 
 
