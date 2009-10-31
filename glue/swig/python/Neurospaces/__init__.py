@@ -2,6 +2,9 @@
 
 import SwiggableNeurospaces
 
+nmcGlobal = None
+
+
 classes = { 'Symbol': { 'methods': { 'backend_object': 'self.backend',
                                      'insert_child': 'abc',
                                      },
@@ -193,4 +196,11 @@ def prepare(path):
     SwiggableNeurospaces.PidinStackPop(context)
     top_symbol = SwiggableNeurospaces.PidinStackLookupTopSymbol(context)
     return [ name, top_symbol ]
+
+def getModelContainer():
+    return nmcGlobal
+
+def setModelContainer(nmc):
+    global nmcGlobal
+    nmcGlobal = nmc
 
