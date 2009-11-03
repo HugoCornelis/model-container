@@ -53,9 +53,7 @@ int AttachmentSetType(struct symtab_Attachment *patta, int iType);
 #include "neurospaces/symboltable.h"
 
 
-/// \struct
 /// \struct attachment description
-/// \struct
 
 struct descr_Attachment
 {
@@ -69,9 +67,7 @@ struct descr_Attachment
 };
 
 
-/// \struct
 /// \struct struct symtab_Attachment
-/// \struct
 
 struct symtab_Attachment
 {

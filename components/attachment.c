@@ -25,13 +25,11 @@
 
 
 /// 
-/// 
 /// \return struct symtab_Attachment * 
 /// 
 ///	Newly allocated attachment point, NULL for failure
 /// 
 /// \brief Allocate a new attachment point symbol table element.
-/// \details 
 /// 
 
 struct symtab_Attachment * AttachmentCalloc(void)
@@ -61,14 +59,12 @@ struct symtab_Attachment * AttachmentCalloc(void)
 
 
 /// 
-/// 
 /// \arg patta symbol to alias
 /// \arg pidin name of new symbol
 /// 
 /// \return struct symtab_HSolveListElement * : alias for original symbol
 /// 
 /// \brief Create alias to given symbol
-/// \details 
 /// 
 
 struct symtab_HSolveListElement * 
@@ -102,13 +98,11 @@ AttachmentCreateAlias
 
 
 /// 
-/// 
 /// \arg patta attachment to init
 /// 
 /// \return int : type of attachment (incoming, outgoing).
 /// 
 /// \brief Get type of attachment.
-/// \details 
 /// 
 
 int AttachmentGetType(struct symtab_Attachment *patta)
@@ -118,13 +112,11 @@ int AttachmentGetType(struct symtab_Attachment *patta)
 
 
 /// 
-/// 
 /// \arg patta attachment to init
 /// 
 /// \return void
 /// 
 /// \brief init attachment
-/// \details 
 /// 
 
 void AttachmentInit(struct symtab_Attachment *patta)
@@ -140,14 +132,12 @@ void AttachmentInit(struct symtab_Attachment *patta)
 
 
 /// 
-/// 
 /// \arg patta attachment to set type for.
 /// \arg iType type of attachment.
 /// 
 /// \return int : success of operation.
 /// 
 /// \brief Set type of attachment.
-/// \details 
 /// 
 
 int AttachmentSetType(struct symtab_Attachment *patta, int iType)
