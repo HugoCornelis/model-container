@@ -107,6 +107,7 @@ libneurospacesread_a_SOURCES = \
 	components/pool.c \
 	components/population.c \
 	components/projection.c \
+	components/pulse.c \
 	components/randomvalue.c \
 	components/root.c \
 	components/segment.c \
@@ -287,6 +288,7 @@ nobase_include_HEADERS = \
 	neurospaces/components/pool.h \
 	neurospaces/components/population.h \
 	neurospaces/components/projection.h \
+	neurospaces/components/pulse.h \
 	neurospaces/components/randomvalue.h \
 	neurospaces/components/root.h \
 	neurospaces/components/segment.h \
@@ -482,6 +484,7 @@ libneurospacesread.so: libneurospacesread.a
 	projectionquery.o \
 	psymbolserialstack.o \
 	psymbolstack.o \
+	pulse.o \
 	querymachine.o \
 	randomvalue.o \
 	root.o \

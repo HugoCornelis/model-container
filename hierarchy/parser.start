@@ -31,6 +31,7 @@
     struct symtab_Pool * ppool;
     struct symtab_Population *ppopu;
     struct symtab_Projection *pproj;
+    struct symtab_Pulse *ppulse;
     struct symtab_Randomvalue *pranv;
     struct symtab_Segment *psegment;
     struct symtab_String *pstring;

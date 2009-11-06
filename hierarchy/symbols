@@ -490,7 +490,62 @@ my $class_hierarchy
 				 concen_init => 'initial concentration level',
 				},
 		 },
+
+
+
+
+
+         pulse => {
+                  allows => {
+                             'create_alias' => 'pulse',
+                             'get_parameter' => 'pulse',
+                             'parameter_scale_value' => 'pulse',
+                             'reduce' => 'pulse',
+                            },
+                  annotations => {
+                                  'piSymbolType2Biolevel' => 'BIOLEVEL_MECHANISM',
+                                 },
+                  description => 'an object that can generate a variety of pulse patterns',
+                  dimensions => [
+                                 'mechanism',
+                                ],
+                  grammar => {
+                              components => [],
+                              specific_allocator => 'PulseCalloc',
+                              specific_token => {
+                                                 class => 'pulse',
+                                                 lexical => 'TOKEN_PULSE',
+                                                 purpose => 'physical',
+                                                },
+                              typing => {
+                                         base => 'phsle',
+                                         id => 'pidin',
+                                         spec => 'ppulse',
+                                         to_base => '->bio.ioh.iol.hsle',
+                                        },
+                             },
+                  isa => 'bio_comp',
+                  name => 'symtab_Pulse',
+                  parameters => {
+				 LEVEL1 => 'level of pulse1',
+				 LEVEL2 => 'level of pulse2',
+				 WIDTH1 => 'width of pulse1',
+				 WIDTH2 => 'width of pulse2',
+				 DELAY1 => 'delay of pulse1',
+				 DELAY2 => 'delay of pulse2',
+				 BASELEVEL => 'baseline level',
+				 TRIGMODE => 'Trigger mode, 0 - free run, 1 - ext trig, 2 - ext gate',
+                                },
+                 },
+        
+
+
+
+
+
 	),
+
+
 
 	# biological with segments
 
