@@ -3052,6 +3052,24 @@ my $test
 						 ],
 				description => "syntax of utilities/empty_model.ndf",
 			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-R',
+					      'pulse/pulse1.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (pulse/pulse1.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/pulse/pulse1.ndf', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of pulse/pulse1.ndf",
+			       },
 		      ],
        description => "general syntax of library files",
        name => 'parsing.t',
