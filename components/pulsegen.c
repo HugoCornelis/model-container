@@ -24,7 +24,7 @@
 #include <stdlib.h>
 
 
-#include "neurospaces/components/pulse.h"
+#include "neurospaces/components/pulsegen.h"
 #include "neurospaces/components/segment.h"
 #include "neurospaces/components/segmenter.h"
 #include "neurospaces/function.h"
@@ -43,51 +43,51 @@
 
 static
 double
-PulseGetBeta
-(struct symtab_Pulse *ppulse, struct PidinStack *ppist);
+PulseGenGetBeta
+(struct symtab_PulseGen *ppulsegen, struct PidinStack *ppist);
 
 static
 double
-PulseGetVolume
-(struct symtab_Pulse *ppulse, struct PidinStack *ppist);
+PulseGenGetVolume
+(struct symtab_PulseGen *ppulsegen, struct PidinStack *ppist);
 
 
 /// 
-/// \return struct symtab_Pulse * 
+/// \return struct symtab_PulseGen * 
 /// 
-///	Newly allocated pulse, NULL for failure
+///	Newly allocated pulsegen, NULL for failure
 /// 
-/// \brief Allocate a new pulse symbol table element
+/// \brief Allocate a new pulsegen symbol table element
 /// 
 
-struct symtab_Pulse * PulseCalloc(void)
+struct symtab_PulseGen * PulseGenCalloc(void)
 {
     //- set default result : failure
 
-    struct symtab_Pulse *ppulseResult = NULL;
+    struct symtab_PulseGen *ppulsegenResult = NULL;
 
     //- construct function table
 
-#include "hierarchy/output/symbols/pulse_vtable.c"
+#include "hierarchy/output/symbols/pulse_gen_vtable.c"
 
-    //- allocate pulse
+    //- allocate pulsegen
 
-    ppulseResult
-	= (struct symtab_Pulse *)
-	  SymbolCalloc(1, sizeof(struct symtab_Pulse), _vtable_pulse, HIERARCHY_TYPE_symbols_pulse);
+    ppulsegenResult
+	= (struct symtab_PulseGen *)
+	  SymbolCalloc(1, sizeof(struct symtab_PulseGen), _vtable_pulse_gen, HIERARCHY_TYPE_symbols_pulse_gen);
 
-    //- initialize pulse
+    //- initialize pulsegen
 
-    PulseInit(ppulseResult);
+    PulseGenInit(ppulsegenResult);
 
     //- return result
 
-    return(ppulseResult);
+    return(ppulsegenResult);
 }
 
 
 /// 
-/// \arg ppulse symbol to alias
+/// \arg ppulsegen symbol to alias
 /// \arg pidin name of new symbol
 /// 
 /// \return struct symtab_HSolveListElement * : alias for original symbol
@@ -96,34 +96,34 @@ struct symtab_Pulse * PulseCalloc(void)
 /// 
 
 struct symtab_HSolveListElement * 
-PulseCreateAlias
-(struct symtab_Pulse *ppulse,
+PulseGenCreateAlias
+(struct symtab_PulseGen *ppulsegen,
  char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
-    struct symtab_Pulse *ppulseResult = PulseCalloc();
+    struct symtab_PulseGen *ppulsegenResult = PulseGenCalloc();
 
     //- set name, namespace and prototype
 
-    SymbolSetName(&ppulseResult->bio.ioh.iol.hsle, pidin);
-    SymbolSetNamespace(&ppulseResult->bio.ioh.iol.hsle, pcNamespace);
-    SymbolSetPrototype(&ppulseResult->bio.ioh.iol.hsle, &ppulse->bio.ioh.iol.hsle);
+    SymbolSetName(&ppulsegenResult->bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&ppulsegenResult->bio.ioh.iol.hsle, pcNamespace);
+    SymbolSetPrototype(&ppulsegenResult->bio.ioh.iol.hsle, &ppulsegen->bio.ioh.iol.hsle);
 
     //- increment number of created aliases
 
-    SymbolIncrementAliases(HIERARCHY_TYPE_symbols_pulse);
+    SymbolIncrementAliases(HIERARCHY_TYPE_symbols_pulse_gen);
 
     //- return result
 
-    return(&ppulseResult->bio.ioh.iol.hsle);
+    return(&ppulsegenResult->bio.ioh.iol.hsle);
 }
 
 
 /// 
-/// \arg ppulse pulse to get unscaled beta for.
-/// \arg ppist context of pulse.
+/// \arg ppulsegen pulsegen to get unscaled beta for.
+/// \arg ppist context of pulsegen.
 /// 
 /// \return double : always 1.
 /// 
@@ -137,8 +137,8 @@ PulseCreateAlias
 
 static
 double
-PulseGetBeta
-(struct symtab_Pulse *ppulse, struct PidinStack *ppist)
+PulseGenGetBeta
+(struct symtab_PulseGen *ppulsegen, struct PidinStack *ppist)
 {
     //- set default result : always one
 
@@ -153,7 +153,7 @@ PulseGetBeta
 
 
 /// 
-/// \arg ppulse symbol to get parameter for.
+/// \arg ppulsegen symbol to get parameter for.
 /// \arg ppist context of given symbol.
 /// \arg pcName name of parameter.
 /// 
@@ -163,8 +163,8 @@ PulseGetBeta
 /// 
 
 struct symtab_Parameters * 
-PulseGetParameter
-(struct symtab_Pulse *ppulse,
+PulseGenGetParameter
+(struct symtab_PulseGen *ppulsegen,
  struct PidinStack *ppist,
  char *pcName)
 {
@@ -174,7 +174,7 @@ PulseGetParameter
 
     //- get parameter from bio component
 
-    pparResult = BioComponentGetParameter(&ppulse->bio, ppist, pcName);
+    pparResult = BioComponentGetParameter(&ppulsegen->bio, ppist, pcName);
 
     //- if not found
 
@@ -186,13 +186,13 @@ PulseGetParameter
 	{
 	    //- get beta
 
-	    double dBeta = PulseGetBeta(ppulse, ppist);
+	    double dBeta = PulseGenGetBeta(ppulsegen, ppist);
 
-	    //- set beta of pulse, value will be ignored.
+	    //- set beta of pulsegen, value will be ignored.
 
 	    pparResult
 		= SymbolSetParameterDouble
-		  (&ppulse->bio.ioh.iol.hsle, "BETA", dBeta);
+		  (&ppulsegen->bio.ioh.iol.hsle, "BETA", dBeta);
 	}
 
 	//- if volume
@@ -201,13 +201,13 @@ PulseGetParameter
 	{
 	    //- get volume
 
-	    double dVolume = PulseGetVolume(ppulse, ppist);
+	    double dVolume = PulseGenGetVolume(ppulsegen, ppist);
 
-	    //- set volume of pulse, value should be ignored.
+	    //- set volume of pulsegen, value should be ignored.
 
 	    pparResult
 		= SymbolSetParameterDouble
-		  (&ppulse->bio.ioh.iol.hsle, "VOLUME", dVolume);
+		  (&ppulsegen->bio.ioh.iol.hsle, "VOLUME", dVolume);
 	}
 
 	//- if initial concentration
@@ -216,13 +216,13 @@ PulseGetParameter
 	{
 	    //- get base
 
-	    double dBase = SymbolParameterResolveValue(&ppulse->bio.ioh.iol.hsle, ppist, "BASE");
+	    double dBase = SymbolParameterResolveValue(&ppulsegen->bio.ioh.iol.hsle, ppist, "BASE");
 
 	    //- set initial concentration
 
 	    pparResult
 		= SymbolSetParameterDouble
-		  (&ppulse->bio.ioh.iol.hsle, "concen_init", dBase);
+		  (&ppulsegen->bio.ioh.iol.hsle, "concen_init", dBase);
 	}
     }
 
@@ -233,24 +233,24 @@ PulseGetParameter
 
 
 /// 
-/// \arg ppulse pulse to get volume for.
-/// \arg ppist context of pulse.
+/// \arg ppulsegen pulsegen to get volume for.
+/// \arg ppist context of pulsegen.
 /// 
-/// \return double : pulse volume, FLT_MAX for failure.
+/// \return double : pulsegen volume, FLT_MAX for failure.
 /// 
-/// \brief get volume of pulse.
+/// \brief get volume of pulsegen.
 /// 
 
 static
 double
-PulseGetVolume
-(struct symtab_Pulse *ppulse, struct PidinStack *ppist)
+PulseGenGetVolume
+(struct symtab_PulseGen *ppulsegen, struct PidinStack *ppist)
 {
     //- set default result : failure
 
     double dResult = FLT_MAX;
 
-    //- by default we assume we are not working with a pulse embedded
+    //- by default we assume we are not working with a pulsegen embedded
     //- in a spherical segment.
 
     int iSpherical = 0;
@@ -258,7 +258,7 @@ PulseGetVolume
     //- if parent compartment can be found
 
     struct PidinStack *ppistComp
-	= SymbolFindParentSegment(&ppulse->bio.ioh.iol.hsle, ppist);
+	= SymbolFindParentSegment(&ppulsegen->bio.ioh.iol.hsle, ppist);
 
     double dDiaFromParent = FLT_MAX;
 
@@ -269,7 +269,7 @@ PulseGetVolume
 
 	if (phsleComp)
 	{
-	    //- set spherical flag for pulse calculations
+	    //- set spherical flag for pulsegen calculations
 
 	    if (SegmenterIsSpherical((struct symtab_Segmenter *)phsleComp))
 	    {
@@ -284,12 +284,12 @@ PulseGetVolume
 
     }
 
-    //- if spherical pulse
+    //- if spherical pulsegen
 
     if (iSpherical)
     {
 	double dDiaSegment
-	    = SymbolParameterResolveValue(&ppulse->bio.ioh.iol.hsle, ppist, "DIA");
+	    = SymbolParameterResolveValue(&ppulsegen->bio.ioh.iol.hsle, ppist, "DIA");
 
 	//t not really sure if this is correct...
 
@@ -299,7 +299,7 @@ PulseGetVolume
 	}
 
 	double dThickness
-	    = SymbolParameterResolveValue(&ppulse->bio.ioh.iol.hsle, ppist, "THICK");
+	    = SymbolParameterResolveValue(&ppulsegen->bio.ioh.iol.hsle, ppist, "THICK");
 
 	if (dDiaSegment == FLT_MAX
 	    || dThickness == FLT_MAX)
@@ -307,9 +307,9 @@ PulseGetVolume
 	    return(FLT_MAX);
 	}
 
-	double dDiaPulse = 2 * dThickness;
+	double dDiaPulseGen = 2 * dThickness;
 
-	double d = dDiaSegment - dDiaPulse;
+	double d = dDiaSegment - dDiaPulseGen;
 
 	double d1 = dDiaSegment * dDiaSegment * dDiaSegment;
 
@@ -319,9 +319,9 @@ PulseGetVolume
 
 /* 	dResult */
 /* 	    = (( */
-/* 		   3 * dDiaSegment * dDiaSegment * dDiaPulse */
-/* 		   - 3 * dDiaSegment * dDiaPulse * dDiaPulse */
-/* 		   + dDiaPulse * dDiaPulse * dDiaPulse */
+/* 		   3 * dDiaSegment * dDiaSegment * dDiaPulseGen */
+/* 		   - 3 * dDiaSegment * dDiaPulseGen * dDiaPulseGen */
+/* 		   + dDiaPulseGen * dDiaPulseGen * dDiaPulseGen */
 /* 		   ) */
 /* 	       * M_PI */
 /* 	       / 6.0); */
@@ -329,13 +329,13 @@ PulseGetVolume
     else
     {
 	double dDiaSegment
-	    = SymbolParameterResolveValue(&ppulse->bio.ioh.iol.hsle, ppist, "DIA");
+	    = SymbolParameterResolveValue(&ppulsegen->bio.ioh.iol.hsle, ppist, "DIA");
 
 	double dLengthSegment
-	    = SymbolParameterResolveValue(&ppulse->bio.ioh.iol.hsle, ppist, "LENGTH");
+	    = SymbolParameterResolveValue(&ppulsegen->bio.ioh.iol.hsle, ppist, "LENGTH");
 
 	double dThickness
-	    = SymbolParameterResolveValue(&ppulse->bio.ioh.iol.hsle, ppist, "THICK");
+	    = SymbolParameterResolveValue(&ppulsegen->bio.ioh.iol.hsle, ppist, "THICK");
 
 	if (dDiaSegment == FLT_MAX
 	    || dLengthSegment == FLT_MAX
@@ -361,9 +361,9 @@ PulseGetVolume
 /* 	} */
 /* 	return(volume); */
 
-	double dDiaPulse = 2 * dThickness;
+	double dDiaPulseGen = 2 * dThickness;
 
-	double d = dDiaSegment - dDiaPulse;
+	double d = dDiaSegment - dDiaPulseGen;
 
 	double d1 = dDiaSegment * dDiaSegment;
 
@@ -373,8 +373,8 @@ PulseGetVolume
 
 /* 	dResult */
 /* 	    = (( */
-/* 		   2 * dDiaSegment * dDiaPulse */
-/* 		   - dDiaPulse * dDiaPulse */
+/* 		   2 * dDiaSegment * dDiaPulseGen */
+/* 		   - dDiaPulseGen * dDiaPulseGen */
 /* 		   ) */
 /* 	       * dLengthSegment */
 /* 	       * M_PI */
@@ -388,27 +388,27 @@ PulseGetVolume
 
 
 /// 
-/// \arg ppulse pulse to init
+/// \arg ppulsegen pulsegen to init
 /// 
 /// \return void
 /// 
-/// \brief init pulse
+/// \brief init pulsegen
 /// 
 
-void PulseInit(struct symtab_Pulse *ppulse)
+void PulseGenInit(struct symtab_PulseGen *ppulsegen)
 {
     //- initialize base symbol
 
-    BioComponentInit(&ppulse->bio);
+    BioComponentInit(&ppulsegen->bio);
 
     //- set type
 
-    ppulse->bio.ioh.iol.hsle.iType = HIERARCHY_TYPE_symbols_pulse;
+    ppulsegen->bio.ioh.iol.hsle.iType = HIERARCHY_TYPE_symbols_pulse_gen;
 }
 
 
 /// 
-/// \arg ppulse pulse container
+/// \arg ppulsegen pulsegen container
 /// \arg ppist name(s) to search
 /// \arg iLevel: active level of ppist
 /// \arg bAll set TRUE if next entries in ppist have to be searched
@@ -417,7 +417,7 @@ void PulseInit(struct symtab_Pulse *ppulse)
 /// 
 ///	found symbol, NULL for not found
 /// 
-/// \brief Hierarchical lookup in pulse subsymbols.
+/// \brief Hierarchical lookup in pulsegen subsymbols.
 ///
 /// \details 
 /// 
@@ -425,8 +425,8 @@ void PulseInit(struct symtab_Pulse *ppulse)
 /// 
 
 struct symtab_HSolveListElement *
-PulseLookupHierarchical
-(struct symtab_Pulse *ppulse,
+PulseGenLookupHierarchical
+(struct symtab_PulseGen *ppulsegen,
  struct PidinStack *ppist,
  int iLevel,
  int bAll)
@@ -442,7 +442,7 @@ PulseLookupHierarchical
 
 
 /// 
-/// \arg ppulse pulse to scale value for
+/// \arg ppulsegen pulsegen to scale value for
 /// \arg ppist context of given element
 /// \arg dValue value to scale
 /// \arg ppar parameter that specify type of scaling
@@ -453,8 +453,8 @@ PulseLookupHierarchical
 /// 
 
 double
-PulseParameterScaleValue
-(struct symtab_Pulse *ppulse,
+PulseGenParameterScaleValue
+(struct symtab_PulseGen *ppulsegen,
  struct PidinStack *ppist,
  double dValue,
  struct symtab_Parameters *ppar)
@@ -465,7 +465,7 @@ PulseParameterScaleValue
 
     struct PidinStack *ppistComp = NULL;
 
-    //- get pulse parameter field name
+    //- get pulsegen parameter field name
 
     char *pcName = ParameterGetName(ppar);
 
@@ -478,22 +478,22 @@ PulseParameterScaleValue
 
     if (0 == strcmp(pcName, "BETA"))
     {
-	//- get pulse diameter
+	//- get pulsegen diameter
 
-	double dPulseDia
+	double dPulseGenDia
 	    = SymbolParameterResolveValue
-	      ((struct symtab_HSolveListElement *)ppulse, ppist, "DIA");
+	      ((struct symtab_HSolveListElement *)ppulsegen, ppist, "DIA");
 
-	if (dPulseDia == FLT_MAX)
+	if (dPulseGenDia == FLT_MAX)
 	{
-	    ppistComp = SymbolFindParentSegment(&ppulse->bio.ioh.iol.hsle, ppist);
+	    ppistComp = SymbolFindParentSegment(&ppulsegen->bio.ioh.iol.hsle, ppist);
 
 	    if (ppistComp)
 	    {
 		struct symtab_HSolveListElement *phsleComp
 		    = PidinStackLookupTopSymbol(ppistComp);
 
-		dPulseDia = SymbolParameterResolveValue(phsleComp, ppistComp, "DIA");
+		dPulseGenDia = SymbolParameterResolveValue(phsleComp, ppistComp, "DIA");
 	    }
 	}
 
@@ -501,12 +501,12 @@ PulseParameterScaleValue
 
 	struct symtab_Parameters *pparThickness
 	    = SymbolFindParameter
-	      ((struct symtab_HSolveListElement *)ppulse, ppist, "THICK");
+	      ((struct symtab_HSolveListElement *)ppulsegen, ppist, "THICK");
 
 	double dThickness
 	    = ParameterResolveValue(pparThickness, ppist);
 
-	if (dPulseDia == FLT_MAX
+	if (dPulseGenDia == FLT_MAX
 	    || dThickness == FLT_MAX)
 	{
 	    return(dResult);
@@ -520,7 +520,7 @@ PulseParameterScaleValue
 
 	if (!ppistComp)
 	{
-	    ppistComp = SymbolFindParentSegment(&ppulse->bio.ioh.iol.hsle, ppist);
+	    ppistComp = SymbolFindParentSegment(&ppulsegen->bio.ioh.iol.hsle, ppist);
 	}
 
 	int iSpherical = 0;
@@ -550,30 +550,30 @@ PulseParameterScaleValue
 	    /// \note (optimized to minimize cancellations)
 
 	    dVolume
-		= (3 * dPulseDia * dPulseDia * dDia
-		   - 3 * dPulseDia * dDia * dDia
+		= (3 * dPulseGenDia * dPulseGenDia * dDia
+		   - 3 * dPulseGenDia * dDia * dDia
 		   + dDia * dDia * dDia)
 		* M_PI
 		/ 6.0;
 	}
 	else
 	{
-	    //- get pulse length
+	    //- get pulsegen length
 
-	    double dPulseLength
+	    double dPulseGenLength
 		= SymbolParameterResolveValue
-		  ((struct symtab_HSolveListElement *)ppulse, ppist, "LENGTH");
+		  ((struct symtab_HSolveListElement *)ppulsegen, ppist, "LENGTH");
 
-	    if (dPulseLength == FLT_MAX)
+	    if (dPulseGenLength == FLT_MAX)
 	    {
-		ppistComp = SymbolFindParentSegment(&ppulse->bio.ioh.iol.hsle, ppist);
+		ppistComp = SymbolFindParentSegment(&ppulsegen->bio.ioh.iol.hsle, ppist);
 
 		if (ppistComp)
 		{
 		    struct symtab_HSolveListElement *phsleComp
 			= PidinStackLookupTopSymbol(ppistComp);
 
-		    dPulseLength = SymbolParameterResolveValue(phsleComp, ppistComp, "LENGTH");
+		    dPulseGenLength = SymbolParameterResolveValue(phsleComp, ppistComp, "LENGTH");
 		}
 	    }
 
@@ -581,11 +581,11 @@ PulseParameterScaleValue
 	    /// \note (dCompDia^2 - (dCompDia - dDia)^2)
 
 	    dVolume
-		= (2 * dPulseDia * dDia
-		   - dDia * dDia) * dPulseLength * M_PI / 4.0;
+		= (2 * dPulseGenDia * dDia
+		   - dDia * dDia) * dPulseGenLength * M_PI / 4.0;
 	}
 
-	//- scale valency to pulse volume of segment
+	//- scale valency to pulsegen volume of segment
 
 	/// \todo 2.0 is valency, get this from parameter
 
@@ -606,12 +606,12 @@ PulseParameterScaleValue
 
 
 /// 
-/// \arg ppulse pulse to reduce.
-/// \arg ppist context of pulse.
+/// \arg ppulsegen pulsegen to reduce.
+/// \arg ppist context of pulsegen.
 /// 
 /// \return int success of operation.
 /// 
-/// \brief Reduce the parameters of a pulse.
+/// \brief Reduce the parameters of a pulsegen.
 ///
 /// \details Reduces:
 ///
@@ -620,8 +620,8 @@ PulseParameterScaleValue
 /// 
 
 int
-PulseReduce
-(struct symtab_Pulse *ppulse, struct PidinStack *ppist)
+PulseGenReduce
+(struct symtab_PulseGen *ppulsegen, struct PidinStack *ppist)
 {
     //- set default result: success
 
@@ -629,10 +629,10 @@ PulseReduce
 
     //- get volume
 
-/*     double dVolume = SymbolParameterResolveValue(&ppulse->bio.ioh.iol.hsle, ppist, "VOLUME"); */
+/*     double dVolume = SymbolParameterResolveValue(&ppulsegen->bio.ioh.iol.hsle, ppist, "VOLUME"); */
 
-    //t if this one is enabled, PulseParameterScaleValue() for BETA
-    //t will not find a pparPulseDia, and SEGV.
+    //t if this one is enabled, PulseGenParameterScaleValue() for BETA
+    //t will not find a pparPulseGenDia, and SEGV.
 
     //t when running tests/scripts/PurkM9_model/ACTIVE-soma1.g
 
@@ -641,7 +641,7 @@ PulseReduce
 	//- get BETA parameter
 
 	struct symtab_Parameters *pparBeta
-	    = SymbolGetParameter(&ppulse->bio.ioh.iol.hsle, ppist, "BETA");
+	    = SymbolGetParameter(&ppulsegen->bio.ioh.iol.hsle, ppist, "BETA");
 
 	//t THICKNESS known
 	//t DIA required
@@ -663,7 +663,7 @@ PulseReduce
 	{
 	    //- remove BETA parameter
 
-	    ParContainerDelete(ppulse->bio.pparc, pparBeta);
+	    ParContainerDelete(ppulsegen->bio.pparc, pparBeta);
 	}
     }
 
@@ -684,7 +684,7 @@ PulseReduce
 	//- get VOLUME parameter
 
 	struct symtab_Parameters *pparVolume
-	    = SymbolGetParameter(&ppulse->bio.ioh.iol.hsle, ppist, "VOLUME");
+	    = SymbolGetParameter(&ppulsegen->bio.ioh.iol.hsle, ppist, "VOLUME");
 
 	double dVolume = ParameterResolveValue(pparVolume, ppist);
 
@@ -692,20 +692,20 @@ PulseReduce
 
 	if (dVolume != FLT_MAX)
 	{
-	    double d = PulseGetVolume(ppulse, ppist);
+	    double d = PulseGenGetVolume(ppulsegen, ppist);
 
 	    if (MMGParmEQ(dVolume, d))
 	    {
 		//- remove VOLUME parameter
 
-		ParContainerDelete(ppulse->bio.pparc, pparVolume);
+		ParContainerDelete(ppulsegen->bio.pparc, pparVolume);
 	    }
 	}
     }
 
     //- reduce bio component
 
-    iResult = iResult && BioComponentReduce(&ppulse->bio, ppist);
+    iResult = iResult && BioComponentReduce(&ppulsegen->bio, ppist);
 
     //- return result
 

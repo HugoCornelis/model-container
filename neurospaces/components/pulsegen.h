@@ -2,7 +2,7 @@
 // Neurospaces: a library which implements a global typed symbol table to
 // be used in neurobiological model maintenance and simulation.
 //
-// $Id: pulse.h 1.20.1.37 Fri, 28 Sep 2007 22:25:58 -0500 hugo $
+// $Id: pulsegen.h 1.20.1.37 Fri, 28 Sep 2007 22:25:58 -0500 hugo $
 //
 
 //////////////////////////////////////////////////////////////////////////////
@@ -18,8 +18,8 @@
 //////////////////////////////////////////////////////////////////////////////
 
 
-#ifndef PULSE_H
-#define PULSE_H
+#ifndef PULSEGEN_H
+#define PULSEGEN_H
 
 
 #include <stdio.h>
@@ -30,44 +30,44 @@
 
 /// \struct structure declarations
 
-struct descr_Pulse;
-struct symtab_Pulse;
+struct descr_PulseGen;
+struct symtab_PulseGen;
 
 
 
-struct symtab_Pulse * PulseCalloc(void);
+struct symtab_PulseGen * PulseGenCalloc(void);
 
 struct symtab_HSolveListElement * 
-PulseCreateAlias
-(struct symtab_Pulse *ppulse,
+PulseGenCreateAlias
+(struct symtab_PulseGen *ppulsegen,
  char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
 struct symtab_Parameters * 
-PulseGetParameter
-(struct symtab_Pulse *ppulse,
+PulseGenGetParameter
+(struct symtab_PulseGen *ppulsegen,
  struct PidinStack *ppist,
  char *pcName);
 
-void PulseInit(struct symtab_Pulse *ppulse);
+void PulseGenInit(struct symtab_PulseGen *ppulsegen);
 
 struct symtab_HSolveListElement *
-PulseLookupHierarchical
-(struct symtab_Pulse *ppulse,
+PulseGenLookupHierarchical
+(struct symtab_PulseGen *ppulsegen,
  struct PidinStack *ppist,
  int iLevel,
  int bAll);
 
 double
-PulseParameterScaleValue
-(struct symtab_Pulse *ppulse,
+PulseGenParameterScaleValue
+(struct symtab_PulseGen *ppulsegen,
  struct PidinStack *ppist,
  double dValue,
  struct symtab_Parameters *ppar);
 
 int
-PulseReduce
-(struct symtab_Pulse *ppulse, struct PidinStack *ppist);
+PulseGenReduce
+(struct symtab_PulseGen *ppulsegen, struct PidinStack *ppist);
 
 
 /* #include "equationexponential.h" */
@@ -77,16 +77,16 @@ PulseReduce
 
 
 /// \struct
-/// \struct pulse description
+/// \struct pulsegen description
 /// \struct
 
-struct descr_Pulse
+struct descr_PulseGen
 {
     /// keeping things happy
 
     int iHappy;
 
-/*     /// type of pulse data */
+/*     /// type of pulsegen data */
 
 /*     int iType; */
 
@@ -94,11 +94,11 @@ struct descr_Pulse
 
 /*     union  */
 /*     { */
-/* 	/// equation describing pulse */
+/* 	/// equation describing pulsegen */
 
 /* 	struct symtab_Equation *peq; */
 
-/* 	/// file with table describing pulse */
+/* 	/// file with table describing pulsegen */
 
 /* 	char *pcFilename; */
 /*     } */
@@ -107,36 +107,36 @@ struct descr_Pulse
 
 
 /// \struct
-/// \struct struct symtab_Pulse
+/// \struct struct symtab_PulseGen
 /// \struct
 
-struct symtab_Pulse
+struct symtab_PulseGen
 {
     /// base struct : bio component
 
     struct symtab_BioComponent bio;
 
-    /// pulse description
+    /// pulsegen description
 
-    struct descr_Pulse depulse;
+    struct descr_PulseGen depulsegen;
 };
 
 
 /// \def equation type
 
-#define TYPE_PULSE_EQUATION		1
+#define TYPE_PULSEGEN_EQUATION		1
 
 /// \def table in file
 
-#define TYPE_PULSE_TABLEFILE		2
+#define TYPE_PULSEGEN_TABLEFILE		2
 
 /// \def attachment point data
 
-#define TYPE_PULSE_VIRTUALCONNECTION	4
+#define TYPE_PULSEGEN_VIRTUALCONNECTION	4
 
-/// \def additional pulse parameters
+/// \def additional pulsegen parameters
 
-#define TYPE_PULSE_PARAMETERS		5
+#define TYPE_PULSEGEN_PARAMETERS		5
 
 
 #endif

@@ -56,7 +56,7 @@
 #include "neurospaces/components/population.h"
 /* #include "neurospaces/positionD3.h" */
 #include "neurospaces/components/projection.h"
-#include "neurospaces/components/pulse.h"
+#include "neurospaces/components/pulsegen.h"
 #include "neurospaces/components/randomvalue.h"
 #include "neurospaces/components/root.h"
 #include "neurospaces/components/segment.h"

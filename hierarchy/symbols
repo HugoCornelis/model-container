@@ -495,12 +495,12 @@ my $class_hierarchy
 
 
 
-         pulse => {
-                  allows => {
-                             'create_alias' => 'pulse',
-                             'get_parameter' => 'pulse',
-                             'parameter_scale_value' => 'pulse',
-                             'reduce' => 'pulse',
+         pulse_gen => {
+                 allows => {
+                             'create_alias' => 'pulse_gen',
+                             'get_parameter' => 'pulse_gen',
+                             'parameter_scale_value' => 'pulse_gen',
+                             'reduce' => 'pulse_gen',
                             },
                   annotations => {
                                   'piSymbolType2Biolevel' => 'BIOLEVEL_MECHANISM',
@@ -511,21 +511,21 @@ my $class_hierarchy
                                 ],
                   grammar => {
                               components => [],
-                              specific_allocator => 'PulseCalloc',
+                              specific_allocator => 'PulseGenCalloc',
                               specific_token => {
-                                                 class => 'pulse',
-                                                 lexical => 'TOKEN_PULSE',
+                                                 class => 'pulse_gen',
+                                                 lexical => 'TOKEN_PULSE_GEN',
                                                  purpose => 'physical',
                                                 },
                               typing => {
                                          base => 'phsle',
                                          id => 'pidin',
-                                         spec => 'ppulse',
+                                         spec => 'ppulsegen',
                                          to_base => '->bio.ioh.iol.hsle',
                                         },
                              },
                   isa => 'bio_comp',
-                  name => 'symtab_Pulse',
+                  name => 'symtab_PulseGen',
                   parameters => {
 				 LEVEL1 => 'level of pulse1',
 				 LEVEL2 => 'level of pulse2',
