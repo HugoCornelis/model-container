@@ -125,6 +125,7 @@ Key bindings:
 		 ;; use listactions, listclasses, listobjects
 
 		 "projection"
+		 "\\|pulse_gen"
 		 "\\|connection"
 		 "\\|connection"
 		 "\\|contour_group"
@@ -150,6 +151,7 @@ Key bindings:
 		 "\\|concentration_gate_kinetic"
 
 		 "\\|PROJECTION"
+		 "\\|PULSE_GEN"
 		 "\\|CONNECTION"
 		 "\\|CONNECTION"
 		 "\\|CONTOUR_GROUP"
