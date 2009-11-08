@@ -13,13 +13,13 @@ my $test
 					      '1',
 					      '-q',
 					      '-R',
-					      'pulse/pulse1.ndf',
+					      'pulsegen/pulsegen1.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
 						  {
 						   description => "Is neurospaces startup successful ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/pulse/pulse1.ndf.', ],
+						   read => [ '-re', './neurospacesparse: No errors for .+?/pulsegen/pulsegen1.ndf.', ],
 						   timeout => 3,
 						   write => undef,
 						  },
@@ -28,13 +28,13 @@ my $test
 						  {
 						   description => "Has the parameter level1 been set ?",
 						   read => 'value = 50',
-						   write => 'printparameter /Pulse_gen LEVEL1',
+						   write => 'printparameter /PulseGen_1 LEVEL1',
 						  },
 
 						  {
 						   description => "Has the parameter width1 been set ?",
 						   read => 'value = 3',
-						   write => 'printparameter /Pulse_gen WIDTH1',
+						   write => 'printparameter /PulseGen_1 WIDTH1',
 						  },
 
 
@@ -42,27 +42,27 @@ my $test
 						  {
 						   description => "Has the parameter delay1 been set ?",
 						   read => 'value = 5',
-						   write => 'printparameter /Pulse_gen DELAY1',
+						   write => 'printparameter /PulseGen_1 DELAY1',
 						  },
 
 
 						  {
 						   description => "Has the parameter level2 been set ?",
 						   read => 'value = -20',
-						   write => 'printparameter /Pulse_gen LEVEL2',
+						   write => 'printparameter /PulseGen_1 LEVEL2',
 						  },
 
 						  {
 						   description => "Has the parameter width2 been set ?",
 						   read => 'value = 5',
-						   write => 'printparameter /Pulse_gen WIDTH2',
+						   write => 'printparameter /PulseGen_1 WIDTH2',
 						  },
 
 
 						  {
 						   description => "Has the parameter delay2 been set ?",
 						   read => 'value = 8',
-						   write => 'printparameter /Pulse_gen DELAY2',
+						   write => 'printparameter /PulseGen_1 DELAY2',
 						  },
 
 
@@ -71,24 +71,24 @@ my $test
 						  {
 						   description => "Has the parameter baselevel been set ?",
 						   read => 'value = 10',
-						   write => 'printparameter /Pulse_gen BASELEVEL',
+						   write => 'printparameter /PulseGen_1 BASELEVEL',
 						  },
 
 
 						  {
 						   description => "Has the trigger mode parameter been set ?",
 						   read => 'value = 0',
-						   write => 'printparameter /Pulse_gen TRIGMODE',
+						   write => 'printparameter /PulseGen_1 TRIGMODE',
 						  },
 
 
 						 ],
-				description => "library pulse generators",
+				description => "library pulsegen generators",
 			       },
 
 			      ],
-       description => "generic pulse objects",
-       name => 'pulse.t',
+       description => "generic pulsegen objects",
+       name => 'pulsegen.t',
       };
 
 
