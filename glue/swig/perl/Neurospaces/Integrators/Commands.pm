@@ -13,6 +13,7 @@ use Neurospaces;
 
 our $g3_commands
     = [
+       'morphology_list_spine_heads',
        'morphology_summarize',
        'ndf_load',
        'ndf_load_help',
@@ -23,6 +24,16 @@ our $g3_commands
        'xml_save',
        'xml_save_help',
       ];
+
+
+sub morphology_list_spine_heads
+{
+    my $modelname = shift;
+
+    GENESIS3::Commands::querymachine("segmentertips $modelname");
+
+    return "*** Ok: morphology_list_spine_heads";
+}
 
 
 sub morphology_summarize
