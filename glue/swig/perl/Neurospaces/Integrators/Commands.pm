@@ -13,6 +13,7 @@ use Neurospaces;
 
 our $g3_commands
     = [
+       'morphology_summarize',
        'ndf_load',
        'ndf_load_help',
        'ndf_save',
@@ -22,6 +23,16 @@ our $g3_commands
        'xml_save',
        'xml_save_help',
       ];
+
+
+sub morphology_summarize
+{
+    my $modelname = shift;
+
+    GENESIS3::Commands::querymachine("segmenterlinearize $modelname");
+
+    return "*** Ok: morphology_summarize";
+}
 
 
 sub ndf_load
