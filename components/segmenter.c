@@ -1971,25 +1971,30 @@ SegmenterTips
 	}
     }
 
-    //- loop over all segments in the cache
+    //- if serials requested
 
-    fprintf(stdout, "  serials:\n");
-
-    for (i = 0 ; i < psegr->desegmenter.iSegments ; i++)
+    if (iSerials)
     {
-	//- if this segment has no children
+	//- loop over all segments in the cache
 
-	if (psegr->desegmenter.piChildren[i] == 0)
+	fprintf(stdout, "  serials:\n");
+
+	for (i = 0 ; i < psegr->desegmenter.iSegments ; i++)
 	{
-	    //- get serial and context of the tip
+	    //- if this segment has no children
 
-	    struct cable_structure *pcsTip = &pcs[i];
+	    if (psegr->desegmenter.piChildren[i] == 0)
+	    {
+		//- get serial and context of the tip
 
-	    int iTip = pcsTip->iSerial - PidinStackToSerial(ppist);
+		struct cable_structure *pcsTip = &pcs[i];
 
-	    //- give output
+		int iTip = pcsTip->iSerial - PidinStackToSerial(ppist);
 
-	    fprintf(stdout, "    - %i\n", iTip);
+		//- give output
+
+		fprintf(stdout, "    - %i\n", iTip);
+	    }
 	}
     }
 
