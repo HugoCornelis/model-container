@@ -72,6 +72,16 @@ sub ndf_save
 
     my $filename = shift;
 
+    if (!defined $modelname)
+    {
+	return "*** Error: no modelname given";
+    }
+
+    if (!defined $filename)
+    {
+	return "*** Error: no filename given";
+    }
+
     $GENESIS3::model_container->write(undef, $modelname, 'ndf', $filename, );
 
     return "*** Ok: ndf_save $filename";
