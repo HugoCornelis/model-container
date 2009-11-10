@@ -7699,7 +7699,7 @@ QueryHandlerSegmenterTips
 
 	    struct symtab_Segmenter *psegr = (struct symtab_Segmenter *)phsle;
 
-	    int iSuccess = SegmenterTips(psegr, ppist);
+	    int iSuccess = SegmenterTips(psegr, ppist, 0);
 
 	    if (!iSuccess)
 	    {

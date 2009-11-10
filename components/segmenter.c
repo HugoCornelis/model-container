@@ -1895,6 +1895,7 @@ SegmenterSetBase
 /// 
 /// \arg psegr segmenter to get tips for.
 /// \arg ppist context of segmenter, segmenter assumed to be on top
+/// \arg iSerials set to 1 if serials should be reported too?
 /// 
 /// \return int
 /// 
@@ -1905,7 +1906,7 @@ SegmenterSetBase
 
 int
 SegmenterTips
-(struct symtab_Segmenter *psegr, struct PidinStack *ppist)
+(struct symtab_Segmenter *psegr, struct PidinStack *ppist, int iSerials)
 {
     //- set default result: ok
 

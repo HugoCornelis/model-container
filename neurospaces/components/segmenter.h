@@ -124,7 +124,7 @@ SegmenterSetBase
 
 int
 SegmenterTips
-(struct symtab_Segmenter *psegr, struct PidinStack *ppist);
+(struct symtab_Segmenter *psegr, struct PidinStack *ppist, int iSerials);
 
 int
 SegmenterTraverseSegments
