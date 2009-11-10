@@ -128,10 +128,10 @@ class Context:
 class ModelContainer:
     def __init__(self, backend):
         if backend == None:
-            print "Constructing a new ModelContainer for the python interface"
+#             print "Constructing a new ModelContainer for the python interface"
             self.backend = SwiggableNeurospaces.NeurospacesNew()
         else:
-            print "Recycling an existing ModelContainer for the python interface"
+#             print "Recycling an existing ModelContainer for the python interface"
             self.backend = backend
             pif = backend.pifRootImport
             SwiggableNeurospaces.ImportedFileSetRootImport(pif)
