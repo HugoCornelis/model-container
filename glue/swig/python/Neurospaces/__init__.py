@@ -11,7 +11,7 @@ classes = { 'Symbol': { 'methods': { 'backend_object': 'self.backend',
                         },
             }
 
-print type(classes)
+# print type(classes)
 
 for class_name in classes.keys():
     class_definition = classes[class_name]
