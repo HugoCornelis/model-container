@@ -38,16 +38,16 @@ my $test
 NEUROSPACES NDF
 
 IMPORT
-    FILE mapper "mappers/spikereceiver.ndf"
+    FILE "mapper" "mappers/spikereceiver.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS mapper::/Synapse Synapse
+  ALIAS "mapper::/Synapse" "Synapse"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CHANNEL NMDA_fixed_conductance
+  CHANNEL "NMDA_fixed_conductance"
     BINDABLES
       INPUT Vm,
       OUTPUT I,
@@ -61,9 +61,9 @@ PUBLIC_MODELS
               PARAMETER ( scale = 1 ),
           ), ),
     END PARAMETERS
-    CHILD Synapse synapse
+    CHILD "Synapse" "synapse"
     END CHILD
-    EQUATION_EXPONENTIAL exp2
+    EQUATION_EXPONENTIAL "exp2"
       BINDABLES
         INPUT activation,
         OUTPUT G,
@@ -77,14 +77,14 @@ PUBLIC_MODELS
       END PARAMETERS
     END EQUATION_EXPONENTIAL
   END CHANNEL
-  CHANNEL NMDA
+  CHANNEL "NMDA"
     BINDABLES
       INPUT Vm,
       OUTPUT I,
     END BINDABLES
-    CHILD Synapse synapse
+    CHILD "Synapse" "synapse"
     END CHILD
-    EQUATION_EXPONENTIAL exp2
+    EQUATION_EXPONENTIAL "exp2"
       BINDABLES
         INPUT activation,
         OUTPUT G,
@@ -212,21 +212,21 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE k "channels/hodgkin-huxley/potassium.ndf"
-    FILE na "channels/hodgkin-huxley/sodium.ndf"
+    FILE "k" "channels/hodgkin-huxley/potassium.ndf"
+    FILE "na" "channels/hodgkin-huxley/sodium.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS k::/k k
+  ALIAS "k::/k" "k"
   END ALIAS
-  ALIAS na::/na na
+  ALIAS "na::/na" "na"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  ALIAS k k
+  ALIAS "k" "k"
   END ALIAS
-  ALIAS na na
+  ALIAS "na" "na"
   END ALIAS
 END PUBLIC_MODELS
 ',
@@ -299,16 +299,16 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE mapper "mappers/spikereceiver.ndf"
+    FILE "mapper" "mappers/spikereceiver.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS mapper::/Synapse Synapse
+  ALIAS "mapper::/Synapse" "Synapse"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CHANNEL NMDA_fixed_conductance
+  CHANNEL "NMDA_fixed_conductance"
     BINDABLES
       INPUT Vm,
       OUTPUT I,
@@ -322,9 +322,9 @@ PUBLIC_MODELS
               PARAMETER ( scale = 1 ),
           ), ),
     END PARAMETERS
-    CHILD Synapse synapse
+    CHILD "Synapse" "synapse"
     END CHILD
-    EQUATION_EXPONENTIAL exp2
+    EQUATION_EXPONENTIAL "exp2"
       BINDABLES
         INPUT activation,
         OUTPUT G,
@@ -338,14 +338,14 @@ PUBLIC_MODELS
       END PARAMETERS
     END EQUATION_EXPONENTIAL
   END CHANNEL
-  CHANNEL NMDA
+  CHANNEL "NMDA"
     BINDABLES
       INPUT Vm,
       OUTPUT I,
     END BINDABLES
-    CHILD Synapse synapse
+    CHILD "Synapse" "synapse"
     END CHILD
-    EQUATION_EXPONENTIAL exp2
+    EQUATION_EXPONENTIAL "exp2"
       BINDABLES
         INPUT activation,
         OUTPUT G,
@@ -456,18 +456,18 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE mapper "mappers/spikereceiver.ndf"
-    FILE gaba "channels/gaba.ndf"
-    FILE basket "channels/purkinje_basket.ndf"
+    FILE "mapper" "mappers/spikereceiver.ndf"
+    FILE "gaba" "channels/gaba.ndf"
+    FILE "basket" "channels/purkinje_basket.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS mapper::/Synapse Synapse
+  ALIAS "mapper::/Synapse" "Synapse"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CHANNEL NMDA_fixed_conductance
+  CHANNEL "NMDA_fixed_conductance"
     BINDABLES
       INPUT Vm,
       OUTPUT I,
@@ -481,9 +481,9 @@ PUBLIC_MODELS
               PARAMETER ( scale = 1 ),
           ), ),
     END PARAMETERS
-    CHILD Synapse synapse
+    CHILD "Synapse" "synapse"
     END CHILD
-    EQUATION_EXPONENTIAL exp2
+    EQUATION_EXPONENTIAL "exp2"
       BINDABLES
         INPUT activation,
         OUTPUT G,
@@ -497,14 +497,14 @@ PUBLIC_MODELS
       END PARAMETERS
     END EQUATION_EXPONENTIAL
   END CHANNEL
-  CHANNEL NMDA
+  CHANNEL "NMDA"
     BINDABLES
       INPUT Vm,
       OUTPUT I,
     END BINDABLES
-    CHILD Synapse synapse
+    CHILD "Synapse" "synapse"
     END CHILD
-    EQUATION_EXPONENTIAL exp2
+    EQUATION_EXPONENTIAL "exp2"
       BINDABLES
         INPUT activation,
         OUTPUT G,
@@ -617,17 +617,17 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE soma "tests/segments/soma.ndf"
-    FILE gate1 "gates/naf_activation.ndf"
-    FILE gate2 "gates/naf_inactivation.ndf"
+    FILE "soma" "tests/segments/soma.ndf"
+    FILE "gate1" "gates/naf_activation.ndf"
+    FILE "gate2" "gates/naf_inactivation.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS gate1::/naf_activation naf_gate_activation
+  ALIAS "gate1::/naf_activation" "naf_gate_activation"
   END ALIAS
-  ALIAS gate2::/naf_inactivation naf_gate_inactivation
+  ALIAS "gate2::/naf_inactivation" "naf_gate_inactivation"
   END ALIAS
-  CHANNEL NaF
+  CHANNEL "NaF"
     BINDABLES
       INPUT Vm,
       OUTPUT I,
@@ -637,12 +637,12 @@ PRIVATE_MODELS
       PARAMETER ( G_MAX = 75000 ),
       PARAMETER ( Erev = 0.045 ),
     END PARAMETERS
-    CHILD naf_gate_activation naf_gate_activation
+    CHILD "naf_gate_activation" "naf_gate_activation"
     END CHILD
-    CHILD naf_gate_inactivation naf_gate_inactivation
+    CHILD "naf_gate_inactivation" "naf_gate_inactivation"
     END CHILD
   END CHANNEL
-  SEGMENT soma2
+  SEGMENT "soma2"
     BINDABLES
       OUTPUT Vm,
     END BINDABLES
@@ -656,15 +656,15 @@ PRIVATE_MODELS
       PARAMETER ( CM = 0.0164 ),
       PARAMETER ( ELEAK = -0.08 ),
     END PARAMETERS
-    CHILD NaF NaF
+    CHILD "NaF" "NaF"
     END CHILD
   END SEGMENT
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL singlea_naf
-    SEGMENT_GROUP segments
-      CHILD soma2 soma
+  CELL "singlea_naf"
+    SEGMENT_GROUP "segments"
+      CHILD "soma2" "soma"
         PARAMETERS
           PARAMETER ( rel_X = 0 ),
           PARAMETER ( rel_Y = 0 ),
