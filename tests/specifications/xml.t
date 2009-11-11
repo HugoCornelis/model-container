@@ -37,11 +37,11 @@ my $test
 NEUROSPACES NDF
 
 IMPORT
-    FILE mapper "mappers/spikereceiver.ndf"
+    FILE "mapper" "mappers/spikereceiver.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS mapper::/Synapse "Synapse"
+  ALIAS "mapper::/Synapse" "Synapse"
   END ALIAS
 END PRIVATE_MODELS
 
@@ -55,7 +55,7 @@ PUBLIC_MODELS
       PARAMETER ( G_MAX = 1.077 ),
       PARAMETER ( Erev = -0.08 ),
     END PARAMETERS
-    CHILD Synapse "synapse"
+    CHILD "Synapse" "synapse"
     END CHILD
     EQUATION_EXPONENTIAL "exp2"
       BINDABLES
