@@ -499,7 +499,7 @@ my $class_hierarchy
                  allows => {
                              'create_alias' => 'pulse_gen',
                              'get_parameter' => 'pulse_gen',
-                             'parameter_scale_value' => 'pulse_gen',
+#                              'parameter_scale_value' => 'pulse_gen',
                              'reduce' => 'pulse_gen',
                             },
                   annotations => {
@@ -507,7 +507,8 @@ my $class_hierarchy
                                  },
                   description => 'an object that can generate a variety of pulse patterns',
                   dimensions => [
-                                 'mechanism',
+#                                  'mechanism',
+				 'experiment',
                                 ],
                   grammar => {
                               components => [],
