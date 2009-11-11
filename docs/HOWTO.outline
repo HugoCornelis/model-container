@@ -292,35 +292,7 @@ of the tests, and contains raw examples how Neurospaces can be used to
 explore an instantiated model.
 
 ** Add new components
-Difficult at the moment.  Here are the steps, say for adding a
-component with name AXON:
-*** Add a tokenizer to analyzer.l
-*** Add the token to description.tokens
-*** Add the necessary grammar rules to parser.rules
-Most of the following involve simple copying operations and can be
-automated:
-**** Add a rule for reducing the NT AxonSymbol to NT AnySymbol
-**** Add a rule for AxonComponent, to place the axon in the hierarchy
-**** Add a rule for AxonSymbol
-**** Add a rule for AxonSection
-***** This defines the possibility of bindables and bindings
-**** Add a rule for AxonDescription
-**** Perhaps add the new type to YYSTYPE
-*** Add files axon.h, axon.c
-Again, this step involves simple copying and should be automated.
-**** Use pool.h, pool.c as a template
-**** Decide what parameters should be scaled and get default values etc.
-*** Define the aspects for the new component.
-**** Adapt hierarchy/symbols
-**** Define the relationships for instanceof()
-**** Define biological level for axons in biolevel.[ch]
-*** Integrate the new component in the development process
-**** Adapt Makefile.am
-**** Check, correct existing tests.
-Note: the switches test checks for parser states.  This needs to be
-updated because of the added grammar rules.
-**** Write new tests for the new component.
-
+See http://code.google.com/p/neurospaces/wiki/Adding_New_Components
 ** Add new virtual calls
 *** Add the call at the appropriate level in hierarchy/symbols
 *** Add the necessary function to symboltable.[ch].
