@@ -1374,6 +1374,20 @@ Identifier	/* <pcIdentifier> */
 
 		    $$ = $1;
 		}
+	|
+		TOKEN_STRING
+		{
+#line
+		    //- remove ending '"' from string
+
+		    $1->pcString[$1->iLength - 1] = '\0';
+
+		    //- put identifier on stack
+
+		    $$ = &$1->pcString[1];
+
+		    //! memory leak : $2
+		}
 	;
 
 %%
