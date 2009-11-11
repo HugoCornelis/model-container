@@ -503,12 +503,27 @@ PoolParameterScaleValue
 	    = SymbolFindParameter
 	      ((struct symtab_HSolveListElement *)ppool, ppist, "THICK");
 
+	if (!pparThickness)
+	{
+	    if (ppistComp)
+	    {
+		PidinStackFree(ppistComp);
+	    }
+
+	    return(dResult);
+	}
+
 	double dThickness
 	    = ParameterResolveValue(pparThickness, ppist);
 
 	if (dPoolDia == FLT_MAX
 	    || dThickness == FLT_MAX)
 	{
+	    if (ppistComp)
+	    {
+		PidinStackFree(ppistComp);
+	    }
+
 	    return(dResult);
 	}
 
