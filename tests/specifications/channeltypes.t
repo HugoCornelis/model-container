@@ -20,7 +20,6 @@ my $test
 						  {
 						   description => "Is neurospaces startup successful (channels/purkinje/cat.ndf) ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/channels/purkinje/cat.ndf.', ],
-						   write => undef,
 						  },
 						  {
 						   description => "What is the type of the cat channel ?",
@@ -43,7 +42,6 @@ my $test
 						  {
 						   description => "Is neurospaces startup successful (channels/purkinje/nap.ndf) ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/channels/purkinje/nap.ndf.', ],
-						   write => undef,
 						  },
 						  {
 						   description => "What is the type of the nap channel ?",
@@ -66,7 +64,6 @@ my $test
 						  {
 						   description => "Is neurospaces startup successful (channels/purkinje/kh.ndf) ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/channels/purkinje/kh.ndf.', ],
-						   write => undef,
 						  },
 						  {
 						   description => "What is the type of the kh channel ?",
@@ -90,7 +87,6 @@ my $test
 						  {
 						   description => "Is neurospaces startup successful (channels/purkinje/naf.ndf) ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/channels/purkinje/naf.ndf.', ],
-						   write => undef,
 						  },
 						  {
 						   description => "What is the type of the naf channel ?",
@@ -113,7 +109,6 @@ my $test
 						  {
 						   description => "Is neurospaces startup successful (channels/purkinje/k2.ndf) ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/channels/purkinje/k2.ndf.', ],
-						   write => undef,
 						  },
 						  {
 						   description => "What is the type of the k2 channel ?",
@@ -136,7 +131,6 @@ my $test
 						  {
 						   description => "Is neurospaces startup successful (channels/purkinje/kc.ndf) ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/channels/purkinje/kc.ndf.', ],
-						   write => undef,
 						  },
 						  {
 						   description => "What is the type of the kc channel ?",
@@ -159,7 +153,6 @@ my $test
 						  {
 						   description => "Is neurospaces startup successful (channels/purkinje/km.ndf) ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/channels/purkinje/km.ndf.', ],
-						   write => undef,
 						  },
 						  {
 						   description => "What is the type of the km channel ?",
@@ -183,7 +176,6 @@ my $test
 						  {
 						   description => "Is neurospaces startup successful (channels/purkinje/kdr.ndf) ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/channels/purkinje/kdr.ndf.', ],
-						   write => undef,
 						  },
 						  {
 						   description => "What is the type of the kdr channel ?",
@@ -207,7 +199,6 @@ my $test
 						  {
 						   description => "Is neurospaces startup successful (channels/purkinje/ka.ndf) ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/channels/purkinje/ka.ndf.', ],
-						   write => undef,
 						  },
 						  {
 						   description => "What is the type of the ka channel ?",
@@ -230,7 +221,6 @@ my $test
 						  {
 						   description => "Is neurospaces startup successful (channels/purkinje/cap.ndf) ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/channels/purkinje/cap.ndf.', ],
-						   write => undef,
 						  },
 						  {
 						   description => "What is the type of the cap channel ?",
@@ -239,6 +229,28 @@ my $test
 						  },
 						 ],
 				description => "CHANNEL_TYPE of channels/purkinje/cap.ndf",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-q',
+					      '-R',
+					      'channels/traub/k_ahp.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (channels/traub/k_ahp.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/channels/traub/k_ahp.ndf.', ],
+						  },
+						  {
+						   description => "What is the type of the k_ahp channel ?",
+						   read => 'value = "ChannelConc"',
+						   write => 'printparameter /k_ahp CHANNEL_TYPE',
+						  },
+						 ],
+				description => "CHANNEL_TYPE of channels/traub/k_ahp.ndf",
 			       },
 		      ],
        description => "automatically inferred and hardcoded channel type parameters",

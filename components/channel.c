@@ -315,6 +315,16 @@ ChannelGetChannelType
 	{
 	    pcResult = "ChannelActConc";
 	}
+	else if (ccc.iEquations == 0
+		 && (ccc.iGateKineticsConcentration == 1
+		     || ccc.iGateKineticsConcentration == 2)
+		 && ccc.iGateKineticsVoltage == 0
+		 && ccc.iGates == 1
+		 && ccc.iOthers == 0
+		 && ccc.iReceivers == 0)
+	{
+	    pcResult = "ChannelConc";
+	}
     }
 
     //- return result
