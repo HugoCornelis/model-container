@@ -1019,6 +1019,7 @@ IdentifierHierarchicalNameSpaceRooted	/* <pidin> */
 		    //- create a pidin queue
 
 		    struct PidinStack *ppist
+
 			= PidinStackParse(&$1->pcString[1]);
 
 		    struct symtab_IdentifierIndex *pidin
