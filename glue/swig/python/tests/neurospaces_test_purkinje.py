@@ -20,7 +20,7 @@ Neurospaces.SingleCellContainer.compile("/Purkinje")
 
 Neurospaces.SingleCellContainer.output("/Purkinje/segments/soma", "Vm")
 
-Neurospaces.SingleCellContainer.run(0.1)
+Neurospaces.SingleCellContainer.run(0.01)
 
 print "simulation finished"
 

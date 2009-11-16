@@ -5,7 +5,7 @@ import Neurospaces
 
 import SwiggableNeurospaces
 
-nmc = Neurospaces.ModelContainer()
+nmc = Neurospaces.ModelContainer(None)
 
 output_filename = None
 
