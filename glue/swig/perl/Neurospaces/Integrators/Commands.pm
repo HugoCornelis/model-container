@@ -40,6 +40,8 @@ sub morphology_summarize
 {
     my $modelname = shift;
 
+    GENESIS3::Commands::querymachine("segmentersetbase $modelname");
+
     GENESIS3::Commands::querymachine("segmenterlinearize $modelname");
 
     return "*** Ok: morphology_summarize";
