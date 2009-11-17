@@ -582,6 +582,7 @@ my $class_hierarchy
 				       DIA => 'segment diameter',
 				       LENGTH => 'segment length (calculated automatically if not set)',
 				       PARENT => 'parent segment, somatopetal',
+				       SEGMENTER_BASE => 'base symbol of segmentation',
 				       SURFACE => 'surface of the segment (calculated automatically if not set, you can set it to add spine surface)',
 				       TOTALSURFACE => 'total surface of all segments in the segmenter (calculated automatically)',
 				       rel_X => 'spatial extent of the segment in the X direction',
