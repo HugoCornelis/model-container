@@ -1820,6 +1820,90 @@ SymbolPrincipalSerial2RelativeContext
 }
 
 
+
+
+/*
+ *
+ *
+ */
+int SymbolPrintParameterTraversal
+ (struct symtab_HSolveListElement *phsle,
+  struct PidinStack *ppist)
+{
+
+
+  char pcContext[1000];
+
+  PidinStackString(ppist, pcContext, 1000);
+
+  struct symtab_HSolveListElement *phsleSymbol = NULL;
+
+  //- lookup symbol
+
+  /// \note allows namespacing, yet incompatible with parameter caches.
+
+  if(!phsle)
+  {
+    phsleSymbol = PidinStackLookupTopSymbol(ppist);
+  }
+  else
+  {
+    phsleSymbol = phsle;
+  }
+
+
+  if (!phsleSymbol)
+  {
+    fprintf(stdout, "symbol not found\n");
+
+    return(FALSE);
+  }
+
+  if (phsleSymbol)
+  {
+    fprintf(stdout, "---\nshow_parameters:\n");
+    
+    /// \todo this code is one more reason to implement traversals that are
+      /// \todo orthogonal to the model's axis.
+      
+      //- loop over all prototypes including self
+
+      struct symtab_BioComponent *pbio
+	= (struct symtab_BioComponent *)phsleSymbol;
+      
+      while (pbio)
+      {
+	//- loop over parameters of this prototype
+
+	struct symtab_Parameters *ppar
+	  = ParContainerIterateParameters(pbio->pparc);
+
+	while (ppar)
+	{
+
+	  ParameterPrintInfoRecursive(ppar, ppist, 0, stdout);
+
+	  fprintf(stdout,"%s","\n");
+
+	  //- go to next parameter
+
+	  ppar = ParContainerNextParameter(ppar);
+	}
+	
+	//- go to next prototype
+
+	pbio = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
+      }
+
+  }
+   
+  return TRUE;
+
+}
+
+
+
+
 /// 
 /// \arg phsle symbol to resolve input for
 /// \arg ppist context of given element, may be NULL

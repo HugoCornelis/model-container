@@ -385,6 +385,12 @@ int
 SymbolIncrementAliases(int iType);
 
 
+int SymbolPrintParameterTraversal(
+  struct symtab_HSolveListElement *phsle,
+  struct PidinStack *ppist);
+
+
+
 /// 
 /// clear all known spaces
 /// 
@@ -723,6 +729,8 @@ SymbolGetNumberOfAliases()
 
     return(iCreatedAliases);
 }
+
+
 
 
 /// 
