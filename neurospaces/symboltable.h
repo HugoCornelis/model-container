@@ -26,6 +26,7 @@
 #define SYMBOLTABLE_H
 
 
+struct PidinStack;
 struct symtab_HSolveListElement;
 struct symtab_String;
 

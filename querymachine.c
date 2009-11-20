@@ -5549,7 +5549,7 @@ static int QueryHandlerPrintParameterScaled
 
     //- lookup symbol
 
-    /// \note allows namespacing, yet incompatible with parameter caches.
+/*     /// \note allows namespacing, yet incompatible with parameter caches. */
 
 /*     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist); */
 
