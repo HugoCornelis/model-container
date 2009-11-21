@@ -28,7 +28,6 @@
 
 
 /// 
-/// 
 /// \arg pparcac parameter cache.
 /// \arg iSerial context of parameter value.
 /// \arg pcName name of parameter value.
@@ -39,7 +38,6 @@
 ///	Newly added cached parameter, NULL for failure.
 /// 
 /// \brief Add a parameter to the cache.
-/// \details 
 /// 
 
 struct CachedParameter *
@@ -70,7 +68,6 @@ ParameterCacheAddDouble
 
 
 /// 
-/// 
 /// \arg pparcac parameter cache.
 /// \arg iSerial context of parameter value.
 /// \arg pcName name of parameter value.
@@ -81,7 +78,6 @@ ParameterCacheAddDouble
 ///	Newly added cached parameter, NULL for failure.
 /// 
 /// \brief Add a parameter to the cache.
-/// \details 
 /// 
 
 struct CachedParameter *
@@ -112,7 +108,6 @@ ParameterCacheAddString
 
 
 /// 
-/// 
 /// \arg pparcac parameter cache.
 /// \arg ppar parameter to be cached.
 /// 
@@ -121,7 +116,6 @@ ParameterCacheAddString
 ///	Success of operation.
 /// 
 /// \brief Insert a parameter in the cache.
-/// \details 
 /// 
 
 int
@@ -149,13 +143,11 @@ ParameterCacheInsert
 
 
 /// 
-/// 
 /// \return struct ParameterCache * 
 /// 
 ///	New parameter cache, NULL for failure.
 /// 
 /// \brief Initialize new parameter cache.
-/// \details 
 /// 
 
 struct ParameterCache * ParameterCacheNew(void)
