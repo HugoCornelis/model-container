@@ -26,7 +26,6 @@
 
 
 /// 
-/// 
 /// \arg ppar parameter
 /// 
 /// \return struct CachedParameter *
@@ -52,7 +51,6 @@ CachedParameterNew(struct symtab_Parameters *ppar)
 }
 
 
-/// 
 /// 
 /// \arg iSerial context of parameter value.
 /// \arg pcName name of parameter value.
@@ -100,7 +98,6 @@ CachedParameterNewFromNumber
 }
 
 
-/// 
 /// 
 /// \arg iSerial context of parameter value.
 /// \arg pcName name of parameter value.
