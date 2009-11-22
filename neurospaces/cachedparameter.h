@@ -51,6 +51,10 @@ CachedParameterNewFromNumber
 (int iSerial, char *pcName, double dNumber);
 
 struct CachedParameter *
+CachedParameterNewFromParameter
+(int iSerial, struct symtab_Parameters *ppar);
+
+struct CachedParameter *
 CachedParameterNewFromString
 (int iSerial, char *pcName, char *pcValue);
 

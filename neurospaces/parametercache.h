@@ -35,6 +35,10 @@ struct symtab_Parameters;
 
 
 struct CachedParameter *
+ParameterCacheAdd
+(struct ParameterCache *pparcac, int iSerial, struct symtab_Parameters *ppar);
+
+struct CachedParameter *
 ParameterCacheAddDouble
 (struct ParameterCache *pparcac, int iSerial, char *pcName, double dNumber);
 

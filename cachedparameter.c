@@ -63,7 +63,7 @@ CachedParameterNew(struct symtab_Parameters *ppar)
 /// \details 
 /// 
 ///	Create a new cached parameter with the given value for the
-///	given context
+///	given context.
 /// 
 
 struct CachedParameter *
@@ -82,6 +82,44 @@ CachedParameterNewFromNumber
     {
 	return(NULL);
     }
+
+    pcacparResult = CachedParameterNew(ppar);
+
+    //- set serial
+
+    /// \note flags are not used for cached parameters, or a small redesign
+    /// \note is needed.
+
+    pcacparResult->par.iFlags = iSerial;
+
+    //- return result
+
+    return(pcacparResult);
+}
+
+
+/// 
+/// \arg iSerial context of parameter value.
+/// \arg ppar parameter with name and value.
+/// 
+/// \return struct CachedParameter *
+/// 
+///	New cached parameter, NULL for failure.
+/// 
+/// \details 
+/// 
+///	Create a new cached parameter with the given value for the
+///	given context.  Note that this function does not do memory
+///	allocation of the inserted parameter.
+/// 
+
+struct CachedParameter *
+CachedParameterNewFromParameter
+(int iSerial, struct symtab_Parameters *ppar)
+{
+    //- set default result : failure
+
+    struct CachedParameter * pcacparResult = NULL;
 
     pcacparResult = CachedParameterNew(ppar);
 

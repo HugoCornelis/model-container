@@ -169,6 +169,10 @@ char *
 BaseSymbolGetID(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist);
 
 struct symtab_Parameters *
+SymbolCacheParameter
+(struct symtab_HSolveListElement *phsle, int iSerial, struct symtab_Parameters *ppar);
+
+struct symtab_Parameters *
 SymbolCacheParameterDouble
 (struct symtab_HSolveListElement *phsle, int iSerial, char *pcName, double dNumber);
 

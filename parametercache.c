@@ -30,6 +30,45 @@
 /// 
 /// \arg pparcac parameter cache.
 /// \arg iSerial context of parameter value.
+/// \arg ppar parameter to cache.
+/// 
+/// \return struct CachedParameter *
+/// 
+///	Newly added cached parameter, NULL for failure.
+/// 
+/// \brief Add a parameter to the cache.
+/// 
+
+struct CachedParameter *
+ParameterCacheAdd
+(struct ParameterCache *pparcac, int iSerial, struct symtab_Parameters *ppar)
+{
+    //- set default result : failure
+
+    struct CachedParameter * pcacparResult = NULL;
+
+    //- allocate parameter for double
+
+    pcacparResult = CachedParameterNewFromParameter(iSerial, ppar);
+
+    if (!pcacparResult)
+    {
+	return(NULL);
+    }
+
+    //- insert the parameter in the cache
+
+    ParameterCacheInsert(pparcac, pcacparResult);
+
+    //- return result
+
+    return(pcacparResult);
+}
+
+
+/// 
+/// \arg pparcac parameter cache.
+/// \arg iSerial context of parameter value.
 /// \arg pcName name of parameter value.
 /// \arg dNumber parameter value.
 /// 

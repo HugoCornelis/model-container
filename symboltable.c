@@ -160,6 +160,70 @@ BaseSymbolGetID(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist
 /// \arg phsle symbol to use for caching.
 /// \arg iSerial serial to use for caching, context of parameter.
 /// \arg pcName name of parameter.
+/// \arg pcValue value of parameter.
+/// 
+/// \return struct symtab_Parameters *
+/// 
+///	Newly allocated parameters, NULL for failure.
+/// 
+/// \details 
+/// 
+///	Allocate a parameter for the given value and insert it in the
+///	parameter cache of the given symbol.
+/// 
+
+struct symtab_Parameters *
+SymbolCacheParameter
+(struct symtab_HSolveListElement *phsle, int iSerial, struct symtab_Parameters *ppar)
+{
+    //- set default result : failure
+
+    struct symtab_Parameters * pparResult = NULL;
+
+    struct ImportedFile *pifRootImport = ImportedFileGetRootImport();
+
+/*     fprintf(stdout, "importedfile.c: root import %p\n", pifRootImport); */
+
+    struct symtab_RootSymbol *proot
+	= ImportedFileGetRootSymbol(pifRootImport);
+
+/*     fprintf(stdout, "importedfile.c: root symbol %p\n", proot); */
+
+/*     fprintf(stdout, "importedfile.c: symbol %p\n", phsle); */
+
+    //- allocate parameter cache if needed
+
+    if (!phsle->pparcac)
+    {
+	phsle->pparcac = ParameterCacheNew();
+
+	if (!phsle->pparcac)
+	{
+	    return(NULL);
+	}
+    }
+
+    //- get reference to parameter cache
+
+    struct ParameterCache *pparcac = phsle->pparcac;
+
+    //- add the parameter to the cache
+
+    struct CachedParameter *pcacpar
+	= ParameterCacheAdd(pparcac, iSerial, ppar);
+
+    pparResult = CachedParameterGetParameter(pcacpar);
+
+    //- return result
+
+    return(pparResult);
+}
+
+
+/// 
+/// \arg phsle symbol to use for caching.
+/// \arg iSerial serial to use for caching, context of parameter.
+/// \arg pcName name of parameter.
 /// \arg dNumber value of parameter.
 /// 
 /// \return struct symtab_Parameters *
