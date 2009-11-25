@@ -5376,7 +5376,7 @@ static int QueryHandlerPrintParameterInfo
 ///
 /// \details 
 /// 
-///	printparameter <context> <parameter1-name> <parameter2-name>
+///	printparameterinput <context> <parameter1-name> <parameter2-name>
 /// 
 
 static int
