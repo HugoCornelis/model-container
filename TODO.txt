@@ -1,5 +1,7 @@
 -*- outline -*-
 
+* solve shift reduce conflicts
+
 * check the tools directory of G2
 contains a couple of useful model operations.
 
