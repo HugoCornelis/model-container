@@ -116,6 +116,7 @@ my $option_numerical_compare = $config->{numerical_compare} || 0;
 my $option_random_order;
 my $option_regex_selector = ".*";
 my $option_report_disabled;
+my $option_show;
 my $option_timeout_multiplier = 1;
 my $option_timings;
 my $option_verbose;
@@ -381,6 +382,16 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 Total of $test_report->{global}->{test_count} tests (encountered $error_count error(s) so far)");
 
 		$test_report->{disabled}->{command_definitions}->{$module_name}->{$description} = $command_definition->{disabled};
+
+		next;
+	    }
+
+	    if ($option_show)
+	    {
+		if (!$test_report->{selected}->{$module_name}->{$description})
+		{
+		    $test_report->{selected}->{$module_name}->{$description} = 1;
+		}
 
 		next;
 	    }
@@ -953,6 +964,7 @@ sub read_cmd_line
 	     "randomize-order=s" => \$option_random_order,
 	     "regex-selector=s" => \$option_regex_selector,
 	     "report-disabled" => \$option_report_disabled,
+	     "show!" => \$option_show,
 	     "timeout-multiplier=s" => \$option_timeout_multiplier,
 	     "timings!" => \$option_timings,
 	     "v|verbose+" => \$option_verbose,
@@ -972,6 +984,7 @@ sub read_cmd_line
 	   random_order => $option_random_order,
 	   regex_selector => $option_regex_selector,
 	   report_disabled => $option_report_disabled,
+	   show => $option_show,
 	   timeout_multiplier => $option_timeout_multiplier,
 	   timings => $option_timings,
 	   verbose => $option_verbose,
@@ -993,6 +1006,7 @@ options:
     --randomize-order    randomize the order of the tests before executing them (require List::Util to be installed).
     --regex-selector     defines a regex to run specific tests.
     --report-disabled    include information of disabled tests in the test report.
+    --show               show tests that would be run using the current configuration.
     --timeout-multiplier multiply all timeout values with this constant.
     --timings            add timing information about the tests to the report.
     --verbose            set verbosity level.
@@ -1104,9 +1118,10 @@ sub report_exit
 		   {
 		    description => $test_report->{description},
 		    ($option_report_disabled ? (disabled => $test_report->{disabled}) : ()),
-		    errors => $test_report->{errors},
-		    global => $test_report->{global},
+		    ($option_show ? () : (errors => $test_report->{errors})),
+		    ($option_show ? () : (global => $test_report->{global})),
 		    ($error_count ? (target => $test_report->{target}) : ()),
+		    ($option_show ? (selected => $test_report->{selected}) : ()),
 		   },
 		  );
 
@@ -1276,12 +1291,15 @@ sub report_message
 
     my $line = '-' x $longest;
 
-    print "\n";
-    print "$line\n" for 0 .. $header;
-    print "\n";
-    print "$message\n\n";
-    print "$line\n" for 0 .. $trailer;
-    print "\n";
+    if (!$option_show)
+    {
+	print "\n";
+	print "$line\n" for 0 .. $header;
+	print "\n";
+	print "$message\n\n";
+	print "$line\n" for 0 .. $trailer;
+	print "\n";
+    }
 }
 
 
