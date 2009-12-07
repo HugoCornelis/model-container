@@ -96,6 +96,46 @@ struct symtab_RootSymbol * RootSymbolCalloc(void)
 }
 
 
+#ifdef DELETE_OPERATION
+
+/// 
+/// \arg proot root symbol container.
+/// \arg phsleChild child to delete.
+/// 
+/// \return int : success of operation
+/// 
+/// \brief Delete a child from the children of given symbol container.
+///
+/// \details 
+/// 
+///	Does not update (sub)?space indices.
+/// 
+
+int
+RootSymbolDeleteChild
+(struct symtab_RootSymbol *proot,
+ struct symtab_HSolveListElement *phsleChild)
+{
+    //- set default result: ok
+
+    int iResult = TRUE;
+
+    //- delete child
+
+    HSolveListRemove(&phsleChild->hsleLink);
+
+/*     //- set serials of child */
+
+/*     SymbolAllSerialsEntailChild(&pioh->iol.hsle, phsleChild); */
+
+    //- return result
+
+    return(iResult);
+}
+
+#endif
+
+
 /// 
 /// \arg proot root to free
 /// 

@@ -427,6 +427,8 @@ Grid3DAddComponents
 
 		//- add to population
 
+		/// \todo should this be SymbolAddChild() ?
+
 		IOHierarchyAddChild(pioh, phsleNew);
 
 		//- increment count

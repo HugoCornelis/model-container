@@ -52,15 +52,20 @@ RootSymbolAddChild
 
 struct symtab_RootSymbol * RootSymbolCalloc(void);
 
-void RootSymbolInit(struct symtab_RootSymbol *phyro);
-
-struct symtab_HSolveListElement *
-RootSymbolLookup(struct symtab_RootSymbol *phyro,char *pcName);
+int
+RootSymbolDeleteChild
+(struct symtab_RootSymbol *proot,
+ struct symtab_HSolveListElement *phsleChild);
 
 void RootSymbolFree(struct symtab_RootSymbol *phyro);
 
 struct symtab_IdentifierIndex *
 RootSymbolGetPidin(struct symtab_RootSymbol *phyro);
+
+void RootSymbolInit(struct symtab_RootSymbol *phyro);
+
+struct symtab_HSolveListElement *
+RootSymbolLookup(struct symtab_RootSymbol *phyro,char *pcName);
 
 struct symtab_HSolveListElement *
 RootSymbolLookupHierarchical
