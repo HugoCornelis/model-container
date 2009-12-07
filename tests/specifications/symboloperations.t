@@ -286,14 +286,14 @@ Principal serial ID = 12 of 12 Principal successors
 						  },
 						  {
 						   description => "Can we delete the cell ?",
-						   disabled => 'root symbols cannot delete their children yet',
+# 						   disabled => 'root symbols cannot delete their children yet',
 						   read => "neurospaces",
 						   write => "delete /Golgi",
 						  },
 						  {
 						   description => "Do we find an empty result ?",
-						   disabled => 'root symbols cannot delete their children yet',
-						   read => [ '-re', '(?!Golgi)', ],
+# 						   disabled => 'root symbols cannot delete their children yet',
+						   read => "neurospaces",
 						   write => "expand /**",
 						  },
 						 ],
