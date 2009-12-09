@@ -36,41 +36,49 @@ dnl this is the only variant present at the moment
 AC_DEFINE(PRE_PROTO_TRAVERSAL)
 
 # Checks for enablng subsets.
-AC_ARG_ENABLE(subset_segment, 
-[--with-subset-segment   enable the segment subset translator],
-[with_subset_segment=yes]
-)
+AC_ARG_ENABLE(subset_segment, AS_HELP_STRING([--with-subset-segment   enable the segment subset translator]) )
 
-if test "$with_subset_segment" == "yes" ; then
+if test x"$with_subset_segment" == "xyes" ; then
+
     echo "segment subset is enabled"
+
     AC_DEFINE(TREESPACES_SUBSET_SEGMENT, 1, [enable the segment subset])
+
 else
+
     echo "segment subset is disabled"
+
 fi
 
 
-AC_ARG_ENABLE(subset_mechanism, 
-[--with-subset-mechanism   enable the mechanism subset translator],
-[with_subset_mechanism=yes]
-)
+AC_ARG_ENABLE(subset_mechanism, AS_HELP_STRING([--with-subset-mechanism   enable the mechanism subset translator]) )
 
-if test "$with_subset_mechanism" == "yes" ; then
+if test x"$with_subset_mechanism" == "xyes" ; then
+
     echo "mechanism subset is enabled"
+
     AC_DEFINE(TREESPACES_SUBSET_MECHANISM, 1, [enable the mechanism subset])
+
 else
+
     echo "mechanism subset is disabled"
+
 fi
 
 
 # Check for delete operation
-AC_ARG_ENABLE(delete-operation, [--with-delete-operation   enable the delete operation],[with_delete_operation=yes
-])
+AC_ARG_ENABLE(delete_operation, AS_HELP_STRING([--with-delete-operation   enable the delete operation]) )
 
-if test "$with_delete_operation" == "yes" ; then
-	echo "delete operation is enabled"
-	AC_DEFINE(DELETE_OPERATION, 1, [enable the delete operation])
+if test x"$with_delete_operation" == "xyes" ; then
+
+    echo "delete operation is enabled"
+
+    AC_DEFINE(DELETE_OPERATION, 1, [enable the delete operation])
+
 else
-	echo "delete operation is disabled"
+
+    echo "delete operation is disabled"
+
 fi
 
 
@@ -97,7 +105,7 @@ AC_PROG_AWK
 AC_PROG_YACC
 AC_PROG_CC
 AM_PROG_LEX
-dnl AC_ARG_PROGRAM
+#AC_ARG_PROGRAM
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_RANLIB
