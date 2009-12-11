@@ -14,7 +14,9 @@ use Neurospaces;
 our $g3_commands
     = [
        'morphology_list_spine_heads',
+       'morphology_list_spine_heads_help',
        'morphology_summarize',
+       'morphology_summarize_help',
        'ndf_load',
        'ndf_load_help',
        'ndf_save',
