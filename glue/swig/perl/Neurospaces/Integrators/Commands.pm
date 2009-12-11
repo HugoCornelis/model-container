@@ -36,6 +36,16 @@ sub morphology_list_spine_heads
 }
 
 
+sub morphology_list_spine_heads_help
+{
+    print "description: list all the terminal tips in a morphology.\n";
+
+    print "synopsis: morphology_list_spine_heads <modelname>\n";
+
+    return "*** Ok: morphology_list_spine_heads_help";
+}
+
+
 sub morphology_summarize
 {
     my $modelname = shift;
@@ -45,6 +55,16 @@ sub morphology_summarize
     GENESIS3::Commands::querymachine("segmenterlinearize $modelname");
 
     return "*** Ok: morphology_summarize";
+}
+
+
+sub morphology_summarize_help
+{
+    print "description: build internal indexes before analyzing a morphology.\n";
+
+    print "synopsis: morphology_summarize <modelname>\n";
+
+    return "*** Ok: morphology_summarize_help";
 }
 
 
