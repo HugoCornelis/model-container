@@ -9218,6 +9218,55 @@ static int QueryHandlerSolverSet
 }
 
 
+/*
+ * \fun static int QueryHandlerSymbolPrintParameterTraversal
+ *          (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
+ * 
+ *  Prints out all parameters associated with a given symbol.
+ */
+static int QueryHandlerSymbolPrintParameterTraversal
+(char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
+{
+    //- set result : ok
+
+    int iResult = 1;
+
+    //- parse command line element
+
+    struct PidinStack *ppist = PidinStackParse(&pcLine[iLength]);
+ 
+    //- lookup symbol
+
+    /// \note allows namespacing, yet incompatible with parameter caches.
+
+    struct symtab_HSolveListElement *phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
+
+    //- if found
+
+    if (phsle)
+    {
+	iResult = SymbolPrintParameterTraversal(phsle,ppist);
+    }
+
+    //- else
+
+    else
+    {
+	//- diag's
+
+	fprintf(stdout, "symbol not found\n");
+    }
+
+    //- free stacks
+
+    PidinStackFree(ppist);
+
+    //- return result
+
+    return(iResult);
+}
+
+
 struct QM_SegmentValidator_data
 {
     /// base symbol.
@@ -10445,35 +10494,3 @@ void QueryMachineStart(struct Neurospaces *pneuro, int iReadline)
 }
 
 
-
-
-
-
-/*
-* \fun static int QueryHandlerSymbolPrintParameterTraversal
-          (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
-* 
-*  Prints out all parameters associated with a given symbol.
-*/
-static int QueryHandlerSymbolPrintParameterTraversal
-(char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
-{
-    //- set result : ok
-
-    int bResult = TRUE;
-
-    struct symtab_HSolveListElement *phsle = NULL;
-
-    //- parse command line element
-
-    struct PidinStack *ppist = PidinStackParse(&pcLine[iLength]);
- 
-    bResult = SymbolPrintParameterTraversal(phsle,ppist);
-
-    //- free stacks
-
-    PidinStackFree(ppist);
-    //- return result
-
-    return(bResult);
-}
