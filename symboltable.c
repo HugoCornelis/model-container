@@ -1900,30 +1900,30 @@ int SymbolPrintParameterTraversal
 
   PidinStackString(ppist, pcContext, 1000);
 
-  struct symtab_HSolveListElement *phsleSymbol = NULL;
+  struct symtab_HSolveListElement *phsleSymbol = phsle;
 
-  //- lookup symbol
+/*   //- lookup symbol */
 
-  /// \note allows namespacing, yet incompatible with parameter caches.
+/* /*   /// \note allows namespacing, yet incompatible with parameter caches. * */
 
-  if(!phsle)
-  {
-    phsleSymbol = PidinStackLookupTopSymbol(ppist);
-  }
-  else
-  {
-    phsleSymbol = phsle;
-  }
+/*   if(!phsle) */
+/*   { */
+/*     phsleSymbol = PidinStackLookupTopSymbol(ppist); */
+/*   } */
+/*   else */
+/*   { */
+/*     phsleSymbol = phsle; */
+/*   } */
 
 
-  if (!phsleSymbol)
-  {
-    fprintf(stdout, "symbol not found\n");
+/*   if (!phsleSymbol) */
+/*   { */
+/*     fprintf(stdout, "symbol not found\n"); */
 
-    return(FALSE);
-  }
+/*     return(FALSE); */
+/*   } */
 
-  if (phsleSymbol)
+/*   if (phsleSymbol) */
   {
     fprintf(stdout, "---\nshow_parameters:\n");
     
