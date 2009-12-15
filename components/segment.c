@@ -72,6 +72,11 @@ SegmentGetTau
 
 static
 double
+SegmentGetVmInit
+(struct symtab_Segment *psegment, struct PidinStack *ppist);
+
+static
+double
 SegmentGetVolume
 (struct symtab_Segment *psegment, struct PidinStack *ppist);
 
@@ -445,17 +450,31 @@ SegmentGetParameter
 
 	    double dTau = SegmentGetTau(psegment, ppist);
 
-/* 	    //- allocate new parameter for give name,value */
-
-/* 	    pparResult = ParameterNewFromNumber(pcName, dTau); */
-
 	    if (dTau != FLT_MAX)
 	    {
-		//- set length of segment
+		//- set time constant
 
 		pparResult
 		    = SymbolSetParameterDouble
 		      (&psegment->segr.bio.ioh.iol.hsle, "TAU", dTau);
+	    }
+	}
+
+	//- if initial membrane potential
+
+	else if (0 == strcmp(pcName, "Vm_init"))
+	{
+	    //- calculate initial membrane potential
+
+	    double dVmInit = SegmentGetVmInit(psegment, ppist);
+
+	    if (dVmInit != FLT_MAX)
+	    {
+		//- set initial membrane potential
+
+		pparResult
+		    = SymbolSetParameterDouble
+		      (&psegment->segr.bio.ioh.iol.hsle, "Vm_init", dVmInit);
 	    }
 	}
     }
@@ -812,6 +831,42 @@ SegmentGetTau
 /* 	     "SegmentGetTau() : %s doesn't have a capacitance or resistance\n", */
 /* 	     IdinName(SymbolGetPidin(&psegment->segr.bio.ioh.iol.hsle))); */
     }
+
+    //- return result
+
+    return(dResult);
+}
+
+
+/// 
+/// \arg psegment segment to get initial membrane potential for.
+/// \arg ppist context of segment.
+/// 
+/// \return double : segment initial membrane potential, FLT_MAX for
+/// failure.
+/// 
+/// \brief Get initial membrane potential of segment.
+/// 
+
+static
+double
+SegmentGetVmInit
+(struct symtab_Segment *psegment, struct PidinStack *ppist)
+{
+    //- set default result : failure
+
+    double dResult = FLT_MAX;
+
+    //- get leak conductance potential
+
+    /// \note note that it does not matter if we use specific or actual values
+
+    double dEm
+	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "ELEAK");
+
+    //- set result
+
+    dResult = dEm;
 
     //- return result
 
