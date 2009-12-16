@@ -1926,14 +1926,38 @@ int PidinStackPushCompact
 
     else if (IdinPointsToParent(pidin))
     {
-	//- pop stack if possible
+	//- if possible it is possible to pop
 
 	if (PidinStackNumberOfEntries(ppist) > 0)
 	{
-	    iResult = PidinStackPop(ppist) != NULL;
+	    //- if the top entry on the stack points to parent
+
+	    struct symtab_IdentifierIndex *pidinTop
+		= PidinStackTop(ppist);
+
+	    if (IdinPointsToParent(pidinTop))
+	    {
+		//- we push this entry
+
+		iResult = PidinStackPush(ppist, pidin);
+	    }
+
+	    //- else
+
+	    else
+	    {
+		//- we pop
+
+		iResult = PidinStackPop(ppist) != NULL;
+	    }
 	}
+
+	//- else
+
 	else
 	{
+	    //- we push this entry
+
 	    iResult = PidinStackPush(ppist, pidin);
 	}
     }
@@ -2346,7 +2370,7 @@ PidinStackSubtract(struct PidinStack *ppistA, struct PidinStack *ppistB)
 
     if (iContinue)
     {
-	//- calculate serials
+	//- calculate serials (cannot result in INT_MAX, see above)
 
 	int iSerial1 = PidinStackToSerial(ppist1);
 	int iSerial2 = PidinStackToSerial(ppist2);
