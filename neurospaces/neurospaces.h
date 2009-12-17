@@ -169,7 +169,14 @@ struct Neurospaces
 #ifndef SWIG
 extern char parsertext[];
 #endif
-extern size_t parserleng;
+extern 
+#if  defined(__APPLE__) && defined(MAC_OS_VERSION_10_6)
+size_t 
+#else
+int
+#endif
+parserleng;
+
 extern FILE *parserin;
 
 
