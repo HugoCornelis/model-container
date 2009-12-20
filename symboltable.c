@@ -422,6 +422,13 @@ SymbolFindCachedParameter
 
     struct symtab_Parameters * pparResult = NULL;
 
+    struct ImportedFile *pifRootImport = ImportedFileGetRootImport();
+
+/*     fprintf(stdout, "importedfile.c: root import %p\n", pifRootImport); */
+
+    struct symtab_RootSymbol *proot
+	= ImportedFileGetRootSymbol(pifRootImport);
+
     //- update context caches
 
     /// \todo how can I get around this hack in a clean way ?
@@ -471,14 +478,21 @@ SymbolFindCachedParameter
 
     int i;
 
-    for (i = 0 ; i < iEntries ; i++)
+    for (i = -1 ; i < iEntries ; i++)
     {
 	//- get caching symbol
 
-	/// \todo more hacking to be removed
+	struct symtab_HSolveListElement *phsleCache;
 
-	struct symtab_HSolveListElement *phsleCache
-	    = PSymbolSerialStackElementSymbol(&ppist->symsst, i);
+	if (i == -1)
+	{
+	    phsleCache = &proot->hsle;
+	}
+	else
+	{
+	    phsleCache
+		= PSymbolSerialStackElementSymbol(&ppist->symsst, i);
+	}
 
 	//- correct serial to be relative to next symbol
 
