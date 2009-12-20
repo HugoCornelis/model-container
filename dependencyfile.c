@@ -146,7 +146,7 @@ DependencyFilePrint
 
 	fprintf
 	    (pfile,
-	     "FILE %s \"%s\"\n",
+	     "FILE \"%s\" \"%s\"\n",
 	     DependencyFileGetNameSpace(pdf),
 	     ImportedFileGetRelative(DependencyFileGetImportedFile(pdf)));
     }
