@@ -41,11 +41,11 @@
 
 static inline void
 PSymbolSerialStackPopped
-(struct PSymbolSerialStack *psymsst,struct symtab_HSolveListElement *phsle);
+(struct PSymbolSerialStack *psymsst, struct symtab_HSolveListElement *phsle);
 
 static inline void
 PSymbolSerialStackPushed
-(struct PSymbolSerialStack *psymsst,struct symtab_HSolveListElement *phsle);
+(struct PSymbolSerialStack *psymsst, struct symtab_HSolveListElement *phsle);
 
 
 ///
@@ -117,7 +117,7 @@ struct PSymbolSerialStack * PSymbolSerialStackCalloc(void)
 
     psymsstResult
 	= (struct PSymbolSerialStack *)
-	  calloc(1,sizeof(struct PSymbolSerialStack));
+	  calloc(1, sizeof(struct PSymbolSerialStack));
 
     //- initialize symbol serial stack
 
@@ -159,7 +159,7 @@ PSymbolSerialStackElementSymbol(struct PSymbolSerialStack *psymsst, int i)
     //- set default result : from base struct
 
     struct symtab_HSolveListElement *phsleResult
-	= PSymbolStackElementSymbol(&psymsst->symst,i);
+	= PSymbolStackElementSymbol(&psymsst->symst, i);
 
     //- return result
 
@@ -241,7 +241,7 @@ PSymbolSerialStackPop(struct PSymbolSerialStack *psymsst)
 	{
 	    //- register popped symbol (adjust serials)
 
-	    PSymbolSerialStackPopped(psymsst,phsleResult);
+	    PSymbolSerialStackPopped(psymsst, phsleResult);
 	}
     }
 
@@ -267,7 +267,7 @@ PSymbolSerialStackPop(struct PSymbolSerialStack *psymsst)
 
 static inline void
 PSymbolSerialStackPopped
-(struct PSymbolSerialStack *psymsst,struct symtab_HSolveListElement *phsle)
+(struct PSymbolSerialStack *psymsst, struct symtab_HSolveListElement *phsle)
 {
     //- get principal-to-parent from symbol
 
@@ -292,7 +292,7 @@ PSymbolSerialStackPopped
 
 int
 PSymbolSerialStackPush
-(struct PSymbolSerialStack *psymsst,struct symtab_HSolveListElement *phsle)
+(struct PSymbolSerialStack *psymsst, struct symtab_HSolveListElement *phsle)
 {
     //- set default result : ok
 
@@ -300,7 +300,7 @@ PSymbolSerialStackPush
 
     //- set result : from base struct
 
-    bResult = PSymbolStackPush(&psymsst->symst,phsle);
+    bResult = PSymbolStackPush(&psymsst->symst, phsle);
 
     //- if success
 
@@ -313,7 +313,7 @@ PSymbolSerialStackPush
 	{
 	    //- register pushed symbol (adjust serials)
 
-	    PSymbolSerialStackPushed(psymsst,phsle);
+	    PSymbolSerialStackPushed(psymsst, phsle);
 	}
     }
 
@@ -339,7 +339,7 @@ PSymbolSerialStackPush
 
 static inline void
 PSymbolSerialStackPushed
-(struct PSymbolSerialStack *psymsst,struct symtab_HSolveListElement *phsle)
+(struct PSymbolSerialStack *psymsst, struct symtab_HSolveListElement *phsle)
 {
     //- get principal-to-parent from symbol
 
