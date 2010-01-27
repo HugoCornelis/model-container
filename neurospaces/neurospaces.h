@@ -30,6 +30,7 @@
 #include <stdlib.h>
 
 #include <sys/time.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 struct ParserContext;
@@ -168,7 +169,7 @@ struct Neurospaces
 #ifndef SWIG
 extern char parsertext[];
 #endif
-extern int parserleng;
+extern size_t parserleng;
 extern FILE *parserin;
 
 
