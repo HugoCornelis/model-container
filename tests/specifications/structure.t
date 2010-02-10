@@ -59,10 +59,6 @@ my $test
             attach{-- begin HIER sections ---
             attach}--  end  HIER sections ---
                 attachName, index (SpikeGen,-1)
-                    PARA  Name (THRESHOLD)
-                    PARA  Type (TYPE_PARA_ATTRIBUTE), 
-                    PARA  Name (REFRACTORY)
-                    PARA  Type (TYPE_PARA_ATTRIBUTE), 
                 attach{-- begin HIER sections ---
                 attach}--  end  HIER sections ---
         Name, index (Ca_pool,-1)

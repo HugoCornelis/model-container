@@ -511,7 +511,7 @@ report:
 				command_tests => [
 						  {
 						   description => "Have symbols been reported to be published to stdout ?",
-						   read => [ '-re', '1,spikegenerat,25	\|\|  Add Public Model\(T_sym_attachment,SpikeGen\)
+						   read => [ '-re', '1,spikegenerat,23	\|\|  Add Public Model\(T_sym_attachment,SpikeGen\)
 1,granule_inna,30	\|\|  Add Public Model\(T_sym_channel,InNa\)
 1,granule_kdr.,30	\|\|  Add Public Model\(T_sym_channel,KDr\)
 1,granule_ka.n,30	\|\|  Add Public Model\(T_sym_channel,KA\)
@@ -581,7 +581,7 @@ report:
 						  {
 						   description => "Have all levels been reported to stdout ?",
 						   read => [ '-re', '0,golgi.ndf   ,15	\|\|->Dependency file\(.*?/mappers/spikegenerator.ndf\)
-1,spikegenerat,25	\|\|  Add Public Model\(T_sym_attachment,SpikeGen\)
+1,spikegenerat,23	\|\|  Add Public Model\(T_sym_attachment,SpikeGen\)
 0,golgi.ndf   ,15	\|\|->End\(.*?/mappers/spikegenerator.ndf\)
 0,golgi.ndf   ,17	\|\|->Dependency file\(.*?/channels/golgi_inna.ndf\)
 1,golgi_inna.n,30	\|\|  Add Public Model\(T_sym_channel,InNa\)
