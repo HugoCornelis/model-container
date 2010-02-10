@@ -511,14 +511,14 @@ report:
 				command_tests => [
 						  {
 						   description => "Have symbols been reported to be published to stdout ?",
-						   read => [ '-re', '1,spikegenerat,23	\|\|  Add Public Model\(T_sym_attachment,SpikeGen\)
+						   read => [ '-re', '1,spikegenerat,20	\|\|  Add Public Model\(T_sym_attachment,SpikeGen\)
 1,granule_inna,30	\|\|  Add Public Model\(T_sym_channel,InNa\)
 1,granule_kdr.,30	\|\|  Add Public Model\(T_sym_channel,KDr\)
 1,granule_ka.n,30	\|\|  Add Public Model\(T_sym_channel,KA\)
 1,granule_cahv,30	\|\|  Add Public Model\(T_sym_channel,CaHVA\)
 1,granule_h.nd,30	\|\|  Add Public Model\(T_sym_channel,H\)
 1,granule_kc.n,36	\|\|  Add Public Model\(T_sym_channel,Moczyd_KC\)
-2,spikereceive,25	\|\|    Add Public Model\(T_sym_attachment,Synapse\)
+2,spikereceive,22	\|\|    Add Public Model\(T_sym_attachment,Synapse\)
 1,granule_nmda,21	\|\|  Add Private Model\(T_sym_attachment,Synapse\)
 1,granule_nmda,70	\|\|  Add Public Model\(T_sym_channel,NMDA\)
 1,granule_ampa,21	\|\|  Add Private Model\(T_sym_attachment,Synapse\)
@@ -581,7 +581,7 @@ report:
 						  {
 						   description => "Have all levels been reported to stdout ?",
 						   read => [ '-re', '0,golgi.ndf   ,15	\|\|->Dependency file\(.*?/mappers/spikegenerator.ndf\)
-1,spikegenerat,23	\|\|  Add Public Model\(T_sym_attachment,SpikeGen\)
+1,spikegenerat,20	\|\|  Add Public Model\(T_sym_attachment,SpikeGen\)
 0,golgi.ndf   ,15	\|\|->End\(.*?/mappers/spikegenerator.ndf\)
 0,golgi.ndf   ,17	\|\|->Dependency file\(.*?/channels/golgi_inna.ndf\)
 1,golgi_inna.n,30	\|\|  Add Public Model\(T_sym_channel,InNa\)
@@ -603,7 +603,7 @@ report:
 0,golgi.ndf   ,27	\|\|->End\(.*?/channels/golgi_kc.ndf\)
 0,golgi.ndf   ,29	\|\|->Dependency file\(.*?/channels/golgi_nmda.ndf\)
 1,golgi_nmda.n,15	\|\|  ->Dependency file\(.*?/mappers/spikereceiver.ndf\)
-2,spikereceive,25	\|\|    Add Public Model\(T_sym_attachment,Synapse\)
+2,spikereceive,22	\|\|    Add Public Model\(T_sym_attachment,Synapse\)
 1,golgi_nmda.n,15	\|\|  ->End\(.*?/mappers/spikereceiver.ndf\)
 1,golgi_nmda.n,17	\|\|  Activating golgi_nmda.ndf\'s dependencies\(dependency list not yet\)
 1,golgi_nmda.n,21	\|\|  Add Private Model\(T_sym_attachment,Synapse\)

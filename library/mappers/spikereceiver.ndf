@@ -15,10 +15,7 @@ PUBLIC_MODELS
 			OUTPUT activation
 		END BINDABLES
 
-		// obsoleted, spike is implicitly discrete 
-		// event at the moment.
-
-		// RECEIVES EVENTS(spike)
+		RECEIVES EVENTS(spike)
 
 		ATTRIBUTES weight, delay END ATTRIBUTES
 

@@ -15,10 +15,7 @@ PUBLIC_MODELS
 			OUTPUT spike
 		END BINDABLES
 
-		// obsoleted, spike is implicitly discrete 
-		// event at the moment.
-
-		// GENERATES EVENTS(spike)
+		GENERATES EVENTS(spike)
 
 	END ATTACHMENT
 
