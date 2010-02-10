@@ -1008,28 +1008,28 @@ IdentifierHierarchicalNameSpaceRooted	/* <pidin> */
 		    *(int *)NULL = 0xdeadbeaf;
 		}
 */
-	|
-		TOKEN_STRING
-		{
-#line
-		    //- remove ending '"' from string
+/* 	| */
+/* 		TOKEN_STRING */
+/* 		{ */
+/* #line */
+/* 		    //- remove ending '"' from string */
 
-		    $1->pcString[$1->iLength - 1] = '\0';
+/* 		    $1->pcString[$1->iLength - 1] = '\0'; */
 
-		    //- create a pidin queue
+/* 		    //- create a pidin queue */
 
-		    struct PidinStack *ppist
-			= PidinStackParse(&$1->pcString[1]);
+/* 		    struct PidinStack *ppist */
+/* 			= PidinStackParse(&$1->pcString[1]); */
 
-		    struct symtab_IdentifierIndex *pidin
-			= PidinStackToPidinQueue(ppist);
+/* 		    struct symtab_IdentifierIndex *pidin */
+/* 			= PidinStackToPidinQueue(ppist); */
 
-		    //- put it on the stack
+/* 		    //- put it on the stack */
 
-		    $$ = pidin->pidinRoot;
+/* 		    $$ = pidin->pidinRoot; */
 
-		    //! memory leak : $1
-		}
+/* 		    //! memory leak : $1 */
+/* 		} */
 	;
 
 IdentifierHierarchicalRooted	/* <pidin> */
