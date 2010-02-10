@@ -1,9 +1,5 @@
 -*- outline -*-
 
-* correct event receivers and generators
-** double variabes / attributes
-** check stockholm presentation
-
 * solve shift reduce conflicts
 
 * check the tools directory of G2
