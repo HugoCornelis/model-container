@@ -1,4 +1,4 @@
-static char *pcVersionTime="(09/09/29) Tuesday, September 29, 2009 18:41:23 hugo";
+static char *pcVersionTime="(10/02/17) Wednesday, February 17, 2010 11:08:07 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -1415,6 +1415,24 @@ int NeurospacesReduce(struct Neurospaces *pneuro)
 
 /// 
 /// \arg pneuro neurospaces.
+///
+/// \return ppq : registered projection query.
+/// 
+/// \brief Get registered projection query.
+/// 
+
+struct ProjectionQuery *
+NeurospacesGetProjectionQuery
+(struct Neurospaces *pneuro)
+{
+    //- return registered projection query
+
+    return(pneuro->ppq);
+}
+
+
+/// 
+/// \arg pneuro neurospaces.
 /// 
 /// \return int : success of operation
 /// 
@@ -1453,7 +1471,7 @@ int NeurospacesRemoveProjectionQuery(struct Neurospaces *pneuro)
 
 int
 NeurospacesSetProjectionQuery
-(struct Neurospaces *pneuro,struct ProjectionQuery *ppq)
+(struct Neurospaces *pneuro, struct ProjectionQuery *ppq)
 {
     //- set default result : ok
 
