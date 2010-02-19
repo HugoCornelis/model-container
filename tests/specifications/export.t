@@ -749,7 +749,164 @@ END PUBLIC_MODELS
 						  ],
 				 description => "export of a model with an active channel",
 				},
+				{
+				 arguments => [
+					       '-q',
+					       '-v',
+					       '1',
+					       'tests/cells/hh1.ndf',
+					      ],
+				 command => './neurospacesparse',
+				 command_tests => [
+						   {
+						    description => "Is neurospaces startup successful ?",
+						    read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/hh1.ndf.', ],
+						    timeout => 15,
+						   },
+						   {
+						    description => "Can we export the model as NDF ?",
+						    read => '#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+    FILE hh "segments/hodgkin_huxley.ndf"
+END IMPORT
+
+PRIVATE_MODELS
+  ALIAS hh::/hh_segment hh
+  END ALIAS
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+  CELL hh1
+    SEGMENT_GROUP segments
+      CHILD hh soma
+      END CHILD
+    END SEGMENT_GROUP
+  END CELL
+END PUBLIC_MODELS
+',
+						    write => "export no ndf STDOUT /**",
+						   },
+						   {
+						    description => "Can we export the model as NDF with namespace support ?",
+						    read => '#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+    FILE hh "segments/hodgkin_huxley.ndf"
+END IMPORT
+
+PRIVATE_MODELS
+  ALIAS hh::/hh_segment hh
+  END ALIAS
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+  CELL hh1
+    SEGMENT_GROUP segments
+      CHILD hh soma
+      END CHILD
+    END SEGMENT_GROUP
+  END CELL
+END PUBLIC_MODELS
+',
+						    write => "export names ndf STDOUT /**",
+						   },
+						  ],
+				 description => "export of an HH model with an active channel",
+				},
+				{
+				 arguments => [
+					       '-q',
+					       '-v',
+					       '1',
+					       'tests/cells/singlep.ndf',
+					      ],
+				 command => './neurospacesparse',
+				 command_tests => [
+						   {
+						    description => "Is neurospaces startup successful ?",
+						    read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/singlep.ndf.', ],
+						    timeout => 15,
+						   },
+						   {
+						    description => "Can we export the model as NDF ?",
+						    read => '#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+    FILE soma "tests/segments/soma.ndf"
+END IMPORT
+
+PRIVATE_MODELS
+  ALIAS soma::/soma soma
+  END ALIAS
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+  CELL singlep
+    SEGMENT_GROUP segments
+      CHILD soma soma
+        PARAMETERS
+          PARAMETER ( rel_X = 0 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = 0 ),
+          PARAMETER ( DIA = 2.98e-05 ),
+        END PARAMETERS
+      END CHILD
+    END SEGMENT_GROUP
+  END CELL
+END PUBLIC_MODELS
+',
+						    write => "export no ndf STDOUT /**",
+						   },
+						   {
+						    description => "Can we export the model as NDF with namespace support ?",
+						    read => '#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+    FILE soma "tests/segments/soma.ndf"
+END IMPORT
+
+PRIVATE_MODELS
+  ALIAS soma::/soma soma
+  END ALIAS
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+  CELL singlep
+    SEGMENT_GROUP segments
+      CHILD soma soma
+        PARAMETERS
+          PARAMETER ( rel_X = 0 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = 0 ),
+          PARAMETER ( DIA = 2.98e-05 ),
+        END PARAMETERS
+      END CHILD
+    END SEGMENT_GROUP
+  END CELL
+END PUBLIC_MODELS
+',
+						    write => "export names ndf STDOUT /**",
+						   },
+						  ],
+				 description => "export of an HH model with an active channel",
+				},
 			       ),
+
+			       # reading, writing and then parsing a couple of ndf files
+
 			       (
 				map
 				{
