@@ -290,6 +290,7 @@ END PUBLIC_MODELS
 						    write => "export no ndf /tmp/1.ndf /**",
 						   },
 						   {
+						    comment => 'exported text only differs in bindings of the original',
 						    description => "Does the exported NDF file contain the correct model (3) ?",
 						    read => {
 							     application_output_file => '/tmp/1.ndf',
@@ -610,6 +611,7 @@ END PUBLIC_MODELS
 						    timeout => 15,
 						   },
 						   {
+						    comment => 'exported text differs with the original in the bindings of the channel inside the segment',
 						    description => "Can we export the model as NDF ?",
 						    read => '#!neurospacesparse
 // -*- NEUROSPACES -*-
