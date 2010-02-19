@@ -821,7 +821,9 @@ sub write
 
     $type = $types->{$type} || $type;
 
-    my $result = SwiggableNeurospaces::ExporterModel($context, $type, $filename);
+    my $flags = 0;
+
+    my $result = SwiggableNeurospaces::ExporterModel($context, $type, $flags, $filename);
 
 #  $self->{neurospaces}->NeurospacesWrite($#$argv + 1, $argv, @_);
 
