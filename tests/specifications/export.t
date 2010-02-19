@@ -26,10 +26,10 @@ my $test
 						    description => "Can we export the model to an NDF file ?",
 						    read => 'neurospaces',
 						    wait => 1,
-						    write => "export ndf /tmp/1.ndf /**",
+						    write => "export no ndf /tmp/1.ndf /**",
 						   },
 						   {
-						    description => "Does the exported NDF file contain the correct model ?",
+						    description => "Does the exported NDF file contain the correct model (1) ?",
 						    read => {
 							     application_output_file => '/tmp/1.ndf',
 							     expected_output => '#!neurospacesparse
@@ -106,7 +106,7 @@ END PUBLIC_MODELS
 						    description => "Can we export the model to an XML file ?",
 						    read => 'neurospaces',
 						    wait => 1,
-						    write => "export xml /tmp/1.xml /**",
+						    write => "export no xml /tmp/1.xml /**",
 						   },
 						   {
 						    comment => 'xml to html conversion fails when converting this test to html',
@@ -200,10 +200,10 @@ END PUBLIC_MODELS
 						    description => "Can we export the model to an NDF file ?",
 						    read => 'neurospaces',
 						    wait => 1,
-						    write => "export ndf /tmp/1.ndf /**",
+						    write => "export no ndf /tmp/1.ndf /**",
 						   },
 						   {
-						    description => "Does the exported NDF file contain the correct model ?",
+						    description => "Does the exported NDF file contain the correct model (2) ?",
 						    read => {
 							     application_output_file => '/tmp/1.ndf',
 							     expected_output => '#!neurospacesparse
@@ -236,7 +236,7 @@ END PUBLIC_MODELS
 						    description => "Can we export the model to an XML file ?",
 						    read => 'neurospaces',
 						    wait => 1,
-						    write => "export xml /tmp/1.xml /**",
+						    write => "export no xml /tmp/1.xml /**",
 						   },
 						   {
 						    comment => 'xml to html conversion fails when converting this test to html',
@@ -287,10 +287,10 @@ END PUBLIC_MODELS
 						    description => "Can we export the model to an NDF file ?",
 						    read => 'neurospaces',
 						    wait => 1,
-						    write => "export ndf /tmp/1.ndf /**",
+						    write => "export no ndf /tmp/1.ndf /**",
 						   },
 						   {
-						    description => "Does the exported NDF file contain the correct model ?",
+						    description => "Does the exported NDF file contain the correct model (3) ?",
 						    read => {
 							     application_output_file => '/tmp/1.ndf',
 							     expected_output => '#!neurospacesparse
@@ -367,7 +367,7 @@ END PUBLIC_MODELS
 						    description => "Can we export the model to an XML file ?",
 						    read => 'neurospaces',
 						    wait => 1,
-						    write => "export xml /tmp/1.xml /**",
+						    write => "export no xml /tmp/1.xml /**",
 						   },
 						   {
 						    comment => 'xml to html conversion fails when converting this test to html',
@@ -520,7 +520,7 @@ PUBLIC_MODELS
   END CHANNEL
 END PUBLIC_MODELS
 ',
-						    write => 'export ndf STDOUT /**',
+						    write => 'export no ndf STDOUT /**',
 						   },
 						   {
 						    description => 'Are the imported namespaces present in the xml export ?',
@@ -590,7 +590,7 @@ END PUBLIC_MODELS
   </CHANNEL>
 </public_models>
 ',
-						    write => 'export xml STDOUT /**',
+						    write => 'export no xml STDOUT /**',
 						   },
 						  ],
 				 description => "export of a simple model and manually importing files",
@@ -676,7 +676,7 @@ PUBLIC_MODELS
   END CELL
 END PUBLIC_MODELS
 ',
-						    write => "export ndf STDOUT /**",
+						    write => "export no ndf STDOUT /**",
 						   },
 						   {
 						    description => "Can we export the model as XML ?",
@@ -742,7 +742,7 @@ END PUBLIC_MODELS
   </CELL>
 </public_models>
 ',
-						    write => "export xml STDOUT /**",
+						    write => "export no xml STDOUT /**",
 						   },
 						  ],
 				 description => "export of a model with an active channel",
@@ -771,7 +771,7 @@ END PUBLIC_MODELS
 							{
 							 description => "Can we export the model as NDF ?",
 							 wait => 1,
-							 write => "export ndf /tmp/1.ndf /**",
+							 write => "export no ndf /tmp/1.ndf /**",
 							},
 						       ],
 				      description => "export of $ndf before reading it back",

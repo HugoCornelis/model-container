@@ -43,8 +43,11 @@ struct exporter_data
     /// output type
 
     int iType;
-};
 
+    /// output flags
+
+    int iFlags;
+};
 
 
 static
@@ -69,6 +72,7 @@ ExporterSymbol
  struct PidinStack *ppist,
  struct PidinStack *ppistWildcard,
  int iType,
+ int iFlags,
  FILE *pfile);
 
 static
@@ -243,6 +247,7 @@ ExporterBindings
 /// 
 /// \arg ppistWildcard wildcard of symbols to export.
 /// \arg iType type of export, see below.
+/// \arg iFlags export flags (eg. namespacing flags).
 /// \arg pcFilename name of exported file.
 /// 
 /// \return int success of operation.
@@ -255,7 +260,7 @@ ExporterBindings
 ///	formats.
 ///
 
-int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
+int ExporterModel(struct PidinStack *ppistWildcard, int iType, int iFlags, char *pcFilename)
 {
     //- set default result: ok
 
@@ -330,11 +335,15 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 
 	phslePrivate = (struct symtab_HSolveListElement *)pdefsym->prootPrivate;
 
+	//- private models always export their namespaces
+
+	int iFlagsPrivate = iFlags | EXPORTER_FLAG_NAMESPACES;
+
 	/// \note phslePrivate can be NULL if the model description file was not found ?
 
 	if (phslePrivate)
 	{
-	    iResult = ExporterSymbol(phslePrivate, ppistPrivate, ppistWildcard, iType, pfile);
+	    iResult = ExporterSymbol(phslePrivate, ppistPrivate, ppistWildcard, iType, iFlagsPrivate, pfile);
 	}
 
 	//- end private models
@@ -387,7 +396,7 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 
 	if (phsleRoot)
 	{
-	    iResult = ExporterSymbol(phsleRoot, ppistRoot, ppistWildcard, iType, pfile);
+	    iResult = ExporterSymbol(phsleRoot, ppistRoot, ppistWildcard, iType, iFlags, pfile);
 	}
 
 	//- end public models
@@ -463,7 +472,7 @@ ExporterSymbolStarter
 
 	    PrintIndent(pexd->iIndent, pexd->pfile);
 
-	    char *pcNamespace = pbio->pcNamespace;
+	    char *pcNamespace = (pexd->iFlags & EXPORTER_FLAG_NAMESPACES) ? pbio->pcNamespace : NULL ;
 
 	    if (pexd->iType == EXPORTER_TYPE_NDF)
 	    {
@@ -503,9 +512,23 @@ ExporterSymbolStarter
 		fprintf(pexd->pfile, "<%s> %s<prototype>%s%s</prototype> <name>%s</name>\n", pcToken, (pcNamespace ? pcNamespace : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
 	    }
 
-	    //- set result: only sibling processing
+	    //- if there was a namespace
 
-	    iResult = TSTR_PROCESSOR_SIBLINGS;
+	    if (pcNamespace)
+	    {
+		//- set result: only sibling processing
+
+		iResult = TSTR_PROCESSOR_SIBLINGS;
+	    }
+
+	    //- if prototypes allowed to be exported
+
+	    if (!(pexd->iFlags & EXPORTER_FLAG_PROTOTYPES))
+	    {
+		//- set result: only sibling processing
+
+		iResult = TSTR_PROCESSOR_SIBLINGS;
+	    }
 	}
 
 	//- else hardcoded component
@@ -604,6 +627,7 @@ ExporterSymbol
  struct PidinStack *ppist,
  struct PidinStack *ppistWildcard,
  int iType,
+ int iFlags,
  FILE *pfile)
 {
     //- set default result: ok
@@ -629,6 +653,10 @@ ExporterSymbol
 	    /// output type
 
 	    iType,
+
+	    /// output flags
+
+	    iFlags,
 	};
 
     //- traverse symbols that match with wildcard

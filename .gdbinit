@@ -1,6 +1,6 @@
 set env NEUROSPACES_NMC_MODELS = /local_home/hugo/neurospaces_project/model-container/source/snapshots/0/library
 set env NEUROSPACES_NMC_PROJECT_MODELS = /local_home/hugo/EM/models
-set args -q channels/nmda.ndf
+set args -q cells/purkinje/edsjb1994.ndf
 file ./neurospacesparse
 break parsererror
 echo .gdbinit: Done .gdbinit\n

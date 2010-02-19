@@ -1816,7 +1816,7 @@ QueryHandlerExpand
 ///
 /// \details 
 /// 
-///	export <info|ndf|xml> <filename> <wildcard> <symbol>
+///	export <names> <info|ndf|xml> <filename> <wildcard> <symbol>
 /// 
 
 static
@@ -1830,11 +1830,33 @@ QueryHandlerExport
 
     struct symtab_HSolveListElement *phsle = NULL;
 
-    //- get type
+    //- get flags
 
-    int iType = -1;
+    int iFlags = -1;
 
     char pcSeparator[] = " \t,;\n";
+
+    if (!strpbrk(&pcLine[iLength + 1], pcSeparator))
+    {
+	fprintf(stdout, "export flags not specified on command line\n");
+
+	return(FALSE);
+    }
+
+    char *pcFlags = &pcLine[iLength + 1];
+
+    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+    pcLine[iLength] = '\0';
+
+    if (strcmp(pcFlags, "names") == 0)
+    {
+	iFlags = EXPORTER_FLAG_NAMESPACES;
+    }
+    else
+    {
+	iFlags = 0;
+    }
 
     if (!strpbrk(&pcLine[iLength + 1], pcSeparator))
     {
@@ -1842,6 +1864,10 @@ QueryHandlerExport
 
 	return(FALSE);
     }
+
+    //- get type
+
+    int iType = -1;
 
     char *pcType = &pcLine[iLength + 1];
 
@@ -1939,7 +1965,7 @@ QueryHandlerExport
 
     //- export model
 
-    int iExported = ExporterModel(ppistWildcard, iType, pcFilename);
+    int iExported = ExporterModel(ppistWildcard, iType, iFlags, pcFilename);
 
     if (!iExported)
     {

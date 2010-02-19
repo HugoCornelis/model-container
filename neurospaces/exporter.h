@@ -27,7 +27,8 @@
 #include "neurospaces/treespacetraversal.h"
 
 
-int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename);
+int ExporterModel(struct PidinStack *ppistWildcard, int iType, int iFlags, char *pcFilename);
+
 
 //d export the old info type cryptic format.
 
@@ -40,6 +41,15 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, char *pcFilename)
 //d export in a custom XML format.
 
 #define EXPORTER_TYPE_XML	12
+
+
+//d export namespaces
+
+#define EXPORTER_FLAG_NAMESPACES 1
+
+//d export prototypes
+
+#define EXPORTER_FLAG_PROTOTYPES 2
 
 
 #endif

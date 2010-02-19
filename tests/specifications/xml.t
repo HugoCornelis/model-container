@@ -25,7 +25,7 @@ my $test
 						   description => "Can we export the model to an NDF file ?",
 						   read => 'neurospaces',
 						   wait => 1,
-						   write => "export ndf /tmp/1.ndf /**",
+						   write => "export no ndf /tmp/1.ndf /**",
 						  },
 						  {
 						   description => "Does the exported NDF file contain the correct model ?",
@@ -79,7 +79,7 @@ END PUBLIC_MODELS
 						   description => "Can we export the model to an XML file ?",
 						   read => 'neurospaces',
 						   wait => 1,
-						   write => "export xml /tmp/1.xml /**",
+						   write => "export no xml /tmp/1.xml /**",
 						  },
 						  {
 						   comment => 'xml to html conversion fails when converting this test to html',

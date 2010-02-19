@@ -136,7 +136,7 @@ PUBLIC_MODELS
   END CELL
 END PUBLIC_MODELS
 ',
-						   write => 'export ndf STDOUT /**',
+						   write => 'export no ndf STDOUT /**',
 						  },
 						  {
 						   description => 'Can we reduce the model ?',
@@ -238,7 +238,7 @@ PUBLIC_MODELS
   END CELL
 END PUBLIC_MODELS
 ',
-						   write => 'export ndf STDOUT /**',
+						   write => 'export no ndf STDOUT /**',
 						  },
 						 ],
 				description => 'reducing model parameters in a simple cell model',
