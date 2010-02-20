@@ -114,7 +114,7 @@ ExporterBindables
 	//- loop over bindables
 
 	struct symtab_InputOutput *pio
-	    = IOContainerIterateRelations(pioc);
+	    = pioc ? IOContainerIterateRelations(pioc) : NULL;
 
 	if (pio)
 	{
@@ -549,12 +549,12 @@ ExporterSymbolStarter
 	    }
 	}
 
-	//- at this moment we never export bindables and bindings if this is symbol is an alias
+/* 	//- at this moment we never export bindables and bindings if this is symbol is an alias */
 
 /* 	struct symtab_BioComponent * pbioPrototype */
 /* 	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle); */
 
-	if (!pbioPrototype)
+/* 	if (!pbioPrototype) */
 	{
 	    //- export bindables
 

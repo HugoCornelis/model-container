@@ -67,6 +67,7 @@ PUBLIC_MODELS
       CHANNEL ka
         BINDABLES
           INPUT Vm,
+          OUTPUT G,
           OUTPUT I,
         END BINDABLES
         BINDINGS
@@ -172,6 +173,7 @@ PUBLIC_MODELS
       CHANNEL ka
         BINDABLES
           INPUT Vm,
+          OUTPUT G,
           OUTPUT I,
         END BINDABLES
         BINDINGS

@@ -800,7 +800,7 @@ InputRelations	/* <pio> */
 
 		    //- put new item on top of stack
 
-		    $$ = pio;
+		    $$ = $1;
 		}
 	|
 		TOKEN_INPUT
@@ -837,7 +837,7 @@ OutputRelations	/* <pio> */
 
 		    //- put new item on top of stack
 
-		    $$ = pio;
+		    $$ = $1;
 		}
 	|
 		TOKEN_OUTPUT

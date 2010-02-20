@@ -118,6 +118,11 @@ ChannelCreateAlias
 
     struct symtab_Channel *pchanResult = ChannelCalloc();
 
+    //\todo this is a hack that also introduces a memory leak: release
+    // the IO list
+
+    SymbolAssignBindableIO(&pchanResult->bio.ioh.iol.hsle, NULL);
+
     //- set name, namespace and prototype
 
     SymbolSetName(&pchanResult->bio.ioh.iol.hsle, pidin);

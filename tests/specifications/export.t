@@ -50,6 +50,7 @@ PUBLIC_MODELS
   CHANNEL NMDA_fixed_conductance
     BINDABLES
       INPUT Vm,
+      OUTPUT exp2->G,
       OUTPUT I,
     END BINDABLES
     PARAMETERS
@@ -80,6 +81,7 @@ PUBLIC_MODELS
   CHANNEL NMDA
     BINDABLES
       INPUT Vm,
+      OUTPUT exp2->G,
       OUTPUT I,
     END BINDABLES
     CHILD Synapse synapse
@@ -128,6 +130,7 @@ END PUBLIC_MODELS
   <CHANNEL> <name>NMDA_fixed_conductance</name>
     <bindables>
       <input> <name>Vm</name> </input>
+      <output> <name>exp2->G</name> </output>
       <output> <name>I</name> </output>
     </bindables>
     <parameters>
@@ -157,6 +160,7 @@ END PUBLIC_MODELS
   <CHANNEL> <name>NMDA</name>
     <bindables>
       <input> <name>Vm</name> </input>
+      <output> <name>exp2->G</name> </output>
       <output> <name>I</name> </output>
     </bindables>
     <child> <prototype>Synapse</prototype> <name>synapse</name>
@@ -312,6 +316,7 @@ PUBLIC_MODELS
   CHANNEL NMDA_fixed_conductance
     BINDABLES
       INPUT Vm,
+      OUTPUT exp2->G,
       OUTPUT I,
     END BINDABLES
     PARAMETERS
@@ -342,6 +347,7 @@ PUBLIC_MODELS
   CHANNEL NMDA
     BINDABLES
       INPUT Vm,
+      OUTPUT exp2->G,
       OUTPUT I,
     END BINDABLES
     CHILD Synapse synapse
@@ -390,6 +396,7 @@ END PUBLIC_MODELS
   <CHANNEL> <name>NMDA_fixed_conductance</name>
     <bindables>
       <input> <name>Vm</name> </input>
+      <output> <name>exp2->G</name> </output>
       <output> <name>I</name> </output>
     </bindables>
     <parameters>
@@ -419,6 +426,7 @@ END PUBLIC_MODELS
   <CHANNEL> <name>NMDA</name>
     <bindables>
       <input> <name>Vm</name> </input>
+      <output> <name>exp2->G</name> </output>
       <output> <name>I</name> </output>
     </bindables>
     <child> <prototype>Synapse</prototype> <name>synapse</name>
@@ -471,6 +479,7 @@ PUBLIC_MODELS
   CHANNEL NMDA_fixed_conductance
     BINDABLES
       INPUT Vm,
+      OUTPUT exp2->G,
       OUTPUT I,
     END BINDABLES
     PARAMETERS
@@ -501,6 +510,7 @@ PUBLIC_MODELS
   CHANNEL NMDA
     BINDABLES
       INPUT Vm,
+      OUTPUT exp2->G,
       OUTPUT I,
     END BINDABLES
     CHILD Synapse synapse
@@ -542,6 +552,7 @@ END PUBLIC_MODELS
   <CHANNEL> <name>NMDA_fixed_conductance</name>
     <bindables>
       <input> <name>Vm</name> </input>
+      <output> <name>exp2->G</name> </output>
       <output> <name>I</name> </output>
     </bindables>
     <parameters>
@@ -571,6 +582,7 @@ END PUBLIC_MODELS
   <CHANNEL> <name>NMDA</name>
     <bindables>
       <input> <name>Vm</name> </input>
+      <output> <name>exp2->G</name> </output>
       <output> <name>I</name> </output>
     </bindables>
     <child> <prototype>Synapse</prototype> <name>synapse</name>
@@ -632,6 +644,7 @@ PRIVATE_MODELS
   CHANNEL NaF
     BINDABLES
       INPUT Vm,
+      OUTPUT G,
       OUTPUT I,
     END BINDABLES
     PARAMETERS
@@ -659,6 +672,9 @@ PRIVATE_MODELS
       PARAMETER ( ELEAK = -0.08 ),
     END PARAMETERS
     CHILD NaF NaF
+      BINDINGS
+        INPUT ..->Vm,
+      END BINDINGS
     END CHILD
   END SEGMENT
 END PRIVATE_MODELS
@@ -698,6 +714,7 @@ END PUBLIC_MODELS
   <CHANNEL> <name>NaF</name>
     <bindables>
       <input> <name>Vm</name> </input>
+      <output> <name>G</name> </output>
       <output> <name>I</name> </output>
     </bindables>
     <parameters>
@@ -725,6 +742,9 @@ END PUBLIC_MODELS
       <parameter> <name>ELEAK</name><value>-0.08</value> </parameter>
     </parameters>
     <child> <prototype>NaF</prototype> <name>NaF</name>
+      <bindings>
+        <input> <name>..->Vm</name> </input>
+      </bindings>
     </child>
   </SEGMENT>
 </private_models>
@@ -964,6 +984,7 @@ PUBLIC_MODELS
       CHANNEL ka
         BINDABLES
           INPUT Vm,
+          OUTPUT G,
           OUTPUT I,
         END BINDABLES
         BINDINGS
@@ -1082,6 +1103,7 @@ PUBLIC_MODELS
       CHANNEL ka
         BINDABLES
           INPUT Vm,
+          OUTPUT G,
           OUTPUT I,
         END BINDABLES
         BINDINGS
@@ -1187,6 +1209,7 @@ PUBLIC_MODELS
       CHANNEL ka
         BINDABLES
           INPUT Vm,
+          OUTPUT G,
           OUTPUT I,
         END BINDABLES
         BINDINGS
@@ -1285,6 +1308,7 @@ PUBLIC_MODELS
       CHANNEL ka
         BINDABLES
           INPUT Vm,
+          OUTPUT G,
           OUTPUT I,
         END BINDABLES
         BINDINGS
@@ -1396,6 +1420,7 @@ PRIVATE_MODELS
   CHANNEL cat
     BINDABLES
       INPUT Vm,
+      OUTPUT G,
       OUTPUT I,
     END BINDABLES
     PARAMETERS
@@ -1421,12 +1446,18 @@ PRIVATE_MODELS
       PARAMETER ( ELEAK = -0.08 ),
     END PARAMETERS
     CHILD cat cat
+      BINDINGS
+        INPUT ..->Vm,
+      END BINDINGS
       PARAMETERS
         PARAMETER ( G_MAX = 5 ),
         PARAMETER ( Erev = 0.137526 ),
       END PARAMETERS
     END CHILD
     CHILD ca_pool ca_pool
+      BINDINGS
+        INPUT ../cat->I,
+      END BINDINGS
     END CHILD
   END SEGMENT
 END PRIVATE_MODELS
@@ -1471,6 +1502,7 @@ PRIVATE_MODELS
   CHANNEL cat
     BINDABLES
       INPUT Vm,
+      OUTPUT G,
       OUTPUT I,
     END BINDABLES
     PARAMETERS
@@ -1496,12 +1528,18 @@ PRIVATE_MODELS
       PARAMETER ( ELEAK = -0.08 ),
     END PARAMETERS
     CHILD cat cat
+      BINDINGS
+        INPUT ..->Vm,
+      END BINDINGS
       PARAMETERS
         PARAMETER ( G_MAX = 5 ),
         PARAMETER ( Erev = 0.137526 ),
       END PARAMETERS
     END CHILD
     CHILD ca_pool ca_pool
+      BINDINGS
+        INPUT ../cat->I,
+      END BINDINGS
     END CHILD
   END SEGMENT
 END PRIVATE_MODELS
