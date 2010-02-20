@@ -116,7 +116,7 @@ void IOContainerInit(struct symtab_IOContainer * pioc)
 
 struct symtab_InputOutput *
 IOContainerLookupRelation
-(struct symtab_IOContainer * pioc,char *pc,int iCount)
+(struct symtab_IOContainer * pioc, char *pc, int iCount)
 {
     //- set default result : not found
 

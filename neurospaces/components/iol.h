@@ -199,6 +199,11 @@ struct symtab_InputOutput *
 IOListLookupBindableIO
 (struct symtab_IOList *piol, char* pcInput, int i)
 {
+    if (!piol->piocBindable)
+    {
+	return(NULL);
+    }
+
     return(IOContainerLookupRelation(piol->piocBindable, pcInput, i));
 }
 
