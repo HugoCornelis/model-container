@@ -928,6 +928,189 @@ END PUBLIC_MODELS
 					       '-q',
 					       '-v',
 					       '1',
+					       'tests/cells/addressing_aggregator1.ndf',
+					      ],
+				 command => './neurospacesparse',
+				 command_tests => [
+						   {
+						    description => "Is neurospaces startup successful ?",
+						    read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/addressing_aggregator1.ndf.', ],
+						    timeout => 15,
+						   },
+						   {
+						    description => "Can we export the model as NDF ?",
+						    read => '#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+    FILE cat "channels/purkinje/cat.ndf"
+    FILE kdr "channels/purkinje/kdr.ndf"
+    FILE naf "channels/purkinje/naf.ndf"
+    FILE nap "channels/purkinje/nap.ndf"
+END IMPORT
+
+PRIVATE_MODELS
+  ALIAS cat::/cat cat
+  END ALIAS
+  ALIAS kdr::/kdr kdr
+  END ALIAS
+  ALIAS naf::/naf naf
+  END ALIAS
+  ALIAS nap::/nap nap
+  END ALIAS
+  SEGMENT something
+    BINDABLES
+      OUTPUT Vm,
+    END BINDABLES
+    BINDINGS
+      INPUT cat->I,
+      INPUT naf->I,
+      INPUT nap->I,
+      INPUT kdr->I,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( Vm_init = -0.068 ),
+      PARAMETER ( RM = 1 ),
+      PARAMETER ( RA = 2.5 ),
+      PARAMETER ( CM = 0.0164 ),
+      PARAMETER ( ELEAK = -0.08 ),
+    END PARAMETERS
+    CHILD cat cat
+      BINDINGS
+        INPUT ..->Vm,
+      END BINDINGS
+      PARAMETERS
+        PARAMETER ( Erev = 0.137526 ),
+      END PARAMETERS
+    END CHILD
+    CHILD kdr kdr
+      BINDINGS
+        INPUT ..->Vm,
+      END BINDINGS
+    END CHILD
+    CHILD nap nap
+      BINDINGS
+        INPUT ..->Vm,
+      END BINDINGS
+    END CHILD
+    CHILD naf naf
+      BINDINGS
+        INPUT ..->Vm,
+      END BINDINGS
+    END CHILD
+  END SEGMENT
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+  CELL addressing_aggregator1
+    SEGMENT_GROUP segments
+      CHILD something c1
+        PARAMETERS
+          PARAMETER ( rel_X = 0 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = 0 ),
+          PARAMETER ( DIA = 2.98e-05 ),
+        END PARAMETERS
+      END CHILD
+    END SEGMENT_GROUP
+  END CELL
+END PUBLIC_MODELS
+',
+						    write => "export no ndf STDOUT /**",
+						   },
+						   {
+						    description => "Can we export the model as NDF with namespace support ?",
+						    read => '#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+    FILE cat "channels/purkinje/cat.ndf"
+    FILE kdr "channels/purkinje/kdr.ndf"
+    FILE naf "channels/purkinje/naf.ndf"
+    FILE nap "channels/purkinje/nap.ndf"
+END IMPORT
+
+PRIVATE_MODELS
+  ALIAS cat::/cat cat
+  END ALIAS
+  ALIAS kdr::/kdr kdr
+  END ALIAS
+  ALIAS naf::/naf naf
+  END ALIAS
+  ALIAS nap::/nap nap
+  END ALIAS
+  SEGMENT something
+    BINDABLES
+      OUTPUT Vm,
+    END BINDABLES
+    BINDINGS
+      INPUT cat->I,
+      INPUT naf->I,
+      INPUT nap->I,
+      INPUT kdr->I,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( Vm_init = -0.068 ),
+      PARAMETER ( RM = 1 ),
+      PARAMETER ( RA = 2.5 ),
+      PARAMETER ( CM = 0.0164 ),
+      PARAMETER ( ELEAK = -0.08 ),
+    END PARAMETERS
+    CHILD cat cat
+      BINDINGS
+        INPUT ..->Vm,
+      END BINDINGS
+      PARAMETERS
+        PARAMETER ( Erev = 0.137526 ),
+      END PARAMETERS
+    END CHILD
+    CHILD kdr kdr
+      BINDINGS
+        INPUT ..->Vm,
+      END BINDINGS
+    END CHILD
+    CHILD nap nap
+      BINDINGS
+        INPUT ..->Vm,
+      END BINDINGS
+    END CHILD
+    CHILD naf naf
+      BINDINGS
+        INPUT ..->Vm,
+      END BINDINGS
+    END CHILD
+  END SEGMENT
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+  CELL addressing_aggregator1
+    SEGMENT_GROUP segments
+      CHILD something c1
+        PARAMETERS
+          PARAMETER ( rel_X = 0 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = 0 ),
+          PARAMETER ( DIA = 2.98e-05 ),
+        END PARAMETERS
+      END CHILD
+    END SEGMENT_GROUP
+  END CELL
+END PUBLIC_MODELS
+',
+						    write => "export names ndf STDOUT /**",
+						   },
+						  ],
+				 description => "export of a model with many channels in one compartment",
+				},
+				{
+				 arguments => [
+					       '-q',
+					       '-v',
+					       '1',
 					       'tests/cells/reducing.ndf',
 					      ],
 				 command => './neurospacesparse',
@@ -1378,9 +1561,11 @@ END PUBLIC_MODELS
 						    write => "export names ndf STDOUT /**",
 						   },
 						  ],
-				 description => "export of a single passive compartment model",
+				 description => "export of a model with many parameters that can be reduced",
 				},
 			       ),
+
+			       # pools and pool bindings related
 
 			       (
 				{
@@ -1562,7 +1747,750 @@ END PUBLIC_MODELS
 						    write => "export names ndf STDOUT /**",
 						   },
 						  ],
-				 description => "export of an HH model with an active channel",
+				 description => "export of an pool model and a channel",
+				},
+			       ),
+
+			       # morphology related
+
+			       (
+				{
+				 arguments => [
+					       '-q',
+					       '-v',
+					       '1',
+					       'tests/cells/tensizesp.ndf',
+					      ],
+				 command => './neurospacesparse',
+				 command_tests => [
+						   {
+						    description => "Is neurospaces startup successful ?",
+						    read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/tensizesp.ndf.', ],
+						    timeout => 15,
+						   },
+						   {
+						    description => "Can we export the model as NDF ?",
+						    read => '#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+    FILE soma "tests/segments/soma.ndf"
+    FILE maind "tests/segments/maind.ndf"
+END IMPORT
+
+PRIVATE_MODELS
+  ALIAS soma::/soma soma
+  END ALIAS
+  ALIAS maind::/maind maind
+  END ALIAS
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+  CELL tensizesp
+    SEGMENT_GROUP segments
+      CHILD soma soma
+        PARAMETERS
+          PARAMETER ( INJECT = 1e-08 ),
+          PARAMETER ( rel_X = 0 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = 0 ),
+          PARAMETER ( DIA = 2.98e-05 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[0]
+        PARAMETERS
+          PARAMETER ( Z = 9.447e-06 ),
+          PARAMETER ( Y = 9.447e-06 ),
+          PARAMETER ( X = 5.557e-06 ),
+          PARAMETER ( PARENT = ../soma ),
+          PARAMETER ( rel_X = 5.557e-06 ),
+          PARAMETER ( rel_Y = 9.447e-06 ),
+          PARAMETER ( rel_Z = 9.447e-06 ),
+          PARAMETER ( DIA = 7.72e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[1]
+        PARAMETERS
+          PARAMETER ( Z = 3.1356e-05 ),
+          PARAMETER ( Y = 1.0571e-05 ),
+          PARAMETER ( X = 1.3983e-05 ),
+          PARAMETER ( PARENT = ../main[0] ),
+          PARAMETER ( rel_X = 8.426e-06 ),
+          PARAMETER ( rel_Y = 1.124e-06 ),
+          PARAMETER ( rel_Z = 2.1909e-05 ),
+          PARAMETER ( DIA = 8.22e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[2]
+        PARAMETERS
+          PARAMETER ( Z = 3.8022e-05 ),
+          PARAMETER ( Y = 1.1682e-05 ),
+          PARAMETER ( X = 1.5649e-05 ),
+          PARAMETER ( PARENT = ../main[1] ),
+          PARAMETER ( rel_X = 1.666e-06 ),
+          PARAMETER ( rel_Y = 1.111e-06 ),
+          PARAMETER ( rel_Z = 6.666e-06 ),
+          PARAMETER ( DIA = 8.5e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[3]
+        PARAMETERS
+          PARAMETER ( Z = 3.9689e-05 ),
+          PARAMETER ( Y = 1.3905e-05 ),
+          PARAMETER ( X = 1.287e-05 ),
+          PARAMETER ( PARENT = ../main[2] ),
+          PARAMETER ( rel_X = -2.779e-06 ),
+          PARAMETER ( rel_Y = 2.223e-06 ),
+          PARAMETER ( rel_Z = 1.667e-06 ),
+          PARAMETER ( DIA = 9.22e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[4]
+        PARAMETERS
+          PARAMETER ( Z = 4.5242e-05 ),
+          PARAMETER ( Y = 2.0014e-05 ),
+          PARAMETER ( X = 1.1759e-05 ),
+          PARAMETER ( PARENT = ../main[3] ),
+          PARAMETER ( rel_X = -1.111e-06 ),
+          PARAMETER ( rel_Y = 6.109e-06 ),
+          PARAMETER ( rel_Z = 5.553e-06 ),
+          PARAMETER ( DIA = 8.89e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[5]
+        PARAMETERS
+          PARAMETER ( Z = 5.024e-05 ),
+          PARAMETER ( Y = 1.9459e-05 ),
+          PARAMETER ( X = 1.0648e-05 ),
+          PARAMETER ( PARENT = ../main[4] ),
+          PARAMETER ( rel_X = -1.111e-06 ),
+          PARAMETER ( rel_Y = -5.55e-07 ),
+          PARAMETER ( rel_Z = 4.998e-06 ),
+          PARAMETER ( DIA = 8.44e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[6]
+        PARAMETERS
+          PARAMETER ( Z = 5.3738e-05 ),
+          PARAMETER ( Y = 2.0042e-05 ),
+          PARAMETER ( X = 8.899e-06 ),
+          PARAMETER ( PARENT = ../main[5] ),
+          PARAMETER ( rel_X = -1.749e-06 ),
+          PARAMETER ( rel_Y = 5.83e-07 ),
+          PARAMETER ( rel_Z = 3.498e-06 ),
+          PARAMETER ( DIA = 8.61e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[7]
+        PARAMETERS
+          PARAMETER ( Z = 6.0407e-05 ),
+          PARAMETER ( Y = 2.3376e-05 ),
+          PARAMETER ( X = 5.009e-06 ),
+          PARAMETER ( PARENT = ../main[6] ),
+          PARAMETER ( rel_X = -3.89e-06 ),
+          PARAMETER ( rel_Y = 3.334e-06 ),
+          PARAMETER ( rel_Z = 6.669e-06 ),
+          PARAMETER ( DIA = 7.78e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[8]
+        PARAMETERS
+          PARAMETER ( Z = 6.9848e-05 ),
+          PARAMETER ( Y = 2.2265e-05 ),
+          PARAMETER ( X = -1.656e-06 ),
+          PARAMETER ( PARENT = ../main[7] ),
+          PARAMETER ( rel_X = -6.665e-06 ),
+          PARAMETER ( rel_Y = -1.111e-06 ),
+          PARAMETER ( rel_Z = 9.441e-06 ),
+          PARAMETER ( DIA = 8.44e-06 ),
+        END PARAMETERS
+      END CHILD
+    END SEGMENT_GROUP
+  END CELL
+END PUBLIC_MODELS
+',
+						    write => "export no ndf STDOUT /**",
+						   },
+						   {
+						    description => "Can we export the model as NDF with namespace support ?",
+						    read => '#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+    FILE soma "tests/segments/soma.ndf"
+    FILE maind "tests/segments/maind.ndf"
+END IMPORT
+
+PRIVATE_MODELS
+  ALIAS soma::/soma soma
+  END ALIAS
+  ALIAS maind::/maind maind
+  END ALIAS
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+  CELL tensizesp
+    SEGMENT_GROUP segments
+      CHILD soma soma
+        PARAMETERS
+          PARAMETER ( INJECT = 1e-08 ),
+          PARAMETER ( rel_X = 0 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = 0 ),
+          PARAMETER ( DIA = 2.98e-05 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[0]
+        PARAMETERS
+          PARAMETER ( Z = 9.447e-06 ),
+          PARAMETER ( Y = 9.447e-06 ),
+          PARAMETER ( X = 5.557e-06 ),
+          PARAMETER ( PARENT = ../soma ),
+          PARAMETER ( rel_X = 5.557e-06 ),
+          PARAMETER ( rel_Y = 9.447e-06 ),
+          PARAMETER ( rel_Z = 9.447e-06 ),
+          PARAMETER ( DIA = 7.72e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[1]
+        PARAMETERS
+          PARAMETER ( Z = 3.1356e-05 ),
+          PARAMETER ( Y = 1.0571e-05 ),
+          PARAMETER ( X = 1.3983e-05 ),
+          PARAMETER ( PARENT = ../main[0] ),
+          PARAMETER ( rel_X = 8.426e-06 ),
+          PARAMETER ( rel_Y = 1.124e-06 ),
+          PARAMETER ( rel_Z = 2.1909e-05 ),
+          PARAMETER ( DIA = 8.22e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[2]
+        PARAMETERS
+          PARAMETER ( Z = 3.8022e-05 ),
+          PARAMETER ( Y = 1.1682e-05 ),
+          PARAMETER ( X = 1.5649e-05 ),
+          PARAMETER ( PARENT = ../main[1] ),
+          PARAMETER ( rel_X = 1.666e-06 ),
+          PARAMETER ( rel_Y = 1.111e-06 ),
+          PARAMETER ( rel_Z = 6.666e-06 ),
+          PARAMETER ( DIA = 8.5e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[3]
+        PARAMETERS
+          PARAMETER ( Z = 3.9689e-05 ),
+          PARAMETER ( Y = 1.3905e-05 ),
+          PARAMETER ( X = 1.287e-05 ),
+          PARAMETER ( PARENT = ../main[2] ),
+          PARAMETER ( rel_X = -2.779e-06 ),
+          PARAMETER ( rel_Y = 2.223e-06 ),
+          PARAMETER ( rel_Z = 1.667e-06 ),
+          PARAMETER ( DIA = 9.22e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[4]
+        PARAMETERS
+          PARAMETER ( Z = 4.5242e-05 ),
+          PARAMETER ( Y = 2.0014e-05 ),
+          PARAMETER ( X = 1.1759e-05 ),
+          PARAMETER ( PARENT = ../main[3] ),
+          PARAMETER ( rel_X = -1.111e-06 ),
+          PARAMETER ( rel_Y = 6.109e-06 ),
+          PARAMETER ( rel_Z = 5.553e-06 ),
+          PARAMETER ( DIA = 8.89e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[5]
+        PARAMETERS
+          PARAMETER ( Z = 5.024e-05 ),
+          PARAMETER ( Y = 1.9459e-05 ),
+          PARAMETER ( X = 1.0648e-05 ),
+          PARAMETER ( PARENT = ../main[4] ),
+          PARAMETER ( rel_X = -1.111e-06 ),
+          PARAMETER ( rel_Y = -5.55e-07 ),
+          PARAMETER ( rel_Z = 4.998e-06 ),
+          PARAMETER ( DIA = 8.44e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[6]
+        PARAMETERS
+          PARAMETER ( Z = 5.3738e-05 ),
+          PARAMETER ( Y = 2.0042e-05 ),
+          PARAMETER ( X = 8.899e-06 ),
+          PARAMETER ( PARENT = ../main[5] ),
+          PARAMETER ( rel_X = -1.749e-06 ),
+          PARAMETER ( rel_Y = 5.83e-07 ),
+          PARAMETER ( rel_Z = 3.498e-06 ),
+          PARAMETER ( DIA = 8.61e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[7]
+        PARAMETERS
+          PARAMETER ( Z = 6.0407e-05 ),
+          PARAMETER ( Y = 2.3376e-05 ),
+          PARAMETER ( X = 5.009e-06 ),
+          PARAMETER ( PARENT = ../main[6] ),
+          PARAMETER ( rel_X = -3.89e-06 ),
+          PARAMETER ( rel_Y = 3.334e-06 ),
+          PARAMETER ( rel_Z = 6.669e-06 ),
+          PARAMETER ( DIA = 7.78e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[8]
+        PARAMETERS
+          PARAMETER ( Z = 6.9848e-05 ),
+          PARAMETER ( Y = 2.2265e-05 ),
+          PARAMETER ( X = -1.656e-06 ),
+          PARAMETER ( PARENT = ../main[7] ),
+          PARAMETER ( rel_X = -6.665e-06 ),
+          PARAMETER ( rel_Y = -1.111e-06 ),
+          PARAMETER ( rel_Z = 9.441e-06 ),
+          PARAMETER ( DIA = 8.44e-06 ),
+        END PARAMETERS
+      END CHILD
+    END SEGMENT_GROUP
+  END CELL
+END PUBLIC_MODELS
+',
+						    write => "export names ndf STDOUT /**",
+						   },
+						  ],
+				 description => "export of a model with ten passive compartments",
+				},
+				{
+				 arguments => [
+					       '-q',
+					       '-v',
+					       '1',
+					       'tests/cells/purk_test.ndf',
+					      ],
+				 command => './neurospacesparse',
+				 command_tests => [
+						   {
+						    description => "Is neurospaces startup successful ?",
+						    read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/purk_test.ndf.', ],
+						    timeout => 15,
+						   },
+						   {
+						    description => "Can we export the model as NDF ?",
+						    read => '#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+    FILE maind "segments/purkinje/maind.ndf"
+    FILE soma "segments/purkinje/soma.ndf"
+    FILE spine "segments/spines/purkinje.ndf"
+    FILE thickd "segments/purkinje/thickd.ndf"
+END IMPORT
+
+PRIVATE_MODELS
+  ALIAS maind::/maind maind
+  END ALIAS
+  ALIAS soma::/soma soma
+  END ALIAS
+  ALIAS spine::/Purk_spine Purkinje_spine
+  END ALIAS
+  ALIAS thickd::/thickd thickd
+  END ALIAS
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+  CELL purk_test
+    ALGORITHM Spines SpinesNormal_13_1
+      PARAMETERS
+        PARAMETER ( PROTOTYPE = "Purkinje_spine" ),
+        PARAMETER ( DIA_MIN = 0 ),
+        PARAMETER ( DIA_MAX = 3.18 ),
+        PARAMETER ( SPINE_DENSITY = 13 ),
+        PARAMETER ( SPINE_FREQUENCY = 1 ),
+      END PARAMETERS
+    END ALGORITHM
+    SEGMENT_GROUP segments
+      CHILD soma soma
+        PARAMETERS
+          PARAMETER ( rel_X = 0 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = 0 ),
+          PARAMETER ( DIA = 2.98e-05 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[0]
+        PARAMETERS
+          PARAMETER ( Z = 9.447e-06 ),
+          PARAMETER ( Y = 9.447e-06 ),
+          PARAMETER ( X = 5.557e-06 ),
+          PARAMETER ( PARENT = ../soma ),
+          PARAMETER ( rel_X = 5.557e-06 ),
+          PARAMETER ( rel_Y = 9.447e-06 ),
+          PARAMETER ( rel_Z = 9.447e-06 ),
+          PARAMETER ( DIA = 7.72e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[1]
+        PARAMETERS
+          PARAMETER ( Z = 3.1356e-05 ),
+          PARAMETER ( Y = 1.0571e-05 ),
+          PARAMETER ( X = 1.3983e-05 ),
+          PARAMETER ( PARENT = ../main[0] ),
+          PARAMETER ( rel_X = 8.426e-06 ),
+          PARAMETER ( rel_Y = 1.124e-06 ),
+          PARAMETER ( rel_Z = 2.1909e-05 ),
+          PARAMETER ( DIA = 8.22e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[2]
+        PARAMETERS
+          PARAMETER ( Z = 3.8022e-05 ),
+          PARAMETER ( Y = 1.1682e-05 ),
+          PARAMETER ( X = 1.5649e-05 ),
+          PARAMETER ( PARENT = ../main[1] ),
+          PARAMETER ( rel_X = 1.666e-06 ),
+          PARAMETER ( rel_Y = 1.111e-06 ),
+          PARAMETER ( rel_Z = 6.666e-06 ),
+          PARAMETER ( DIA = 8.5e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[3]
+        PARAMETERS
+          PARAMETER ( Z = 3.9689e-05 ),
+          PARAMETER ( Y = 1.3905e-05 ),
+          PARAMETER ( X = 1.287e-05 ),
+          PARAMETER ( PARENT = ../main[2] ),
+          PARAMETER ( rel_X = -2.779e-06 ),
+          PARAMETER ( rel_Y = 2.223e-06 ),
+          PARAMETER ( rel_Z = 1.667e-06 ),
+          PARAMETER ( DIA = 9.22e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[4]
+        PARAMETERS
+          PARAMETER ( Z = 4.5242e-05 ),
+          PARAMETER ( Y = 2.0014e-05 ),
+          PARAMETER ( X = 1.1759e-05 ),
+          PARAMETER ( PARENT = ../main[3] ),
+          PARAMETER ( rel_X = -1.111e-06 ),
+          PARAMETER ( rel_Y = 6.109e-06 ),
+          PARAMETER ( rel_Z = 5.553e-06 ),
+          PARAMETER ( DIA = 8.89e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[5]
+        PARAMETERS
+          PARAMETER ( Z = 5.024e-05 ),
+          PARAMETER ( Y = 1.9459e-05 ),
+          PARAMETER ( X = 1.0648e-05 ),
+          PARAMETER ( PARENT = ../main[4] ),
+          PARAMETER ( rel_X = -1.111e-06 ),
+          PARAMETER ( rel_Y = -5.55e-07 ),
+          PARAMETER ( rel_Z = 4.998e-06 ),
+          PARAMETER ( DIA = 8.44e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[6]
+        PARAMETERS
+          PARAMETER ( Z = 5.3738e-05 ),
+          PARAMETER ( Y = 2.0042e-05 ),
+          PARAMETER ( X = 8.899e-06 ),
+          PARAMETER ( PARENT = ../main[5] ),
+          PARAMETER ( rel_X = -1.749e-06 ),
+          PARAMETER ( rel_Y = 5.83e-07 ),
+          PARAMETER ( rel_Z = 3.498e-06 ),
+          PARAMETER ( DIA = 8.61e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[7]
+        PARAMETERS
+          PARAMETER ( Z = 6.0407e-05 ),
+          PARAMETER ( Y = 2.3376e-05 ),
+          PARAMETER ( X = 5.009e-06 ),
+          PARAMETER ( PARENT = ../main[6] ),
+          PARAMETER ( rel_X = -3.89e-06 ),
+          PARAMETER ( rel_Y = 3.334e-06 ),
+          PARAMETER ( rel_Z = 6.669e-06 ),
+          PARAMETER ( DIA = 7.78e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[8]
+        PARAMETERS
+          PARAMETER ( Z = 6.9848e-05 ),
+          PARAMETER ( Y = 2.2265e-05 ),
+          PARAMETER ( X = -1.656e-06 ),
+          PARAMETER ( PARENT = ../main[7] ),
+          PARAMETER ( rel_X = -6.665e-06 ),
+          PARAMETER ( rel_Y = -1.111e-06 ),
+          PARAMETER ( rel_Z = 9.441e-06 ),
+          PARAMETER ( DIA = 8.44e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD thickd br1[0]
+        PARAMETERS
+          PARAMETER ( Z = 6.9848e-05 ),
+          PARAMETER ( Y = 2.3376e-05 ),
+          PARAMETER ( X = -6.099e-06 ),
+          PARAMETER ( PARENT = ../main[8] ),
+          PARAMETER ( rel_X = -4.443e-06 ),
+          PARAMETER ( rel_Y = 1.111e-06 ),
+          PARAMETER ( rel_Z = 0 ),
+          PARAMETER ( DIA = 7.94e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD thickd br1[1]
+        PARAMETERS
+          PARAMETER ( Z = 7.0958e-05 ),
+          PARAMETER ( Y = 2.2821e-05 ),
+          PARAMETER ( X = -1.0539e-05 ),
+          PARAMETER ( PARENT = ../br1[0] ),
+          PARAMETER ( rel_X = -4.44e-06 ),
+          PARAMETER ( rel_Y = -5.55e-07 ),
+          PARAMETER ( rel_Z = 1.11e-06 ),
+          PARAMETER ( DIA = 5.39e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD thickd br1[2]
+        PARAMETERS
+          PARAMETER ( Z = 7.2069e-05 ),
+          PARAMETER ( Y = 2.2821e-05 ),
+          PARAMETER ( X = -2.3873e-05 ),
+          PARAMETER ( PARENT = ../br1[1] ),
+          PARAMETER ( rel_X = -1.3334e-05 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = 1.111e-06 ),
+          PARAMETER ( DIA = 5.06e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD thickd br1[3]
+        PARAMETERS
+          PARAMETER ( Z = 7.4844e-05 ),
+          PARAMETER ( Y = 2.3376e-05 ),
+          PARAMETER ( X = -2.7203e-05 ),
+          PARAMETER ( PARENT = ../br1[2] ),
+          PARAMETER ( rel_X = -3.33e-06 ),
+          PARAMETER ( rel_Y = 5.55e-07 ),
+          PARAMETER ( rel_Z = 2.775e-06 ),
+          PARAMETER ( DIA = 4.83e-06 ),
+        END PARAMETERS
+      END CHILD
+    END SEGMENT_GROUP
+  END CELL
+END PUBLIC_MODELS
+',
+						    write => "export no ndf STDOUT /**",
+						   },
+						   {
+						    description => "Can we export the model as NDF with namespace support ?",
+						    read => '#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+    FILE maind "segments/purkinje/maind.ndf"
+    FILE soma "segments/purkinje/soma.ndf"
+    FILE spine "segments/spines/purkinje.ndf"
+    FILE thickd "segments/purkinje/thickd.ndf"
+END IMPORT
+
+PRIVATE_MODELS
+  ALIAS maind::/maind maind
+  END ALIAS
+  ALIAS soma::/soma soma
+  END ALIAS
+  ALIAS spine::/Purk_spine Purkinje_spine
+  END ALIAS
+  ALIAS thickd::/thickd thickd
+  END ALIAS
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+  CELL purk_test
+    ALGORITHM Spines SpinesNormal_13_1
+      PARAMETERS
+        PARAMETER ( PROTOTYPE = "Purkinje_spine" ),
+        PARAMETER ( DIA_MIN = 0 ),
+        PARAMETER ( DIA_MAX = 3.18 ),
+        PARAMETER ( SPINE_DENSITY = 13 ),
+        PARAMETER ( SPINE_FREQUENCY = 1 ),
+      END PARAMETERS
+    END ALGORITHM
+    SEGMENT_GROUP segments
+      CHILD soma soma
+        PARAMETERS
+          PARAMETER ( rel_X = 0 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = 0 ),
+          PARAMETER ( DIA = 2.98e-05 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[0]
+        PARAMETERS
+          PARAMETER ( Z = 9.447e-06 ),
+          PARAMETER ( Y = 9.447e-06 ),
+          PARAMETER ( X = 5.557e-06 ),
+          PARAMETER ( PARENT = ../soma ),
+          PARAMETER ( rel_X = 5.557e-06 ),
+          PARAMETER ( rel_Y = 9.447e-06 ),
+          PARAMETER ( rel_Z = 9.447e-06 ),
+          PARAMETER ( DIA = 7.72e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[1]
+        PARAMETERS
+          PARAMETER ( Z = 3.1356e-05 ),
+          PARAMETER ( Y = 1.0571e-05 ),
+          PARAMETER ( X = 1.3983e-05 ),
+          PARAMETER ( PARENT = ../main[0] ),
+          PARAMETER ( rel_X = 8.426e-06 ),
+          PARAMETER ( rel_Y = 1.124e-06 ),
+          PARAMETER ( rel_Z = 2.1909e-05 ),
+          PARAMETER ( DIA = 8.22e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[2]
+        PARAMETERS
+          PARAMETER ( Z = 3.8022e-05 ),
+          PARAMETER ( Y = 1.1682e-05 ),
+          PARAMETER ( X = 1.5649e-05 ),
+          PARAMETER ( PARENT = ../main[1] ),
+          PARAMETER ( rel_X = 1.666e-06 ),
+          PARAMETER ( rel_Y = 1.111e-06 ),
+          PARAMETER ( rel_Z = 6.666e-06 ),
+          PARAMETER ( DIA = 8.5e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[3]
+        PARAMETERS
+          PARAMETER ( Z = 3.9689e-05 ),
+          PARAMETER ( Y = 1.3905e-05 ),
+          PARAMETER ( X = 1.287e-05 ),
+          PARAMETER ( PARENT = ../main[2] ),
+          PARAMETER ( rel_X = -2.779e-06 ),
+          PARAMETER ( rel_Y = 2.223e-06 ),
+          PARAMETER ( rel_Z = 1.667e-06 ),
+          PARAMETER ( DIA = 9.22e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[4]
+        PARAMETERS
+          PARAMETER ( Z = 4.5242e-05 ),
+          PARAMETER ( Y = 2.0014e-05 ),
+          PARAMETER ( X = 1.1759e-05 ),
+          PARAMETER ( PARENT = ../main[3] ),
+          PARAMETER ( rel_X = -1.111e-06 ),
+          PARAMETER ( rel_Y = 6.109e-06 ),
+          PARAMETER ( rel_Z = 5.553e-06 ),
+          PARAMETER ( DIA = 8.89e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[5]
+        PARAMETERS
+          PARAMETER ( Z = 5.024e-05 ),
+          PARAMETER ( Y = 1.9459e-05 ),
+          PARAMETER ( X = 1.0648e-05 ),
+          PARAMETER ( PARENT = ../main[4] ),
+          PARAMETER ( rel_X = -1.111e-06 ),
+          PARAMETER ( rel_Y = -5.55e-07 ),
+          PARAMETER ( rel_Z = 4.998e-06 ),
+          PARAMETER ( DIA = 8.44e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[6]
+        PARAMETERS
+          PARAMETER ( Z = 5.3738e-05 ),
+          PARAMETER ( Y = 2.0042e-05 ),
+          PARAMETER ( X = 8.899e-06 ),
+          PARAMETER ( PARENT = ../main[5] ),
+          PARAMETER ( rel_X = -1.749e-06 ),
+          PARAMETER ( rel_Y = 5.83e-07 ),
+          PARAMETER ( rel_Z = 3.498e-06 ),
+          PARAMETER ( DIA = 8.61e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[7]
+        PARAMETERS
+          PARAMETER ( Z = 6.0407e-05 ),
+          PARAMETER ( Y = 2.3376e-05 ),
+          PARAMETER ( X = 5.009e-06 ),
+          PARAMETER ( PARENT = ../main[6] ),
+          PARAMETER ( rel_X = -3.89e-06 ),
+          PARAMETER ( rel_Y = 3.334e-06 ),
+          PARAMETER ( rel_Z = 6.669e-06 ),
+          PARAMETER ( DIA = 7.78e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD maind main[8]
+        PARAMETERS
+          PARAMETER ( Z = 6.9848e-05 ),
+          PARAMETER ( Y = 2.2265e-05 ),
+          PARAMETER ( X = -1.656e-06 ),
+          PARAMETER ( PARENT = ../main[7] ),
+          PARAMETER ( rel_X = -6.665e-06 ),
+          PARAMETER ( rel_Y = -1.111e-06 ),
+          PARAMETER ( rel_Z = 9.441e-06 ),
+          PARAMETER ( DIA = 8.44e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD thickd br1[0]
+        PARAMETERS
+          PARAMETER ( Z = 6.9848e-05 ),
+          PARAMETER ( Y = 2.3376e-05 ),
+          PARAMETER ( X = -6.099e-06 ),
+          PARAMETER ( PARENT = ../main[8] ),
+          PARAMETER ( rel_X = -4.443e-06 ),
+          PARAMETER ( rel_Y = 1.111e-06 ),
+          PARAMETER ( rel_Z = 0 ),
+          PARAMETER ( DIA = 7.94e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD thickd br1[1]
+        PARAMETERS
+          PARAMETER ( Z = 7.0958e-05 ),
+          PARAMETER ( Y = 2.2821e-05 ),
+          PARAMETER ( X = -1.0539e-05 ),
+          PARAMETER ( PARENT = ../br1[0] ),
+          PARAMETER ( rel_X = -4.44e-06 ),
+          PARAMETER ( rel_Y = -5.55e-07 ),
+          PARAMETER ( rel_Z = 1.11e-06 ),
+          PARAMETER ( DIA = 5.39e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD thickd br1[2]
+        PARAMETERS
+          PARAMETER ( Z = 7.2069e-05 ),
+          PARAMETER ( Y = 2.2821e-05 ),
+          PARAMETER ( X = -2.3873e-05 ),
+          PARAMETER ( PARENT = ../br1[1] ),
+          PARAMETER ( rel_X = -1.3334e-05 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = 1.111e-06 ),
+          PARAMETER ( DIA = 5.06e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD thickd br1[3]
+        PARAMETERS
+          PARAMETER ( Z = 7.4844e-05 ),
+          PARAMETER ( Y = 2.3376e-05 ),
+          PARAMETER ( X = -2.7203e-05 ),
+          PARAMETER ( PARENT = ../br1[2] ),
+          PARAMETER ( rel_X = -3.33e-06 ),
+          PARAMETER ( rel_Y = 5.55e-07 ),
+          PARAMETER ( rel_Z = 2.775e-06 ),
+          PARAMETER ( DIA = 4.83e-06 ),
+        END PARAMETERS
+      END CHILD
+    END SEGMENT_GROUP
+  END CELL
+END PUBLIC_MODELS
+',
+						    write => "export names ndf STDOUT /**",
+						   },
+						  ],
+				 description => "export of a model with ten passive compartments",
 				},
 			       ),
 
