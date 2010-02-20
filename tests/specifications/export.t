@@ -2076,6 +2076,20 @@ END PUBLIC_MODELS
 						    timeout => 15,
 						   },
 						   {
+						    description => 'Did the algorithm add spines?',
+						    read => '
+name: SpinesInstance SpinesNormal_13_1
+report:
+    number_of_added_spines: 8
+    number_of_virtual_spines: 503.150268
+    number_of_spiny_segments: 8
+    number_of_failures_adding_spines: 0
+    SpinesInstance_prototype: Purkinje_spine
+    SpinesInstance_surface: 1.33079e-12
+',
+						    write => 'algorithminstance',
+						   },
+						   {
 						    description => "Can we export the model as NDF ?",
 						    read => '#!neurospacesparse
 // -*- NEUROSPACES -*-
@@ -2086,6 +2100,7 @@ IMPORT
     FILE maind "segments/purkinje/maind.ndf"
     FILE soma "segments/purkinje/soma.ndf"
     FILE spine "segments/spines/purkinje.ndf"
+    FILE spinyd "segments/purkinje/spinyd.ndf"
     FILE thickd "segments/purkinje/thickd.ndf"
 END IMPORT
 
@@ -2095,6 +2110,8 @@ PRIVATE_MODELS
   ALIAS soma::/soma soma
   END ALIAS
   ALIAS spine::/Purk_spine Purkinje_spine
+  END ALIAS
+  ALIAS spinyd::/spinyd spinyd
   END ALIAS
   ALIAS thickd::/thickd thickd
   END ALIAS
@@ -2274,6 +2291,130 @@ PUBLIC_MODELS
           PARAMETER ( rel_Y = 5.55e-07 ),
           PARAMETER ( rel_Z = 2.775e-06 ),
           PARAMETER ( DIA = 4.83e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD thickd b0s02[0]
+        PARAMETERS
+          PARAMETER ( Z = 3.8022e-05 ),
+          PARAMETER ( Y = 1.0571e-05 ),
+          PARAMETER ( X = 2.5647e-05 ),
+          PARAMETER ( PARENT = ../main[2] ),
+          PARAMETER ( rel_X = 9.998e-06 ),
+          PARAMETER ( rel_Y = -1.111e-06 ),
+          PARAMETER ( rel_Z = 0 ),
+          PARAMETER ( DIA = 6.17e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD spinyd b0s02[1]
+        PARAMETERS
+          PARAMETER ( SURFACE = 1.81579e-10 ),
+          PARAMETER ( LENGTH = 6.71006e-06 ),
+          PARAMETER ( Z = 3.8577e-05 ),
+          PARAMETER ( Y = 1.0016e-05 ),
+          PARAMETER ( X = 3.2311e-05 ),
+          PARAMETER ( PARENT = ../b0s02[0] ),
+          PARAMETER ( rel_X = 6.664e-06 ),
+          PARAMETER ( rel_Y = -5.55e-07 ),
+          PARAMETER ( rel_Z = 5.55e-07 ),
+          PARAMETER ( DIA = 3.17e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD spinyd b0s02[2]
+        PARAMETERS
+          PARAMETER ( SURFACE = 9.71509e-11 ),
+          PARAMETER ( LENGTH = 3.96965e-06 ),
+          PARAMETER ( Z = 3.4686e-05 ),
+          PARAMETER ( Y = 1.0572e-05 ),
+          PARAMETER ( X = 3.2867e-05 ),
+          PARAMETER ( PARENT = ../b0s02[1] ),
+          PARAMETER ( rel_X = 5.56e-07 ),
+          PARAMETER ( rel_Y = 5.56e-07 ),
+          PARAMETER ( rel_Z = -3.891e-06 ),
+          PARAMETER ( DIA = 2.39e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD spinyd b0s02[3]
+        PARAMETERS
+          PARAMETER ( SURFACE = 7.39547e-11 ),
+          PARAMETER ( LENGTH = 3.23978e-06 ),
+          PARAMETER ( Z = 3.1908e-05 ),
+          PARAMETER ( Y = 1.0572e-05 ),
+          PARAMETER ( X = 3.4534e-05 ),
+          PARAMETER ( PARENT = ../b0s02[2] ),
+          PARAMETER ( rel_X = 1.667e-06 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = -2.778e-06 ),
+          PARAMETER ( DIA = 1.89e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD spinyd b0s02[4]
+        PARAMETERS
+          PARAMETER ( SURFACE = 1.264e-10 ),
+          PARAMETER ( LENGTH = 5.57967e-06 ),
+          PARAMETER ( Z = 2.6356e-05 ),
+          PARAMETER ( Y = 1.0572e-05 ),
+          PARAMETER ( X = 3.5089e-05 ),
+          PARAMETER ( PARENT = ../b0s02[3] ),
+          PARAMETER ( rel_X = 5.55e-07 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = -5.552e-06 ),
+          PARAMETER ( DIA = 1.78e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD spinyd b0s02[5]
+        PARAMETERS
+          PARAMETER ( SURFACE = 1.3969e-10 ),
+          PARAMETER ( LENGTH = 6.16021e-06 ),
+          PARAMETER ( Z = 2.0246e-05 ),
+          PARAMETER ( Y = 1.1127e-05 ),
+          PARAMETER ( X = 3.4534e-05 ),
+          PARAMETER ( PARENT = ../b0s02[4] ),
+          PARAMETER ( rel_X = -5.55e-07 ),
+          PARAMETER ( rel_Y = 5.55e-07 ),
+          PARAMETER ( rel_Z = -6.11e-06 ),
+          PARAMETER ( DIA = 1.78e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD spinyd b0s02[6]
+        PARAMETERS
+          PARAMETER ( SURFACE = 6.88639e-11 ),
+          PARAMETER ( LENGTH = 3.13955e-06 ),
+          PARAMETER ( Z = 1.8026e-05 ),
+          PARAMETER ( Y = 1.1127e-05 ),
+          PARAMETER ( X = 3.2314e-05 ),
+          PARAMETER ( PARENT = ../b0s02[5] ),
+          PARAMETER ( rel_X = -2.22e-06 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = -2.22e-06 ),
+          PARAMETER ( DIA = 1.61e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD spinyd b0s02[7]
+        PARAMETERS
+          PARAMETER ( SURFACE = 1.35952e-10 ),
+          PARAMETER ( LENGTH = 6.29042e-06 ),
+          PARAMETER ( Z = 1.1837e-05 ),
+          PARAMETER ( Y = 1.1127e-05 ),
+          PARAMETER ( X = 3.3439e-05 ),
+          PARAMETER ( PARENT = ../b0s02[6] ),
+          PARAMETER ( rel_X = 1.125e-06 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = -6.189e-06 ),
+          PARAMETER ( DIA = 1.44e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD spinyd b0s02[8]
+        PARAMETERS
+          PARAMETER ( SURFACE = 9.32422e-11 ),
+          PARAMETER ( LENGTH = 4.22991e-06 ),
+          PARAMETER ( Z = 1.858e-05 ),
+          PARAMETER ( Y = 1.1127e-05 ),
+          PARAMETER ( X = 3.8422e-05 ),
+          PARAMETER ( PARENT = ../b0s02[5] ),
+          PARAMETER ( rel_X = 3.888e-06 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = -1.666e-06 ),
+          PARAMETER ( DIA = 1.61e-06 ),
         END PARAMETERS
       END CHILD
     END SEGMENT_GROUP
@@ -2293,6 +2434,7 @@ IMPORT
     FILE maind "segments/purkinje/maind.ndf"
     FILE soma "segments/purkinje/soma.ndf"
     FILE spine "segments/spines/purkinje.ndf"
+    FILE spinyd "segments/purkinje/spinyd.ndf"
     FILE thickd "segments/purkinje/thickd.ndf"
 END IMPORT
 
@@ -2302,6 +2444,8 @@ PRIVATE_MODELS
   ALIAS soma::/soma soma
   END ALIAS
   ALIAS spine::/Purk_spine Purkinje_spine
+  END ALIAS
+  ALIAS spinyd::/spinyd spinyd
   END ALIAS
   ALIAS thickd::/thickd thickd
   END ALIAS
@@ -2483,6 +2627,130 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 4.83e-06 ),
         END PARAMETERS
       END CHILD
+      CHILD thickd b0s02[0]
+        PARAMETERS
+          PARAMETER ( Z = 3.8022e-05 ),
+          PARAMETER ( Y = 1.0571e-05 ),
+          PARAMETER ( X = 2.5647e-05 ),
+          PARAMETER ( PARENT = ../main[2] ),
+          PARAMETER ( rel_X = 9.998e-06 ),
+          PARAMETER ( rel_Y = -1.111e-06 ),
+          PARAMETER ( rel_Z = 0 ),
+          PARAMETER ( DIA = 6.17e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD spinyd b0s02[1]
+        PARAMETERS
+          PARAMETER ( SURFACE = 1.81579e-10 ),
+          PARAMETER ( LENGTH = 6.71006e-06 ),
+          PARAMETER ( Z = 3.8577e-05 ),
+          PARAMETER ( Y = 1.0016e-05 ),
+          PARAMETER ( X = 3.2311e-05 ),
+          PARAMETER ( PARENT = ../b0s02[0] ),
+          PARAMETER ( rel_X = 6.664e-06 ),
+          PARAMETER ( rel_Y = -5.55e-07 ),
+          PARAMETER ( rel_Z = 5.55e-07 ),
+          PARAMETER ( DIA = 3.17e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD spinyd b0s02[2]
+        PARAMETERS
+          PARAMETER ( SURFACE = 9.71509e-11 ),
+          PARAMETER ( LENGTH = 3.96965e-06 ),
+          PARAMETER ( Z = 3.4686e-05 ),
+          PARAMETER ( Y = 1.0572e-05 ),
+          PARAMETER ( X = 3.2867e-05 ),
+          PARAMETER ( PARENT = ../b0s02[1] ),
+          PARAMETER ( rel_X = 5.56e-07 ),
+          PARAMETER ( rel_Y = 5.56e-07 ),
+          PARAMETER ( rel_Z = -3.891e-06 ),
+          PARAMETER ( DIA = 2.39e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD spinyd b0s02[3]
+        PARAMETERS
+          PARAMETER ( SURFACE = 7.39547e-11 ),
+          PARAMETER ( LENGTH = 3.23978e-06 ),
+          PARAMETER ( Z = 3.1908e-05 ),
+          PARAMETER ( Y = 1.0572e-05 ),
+          PARAMETER ( X = 3.4534e-05 ),
+          PARAMETER ( PARENT = ../b0s02[2] ),
+          PARAMETER ( rel_X = 1.667e-06 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = -2.778e-06 ),
+          PARAMETER ( DIA = 1.89e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD spinyd b0s02[4]
+        PARAMETERS
+          PARAMETER ( SURFACE = 1.264e-10 ),
+          PARAMETER ( LENGTH = 5.57967e-06 ),
+          PARAMETER ( Z = 2.6356e-05 ),
+          PARAMETER ( Y = 1.0572e-05 ),
+          PARAMETER ( X = 3.5089e-05 ),
+          PARAMETER ( PARENT = ../b0s02[3] ),
+          PARAMETER ( rel_X = 5.55e-07 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = -5.552e-06 ),
+          PARAMETER ( DIA = 1.78e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD spinyd b0s02[5]
+        PARAMETERS
+          PARAMETER ( SURFACE = 1.3969e-10 ),
+          PARAMETER ( LENGTH = 6.16021e-06 ),
+          PARAMETER ( Z = 2.0246e-05 ),
+          PARAMETER ( Y = 1.1127e-05 ),
+          PARAMETER ( X = 3.4534e-05 ),
+          PARAMETER ( PARENT = ../b0s02[4] ),
+          PARAMETER ( rel_X = -5.55e-07 ),
+          PARAMETER ( rel_Y = 5.55e-07 ),
+          PARAMETER ( rel_Z = -6.11e-06 ),
+          PARAMETER ( DIA = 1.78e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD spinyd b0s02[6]
+        PARAMETERS
+          PARAMETER ( SURFACE = 6.88639e-11 ),
+          PARAMETER ( LENGTH = 3.13955e-06 ),
+          PARAMETER ( Z = 1.8026e-05 ),
+          PARAMETER ( Y = 1.1127e-05 ),
+          PARAMETER ( X = 3.2314e-05 ),
+          PARAMETER ( PARENT = ../b0s02[5] ),
+          PARAMETER ( rel_X = -2.22e-06 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = -2.22e-06 ),
+          PARAMETER ( DIA = 1.61e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD spinyd b0s02[7]
+        PARAMETERS
+          PARAMETER ( SURFACE = 1.35952e-10 ),
+          PARAMETER ( LENGTH = 6.29042e-06 ),
+          PARAMETER ( Z = 1.1837e-05 ),
+          PARAMETER ( Y = 1.1127e-05 ),
+          PARAMETER ( X = 3.3439e-05 ),
+          PARAMETER ( PARENT = ../b0s02[6] ),
+          PARAMETER ( rel_X = 1.125e-06 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = -6.189e-06 ),
+          PARAMETER ( DIA = 1.44e-06 ),
+        END PARAMETERS
+      END CHILD
+      CHILD spinyd b0s02[8]
+        PARAMETERS
+          PARAMETER ( SURFACE = 9.32422e-11 ),
+          PARAMETER ( LENGTH = 4.22991e-06 ),
+          PARAMETER ( Z = 1.858e-05 ),
+          PARAMETER ( Y = 1.1127e-05 ),
+          PARAMETER ( X = 3.8422e-05 ),
+          PARAMETER ( PARENT = ../b0s02[5] ),
+          PARAMETER ( rel_X = 3.888e-06 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = -1.666e-06 ),
+          PARAMETER ( DIA = 1.61e-06 ),
+        END PARAMETERS
+      END CHILD
     END SEGMENT_GROUP
   END CELL
 END PUBLIC_MODELS
@@ -2490,7 +2758,7 @@ END PUBLIC_MODELS
 						    write => "export names ndf STDOUT /**",
 						   },
 						  ],
-				 description => "export of a model with ten passive compartments",
+				 description => "export of a model with the spines algorithm enabled",
 				},
 			       ),
 

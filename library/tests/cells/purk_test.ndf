@@ -8,7 +8,7 @@ IMPORT
 	FILE maind "segments/purkinje/maind.ndf"
 	FILE soma "segments/purkinje/soma.ndf"
 	FILE spine "segments/spines/purkinje.ndf"
-// 	FILE spinyd "segments/purkinje/spinyd.ndf"
+	FILE spinyd "segments/purkinje/spinyd.ndf"
 	FILE thickd "segments/purkinje/thickd.ndf"
 
 END IMPORT
@@ -18,7 +18,7 @@ PRIVATE_MODELS
 	ALIAS maind::/maind maind END ALIAS
 	ALIAS soma::/soma soma END ALIAS
 	ALIAS spine::/Purk_spine Purkinje_spine END ALIAS
-// 	ALIAS spinyd::/spinyd spinyd END ALIAS
+	ALIAS spinyd::/spinyd spinyd END ALIAS
 	ALIAS thickd::/thickd thickd END ALIAS
 
 END PRIVATE_MODELS
@@ -30,11 +30,6 @@ PUBLIC_MODELS
 		// original model had 3.17 as max dia, I changed this to 3.18 to
 		// get around rounding differences between the genesis based model
 		// and this one.
-
-// 		ALGORITHM Spines
-// 			ALGORITHM_INSTANCE SpinesNormal_13_1
-// 			{ Purkinje_spine 0.00 3.18 13 1}
-// 		END ALGORITHM
 
 		ALGORITHM Spines
 			SpinesNormal_13_1
@@ -174,6 +169,87 @@ PUBLIC_MODELS
 					PARAMETER ( rel_Y = 0.555e-6 ),
 					PARAMETER ( rel_Z = 2.775e-6 ),
 					PARAMETER ( DIA = 4.83e-6 )
+				END PARAMETERS
+			END CHILD
+			CHILD thickd b0s02[0]
+				PARAMETERS
+					PARAMETER ( PARENT = ^/main[2] ),
+					PARAMETER ( rel_X = 9.998e-6 ),
+					PARAMETER ( rel_Y = -1.111e-6 ),
+					PARAMETER ( rel_Z = 0.000e-6 ),
+					PARAMETER ( DIA = 6.17e-6 ),
+				END PARAMETERS
+			END CHILD
+			CHILD spinyd b0s02[1]
+				PARAMETERS
+					PARAMETER ( PARENT = ^/b0s02[0] ),
+					PARAMETER ( rel_X = 6.664e-6 ),
+					PARAMETER ( rel_Y = -0.555e-6 ),
+					PARAMETER ( rel_Z = 0.555e-6 ),
+					PARAMETER ( DIA = 3.17e-6 ),
+				END PARAMETERS
+			END CHILD
+			CHILD spinyd b0s02[2]
+				PARAMETERS
+					PARAMETER ( PARENT = ^/b0s02[1] ),
+					PARAMETER ( rel_X = 0.556e-6 ),
+					PARAMETER ( rel_Y = 0.556e-6 ),
+					PARAMETER ( rel_Z = -3.891e-6 ),
+					PARAMETER ( DIA = 2.39e-6 ),
+				END PARAMETERS
+			END CHILD
+			CHILD spinyd b0s02[3]
+				PARAMETERS
+					PARAMETER ( PARENT = ^/b0s02[2] ),
+					PARAMETER ( rel_X = 1.667e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -2.778e-6 ),
+					PARAMETER ( DIA = 1.89e-6 ),
+				END PARAMETERS
+			END CHILD
+			CHILD spinyd b0s02[4]
+				PARAMETERS
+					PARAMETER ( PARENT = ^/b0s02[3] ),
+					PARAMETER ( rel_X = 0.555e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -5.552e-6 ),
+					PARAMETER ( DIA = 1.78e-6 ),
+				END PARAMETERS
+			END CHILD
+			CHILD spinyd b0s02[5]
+				PARAMETERS
+					PARAMETER ( PARENT = ^/b0s02[4] ),
+					PARAMETER ( rel_X = -0.555e-6 ),
+					PARAMETER ( rel_Y = 0.555e-6 ),
+					PARAMETER ( rel_Z = -6.110e-6 ),
+					PARAMETER ( DIA = 1.78e-6 ),
+				END PARAMETERS
+			END CHILD
+			CHILD spinyd b0s02[6]
+				PARAMETERS
+					PARAMETER ( PARENT = ^/b0s02[5] ),
+					PARAMETER ( rel_X = -2.220e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -2.220e-6 ),
+					PARAMETER ( DIA = 1.61e-6 ),
+				END PARAMETERS
+			END CHILD
+			CHILD spinyd b0s02[7]
+				PARAMETERS
+					PARAMETER ( PARENT = ^/b0s02[6] ),
+					PARAMETER ( rel_X = 1.125e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -6.189e-6 ),
+					PARAMETER ( DIA = 1.44e-6 ),
+				END PARAMETERS
+			END CHILD
+			CHILD spinyd b0s02[8]
+				PARAMETERS
+					PARAMETER ( PARENT = ^/b0s02[5] ),
+					PARAMETER ( rel_X = 3.888e-6 ),
+					PARAMETER ( rel_Y = 0.000e-6 ),
+					PARAMETER ( rel_Z = -1.666e-6 ),
+					PARAMETER ( DIA = 1.61e-6 ),
 				END PARAMETERS
 			END CHILD
 
