@@ -454,7 +454,7 @@ ExporterSymbolStarter
 
     //- if this is a cell
 
-    if (subsetof_cell(iType))
+    if (0 && subsetof_cell(iType))
     {
 	//- and it has no descendants
 
@@ -725,7 +725,7 @@ ExporterSymbolStopper
 
     //- if this is a cell
 
-    if (subsetof_cell(iType))
+    if (0 && subsetof_cell(iType))
     {
 	//- and it has no descendants
 
