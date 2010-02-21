@@ -32,9 +32,10 @@ int TreespaceTraversalProcessor
 
 /// \def processor failure : continue with siblings, no postprocessing
 
-//t after inspecting the code iohier.c I think this one does not work ??
-
-//t guess the postprocessing phase is done as usual ??
+//\todo after inspecting the code iohier.c, there was suspicion that
+//TSTR_PROCESSOR_FAILURE does not work.  It was confirmed with ndf
+//export that it indeed does not work and the postprocessing phase is
+//done as usual.
 
 #define TSTR_PROCESSOR_FAILURE			1
 

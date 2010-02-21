@@ -450,11 +450,27 @@ ExporterSymbolStarter
 
     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
 
-    //- only for bio components
-
     int iType = TstrGetActualType(ptstr);
 
-    if (subsetof_bio_comp(iType))
+    //- if this is a cell
+
+    if (subsetof_cell(iType))
+    {
+	//- and it has no descendants
+
+	int iSuccessors = SymbolGetPrincipalNumOfSuccessors(phsle);
+
+	if (iSuccessors == 0)
+	{
+	    //- set result: siblings only
+
+	    iResult = TSTR_PROCESSOR_FAILURE;
+	}
+    }
+
+    //- only for bio components
+
+    else if (subsetof_bio_comp(iType))
     {
 	//- if is prototype
 
@@ -705,11 +721,27 @@ ExporterSymbolStopper
 
     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
 
-    //- if a bio component
-
     int iType = TstrGetActualType(ptstr);
 
-    if (subsetof_bio_comp(iType))
+    //- if this is a cell
+
+    if (subsetof_cell(iType))
+    {
+	//- and it has no descendants
+
+	int iSuccessors = SymbolGetPrincipalNumOfSuccessors(phsle);
+
+	if (iSuccessors == 0)
+	{
+	    //- set result: siblings only
+
+	    iResult = TSTR_PROCESSOR_SIBLINGS;
+	}
+    }
+
+    //- if a bio component
+
+    else if (subsetof_bio_comp(iType))
     {
 	//- if is prototype
 
