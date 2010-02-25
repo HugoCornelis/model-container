@@ -31,7 +31,7 @@ dist-hook:
 
 perldir = $(prefix)/glue/swig/perl
 
-nobase_perl_HEADERS = Neurospaces.pm Neurospaces/Query.pm Neurospaces/Traversal.pm Neurospaces/Tokens/Physical.pm Neurospaces/Integrators/Commands.pm
+nobase_perl_HEADERS = Neurospaces.pm Neurospaces/Query.pm Neurospaces/Traversal.pm Neurospaces/Tokens/Physical.pm Neurospaces/Integrators/Commands.pm Neurospaces/Components.pm
 
 perl_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.pm SwiggableNeurospaces.$(PERLLIB_EXTENSION) # neurospaces_test.pm
 
