@@ -297,6 +297,20 @@ sub backend
 }
 
 
+sub set_name
+{
+    my \$self = shift;
+
+    my $\name = shift;
+
+    my \$backend = \$self->backend();
+
+    \$backend = SwiggableNeurospaces::swig_cell_get_object(\$backend);
+
+    \$backend->SymblSetName(\$name);
+}
+
+
 ";
 
     my $result = eval $code;

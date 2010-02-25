@@ -2299,7 +2299,7 @@ int swig_context2serial(char *pcContext)
 /* 	    { */
 /* 		//- get filename, namespace */
 
-/* 		char *pcFilename = ImportedFileGetFilename(DependencyFileGetImportedFile(pdf)); */
+/* 		char *pcFilename = ImportedFileGetQualified(DependencyFileGetImportedFile(pdf)); */
 /* 		char *pcNamespace = DependencyFileGetNameSpace(pdf); */
 
 /* 		//- put in result hash */

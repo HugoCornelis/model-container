@@ -2344,7 +2344,7 @@ SV * swig_get_namespaces(char *pcNamespace)
 	    {
 		//- get filename, namespace
 
-		char *pcFilename = ImportedFileGetFilename(DependencyFileGetImportedFile(pdf));
+		char *pcFilename = ImportedFileGetQualified(DependencyFileGetImportedFile(pdf));
 		char *pcNamespace = DependencyFileGetNameSpace(pdf);
 
 		//- put in result hash
@@ -2391,6 +2391,13 @@ SV * swig_get_namespaces(char *pcNamespace)
     SV * psvResult = newRV_noinc((SV *)pavResult);
 
     return psvResult;
+}
+
+
+struct symtab_HSolveListElement *
+    swig_cell_get_object(void *pv)
+{
+    return((struct symtab_HSolveListElement *)pv);
 }
 
 
