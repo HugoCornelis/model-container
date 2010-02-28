@@ -301,13 +301,19 @@ sub set_name
 {
     my \$self = shift;
 
-    my $\name = shift;
+    my \$name = shift;
 
     my \$backend = \$self->backend();
 
     \$backend = SwiggableNeurospaces::swig_cell_get_object(\$backend);
 
-    \$backend->SymblSetName(\$name);
+#     use Data::Dumper;
+
+#     print Dumper(\$backend);
+
+    my \$pidin = SwiggableNeurospaces::IdinCallocUnique(\$name);
+
+    SwiggableNeurospaces::SymbolSetName(\$backend, \$pidin);
 }
 
 
