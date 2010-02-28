@@ -17,6 +17,7 @@ my $neurospaces_mapping
 		constructor_settings => {
 # 					 iTable => -1,
 					},
+		internal_factory => 'CellCalloc',
 		internal_name => 'symtab_Cell',
 		translators => {
 				parameters => {
@@ -26,6 +27,7 @@ my $neurospaces_mapping
 			       },
 	       },
        segment => {
+		   internal_factory => 'SegmentCalloc',
 		   internal_name => 'symtab_Segment',
 		  },
       };
@@ -48,14 +50,32 @@ sub new
 
     # create the neurospaces internal object
 
-    my $internal_name = $neurospaces_mapping->{$type}->{internal_name};
+    my $self;
 
-    my $factory_package = "SwiggableNeurospaces::$internal_name";
+    my $internal_factory = $neurospaces_mapping->{$type}->{internal_factory};
 
-    my $self
-	= {
-	   $type => $factory_package->new(),
-	  };
+    if ($internal_factory)
+    {
+	my $factory_package = "SwiggableNeurospaces::$internal_factory";
+
+	no strict "refs";
+
+	$self
+	    = {
+	       $type => &$factory_package(),
+	      };
+    }
+    else
+    {
+	my $internal_name = $neurospaces_mapping->{$type}->{internal_name};
+
+	my $factory_package = "SwiggableNeurospaces::$internal_name";
+
+	$self
+	    = {
+	       $type => $factory_package->new(),
+	      };
+    }
 
     # never forget to set the neurospaces type
 
@@ -305,7 +325,11 @@ sub set_name
 
     my \$backend = \$self->backend();
 
-    \$backend = SwiggableNeurospaces::swig_cell_get_object(\$backend);
+    my \$subname = 'SwiggableNeurospaces::swig_' . lcfirst('$component') . '_get_object';
+
+    no strict 'refs';
+
+    \$backend = &\$subname(\$backend);
 
 #     use Data::Dumper;
 

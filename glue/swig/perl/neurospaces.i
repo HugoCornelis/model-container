@@ -2395,9 +2395,16 @@ SV * swig_get_namespaces(char *pcNamespace)
 
 
 struct symtab_HSolveListElement *
-    swig_cell_get_object(void *pv)
+    swig_cell_get_object(struct symtab_Cell *pcell)
 {
-    return((struct symtab_HSolveListElement *)pv);
+    return((struct symtab_HSolveListElement *)pcell);
+}
+
+
+struct symtab_HSolveListElement *
+    swig_segment_get_object(struct symtab_Segment *psegment)
+{
+    return((struct symtab_HSolveListElement *)psegment);
 }
 
 
