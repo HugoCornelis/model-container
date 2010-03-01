@@ -317,11 +317,9 @@ sub backend
 }
 
 
-sub set_name
+sub backend_hsle
 {
     my \$self = shift;
-
-    my \$name = shift;
 
     my \$backend = \$self->backend();
 
@@ -329,7 +327,19 @@ sub set_name
 
     no strict 'refs';
 
-    \$backend = &\$subname(\$backend);
+    my \$result = &\$subname(\$backend);
+
+    return \$result;
+}
+
+
+sub set_name
+{
+    my \$self = shift;
+
+    my \$name = shift;
+
+    my \$backend = \$self->backend_hsle();
 
 #     use Data::Dumper;
 
