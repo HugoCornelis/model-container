@@ -278,6 +278,52 @@ foreach my $component (keys %$neurospaces_mapping)
     my $code = "
 package Neurospaces::Components::$Component;
 
+sub backend
+{
+    my \$self = shift;
+
+    my \$result = \$self->{$component};
+
+    return \$result;
+}
+
+
+sub backend_hsle
+{
+    my \$self = shift;
+
+    my \$backend = \$self->backend();
+
+    my \$subname = 'SwiggableNeurospaces::swig_' . lcfirst('$component') . '_get_object';
+
+    no strict 'refs';
+
+    my \$result = &\$subname(\$backend);
+
+    return \$result;
+}
+
+
+sub insert
+{
+    my \$self = shift;
+
+    my \$child = shift;
+
+    my \$backend_self = \$self->backend_hsle();
+
+    my \$backend_child = \$child->backend_hsle();
+
+    my \$success = \$backend_self->SymbolAddChild(\$backend_child);
+
+    if (!\$success)
+    {
+	die \"\$0: Backend SymbolAddChild() child failed\";
+    }
+
+}
+
+
 sub new
 {
     my \$package = shift;
@@ -302,32 +348,6 @@ sub neurospaces_object
     my \$self = shift;
 
     my \$result = \$self->{$component};
-
-    return \$result;
-}
-
-
-sub backend
-{
-    my \$self = shift;
-
-    my \$result = \$self->{$component};
-
-    return \$result;
-}
-
-
-sub backend_hsle
-{
-    my \$self = shift;
-
-    my \$backend = \$self->backend();
-
-    my \$subname = 'SwiggableNeurospaces::swig_' . lcfirst('$component') . '_get_object';
-
-    no strict 'refs';
-
-    my \$result = &\$subname(\$backend);
 
     return \$result;
 }
