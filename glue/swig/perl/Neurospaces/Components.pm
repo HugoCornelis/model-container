@@ -273,7 +273,7 @@ foreach my $component (keys %$neurospaces_mapping)
 {
     my $Component = identifier_perl_to_xml($component);
 
-    print "For $component -> $Component\n";
+#     print "For $component -> $Component\n";
 
     my $code = "
 package Neurospaces::Components::$Component;
