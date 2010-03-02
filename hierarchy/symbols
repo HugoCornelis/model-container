@@ -122,6 +122,7 @@ my $class_hierarchy
 				'set_options' => 'bio_component',
 				'set_parameter_context' => 'bio_component',
 				'set_parameter_double' => 'bio_component',
+				'set_parameter_may_be_copy_string' => 'bio_component',
 				'set_parameter_string' => 'bio_component',
 				'set_prototype' => 'bio_component',
 				'traverse' => 'bio_component',
@@ -1697,6 +1698,7 @@ my $object_methods
 	'set_options',
 	'set_parameter_context',
 	'set_parameter_double',
+	'set_parameter_may_be_copy_string',
 	'set_parameter_string',
 	'set_prototype',
 	'set_type',
@@ -1921,6 +1923,9 @@ my $object_methods_custom_code
        'set_parameter_double' => {
 				  simple => 1,
 				 },
+       'set_parameter_may_be_copy_string' => {
+					      simple => 1,
+					     },
        'set_parameter_string' => {
 				  simple => 1,
 				 },
@@ -2246,6 +2251,11 @@ my $object_methods_return_types
 				  selector => '.uSelector.pparFunc',
 				  type => 'struct symtab_Parameters *',
 				 },
+       'set_parameter_may_be_copy_string' => {
+					      default => 'NULL',
+					      selector => '.uSelector.pparFunc',
+					      type => 'struct symtab_Parameters *',
+					     },
        'set_parameter_string' => {
 				  default => 'NULL',
 				  selector => '.uSelector.pparFunc',
@@ -2620,22 +2630,26 @@ my $object_methods_signatures
 				   calling => '(phsle, pcName, ppistValue/* , ppist */)',
 				   prototype => '(struct symtab_HSolveListElement *phsle,
  char *pcName,
- struct PidinStack *ppistValue/* , */
-/*  struct PidinStack *ppist */)',
+ struct PidinStack *ppistValue)',
 				 },
        'set_parameter_double' => {
 				  calling => '(phsle, pcName, dNumber/* , ppist */)',
 				  prototype => '(struct symtab_HSolveListElement *phsle,
  char *pcName,
- double dNumber/* , */
-/*  struct PidinStack *ppist */)',
+ double dNumber)',
+				 },
+       'set_parameter_may_be_copy_string' => {
+					      calling => '(phsle, pcName, pcValue/* , ppist */)',
+					      prototype => '(struct symtab_HSolveListElement *phsle,
+ char *pcName,
+ char *pcValue,
+ int iFlags)',
 				 },
        'set_parameter_string' => {
 				  calling => '(phsle, pcName, pcValue/* , ppist */)',
 				  prototype => '(struct symtab_HSolveListElement *phsle,
  char *pcName,
- char *pcValue/* , */
-/*  struct PidinStack *ppist */)',
+ char *pcValue)',
 				 },
        'set_prototype' => {
 			   calling => '(phsle, phsleProto)',

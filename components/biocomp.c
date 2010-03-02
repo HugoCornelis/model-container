@@ -1232,8 +1232,7 @@ struct symtab_Parameters *
 BioComponentSetParameterContext
 (struct symtab_BioComponent * pbio,
  char *pcName,
- struct PidinStack *ppistValue/* , */
-/* struct PidinStack *ppist */)
+ struct PidinStack *ppistValue)
 {
     //- set default result : failure
 
@@ -1304,8 +1303,7 @@ struct symtab_Parameters *
 BioComponentSetParameterDouble
 (struct symtab_BioComponent * pbio,
  char *pcName,
- double dNumber/* , */
-/* struct PidinStack *ppist */)
+ double dNumber)
 {
     //- set default result : failure
 
@@ -1356,7 +1354,7 @@ BioComponentSetParameterDouble
 /// \arg pbio symbol to get parameter for.
 /// \arg pcName name of parameter.
 /// \arg pcValue parameter value.
-/// \arg ppist context of symbol (not used at the moment, can be changed).
+/// \arg iFlags 1 if the value should be strdup'd first.
 /// 
 /// \return struct symtab_Parameters * : parameter structure.
 /// 
@@ -1364,11 +1362,11 @@ BioComponentSetParameterDouble
 ///
 
 struct symtab_Parameters * 
-BioComponentSetParameterString
+BioComponentSetParameterMayBeCopyString
 (struct symtab_BioComponent * pbio,
  char *pcName,
- char *pcValue/* , */
-/* struct PidinStack *ppist */)
+ char *pcValue,
+ int iFlags)
 {
     //- set default result : failure
 
@@ -1384,7 +1382,7 @@ BioComponentSetParameterString
     {
 	//- allocate new parameter for give name,value
 
-	pparResult = ParameterNewFromString(pcName, pcValue);
+	pparResult = ParameterNewFromString(pcName, iFlags ? strdup(pcValue) : pcValue);
 
 	if (!pparResult)
 	{
@@ -1406,12 +1404,35 @@ BioComponentSetParameterString
     {
 	//- update parameter value
 
-	ParameterSetString(pparResult, pcValue);
+	ParameterSetString(pparResult, iFlags ? strdup(pcValue) : pcValue);
     }
 
     //- return result
 
     return(pparResult);
+}
+
+
+/// 
+/// \arg pbio symbol to get parameter for.
+/// \arg pcName name of parameter.
+/// \arg pcValue parameter value.
+/// 
+/// \return struct symtab_Parameters * : parameter structure.
+/// 
+/// \brief Set parameter with given name.
+///
+
+struct symtab_Parameters * 
+BioComponentSetParameterString
+(struct symtab_BioComponent * pbio,
+ char *pcName,
+ char *pcValue)
+{
+    //- set default result: from helper function
+
+    struct symtab_Parameters *pparResult
+	= BioComponentSetParameterMayBeCopyString(pbio, pcName, pcValue, 0);
 }
 
 

@@ -181,22 +181,26 @@ struct symtab_Parameters *
 BioComponentSetParameterContext
 (struct symtab_BioComponent * pbio,
  char *pcName,
- struct PidinStack *ppistValue/* , */
-/* struct PidinStack *ppist */);
+ struct PidinStack *ppistValue);
 
 struct symtab_Parameters *
 BioComponentSetParameterDouble
 (struct symtab_BioComponent * pbio,
  char *pcName,
- double dNumber/* , */
-/* struct PidinStack *ppist */);
+ double dNumber);
+
+struct symtab_Parameters * 
+BioComponentSetParameterMayBeCopyString
+(struct symtab_BioComponent * pbio,
+ char *pcName,
+ char *pcValue,
+ int iFlags);
 
 struct symtab_Parameters * 
 BioComponentSetParameterString
 (struct symtab_BioComponent * pbio,
  char *pcName,
- char *pcValue/* , */
-/* struct PidinStack *ppist */);
+ char *pcValue);
 
 int
 BioComponentTraverse

@@ -381,7 +381,7 @@ sub set_parameter_string
 
     my \$backend = \$self->backend_hsle();
 
-    SwiggableNeurospaces::SymbolSetParameterDouble(\$backend, \$parameter, \$value);
+    SwiggableNeurospaces::SymbolSetParameterMayBeCopyString(\$backend, \$parameter, \"\$value\", 1);
 }
 
 
