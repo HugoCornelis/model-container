@@ -371,6 +371,20 @@ sub set_name
 }
 
 
+sub set_parameter_string
+{
+    my \$self = shift;
+
+    my \$parameter = shift;
+
+    my \$value = shift;
+
+    my \$backend = \$self->backend_hsle();
+
+    SwiggableNeurospaces::SymbolSetParameterDouble(\$backend, \$parameter, \$value);
+}
+
+
 ";
 
     my $result = eval $code;
