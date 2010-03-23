@@ -26,6 +26,10 @@ my $neurospaces_mapping
 					      },
 			       },
 	       },
+       fiber => {
+		 internal_factory => 'FiberCalloc',
+		 internal_name => 'symtab_Fiber',
+		},
        segment => {
 		   internal_factory => 'SegmentCalloc',
 		   internal_name => 'symtab_Segment',
