@@ -2395,6 +2395,13 @@ SV * swig_get_namespaces(char *pcNamespace)
 
 
 struct symtab_HSolveListElement *
+    swig_cell_get_object(struct symtab_Cell *pcell)
+{
+    return((struct symtab_HSolveListElement *)pcell);
+}
+
+
+struct symtab_HSolveListElement *
     swig_fiber_get_object(struct symtab_Fiber *pfibr)
 {
     return((struct symtab_HSolveListElement *)pfibr);
@@ -2402,9 +2409,9 @@ struct symtab_HSolveListElement *
 
 
 struct symtab_HSolveListElement *
-    swig_cell_get_object(struct symtab_Cell *pcell)
+    swig_randomvalue_get_object(struct symtab_Randomvalue *pranv)
 {
-    return((struct symtab_HSolveListElement *)pcell);
+    return((struct symtab_HSolveListElement *)pranv);
 }
 
 
