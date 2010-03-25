@@ -30,6 +30,10 @@ my $neurospaces_mapping
 		 internal_factory => 'FiberCalloc',
 		 internal_name => 'symtab_Fiber',
 		},
+       randomvalue => {
+		       internal_factory => 'RandomvalueCalloc',
+		       internal_name => 'symtab_Randomvalue',
+		      },
        segment => {
 		   internal_factory => 'SegmentCalloc',
 		   internal_name => 'symtab_Segment',
