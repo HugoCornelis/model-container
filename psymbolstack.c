@@ -382,6 +382,22 @@ int PSymbolStackPush
 /// 
 /// \return int success of operation.
 /// 
+/// \brief Set namespaced flag.
+/// 
+
+int PSymbolStackSetNamespaced(struct PSymbolStack *psymst)
+{
+    psymst->iFlags |= FLAG_SYMST_NAMESPACED;
+
+    return 1;
+}
+
+
+/// 
+/// \arg psymst symbol stack.
+/// 
+/// \return int success of operation.
+/// 
 /// \brief Set rooted flag.
 /// 
 

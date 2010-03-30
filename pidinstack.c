@@ -1476,6 +1476,10 @@ PidinStackParse(char *pc)
 	/// \todo length of the string
 
 	iPos += strlen(IDENTIFIER_NAMESPACE_STRING);
+
+	//- set namespace flag
+
+	PidinStackSetNamespaced(ppistResult);
     }
 
     //- loop over all namespace operators
@@ -1616,6 +1620,10 @@ PidinStackParse(char *pc)
 	    iSize = iTokenSize;
 	}
 
+	//- set : first id is being parsed
+
+	bRoot = TRUE;
+
 	//- if no token
 
 	if (!iSize)
@@ -1624,10 +1632,6 @@ PidinStackParse(char *pc)
 
 	    continue;
 	}
-
-	//- set : first id is being parsed
-
-	bRoot = TRUE;
 
 	//- allocate idin
 
@@ -2203,6 +2207,17 @@ int PidinStackString(struct PidinStack *ppist, char *pc, int iSize)
     }
 
     pc[0] = '\0';
+
+    //- if rooted pidinstack and not namespaced idin
+
+    if (PidinStackIsNamespaced(ppist))
+    {
+	//- print root symbol
+
+	iCount = snprintf(&pc[iIndex], iSize, "%s", IDENTIFIER_NAMESPACE_STRING);
+	iIndex += iCount;
+	iSize -= iCount;
+    }
 
     //- if rooted pidinstack and not namespaced idin
 
@@ -2783,7 +2798,7 @@ PidinStackIsNamespaced(struct PidinStack *ppist)
 {
     struct symtab_IdentifierIndex *pidin = PidinStackElementPidin(ppist, 0);
 
-    return(IdinIsNamespaced(pidin));
+    return(PidinStackGetFlag(ppist, FLAG_PIST_NAMESPACED) || IdinIsNamespaced(pidin));
 }
 
 
@@ -2817,6 +2832,26 @@ void PidinStackSetFlag(struct PidinStack *ppist, int iFlags)
     //- set flags
 
     ppist->iFlags |= iFlags;
+}
+
+
+/// 
+/// register pidin stack is namespaces
+/// 
+
+void PidinStackSetNamespaced(struct PidinStack *ppist)
+{
+#ifdef PIDINSTACK_SMART_CACHE
+
+    //- set rooted for symbol cache
+
+    PSymbolSerialStackSetNamespaced(&ppist->symsst);
+
+#endif
+
+    //- set flag
+
+    PidinStackSetFlag((ppist), FLAG_PIST_NAMESPACED);
 }
 
 

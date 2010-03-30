@@ -92,6 +92,8 @@ PSymbolSerialStackPop
 int PSymbolSerialStackPush
 (struct PSymbolSerialStack *psymsst,struct symtab_HSolveListElement *phsle);
 
+int PSymbolSerialStackSetNamespaced(struct PSymbolSerialStack *psymsst);
+
 int PSymbolSerialStackSetRooted(struct PSymbolSerialStack *psymsst);
 
 struct symtab_HSolveListElement *

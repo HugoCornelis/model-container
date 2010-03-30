@@ -180,6 +180,10 @@ struct PidinStack
 
 #define FLAG_PIST_ROOTED		1
 
+/// \def namespaced pidin stack
+
+#define FLAG_PIST_NAMESPACED		2
+
 
 /* /// \def pidinstack with valid symbol stack cache */
 
@@ -288,6 +292,8 @@ PidinStackIsRooted(struct PidinStack *ppist);
 int PidinStackNumberOfEntries(struct PidinStack *ppist);
 
 void PidinStackSetFlag(struct PidinStack *ppist, int iFlags);
+
+void PidinStackSetNamespaced(struct PidinStack *ppist);
 
 void PidinStackSetRooted(struct PidinStack *ppist);
 

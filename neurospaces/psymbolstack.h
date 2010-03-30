@@ -58,6 +58,10 @@ struct PSymbolStack
 
 #define FLAG_SYMST_ROOTED		1
 
+/// \def namespaced symbol stack
+
+#define FLAG_SYMST_NAMESPACED		2
+
 
 
 static inline
@@ -165,6 +169,8 @@ struct symtab_HSolveListElement * PSymbolStackPop(struct PSymbolStack *psymst);
 
 int PSymbolStackPush
 (struct PSymbolStack *psymst,struct symtab_HSolveListElement *phsle);
+
+int PSymbolStackSetNamespaced(struct PSymbolStack *psymst);
 
 int PSymbolStackSetRooted(struct PSymbolStack *psymst);
 

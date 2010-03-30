@@ -358,6 +358,22 @@ PSymbolSerialStackPushed
 /// 
 /// \return int success of operation.
 /// 
+/// \brief Register symbol serial stack is namespaced.
+/// 
+
+int PSymbolSerialStackSetNamespaced(struct PSymbolSerialStack *psymsst)
+{
+    //- set rooted for base struct
+
+    PSymbolStackSetNamespaced(&psymsst->symst);
+}
+
+
+/// 
+/// \arg psymsst symbol serial stack.
+/// 
+/// \return int success of operation.
+/// 
 /// \brief Register symbol serial stack is rooted.
 /// 
 
