@@ -301,6 +301,27 @@ SymbolsLookupHierarchical
 	return(NULL);
     }
 
+    //- if this is an empty rooted and namespaced context
+
+    if (PidinStackIsNamespaced(ppist)
+	&& PidinStackIsRooted(ppist)
+	&& ppist->iTop == -1)
+    {
+	//- return private models root
+
+	return((struct symtab_HSolveListElement *)pif->pdefsym->hslPrivateModels.phsleHead);
+    }
+
+    //- if this is an empty rooted context
+
+    if (PidinStackIsRooted(ppist)
+	&& ppist->iTop == -1)
+    {
+	//- return public models root
+
+	return((struct symtab_HSolveListElement *)pif->pdefsym->hslPublicModels.phsleHead);
+    }
+
     //- if namespaced symbol name
 
     if (pidin && IdinIsNamespaced(pidin))

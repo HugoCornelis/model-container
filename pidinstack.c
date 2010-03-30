@@ -755,7 +755,8 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
     if (iEntries == 0)
     {
-	if (PidinStackIsRooted(ppist))
+	if (PidinStackIsNamespaced(ppist)
+	    || PidinStackIsRooted(ppist))
 	{
 	    //- return root symbol
 
@@ -2798,7 +2799,7 @@ PidinStackIsNamespaced(struct PidinStack *ppist)
 {
     struct symtab_IdentifierIndex *pidin = PidinStackElementPidin(ppist, 0);
 
-    return(PidinStackGetFlag(ppist, FLAG_PIST_NAMESPACED) || IdinIsNamespaced(pidin));
+    return(PidinStackGetFlag(ppist, FLAG_PIST_NAMESPACED) || (pidin && IdinIsNamespaced(pidin)));
 }
 
 
