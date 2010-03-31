@@ -1701,6 +1701,17 @@ QueryHandlerExpand
 
     struct PidinStack *ppist = PidinStackParse(&pcLine[iLength]);
 
+    //- check if we can find a selector
+
+    struct symtab_IdentifierIndex *pidin = PidinStackElementPidin(ppist, 0);
+
+    if (!pidin)
+    {
+	fprintf(stdout, "no symbols selector found\n");
+
+	return(FALSE);
+    }
+ 
     //- if the wildcard is namespaced
 
     if (PidinStackIsNamespaced(ppist))
