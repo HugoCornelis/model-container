@@ -440,7 +440,7 @@ sub input_2_solverinfo
 }
 
 
-sub insert
+sub insert_public
 {
     my $model_container = shift;
 
@@ -460,6 +460,34 @@ sub insert
     if (!$success)
     {
 	return "Cannot Neurospaces::insert() child";
+    }
+    else
+    {
+	return "";
+    }
+}
+
+
+sub insert_private
+{
+    my $model_container = shift;
+
+    my $component = shift;
+
+    my $root_context = SwiggableNeurospaces::PidinStackParse("/::");
+
+    my $root_symbol = $root_context->PidinStackLookupTopSymbol();
+
+    if (!$root_symbol)
+    {
+	return "Cannot get a private root context (has a model been loaded ?)";
+    }
+
+    my $success = $root_symbol->SymbolAddChild($component->backend_hsle());
+
+    if (!$success)
+    {
+	return "Cannot Neurospaces::insert_private() child";
     }
     else
     {
