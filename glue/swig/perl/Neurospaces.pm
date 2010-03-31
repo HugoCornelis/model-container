@@ -446,7 +446,9 @@ sub insert_private
 
     my $component = shift;
 
-    my $root_context = SwiggableNeurospaces::PidinStackParse("/::");
+#     print "insert_private\n";
+
+    my $root_context = SwiggableNeurospaces::PidinStackParse("::/");
 
     my $root_symbol = $root_context->PidinStackLookupTopSymbol();
 
@@ -474,6 +476,8 @@ sub insert_public
 
     my $component = shift;
 
+#     print "insert_private\n";
+
     my $root_context = SwiggableNeurospaces::PidinStackParse("/");
 
     my $root_symbol = $root_context->PidinStackLookupTopSymbol();
@@ -487,7 +491,7 @@ sub insert_public
 
     if (!$success)
     {
-	return "Cannot Neurospaces::insert() child";
+	return "Cannot Neurospaces::insert_public() child";
     }
     else
     {
