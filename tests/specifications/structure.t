@@ -410,6 +410,7 @@ Principal serial ID = 265341 of 439542 Principal successors
 						    write => "serialMapping /CerebellarCortex/a_non_existent_population/../Purkinjes/5"
 						   },
 						   {
+						    comment => 'this behaviour is undefined, but tested',
 						    description => "What is the serial mapping for a symbol that does exist using parent references, yet with intermediate references to symbols that do not exist ?",
 						    read => "Traversal serial ID = 265341
 Principal serial ID = 265341 of 439542 Principal successors
@@ -419,9 +420,9 @@ Principal serial ID = 265341 of 439542 Principal successors
 						    write => "serialMapping /a_non_existent_network/a_non_existent_population/../../CerebellarCortex/Purkinjes/5"
 						   },
 						   {
+						    comment => 'this behaviour is undefined, but tested',
 						    description => "What is the serial mapping for a symbol that does exist using parent references, yet with intermediate references to symbols that do not exist and using the root namespace operator ?",
-						    read => "Traversal serial ID = 265341
-Principal serial ID = 265341 of 439542 Principal successors
+						    read => "symbol is not an ancestor
 ",
 # Mechanism serial ID = 133390 of 146304 Mechanism successors
 # Segment  serial  ID = 29000 of 33548  Segment  successors
