@@ -2757,7 +2757,8 @@ PidinStackElementPidin(struct PidinStack *ppist, int i)
 {
     struct symtab_IdentifierIndex *pidinResult = NULL;
 
-    if (ppist->iTop >= i)
+    if (ppist->iTop >= i
+	&& i >= 0)
     {
 	pidinResult = ppist->ppidin[i];
     }

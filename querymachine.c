@@ -1689,7 +1689,7 @@ QueryHandlerExpand
 {
     //- set result : ok
 
-    int bResult = TRUE;
+    int bResult = 1;
 
     struct symtab_HSolveListElement *phsle = NULL;
 
@@ -1703,20 +1703,18 @@ QueryHandlerExpand
 
     //- if the wildcard is namespaced
 
-    struct symtab_IdentifierIndex *pidin = PidinStackElementPidin(ppist, 0);
-
-    if (!pidin)
-    {
-	fprintf(stdout, "no symbols selector found\n");
-
-	return(FALSE);
-    }
-
-    if (IdinIsNamespaced(pidin))
+    if (PidinStackIsNamespaced(ppist))
     {
 	//- find namespace
 
 	struct ImportedFile *pif = SymbolsLookupNameSpace(pneuro->psym, ppist);
+
+	if (!pif)
+	{
+	    fprintf(stdout, "cannot find namespace\n");
+
+	    return(0);
+	}
 
 	struct symtab_RootSymbol *prootNamespace = ImportedFileGetRootSymbol(pif);
 
@@ -1727,15 +1725,20 @@ QueryHandlerExpand
 
 	//- convert full context to one with only namespaces
 
-	struct symtab_IdentifierIndex *pidinTraversal
-	    = PidinStackTop(ppistTraversal);
-
-	while (!IdinIsNamespaced(pidinTraversal))
+	if (PidinStackNumberOfEntries(ppistTraversal))
 	{
-	    PidinStackPop(ppistTraversal);
-
-	    pidinTraversal
+	    struct symtab_IdentifierIndex *pidinTraversal
 		= PidinStackTop(ppistTraversal);
+
+	    //- pop all elements that are part of the wildcard
+
+	    while (pidinTraversal && !IdinIsNamespaced(pidinTraversal))
+	    {
+		PidinStackPop(ppistTraversal);
+
+		pidinTraversal
+		    = PidinStackTop(ppistTraversal);
+	    }
 	}
     }
 
@@ -1749,7 +1752,9 @@ QueryHandlerExpand
 
 	if (!ppistRoot)
 	{
-	    return(FALSE);
+	    fprintf(stdout, "cannot allocate a context\n");
+
+	    return(0);
 	}
 
 	PidinStackSetRooted(ppistRoot);
