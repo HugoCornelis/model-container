@@ -13,6 +13,9 @@ package Neurospaces::Components;
 
 my $neurospaces_mapping
     = {
+#        hsle => {
+# 		internal_name => 'symtab_HSolveListElement',
+# 	       },
        cell => {
 		constructor_settings => {
 # 					 iTable => -1,
@@ -286,6 +289,40 @@ foreach my $component (keys %$neurospaces_mapping)
     my $code = "
 package Neurospaces::Components::$Component;
 
+sub alias
+{
+    my \$self = shift;
+
+    my \$namespace = shift;
+
+    my \$name = shift;
+
+    my \$type1 = shift;
+
+    my \$type2 = shift;
+
+    my \$backend_self = \$self->backend_hsle();
+
+    my \$pidin = SwiggableNeurospaces::IdinCallocUnique(\$name);
+
+    my \$alias = \$backend_self->SymbolCreateAlias(\$namespace, \$pidin);
+
+    if (!\$alias)
+    {
+	die \"\$0: Backend SymbolCreateAlias() failed\";
+    }
+
+    my \$result
+	= {
+           \$type1 => \$alias,
+          };
+
+    bless \$result, \$type2;
+
+    return \$result;
+}
+
+
 sub backend
 {
     my \$self = shift;
@@ -302,13 +339,26 @@ sub backend_hsle
 
     my \$backend = \$self->backend();
 
-    my \$subname = 'SwiggableNeurospaces::swig_' . lcfirst('$component') . '_get_object';
+#     use Data::Dumper;
 
-    no strict 'refs';
+#     print Dumper(\$self);
 
-    my \$result = &\$subname(\$backend);
+#     print Dumper(\$backend);
 
-    return \$result;
+    if (ref \$backend ne 'SwiggableNeurospaces::symtab_HSolveListElement')
+    {
+	my \$subname = 'SwiggableNeurospaces::swig_' . lcfirst('$component') . '_get_object';
+
+	no strict 'refs';
+
+	my \$result = &\$subname(\$backend);
+
+	return \$result;
+    }
+    else
+    {
+	return \$backend;
+    }
 }
 
 
