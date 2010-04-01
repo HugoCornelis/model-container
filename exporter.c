@@ -507,7 +507,7 @@ ExporterSymbolStarter
 		    pcNamespace = &pc[0];
 		}
 
-		fprintf(pexd->pfile, "%s %s%s%s %s\n", pcToken, (pcNamespace ? pcNamespace : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
+		fprintf(pexd->pfile, "%s \"%s%s%s\" \"%s\"\n", pcToken, (pcNamespace ? pcNamespace : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
 	    }
 	    else
 	    {
@@ -557,7 +557,7 @@ ExporterSymbolStarter
 
 	    if (pexd->iType == EXPORTER_TYPE_NDF)
 	    {
-		fprintf(pexd->pfile, "%s %s\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
+		fprintf(pexd->pfile, "%s \"%s\"\n", SymbolHSLETypeDescribeNDF(phsle->iType), SymbolName(phsle));
 	    }
 	    else
 	    {
@@ -606,7 +606,7 @@ ExporterSymbolStarter
 
 	if (pexd->iType == EXPORTER_TYPE_NDF)
 	{
-	    fprintf(pexd->pfile, "%s %s %s\n", SymbolHSLETypeDescribeNDF(phsle->iType), palgs->dealgs.palgi->palgc->pcIdentifier, SymbolName(phsle));
+	    fprintf(pexd->pfile, "%s \"%s\" \"%s\"\n", SymbolHSLETypeDescribeNDF(phsle->iType), palgs->dealgs.palgi->palgc->pcIdentifier, SymbolName(phsle));
 	}
 	else
 	{

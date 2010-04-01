@@ -41,12 +41,12 @@ IMPORT
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS mapper::/Synapse Synapse
+  ALIAS mapper::/Synapse "Synapse"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CHANNEL Purk_GABA
+  CHANNEL "Purk_GABA"
     BINDABLES
       INPUT Vm,
       OUTPUT I,
@@ -55,9 +55,9 @@ PUBLIC_MODELS
       PARAMETER ( G_MAX = 1.077 ),
       PARAMETER ( Erev = -0.08 ),
     END PARAMETERS
-    CHILD Synapse synapse
+    CHILD Synapse "synapse"
     END CHILD
-    EQUATION_EXPONENTIAL exp2
+    EQUATION_EXPONENTIAL "exp2"
       BINDABLES
         INPUT activation,
         OUTPUT G,

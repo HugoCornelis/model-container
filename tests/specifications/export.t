@@ -38,16 +38,16 @@ my $test
 NEUROSPACES NDF
 
 IMPORT
-    FILE mapper "mappers/spikereceiver.ndf"
+    FILE "mapper" "mappers/spikereceiver.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS mapper::/Synapse Synapse
+  ALIAS "mapper::/Synapse" "Synapse"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CHANNEL NMDA_fixed_conductance
+  CHANNEL "NMDA_fixed_conductance"
     BINDABLES
       INPUT Vm,
       OUTPUT exp2->G,
@@ -62,9 +62,9 @@ PUBLIC_MODELS
               PARAMETER ( scale = 1 ),
           ), ),
     END PARAMETERS
-    CHILD Synapse synapse
+    CHILD "Synapse" "synapse"
     END CHILD
-    EQUATION_EXPONENTIAL exp2
+    EQUATION_EXPONENTIAL "exp2"
       BINDABLES
         INPUT activation,
         OUTPUT G,
@@ -78,15 +78,15 @@ PUBLIC_MODELS
       END PARAMETERS
     END EQUATION_EXPONENTIAL
   END CHANNEL
-  CHANNEL NMDA
+  CHANNEL "NMDA"
     BINDABLES
       INPUT Vm,
       OUTPUT exp2->G,
       OUTPUT I,
     END BINDABLES
-    CHILD Synapse synapse
+    CHILD "Synapse" "synapse"
     END CHILD
-    EQUATION_EXPONENTIAL exp2
+    EQUATION_EXPONENTIAL "exp2"
       BINDABLES
         INPUT activation,
         OUTPUT G,
@@ -216,21 +216,21 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE k "channels/hodgkin-huxley/potassium.ndf"
-    FILE na "channels/hodgkin-huxley/sodium.ndf"
+    FILE "k" "channels/hodgkin-huxley/potassium.ndf"
+    FILE "na" "channels/hodgkin-huxley/sodium.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS k::/k k
+  ALIAS "k::/k" "k"
   END ALIAS
-  ALIAS na::/na na
+  ALIAS "na::/na" "na"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  ALIAS k k
+  ALIAS "k" "k"
   END ALIAS
-  ALIAS na na
+  ALIAS "na" "na"
   END ALIAS
 END PUBLIC_MODELS
 ',
@@ -304,16 +304,16 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE mapper "mappers/spikereceiver.ndf"
+    FILE "mapper" "mappers/spikereceiver.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS mapper::/Synapse Synapse
+  ALIAS "mapper::/Synapse" "Synapse"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CHANNEL NMDA_fixed_conductance
+  CHANNEL "NMDA_fixed_conductance"
     BINDABLES
       INPUT Vm,
       OUTPUT exp2->G,
@@ -328,9 +328,9 @@ PUBLIC_MODELS
               PARAMETER ( scale = 1 ),
           ), ),
     END PARAMETERS
-    CHILD Synapse synapse
+    CHILD "Synapse" "synapse"
     END CHILD
-    EQUATION_EXPONENTIAL exp2
+    EQUATION_EXPONENTIAL "exp2"
       BINDABLES
         INPUT activation,
         OUTPUT G,
@@ -344,15 +344,15 @@ PUBLIC_MODELS
       END PARAMETERS
     END EQUATION_EXPONENTIAL
   END CHANNEL
-  CHANNEL NMDA
+  CHANNEL "NMDA"
     BINDABLES
       INPUT Vm,
       OUTPUT exp2->G,
       OUTPUT I,
     END BINDABLES
-    CHILD Synapse synapse
+    CHILD "Synapse" "synapse"
     END CHILD
-    EQUATION_EXPONENTIAL exp2
+    EQUATION_EXPONENTIAL "exp2"
       BINDABLES
         INPUT activation,
         OUTPUT G,
@@ -465,18 +465,18 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE mapper "mappers/spikereceiver.ndf"
-    FILE gaba "channels/gaba.ndf"
-    FILE basket "channels/purkinje_basket.ndf"
+    FILE "mapper" "mappers/spikereceiver.ndf"
+    FILE "gaba" "channels/gaba.ndf"
+    FILE "basket" "channels/purkinje_basket.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS mapper::/Synapse Synapse
+  ALIAS "mapper::/Synapse" "Synapse"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CHANNEL NMDA_fixed_conductance
+  CHANNEL "NMDA_fixed_conductance"
     BINDABLES
       INPUT Vm,
       OUTPUT exp2->G,
@@ -491,9 +491,9 @@ PUBLIC_MODELS
               PARAMETER ( scale = 1 ),
           ), ),
     END PARAMETERS
-    CHILD Synapse synapse
+    CHILD "Synapse" "synapse"
     END CHILD
-    EQUATION_EXPONENTIAL exp2
+    EQUATION_EXPONENTIAL "exp2"
       BINDABLES
         INPUT activation,
         OUTPUT G,
@@ -507,15 +507,15 @@ PUBLIC_MODELS
       END PARAMETERS
     END EQUATION_EXPONENTIAL
   END CHANNEL
-  CHANNEL NMDA
+  CHANNEL "NMDA"
     BINDABLES
       INPUT Vm,
       OUTPUT exp2->G,
       OUTPUT I,
     END BINDABLES
-    CHILD Synapse synapse
+    CHILD "Synapse" "synapse"
     END CHILD
-    EQUATION_EXPONENTIAL exp2
+    EQUATION_EXPONENTIAL "exp2"
       BINDABLES
         INPUT activation,
         OUTPUT G,
@@ -631,17 +631,17 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE soma "tests/segments/soma.ndf"
-    FILE gate1 "gates/naf_activation.ndf"
-    FILE gate2 "gates/naf_inactivation.ndf"
+    FILE "soma" "tests/segments/soma.ndf"
+    FILE "gate1" "gates/naf_activation.ndf"
+    FILE "gate2" "gates/naf_inactivation.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS gate1::/naf_activation naf_gate_activation
+  ALIAS "gate1::/naf_activation" "naf_gate_activation"
   END ALIAS
-  ALIAS gate2::/naf_inactivation naf_gate_inactivation
+  ALIAS "gate2::/naf_inactivation" "naf_gate_inactivation"
   END ALIAS
-  CHANNEL NaF
+  CHANNEL "NaF"
     BINDABLES
       INPUT Vm,
       OUTPUT G,
@@ -652,12 +652,12 @@ PRIVATE_MODELS
       PARAMETER ( G_MAX = 75000 ),
       PARAMETER ( Erev = 0.045 ),
     END PARAMETERS
-    CHILD naf_gate_activation naf_gate_activation
+    CHILD "naf_gate_activation" "naf_gate_activation"
     END CHILD
-    CHILD naf_gate_inactivation naf_gate_inactivation
+    CHILD "naf_gate_inactivation" "naf_gate_inactivation"
     END CHILD
   END CHANNEL
-  SEGMENT soma2
+  SEGMENT "soma2"
     BINDABLES
       OUTPUT Vm,
     END BINDABLES
@@ -671,7 +671,7 @@ PRIVATE_MODELS
       PARAMETER ( CM = 0.0164 ),
       PARAMETER ( ELEAK = -0.08 ),
     END PARAMETERS
-    CHILD NaF NaF
+    CHILD "NaF" "NaF"
       BINDINGS
         INPUT ..->Vm,
       END BINDINGS
@@ -680,9 +680,9 @@ PRIVATE_MODELS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL singlea_naf
-    SEGMENT_GROUP segments
-      CHILD soma2 soma
+  CELL "singlea_naf"
+    SEGMENT_GROUP "segments"
+      CHILD "soma2" "soma"
         PARAMETERS
           PARAMETER ( rel_X = 0 ),
           PARAMETER ( rel_Y = 0 ),
@@ -791,18 +791,18 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE hh "segments/hodgkin_huxley.ndf"
+    FILE "hh" "segments/hodgkin_huxley.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS hh::/hh_segment hh
+  ALIAS "hh::/hh_segment" "hh"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL hh1
-    SEGMENT_GROUP segments
-      CHILD hh soma
+  CELL "hh1"
+    SEGMENT_GROUP "segments"
+      CHILD "hh" "soma"
       END CHILD
     END SEGMENT_GROUP
   END CELL
@@ -818,18 +818,18 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE hh "segments/hodgkin_huxley.ndf"
+    FILE "hh" "segments/hodgkin_huxley.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS hh::/hh_segment hh
+  ALIAS "hh::/hh_segment" "hh"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL hh1
-    SEGMENT_GROUP segments
-      CHILD hh soma
+  CELL "hh1"
+    SEGMENT_GROUP "segments"
+      CHILD "hh" "soma"
       END CHILD
     END SEGMENT_GROUP
   END CELL
@@ -862,18 +862,18 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE soma "tests/segments/soma.ndf"
+    FILE "soma" "tests/segments/soma.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS soma::/soma soma
+  ALIAS "soma::/soma" "soma"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL singlep
-    SEGMENT_GROUP segments
-      CHILD soma soma
+  CELL "singlep"
+    SEGMENT_GROUP "segments"
+      CHILD "soma" "soma"
         PARAMETERS
           PARAMETER ( rel_X = 0 ),
           PARAMETER ( rel_Y = 0 ),
@@ -895,18 +895,18 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE soma "tests/segments/soma.ndf"
+    FILE "soma" "tests/segments/soma.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS soma::/soma soma
+  ALIAS "soma::/soma" "soma"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL singlep
-    SEGMENT_GROUP segments
-      CHILD soma soma
+  CELL "singlep"
+    SEGMENT_GROUP "segments"
+      CHILD "soma" "soma"
         PARAMETERS
           PARAMETER ( rel_X = 0 ),
           PARAMETER ( rel_Y = 0 ),
@@ -945,22 +945,22 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE cat "channels/purkinje/cat.ndf"
-    FILE kdr "channels/purkinje/kdr.ndf"
-    FILE naf "channels/purkinje/naf.ndf"
-    FILE nap "channels/purkinje/nap.ndf"
+    FILE "cat" "channels/purkinje/cat.ndf"
+    FILE "kdr" "channels/purkinje/kdr.ndf"
+    FILE "naf" "channels/purkinje/naf.ndf"
+    FILE "nap" "channels/purkinje/nap.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS cat::/cat cat
+  ALIAS "cat::/cat" "cat"
   END ALIAS
-  ALIAS kdr::/kdr kdr
+  ALIAS "kdr::/kdr" "kdr"
   END ALIAS
-  ALIAS naf::/naf naf
+  ALIAS "naf::/naf" "naf"
   END ALIAS
-  ALIAS nap::/nap nap
+  ALIAS "nap::/nap" "nap"
   END ALIAS
-  SEGMENT something
+  SEGMENT "something"
     BINDABLES
       OUTPUT Vm,
     END BINDABLES
@@ -977,7 +977,7 @@ PRIVATE_MODELS
       PARAMETER ( CM = 0.0164 ),
       PARAMETER ( ELEAK = -0.08 ),
     END PARAMETERS
-    CHILD cat cat
+    CHILD "cat" "cat"
       BINDINGS
         INPUT ..->Vm,
       END BINDINGS
@@ -985,17 +985,17 @@ PRIVATE_MODELS
         PARAMETER ( Erev = 0.137526 ),
       END PARAMETERS
     END CHILD
-    CHILD kdr kdr
+    CHILD "kdr" "kdr"
       BINDINGS
         INPUT ..->Vm,
       END BINDINGS
     END CHILD
-    CHILD nap nap
+    CHILD "nap" "nap"
       BINDINGS
         INPUT ..->Vm,
       END BINDINGS
     END CHILD
-    CHILD naf naf
+    CHILD "naf" "naf"
       BINDINGS
         INPUT ..->Vm,
       END BINDINGS
@@ -1004,9 +1004,9 @@ PRIVATE_MODELS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL addressing_aggregator1
-    SEGMENT_GROUP segments
-      CHILD something c1
+  CELL "addressing_aggregator1"
+    SEGMENT_GROUP "segments"
+      CHILD "something" "c1"
         PARAMETERS
           PARAMETER ( rel_X = 0 ),
           PARAMETER ( rel_Y = 0 ),
@@ -1028,22 +1028,22 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE cat "channels/purkinje/cat.ndf"
-    FILE kdr "channels/purkinje/kdr.ndf"
-    FILE naf "channels/purkinje/naf.ndf"
-    FILE nap "channels/purkinje/nap.ndf"
+    FILE "cat" "channels/purkinje/cat.ndf"
+    FILE "kdr" "channels/purkinje/kdr.ndf"
+    FILE "naf" "channels/purkinje/naf.ndf"
+    FILE "nap" "channels/purkinje/nap.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS cat::/cat cat
+  ALIAS "cat::/cat" "cat"
   END ALIAS
-  ALIAS kdr::/kdr kdr
+  ALIAS "kdr::/kdr" "kdr"
   END ALIAS
-  ALIAS naf::/naf naf
+  ALIAS "naf::/naf" "naf"
   END ALIAS
-  ALIAS nap::/nap nap
+  ALIAS "nap::/nap" "nap"
   END ALIAS
-  SEGMENT something
+  SEGMENT "something"
     BINDABLES
       OUTPUT Vm,
     END BINDABLES
@@ -1060,7 +1060,7 @@ PRIVATE_MODELS
       PARAMETER ( CM = 0.0164 ),
       PARAMETER ( ELEAK = -0.08 ),
     END PARAMETERS
-    CHILD cat cat
+    CHILD "cat" "cat"
       BINDINGS
         INPUT ..->Vm,
       END BINDINGS
@@ -1068,17 +1068,17 @@ PRIVATE_MODELS
         PARAMETER ( Erev = 0.137526 ),
       END PARAMETERS
     END CHILD
-    CHILD kdr kdr
+    CHILD "kdr" "kdr"
       BINDINGS
         INPUT ..->Vm,
       END BINDINGS
     END CHILD
-    CHILD nap nap
+    CHILD "nap" "nap"
       BINDINGS
         INPUT ..->Vm,
       END BINDINGS
     END CHILD
-    CHILD naf naf
+    CHILD "naf" "naf"
       BINDINGS
         INPUT ..->Vm,
       END BINDINGS
@@ -1087,9 +1087,9 @@ PRIVATE_MODELS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL addressing_aggregator1
-    SEGMENT_GROUP segments
-      CHILD something c1
+  CELL "addressing_aggregator1"
+    SEGMENT_GROUP "segments"
+      CHILD "something" "c1"
         PARAMETERS
           PARAMETER ( rel_X = 0 ),
           PARAMETER ( rel_Y = 0 ),
@@ -1134,8 +1134,8 @@ PRIVATE_MODELS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL hardcoded_neutral
-    SEGMENT c
+  CELL "hardcoded_neutral"
+    SEGMENT "c"
       BINDINGS
         INPUT ka->I,
       END BINDINGS
@@ -1164,7 +1164,7 @@ PUBLIC_MODELS
             ), ),
         PARAMETER ( SURFACE = 2.78986e-09 ),
       END PARAMETERS
-      CHANNEL ka
+      CHANNEL "ka"
         BINDABLES
           INPUT Vm,
           OUTPUT G,
@@ -1178,13 +1178,13 @@ PUBLIC_MODELS
           PARAMETER ( G_MAX = 150 ),
           PARAMETER ( Erev = -0.085 ),
         END PARAMETERS
-        HH_GATE HH_activation
+        HH_GATE "HH_activation"
           PARAMETERS
             PARAMETER ( HH_NUMBER_OF_TABLE_ENTRIES = 3.40282e+38 ),
             PARAMETER ( state_init = 0.0837136 ),
             PARAMETER ( POWER = 4 ),
           END PARAMETERS
-          gate_kinetic A
+          gate_kinetic "A"
             PARAMETERS
               PARAMETER ( HH_AB_Tau = -0.012 ),
               PARAMETER ( HH_AB_Offset_E = 0.027 ),
@@ -1194,7 +1194,7 @@ PUBLIC_MODELS
               PARAMETER ( HH_AB_Scale = 1400 ),
             END PARAMETERS
           END gate_kinetic
-          gate_kinetic B
+          gate_kinetic "B"
             PARAMETERS
               PARAMETER ( HH_AB_Tau = 0.004 ),
               PARAMETER ( HH_AB_Offset_E = 0.03 ),
@@ -1205,13 +1205,13 @@ PUBLIC_MODELS
             END PARAMETERS
           END gate_kinetic
         END HH_GATE
-        HH_GATE HH_inactivation
+        HH_GATE "HH_inactivation"
           PARAMETERS
             PARAMETER ( HH_NUMBER_OF_TABLE_ENTRIES = 3.40282e+38 ),
             PARAMETER ( state_init = 0.747485 ),
             PARAMETER ( POWER = 1 ),
           END PARAMETERS
-          gate_kinetic A
+          gate_kinetic "A"
             PARAMETERS
               PARAMETER ( HH_AB_Tau = 0.008 ),
               PARAMETER ( HH_AB_Offset_E = 0.05 ),
@@ -1221,7 +1221,7 @@ PUBLIC_MODELS
               PARAMETER ( HH_AB_Scale = 17.5 ),
             END PARAMETERS
           END gate_kinetic
-          gate_kinetic B
+          gate_kinetic "B"
             PARAMETERS
               PARAMETER ( HH_AB_Tau = -0.01 ),
               PARAMETER ( HH_AB_Offset_E = 0.013 ),
@@ -1253,8 +1253,8 @@ PRIVATE_MODELS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL hardcoded_neutral
-    SEGMENT c
+  CELL "hardcoded_neutral"
+    SEGMENT "c"
       BINDINGS
         INPUT ka->I,
       END BINDINGS
@@ -1283,7 +1283,7 @@ PUBLIC_MODELS
             ), ),
         PARAMETER ( SURFACE = 2.78986e-09 ),
       END PARAMETERS
-      CHANNEL ka
+      CHANNEL "ka"
         BINDABLES
           INPUT Vm,
           OUTPUT G,
@@ -1297,13 +1297,13 @@ PUBLIC_MODELS
           PARAMETER ( G_MAX = 150 ),
           PARAMETER ( Erev = -0.085 ),
         END PARAMETERS
-        HH_GATE HH_activation
+        HH_GATE "HH_activation"
           PARAMETERS
             PARAMETER ( HH_NUMBER_OF_TABLE_ENTRIES = 3.40282e+38 ),
             PARAMETER ( state_init = 0.0837136 ),
             PARAMETER ( POWER = 4 ),
           END PARAMETERS
-          gate_kinetic A
+          gate_kinetic "A"
             PARAMETERS
               PARAMETER ( HH_AB_Tau = -0.012 ),
               PARAMETER ( HH_AB_Offset_E = 0.027 ),
@@ -1313,7 +1313,7 @@ PUBLIC_MODELS
               PARAMETER ( HH_AB_Scale = 1400 ),
             END PARAMETERS
           END gate_kinetic
-          gate_kinetic B
+          gate_kinetic "B"
             PARAMETERS
               PARAMETER ( HH_AB_Tau = 0.004 ),
               PARAMETER ( HH_AB_Offset_E = 0.03 ),
@@ -1324,13 +1324,13 @@ PUBLIC_MODELS
             END PARAMETERS
           END gate_kinetic
         END HH_GATE
-        HH_GATE HH_inactivation
+        HH_GATE "HH_inactivation"
           PARAMETERS
             PARAMETER ( HH_NUMBER_OF_TABLE_ENTRIES = 3.40282e+38 ),
             PARAMETER ( state_init = 0.747485 ),
             PARAMETER ( POWER = 1 ),
           END PARAMETERS
-          gate_kinetic A
+          gate_kinetic "A"
             PARAMETERS
               PARAMETER ( HH_AB_Tau = 0.008 ),
               PARAMETER ( HH_AB_Offset_E = 0.05 ),
@@ -1340,7 +1340,7 @@ PUBLIC_MODELS
               PARAMETER ( HH_AB_Scale = 17.5 ),
             END PARAMETERS
           END gate_kinetic
-          gate_kinetic B
+          gate_kinetic "B"
             PARAMETERS
               PARAMETER ( HH_AB_Tau = -0.01 ),
               PARAMETER ( HH_AB_Offset_E = 0.013 ),
@@ -1376,8 +1376,8 @@ PRIVATE_MODELS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL hardcoded_neutral
-    SEGMENT c
+  CELL "hardcoded_neutral"
+    SEGMENT "c"
       BINDINGS
         INPUT ka->I,
       END BINDINGS
@@ -1389,7 +1389,7 @@ PUBLIC_MODELS
         PARAMETER ( Vm_init = -0.068 ),
         PARAMETER ( ELEAK = -0.08 ),
       END PARAMETERS
-      CHANNEL ka
+      CHANNEL "ka"
         BINDABLES
           INPUT Vm,
           OUTPUT G,
@@ -1402,12 +1402,12 @@ PUBLIC_MODELS
           PARAMETER ( G_MAX = 150 ),
           PARAMETER ( Erev = -0.085 ),
         END PARAMETERS
-        HH_GATE HH_activation
+        HH_GATE "HH_activation"
           PARAMETERS
             PARAMETER ( state_init = 0.0837136 ),
             PARAMETER ( POWER = 4 ),
           END PARAMETERS
-          gate_kinetic A
+          gate_kinetic "A"
             PARAMETERS
               PARAMETER ( HH_AB_Tau = -0.012 ),
               PARAMETER ( HH_AB_Offset_E = 0.027 ),
@@ -1417,7 +1417,7 @@ PUBLIC_MODELS
               PARAMETER ( HH_AB_Scale = 1400 ),
             END PARAMETERS
           END gate_kinetic
-          gate_kinetic B
+          gate_kinetic "B"
             PARAMETERS
               PARAMETER ( HH_AB_Tau = 0.004 ),
               PARAMETER ( HH_AB_Offset_E = 0.03 ),
@@ -1428,12 +1428,12 @@ PUBLIC_MODELS
             END PARAMETERS
           END gate_kinetic
         END HH_GATE
-        HH_GATE HH_inactivation
+        HH_GATE "HH_inactivation"
           PARAMETERS
             PARAMETER ( state_init = 0.747485 ),
             PARAMETER ( POWER = 1 ),
           END PARAMETERS
-          gate_kinetic A
+          gate_kinetic "A"
             PARAMETERS
               PARAMETER ( HH_AB_Tau = 0.008 ),
               PARAMETER ( HH_AB_Offset_E = 0.05 ),
@@ -1443,7 +1443,7 @@ PUBLIC_MODELS
               PARAMETER ( HH_AB_Scale = 17.5 ),
             END PARAMETERS
           END gate_kinetic
-          gate_kinetic B
+          gate_kinetic "B"
             PARAMETERS
               PARAMETER ( HH_AB_Tau = -0.01 ),
               PARAMETER ( HH_AB_Offset_E = 0.013 ),
@@ -1475,8 +1475,8 @@ PRIVATE_MODELS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL hardcoded_neutral
-    SEGMENT c
+  CELL "hardcoded_neutral"
+    SEGMENT "c"
       BINDINGS
         INPUT ka->I,
       END BINDINGS
@@ -1488,7 +1488,7 @@ PUBLIC_MODELS
         PARAMETER ( Vm_init = -0.068 ),
         PARAMETER ( ELEAK = -0.08 ),
       END PARAMETERS
-      CHANNEL ka
+      CHANNEL "ka"
         BINDABLES
           INPUT Vm,
           OUTPUT G,
@@ -1501,12 +1501,12 @@ PUBLIC_MODELS
           PARAMETER ( G_MAX = 150 ),
           PARAMETER ( Erev = -0.085 ),
         END PARAMETERS
-        HH_GATE HH_activation
+        HH_GATE "HH_activation"
           PARAMETERS
             PARAMETER ( state_init = 0.0837136 ),
             PARAMETER ( POWER = 4 ),
           END PARAMETERS
-          gate_kinetic A
+          gate_kinetic "A"
             PARAMETERS
               PARAMETER ( HH_AB_Tau = -0.012 ),
               PARAMETER ( HH_AB_Offset_E = 0.027 ),
@@ -1516,7 +1516,7 @@ PUBLIC_MODELS
               PARAMETER ( HH_AB_Scale = 1400 ),
             END PARAMETERS
           END gate_kinetic
-          gate_kinetic B
+          gate_kinetic "B"
             PARAMETERS
               PARAMETER ( HH_AB_Tau = 0.004 ),
               PARAMETER ( HH_AB_Offset_E = 0.03 ),
@@ -1527,12 +1527,12 @@ PUBLIC_MODELS
             END PARAMETERS
           END gate_kinetic
         END HH_GATE
-        HH_GATE HH_inactivation
+        HH_GATE "HH_inactivation"
           PARAMETERS
             PARAMETER ( state_init = 0.747485 ),
             PARAMETER ( POWER = 1 ),
           END PARAMETERS
-          gate_kinetic A
+          gate_kinetic "A"
             PARAMETERS
               PARAMETER ( HH_AB_Tau = 0.008 ),
               PARAMETER ( HH_AB_Offset_E = 0.05 ),
@@ -1542,7 +1542,7 @@ PUBLIC_MODELS
               PARAMETER ( HH_AB_Scale = 17.5 ),
             END PARAMETERS
           END gate_kinetic
-          gate_kinetic B
+          gate_kinetic "B"
             PARAMETERS
               PARAMETER ( HH_AB_Tau = -0.01 ),
               PARAMETER ( HH_AB_Offset_E = 0.013 ),
@@ -1590,19 +1590,19 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE gate1 "gates/cat_activation.ndf"
-    FILE gate2 "gates/cat_inactivation.ndf"
-    FILE ca_pool "pools/purkinje_ca.ndf"
+    FILE "gate1" "gates/cat_activation.ndf"
+    FILE "gate2" "gates/cat_inactivation.ndf"
+    FILE "ca_pool" "pools/purkinje_ca.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS gate1::/cat_activation cat_gate_activation
+  ALIAS "gate1::/cat_activation" "cat_gate_activation"
   END ALIAS
-  ALIAS gate2::/cat_inactivation cat_gate_inactivation
+  ALIAS "gate2::/cat_inactivation" "cat_gate_inactivation"
   END ALIAS
-  ALIAS ca_pool::/Ca_concen ca_pool
+  ALIAS "ca_pool::/Ca_concen" "ca_pool"
   END ALIAS
-  CHANNEL cat
+  CHANNEL "cat"
     BINDABLES
       INPUT Vm,
       OUTPUT G,
@@ -1611,12 +1611,12 @@ PRIVATE_MODELS
     PARAMETERS
       PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
     END PARAMETERS
-    CHILD cat_gate_activation cat_gate_activation
+    CHILD "cat_gate_activation" "cat_gate_activation"
     END CHILD
-    CHILD cat_gate_inactivation cat_gate_inactivation
+    CHILD "cat_gate_inactivation" "cat_gate_inactivation"
     END CHILD
   END CHANNEL
-  SEGMENT soma2
+  SEGMENT "soma2"
     BINDABLES
       OUTPUT Vm,
     END BINDABLES
@@ -1630,7 +1630,7 @@ PRIVATE_MODELS
       PARAMETER ( CM = 0.0164 ),
       PARAMETER ( ELEAK = -0.08 ),
     END PARAMETERS
-    CHILD cat cat
+    CHILD "cat" "cat"
       BINDINGS
         INPUT ..->Vm,
       END BINDINGS
@@ -1639,7 +1639,7 @@ PRIVATE_MODELS
         PARAMETER ( Erev = 0.137526 ),
       END PARAMETERS
     END CHILD
-    CHILD ca_pool ca_pool
+    CHILD "ca_pool" "ca_pool"
       BINDINGS
         INPUT ../cat->I,
       END BINDINGS
@@ -1648,9 +1648,9 @@ PRIVATE_MODELS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL pool1
-    SEGMENT_GROUP segments
-      CHILD soma2 soma
+  CELL "pool1"
+    SEGMENT_GROUP "segments"
+      CHILD "soma2" "soma"
         PARAMETERS
           PARAMETER ( rel_X = 0 ),
           PARAMETER ( rel_Y = 0 ),
@@ -1672,19 +1672,19 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE gate1 "gates/cat_activation.ndf"
-    FILE gate2 "gates/cat_inactivation.ndf"
-    FILE ca_pool "pools/purkinje_ca.ndf"
+    FILE "gate1" "gates/cat_activation.ndf"
+    FILE "gate2" "gates/cat_inactivation.ndf"
+    FILE "ca_pool" "pools/purkinje_ca.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS gate1::/cat_activation cat_gate_activation
+  ALIAS "gate1::/cat_activation" "cat_gate_activation"
   END ALIAS
-  ALIAS gate2::/cat_inactivation cat_gate_inactivation
+  ALIAS "gate2::/cat_inactivation" "cat_gate_inactivation"
   END ALIAS
-  ALIAS ca_pool::/Ca_concen ca_pool
+  ALIAS "ca_pool::/Ca_concen" "ca_pool"
   END ALIAS
-  CHANNEL cat
+  CHANNEL "cat"
     BINDABLES
       INPUT Vm,
       OUTPUT G,
@@ -1693,12 +1693,12 @@ PRIVATE_MODELS
     PARAMETERS
       PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
     END PARAMETERS
-    CHILD cat_gate_activation cat_gate_activation
+    CHILD "cat_gate_activation" "cat_gate_activation"
     END CHILD
-    CHILD cat_gate_inactivation cat_gate_inactivation
+    CHILD "cat_gate_inactivation" "cat_gate_inactivation"
     END CHILD
   END CHANNEL
-  SEGMENT soma2
+  SEGMENT "soma2"
     BINDABLES
       OUTPUT Vm,
     END BINDABLES
@@ -1712,7 +1712,7 @@ PRIVATE_MODELS
       PARAMETER ( CM = 0.0164 ),
       PARAMETER ( ELEAK = -0.08 ),
     END PARAMETERS
-    CHILD cat cat
+    CHILD "cat" "cat"
       BINDINGS
         INPUT ..->Vm,
       END BINDINGS
@@ -1721,7 +1721,7 @@ PRIVATE_MODELS
         PARAMETER ( Erev = 0.137526 ),
       END PARAMETERS
     END CHILD
-    CHILD ca_pool ca_pool
+    CHILD "ca_pool" "ca_pool"
       BINDINGS
         INPUT ../cat->I,
       END BINDINGS
@@ -1730,9 +1730,9 @@ PRIVATE_MODELS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL pool1
-    SEGMENT_GROUP segments
-      CHILD soma2 soma
+  CELL "pool1"
+    SEGMENT_GROUP "segments"
+      CHILD "soma2" "soma"
         PARAMETERS
           PARAMETER ( rel_X = 0 ),
           PARAMETER ( rel_Y = 0 ),
@@ -1776,21 +1776,21 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE soma "tests/segments/soma.ndf"
-    FILE maind "tests/segments/maind.ndf"
+    FILE "soma" "tests/segments/soma.ndf"
+    FILE "maind" "tests/segments/maind.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS soma::/soma soma
+  ALIAS "soma::/soma" "soma"
   END ALIAS
-  ALIAS maind::/maind maind
+  ALIAS "maind::/maind" "maind"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL tensizesp
-    SEGMENT_GROUP segments
-      CHILD soma soma
+  CELL "tensizesp"
+    SEGMENT_GROUP "segments"
+      CHILD "soma" "soma"
         PARAMETERS
           PARAMETER ( INJECT = 1e-08 ),
           PARAMETER ( rel_X = 0 ),
@@ -1799,7 +1799,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 2.98e-05 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[0]
+      CHILD "maind" "main[0]"
         PARAMETERS
           PARAMETER ( Z = 9.447e-06 ),
           PARAMETER ( Y = 9.447e-06 ),
@@ -1811,7 +1811,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 7.72e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[1]
+      CHILD "maind" "main[1]"
         PARAMETERS
           PARAMETER ( Z = 3.1356e-05 ),
           PARAMETER ( Y = 1.0571e-05 ),
@@ -1823,7 +1823,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.22e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[2]
+      CHILD "maind" "main[2]"
         PARAMETERS
           PARAMETER ( Z = 3.8022e-05 ),
           PARAMETER ( Y = 1.1682e-05 ),
@@ -1835,7 +1835,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.5e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[3]
+      CHILD "maind" "main[3]"
         PARAMETERS
           PARAMETER ( Z = 3.9689e-05 ),
           PARAMETER ( Y = 1.3905e-05 ),
@@ -1847,7 +1847,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 9.22e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[4]
+      CHILD "maind" "main[4]"
         PARAMETERS
           PARAMETER ( Z = 4.5242e-05 ),
           PARAMETER ( Y = 2.0014e-05 ),
@@ -1859,7 +1859,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.89e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[5]
+      CHILD "maind" "main[5]"
         PARAMETERS
           PARAMETER ( Z = 5.024e-05 ),
           PARAMETER ( Y = 1.9459e-05 ),
@@ -1871,7 +1871,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.44e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[6]
+      CHILD "maind" "main[6]"
         PARAMETERS
           PARAMETER ( Z = 5.3738e-05 ),
           PARAMETER ( Y = 2.0042e-05 ),
@@ -1883,7 +1883,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.61e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[7]
+      CHILD "maind" "main[7]"
         PARAMETERS
           PARAMETER ( Z = 6.0407e-05 ),
           PARAMETER ( Y = 2.3376e-05 ),
@@ -1895,7 +1895,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 7.78e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[8]
+      CHILD "maind" "main[8]"
         PARAMETERS
           PARAMETER ( Z = 6.9848e-05 ),
           PARAMETER ( Y = 2.2265e-05 ),
@@ -1921,21 +1921,21 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE soma "tests/segments/soma.ndf"
-    FILE maind "tests/segments/maind.ndf"
+    FILE "soma" "tests/segments/soma.ndf"
+    FILE "maind" "tests/segments/maind.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS soma::/soma soma
+  ALIAS "soma::/soma" "soma"
   END ALIAS
-  ALIAS maind::/maind maind
+  ALIAS "maind::/maind" "maind"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL tensizesp
-    SEGMENT_GROUP segments
-      CHILD soma soma
+  CELL "tensizesp"
+    SEGMENT_GROUP "segments"
+      CHILD "soma" "soma"
         PARAMETERS
           PARAMETER ( INJECT = 1e-08 ),
           PARAMETER ( rel_X = 0 ),
@@ -1944,7 +1944,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 2.98e-05 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[0]
+      CHILD "maind" "main[0]"
         PARAMETERS
           PARAMETER ( Z = 9.447e-06 ),
           PARAMETER ( Y = 9.447e-06 ),
@@ -1956,7 +1956,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 7.72e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[1]
+      CHILD "maind" "main[1]"
         PARAMETERS
           PARAMETER ( Z = 3.1356e-05 ),
           PARAMETER ( Y = 1.0571e-05 ),
@@ -1968,7 +1968,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.22e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[2]
+      CHILD "maind" "main[2]"
         PARAMETERS
           PARAMETER ( Z = 3.8022e-05 ),
           PARAMETER ( Y = 1.1682e-05 ),
@@ -1980,7 +1980,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.5e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[3]
+      CHILD "maind" "main[3]"
         PARAMETERS
           PARAMETER ( Z = 3.9689e-05 ),
           PARAMETER ( Y = 1.3905e-05 ),
@@ -1992,7 +1992,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 9.22e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[4]
+      CHILD "maind" "main[4]"
         PARAMETERS
           PARAMETER ( Z = 4.5242e-05 ),
           PARAMETER ( Y = 2.0014e-05 ),
@@ -2004,7 +2004,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.89e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[5]
+      CHILD "maind" "main[5]"
         PARAMETERS
           PARAMETER ( Z = 5.024e-05 ),
           PARAMETER ( Y = 1.9459e-05 ),
@@ -2016,7 +2016,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.44e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[6]
+      CHILD "maind" "main[6]"
         PARAMETERS
           PARAMETER ( Z = 5.3738e-05 ),
           PARAMETER ( Y = 2.0042e-05 ),
@@ -2028,7 +2028,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.61e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[7]
+      CHILD "maind" "main[7]"
         PARAMETERS
           PARAMETER ( Z = 6.0407e-05 ),
           PARAMETER ( Y = 2.3376e-05 ),
@@ -2040,7 +2040,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 7.78e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[8]
+      CHILD "maind" "main[8]"
         PARAMETERS
           PARAMETER ( Z = 6.9848e-05 ),
           PARAMETER ( Y = 2.2265e-05 ),
@@ -2097,29 +2097,29 @@ report:
 NEUROSPACES NDF
 
 IMPORT
-    FILE maind "segments/purkinje/maind.ndf"
-    FILE soma "segments/purkinje/soma.ndf"
-    FILE spine "segments/spines/purkinje.ndf"
-    FILE spinyd "segments/purkinje/spinyd.ndf"
-    FILE thickd "segments/purkinje/thickd.ndf"
+    FILE "maind" "segments/purkinje/maind.ndf"
+    FILE "soma" "segments/purkinje/soma.ndf"
+    FILE "spine" "segments/spines/purkinje.ndf"
+    FILE "spinyd" "segments/purkinje/spinyd.ndf"
+    FILE "thickd" "segments/purkinje/thickd.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS maind::/maind maind
+  ALIAS "maind::/maind" "maind"
   END ALIAS
-  ALIAS soma::/soma soma
+  ALIAS "soma::/soma" "soma"
   END ALIAS
-  ALIAS spine::/Purk_spine Purkinje_spine
+  ALIAS "spine::/Purk_spine" "Purkinje_spine"
   END ALIAS
-  ALIAS spinyd::/spinyd spinyd
+  ALIAS "spinyd::/spinyd" "spinyd"
   END ALIAS
-  ALIAS thickd::/thickd thickd
+  ALIAS "thickd::/thickd" "thickd"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL purk_test
-    ALGORITHM Spines SpinesNormal_13_1
+  CELL "purk_test"
+    ALGORITHM "Spines" "SpinesNormal_13_1"
       PARAMETERS
         PARAMETER ( PROTOTYPE = "Purkinje_spine" ),
         PARAMETER ( DIA_MIN = 0 ),
@@ -2128,8 +2128,8 @@ PUBLIC_MODELS
         PARAMETER ( SPINE_FREQUENCY = 1 ),
       END PARAMETERS
     END ALGORITHM
-    SEGMENT_GROUP segments
-      CHILD soma soma
+    SEGMENT_GROUP "segments"
+      CHILD "soma" "soma"
         PARAMETERS
           PARAMETER ( rel_X = 0 ),
           PARAMETER ( rel_Y = 0 ),
@@ -2137,7 +2137,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 2.98e-05 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[0]
+      CHILD "maind" "main[0]"
         PARAMETERS
           PARAMETER ( Z = 9.447e-06 ),
           PARAMETER ( Y = 9.447e-06 ),
@@ -2149,7 +2149,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 7.72e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[1]
+      CHILD "maind" "main[1]"
         PARAMETERS
           PARAMETER ( Z = 3.1356e-05 ),
           PARAMETER ( Y = 1.0571e-05 ),
@@ -2161,7 +2161,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.22e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[2]
+      CHILD "maind" "main[2]"
         PARAMETERS
           PARAMETER ( Z = 3.8022e-05 ),
           PARAMETER ( Y = 1.1682e-05 ),
@@ -2173,7 +2173,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.5e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[3]
+      CHILD "maind" "main[3]"
         PARAMETERS
           PARAMETER ( Z = 3.9689e-05 ),
           PARAMETER ( Y = 1.3905e-05 ),
@@ -2185,7 +2185,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 9.22e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[4]
+      CHILD "maind" "main[4]"
         PARAMETERS
           PARAMETER ( Z = 4.5242e-05 ),
           PARAMETER ( Y = 2.0014e-05 ),
@@ -2197,7 +2197,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.89e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[5]
+      CHILD "maind" "main[5]"
         PARAMETERS
           PARAMETER ( Z = 5.024e-05 ),
           PARAMETER ( Y = 1.9459e-05 ),
@@ -2209,7 +2209,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.44e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[6]
+      CHILD "maind" "main[6]"
         PARAMETERS
           PARAMETER ( Z = 5.3738e-05 ),
           PARAMETER ( Y = 2.0042e-05 ),
@@ -2221,7 +2221,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.61e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[7]
+      CHILD "maind" "main[7]"
         PARAMETERS
           PARAMETER ( Z = 6.0407e-05 ),
           PARAMETER ( Y = 2.3376e-05 ),
@@ -2233,7 +2233,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 7.78e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[8]
+      CHILD "maind" "main[8]"
         PARAMETERS
           PARAMETER ( Z = 6.9848e-05 ),
           PARAMETER ( Y = 2.2265e-05 ),
@@ -2245,7 +2245,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.44e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD thickd br1[0]
+      CHILD "thickd" "br1[0]"
         PARAMETERS
           PARAMETER ( Z = 6.9848e-05 ),
           PARAMETER ( Y = 2.3376e-05 ),
@@ -2257,7 +2257,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 7.94e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD thickd br1[1]
+      CHILD "thickd" "br1[1]"
         PARAMETERS
           PARAMETER ( Z = 7.0958e-05 ),
           PARAMETER ( Y = 2.2821e-05 ),
@@ -2269,7 +2269,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 5.39e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD thickd br1[2]
+      CHILD "thickd" "br1[2]"
         PARAMETERS
           PARAMETER ( Z = 7.2069e-05 ),
           PARAMETER ( Y = 2.2821e-05 ),
@@ -2281,7 +2281,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 5.06e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD thickd br1[3]
+      CHILD "thickd" "br1[3]"
         PARAMETERS
           PARAMETER ( Z = 7.4844e-05 ),
           PARAMETER ( Y = 2.3376e-05 ),
@@ -2293,7 +2293,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 4.83e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD thickd b0s02[0]
+      CHILD "thickd" "b0s02[0]"
         PARAMETERS
           PARAMETER ( Z = 3.8022e-05 ),
           PARAMETER ( Y = 1.0571e-05 ),
@@ -2305,7 +2305,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 6.17e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD spinyd b0s02[1]
+      CHILD "spinyd" "b0s02[1]"
         PARAMETERS
           PARAMETER ( SURFACE = 1.81579e-10 ),
           PARAMETER ( LENGTH = 6.71006e-06 ),
@@ -2319,7 +2319,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 3.17e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD spinyd b0s02[2]
+      CHILD "spinyd" "b0s02[2]"
         PARAMETERS
           PARAMETER ( SURFACE = 9.71509e-11 ),
           PARAMETER ( LENGTH = 3.96965e-06 ),
@@ -2333,7 +2333,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 2.39e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD spinyd b0s02[3]
+      CHILD "spinyd" "b0s02[3]"
         PARAMETERS
           PARAMETER ( SURFACE = 7.39547e-11 ),
           PARAMETER ( LENGTH = 3.23978e-06 ),
@@ -2347,7 +2347,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 1.89e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD spinyd b0s02[4]
+      CHILD "spinyd" "b0s02[4]"
         PARAMETERS
           PARAMETER ( SURFACE = 1.264e-10 ),
           PARAMETER ( LENGTH = 5.57967e-06 ),
@@ -2361,7 +2361,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 1.78e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD spinyd b0s02[5]
+      CHILD "spinyd" "b0s02[5]"
         PARAMETERS
           PARAMETER ( SURFACE = 1.3969e-10 ),
           PARAMETER ( LENGTH = 6.16021e-06 ),
@@ -2375,7 +2375,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 1.78e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD spinyd b0s02[6]
+      CHILD "spinyd" "b0s02[6]"
         PARAMETERS
           PARAMETER ( SURFACE = 6.88639e-11 ),
           PARAMETER ( LENGTH = 3.13955e-06 ),
@@ -2389,7 +2389,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 1.61e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD spinyd b0s02[7]
+      CHILD "spinyd" "b0s02[7]"
         PARAMETERS
           PARAMETER ( SURFACE = 1.35952e-10 ),
           PARAMETER ( LENGTH = 6.29042e-06 ),
@@ -2403,7 +2403,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 1.44e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD spinyd b0s02[8]
+      CHILD "spinyd" "b0s02[8]"
         PARAMETERS
           PARAMETER ( SURFACE = 9.32422e-11 ),
           PARAMETER ( LENGTH = 4.22991e-06 ),
@@ -2431,29 +2431,29 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 IMPORT
-    FILE maind "segments/purkinje/maind.ndf"
-    FILE soma "segments/purkinje/soma.ndf"
-    FILE spine "segments/spines/purkinje.ndf"
-    FILE spinyd "segments/purkinje/spinyd.ndf"
-    FILE thickd "segments/purkinje/thickd.ndf"
+    FILE "maind" "segments/purkinje/maind.ndf"
+    FILE "soma" "segments/purkinje/soma.ndf"
+    FILE "spine" "segments/spines/purkinje.ndf"
+    FILE "spinyd" "segments/purkinje/spinyd.ndf"
+    FILE "thickd" "segments/purkinje/thickd.ndf"
 END IMPORT
 
 PRIVATE_MODELS
-  ALIAS maind::/maind maind
+  ALIAS "maind::/maind" "maind"
   END ALIAS
-  ALIAS soma::/soma soma
+  ALIAS "soma::/soma" "soma"
   END ALIAS
-  ALIAS spine::/Purk_spine Purkinje_spine
+  ALIAS "spine::/Purk_spine" "Purkinje_spine"
   END ALIAS
-  ALIAS spinyd::/spinyd spinyd
+  ALIAS "spinyd::/spinyd" "spinyd"
   END ALIAS
-  ALIAS thickd::/thickd thickd
+  ALIAS "thickd::/thickd" "thickd"
   END ALIAS
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
-  CELL purk_test
-    ALGORITHM Spines SpinesNormal_13_1
+  CELL "purk_test"
+    ALGORITHM "Spines" "SpinesNormal_13_1"
       PARAMETERS
         PARAMETER ( PROTOTYPE = "Purkinje_spine" ),
         PARAMETER ( DIA_MIN = 0 ),
@@ -2462,8 +2462,8 @@ PUBLIC_MODELS
         PARAMETER ( SPINE_FREQUENCY = 1 ),
       END PARAMETERS
     END ALGORITHM
-    SEGMENT_GROUP segments
-      CHILD soma soma
+    SEGMENT_GROUP "segments"
+      CHILD "soma" "soma"
         PARAMETERS
           PARAMETER ( rel_X = 0 ),
           PARAMETER ( rel_Y = 0 ),
@@ -2471,7 +2471,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 2.98e-05 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[0]
+      CHILD "maind" "main[0]"
         PARAMETERS
           PARAMETER ( Z = 9.447e-06 ),
           PARAMETER ( Y = 9.447e-06 ),
@@ -2483,7 +2483,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 7.72e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[1]
+      CHILD "maind" "main[1]"
         PARAMETERS
           PARAMETER ( Z = 3.1356e-05 ),
           PARAMETER ( Y = 1.0571e-05 ),
@@ -2495,7 +2495,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.22e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[2]
+      CHILD "maind" "main[2]"
         PARAMETERS
           PARAMETER ( Z = 3.8022e-05 ),
           PARAMETER ( Y = 1.1682e-05 ),
@@ -2507,7 +2507,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.5e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[3]
+      CHILD "maind" "main[3]"
         PARAMETERS
           PARAMETER ( Z = 3.9689e-05 ),
           PARAMETER ( Y = 1.3905e-05 ),
@@ -2519,7 +2519,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 9.22e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[4]
+      CHILD "maind" "main[4]"
         PARAMETERS
           PARAMETER ( Z = 4.5242e-05 ),
           PARAMETER ( Y = 2.0014e-05 ),
@@ -2531,7 +2531,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.89e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[5]
+      CHILD "maind" "main[5]"
         PARAMETERS
           PARAMETER ( Z = 5.024e-05 ),
           PARAMETER ( Y = 1.9459e-05 ),
@@ -2543,7 +2543,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.44e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[6]
+      CHILD "maind" "main[6]"
         PARAMETERS
           PARAMETER ( Z = 5.3738e-05 ),
           PARAMETER ( Y = 2.0042e-05 ),
@@ -2555,7 +2555,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.61e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[7]
+      CHILD "maind" "main[7]"
         PARAMETERS
           PARAMETER ( Z = 6.0407e-05 ),
           PARAMETER ( Y = 2.3376e-05 ),
@@ -2567,7 +2567,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 7.78e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD maind main[8]
+      CHILD "maind" "main[8]"
         PARAMETERS
           PARAMETER ( Z = 6.9848e-05 ),
           PARAMETER ( Y = 2.2265e-05 ),
@@ -2579,7 +2579,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 8.44e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD thickd br1[0]
+      CHILD "thickd" "br1[0]"
         PARAMETERS
           PARAMETER ( Z = 6.9848e-05 ),
           PARAMETER ( Y = 2.3376e-05 ),
@@ -2591,7 +2591,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 7.94e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD thickd br1[1]
+      CHILD "thickd" "br1[1]"
         PARAMETERS
           PARAMETER ( Z = 7.0958e-05 ),
           PARAMETER ( Y = 2.2821e-05 ),
@@ -2603,7 +2603,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 5.39e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD thickd br1[2]
+      CHILD "thickd" "br1[2]"
         PARAMETERS
           PARAMETER ( Z = 7.2069e-05 ),
           PARAMETER ( Y = 2.2821e-05 ),
@@ -2615,7 +2615,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 5.06e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD thickd br1[3]
+      CHILD "thickd" "br1[3]"
         PARAMETERS
           PARAMETER ( Z = 7.4844e-05 ),
           PARAMETER ( Y = 2.3376e-05 ),
@@ -2627,7 +2627,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 4.83e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD thickd b0s02[0]
+      CHILD "thickd" "b0s02[0]"
         PARAMETERS
           PARAMETER ( Z = 3.8022e-05 ),
           PARAMETER ( Y = 1.0571e-05 ),
@@ -2639,7 +2639,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 6.17e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD spinyd b0s02[1]
+      CHILD "spinyd" "b0s02[1]"
         PARAMETERS
           PARAMETER ( SURFACE = 1.81579e-10 ),
           PARAMETER ( LENGTH = 6.71006e-06 ),
@@ -2653,7 +2653,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 3.17e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD spinyd b0s02[2]
+      CHILD "spinyd" "b0s02[2]"
         PARAMETERS
           PARAMETER ( SURFACE = 9.71509e-11 ),
           PARAMETER ( LENGTH = 3.96965e-06 ),
@@ -2667,7 +2667,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 2.39e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD spinyd b0s02[3]
+      CHILD "spinyd" "b0s02[3]"
         PARAMETERS
           PARAMETER ( SURFACE = 7.39547e-11 ),
           PARAMETER ( LENGTH = 3.23978e-06 ),
@@ -2681,7 +2681,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 1.89e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD spinyd b0s02[4]
+      CHILD "spinyd" "b0s02[4]"
         PARAMETERS
           PARAMETER ( SURFACE = 1.264e-10 ),
           PARAMETER ( LENGTH = 5.57967e-06 ),
@@ -2695,7 +2695,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 1.78e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD spinyd b0s02[5]
+      CHILD "spinyd" "b0s02[5]"
         PARAMETERS
           PARAMETER ( SURFACE = 1.3969e-10 ),
           PARAMETER ( LENGTH = 6.16021e-06 ),
@@ -2709,7 +2709,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 1.78e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD spinyd b0s02[6]
+      CHILD "spinyd" "b0s02[6]"
         PARAMETERS
           PARAMETER ( SURFACE = 6.88639e-11 ),
           PARAMETER ( LENGTH = 3.13955e-06 ),
@@ -2723,7 +2723,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 1.61e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD spinyd b0s02[7]
+      CHILD "spinyd" "b0s02[7]"
         PARAMETERS
           PARAMETER ( SURFACE = 1.35952e-10 ),
           PARAMETER ( LENGTH = 6.29042e-06 ),
@@ -2737,7 +2737,7 @@ PUBLIC_MODELS
           PARAMETER ( DIA = 1.44e-06 ),
         END PARAMETERS
       END CHILD
-      CHILD spinyd b0s02[8]
+      CHILD "spinyd" "b0s02[8]"
         PARAMETERS
           PARAMETER ( SURFACE = 9.32422e-11 ),
           PARAMETER ( LENGTH = 4.22991e-06 ),
