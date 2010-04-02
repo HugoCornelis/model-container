@@ -310,7 +310,7 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, int iFlags, char 
     //- export private symbols
 
     {
-	//- start public models
+	//- start private models
 
 	if (iType == EXPORTER_TYPE_NDF)
 	{
