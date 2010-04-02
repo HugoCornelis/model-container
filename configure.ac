@@ -168,6 +168,19 @@ AM_PATH_PYTHON(,[],[
    exit -1
 ])
 
+dnl
+dnl This is a forced fix to make sure a mac installation gets the proper
+dnl python executable. Unless the macpython installer was run, the autotools
+dnl python macro won't look for python in the proper path. 
+dnl 
+case "$host_os" in
+  darwin*)
+    PYTHON='/Library/Frameworks/Python.framework/Versions/Current/bin/python'
+    AC_SUBST(PYTHON)
+  ;;
+esac
+
+
 
 case $PYTHON_PREFIX in
   *)   
