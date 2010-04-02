@@ -278,6 +278,22 @@ my $class_hierarchy
 					  'piSymbolType2Biolevel' => 'BIOLEVEL_MECHANISM',
 					 },
 			  description => 'a description of the kinetics of a gate, A/B representation',
+			  grammar => {
+				      components => [
+						    ],
+				      specific_allocator => 'GateKineticCalloc',
+				      specific_token =>  => {
+							     class => 'gate_kinetic',
+							     lexical => 'TOKEN_GATE_KINETIC',
+							     purpose => 'physical',
+							    },
+				      typing => {
+						 base => 'phsle',
+						 id => 'pidin',
+						 spec => 'pgatk',
+						 to_base => '->bio.ioh.iol.hsle',
+						},
+				     },
 			  isa => 'bio_comp',
 			  name => 'symtab_GateKinetic',
 			  parameters => {
@@ -323,6 +339,7 @@ my $class_hierarchy
 		      grammar => {
 				  components => [
 						 'ConcentrationGateKinetic',
+						 'GateKinetic',
 						 'GateKineticBackward',
 						 'GateKineticForward',
 						 'GateKineticPart',
@@ -1083,7 +1100,27 @@ my $class_hierarchy
 				 'movable',
 				],
 		  grammar => {
-			      components => [],
+			      components => [
+					     'Attachment',
+					     'AxonHillock',
+					     'Cell',
+					     'Channel',
+					     'ConcentrationGateKinetic',
+					     'EquationExponential',
+					     'Fiber',
+					     'GateKinetic',
+					     'GateKineticBackward',
+					     'GateKineticForward',
+					     'GateKineticPart',
+					     'Group',
+					     'HHGate',
+					     'Network',
+					     'Pool',
+					     'Population',
+					     'Projection',
+					     'Segment',
+					     'VSegment',
+					    ],
 			      specific_allocator => 'GroupCalloc',
 			      specific_token => {
 						 class => 'group',
