@@ -1,5 +1,9 @@
 -*- outline -*-
 
+* remove tokens
+gate_kinetic_a
+gate_kinetic_b
+
 * groups can traverse segments.
 but they are not segmenters.  See -r
 4bfaed89e383c98bee3b98e4bff30dd9d107ee35.
