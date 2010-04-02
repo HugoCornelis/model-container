@@ -358,6 +358,7 @@ AC_MSG_RESULT([Host is running $host_os.])
 dnl {{{
 case "$host_os" in
   darwin*)
+
     #
     # These are settings specific to MAC OS X.
     #
@@ -398,14 +399,24 @@ case "$host_os" in
     dnl Here we check for specific versions of mac osx since flags are different for each version
     dnl probably need to make this section neater sometime. 
     case "$host_os" in
+	dnl 10.2 and greater is snow leopard
 	*darwin10.2.0)
-	    dnl This is snow leopard
+
 
             SWIGLINKCOMMAND_PERL='ld $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
             AC_SUBST(SWIGLINKCOMMAND_PERL)
 
 
 	;;
+	*darwin10.3.0)
+
+
+            SWIGLINKCOMMAND_PERL='ld $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
+            AC_SUBST(SWIGLINKCOMMAND_PERL)
+
+
+	;;
+
 	*)
 	    dnl This probably needs to be patitioned into leopard, tiger, panther. etc
 
@@ -438,6 +449,14 @@ case "$host_os" in
             AC_SUBST(SWIGLINKCOMMAND_PYTHON)
 
 	;;
+	*darwin10.3.0)
+
+
+            SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
+            AC_SUBST(SWIGLINKCOMMAND_PYTHON)
+
+	;;
+
 	*)
 
 
