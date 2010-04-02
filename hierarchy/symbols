@@ -1074,7 +1074,9 @@ my $class_hierarchy
 	group => {
 		  allows => {
 # 			     'count_spike_generators' => 'group',
+			     'count_segments' => 'segmenter',
 			     'create_alias' => 'group',
+			     'traverse_segments' => 'segmenter',
 			    },
 		  description => 'a heterogeneous group of components',
 		  dimensions => [

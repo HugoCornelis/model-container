@@ -23,6 +23,7 @@
 
 #include "neurospaces/components/attachment.h"
 #include "neurospaces/components/group.h"
+#include "neurospaces/components/segmenter.h"
 #include "neurospaces/idin.h"
 
 
