@@ -35,7 +35,8 @@ AttachmentSection	/* <patta> */
 
 		    //- set type of attachment
 
-		    if (strcasecmp(IdinName($1), "spikegen") == 0)
+		    if (strcasecmp(IdinName($1), "spikegen") == 0
+			|| strcasecmp(IdinName($1), "spike") == 0)
 		    {
 			AttachmentSetType($3, TYPE_ATTACHMENT_OUTGOING);
 		    }
@@ -165,6 +166,14 @@ AttachmentData	/* <ppar> */
 
 		    $$ = $1;
 		}
+	|
+		AttachmentParameters
+		{
+#line
+		    //- put attributes on stack
+
+		    $$ = $1;
+		}
 	;
 
 AttachmentAttributes	/* <ppar> */
@@ -178,6 +187,12 @@ AttachmentAttributes	/* <ppar> */
 
 		    $$ = $2->pparFirst;
 		}
+	;
+
+
+AttachmentParameters	/* <ppar> */
+	:
+		OptionalItemParameters
 	;
 
 

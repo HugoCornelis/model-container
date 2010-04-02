@@ -7,6 +7,7 @@
 %type <patta> AttachmentSection
 %type <ppar> AttachmentAttributes
 %type <ppar> AttachmentData
+%type <ppar> AttachmentParameters
 
 %type <phsle> ChildSectionFront
 %type <phsle> ChildSectionOptionalInputOptionalParameters
