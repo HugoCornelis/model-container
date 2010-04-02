@@ -27,13 +27,11 @@
 
 
 /// 
-/// 
 /// \return struct symtab_Group * 
 /// 
-///	Newly allocated group, NULL for failure
+///	Newly allocated group, NULL for failure.
 /// 
-/// \brief Allocate a new group symbol table element
-/// \details 
+/// \brief Allocate a new group symbol table element.
 /// 
 
 struct symtab_Group * GroupCalloc(void)
@@ -61,14 +59,12 @@ struct symtab_Group * GroupCalloc(void)
 
 
 /// 
+/// \arg pgrup group to count spike generators for.
+/// \arg ppist context, group on top.
 /// 
-/// \arg pgrup group to count spike generators for
-///	ppist.: context, group on top
+/// \return int : number of spike generators in group, -1 for failure.
 /// 
-/// \return int : number of spike generators in group, -1 for failure
-/// 
-/// \brief count all spike generators in group
-/// \details 
+/// \brief count all spike generators in group.
 /// 
 
 static int 
@@ -125,14 +121,13 @@ int GroupCountSpikeGenerators
 
 
 /// 
+/// \arg pgrup symbol to alias.
+/// \arg pidin name of new symbol.
 /// 
-/// \arg pgrup symbol to alias
-/// \arg pidin name of new symbol
+/// \return struct symtab_HSolveListElement * : alias for original
+/// symbol.
 /// 
-/// \return struct symtab_HSolveListElement * : alias for original symbol
-/// 
-/// \brief Create alias to given symbol
-/// \details 
+/// \brief Create alias to given symbol.
 /// 
 
 struct symtab_HSolveListElement * 
@@ -162,13 +157,11 @@ GroupCreateAlias
 
 
 /// 
+/// \arg pgrup group to init.
 /// 
-/// \arg pgrup group to init
+/// \return void.
 /// 
-/// \return void
-/// 
-/// \brief init group
-/// \details 
+/// \brief init group.
 /// 
 
 void GroupInit(struct symtab_Group *pgrup)
@@ -184,14 +177,14 @@ void GroupInit(struct symtab_Group *pgrup)
 
 
 /// 
+/// \arg dx X coordinate.
+/// \arg dy Y coordinate.
+/// \arg dz Z coordinate.
 /// 
-/// \arg dx X coordinate
-/// \arg dy Y coordinate
-/// \arg dz Z coordinate
+/// \return struct symtab_Group * : resulting cell, NULL for failure.
 /// 
-/// \return struct symtab_Group * : resulting cell, NULL for failure
+/// \brief Allocate cell, put at specified position..
 /// 
-/// \brief Allocate cell, put at specified position.
 /// \details 
 /// 
 ///	Contains memory leak.

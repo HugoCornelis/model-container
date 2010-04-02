@@ -55,9 +55,7 @@ struct symtab_Group * GroupNewAtXYZ(double dx,double dy,double dz);
 #include "neurospaces/inputoutput.h"
 
 
-/// \struct
 /// \struct group
-/// \struct
 
 struct descr_Group
 {
@@ -65,9 +63,7 @@ struct descr_Group
 };
 
 
-/// \struct
 /// \struct struct symtab_Group
-/// \struct
 
 struct symtab_Group
 {
