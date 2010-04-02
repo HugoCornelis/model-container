@@ -168,6 +168,19 @@ AM_PATH_PYTHON(,[],[
    exit -1
 ])
 
+dnl
+dnl This is a forced fix to make sure a mac installation gets the proper
+dnl python executable. Unless the macpython installer was run, the autotools
+dnl python macro won't look for python in the proper path. 
+dnl 
+case "$host_os" in
+  darwin*)
+    PYTHON='/Library/Frameworks/Python.framework/Versions/Current/bin/python'
+    AC_SUBST(PYTHON)
+  ;;
+esac
+
+
 
 case $PYTHON_PREFIX in
   *)   
@@ -358,6 +371,7 @@ AC_MSG_RESULT([Host is running $host_os.])
 dnl {{{
 case "$host_os" in
   darwin*)
+
     #
     # These are settings specific to MAC OS X.
     #
@@ -398,14 +412,24 @@ case "$host_os" in
     dnl Here we check for specific versions of mac osx since flags are different for each version
     dnl probably need to make this section neater sometime. 
     case "$host_os" in
+	dnl 10.2 and greater is snow leopard
 	*darwin10.2.0)
-	    dnl This is snow leopard
+
 
             SWIGLINKCOMMAND_PERL='ld $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
             AC_SUBST(SWIGLINKCOMMAND_PERL)
 
 
 	;;
+	*darwin10.3.0)
+
+
+            SWIGLINKCOMMAND_PERL='ld $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
+            AC_SUBST(SWIGLINKCOMMAND_PERL)
+
+
+	;;
+
 	*)
 	    dnl This probably needs to be patitioned into leopard, tiger, panther. etc
 
@@ -426,7 +450,7 @@ case "$host_os" in
     AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
 
 
-    SWIGLDLINKSFORPYTHON='-L$(PYTHON_HEADERS) -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -lreadline -framework Python -flat_namespace -undefined suppress -dylib $(PYTHON_EXE)'
+    SWIGLDLINKSFORPYTHON='-L$(PYTHON_HEADERS) -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -lreadline -framework Python -flat_namespace -undefined suppress -dylib 	-bundle 	-bundle_loader $(PYTHON_EXE)'
     AC_SUBST(SWIGLDLINKSFORPYTHON)
 
 
@@ -438,6 +462,14 @@ case "$host_os" in
             AC_SUBST(SWIGLINKCOMMAND_PYTHON)
 
 	;;
+	*darwin10.3.0)
+
+
+            SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
+            AC_SUBST(SWIGLINKCOMMAND_PYTHON)
+
+	;;
+
 	*)
 
 
