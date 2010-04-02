@@ -163,7 +163,7 @@ BioComponentSpikeReceiverCounter
     if (instanceof_attachment(phsle)
 	&& AttachmentPointIsOutgoing((struct symtab_Attachment *)phsle))
     {
-	//- add to counted segments
+	//- add to counted spike receivers
 
 	(*piSpikerecs)++;
     }
