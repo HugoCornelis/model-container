@@ -38,7 +38,7 @@ PRIVATE_MODELS
 	ALIAS Purk_maind::/Purk_maind Purk_maind END ALIAS
 	ALIAS Purk_thickd::/Purk_thickd Purk_thickd END ALIAS
 	ALIAS Purk_spinyd::/Purk_spinyd Purk_spinyd END ALIAS
-	ALIAS Purk_spine::/Purk_spine Purk_spine END ALIAS
+	ALIAS Purk_spine::/Purk_spine Purkinje_spine END ALIAS
 	//ALIAS Purk_spine::/Purk_spine2 Purk_spine2 END ALIAS
 
 	// these are defines for passive Purkinje cell model
