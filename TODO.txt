@@ -1,6 +1,9 @@
 -*- outline -*-
 
 * solve shift reduce conflicts
+Likely some of them can be solved by introducing a single
+ParameterValue non-terminal that reduces from Identifier and
+TOKEN_STRING and merges the two reduction branches of the grammar.
 
 * check the tools directory of G2
 contains a couple of useful model operations.
