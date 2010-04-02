@@ -1,5 +1,12 @@
 -*- outline -*-
 
+* groups can traverse segments.
+but they are not segmenters.  See -r
+4bfaed89e383c98bee3b98e4bff30dd9d107ee35.
+** or move segmenter capabilities to biocomponents and merge them.
+** or implement traverse_segments and count_segments for groups.
+We need better delegation mechanisms.
+
 * solve shift reduce conflicts
 Likely some of them can be solved by introducing a single
 ParameterValue non-terminal that reduces from Identifier and
