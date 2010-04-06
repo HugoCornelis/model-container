@@ -116,7 +116,7 @@ ChannelCollectMandatoryParameterValues
 
     int iResult = 1;
 
-    fprintf(stdout, "something here\n");
+/*     fprintf(stdout, "something here\n"); */
 
     //- return result
 
