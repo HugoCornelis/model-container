@@ -55,5 +55,5 @@ tar.gz$
 .deb$
 .dsc$
 .changes$
-.log$
+\.log$
 
