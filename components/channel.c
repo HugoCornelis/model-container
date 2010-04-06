@@ -55,9 +55,7 @@ ChannelGetChannelType
 static int ChannelTable_READ(struct symtab_Channel *pchan, char *pcFilename);
 
 
-/// \def
 /// \def check if genesis style object present
-/// \def
 
 #define ChannelHasGenesisObject(pchan)					\
 ({									\
@@ -96,6 +94,33 @@ struct symtab_Channel * ChannelCalloc(void)
     //- return result
 
     return(pchanResult);
+}
+
+
+/// 
+/// \arg pchan symbol to collect mandatory parameters for.
+/// \arg ppist context.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Collect mandatory simulation parameters for this symbol,
+/// instantiate them in cache such that they are present during
+/// serialization.
+/// 
+
+int
+ChannelCollectMandatoryParameterValues
+(struct symtab_Channel *pchan, struct PidinStack *ppist)
+{
+    //- set default result: ok
+
+    int iResult = 1;
+
+    fprintf(stdout, "something here\n");
+
+    //- return result
+
+    return(iResult);
 }
 
 

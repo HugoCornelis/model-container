@@ -43,6 +43,10 @@ struct symtab_Channel;
 
 struct symtab_Channel * ChannelCalloc(void);
 
+int
+ChannelCollectMandatoryParameterValues
+(struct symtab_Channel *pchan, struct PidinStack *ppist);
+
 struct symtab_HSolveListElement * 
 ChannelCreateAlias
 (struct symtab_Channel *pchan,
