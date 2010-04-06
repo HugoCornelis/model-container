@@ -154,7 +154,9 @@ my $class_hierarchy
 			       isa => 'root',
 # 			       name => 'symtab_ConnectionSymbol',
 			       parameters => {
-					      'DELAY' => 'connection delay',
+					      'DELAY' => {
+							  description => 'connection delay',
+							 },
 					      'POST' => 'connection post synaptic serial identifier',
 					      'PRE' => 'connection pre synaptic serial identifier',
 					      'WEIGHT' => 'connection weight',
@@ -230,8 +232,14 @@ my $class_hierarchy
 		     name => 'symtab_Channel',
 		     parameters => {
 				    CHANNEL_TYPE => 'defines the channel type (ChannelActInact: channel with activation and inactivation gates, ChannelAct: channel with activation gate, ChannelActConc: channel with activation and concentration gates)',
-				    Erev => 'channel reversal potential',
-				    G_MAX => 'maximal conductance density when all channels are in the open state',
+				    Erev => {
+					     description => 'channel reversal potential',
+					     simulation => 'required',
+					    },
+				    G_MAX => {
+					      description => 'maximal conductance density when all channels are in the open state',
+					      simulation => 'required',
+					     },
 				    G => 'actual channel conductance, normally a solved variable',
 				    I => 'actual channel current, normally a solved variable',
 				   },

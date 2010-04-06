@@ -51,11 +51,24 @@ sub html_table_code
 
     $table->addCol(@$interesting_keys, );
 
+    my $source_descriptions
+	= {
+	   map
+	   {
+	       $_ => (
+		      $source->{$_} =~ /HASH/
+		      ? $source->{$_}->{description}
+		      : $source->{$_}
+		     );
+	   }
+	   @$interesting_keys,
+	  };
+
     $table->addCol
 	(
 	 map
 	 { (!defined) ? '' : $_ }
-	 @$source{ @$interesting_keys, },
+	 @$source_descriptions{ @$interesting_keys, },
 	);
 
     $table->setColFormat(2, "<pre>\n", "</pre>\n", );
@@ -144,7 +157,7 @@ options :
 
 	my $parameters = $type_definition->{parameters};
 
-	if ($parameters && %$parameters)
+	if ($parameters and %$parameters)
 	{
 	    # create a html table with the parameters
 
