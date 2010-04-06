@@ -433,6 +433,69 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, int iFlags, char 
 
 
 static
+int
+ExporterSymbol
+(struct symtab_HSolveListElement *phsle,
+ struct PidinStack *ppist,
+ struct PidinStack *ppistWildcard,
+ int iType,
+ int iFlags,
+ FILE *pfile)
+{
+    //- set default result: ok
+
+    int iResult = 1;
+
+    //- allocate traversal structure
+
+    struct exporter_data exd =
+	{
+	    /// file to write to
+
+	    pfile,
+
+	    /// current indentation level
+
+	    2,
+
+	    /// wildcard selector
+
+	    ppistWildcard,
+
+	    /// output type
+
+	    iType,
+
+	    /// output flags
+
+	    iFlags,
+	};
+
+    //- traverse symbols that match with wildcard
+
+    int iTraversal
+	= SymbolTraverseWildcard
+	  (phsle,
+	   ppist,
+	   ppistWildcard,
+	   ExporterSymbolStarter,
+	   ExporterSymbolStopper,
+	   (void *)&exd);
+
+    if (iTraversal != 1)
+    {
+	fprintf(stdout, "*** Error: SymbolTraverseWildcard() failed (or aborted)\n");
+
+	iResult = 0;
+    }
+
+    //- return result
+
+    return(iResult);
+}
+
+
+static
 int 
 ExporterSymbolStarter
 (struct TreespaceTraversal *ptstr, void *pvUserdata)
@@ -638,69 +701,6 @@ ExporterSymbolStarter
     //- increase indent
 
     pexd->iIndent += 2;
-
-    //- return result
-
-    return(iResult);
-}
-
-
-static
-int
-ExporterSymbol
-(struct symtab_HSolveListElement *phsle,
- struct PidinStack *ppist,
- struct PidinStack *ppistWildcard,
- int iType,
- int iFlags,
- FILE *pfile)
-{
-    //- set default result: ok
-
-    int iResult = 1;
-
-    //- allocate traversal structure
-
-    struct exporter_data exd =
-	{
-	    /// file to write to
-
-	    pfile,
-
-	    /// current indentation level
-
-	    2,
-
-	    /// wildcard selector
-
-	    ppistWildcard,
-
-	    /// output type
-
-	    iType,
-
-	    /// output flags
-
-	    iFlags,
-	};
-
-    //- traverse symbols that match with wildcard
-
-    int iTraversal
-	= SymbolTraverseWildcard
-	  (phsle,
-	   ppist,
-	   ppistWildcard,
-	   ExporterSymbolStarter,
-	   ExporterSymbolStopper,
-	   (void *)&exd);
-
-    if (iTraversal != 1)
-    {
-	fprintf(stdout, "*** Error: SymbolTraverseWildcard() failed (or aborted)\n");
-
-	iResult = 0;
-    }
 
     //- return result
 
