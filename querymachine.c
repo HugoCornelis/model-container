@@ -1865,7 +1865,15 @@ QueryHandlerExport
 
     pcLine[iLength] = '\0';
 
-    if (strcmp(pcFlags, "names") == 0)
+    if (strcmp(pcFlags, "all") == 0)
+    {
+	iFlags = EXPORTER_FLAG_ALL;
+    }
+    else if (strcmp(pcFlags, "all_names") == 0)
+    {
+	iFlags = EXPORTER_FLAG_ALL | EXPORTER_FLAG_NAMESPACES;
+    }
+    else if (strcmp(pcFlags, "names") == 0)
     {
 	iFlags = EXPORTER_FLAG_NAMESPACES;
     }

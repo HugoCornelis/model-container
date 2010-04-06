@@ -482,7 +482,7 @@ ExporterSymbolStarter
 	struct symtab_BioComponent * pbioPrototype
 	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
 
-	if (pbioPrototype)
+	if (pbioPrototype && !(pexd->iFlags & EXPORTER_FLAG_ALL))
 	{
 	    //- export reference to component
 
@@ -544,6 +544,15 @@ ExporterSymbolStarter
 		//- set result: only sibling processing
 
 		iResult = TSTR_PROCESSOR_SIBLINGS;
+	    }
+
+	    //- if everything must be exported
+
+	    if (pexd->iFlags & EXPORTER_FLAG_ALL)
+	    {
+		//- set result: only sibling processing
+
+		iResult = TSTR_PROCESSOR_SUCCESS;
 	    }
 	}
 
@@ -753,7 +762,7 @@ ExporterSymbolStopper
 	struct symtab_BioComponent * pbioPrototype
 	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
 
-	if (pbioPrototype)
+	if (pbioPrototype && !(pexd->iFlags & EXPORTER_FLAG_ALL))
 	{
 	    //- export reference to component
 

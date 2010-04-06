@@ -1626,7 +1626,7 @@ ParserLookupDependencyModel
 /// 
 /// \return struct symtab_HSolveListElement * : 
 /// 
-///	private, NULL for failure
+///	private model, NULL for failure
 /// 
 /// \brief lookup a private model
 ///
@@ -1655,6 +1655,47 @@ struct symtab_HSolveListElement *ParserLookupPrivateModel(char *pcIdentifier)
 
     phsleResult
 	= DefSymLookup(pdefsym, NULL, pcIdentifier, FLAG_SYMBOL_PRIVATEMODEL);
+
+    //- return result
+
+    return(phsleResult);
+}
+
+
+/// 
+/// \arg pcIdentifier name of public model to search
+/// 
+/// \return struct symtab_HSolveListElement * : 
+/// 
+///	public model, NULL for failure
+/// 
+/// \brief lookup a public model
+///
+/// \details 
+/// 
+///	Lookup a public in current active public models
+/// 
+
+struct symtab_HSolveListElement *ParserLookupPublicModel(char *pcIdentifier)
+{
+    //- set default result : failure
+
+    struct symtab_HSolveListElement *phsleResult = NULL;
+
+    //- get pointer to currently parsed file
+
+    struct ImportedFile *pif
+	= ParserContextGetImportedFile(pacCurrentContext);
+
+    //- get pointer to defined symbols in that file
+
+    struct DefinedSymbols *pdefsym
+	= ImportedFileGetDefinedSymbols(pif);
+
+    //- lookup private model in current context
+
+    phsleResult
+	= DefSymLookup(pdefsym, NULL, pcIdentifier, FLAG_SYMBOL_PUBLICMODEL);
 
     //- return result
 

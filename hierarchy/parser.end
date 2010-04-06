@@ -240,6 +240,11 @@ ChildSectionFront	/* <phsle> */
 
 			if (!phslePrototype)
 			{
+			    phslePrototype = ParserLookupPublicModel($2);
+			}
+
+			if (!phslePrototype)
+			{
 			    NeurospacesError
 				((PARSERCONTEXT *)pacParserContext,
 				 "ChildSectionFront",

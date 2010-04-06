@@ -51,6 +51,10 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, int iFlags, char 
 
 #define EXPORTER_FLAG_PROTOTYPES 2
 
+//d export everything
+
+#define EXPORTER_FLAG_ALL 4
+
 
 #endif
 
