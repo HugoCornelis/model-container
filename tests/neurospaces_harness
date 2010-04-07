@@ -597,6 +597,15 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 			}
 		    }
 
+		    # emit comment if any
+
+		    my $comment = $command_test->{comment};
+
+		    if ($comment)
+		    {
+			print "*** Comment: $comment\n";
+		    }
+
 		    # set read, wait and write strings
 
 		    my $read = $command_test->{read};
