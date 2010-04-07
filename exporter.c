@@ -653,6 +653,13 @@ ExporterSymbolStarter
 	    ExporterBindings(phsle, ptstr->ppist, pexd);
 	}
 
+	//- recollect mandatory parameter values
+
+	if (instanceof_channel(phsle))
+	{
+	    SymbolCollectMandatoryParameterValues(phsle, ptstr->ppist);
+	}
+
 	//- export parameter of this biological component
 
 	struct symtab_ParContainer *pparc = pbio->pparc;

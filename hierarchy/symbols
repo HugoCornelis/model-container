@@ -154,7 +154,9 @@ my $class_hierarchy
 			       isa => 'root',
 # 			       name => 'symtab_ConnectionSymbol',
 			       parameters => {
-					      'DELAY' => 'connection delay',
+					      'DELAY' => {
+							  description => 'connection delay',
+							 },
 					      'POST' => 'connection post synaptic serial identifier',
 					      'PRE' => 'connection pre synaptic serial identifier',
 					      'WEIGHT' => 'connection weight',
@@ -162,6 +164,7 @@ my $class_hierarchy
 			      },
 	 channel => {
 		     allows => {
+				'collect_mandatory_parameter_values' => 'channel',
 				'create_alias' => 'channel',
 				'get_parameter' => 'channel',
 				'has_equation' => 'channel',
@@ -229,9 +232,24 @@ my $class_hierarchy
 		     isa => 'bio_comp',
 		     name => 'symtab_Channel',
 		     parameters => {
-				    CHANNEL_TYPE => 'defines the channel type (ChannelActInact: channel with activation and inactivation gates, ChannelAct: channel with activation gate, ChannelActConc: channel with activation and concentration gates)',
-				    Erev => 'channel reversal potential',
-				    G_MAX => 'maximal conductance density when all channels are in the open state',
+				    CHANNEL_TYPE => {
+						     description => 'defines the channel type (ChannelActInact: channel with activation and inactivation gates, ChannelAct: channel with activation gate, ChannelActConc: channel with activation and concentration gates)',
+						     translation_steps => {
+									   modeling => 'derived',
+									  },
+						    },
+				    Erev => {
+					     description => 'channel reversal potential',
+					     translation_steps => {
+								   simulation => 'initial_value',
+								  },
+					    },
+				    G_MAX => {
+					      description => 'maximal conductance density when all channels are in the open state',
+					      translation_steps => {
+								    simulation => 'initial_value',
+								   },
+					     },
 				    G => 'actual channel conductance, normally a solved variable',
 				    I => 'actual channel current, normally a solved variable',
 				   },
@@ -1687,6 +1705,7 @@ my $object_methods
 	'assign_bindable_i_o',
 	'assign_inputs',
 	'assign_parameters',
+	'collect_mandatory_parameter_values',
 	'count_cells',
 	'count_connections',
 	'count_segments',
@@ -1777,6 +1796,9 @@ my $object_methods_custom_code
        'assign_parameters' => {
 			       simple => 1,
 			      },
+       'collect_mandatory_parameter_values' => {
+						simple => 1,
+					       },
        'count_cells' => {
 			 simple => 1,
 			},
@@ -2040,6 +2062,11 @@ my $object_methods_return_types
 			       selector => '.uSelector.iFunc',
 			       type => 'int',
 			      },
+       'collect_mandatory_parameter_values' => {
+						default => '-1',
+						selector => '.uSelector.iFunc',
+						type => 'int',
+					       },
        'count_cells' => {
 			 default => '-1',
 			 selector => '.uSelector.iFunc',
@@ -2453,6 +2480,10 @@ my $object_methods_signatures
 			       calling => '(phsle, ppar)',
 			       prototype => '(struct symtab_HSolveListElement *phsle, struct symtab_Parameters *ppar)',
 			      },
+       'collect_mandatory_parameter_values' => {
+						calling => '(phsle, ppist)',
+						prototype => '(struct symtab_HSolveListElement *phsle,struct PidinStack *ppist)',
+					       },
        'count_cells' => {
 			 calling => '(phsle, ppist)',
 			 prototype => '(struct symtab_HSolveListElement *phsle,struct PidinStack *ppist)',
