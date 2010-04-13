@@ -1332,6 +1332,7 @@ my $class_hierarchy
        (
 	attachment => {
 		       allows => {
+				  'collect_mandatory_parameter_values' => 'attachment',
 				  'create_alias' => 'attachment',
 				  'get_type' => 'attachment',
 				  'set_type' => 'attachment',

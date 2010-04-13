@@ -59,6 +59,61 @@ struct symtab_Attachment * AttachmentCalloc(void)
 
 
 /// 
+/// \arg patta symbol to collect mandatory parameters for.
+/// \arg ppist context.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Collect mandatory simulation parameters for this symbol,
+/// instantiate them in cache such that they are present during
+/// serialization.
+/// 
+
+int
+AttachmentCollectMandatoryParameterValues
+(struct symtab_Attachment *patta, struct PidinStack *ppist)
+{
+    //- set default result: ok
+
+    int iResult = 1;
+
+    if (AttachmentPointIsOutgoing(patta))
+    {
+	static char *ppc_attachment_mandatory_parameter_names[] =
+	    {
+		"REFRACTORY",
+		"THRESHOLD",
+		(char *)0,
+	    };
+
+	int i;
+
+	for (i = 0 ; ppc_attachment_mandatory_parameter_names[i] ; i++)
+	{
+	    struct symtab_Parameters *pparValue
+		= SymbolFindParameter(&patta->bio.ioh.iol.hsle, ppist, ppc_attachment_mandatory_parameter_names[i]);
+
+	    struct symtab_Parameters *pparOriginal
+		= ParameterLookup(patta->bio.pparc->ppars, ppc_attachment_mandatory_parameter_names[i]);
+
+	    if (pparValue && !pparOriginal)
+	    {
+		double dValue = ParameterResolveValue(pparValue, ppist);
+
+		struct symtab_Parameters *pparDuplicate = ParameterNewFromNumber(ppc_attachment_mandatory_parameter_names[i], dValue);
+
+		BioComponentChangeParameter(&patta->bio, pparDuplicate);
+	    }
+	}
+    }
+
+    //- return result
+
+    return(iResult);
+}
+
+
+/// 
 /// \arg patta symbol to alias
 /// \arg pidin name of new symbol
 /// 

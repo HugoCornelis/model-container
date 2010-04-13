@@ -28,11 +28,15 @@ struct descr_Attachment;
 struct symtab_Attachment;
 
 
-#include "neurospaces/idin.h"
+#include "neurospaces/pidinstack.h"
 
 
 
 struct symtab_Attachment * AttachmentCalloc(void);
+
+int
+AttachmentCollectMandatoryParameterValues
+(struct symtab_Attachment *patta, struct PidinStack *ppist);
 
 struct symtab_HSolveListElement * 
 AttachmentCreateAlias

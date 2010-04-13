@@ -116,18 +116,30 @@ ChannelCollectMandatoryParameterValues
 
     int iResult = 1;
 
-/*     fprintf(stdout, "something here\n"); */
+    static char *ppc_channel_mandatory_parameter_names[] =
+	{
+	    "Erev",
+	    (char *)0,
+	};
 
-    struct symtab_Parameters *pparOriginal
-	= SymbolFindParameter(&pchan->bio.ioh.iol.hsle, ppist, "Erev");
+    int i;
 
-    if (pparOriginal)
+    for (i = 0 ; ppc_channel_mandatory_parameter_names[i] ; i++)
     {
-	double dValue = ParameterResolveValue(pparOriginal, ppist);
+	struct symtab_Parameters *pparValue
+	    = SymbolFindParameter(&pchan->bio.ioh.iol.hsle, ppist, ppc_channel_mandatory_parameter_names[i]);
 
-	struct symtab_Parameters *pparDuplicate = ParameterNewFromNumber("Erev", dValue);
+	struct symtab_Parameters *pparOriginal
+	    = ParameterLookup(pchan->bio.pparc->ppars, ppc_channel_mandatory_parameter_names[i]);
 
-	BioComponentChangeParameter(&pchan->bio, pparDuplicate);
+	if (pparValue && !pparOriginal)
+	{
+	    double dValue = ParameterResolveValue(pparValue, ppist);
+
+	    struct symtab_Parameters *pparDuplicate = ParameterNewFromNumber(ppc_channel_mandatory_parameter_names[i], dValue);
+
+	    BioComponentChangeParameter(&pchan->bio, pparDuplicate);
+	}
     }
 
     //- return result

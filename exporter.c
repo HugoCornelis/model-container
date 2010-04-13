@@ -653,11 +653,19 @@ ExporterSymbolStarter
 	    ExporterBindings(phsle, ptstr->ppist, pexd);
 	}
 
-	//- recollect mandatory parameter values
+	//- if exporting all we must export mandatory parameter values
+	//- otherwise there is the risk that the exported model cannot
+	//- be instantiated.
 
-	if (instanceof_channel(phsle))
+	if (pexd->iFlags & EXPORTER_FLAG_ALL)
 	{
-	    SymbolCollectMandatoryParameterValues(phsle, ptstr->ppist);
+	    //- recollect mandatory parameter values
+
+	    if (instanceof_channel(phsle)
+		|| instanceof_attachment(phsle))
+	    {
+		SymbolCollectMandatoryParameterValues(phsle, ptstr->ppist);
+	    }
 	}
 
 	//- export parameter of this biological component
