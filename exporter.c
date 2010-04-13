@@ -662,6 +662,7 @@ ExporterSymbolStarter
 	    //- recollect mandatory parameter values
 
 	    if (instanceof_channel(phsle)
+		|| instanceof_equation_exponential(phsle)
 		|| instanceof_attachment(phsle))
 	    {
 		SymbolCollectMandatoryParameterValues(phsle, ptstr->ppist);
