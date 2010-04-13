@@ -1,0 +1,25 @@
+$files = {
+           '_<hierarchy/types_2_html' => [
+                                           {
+                                             'expr' => undef,
+                                             'value' => '1',
+                                             'text' => '    my $source_descriptions
+',
+                                             'fname' => 'hierarchy/types_2_html',
+                                             'type' => 'user',
+                                             'line' => 54
+                                           }
+                                         ]
+         };
+$expr_list = [
+               {
+                 'expr' => '$name',
+                 'depth' => -1
+               },
+               {
+                 'expr' => '$_',
+                 'depth' => -1
+               }
+             ];
+$eval_saved_text = undef;
+$main_win_geometry = '1592x1115+0+0';
