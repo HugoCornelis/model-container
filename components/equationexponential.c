@@ -65,6 +65,58 @@ struct symtab_EquationExponential * EquationExponentialCalloc(void)
 
 
 /// 
+/// \arg pchan symbol to collect mandatory parameters for.
+/// \arg ppist context.
+/// 
+/// \return int : success of operation.
+/// 
+/// \brief Collect mandatory simulation parameters for this symbol,
+/// instantiate them in cache such that they are present during
+/// serialization.
+/// 
+
+int
+EquationExponentialCollectMandatoryParameterValues
+(struct symtab_EquationExponential *peqe, struct PidinStack *ppist)
+{
+    //- set default result: ok
+
+    int iResult = 1;
+
+    static char *ppc_equation_exponential_mandatory_parameter_names[] =
+	{
+	    "TAU1",
+	    "TAU2",
+	    (char *)0,
+	};
+
+    int i;
+
+    for (i = 0 ; ppc_equation_exponential_mandatory_parameter_names[i] ; i++)
+    {
+	struct symtab_Parameters *pparValue
+	    = SymbolFindParameter(&peqe->bio.ioh.iol.hsle, ppist, ppc_equation_exponential_mandatory_parameter_names[i]);
+
+	struct symtab_Parameters *pparOriginal
+	    = ParameterLookup(peqe->bio.pparc->ppars, ppc_equation_exponential_mandatory_parameter_names[i]);
+
+	if (pparValue && !pparOriginal)
+	{
+	    double dValue = ParameterResolveValue(pparValue, ppist);
+
+	    struct symtab_Parameters *pparDuplicate = ParameterNewFromNumber(ppc_equation_exponential_mandatory_parameter_names[i], dValue);
+
+	    BioComponentChangeParameter(&peqe->bio, pparDuplicate);
+	}
+    }
+
+    //- return result
+
+    return(iResult);
+}
+
+
+/// 
 /// \arg peqe symbol to alias
 /// \arg pidin name of new symbol
 /// 

@@ -1164,9 +1164,8 @@ my $class_hierarchy
        (
 	equation_exponential => {
 				 allows => {
+					    'collect_mandatory_parameter_values' => 'equation_exponential',
 					    'create_alias' => 'equation_exponential',
-# 					    'get_type' => 'equation_exponential',
-# 					    'set_type' => 'equation_exponential',
 					   },
 				 description => 'an exponential equation (or an alpha function)',
 				 grammar => {
