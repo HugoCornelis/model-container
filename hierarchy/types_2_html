@@ -4,18 +4,6 @@
 use strict;
 
 
-# BEGIN
-# {
-#     # run from this directory
-
-#     push @INC, "../perl";
-
-#     # run from the core directory, e.g. using the makefile
-
-#     push @INC, "./perl";
-# }
-
-
 use Data::Comparator qw(data_comparator);
 use Data::Transformator;
 
