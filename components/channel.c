@@ -118,6 +118,18 @@ ChannelCollectMandatoryParameterValues
 
 /*     fprintf(stdout, "something here\n"); */
 
+    struct symtab_Parameters *pparOriginal
+	= SymbolFindParameter(&pchan->bio.ioh.iol.hsle, ppist, "Erev");
+
+    if (pparOriginal)
+    {
+	double dValue = ParameterResolveValue(pparOriginal, ppist);
+
+	struct symtab_Parameters *pparDuplicate = ParameterNewFromNumber("Erev", dValue);
+
+	BioComponentChangeParameter(&pchan->bio, pparDuplicate);
+    }
+
     //- return result
 
     return(iResult);

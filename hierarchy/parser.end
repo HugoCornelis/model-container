@@ -614,79 +614,72 @@ Parameter	/* <ppar> */
 		'('
 		Identifier
 		'='
+		ParameterValue
+		')'
+		{
+#line
+		    //- allocate room for symbolic parameter
+
+		    $$ = $5;
+
+		    $$->pcIdentifier = $3;
+		}
+	;
+
+ParameterValue	/* <ppar> */
+	:
 		IdentifierHierarchicalOptionalRooted
-		')'
 		{
 #line
 		    //- allocate room for symbolic parameter
 
-		    $$ = ParameterNewFromPidinQueue($3, $5->pidinRoot, TYPE_PARA_SYMBOLIC);
+		    $$ = ParameterNewFromPidinQueue(NULL, $1->pidinRoot, TYPE_PARA_SYMBOLIC);
 
 		}
 	|
-		TOKEN_PARAMETER
-		'('
-		Identifier
-		'='
 		FieldOrIOHierarchical
-		')'
 		{
 #line
 		    //- allocate room for symbolic parameter
 
-		    $$ = ParameterNewFromPidinQueue($3, $5, TYPE_PARA_FIELD);
+		    $$ = ParameterNewFromPidinQueue(NULL, $1, TYPE_PARA_FIELD);
 
 		}
 	|
-		TOKEN_PARAMETER
-		'('
-		Identifier
-		'='
 		TOKEN_STRING
-		')'
 		{
 #line
 		    //- allocate room for string parameter
 
 		    //- remove ending '"'
 
-		    $5->pcString[$5->iLength - 1] = '\0';
+		    $1->pcString[$1->iLength - 1] = '\0';
 
 		    //! allocates to much
 
-		    char *pc = calloc(sizeof(char), $5->iLength);
+		    char *pc = calloc(sizeof(char), $1->iLength);
 
-		    strcpy(pc, &$5->pcString[1]);
+		    strcpy(pc, &$1->pcString[1]);
 
-		    $$ = ParameterNewFromString($3, pc);
+		    $$ = ParameterNewFromString(NULL, pc);
 
 		}
 	|
-		TOKEN_PARAMETER
-		'('
-		Identifier
-		'='
 		TOKEN_NUMBER
-		')'
 		{
 #line
 		    //- allocate room for number parameter
 
-		    $$ = ParameterNewFromNumber($3, $5);
+		    $$ = ParameterNewFromNumber(NULL, $1);
 
 		}
 	|
-		TOKEN_PARAMETER
-		'('
-		Identifier
-		'='
 		FunctionSpecification
-		')'
 		{
 #line
 		    //- allocate room for function parameter
 
-		    $$ = ParameterNewFromFunction($3, $5);
+		    $$ = ParameterNewFromFunction(NULL, $1);
 
 		}
 	;

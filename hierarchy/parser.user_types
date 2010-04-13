@@ -21,6 +21,7 @@
 %type <ppar> Parameters
 %type <ppar> ParametersEnumerated
 %type <ppar> Parameter
+%type <ppar> ParameterValue
 %type <pfun> FunctionSpecification
 %type <pcIdentifier> FunctionIdentifier
 %type <ppar> FunctionParameters
