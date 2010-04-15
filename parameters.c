@@ -38,7 +38,9 @@
 
 int iINT_MAX = INT_MAX;
 
-double dFLT_MAX = FLT_MAX;
+double dDBL_MAX = DBL_MAX;
+
+/* double dFLT_MAX = FLT_MAX; */
 
 
 char *ppcParameterStruct[] =
@@ -1203,7 +1205,7 @@ ParameterResolveScaledValue
 
     //- if resolved
 
-    if (dResult != FLT_MAX)
+    if (dResult != DBL_MAX)
     {
 	//- default : do scaling
 
@@ -1545,7 +1547,7 @@ ParameterResolveToPidinStack
 /// \arg ppar parameter to resolve input for
 /// \arg ppist context of parameter
 /// 
-/// \return double : parameter value, FLT_MAX if failure
+/// \return double : parameter value, DBL_MAX if failure
 /// 
 /// \brief Resolve value of parameter in given context
 /// 
@@ -1569,7 +1571,7 @@ ParameterResolveValue
 {
     //- set default result : invalid
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- if string
 
@@ -1577,7 +1579,7 @@ ParameterResolveValue
     {
 	//- return failure
 
-	dResult = FLT_MAX;
+	dResult = DBL_MAX;
     }
 
     //- if constant value
@@ -1597,7 +1599,7 @@ ParameterResolveValue
     {
 	//- return failure
 
-	dResult = FLT_MAX;
+	dResult = DBL_MAX;
     }
 
     //- if field parameter
@@ -1801,7 +1803,7 @@ void ParameterTo_stdout(struct symtab_Parameters *ppar)
 /// 
 /// \arg ppar parameter to obtain value for
 /// 
-/// \return double : value, FLT_MAX for failure
+/// \return double : value, DBL_MAX for failure
 /// 
 /// \brief Get value from parameter
 /// 
@@ -1810,7 +1812,7 @@ double ParameterValue(struct symtab_Parameters *ppar)
 {
     //- set default result
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- if number present
 

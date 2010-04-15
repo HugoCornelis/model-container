@@ -625,7 +625,7 @@ static int SpineDoAdjustments
 	    = SymbolParameterResolveValue
 	      (&pD3segm->segment.bio.ioh.iol.hsle, ppist, "SURFACE");
 
-	if (dSegment == -1 || dSegment == FLT_MAX)
+	if (dSegment == -1 || dSegment == DBL_MAX)
 	{
 	    fprintf
 		(stderr,

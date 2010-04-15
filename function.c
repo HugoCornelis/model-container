@@ -363,7 +363,7 @@ FunctionSetName
 /// \arg pfun function to resolve input for
 /// \arg ppist context of function
 /// 
-/// \return double : value of function, FLT_MAX if failure.
+/// \return double : value of function, DBL_MAX if failure.
 /// 
 /// \brief Resolve value for given function in given context.
 /// 
@@ -384,7 +384,7 @@ FunctionValue
 {
     //- set default result : invalid
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- get function name
 
@@ -427,14 +427,14 @@ FunctionValue
 	    = FunctionGetParameter(pfun, "value1");
 
 	double dValue1
-	    = pparValue1 ? ParameterResolveValue(pparValue1, ppist) : FLT_MAX ;
+	    = pparValue1 ? ParameterResolveValue(pparValue1, ppist) : DBL_MAX ;
 
 	//- get stop
 
 	struct symtab_Parameters *pparValue2
 	    = FunctionGetParameter(pfun, "value2");
 
-	double dValue2 = pparValue2 ? ParameterResolveValue(pparValue2, ppist) : FLT_MAX ;
+	double dValue2 = pparValue2 ? ParameterResolveValue(pparValue2, ppist) : DBL_MAX ;
 
 	//- set result
 
@@ -451,14 +451,14 @@ FunctionValue
 	    = FunctionGetParameter(pfun, "value1");
 
 	double dValue1
-	    = pparValue1 ? ParameterResolveValue(pparValue1, ppist) : FLT_MAX ;
+	    = pparValue1 ? ParameterResolveValue(pparValue1, ppist) : DBL_MAX ;
 
 	//- get stop
 
 	struct symtab_Parameters *pparValue2
 	    = FunctionGetParameter(pfun, "value2");
 
-	double dValue2 = pparValue2 ? ParameterResolveValue(pparValue2, ppist) : FLT_MAX ;
+	double dValue2 = pparValue2 ? ParameterResolveValue(pparValue2, ppist) : DBL_MAX ;
 
 	//- set result
 
@@ -475,14 +475,14 @@ FunctionValue
 	    = FunctionGetParameter(pfun, "value");
 
 	double dValue
-	    = pparValue ? ParameterResolveValue(pparValue, ppist) : FLT_MAX ;
+	    = pparValue ? ParameterResolveValue(pparValue, ppist) : DBL_MAX ;
 
 	//- get comparator
 
 	struct symtab_Parameters *pparComparator
 	    = FunctionGetParameter(pfun, "comparator");
 
-	double dComparator = pparComparator ? ParameterResolveValue(pparComparator, ppist) : FLT_MAX ;
+	double dComparator = pparComparator ? ParameterResolveValue(pparComparator, ppist) : DBL_MAX ;
 
 	//- get value
 
@@ -490,13 +490,13 @@ FunctionValue
 	    = FunctionGetParameter(pfun, "result1");
 
 	double dResult1
-	    = pparResult1 ? ParameterResolveValue(pparResult1, ppist) : FLT_MAX ;
+	    = pparResult1 ? ParameterResolveValue(pparResult1, ppist) : DBL_MAX ;
 
 	struct symtab_Parameters *pparResult2
 	    = FunctionGetParameter(pfun, "result2");
 
 	double dResult2
-	    = pparResult2 ? ParameterResolveValue(pparResult2, ppist) : FLT_MAX ;
+	    = pparResult2 ? ParameterResolveValue(pparResult2, ppist) : DBL_MAX ;
 
 	//- set result
 
@@ -513,14 +513,14 @@ FunctionValue
 	    = FunctionGetParameter(pfun, "value");
 
 	double dValue
-	    = pparValue ? ParameterResolveValue(pparValue, ppist) : FLT_MAX ;
+	    = pparValue ? ParameterResolveValue(pparValue, ppist) : DBL_MAX ;
 
 	//- get comparator
 
 	struct symtab_Parameters *pparComparator
 	    = FunctionGetParameter(pfun, "comparator");
 
-	double dComparator = pparComparator ? ParameterResolveValue(pparComparator, ppist) : FLT_MAX ;
+	double dComparator = pparComparator ? ParameterResolveValue(pparComparator, ppist) : DBL_MAX ;
 
 	//- get value
 
@@ -528,13 +528,13 @@ FunctionValue
 	    = FunctionGetParameter(pfun, "result1");
 
 	double dResult1
-	    = pparResult1 ? ParameterResolveValue(pparResult1, ppist) : FLT_MAX ;
+	    = pparResult1 ? ParameterResolveValue(pparResult1, ppist) : DBL_MAX ;
 
 	struct symtab_Parameters *pparResult2
 	    = FunctionGetParameter(pfun, "result2");
 
 	double dResult2
-	    = pparResult2 ? ParameterResolveValue(pparResult2, ppist) : FLT_MAX ;
+	    = pparResult2 ? ParameterResolveValue(pparResult2, ppist) : DBL_MAX ;
 
 	//- set result
 
@@ -611,7 +611,7 @@ FunctionValue
 	}
 	else
 	{
-	    dResult == FLT_MAX;
+	    dResult == DBL_MAX;
 
 	    //- give diag's : not yet implemented
 

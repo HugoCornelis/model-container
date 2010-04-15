@@ -46,13 +46,11 @@ GateKineticGetTabulationFlag
 
 
 /// 
-/// 
 /// \return struct symtab_ConcentrationGateKinetic * 
 /// 
 ///	Newly allocated concentration gate kinetic, NULL for failure
 /// 
 /// \brief Allocate a new concentration gate kinetic symbol table element
-/// \details 
 /// 
 
 struct symtab_ConcentrationGateKinetic * ConcentrationGateKineticCalloc(void)
@@ -82,14 +80,12 @@ struct symtab_ConcentrationGateKinetic * ConcentrationGateKineticCalloc(void)
 
 
 /// 
-/// 
 /// \arg pcgatc symbol to alias
 /// \arg pidin name of new symbol
 /// 
 /// \return struct symtab_HSolveListElement * : alias for original symbol
 /// 
 /// \brief Create alias to given symbol
-/// \details 
 /// 
 
 struct symtab_HSolveListElement * 
@@ -119,13 +115,11 @@ ConcentrationGateKineticCreateAlias
 
 
 /// 
-/// 
 /// \arg pcgatc concentration gate kinetic to init
 /// 
 /// \return void
 /// 
 /// \brief init concentration gate kinetic
-/// \details 
 /// 
 
 void ConcentrationGateKineticInit(struct symtab_ConcentrationGateKinetic *pcgatc)
@@ -143,7 +137,6 @@ void ConcentrationGateKineticInit(struct symtab_ConcentrationGateKinetic *pcgatc
 
 
 /// 
-/// 
 /// \arg pcgatc symbol to get parameter for.
 /// \arg ppist context of symbol.
 /// \arg pcName name of parameter.
@@ -153,7 +146,6 @@ void ConcentrationGateKineticInit(struct symtab_ConcentrationGateKinetic *pcgatc
 ///	Parameter structure, NULL for failure.
 /// 
 /// \brief Get specific parameter of symbol.
-/// \details 
 /// 
 
 struct symtab_Parameters * 
@@ -194,7 +186,7 @@ ConcentrationGateKineticGetParameter
 
 	    double dTableEntries = GateKineticGetNumTableEntries(pcgatc,ppist);
 
-	    if (dTableEntries == FLT_MAX)
+	    if (dTableEntries == DBL_MAX)
 	    {
 		return NULL;
 	    }
@@ -214,13 +206,13 @@ ConcentrationGateKineticGetParameter
 
 
 /// 
-/// 
 /// \arg pcgatc gate kinetic to init
 /// \arg ppist context of kinetic symbol
 /// 
 /// \return double
 /// 
 /// \brief Functions returns the number of table parameters in a
+/// 
 /// \details 
 ///        gate kinetic in the format "table["index"]"
 /// 
@@ -232,7 +224,7 @@ GateKineticGetNumTableEntries
 {
     //- set default result: failure
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- if no first table entry
 
@@ -243,7 +235,7 @@ GateKineticGetNumTableEntries
     {
 	//- return no entries
 
-	return FLT_MAX;
+	return DBL_MAX;
     }
 
     //- loop over all table entries by index
@@ -271,13 +263,13 @@ GateKineticGetNumTableEntries
 
 
 /// 
-/// 
 /// \arg pcgatc gate kinetic symbol.
 /// \arg ppist context of gate kinetic symbol.
 /// 
 /// \return int : TRUE if this table can be tabulated.
 /// 
 /// \brief Get tabulation flag of gate kinetic.
+///
 /// \details 
 /// 
 ///	A gate kinetic can be presented as a table if it contains a

@@ -30,7 +30,7 @@ my $test
 						  },
 						  {
 						   description => "Does the soma have a scaled capacitance (should not) ?",
-						   read => '= 3.40282e+38
+						   read => '= 1.79769e+308
 ',
 						   write => "printparameterscaled /soma CM",
 						  },
@@ -42,7 +42,7 @@ my $test
 						  },
 						  {
 						   description => "Does the soma have a scaled membrane resistance (should not) ?",
-						   read => '= 3.40282e+38
+						   read => '= 1.79769e+308
 ',
 						   write => "printparameterscaled /soma RM",
 						  },
@@ -54,7 +54,7 @@ my $test
 						  },
 						  {
 						   description => "Does the soma have a scaled axial resistance (should not) ?",
-						   read => '= 3.40282e+38
+						   read => '= 1.79769e+308
 ',
 						   write => "printparameterscaled /soma RA",
 						  },

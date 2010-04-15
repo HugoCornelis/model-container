@@ -57,9 +57,9 @@ PUBLIC_MODELS
         HH_GATE HH_activation
           PARAMETERS
 
-	    // depending on your c library, this might not come out as FLT_MAX
+	    // depending on your c library, this might not come out as DBL_MAX
 
-            PARAMETER ( HH_NUMBER_OF_TABLE_ENTRIES = 3.4028234663852886e+38 ),
+            PARAMETER ( HH_NUMBER_OF_TABLE_ENTRIES = 1.7976931348623157e+308 ),
             PARAMETER ( state_init = 0.0837136 ),
             PARAMETER ( POWER = 4 ),
           END PARAMETERS
@@ -87,9 +87,9 @@ PUBLIC_MODELS
         HH_GATE HH_inactivation
           PARAMETERS
 
-	    // depending on your c library, this might not come out as FLT_MAX
+	    // depending on your c library, this might not come out as DBL_MAX
 
-            PARAMETER ( HH_NUMBER_OF_TABLE_ENTRIES = 3.4028234663852886e+38 ),
+            PARAMETER ( HH_NUMBER_OF_TABLE_ENTRIES = 1.7976931348623157e+308 ),
             PARAMETER ( state_init = 0.747485 ),
             PARAMETER ( POWER = 1 ),
           END PARAMETERS

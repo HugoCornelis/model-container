@@ -236,7 +236,7 @@ PulseGenGetParameter
 /// \arg ppulsegen pulsegen to get volume for.
 /// \arg ppist context of pulsegen.
 /// 
-/// \return double : pulsegen volume, FLT_MAX for failure.
+/// \return double : pulsegen volume, DBL_MAX for failure.
 /// 
 /// \brief get volume of pulsegen.
 /// 
@@ -248,7 +248,7 @@ PulseGenGetVolume
 {
     //- set default result : failure
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- by default we assume we are not working with a pulsegen embedded
     //- in a spherical segment.
@@ -260,7 +260,7 @@ PulseGenGetVolume
     struct PidinStack *ppistComp
 	= SymbolFindParentSegment(&ppulsegen->bio.ioh.iol.hsle, ppist);
 
-    double dDiaFromParent = FLT_MAX;
+    double dDiaFromParent = DBL_MAX;
 
     if (ppistComp)
     {
@@ -293,7 +293,7 @@ PulseGenGetVolume
 
 	//t not really sure if this is correct...
 
-	if (dDiaSegment == FLT_MAX)
+	if (dDiaSegment == DBL_MAX)
 	{
 	    dDiaSegment = dDiaFromParent;
 	}
@@ -301,10 +301,10 @@ PulseGenGetVolume
 	double dThickness
 	    = SymbolParameterResolveValue(&ppulsegen->bio.ioh.iol.hsle, ppist, "THICK");
 
-	if (dDiaSegment == FLT_MAX
-	    || dThickness == FLT_MAX)
+	if (dDiaSegment == DBL_MAX
+	    || dThickness == DBL_MAX)
 	{
-	    return(FLT_MAX);
+	    return(DBL_MAX);
 	}
 
 	double dDiaPulseGen = 2 * dThickness;
@@ -337,11 +337,11 @@ PulseGenGetVolume
 	double dThickness
 	    = SymbolParameterResolveValue(&ppulsegen->bio.ioh.iol.hsle, ppist, "THICK");
 
-	if (dDiaSegment == FLT_MAX
-	    || dLengthSegment == FLT_MAX
-	    || dThickness == FLT_MAX)
+	if (dDiaSegment == DBL_MAX
+	    || dLengthSegment == DBL_MAX
+	    || dThickness == DBL_MAX)
 	{
-	    return(FLT_MAX);
+	    return(DBL_MAX);
 	}
 
 /* 	if (thick>0.0) { */
@@ -447,7 +447,7 @@ PulseGenLookupHierarchical
 /// \arg dValue value to scale
 /// \arg ppar parameter that specify type of scaling
 /// 
-/// \return double : scaled value, FLT_MAX for failure
+/// \return double : scaled value, DBL_MAX for failure
 /// 
 /// \brief Scale value according to parameter type and symbol type
 /// 
@@ -461,7 +461,7 @@ PulseGenParameterScaleValue
 {
     //- set default result : none
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     struct PidinStack *ppistComp = NULL;
 
@@ -484,7 +484,7 @@ PulseGenParameterScaleValue
 	    = SymbolParameterResolveValue
 	      ((struct symtab_HSolveListElement *)ppulsegen, ppist, "DIA");
 
-	if (dPulseGenDia == FLT_MAX)
+	if (dPulseGenDia == DBL_MAX)
 	{
 	    ppistComp = SymbolFindParentSegment(&ppulsegen->bio.ioh.iol.hsle, ppist);
 
@@ -506,8 +506,8 @@ PulseGenParameterScaleValue
 	double dThickness
 	    = ParameterResolveValue(pparThickness, ppist);
 
-	if (dPulseGenDia == FLT_MAX
-	    || dThickness == FLT_MAX)
+	if (dPulseGenDia == DBL_MAX
+	    || dThickness == DBL_MAX)
 	{
 	    return(dResult);
 	}
@@ -564,7 +564,7 @@ PulseGenParameterScaleValue
 		= SymbolParameterResolveValue
 		  ((struct symtab_HSolveListElement *)ppulsegen, ppist, "LENGTH");
 
-	    if (dPulseGenLength == FLT_MAX)
+	    if (dPulseGenLength == DBL_MAX)
 	    {
 		ppistComp = SymbolFindParentSegment(&ppulsegen->bio.ioh.iol.hsle, ppist);
 
@@ -690,7 +690,7 @@ PulseGenReduce
 
 	//- if present
 
-	if (dVolume != FLT_MAX)
+	if (dVolume != DBL_MAX)
 	{
 	    double d = PulseGenGetVolume(ppulsegen, ppist);
 

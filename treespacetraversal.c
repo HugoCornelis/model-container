@@ -304,7 +304,7 @@ SymbolTableValueCollector
 
     double dValue = SymbolParameterResolveValue(phsle, ptstr->ppist, ptpcd->pcParameter);
 
-    if (dValue != FLT_MAX)
+    if (dValue != DBL_MAX)
     {
 	//- if value not initialized
 

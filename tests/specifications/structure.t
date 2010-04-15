@@ -43,8 +43,6 @@ my $test
         PARA  Type (TYPE_PARA_NUMBER), Value(1.000000e+00)
         PARA  Name (CM)
         PARA  Type (TYPE_PARA_NUMBER), Value(1.000000e-02)
-        PARA  Name (ELEAK)
-        PARA  Type (TYPE_PARA_NUMBER), Value(-5.500000e-02)
     segmen{-- begin HIER sections ---
         Name, index (spikegen,-1)
         Type (T_sym_attachment)
@@ -101,8 +99,6 @@ my $test
         channeName, index (CaHVA,-1)
             PARA  Name (G_MAX)
             PARA  Type (TYPE_PARA_FIELD), Value : ../..->G_MAX
-            PARA  Name (G_MAX)
-            PARA  Type (TYPE_PARA_NUMBER), Value(8.317569e+00)
             PARA  Name (Erev)
             PARA  Type (TYPE_PARA_FUNCTION), Value(NERNST)
                 FUNC  Name (NERNST)

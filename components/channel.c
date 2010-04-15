@@ -837,7 +837,7 @@ void ChannelInit(struct symtab_Channel *pchan)
 /// \arg dValue value to scale
 /// \arg ppar parameter that specify type of scaling
 /// 
-/// \return double : scaled value, FLT_MAX for failure
+/// \return double : scaled value, DBL_MAX for failure
 /// 
 /// \brief Scale value according to parameter type and symbol type
 /// 
@@ -851,7 +851,7 @@ ChannelParameterScaleValue
 {
     //- set default result : none
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- get channel parameter field name
 

@@ -128,7 +128,7 @@ VSegmentSegmentRelocatorAbsolute
 	    {
 		//- get coordinates of parent
 
-		double dParentX = FLT_MAX;
+		double dParentX = DBL_MAX;
 
 		struct symtab_Parameters *pparParentX
 		    = SymbolGetParameter(phsleParent, ppist, "X");
@@ -138,7 +138,7 @@ VSegmentSegmentRelocatorAbsolute
 		    dParentX = ParameterResolveValue(pparParentX, ppist);
 		}
 
-		double dParentY = FLT_MAX;
+		double dParentY = DBL_MAX;
 
 		struct symtab_Parameters *pparParentY
 		    = SymbolGetParameter(phsleParent, ppist, "Y");
@@ -148,7 +148,7 @@ VSegmentSegmentRelocatorAbsolute
 		    dParentY = ParameterResolveValue(pparParentY, ppist);
 		}
 
-		double dParentZ = FLT_MAX;
+		double dParentZ = DBL_MAX;
 
 		struct symtab_Parameters *pparParentZ
 		    = SymbolGetParameter(phsleParent, ppist, "Z");

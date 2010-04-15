@@ -329,6 +329,16 @@ void ParContainerInit(struct symtab_ParContainer * pparc)
 void ParContainerInsert
 (struct symtab_ParContainer *pparc, struct symtab_Parameters *ppar)
 {
+    //- lookup old value
+
+    struct symtab_Parameters *pparOld
+	= ParameterLookup(pparc->ppars, ParameterGetName(ppar));
+
+    if (pparOld)
+    {
+	ParContainerDelete(pparc, pparOld);
+    }
+
     //- insert
 
     ppar->pparNext = pparc->ppars;
@@ -476,7 +486,7 @@ ParContainerReduce(struct symtab_ParContainer *pparc)
 	    {
 		//- if is undefined
 
-		if (ppar->uValue.dNumber == FLT_MAX)
+		if (ppar->uValue.dNumber == DBL_MAX)
 		{
 		    //- remove this parameter from the list
 

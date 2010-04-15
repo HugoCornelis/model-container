@@ -309,7 +309,7 @@ int ConnectionSymbolPrint
 /// 
 /// \return double
 /// 
-///	Delay of connection, FLT_MAX for failure.
+///	Delay of connection, DBL_MAX for failure.
 /// 
 /// \brief Get delay of connection.
 /// \details 
@@ -320,7 +320,7 @@ ConnectionSymbolGetDelay(struct symtab_ConnectionSymbol *pconsy)
 {
     //- set default result: failure
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- get parameter
 
@@ -338,7 +338,7 @@ ConnectionSymbolGetDelay(struct symtab_ConnectionSymbol *pconsy)
 
     double dDelay = ParameterResolveValue(pparPost, NULL);
 
-    if (dDelay != FLT_MAX)
+    if (dDelay != DBL_MAX)
     {
 	dResult = dDelay;
     }
@@ -384,7 +384,7 @@ ConnectionSymbolGetPost(struct symtab_ConnectionSymbol *pconsy)
 
     double dResult = ParameterResolveValue(pparPost, NULL);
 
-    if (dResult != FLT_MAX)
+    if (dResult != DBL_MAX)
     {
 	iResult = dResult;
     }
@@ -435,7 +435,7 @@ ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy)
 
     double dResult = ParameterResolveValue(pparPre, NULL);
 
-    if (dResult != FLT_MAX)
+    if (dResult != DBL_MAX)
     {
 	iResult = dResult;
     }
@@ -452,7 +452,7 @@ ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy)
 /// 
 /// \return double
 /// 
-///	Weight of connection, FLT_MAX for failure.
+///	Weight of connection, DBL_MAX for failure.
 /// 
 /// \brief Get weight of connection.
 /// \details 
@@ -463,7 +463,7 @@ ConnectionSymbolGetWeight(struct symtab_ConnectionSymbol *pconsy)
 {
     //- set default result: failure
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- get parameter
 
@@ -481,7 +481,7 @@ ConnectionSymbolGetWeight(struct symtab_ConnectionSymbol *pconsy)
 
     double dWeight = ParameterResolveValue(pparPost, NULL);
 
-    if (dWeight != FLT_MAX)
+    if (dWeight != DBL_MAX)
     {
 	dResult = dWeight;
     }

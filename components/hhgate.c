@@ -40,13 +40,11 @@ HHGateGetStateInit
 
 
 /// 
-/// 
 /// \return struct symtab_HHGate * 
 /// 
 ///	Newly allocated conceptual gate, NULL for failure
 /// 
 /// \brief Allocate a new conceptual gate symbol table element
-/// \details 
 /// 
 
 struct symtab_HHGate * HHGateCalloc(void)
@@ -76,14 +74,12 @@ struct symtab_HHGate * HHGateCalloc(void)
 
 
 /// 
-/// 
 /// \arg pgathh symbol to alias
 /// \arg pidin name of new symbol
 /// 
 /// \return struct symtab_HSolveListElement * : alias for original symbol
 /// 
 /// \brief Create alias to given symbol
-/// \details 
 /// 
 
 struct symtab_HSolveListElement * 
@@ -113,7 +109,6 @@ HHGateCreateAlias
 
 
 /// 
-/// 
 /// \arg pgathh symbol to get parameter for.
 /// \arg ppist context of symbol.
 /// \arg pcName name of parameter.
@@ -123,7 +118,6 @@ HHGateCreateAlias
 ///	Parameter structure, NULL for failure.
 /// 
 /// \brief Get parameter of symbol.
-/// \details 
 /// 
 
 struct symtab_Parameters * 
@@ -227,7 +221,6 @@ HHGateGetParameter
 
 
 /// 
-/// 
 /// \arg pgathh conceptual gate.
 /// \arg ppist context of conceptual gate.
 /// \arg pc name of parameter.
@@ -235,10 +228,11 @@ HHGateGetParameter
 /// \return double
 /// 
 ///	Number of table entries of precalculated tables for all of the
-///	kinetics inside the gate, FLT_MAX for inconsistent tables, 0
+///	kinetics inside the gate, DBL_MAX for inconsistent tables, 0
 ///	for no tables.
 /// 
 /// \brief Get number of table entries, or a similar parameter.
+/// 
 /// \details 
 /// 
 ///	Similar parameters are currently HH_TABLE_START_Y,
@@ -252,7 +246,7 @@ HHGateGetTableValue
 {
     //- set default result: failure.
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     struct table_parameter_collector_data tpcd =
 	{
@@ -305,18 +299,16 @@ HHGateGetTableValue
 
 
 /// 
-/// 
 /// \arg pgathh conceptual gate.
 /// \arg ppist context of conceptual gate.
 /// 
 /// \return double
 /// 
-///	Initial state, FLT_MAX for unknown.  By default the initial
+///	Initial state, DBL_MAX for unknown.  By default the initial
 ///	state is the steady state for the initial membrane potential
 ///	found in the parent compartment.
 /// 
 /// \brief Get initial state of this gate.
-/// \details 
 /// 
 
 static
@@ -326,7 +318,7 @@ HHGateGetStateInit
 {
     //- set default result: failure.
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- determine the initial membrane potential of the parent segment
 
@@ -341,7 +333,7 @@ HHGateGetStateInit
     {
 	double dVm = SymbolParameterResolveValue(phsleSegment, ppistSegment, "Vm_init");
 
-	if (dVm != FLT_MAX)
+	if (dVm != DBL_MAX)
 	{
 	    /// \todo need access to a gate kinetic calculator
 
@@ -358,13 +350,11 @@ HHGateGetStateInit
 
 
 /// 
-/// 
 /// \arg pgathh conceptual gate to init
 /// 
 /// \return void
 /// 
 /// \brief init conceptual gate
-/// \details 
 /// 
 
 void HHGateInit(struct symtab_HHGate *pgathh)

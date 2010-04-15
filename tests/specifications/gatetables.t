@@ -63,7 +63,7 @@ my $test
 						   {
 						    comment => "These semantics are ok for running simulations, for modeling not sure yet.",
 						    description => "Is the number of table entries of the second gate derived correctly ?",
-						    read => 'value = 3.40282e+38
+						    read => 'value = 1.79769e+308
 ',
 						    write => 'printparameter /hardcoded_tables1/segments/soma/kh/kh2 HH_NUMBER_OF_TABLE_ENTRIES',
 						   },
@@ -138,13 +138,13 @@ my $test
 
 						    {
 						     description => "Is the start of the table of the first gate correct ?",
-						     read => 'value = 3.40282e+38
+						     read => 'value = 1.79769e+308
 ',
 						     write => 'printparameter /hardcoded_tables1/segments/soma/kh/kh HH_TABLE_START_Y',
 						    },
 						    {
 						     description => "Is the end of the table of the first gate correct ?",
-						     read => 'value = 3.40282e+38
+						     read => 'value = 1.79769e+308
 ',
 						     write => 'printparameter /hardcoded_tables1/segments/soma/kh/kh HH_TABLE_END_Y',
 						    },

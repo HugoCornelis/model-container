@@ -33,7 +33,9 @@
 
 extern int iINT_MAX;
 
-extern double dFLT_MAX;
+extern double dDBL_MAX;
+
+/* extern double dFLT_MAX; */
 
 
 /// table with description of types

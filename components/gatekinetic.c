@@ -188,7 +188,7 @@ GateKineticGetParameter
 
 	    double dEntries = GateKineticGetNumTableEntries(pgatk, ppist);
 
-	    if (dEntries == FLT_MAX)
+	    if (dEntries == DBL_MAX)
 	    {
 		return NULL;
 	    }
@@ -216,7 +216,7 @@ GateKineticGetParameter
 
 	    double dEntries = SymbolParameterResolveValue(&pgatk->bio.ioh.iol.hsle, ppist, "HH_NUMBER_OF_TABLE_ENTRIES");
 
-	    if (dEntries != FLT_MAX)
+	    if (dEntries != DBL_MAX)
 	    {
 		//- get last table entry
 
@@ -250,8 +250,8 @@ GateKineticGetParameter
 
 	    //- if both are defined
 
-	    if (d0 != FLT_MAX
-		&& d1 != FLT_MAX)
+	    if (d0 != DBL_MAX
+		&& d1 != DBL_MAX)
 	    {
 		//- subtract
 
@@ -276,7 +276,7 @@ GateKineticGetParameter
 /// \arg pgatk gate kinetic symbol.
 /// \arg ppist context of gate kinetic symbol.
 /// 
-/// \return double : HH_AB_Offset, FLT_MAX for failure.
+/// \return double : HH_AB_Offset, DBL_MAX for failure.
 /// 
 /// \brief Get HH_AB_Offset of gate kinetic.
 /// \details 
@@ -310,7 +310,7 @@ GateKineticGetHHOffset
 /// 
 /// \return double
 /// 
-///	Number of entries in the table, FLT_MAX for no table.
+///	Number of entries in the table, DBL_MAX for no table.
 /// 
 /// \brief Calculate the number of entries in the gate kinetic table.
 /// \details 
@@ -323,7 +323,7 @@ GateKineticGetNumTableEntries
 {
     //- set default result: failure
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- if no first table entry
 
@@ -334,7 +334,7 @@ GateKineticGetNumTableEntries
     {
 	//- return no entries
 
-	return FLT_MAX;
+	return DBL_MAX;
     }
 
     //- loop over all table entries by index
