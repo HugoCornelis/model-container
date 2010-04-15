@@ -100,7 +100,7 @@ EquationExponentialCollectMandatoryParameterValues
 	struct symtab_Parameters *pparOriginal
 	    = ParameterLookup(peqe->bio.pparc->ppars, ppc_equation_exponential_mandatory_parameter_names[i]);
 
-	if (pparValue && !pparOriginal)
+	if (pparValue && (!pparOriginal || ParameterIsSymbolic(pparOriginal) || ParameterIsField(pparOriginal)))
 	{
 	    double dValue = ParameterResolveValue(pparValue, ppist);
 

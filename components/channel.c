@@ -132,7 +132,7 @@ ChannelCollectMandatoryParameterValues
 	struct symtab_Parameters *pparOriginal
 	    = ParameterLookup(pchan->bio.pparc->ppars, ppc_channel_mandatory_parameter_names[i]);
 
-	if (pparValue && !pparOriginal)
+	if (pparValue && (!pparOriginal || ParameterIsSymbolic(pparOriginal) || ParameterIsField(pparOriginal)))
 	{
 	    double dValue = ParameterResolveValue(pparValue, ppist);
 

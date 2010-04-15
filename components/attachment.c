@@ -96,7 +96,7 @@ AttachmentCollectMandatoryParameterValues
 	    struct symtab_Parameters *pparOriginal
 		= ParameterLookup(patta->bio.pparc->ppars, ppc_attachment_mandatory_parameter_names[i]);
 
-	    if (pparValue && !pparOriginal)
+	    if (pparValue && (!pparOriginal || ParameterIsSymbolic(pparOriginal) || ParameterIsField(pparOriginal)))
 	    {
 		double dValue = ParameterResolveValue(pparValue, ppist);
 
