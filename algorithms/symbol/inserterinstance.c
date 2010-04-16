@@ -444,7 +444,7 @@ InserterInstanceInsert
 
 	    struct D3Position D3Segment = pii->iv.psegments_info[iSegment].D3;
 
-	    double dRange = FLT_MAX;
+	    double dRange = DBL_MAX;
 
 	    if (iSegment < pii->iv.iSegments - 1)
 	    {

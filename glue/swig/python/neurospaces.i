@@ -1068,7 +1068,7 @@ char **get_args() {
 
 /* 		//- copy absolute coordinate of parent */
 
-/* 		if (ci.ppD3CoordsAbsoluteParent[i]->dx != FLT_MAX) */
+/* 		if (ci.ppD3CoordsAbsoluteParent[i]->dx != DBL_MAX) */
 /* 		{ */
 /* 		    HV * phvCoordAbsoluteParent = newHV(); */
 
@@ -1515,7 +1515,7 @@ char **get_args() {
 
 /* 	    SV * psvResolved = NULL; */
 
-/* 	    if (dResolved != FLT_MAX) */
+/* 	    if (dResolved != DBL_MAX) */
 /* 	    { */
 /* 		psvResolved = newSVnv(dResolved); */
 /* 	    } */
@@ -1526,7 +1526,7 @@ char **get_args() {
 
 /* 	    SV * psvScaled = NULL; */
 
-/* 	    if (dScaled != FLT_MAX) */
+/* 	    if (dScaled != DBL_MAX) */
 /* 	    { */
 /* 		psvScaled = newSVnv(dScaled); */
 /* 	    } */
@@ -3219,14 +3219,14 @@ treespace_traversal_finalizer
 /*     { */
 /* 	printf("In symbol_parameter_resolve_value(): could not dereference phsle\n"); */
 
-/* 	return(FLT_MAX); */
+/* 	return(DBL_MAX); */
 /*     } */
 
 /*     if (!SvROK((SV *)ppist)) */
 /*     { */
 /* 	printf("In symbol_parameter_resolve_value(): could not dereference ppist\n"); */
 
-/* 	return(FLT_MAX); */
+/* 	return(DBL_MAX); */
 /*     } */
 
 /*     //t see above on pointer casting */
@@ -3245,14 +3245,14 @@ treespace_traversal_finalizer
 /*     { */
 /* 	printf("In symbol_parameter_resolve_scaled_value(): could not dereference phsle\n"); */
 
-/* 	return(FLT_MAX); */
+/* 	return(DBL_MAX); */
 /*     } */
 
 /*     if (!SvROK((SV *)ppist)) */
 /*     { */
 /* 	printf("In symbol_parameter_resolve_scaled_value(): could not dereference ppist\n"); */
 
-/* 	return(FLT_MAX); */
+/* 	return(DBL_MAX); */
 /*     } */
 
 /*     //t see above on pointer casting */

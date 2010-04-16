@@ -509,7 +509,8 @@ double
 BioComponentParameterResolveValue
 (struct symtab_BioComponent *pbio, struct PidinStack *ppist, char *pcName)
 {
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
+
     struct symtab_Parameters *ppar;
 
     //- if there is a context

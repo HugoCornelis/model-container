@@ -1113,7 +1113,7 @@ swigi_coordinates_2_array
 
 		//- copy absolute coordinate of parent
 
-		if (ci.ppD3CoordsAbsoluteParent[i]->dx != FLT_MAX)
+		if (ci.ppD3CoordsAbsoluteParent[i]->dx != DBL_MAX)
 		{
 		    HV * phvCoordAbsoluteParent = newHV();
 
@@ -1560,7 +1560,7 @@ swigi_parameters_2_array
 
 	    SV * psvResolved = NULL;
 
-	    if (dResolved != FLT_MAX)
+	    if (dResolved != DBL_MAX)
 	    {
 		psvResolved = newSVnv(dResolved);
 	    }
@@ -1571,7 +1571,7 @@ swigi_parameters_2_array
 
 	    SV * psvScaled = NULL;
 
-	    if (dScaled != FLT_MAX)
+	    if (dScaled != DBL_MAX)
 	    {
 		psvScaled = newSVnv(dScaled);
 	    }
@@ -3286,14 +3286,14 @@ double symbol_parameter_resolve_value(void *phsle, void *ppist, char *pc)
     {
 	printf("In symbol_parameter_resolve_value(): could not dereference phsle\n");
 
-	return(FLT_MAX);
+	return(DBL_MAX);
     }
 
     if (!SvROK((SV *)ppist))
     {
 	printf("In symbol_parameter_resolve_value(): could not dereference ppist\n");
 
-	return(FLT_MAX);
+	return(DBL_MAX);
     }
 
     //t see above on pointer casting
@@ -3312,14 +3312,14 @@ double symbol_parameter_resolve_scaled_value(void *phsle, void *ppist, char *pc)
     {
 	printf("In symbol_parameter_resolve_scaled_value(): could not dereference phsle\n");
 
-	return(FLT_MAX);
+	return(DBL_MAX);
     }
 
     if (!SvROK((SV *)ppist))
     {
 	printf("In symbol_parameter_resolve_scaled_value(): could not dereference ppist\n");
 
-	return(FLT_MAX);
+	return(DBL_MAX);
     }
 
     //t see above on pointer casting

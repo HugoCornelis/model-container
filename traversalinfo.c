@@ -517,9 +517,9 @@ TraversalInfoCollectorProcessor
 		    }
 		    else
 		    {
-			pti->ppD3CoordsAbsoluteParent[pti->iChildren]->dx = FLT_MAX;
-			pti->ppD3CoordsAbsoluteParent[pti->iChildren]->dy = FLT_MAX;
-			pti->ppD3CoordsAbsoluteParent[pti->iChildren]->dz = FLT_MAX;
+			pti->ppD3CoordsAbsoluteParent[pti->iChildren]->dx = DBL_MAX;
+			pti->ppD3CoordsAbsoluteParent[pti->iChildren]->dy = DBL_MAX;
+			pti->ppD3CoordsAbsoluteParent[pti->iChildren]->dz = DBL_MAX;
 		    }
 		}
 	    }

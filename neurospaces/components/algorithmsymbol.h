@@ -266,7 +266,7 @@ double
 AlgorithmSymbolParameterResolveValue
 (struct symtab_AlgorithmSymbol *palgs, struct PidinStack *ppist, char *pcName)
 {
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     struct symtab_Parameters *ppar;
 

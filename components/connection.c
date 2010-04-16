@@ -350,7 +350,7 @@ ConnectionNewForStandardConnection
 /// \arg ppist context of connection.
 /// \arg pcName name of parameter.
 /// 
-/// \return double : parameter value, FLT_MAX for failure.
+/// \return double : parameter value, DBL_MAX for failure.
 /// 
 /// \brief Resolve parameter value for connection.
 /// 
@@ -363,7 +363,7 @@ ConnectionParameterResolveValue
 {
     //- set result : failure
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- if pre-synaptic
 

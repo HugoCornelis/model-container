@@ -236,7 +236,7 @@ PoolGetParameter
 /// \arg ppool pool to get volume for.
 /// \arg ppist context of pool.
 /// 
-/// \return double : pool volume, FLT_MAX for failure.
+/// \return double : pool volume, DBL_MAX for failure.
 /// 
 /// \brief get volume of pool.
 /// 
@@ -248,7 +248,7 @@ PoolGetVolume
 {
     //- set default result : failure
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- by default we assume we are not working with a pool embedded
     //- in a spherical segment.
@@ -260,7 +260,7 @@ PoolGetVolume
     struct PidinStack *ppistComp
 	= SymbolFindParentSegment(&ppool->bio.ioh.iol.hsle, ppist);
 
-    double dDiaFromParent = FLT_MAX;
+    double dDiaFromParent = DBL_MAX;
 
     if (ppistComp)
     {
@@ -293,7 +293,7 @@ PoolGetVolume
 
 	//t not really sure if this is correct...
 
-	if (dDiaSegment == FLT_MAX)
+	if (dDiaSegment == DBL_MAX)
 	{
 	    dDiaSegment = dDiaFromParent;
 	}
@@ -301,10 +301,10 @@ PoolGetVolume
 	double dThickness
 	    = SymbolParameterResolveValue(&ppool->bio.ioh.iol.hsle, ppist, "THICK");
 
-	if (dDiaSegment == FLT_MAX
-	    || dThickness == FLT_MAX)
+	if (dDiaSegment == DBL_MAX
+	    || dThickness == DBL_MAX)
 	{
-	    return(FLT_MAX);
+	    return(DBL_MAX);
 	}
 
 	double dDiaPool = 2 * dThickness;
@@ -337,11 +337,11 @@ PoolGetVolume
 	double dThickness
 	    = SymbolParameterResolveValue(&ppool->bio.ioh.iol.hsle, ppist, "THICK");
 
-	if (dDiaSegment == FLT_MAX
-	    || dLengthSegment == FLT_MAX
-	    || dThickness == FLT_MAX)
+	if (dDiaSegment == DBL_MAX
+	    || dLengthSegment == DBL_MAX
+	    || dThickness == DBL_MAX)
 	{
-	    return(FLT_MAX);
+	    return(DBL_MAX);
 	}
 
 /* 	if (thick>0.0) { */
@@ -447,7 +447,7 @@ PoolLookupHierarchical
 /// \arg dValue value to scale
 /// \arg ppar parameter that specify type of scaling
 /// 
-/// \return double : scaled value, FLT_MAX for failure
+/// \return double : scaled value, DBL_MAX for failure
 /// 
 /// \brief Scale value according to parameter type and symbol type
 /// 
@@ -461,7 +461,7 @@ PoolParameterScaleValue
 {
     //- set default result : none
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     struct PidinStack *ppistComp = NULL;
 
@@ -484,7 +484,7 @@ PoolParameterScaleValue
 	    = SymbolParameterResolveValue
 	      ((struct symtab_HSolveListElement *)ppool, ppist, "DIA");
 
-	if (dPoolDia == FLT_MAX)
+	if (dPoolDia == DBL_MAX)
 	{
 	    ppistComp = SymbolFindParentSegment(&ppool->bio.ioh.iol.hsle, ppist);
 
@@ -516,8 +516,8 @@ PoolParameterScaleValue
 	double dThickness
 	    = ParameterResolveValue(pparThickness, ppist);
 
-	if (dPoolDia == FLT_MAX
-	    || dThickness == FLT_MAX)
+	if (dPoolDia == DBL_MAX
+	    || dThickness == DBL_MAX)
 	{
 	    if (ppistComp)
 	    {
@@ -579,7 +579,7 @@ PoolParameterScaleValue
 		= SymbolParameterResolveValue
 		  ((struct symtab_HSolveListElement *)ppool, ppist, "LENGTH");
 
-	    if (dPoolLength == FLT_MAX)
+	    if (dPoolLength == DBL_MAX)
 	    {
 		ppistComp = SymbolFindParentSegment(&ppool->bio.ioh.iol.hsle, ppist);
 
@@ -705,7 +705,7 @@ PoolReduce
 
 	//- if present
 
-	if (dVolume != FLT_MAX)
+	if (dVolume != DBL_MAX)
 	{
 	    double d = PoolGetVolume(ppool, ppist);
 

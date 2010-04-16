@@ -179,7 +179,7 @@ ContourPointGetThickness
 {
     //- set default result : failure
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- create a working context
 
@@ -193,7 +193,7 @@ ContourPointGetThickness
     {
 	if (!PidinStackPop(ppistWorking))
 	{
-	    return(FLT_MAX);
+	    return(DBL_MAX);
 	}
 
 	phsle = PidinStackLookupTopSymbol(ppistWorking);

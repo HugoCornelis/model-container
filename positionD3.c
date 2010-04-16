@@ -41,7 +41,7 @@ void D3PositionInit(struct D3Position *pD3)
 {
     //- initialize D3 specifics
 
-    D3Set(pD3, FLT_MAX, FLT_MAX, FLT_MAX);
+    D3Set(pD3, DBL_MAX, FLT_MAX, FLT_MAX);
 }
 
 

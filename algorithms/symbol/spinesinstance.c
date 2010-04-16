@@ -55,23 +55,23 @@ struct SpinesOptions_type
 
     /*m spine surface option */
 
-    float fSpineSurface;
+    double fSpineSurface;
 
     /*m random spines maximal dendritic diameter for segment */
 
-    float fDendrDiaMax;
+    double fDendrDiaMax;
 
     /*m random spines minimal dendritic diameter for segment */
 
-    float fDendrDiaMin;
+    double fDendrDiaMin;
 
     /*m spine density */
 
-    float fSpineDensity;
+    double fSpineDensity;
 
     /*m spine frequency */
 
-    float fSpineFrequency;
+    double fSpineFrequency;
 
     /*m name selector */
 
@@ -266,7 +266,7 @@ SpinesInstanceNew
 
 	psi->so.fSpineSurface = SymbolParameterResolveValue(&palgs->hsle, ppist, "SPINE_SURFACE");
 
-	if (psi->so.fSpineSurface != FLT_MAX)
+	if (psi->so.fSpineSurface != DBL_MAX)
 	{
 	    psi->so.fSpineSurface *= 1e-12;
 	}
@@ -275,7 +275,7 @@ SpinesInstanceNew
 
 	psi->so.fDendrDiaMin = SymbolParameterResolveValue(&palgs->hsle, ppist, "DIA_MIN");
 
-	if (psi->so.fDendrDiaMin == FLT_MAX)
+	if (psi->so.fDendrDiaMin == DBL_MAX)
 	{
 	    psi->so.fDendrDiaMin = 0;
 	}
@@ -361,7 +361,7 @@ SpinesInstanceNew
 		 "Spine surface calculation of %s failed\n",
 		 psi->so.pcRandomSpineProto);
 
-	    psi->sv.dSpineSurface = FLT_MAX;
+	    psi->sv.dSpineSurface = DBL_MAX;
 
 	    /// \todo memory leak
 
@@ -387,7 +387,7 @@ SpinesInstanceNew
 
     //- if there was an option setting the spine surface
 
-    if (psi->so.fSpineSurface != FLT_MAX)
+    if (psi->so.fSpineSurface != DBL_MAX)
     {
 	//- set spine surface, possibly overwrites calculated surface
 
@@ -396,7 +396,7 @@ SpinesInstanceNew
 
     //- if spine surface not set
 
-    if (psi->sv.dSpineSurface == FLT_MAX)
+    if (psi->sv.dSpineSurface == DBL_MAX)
     {
 	//- give diag's
 
@@ -534,7 +534,7 @@ SpinesSegmentRecorder
 
     //- if not found
 
-    if (dDia == FLT_MAX)
+    if (dDia == DBL_MAX)
     {
 	fprintf
 	    (stderr,
@@ -823,7 +823,7 @@ SpinesDoVirtualAdjustments
 	    = SymbolParameterResolveValue
 	      (&psegr->bio.ioh.iol.hsle, ppist, "SURFACE");
 
-	if (dSegment == FLT_MAX)
+	if (dSegment == DBL_MAX)
 	{
 	    fprintf
 		(stderr,

@@ -22,6 +22,9 @@
 #define PARAMETERS_H
 
 
+#include <float.h>
+#include <limits.h>
+#include <math.h>
 #include <stdio.h>
 
 #include "double.h"
@@ -33,7 +36,9 @@
 
 extern int iINT_MAX;
 
-extern double dFLT_MAX;
+extern double dDBL_MAX;
+
+/* extern double dFLT_MAX; */
 
 
 /// table with description of types
@@ -510,6 +515,16 @@ ParameterSetNumber
 (struct symtab_Parameters *ppar, double dNumber)
 {
     ParameterSetType(ppar, TYPE_PARA_NUMBER);
+
+    //! this can happen after conversion to ascii and back.  Note that
+    //! the ascii representation of the number in this condition first
+    //! get converted to double which rounds it to nearest (in this
+    //! case +.1e-16 or so.
+
+    if (dNumber == 1.79769e+308)
+    {
+	dNumber = DBL_MAX;
+    }
 
     ppar->uValue.dNumber = dNumber;
 }

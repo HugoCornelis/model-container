@@ -113,7 +113,7 @@ my $test
 						  },
 						  {
 						   description => "What happens for division by zero ?",
-						   read => "= 3.40282e+38",
+						   read => "= 1.79769e+308",
 						   write => "printparameter /segm J"
 						  },
 						  {

@@ -108,7 +108,7 @@ my $test
 						  },
 						  {
 						   description => "Is the beta parameter of the isolated pool not available ?",
-						   read => 'scaled value = 3.40282e+38',
+						   read => 'scaled value = 1.79769e+308',
 						   write => 'printparameterscaled /Ca_concen BETA',
 						  },
 						  {

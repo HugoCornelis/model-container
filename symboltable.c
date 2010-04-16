@@ -859,7 +859,7 @@ SymbolParameterResolveCoordinateValue
 /*     { */
 /* 	//- return default failure */
 
-/* 	return(FLT_MAX); */
+/* 	return(DBL_MAX); */
 /*     } */
 
     //- loop over context to base symbol
@@ -897,9 +897,9 @@ SymbolParameterResolveCoordinateValue
 		|| !pparY
 		|| !pparZ)
 	    {
-		pD3Coord->dx = FLT_MAX;
-		pD3Coord->dy = FLT_MAX;
-		pD3Coord->dz = FLT_MAX;
+		pD3Coord->dx = DBL_MAX;
+		pD3Coord->dy = DBL_MAX;
+		pD3Coord->dz = DBL_MAX;
 
 		bResult = FALSE;
 
@@ -912,13 +912,13 @@ SymbolParameterResolveCoordinateValue
 	    dResolvedY = ParameterResolveValue(pparY, ppistWorking);
 	    dResolvedZ = ParameterResolveValue(pparZ, ppistWorking);
 
-	    if (dResolvedX == FLT_MAX
-		|| dResolvedY == FLT_MAX
-		|| dResolvedZ == FLT_MAX)
+	    if (dResolvedX == DBL_MAX
+		|| dResolvedY == DBL_MAX
+		|| dResolvedZ == DBL_MAX)
 	    {
-		pD3Coord->dx = FLT_MAX;
-		pD3Coord->dy = FLT_MAX;
-		pD3Coord->dz = FLT_MAX;
+		pD3Coord->dx = DBL_MAX;
+		pD3Coord->dy = DBL_MAX;
+		pD3Coord->dz = DBL_MAX;
 
 		bResult = FALSE;
 
@@ -965,9 +965,9 @@ SymbolParameterResolveCoordinateValue
 	{
 	    //- signal error
 
-	    pD3Coord->dx = FLT_MAX;
-	    pD3Coord->dy = FLT_MAX;
-	    pD3Coord->dz = FLT_MAX;
+	    pD3Coord->dx = DBL_MAX;
+	    pD3Coord->dy = DBL_MAX;
+	    pD3Coord->dz = DBL_MAX;
 
 	    bResult = FALSE;
 
@@ -995,7 +995,7 @@ SymbolParameterResolveCoordinateValue
 /// \arg ppistCoord context to get coordinate for
 /// \arg pcName name of parameter ("X", "Y", "Z")
 /// 
-/// \return double : coordinate parameter value, FLT_MAX if some error occured
+/// \return double : coordinate parameter value, DBL_MAX if some error occured
 /// 
 /// \brief Resolve coordinate value of parameter
 ///
@@ -1017,7 +1017,7 @@ SymbolParameterResolveTransformedValue
 {
     //- set default result : failure
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- init transformed value : zero
 
@@ -1045,7 +1045,7 @@ SymbolParameterResolveTransformedValue
 /*     { */
 /* 	//- return default failure */
 
-/* 	return(FLT_MAX); */
+/* 	return(DBL_MAX); */
 /*     } */
 
     //- loop over context to base symbol
@@ -1081,9 +1081,9 @@ SymbolParameterResolveTransformedValue
 
 	    if (!pparX || !pparY || !pparZ)
 	    {
-		D3Value.dx = FLT_MAX;
-		D3Value.dy = FLT_MAX;
-		D3Value.dz = FLT_MAX;
+		D3Value.dx = DBL_MAX;
+		D3Value.dy = DBL_MAX;
+		D3Value.dz = DBL_MAX;
 
 		break;
 	    }
@@ -1094,13 +1094,13 @@ SymbolParameterResolveTransformedValue
 	    dResolvedY = ParameterResolveValue(pparY, ppistWorking);
 	    dResolvedZ = ParameterResolveValue(pparZ, ppistWorking);
 
-	    if (dResolvedX == FLT_MAX
-		|| dResolvedY == FLT_MAX
-		|| dResolvedZ == FLT_MAX)
+	    if (dResolvedX == DBL_MAX
+		|| dResolvedY == DBL_MAX
+		|| dResolvedZ == DBL_MAX)
 	    {
-		D3Value.dx = FLT_MAX;
-		D3Value.dy = FLT_MAX;
-		D3Value.dz = FLT_MAX;
+		D3Value.dx = DBL_MAX;
+		D3Value.dy = DBL_MAX;
+		D3Value.dz = DBL_MAX;
 
 		break;
 	    }
@@ -1123,9 +1123,9 @@ SymbolParameterResolveTransformedValue
 
 	if (!bTransformed)
 	{
-	    D3Value.dx = FLT_MAX;
-	    D3Value.dy = FLT_MAX;
-	    D3Value.dz = FLT_MAX;
+	    D3Value.dx = DBL_MAX;
+	    D3Value.dy = DBL_MAX;
+	    D3Value.dz = DBL_MAX;
 
 	    break;
 	}
@@ -1141,7 +1141,7 @@ SymbolParameterResolveTransformedValue
 
     //- set result
 
-    if (D3Value.dx != FLT_MAX && D3Value.dy != FLT_MAX && D3Value.dz != FLT_MAX)
+    if (D3Value.dx != DBL_MAX && D3Value.dy != FLT_MAX && D3Value.dz != FLT_MAX)
     {
 	switch (pcName[0])
 	{
@@ -1162,7 +1162,7 @@ SymbolParameterResolveTransformedValue
 /// \arg ppist context of symbol
 /// \arg pcName name of parameter
 /// 
-/// \return double : scaled parameter value, FLT_MAX if some error occured
+/// \return double : scaled parameter value, DBL_MAX if some error occured
 /// 
 /// \brief Resolve scaled value of parameter
 /// 
@@ -1175,7 +1175,7 @@ SymbolParameterResolveScaledValue
 {
     //- set default result : failure
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- lookup parameter
 
@@ -3597,7 +3597,7 @@ SymbolTraverseWildcard
 /// \arg pcName name of parameter
 /// \arg ppist context of symbol
 /// 
-/// \return double : parameter value, FLT_MAX if some error occured
+/// \return double : parameter value, DBL_MAX if some error occured
 /// 
 /// \brief Resolve value of parameter
 /// 
@@ -3609,7 +3609,7 @@ SymbolTraverseWildcard
 /// \arg dValue value to scale
 /// \arg ppar parameter that specifies type of scaling
 /// 
-/// \return double : scaled value, FLT_MAX for failure
+/// \return double : scaled value, DBL_MAX for failure
 /// 
 /// \brief Scale value according to parameter type and symbol type
 /// 

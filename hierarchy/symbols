@@ -924,7 +924,7 @@ my $class_hierarchy
 		      isa => 'segmenter',
 		      name => 'symtab_Segment',
 		      parameters => {
-				     BRANCHPOINT => '1 if this is a branch point, 0 if not, FLT_MAX if unknown (a very high value)',
+				     BRANCHPOINT => '1 if this is a branch point, 0 if not, DBL_MAX if unknown (a very high value)',
 				     CM => 'specific capacitance of this segment',
 				     RA => 'specific axial resistance of this segment',
 				     RM => 'specific membrane resistance of this segment',
@@ -2103,7 +2103,7 @@ my $object_methods_return_types
 			  type => 'int',
 			 },
        'get_cached_delay' => {
-			      default => 'FLT_MAX',
+			      default => 'DBL_MAX',
 			      selector => '.uSelector.dFunc',
 			      type => 'double',
 			     },
@@ -2118,7 +2118,7 @@ my $object_methods_return_types
 			    type => 'int',
 			   },
        'get_cached_weight' => {
-			       default => 'FLT_MAX',
+			       default => 'DBL_MAX',
 			       selector => '.uSelector.dFunc',
 			       type => 'double',
 			      },
@@ -2133,7 +2133,7 @@ my $object_methods_return_types
 			  type => 'IOHContainer *',
 			 },
        'get_delay' => {
-		       default => 'FLT_MAX',
+		       default => 'DBL_MAX',
 		       selector => '.uSelector.dFunc',
 		       type => 'double',
 		      },
@@ -2198,7 +2198,7 @@ my $object_methods_return_types
 		      type => 'int',
 		     },
        'get_weight' => {
-			default => 'FLT_MAX',
+			default => 'DBL_MAX',
 			selector => '.uSelector.dFunc',
 			type => 'double',
 		       },
@@ -2248,12 +2248,12 @@ my $object_methods_return_types
 				   type => 'int',
 				  },
        'parameter_resolve_value' => {
-				     default => 'FLT_MAX',
+				     default => 'DBL_MAX',
 				     selector => '.uSelector.dFunc',
 				     type => 'double',
 				    },
        'parameter_scale_value' => {
-				   default => 'FLT_MAX',
+				   default => 'DBL_MAX',
 				   selector => '.uSelector.dFunc',
 				   type => 'double',
 				  },

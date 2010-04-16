@@ -164,7 +164,7 @@ SegmentCreateAlias
 /// 
 /// \return double
 /// 
-///	1, 2, 3 ... if this is a branch point, 0 if not, FLT_MAX if unknown.
+///	1, 2, 3 ... if this is a branch point, 0 if not, DBL_MAX if unknown.
 /// 
 /// \brief Get branch point flag of this segment.
 /// 
@@ -176,7 +176,7 @@ SegmentGetBranchpointFlag
 {
     //- set default result: failure
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- get segmenter base symbol
 
@@ -238,7 +238,7 @@ SegmentGetBranchpointFlag
 		    (stderr,
 		     "internal error: SegmenterLinearize() was used to obtain the branchpoint flag on a segment that does not belong to its own container\n");
 
-		dResult = FLT_MAX;
+		dResult = DBL_MAX;
 	    }
 	}
 
@@ -258,7 +258,7 @@ SegmentGetBranchpointFlag
 /// \arg psegment segment to get length for.
 /// \arg ppist context of segment.
 /// 
-/// \return double : segment length, FLT_MAX for failure.
+/// \return double : segment length, DBL_MAX for failure.
 /// 
 /// \brief Get length of segment.
 /// 
@@ -286,7 +286,7 @@ SegmentGetLength
 {
     //- set default result : failure
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- get coordinates
 
@@ -297,9 +297,9 @@ SegmentGetLength
     double dZ
 	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "rel_Z");
 
-    if (dX != FLT_MAX
-	&& dY != FLT_MAX
-	&& dZ != FLT_MAX)
+    if (dX != DBL_MAX
+	&& dY != DBL_MAX
+	&& dZ != DBL_MAX)
     {
 	//- calculate distance between two segments
 
@@ -432,7 +432,7 @@ SegmentGetParameter
 
 	    double dLength = SegmentGetLength(psegment, ppist);
 
-	    if (dLength != FLT_MAX)
+	    if (dLength != DBL_MAX)
 	    {
 		//- set length of segment
 
@@ -450,7 +450,7 @@ SegmentGetParameter
 
 	    double dTau = SegmentGetTau(psegment, ppist);
 
-	    if (dTau != FLT_MAX)
+	    if (dTau != DBL_MAX)
 	    {
 		//- set time constant
 
@@ -468,7 +468,7 @@ SegmentGetParameter
 
 	    double dVmInit = SegmentGetVmInit(psegment, ppist);
 
-	    if (dVmInit != FLT_MAX)
+	    if (dVmInit != DBL_MAX)
 	    {
 		//- set initial membrane potential
 
@@ -489,7 +489,7 @@ SegmentGetParameter
 /// \arg psegment segment to get somatopetal branchpoints for.
 /// \arg ppist context of segment.
 /// 
-/// \return double : segment somatopetal branchpoints, FLT_MAX for failure.
+/// \return double : segment somatopetal branchpoints, DBL_MAX for failure.
 /// 
 /// \brief get somatopetal branchpoints of segment.
 /// 
@@ -528,9 +528,9 @@ SegmentGetSomatopetalBranchpoints
 
 	double dBranchpoint = SymbolParameterResolveValue(phsle, ppistWorking, "BRANCHPOINT");
 
-	if (dBranchpoint == FLT_MAX)
+	if (dBranchpoint == DBL_MAX)
 	{
-	    dResult = FLT_MAX;
+	    dResult = DBL_MAX;
 
 	    break;
 	}
@@ -566,13 +566,13 @@ SegmentGetSomatopetalBranchpoints
 
 	    double dParentBranchPoints = SymbolParameterResolveValue(phsle, ppistWorking, "SOMATOPETAL_BRANCHPOINTS");
 
-	    if (dParentBranchPoints != FLT_MAX)
+	    if (dParentBranchPoints != DBL_MAX)
 	    {
 		dResult += dParentBranchPoints;
 	    }
 	    else
 	    {
-		dResult = FLT_MAX;
+		dResult = DBL_MAX;
 	    }
 
 	    phsle = NULL;
@@ -606,7 +606,7 @@ SegmentGetSomatopetalBranchpoints
 /// \arg psegment segment to get somatopetal distance for.
 /// \arg ppist context of segment.
 /// 
-/// \return double : segment somatopetal distance, FLT_MAX for failure.
+/// \return double : segment somatopetal distance, DBL_MAX for failure.
 /// 
 /// \brief get somatopetal distance of segment.
 /// 
@@ -643,9 +643,9 @@ SegmentGetSomatopetalDistance
 
 	double dLength = SymbolParameterResolveValue(phsle, ppistWorking, "LENGTH");
 
-	if (dLength == FLT_MAX)
+	if (dLength == DBL_MAX)
 	{
-	    dResult = FLT_MAX;
+	    dResult = DBL_MAX;
 
 	    break;
 	}
@@ -674,7 +674,7 @@ SegmentGetSomatopetalDistance
 
 		PidinStackFree(ppistParent);
 
-		dResult = FLT_MAX;
+		dResult = DBL_MAX;
 
 		break;
 	    }
@@ -687,13 +687,13 @@ SegmentGetSomatopetalDistance
 
 	    double dParentDistance = SymbolParameterResolveValue(phsle, ppistWorking, "SOMATOPETAL_DISTANCE");
 
-	    if (dParentDistance != FLT_MAX)
+	    if (dParentDistance != DBL_MAX)
 	    {
 		dResult += dParentDistance;
 	    }
 	    else
 	    {
-		dResult = FLT_MAX;
+		dResult = DBL_MAX;
 	    }
 
 	    phsle = NULL;
@@ -727,7 +727,7 @@ SegmentGetSomatopetalDistance
 /// \arg psegment segment to get surface for.
 /// \arg ppist context of segment.
 /// 
-/// \return double : segment surface, FLT_MAX for failure.
+/// \return double : segment surface, DBL_MAX for failure.
 /// 
 /// \brief get surface of segment.
 /// 
@@ -739,7 +739,7 @@ SegmentGetSurface
 {
     //- set default result : failure
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- if spherical segment
 
@@ -756,7 +756,7 @@ SegmentGetSurface
 	    = SymbolParameterResolveValue
 	      (&psegment->segr.bio.ioh.iol.hsle, ppist, "DIA");
 
-	if (dResult != FLT_MAX)
+	if (dResult != DBL_MAX)
 	{
 	    dResult = dResult * dResult * M_PI;
 	}
@@ -776,7 +776,7 @@ SegmentGetSurface
 	    = SymbolParameterResolveValue
 	      (&psegment->segr.bio.ioh.iol.hsle, ppist, "LENGTH");
 
-	if (dDia != FLT_MAX && dLength != FLT_MAX)
+	if (dDia != DBL_MAX && dLength != FLT_MAX)
 	{
 	    //- calculate surface
 
@@ -794,7 +794,7 @@ SegmentGetSurface
 /// \arg psegment segment to get time constant for.
 /// \arg ppist context of segment.
 /// 
-/// \return double : segment time constant, FLT_MAX for failure.
+/// \return double : segment time constant, DBL_MAX for failure.
 /// 
 /// \brief Get time constant of segment.
 /// 
@@ -806,7 +806,7 @@ SegmentGetTau
 {
     //- set default result : failure
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- get capacitance and resistance
 
@@ -817,8 +817,8 @@ SegmentGetTau
     double dRm
 	= SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "RM");
 
-    if (dCm != FLT_MAX
-	&& dRm != FLT_MAX)
+    if (dCm != DBL_MAX
+	&& dRm != DBL_MAX)
     {
 	//- calculate time constant
 
@@ -842,7 +842,7 @@ SegmentGetTau
 /// \arg psegment segment to get initial membrane potential for.
 /// \arg ppist context of segment.
 /// 
-/// \return double : segment initial membrane potential, FLT_MAX for
+/// \return double : segment initial membrane potential, DBL_MAX for
 /// failure.
 /// 
 /// \brief Get initial membrane potential of segment.
@@ -855,7 +855,7 @@ SegmentGetVmInit
 {
     //- set default result : failure
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- get leak conductance potential
 
@@ -878,7 +878,7 @@ SegmentGetVmInit
 /// \arg psegment segment to get volume for.
 /// \arg ppist context of segment.
 /// 
-/// \return double : segment volume, FLT_MAX for failure.
+/// \return double : segment volume, DBL_MAX for failure.
 /// 
 /// \brief get volume of segment.
 /// 
@@ -890,7 +890,7 @@ SegmentGetVolume
 {
     //- set default result : failure
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     //- if spherical segment
 
@@ -924,7 +924,7 @@ SegmentGetVolume
 	    = SymbolParameterResolveValue
 	      (&psegment->segr.bio.ioh.iol.hsle, ppist, "LENGTH");
 
-	if (dDia != FLT_MAX && dLength != FLT_MAX)
+	if (dDia != DBL_MAX && dLength != FLT_MAX)
 	{
 	    //- calculate volume
 
@@ -1103,7 +1103,7 @@ SegmentReduce
 
 	    //- unscale resistance to length and dia of segment
 
-	    double dRAUnscaled = FLT_MAX;
+	    double dRAUnscaled = DBL_MAX;
 
 	    if (SegmenterIsSpherical(&psegment->segr))
 	    {
@@ -1145,7 +1145,7 @@ SegmentReduce
 
 	//- if present
 
-	if (dSurface != FLT_MAX)
+	if (dSurface != DBL_MAX)
 	{
 	    //- if spherical
 
@@ -1155,7 +1155,7 @@ SegmentReduce
 
 		double dDia = SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "DIA");
 
-		if (dDia != FLT_MAX)
+		if (dDia != DBL_MAX)
 		{
 		    //- if surface matches with spherical surface
 
@@ -1180,8 +1180,8 @@ SegmentReduce
 
 		double dDia = SymbolParameterResolveValue(&psegment->segr.bio.ioh.iol.hsle, ppist, "DIA");
 
-		if (dLength != FLT_MAX
-		    && dDia != FLT_MAX)
+		if (dLength != DBL_MAX
+		    && dDia != DBL_MAX)
 		{
 		    //- if surface matches with cylindrical surface
 

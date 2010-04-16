@@ -306,7 +306,7 @@ ConnectionAllSuccessorsSet
 /// 
 /// \arg pconn connection.
 /// 
-/// \return double : delay, FLT_MAX for failure
+/// \return double : delay, DBL_MAX for failure
 /// 
 /// \brief Get connection delay.
 /// 
@@ -365,7 +365,7 @@ ConnectionGetPre
 /// 
 /// \arg pconn connection.
 /// 
-/// \return double : weight, FLT_MAX for failure
+/// \return double : weight, DBL_MAX for failure
 /// 
 /// \brief Get connection weight.
 /// 

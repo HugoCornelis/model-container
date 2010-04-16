@@ -303,7 +303,7 @@ SegmenterGetParameter
 /// \arg psegr segment to get length for.
 /// \arg ppist context of segment.
 /// 
-/// \return double : segment length, FLT_MAX for failure.
+/// \return double : segment length, DBL_MAX for failure.
 /// 
 /// \brief get total length of segmenter.
 /// 
@@ -330,7 +330,7 @@ SegmenterLengthCalculator
 
     double dLength = SymbolParameterResolveValue(phsle, ptstr->ppist, "LENGTH");
 
-    if (dLength != FLT_MAX)
+    if (dLength != DBL_MAX)
     {
 	*pdTotalLength += dLength;
     }
@@ -359,7 +359,7 @@ SegmenterGetTotalLength
 	 (void *)&dResult)
 	== FALSE)
     {
-	dResult = FLT_MAX;
+	dResult = DBL_MAX;
     }
 
     //- return result
@@ -372,7 +372,7 @@ SegmenterGetTotalLength
 /// \arg psegr segment to get surface for.
 /// \arg ppist context of segment.
 /// 
-/// \return double : segment surface, FLT_MAX for failure.
+/// \return double : segment surface, DBL_MAX for failure.
 /// 
 /// \brief get total surface of segmenter.
 /// 
@@ -399,7 +399,7 @@ SegmenterSurfaceCalculator
 
     double dSurface = SymbolParameterResolveValue(phsle, ptstr->ppist, "SURFACE");
 
-    if (dSurface != FLT_MAX)
+    if (dSurface != DBL_MAX)
     {
 	*pdTotalSurface += dSurface;
     }
@@ -428,7 +428,7 @@ SegmenterGetTotalSurface
 	 (void *)&dResult)
 	== FALSE)
     {
-	dResult = FLT_MAX;
+	dResult = DBL_MAX;
     }
 
     //- return result
@@ -441,7 +441,7 @@ SegmenterGetTotalSurface
 /// \arg psegr segment to get volume for.
 /// \arg ppist context of segment.
 /// 
-/// \return double : segment volume, FLT_MAX for failure.
+/// \return double : segment volume, DBL_MAX for failure.
 /// 
 /// \brief get total volume of segmenter.
 /// 
@@ -468,7 +468,7 @@ SegmenterVolumeCalculator
 
     double dVolume = SymbolParameterResolveValue(phsle, ptstr->ppist, "VOLUME");
 
-    if (dVolume != FLT_MAX)
+    if (dVolume != DBL_MAX)
     {
 	*pdTotalVolume += dVolume;
     }
@@ -497,7 +497,7 @@ SegmenterGetTotalVolume
 	 (void *)&dResult)
 	== FALSE)
     {
-	dResult = FLT_MAX;
+	dResult = DBL_MAX;
     }
 
     //- return result
@@ -1021,7 +1021,7 @@ SegmenterMesherOnLengthProcessor
 
     double dLength = SymbolParameterResolveValue(phsle, ptstr->ppist, "LENGTH");
 
-    if (dLength == FLT_MAX)
+    if (dLength == DBL_MAX)
     {
 	return(TSTR_PROCESSOR_ABORT);
     }
@@ -1142,16 +1142,16 @@ SegmenterMesherOnLengthProcessor
 	    //- remove parameters LENGTH, SURFACE, VOLUME, TOTALSURFACE, DIA
 
 	    BioComponentSetParameterDouble
-		((struct symtab_BioComponent *)phsleAlias, "LENGTH", FLT_MAX);
+		((struct symtab_BioComponent *)phsleAlias, "LENGTH", DBL_MAX);
 
 	    BioComponentSetParameterDouble
-		((struct symtab_BioComponent *)phsleAlias, "SURFACE", FLT_MAX);
+		((struct symtab_BioComponent *)phsleAlias, "SURFACE", DBL_MAX);
 
 	    BioComponentSetParameterDouble
-		((struct symtab_BioComponent *)phsleAlias, "VOLUME", FLT_MAX);
+		((struct symtab_BioComponent *)phsleAlias, "VOLUME", DBL_MAX);
 
 	    BioComponentSetParameterDouble
-		((struct symtab_BioComponent *)phsleAlias, "TOTALSURFACE", FLT_MAX);
+		((struct symtab_BioComponent *)phsleAlias, "TOTALSURFACE", DBL_MAX);
 
 	    //- set new parameters rel_X, rel_Y, rel_Z, DIA
 
@@ -1614,7 +1614,7 @@ SegmenterMesherOnLength
 /// \arg dValue value to scale
 /// \arg ppar parameter that specify type of scaling
 /// 
-/// \return double : scaled value, FLT_MAX for failure
+/// \return double : scaled value, DBL_MAX for failure
 /// 
 /// \brief Scale value according to parameter type and symbol type
 /// 
@@ -1628,13 +1628,13 @@ SegmenterParameterScaleValue
 {
     //- set default result : none
 
-    double dResult = FLT_MAX;
+    double dResult = DBL_MAX;
 
     /// \note safety and robustness first
 
-    if (dValue == FLT_MAX)
+    if (dValue == DBL_MAX)
     {
-	return(FLT_MAX);
+	return(DBL_MAX);
     }
 
     //- get segment surface
@@ -1645,7 +1645,7 @@ SegmenterParameterScaleValue
     double dSurface
 	= pparSurface
 	  ? ParameterResolveValue(pparSurface, ppist)
-	  : FLT_MAX ;
+	  : DBL_MAX ;
 
     //- get segment length
 
@@ -1655,7 +1655,7 @@ SegmenterParameterScaleValue
     double dLength
 	= pparLength
 	  ? ParameterResolveValue(pparLength, ppist)
-	  : FLT_MAX ;
+	  : DBL_MAX ;
 
     //- get segment diameter
 
@@ -1665,7 +1665,7 @@ SegmenterParameterScaleValue
     double dDia
 	= pparDia
 	  ? ParameterResolveValue(pparDia, ppist)
-	  : FLT_MAX ;
+	  : DBL_MAX ;
 
     //- get channel parameter field name
 
@@ -1682,13 +1682,13 @@ SegmenterParameterScaleValue
     {
 	//- scale value : divide through surface
 
-	if (dSurface != FLT_MAX)
+	if (dSurface != DBL_MAX)
 	{
 	    dResult = dValue / dSurface;
 	}
 	else
 	{
-	    return(FLT_MAX);
+	    return(DBL_MAX);
 	}
     }
 
@@ -1698,13 +1698,13 @@ SegmenterParameterScaleValue
     {
 	//- scale value : multiply with surface
 
-	if (dSurface != FLT_MAX)
+	if (dSurface != DBL_MAX)
 	{
 	    dResult = dValue * dSurface;
 	}
 	else
 	{
-	    return(FLT_MAX);
+	    return(DBL_MAX);
 	}
     }
 
@@ -1725,13 +1725,13 @@ SegmenterParameterScaleValue
 
 	    //- scale value
 
-	    if (dDia != FLT_MAX)
+	    if (dDia != DBL_MAX)
 	    {
 		dResult = 13.50 * dValue / (dDia * M_PI);
 	    }
 	    else
 	    {
-		return(FLT_MAX);
+		return(DBL_MAX);
 	    }
 	}
 
@@ -1741,14 +1741,14 @@ SegmenterParameterScaleValue
 	{
 	    //- scale value
 
-	    if (dDia != FLT_MAX
-		&& dLength != FLT_MAX)
+	    if (dDia != DBL_MAX
+		&& dLength != DBL_MAX)
 	    {
 		dResult = 4.0 * dValue * dLength / (dDia * dDia * M_PI);
 	    }
 	    else
 	    {
-		return(FLT_MAX);
+		return(DBL_MAX);
 	    }
 	}
     }
