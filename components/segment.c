@@ -748,7 +748,7 @@ SegmentGetSurface
     /// \todo but the cast should not be here, there is a mismatch in the
     /// \todo derivation hierarchy here.
 
-    if (SegmenterIsSpherical((struct symtab_Segmenter *)psegment))
+    if (SegmenterIsSpherical((struct symtab_Segmenter *)psegment, ppist))
     {
 	//- calculate surface
 
@@ -899,7 +899,7 @@ SegmentGetVolume
     /// \todo but the cast should not be here, there is a mismatch in the
     /// \todo derivation hierarchy here.
 
-    if (SegmenterIsSpherical((struct symtab_Segmenter *)psegment))
+    if (SegmenterIsSpherical((struct symtab_Segmenter *)psegment, ppist))
     {
 	//- calculate volume
 
@@ -999,9 +999,9 @@ SegmentReduce
 
 	    ParContainerDelete(psegment->segr.bio.pparc, pparLength);
 
-	    //- mark segment as spherical
+/* 	    //- mark segment as spherical */
 
-	    SymbolSetOptions(&psegment->segr.bio.ioh.iol.hsle, FLAG_SEGMENTER_SPHERICAL);
+/* 	    SymbolSetOptions(&psegment->segr.bio.ioh.iol.hsle, FLAG_SEGMENTER_SPHERICAL); */
 	}
     }
 
@@ -1105,7 +1105,7 @@ SegmentReduce
 
 	    double dRAUnscaled = DBL_MAX;
 
-	    if (SegmenterIsSpherical(&psegment->segr))
+	    if (SegmenterIsSpherical(&psegment->segr, ppist))
 	    {
 		/* Thinking of the 'one-dimensional' cable resistance of a 
 		** sphere is a bit of a challenge...  As an approximation we
@@ -1149,7 +1149,7 @@ SegmentReduce
 	{
 	    //- if spherical
 
-	    if (SegmenterIsSpherical(&psegment->segr))
+	    if (SegmenterIsSpherical(&psegment->segr, ppist))
 	    {
 		//- get length and dia
 

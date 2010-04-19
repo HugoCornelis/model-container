@@ -544,6 +544,41 @@ void SegmenterInit(struct symtab_Segmenter *psegr)
 /// 
 /// \return int
 /// 
+///	TRUE if spherical.
+/// 
+/// \brief Check if a segmenter is spherical.
+/// 
+
+int SegmenterIsSpherical(struct symtab_Segmenter *psegr, struct PidinStack *ppist)
+{
+    //- set default result: cylindrical
+
+    int iResult = 0;
+
+    //- if the has no length
+
+    double dLength = SymbolParameterResolveValue(&psegr->bio.ioh.iol.hsle, ppist, "LENGTH");
+
+    if (dLength == 0.0
+	|| dLength == DBL_MAX)
+    {
+	//- is spherical
+
+	iResult = 1;
+    }
+
+    //- return result
+
+    return(iResult);
+}
+
+
+/// 
+/// \arg psegr segmenter to traverse segments for
+/// \arg ppist context of segmenter, segmenter assumed to be on top
+/// 
+/// \return int
+/// 
 ///	success of operation.
 /// 
 /// \brief Linearize the segments of the segmenter.
@@ -1714,7 +1749,7 @@ SegmenterParameterScaleValue
     {
 	//- if spherical
 
-	if (SegmenterIsSpherical(psegr))
+	if (SegmenterIsSpherical(psegr, ppist))
 	{
 	    /* Thinking of the 'one-dimensional' cable resistance of a 
 	    ** sphere is a bit of a challenge...  As an approximation we

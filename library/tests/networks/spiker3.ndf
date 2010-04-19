@@ -274,7 +274,7 @@ PRIVATE_MODELS
                		INPUT naf->I,
 		END BINDINGS
 
-		OPTIONS SPHERICAL
+// 		OPTIONS SPHERICAL
 
 		CHILD SpikeGen
 			spikegen
@@ -362,7 +362,7 @@ PRIVATE_MODELS
                		INPUT s->I,
 		END BINDINGS
 
-		OPTIONS SPHERICAL
+// 		OPTIONS SPHERICAL
 
 		PARAMETERS
 			PARAMETER ( Vm_init = -0.080 ),

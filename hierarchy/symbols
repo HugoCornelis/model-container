@@ -858,7 +858,7 @@ my $class_hierarchy
 						 'Channel',
 						],
 				  specific_allocator => 'SegmentCalloc',
-				  specific_description => {
+				  specific_description1 => {
 							   add => '		SegmentDescription
 		TOKEN_OPTIONS
 		SegmentInstanceOptions
@@ -880,7 +880,7 @@ my $class_hierarchy
 		}
 ',
 							  },
-				  specific_rules => 'SegmentInstanceOptions	/* <iCompOptions> */
+				  specific_rules1 => 'SegmentInstanceOptions	/* <iCompOptions> */
 	:
 		{
 #line

@@ -190,7 +190,7 @@ PUBLIC_MODELS
                 		INPUT pf_AMPA->I
 			END BINDINGS
 
-			OPTIONS SPHERICAL
+// 			OPTIONS SPHERICAL
 
 			CHILD SpikeGen
 				spikegen

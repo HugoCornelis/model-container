@@ -507,7 +507,7 @@ SpinesSegmentRecorder
 
     //- if segment spherical
 
-    if (SegmenterIsSpherical(psegr))
+    if (SegmenterIsSpherical(psegr, ptstr->ppist))
     {
 	//- return success
 

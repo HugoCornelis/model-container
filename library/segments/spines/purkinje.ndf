@@ -50,7 +50,7 @@ PRIVATE_MODELS
 ** scaling method to calculate actual Ra (in Purk_cicomp.g, the 8 factor)
 **
 ** 
-		OPTIONS SPHERICAL
+// 		OPTIONS SPHERICAL
 
 		PARAMETERS
 /* //			DIA = FIXED(5.399999736e-07), */
