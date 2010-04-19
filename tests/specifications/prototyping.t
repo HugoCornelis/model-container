@@ -67,7 +67,7 @@ my $test
 						  (
 						   {
 						    description => "Can we identify the prototype of the cell (has no prototype) ?",
-						    read => 'value = 320
+						    read => 'value = 327
 ',
 						    write => "printparameter /Purkinje/segments/soma PROTOTYPE_IDENTIFIER",
 						   },

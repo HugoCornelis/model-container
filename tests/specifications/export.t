@@ -2131,6 +2131,7 @@ PUBLIC_MODELS
     SEGMENT_GROUP "segments"
       CHILD "soma" "soma"
         PARAMETERS
+          PARAMETER ( LENGTH = 0 ),
           PARAMETER ( rel_X = 0 ),
           PARAMETER ( rel_Y = 0 ),
           PARAMETER ( rel_Z = 0 ),
@@ -2139,6 +2140,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[0]"
         PARAMETERS
+          PARAMETER ( LENGTH = 1.44697e-05 ),
           PARAMETER ( Z = 9.447e-06 ),
           PARAMETER ( Y = 9.447e-06 ),
           PARAMETER ( X = 5.557e-06 ),
@@ -2151,6 +2153,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[1]"
         PARAMETERS
+          PARAMETER ( LENGTH = 2.35003e-05 ),
           PARAMETER ( Z = 3.1356e-05 ),
           PARAMETER ( Y = 1.0571e-05 ),
           PARAMETER ( X = 1.3983e-05 ),
@@ -2163,6 +2166,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[2]"
         PARAMETERS
+          PARAMETER ( LENGTH = 6.96028e-06 ),
           PARAMETER ( Z = 3.8022e-05 ),
           PARAMETER ( Y = 1.1682e-05 ),
           PARAMETER ( X = 1.5649e-05 ),
@@ -2175,6 +2179,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[3]"
         PARAMETERS
+          PARAMETER ( LENGTH = 3.92982e-06 ),
           PARAMETER ( Z = 3.9689e-05 ),
           PARAMETER ( Y = 1.3905e-05 ),
           PARAMETER ( X = 1.287e-05 ),
@@ -2187,6 +2192,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[4]"
         PARAMETERS
+          PARAMETER ( LENGTH = 8.33007e-06 ),
           PARAMETER ( Z = 4.5242e-05 ),
           PARAMETER ( Y = 2.0014e-05 ),
           PARAMETER ( X = 1.1759e-05 ),
@@ -2199,6 +2205,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[5]"
         PARAMETERS
+          PARAMETER ( LENGTH = 5.14999e-06 ),
           PARAMETER ( Z = 5.024e-05 ),
           PARAMETER ( Y = 1.9459e-05 ),
           PARAMETER ( X = 1.0648e-05 ),
@@ -2211,6 +2218,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[6]"
         PARAMETERS
+          PARAMETER ( LENGTH = 3.9541e-06 ),
           PARAMETER ( Z = 5.3738e-05 ),
           PARAMETER ( Y = 2.0042e-05 ),
           PARAMETER ( X = 8.899e-06 ),
@@ -2223,6 +2231,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[7]"
         PARAMETERS
+          PARAMETER ( LENGTH = 8.40971e-06 ),
           PARAMETER ( Z = 6.0407e-05 ),
           PARAMETER ( Y = 2.3376e-05 ),
           PARAMETER ( X = 5.009e-06 ),
@@ -2235,6 +2244,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[8]"
         PARAMETERS
+          PARAMETER ( LENGTH = 1.16099e-05 ),
           PARAMETER ( Z = 6.9848e-05 ),
           PARAMETER ( Y = 2.2265e-05 ),
           PARAMETER ( X = -1.656e-06 ),
@@ -2247,6 +2257,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "thickd" "br1[0]"
         PARAMETERS
+          PARAMETER ( LENGTH = 4.5798e-06 ),
           PARAMETER ( Z = 6.9848e-05 ),
           PARAMETER ( Y = 2.3376e-05 ),
           PARAMETER ( X = -6.099e-06 ),
@@ -2259,6 +2270,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "thickd" "br1[1]"
         PARAMETERS
+          PARAMETER ( LENGTH = 4.61018e-06 ),
           PARAMETER ( Z = 7.0958e-05 ),
           PARAMETER ( Y = 2.2821e-05 ),
           PARAMETER ( X = -1.0539e-05 ),
@@ -2271,6 +2283,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "thickd" "br1[2]"
         PARAMETERS
+          PARAMETER ( LENGTH = 1.33802e-05 ),
           PARAMETER ( Z = 7.2069e-05 ),
           PARAMETER ( Y = 2.2821e-05 ),
           PARAMETER ( X = -2.3873e-05 ),
@@ -2283,6 +2296,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "thickd" "br1[3]"
         PARAMETERS
+          PARAMETER ( LENGTH = 4.37007e-06 ),
           PARAMETER ( Z = 7.4844e-05 ),
           PARAMETER ( Y = 2.3376e-05 ),
           PARAMETER ( X = -2.7203e-05 ),
@@ -2295,6 +2309,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "thickd" "b0s02[0]"
         PARAMETERS
+          PARAMETER ( LENGTH = 1.00595e-05 ),
           PARAMETER ( Z = 3.8022e-05 ),
           PARAMETER ( Y = 1.0571e-05 ),
           PARAMETER ( X = 2.5647e-05 ),
@@ -2465,6 +2480,7 @@ PUBLIC_MODELS
     SEGMENT_GROUP "segments"
       CHILD "soma" "soma"
         PARAMETERS
+          PARAMETER ( LENGTH = 0 ),
           PARAMETER ( rel_X = 0 ),
           PARAMETER ( rel_Y = 0 ),
           PARAMETER ( rel_Z = 0 ),
@@ -2473,6 +2489,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[0]"
         PARAMETERS
+          PARAMETER ( LENGTH = 1.44697e-05 ),
           PARAMETER ( Z = 9.447e-06 ),
           PARAMETER ( Y = 9.447e-06 ),
           PARAMETER ( X = 5.557e-06 ),
@@ -2485,6 +2502,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[1]"
         PARAMETERS
+          PARAMETER ( LENGTH = 2.35003e-05 ),
           PARAMETER ( Z = 3.1356e-05 ),
           PARAMETER ( Y = 1.0571e-05 ),
           PARAMETER ( X = 1.3983e-05 ),
@@ -2497,6 +2515,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[2]"
         PARAMETERS
+          PARAMETER ( LENGTH = 6.96028e-06 ),
           PARAMETER ( Z = 3.8022e-05 ),
           PARAMETER ( Y = 1.1682e-05 ),
           PARAMETER ( X = 1.5649e-05 ),
@@ -2509,6 +2528,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[3]"
         PARAMETERS
+          PARAMETER ( LENGTH = 3.92982e-06 ),
           PARAMETER ( Z = 3.9689e-05 ),
           PARAMETER ( Y = 1.3905e-05 ),
           PARAMETER ( X = 1.287e-05 ),
@@ -2521,6 +2541,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[4]"
         PARAMETERS
+          PARAMETER ( LENGTH = 8.33007e-06 ),
           PARAMETER ( Z = 4.5242e-05 ),
           PARAMETER ( Y = 2.0014e-05 ),
           PARAMETER ( X = 1.1759e-05 ),
@@ -2533,6 +2554,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[5]"
         PARAMETERS
+          PARAMETER ( LENGTH = 5.14999e-06 ),
           PARAMETER ( Z = 5.024e-05 ),
           PARAMETER ( Y = 1.9459e-05 ),
           PARAMETER ( X = 1.0648e-05 ),
@@ -2545,6 +2567,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[6]"
         PARAMETERS
+          PARAMETER ( LENGTH = 3.9541e-06 ),
           PARAMETER ( Z = 5.3738e-05 ),
           PARAMETER ( Y = 2.0042e-05 ),
           PARAMETER ( X = 8.899e-06 ),
@@ -2557,6 +2580,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[7]"
         PARAMETERS
+          PARAMETER ( LENGTH = 8.40971e-06 ),
           PARAMETER ( Z = 6.0407e-05 ),
           PARAMETER ( Y = 2.3376e-05 ),
           PARAMETER ( X = 5.009e-06 ),
@@ -2569,6 +2593,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "maind" "main[8]"
         PARAMETERS
+          PARAMETER ( LENGTH = 1.16099e-05 ),
           PARAMETER ( Z = 6.9848e-05 ),
           PARAMETER ( Y = 2.2265e-05 ),
           PARAMETER ( X = -1.656e-06 ),
@@ -2581,6 +2606,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "thickd" "br1[0]"
         PARAMETERS
+          PARAMETER ( LENGTH = 4.5798e-06 ),
           PARAMETER ( Z = 6.9848e-05 ),
           PARAMETER ( Y = 2.3376e-05 ),
           PARAMETER ( X = -6.099e-06 ),
@@ -2593,6 +2619,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "thickd" "br1[1]"
         PARAMETERS
+          PARAMETER ( LENGTH = 4.61018e-06 ),
           PARAMETER ( Z = 7.0958e-05 ),
           PARAMETER ( Y = 2.2821e-05 ),
           PARAMETER ( X = -1.0539e-05 ),
@@ -2605,6 +2632,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "thickd" "br1[2]"
         PARAMETERS
+          PARAMETER ( LENGTH = 1.33802e-05 ),
           PARAMETER ( Z = 7.2069e-05 ),
           PARAMETER ( Y = 2.2821e-05 ),
           PARAMETER ( X = -2.3873e-05 ),
@@ -2617,6 +2645,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "thickd" "br1[3]"
         PARAMETERS
+          PARAMETER ( LENGTH = 4.37007e-06 ),
           PARAMETER ( Z = 7.4844e-05 ),
           PARAMETER ( Y = 2.3376e-05 ),
           PARAMETER ( X = -2.7203e-05 ),
@@ -2629,6 +2658,7 @@ PUBLIC_MODELS
       END CHILD
       CHILD "thickd" "b0s02[0]"
         PARAMETERS
+          PARAMETER ( LENGTH = 1.00595e-05 ),
           PARAMETER ( Z = 3.8022e-05 ),
           PARAMETER ( Y = 1.0571e-05 ),
           PARAMETER ( X = 2.5647e-05 ),

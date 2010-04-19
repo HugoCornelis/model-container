@@ -271,7 +271,7 @@ PulseGenGetVolume
 	{
 	    //- set spherical flag for pulsegen calculations
 
-	    if (SegmenterIsSpherical((struct symtab_Segmenter *)phsleComp))
+	    if (SegmenterIsSpherical((struct symtab_Segmenter *)phsleComp, ppistComp))
 	    {
 		iSpherical = 1;
 	    }
@@ -532,7 +532,7 @@ PulseGenParameterScaleValue
 	    struct symtab_HSolveListElement *phsleComp
 		= PidinStackLookupTopSymbol(ppistComp);
 
-	    if (SegmenterIsSpherical((struct symtab_Segmenter *)phsleComp))
+	    if (SegmenterIsSpherical((struct symtab_Segmenter *)phsleComp, ppistComp))
 	    {
 		iSpherical = 1;
 	    }

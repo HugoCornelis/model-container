@@ -36,51 +36,6 @@ struct symtab_Segmenter;
 #include "neurospaces/treespacetraversal.h"
 
 
-/// \def
-/// \def test type(psegr) == struct symtab_Segmenter * at compile time
-/// \def
-
-#define CompileTimeTestSegmenter(psegr)					\
-do {									\
-    struct symtab_Segmenter segr;					\
-    (psegr) == &segr;							\
-} while (0)
-
-
-/// \def
-/// \def test if segment is cylindrical
-/// \def
-
-/// \todo this function is called for pool parameter calculation.
-
-#define SegmenterIsCylindrical(psegr)					\
-({									\
-    CompileTimeTestSegmenter(psegr);					\
-    ( ! SegmenterIsSpherical(psegr));					\
-})
-
-
-/// \def
-/// \def test if segment is spherical
-/// \def
-
-/// \todo this function is called for pool parameter calculation.
-
-#define SegmenterIsSpherical(psegr)					\
-({									\
-    CompileTimeTestSegmenter(psegr);					\
-    (SymbolGetOptions(&(psegr)->bio.ioh.iol.hsle) & FLAG_SEGMENTER_SPHERICAL) \
-    ? 1 								\
-    : 0 ;								\
-})
-
-
-/// \def segment is spherical
-
-#define FLAG_SEGMENTER_SPHERICAL		1
-
-
-
 struct symtab_Segmenter * SegmenterCalloc(void);
 
 int
@@ -99,6 +54,8 @@ SegmenterGetParameter
  char *pcName);
 
 void SegmenterInit(struct symtab_Segmenter *psegr);
+
+int SegmenterIsSpherical(struct symtab_Segmenter *psegr, struct PidinStack *ppist);
 
 int
 SegmenterLinearize

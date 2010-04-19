@@ -244,7 +244,7 @@ PRIVATE_MODELS
 			INPUT naf->I,
 		END BINDINGS
 
-		OPTIONS SPHERICAL
+// 		OPTIONS SPHERICAL
 
 		PARAMETERS
 			PARAMETER ( Vm_init = -0.028 ),
@@ -265,7 +265,7 @@ PRIVATE_MODELS
 
 	// a soma only test neuron with only this channel
 
-	CELL cell_naf_spherical
+// 	CELL cell_naf_spherical
 
 		SEGMENT_GROUP segments
 
@@ -308,7 +308,7 @@ PUBLIC_MODELS
 
 	// select one of the two models as the default model by setting the name equal to the filename of the ndf file (when ssp is run without the --model-name option)
 
-	ALIAS cell_naf_spherical channel_response END ALIAS
+// 	ALIAS cell_naf_spherical channel_response END ALIAS
 
 END PUBLIC_MODELS
 

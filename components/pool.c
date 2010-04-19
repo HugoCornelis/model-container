@@ -271,7 +271,7 @@ PoolGetVolume
 	{
 	    //- set spherical flag for pool calculations
 
-	    if (SegmenterIsSpherical((struct symtab_Segmenter *)phsleComp))
+	    if (SegmenterIsSpherical((struct symtab_Segmenter *)phsleComp, ppistComp))
 	    {
 		iSpherical = 1;
 	    }
@@ -547,7 +547,7 @@ PoolParameterScaleValue
 	    struct symtab_HSolveListElement *phsleComp
 		= PidinStackLookupTopSymbol(ppistComp);
 
-	    if (SegmenterIsSpherical((struct symtab_Segmenter *)phsleComp))
+	    if (SegmenterIsSpherical((struct symtab_Segmenter *)phsleComp, ppistComp))
 	    {
 		iSpherical = 1;
 	    }

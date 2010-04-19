@@ -889,7 +889,7 @@ ChannelParameterScaleValue
 
 	    //- if spherical
 
-	    if (SegmenterIsSpherical((struct symtab_Segmenter *)phsle))
+	    if (SegmenterIsSpherical((struct symtab_Segmenter *)phsle, ppistComp))
 	    {
 		//- calculate surface
 
@@ -1036,7 +1036,7 @@ ChannelReduce
 
 		//- if spherical
 
-		if (SegmenterIsSpherical((struct symtab_Segmenter *)phsle))
+		if (SegmenterIsSpherical((struct symtab_Segmenter *)phsle, ppistComp))
 		{
 		    //- calculate surface
 

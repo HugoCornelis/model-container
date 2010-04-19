@@ -136,7 +136,7 @@ PUBLIC_MODELS
                 		INPUT GABAB->I
 			END BINDINGS
 
-			OPTIONS SPHERICAL
+// 			OPTIONS SPHERICAL
 
 			CHILD SpikeGen
 				spikegen
