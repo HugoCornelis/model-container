@@ -721,13 +721,13 @@ ExporterSymbolStarter
 
 	//- if not prototypes export
 
-	if (!pbioPrototype/*  || (pexd->iFlags & EXPORTER_FLAG_ALL) */)
+	if (!pbioPrototype || (pexd->iFlags & EXPORTER_FLAG_ALL))
 	{
-	    //- export children in prototypes mode
+	    //- export children (maybe in prototypes mode)
 
 	    ExporterChildren(phsle, ptstr->ppist, pexd);
 
-	    //- don't do children traversal
+	    //- now skip to siblings
 
 	    iResult = TSTR_PROCESSOR_SIBLINGS;
 	}
