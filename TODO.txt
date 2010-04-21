@@ -1,10 +1,14 @@
 -*- outline -*-
 
 * ParContainerDelete()
+** Problem
 Is sometimes called in reduce methods with parameter arguments not in
 the container.  This gives funny results such as moving parameters
 from one symbol to another etc.  Additional logic is required that
 makes sure that the correct parameter container is used.
+** reducing.t
+Has a test for the above, but it is currently disabled (because it
+does not work).  This test should be enabled after the bugfix.
 
 * Replace
 ParameterLookup() with ParContainerLookup().
