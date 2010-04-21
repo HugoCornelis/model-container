@@ -84,6 +84,9 @@ struct symtab_ParContainer * ParContainerCalloc(void)
 /// \return int success of operations.
 /// 
 /// \brief Delete a parameter from its container.
+///
+/// \note make sure the parameter is in the container otherwise expect
+/// funny results.
 /// 
 
 int

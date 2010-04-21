@@ -1,5 +1,11 @@
 -*- outline -*-
 
+* ParContainerDelete()
+Is sometimes called in reduce methods with parameter arguments not in
+the container.  This gives funny results such as moving parameters
+from one symbol to another etc.  Additional logic is required that
+makes sure that the correct parameter container is used.
+
 * Replace
 ParameterLookup() with ParContainerLookup().
 
