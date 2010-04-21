@@ -61,6 +61,11 @@ ExporterBindings
 (struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, struct exporter_data *pexd);
 
 static
+int
+ExporterChildren
+(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, struct exporter_data *pexd);
+
+static
 int 
 ExporterSymbolStarter
 (struct TreespaceTraversal *ptstr, void *pvUserdata);
@@ -73,6 +78,7 @@ ExporterSymbol
  struct PidinStack *ppistWildcard,
  int iType,
  int iFlags,
+ int iIndent,
  FILE *pfile);
 
 static
@@ -84,6 +90,7 @@ ExporterSymbolStopper
 ///
 /// \arg phsle symbol to export bindables of.
 /// \arg ppist context of symbol.
+/// \arg pexd exporter configuration.
 ///
 /// \return int success of operation.
 ///
@@ -166,6 +173,7 @@ ExporterBindables
 ///
 /// \arg phsle symbol to export bindings of.
 /// \arg ppist context of symbol.
+/// \arg pexd exporter configuration.
 ///
 /// \return int success of operation.
 ///
@@ -236,6 +244,52 @@ ExporterBindings
 		fprintf(pexd->pfile, "</bindings>\n");
 	    }
 	}
+    }
+
+    //- return result
+
+    return(iResult);
+}
+
+
+///
+/// \arg phsle symbol to export bindings of.
+/// \arg ppist context of symbol.
+/// \arg pexd exporter configuration.
+///
+/// \return int success of operation.
+///
+/// \brief Export the symbols bound to this symbol.  The bound ones
+/// must be children of this symbol.
+///
+
+static
+int
+ExporterChildren
+(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, struct exporter_data *pexd)
+{
+    //- set default result: success
+
+    int iResult = 1;
+
+    //- if has bindings
+
+    if (instanceof_iol(phsle))
+    {
+	//- create a new wildcarded selector for the current context
+
+	struct PidinStack *ppistChildren
+	    = PidinStackDuplicate(ppist);
+
+	PidinStackPush(ppistChildren, IdinNewFromChars("*"));
+
+	//- export children as aliasses
+
+	iResult = ExporterSymbol(phsle, ppist, ppistChildren, pexd->iType, pexd->iFlags | EXPORTER_FLAG_PROTOTYPES, pexd->iIndent, pexd->pfile);
+
+	//- free allocated resources
+
+	PidinStackFree(ppistChildren);
     }
 
     //- return result
@@ -343,7 +397,7 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, int iFlags, char 
 
 	if (phslePrivate)
 	{
-	    iResult = ExporterSymbol(phslePrivate, ppistPrivate, ppistWildcard, iType, iFlagsPrivate, pfile);
+	    iResult = ExporterSymbol(phslePrivate, ppistPrivate, ppistWildcard, iType, iFlagsPrivate, 0, pfile);
 	}
 
 	//- end private models
@@ -396,7 +450,7 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, int iFlags, char 
 
 	if (phsleRoot)
 	{
-	    iResult = ExporterSymbol(phsleRoot, ppistRoot, ppistWildcard, iType, iFlags, pfile);
+	    iResult = ExporterSymbol(phsleRoot, ppistRoot, ppistWildcard, iType, iFlags, 0, pfile);
 	}
 
 	//- end public models
@@ -440,6 +494,7 @@ ExporterSymbol
  struct PidinStack *ppistWildcard,
  int iType,
  int iFlags,
+ int iIndent,
  FILE *pfile)
 {
     //- set default result: ok
@@ -456,7 +511,7 @@ ExporterSymbol
 
 	    /// current indentation level
 
-	    2,
+	    iIndent + 2,
 
 	    /// wildcard selector
 
@@ -654,12 +709,6 @@ ExporterSymbolStarter
 
 	    ExporterBindings(phsle, ptstr->ppist, pexd);
 
-/* 	    //- export bound ones */
-
-/* 	    if (pexd->iFlags & EXPORTER_FLAG_PROTOTYPES) */
-/* 	    { */
-/* 		ExporterBoundOnes(phsle, ptstr->ppist, pexd); */
-/* 	    } */
 	}
 
 	//- if exporting all we must export mandatory parameter values
@@ -688,6 +737,20 @@ ExporterSymbolStarter
 	    {
 		iResult = TSTR_PROCESSOR_ABORT;
 	    }
+	}
+
+	//- if not prototypes export
+
+	if ((!(pexd->iFlags & EXPORTER_FLAG_PROTOTYPES) || 1)
+	    && !(pbioPrototype && !(pexd->iFlags & EXPORTER_FLAG_ALL)))
+	{
+	    //- export children as aliasses
+
+	    ExporterChildren(phsle, ptstr->ppist, pexd);
+
+	    //- don't do children traversal
+
+	    iResult = TSTR_PROCESSOR_SIBLINGS;
 	}
     }
 
