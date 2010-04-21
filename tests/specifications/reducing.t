@@ -245,6 +245,172 @@ END PUBLIC_MODELS
 						 ],
 				description => 'reducing model parameters in a simple cell model',
 			       },
+			       {
+				arguments => [
+					      '-q',
+					      '-v',
+					      '1',
+					      'tests/cells/singlea_naf.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/singlea_naf.ndf.', ],
+						  },
+						  {
+						   description => 'Do we find reducable items in the model (such as CHANNEL_TYPE) ?',
+						   read => '#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+    FILE "soma" "tests/segments/soma.ndf"
+    FILE "gate1" "gates/naf_activation.ndf"
+    FILE "gate2" "gates/naf_inactivation.ndf"
+END IMPORT
+
+PRIVATE_MODELS
+  ALIAS "gate1::/naf_activation" "naf_gate_activation"
+  END ALIAS
+  ALIAS "gate2::/naf_inactivation" "naf_gate_inactivation"
+  END ALIAS
+  CHANNEL "NaF"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    PARAMETERS
+      PARAMETER ( CHANNEL_TYPE = "ChannelActInact" ),
+      PARAMETER ( G_MAX = 75000 ),
+      PARAMETER ( Erev = 0.045 ),
+    END PARAMETERS
+    CHILD "naf_gate_activation" "naf_gate_activation"
+    END CHILD
+    CHILD "naf_gate_inactivation" "naf_gate_inactivation"
+    END CHILD
+  END CHANNEL
+  SEGMENT "soma2"
+    BINDABLES
+      OUTPUT Vm,
+    END BINDABLES
+    BINDINGS
+      INPUT NaF->I,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( Vm_init = -0.028 ),
+      PARAMETER ( RM = 1 ),
+      PARAMETER ( RA = 2.5 ),
+      PARAMETER ( CM = 0.0164 ),
+      PARAMETER ( ELEAK = -0.08 ),
+    END PARAMETERS
+    CHILD "NaF" "NaF"
+      BINDINGS
+        INPUT ..->Vm,
+      END BINDINGS
+    END CHILD
+  END SEGMENT
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+  CELL "singlea_naf"
+    SEGMENT_GROUP "segments"
+      CHILD "soma2" "soma"
+        PARAMETERS
+          PARAMETER ( rel_X = 0 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = 0 ),
+          PARAMETER ( DIA = 2.98e-05 ),
+        END PARAMETERS
+      END CHILD
+    END SEGMENT_GROUP
+  END CELL
+END PUBLIC_MODELS
+',
+						   write => 'export no ndf STDOUT /**',
+						  },
+						  {
+						   description => 'Can we reduce the model (2) ?',
+						   write => 'reduce',
+						  },
+						  {
+						   description => 'Do we find the reduced items in the model (removed CHANNEL_TYPE and correct parameter structure) ?',
+						   read => '#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+    FILE "soma" "tests/segments/soma.ndf"
+    FILE "gate1" "gates/naf_activation.ndf"
+    FILE "gate2" "gates/naf_inactivation.ndf"
+END IMPORT
+
+PRIVATE_MODELS
+  ALIAS "gate1::/naf_activation" "naf_gate_activation"
+  END ALIAS
+  ALIAS "gate2::/naf_inactivation" "naf_gate_inactivation"
+  END ALIAS
+  CHANNEL "NaF"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    PARAMETERS
+      PARAMETER ( G_MAX = 75000 ),
+      PARAMETER ( Erev = 0.045 ),
+    END PARAMETERS
+    CHILD "naf_gate_activation" "naf_gate_activation"
+    END CHILD
+    CHILD "naf_gate_inactivation" "naf_gate_inactivation"
+    END CHILD
+  END CHANNEL
+  SEGMENT "soma2"
+    BINDABLES
+      OUTPUT Vm,
+    END BINDABLES
+    BINDINGS
+      INPUT NaF->I,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( Vm_init = -0.028 ),
+      PARAMETER ( RM = 1 ),
+      PARAMETER ( RA = 2.5 ),
+      PARAMETER ( CM = 0.0164 ),
+      PARAMETER ( ELEAK = -0.08 ),
+    END PARAMETERS
+    CHILD "NaF" "NaF"
+      BINDINGS
+        INPUT ..->Vm,
+      END BINDINGS
+    END CHILD
+  END SEGMENT
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+  CELL "singlea_naf"
+    SEGMENT_GROUP "segments"
+      CHILD "soma2" "soma"
+        PARAMETERS
+          PARAMETER ( rel_X = 0 ),
+          PARAMETER ( rel_Y = 0 ),
+          PARAMETER ( rel_Z = 0 ),
+          PARAMETER ( DIA = 2.98e-05 ),
+        END PARAMETERS
+      END CHILD
+    END SEGMENT_GROUP
+  END CELL
+END PUBLIC_MODELS
+',
+						   write => 'export no ndf STDOUT /**',
+						  },
+						 ],
+				description => 'reducing model parameters in a single compartment model with one channel',
+				disabled => 'todo',
+			       },
 			      ],
        description => "reducing model parameters",
        name => 'reducing.t',
