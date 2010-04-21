@@ -591,6 +591,8 @@ ExporterSymbolStarter
 		fprintf(pexd->pfile, "<%s> %s<prototype>%s%s</prototype> <name>%s</name>\n", pcToken, (pcNamespace ? pcNamespace : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
 	    }
 
+	    // \todo we need a mode 'children as aliasses' here, or may be boundones as aliasses when EXPORTER_FLAG_PROTOTYPES is set.
+
 	    //- if there was a namespace
 
 	    if (pcNamespace)
@@ -651,6 +653,13 @@ ExporterSymbolStarter
 	    //- export bindings
 
 	    ExporterBindings(phsle, ptstr->ppist, pexd);
+
+/* 	    //- export bound ones */
+
+/* 	    if (pexd->iFlags & EXPORTER_FLAG_PROTOTYPES) */
+/* 	    { */
+/* 		ExporterBoundOnes(phsle, ptstr->ppist, pexd); */
+/* 	    } */
 	}
 
 	//- if exporting all we must export mandatory parameter values
