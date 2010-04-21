@@ -285,7 +285,7 @@ ExporterChildren
 
 	//- export children as aliasses
 
-	iResult = ExporterSymbol(phsle, ppist, ppistChildren, pexd->iType, pexd->iFlags | EXPORTER_FLAG_PROTOTYPES, pexd->iIndent, pexd->pfile);
+	iResult = ExporterSymbol(phsle, ppist, ppistChildren, pexd->iType, pexd->iFlags/*  | EXPORTER_FLAG_PROTOTYPES */, pexd->iIndent, pexd->pfile);
 
 	//- free allocated resources
 
@@ -570,29 +570,11 @@ ExporterSymbolStarter
 
     int iType = TstrGetActualType(ptstr);
 
-    //- if this is a cell
-
-    if (0 && subsetof_cell(iType))
-    {
-	//- and it has no descendants
-
-	int iSuccessors = SymbolGetPrincipalNumOfSuccessors(phsle);
-
-	if (iSuccessors == 0)
-	{
-	    //- set result: siblings only
-
-	    iResult = TSTR_PROCESSOR_FAILURE;
-	}
-    }
-
     //- only for bio components
 
-    else if (subsetof_bio_comp(iType))
+    if (subsetof_bio_comp(iType))
     {
 	//- if is prototype
-
-	//t and exporting prototypes enabled ?
 
 	struct symtab_BioComponent *pbio
 	    = (struct symtab_BioComponent *)phsle;
@@ -646,8 +628,6 @@ ExporterSymbolStarter
 		fprintf(pexd->pfile, "<%s> %s<prototype>%s%s</prototype> <name>%s</name>\n", pcToken, (pcNamespace ? pcNamespace : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
 	    }
 
-	    // \todo we need a mode 'children as aliasses' here, or may be boundones as aliasses when EXPORTER_FLAG_PROTOTYPES is set.
-
 	    //- if there was a namespace
 
 	    if (pcNamespace)
@@ -657,7 +637,7 @@ ExporterSymbolStarter
 		iResult = TSTR_PROCESSOR_SIBLINGS;
 	    }
 
-	    //- if prototypes allowed to be exported
+	    //- if prototypes mode
 
 	    if (!(pexd->iFlags & EXPORTER_FLAG_PROTOTYPES))
 	    {
@@ -741,10 +721,9 @@ ExporterSymbolStarter
 
 	//- if not prototypes export
 
-	if ((!(pexd->iFlags & EXPORTER_FLAG_PROTOTYPES) || 1)
-	    && !(pbioPrototype && !(pexd->iFlags & EXPORTER_FLAG_ALL)))
+	if (!pbioPrototype/*  || (pexd->iFlags & EXPORTER_FLAG_ALL) */)
 	{
-	    //- export children as aliasses
+	    //- export children in prototypes mode
 
 	    ExporterChildren(phsle, ptstr->ppist, pexd);
 
@@ -754,7 +733,7 @@ ExporterSymbolStarter
 	}
     }
 
-    //- for algorithm
+    //- for an algorithm
 
     else if (subsetof_algorithm_symbol(iType))
     {
@@ -820,29 +799,11 @@ ExporterSymbolStopper
 
     int iType = TstrGetActualType(ptstr);
 
-    //- if this is a cell
+    //- only for bio components
 
-    if (0 && subsetof_cell(iType))
-    {
-	//- and it has no descendants
-
-	int iSuccessors = SymbolGetPrincipalNumOfSuccessors(phsle);
-
-	if (iSuccessors == 0)
-	{
-	    //- set result: siblings only
-
-	    iResult = TSTR_PROCESSOR_SIBLINGS;
-	}
-    }
-
-    //- if a bio component
-
-    else if (subsetof_bio_comp(iType))
+    if (subsetof_bio_comp(iType))
     {
 	//- if is prototype
-
-	//t and exporting prototypes enabled ?
 
 	struct symtab_BioComponent *pbio
 	    = (struct symtab_BioComponent *)phsle;
