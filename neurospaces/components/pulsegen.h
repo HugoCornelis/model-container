@@ -43,12 +43,6 @@ PulseGenCreateAlias
  char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
-struct symtab_Parameters * 
-PulseGenGetParameter
-(struct symtab_PulseGen *ppulsegen,
- struct PidinStack *ppist,
- char *pcName);
-
 void PulseGenInit(struct symtab_PulseGen *ppulsegen);
 
 struct symtab_HSolveListElement *
@@ -58,27 +52,8 @@ PulseGenLookupHierarchical
  int iLevel,
  int bAll);
 
-double
-PulseGenParameterScaleValue
-(struct symtab_PulseGen *ppulsegen,
- struct PidinStack *ppist,
- double dValue,
- struct symtab_Parameters *ppar);
 
-int
-PulseGenReduce
-(struct symtab_PulseGen *ppulsegen, struct PidinStack *ppist);
-
-
-/* #include "equationexponential.h" */
-#include "neurospaces/idin.h"
-#include "neurospaces/inputoutput.h"
-#include "neurospaces/parameters.h"
-
-
-/// \struct
 /// \struct pulsegen description
-/// \struct
 
 struct descr_PulseGen
 {
@@ -86,29 +61,10 @@ struct descr_PulseGen
 
     int iHappy;
 
-/*     /// type of pulsegen data */
-
-/*     int iType; */
-
-/*     /// actual data : should still be changed */
-
-/*     union  */
-/*     { */
-/* 	/// equation describing pulsegen */
-
-/* 	struct symtab_Equation *peq; */
-
-/* 	/// file with table describing pulsegen */
-
-/* 	char *pcFilename; */
-/*     } */
-/*     uData; */
 };
 
 
-/// \struct
 /// \struct struct symtab_PulseGen
-/// \struct
 
 struct symtab_PulseGen
 {
@@ -120,23 +76,6 @@ struct symtab_PulseGen
 
     struct descr_PulseGen depulsegen;
 };
-
-
-/// \def equation type
-
-#define TYPE_PULSEGEN_EQUATION		1
-
-/// \def table in file
-
-#define TYPE_PULSEGEN_TABLEFILE		2
-
-/// \def attachment point data
-
-#define TYPE_PULSEGEN_VIRTUALCONNECTION	4
-
-/// \def additional pulsegen parameters
-
-#define TYPE_PULSEGEN_PARAMETERS		5
 
 
 #endif
