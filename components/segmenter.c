@@ -259,6 +259,8 @@ SegmenterGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&psegr->bio.ioh.iol.hsle, "TOTALLENGTH", dLength);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if total surface
@@ -274,6 +276,8 @@ SegmenterGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&psegr->bio.ioh.iol.hsle, "TOTALSURFACE", dSurface);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if total volume
@@ -289,6 +293,8 @@ SegmenterGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&psegr->bio.ioh.iol.hsle, "TOTALVOLUME", dVolume);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
     }

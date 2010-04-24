@@ -179,6 +179,8 @@ ConcentrationGateKineticGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&pcgatc->bio.ioh.iol.hsle, "HH_Has_Table", iTable);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 	else if (0 == strcmp(pcName, "HH_NUMBER_OF_TABLE_ENTRIES"))
 	{
@@ -196,6 +198,8 @@ ConcentrationGateKineticGetParameter
 		  (&pcgatc->bio.ioh.iol.hsle,
 		   "HH_NUMBER_OF_TABLE_ENTRIES", 
 		   dTableEntries);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
     }
 

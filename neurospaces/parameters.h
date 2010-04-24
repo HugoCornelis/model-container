@@ -52,9 +52,7 @@ extern char *ppcParameterStructShort[];
 #endif
 
 
-/// \struct
 /// \struct parameters
-/// \struct
 
 struct symtab_Parameters
 {
@@ -121,6 +119,10 @@ struct symtab_Parameters
 /// \def parameter is read-only
 
 #define FLAG_PARA_READONLY		1
+
+/// \def parameter has a derived value
+
+#define FLAG_PARA_DERIVED		2
 
 
 /// table with description of types

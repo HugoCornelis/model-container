@@ -151,6 +151,8 @@ HHGateGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&pgathh->bio.ioh.iol.hsle, "state_init", dState);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if number of table entries
@@ -166,6 +168,8 @@ HHGateGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&pgathh->bio.ioh.iol.hsle, "HH_NUMBER_OF_TABLE_ENTRIES", dState);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if start of table
@@ -181,6 +185,8 @@ HHGateGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&pgathh->bio.ioh.iol.hsle, "HH_TABLE_START_Y", dState);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if end of table
@@ -196,6 +202,8 @@ HHGateGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&pgathh->bio.ioh.iol.hsle, "HH_TABLE_END_Y", dState);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if table step
@@ -211,6 +219,8 @@ HHGateGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&pgathh->bio.ioh.iol.hsle, "HH_TABLE_STEP_Y", dState);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
     }
 

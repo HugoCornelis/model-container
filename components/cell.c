@@ -145,28 +145,11 @@ struct symtab_Cell * CellNewAtXYZ(double dx, double dy, double dz)
     struct symtab_Cell *pcellResult 
 	= CellCalloc();
 
-    //- allocate & insert parameters
+    //- put at position
 
-    if (SymbolSetParameterDouble(&pcellResult->segr.bio.ioh.iol.hsle, "X", dx))
+    if (!BioComponentSetAtXYZ(&pcellResult->segr.bio, dx, dy, dz))
     {
-	if (SymbolSetParameterDouble(&pcellResult->segr.bio.ioh.iol.hsle, "Y", dy))
-	{
-	    if (SymbolSetParameterDouble(&pcellResult->segr.bio.ioh.iol.hsle, "Z", dz))
-	    {
-	    }
-	    else
-	    {
-		pcellResult = NULL;
-	    }
-	}
-	else
-	{
-	    pcellResult = NULL;
-	}
-    }
-    else
-    {
-	pcellResult = NULL;
+	return(NULL);
     }
 
     //- return result

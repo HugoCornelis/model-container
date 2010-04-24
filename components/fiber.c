@@ -196,28 +196,11 @@ struct symtab_Fiber * FiberNewAtXYZ(double dx,double dy,double dz)
     struct symtab_Fiber *pfibrResult 
 	= FiberCalloc();
 
-    //- allocate & insert parameters
+    //- put at position
 
-    if (SymbolSetParameterDouble(&pfibrResult->segr.bio.ioh.iol.hsle, "X", dx))
+    if (!BioComponentSetAtXYZ(&pfibrResult->segr.bio, dx, dy, dz))
     {
-	if (SymbolSetParameterDouble(&pfibrResult->segr.bio.ioh.iol.hsle, "Y", dy))
-	{
-	    if (SymbolSetParameterDouble(&pfibrResult->segr.bio.ioh.iol.hsle, "Z", dz))
-	    {
-	    }
-	    else
-	    {
-		pfibrResult = NULL;
-	    }
-	}
-	else
-	{
-	    pfibrResult = NULL;
-	}
-    }
-    else
-    {
-	pfibrResult = NULL;
+	return(NULL);
     }
 
     //- return result

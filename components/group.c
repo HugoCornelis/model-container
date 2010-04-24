@@ -198,28 +198,11 @@ struct symtab_Group * GroupNewAtXYZ(double dx, double dy, double dz)
     struct symtab_Group *pgrupResult 
 	= GroupCalloc();
 
-    //- allocate & insert parameters
+    //- put at position
 
-    if (SymbolSetParameterDouble(&pgrupResult->bio.ioh.iol.hsle, "X", dx))
+    if (!BioComponentSetAtXYZ(&pgrupResult->bio, dx, dy, dz))
     {
-	if (SymbolSetParameterDouble(&pgrupResult->bio.ioh.iol.hsle, "Y", dy))
-	{
-	    if (SymbolSetParameterDouble(&pgrupResult->bio.ioh.iol.hsle, "Z", dz))
-	    {
-	    }
-	    else
-	    {
-		pgrupResult = NULL;
-	    }
-	}
-	else
-	{
-	    pgrupResult = NULL;
-	}
-    }
-    else
-    {
-	pgrupResult = NULL;
+	return(NULL);
     }
 
     //- return result

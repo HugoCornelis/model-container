@@ -266,6 +266,8 @@ PopulationGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&ppopu->segr.bio.ioh.iol.hsle, "EXTENT_X", dExtentX);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if extent y
@@ -336,6 +338,8 @@ PopulationGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&ppopu->segr.bio.ioh.iol.hsle, "EXTENT_Y", dExtentY);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if extent z
@@ -406,6 +410,8 @@ PopulationGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&ppopu->segr.bio.ioh.iol.hsle, "EXTENT_Z", dExtentZ);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
     }
 

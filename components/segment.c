@@ -362,6 +362,8 @@ SegmentGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&psegment->segr.bio.ioh.iol.hsle, "SOMATOPETAL_DISTANCE", dDistance);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if somatopetal branchpoints
@@ -377,6 +379,8 @@ SegmentGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&psegment->segr.bio.ioh.iol.hsle, "SOMATOPETAL_BRANCHPOINTS", dBranchpoints);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if branchpoint flag
@@ -392,6 +396,8 @@ SegmentGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&psegment->segr.bio.ioh.iol.hsle, "BRANCHPOINT", dBranchpoint);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if surface
@@ -407,6 +413,8 @@ SegmentGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&psegment->segr.bio.ioh.iol.hsle, "SURFACE", dSurface);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if volume
@@ -422,6 +430,8 @@ SegmentGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&psegment->segr.bio.ioh.iol.hsle, "VOLUME", dVolume);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if length
@@ -439,6 +449,8 @@ SegmentGetParameter
 		pparResult
 		    = SymbolSetParameterDouble
 		      (&psegment->segr.bio.ioh.iol.hsle, "LENGTH", dLength);
+
+		pparResult->iFlags |= FLAG_PARA_DERIVED;
 	    }
 	}
 
@@ -457,6 +469,8 @@ SegmentGetParameter
 		pparResult
 		    = SymbolSetParameterDouble
 		      (&psegment->segr.bio.ioh.iol.hsle, "TAU", dTau);
+
+		pparResult->iFlags |= FLAG_PARA_DERIVED;
 	    }
 	}
 
@@ -475,6 +489,8 @@ SegmentGetParameter
 		pparResult
 		    = SymbolSetParameterDouble
 		      (&psegment->segr.bio.ioh.iol.hsle, "Vm_init", dVmInit);
+
+		pparResult->iFlags |= FLAG_PARA_DERIVED;
 	    }
 	}
     }
@@ -1036,7 +1052,7 @@ SegmentReduce
 	    //- set this as CM
 
 	    SymbolSetParameterDouble(&psegment->segr.bio.ioh.iol.hsle, "CM", dCMUnscaled);
-
+	    
 	}
     }
 

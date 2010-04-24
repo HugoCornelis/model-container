@@ -163,6 +163,8 @@ GateKineticGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&pgatk->bio.ioh.iol.hsle, "HH_AB_Offset", dHHOffset);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if tabulation flag
@@ -178,6 +180,8 @@ GateKineticGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&pgatk->bio.ioh.iol.hsle, "HH_Has_Table", iTable);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if number of table entries
@@ -196,6 +200,8 @@ GateKineticGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&pgatk->bio.ioh.iol.hsle, "HH_NUMBER_OF_TABLE_ENTRIES", dEntries);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if table start
@@ -233,6 +239,8 @@ GateKineticGetParameter
 		pparResult
 		    = SymbolSetParameterDouble
 		      (&pgatk->bio.ioh.iol.hsle, "HH_TABLE_END_Y", dResult);
+
+		pparResult->iFlags |= FLAG_PARA_DERIVED;
 	    }
 	}
 
@@ -261,6 +269,8 @@ GateKineticGetParameter
 
 		pparResult
 		    = SymbolSetParameterDouble(&pgatk->bio.ioh.iol.hsle, "HH_TABLE_STEP_Y", dResult);
+
+		pparResult->iFlags |= FLAG_PARA_DERIVED;
 	    }
 	}
     }

@@ -150,6 +150,8 @@ ContourPointGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&pcpnt->bio.ioh.iol.hsle, "THICKNESS", dThickness);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
     }
 

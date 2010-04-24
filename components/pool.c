@@ -193,6 +193,8 @@ PoolGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&ppool->bio.ioh.iol.hsle, "BETA", dBeta);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if volume
@@ -208,6 +210,8 @@ PoolGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&ppool->bio.ioh.iol.hsle, "VOLUME", dVolume);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
 
 	//- if initial concentration
@@ -223,6 +227,8 @@ PoolGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&ppool->bio.ioh.iol.hsle, "concen_init", dBase);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
     }
 
