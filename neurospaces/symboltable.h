@@ -58,11 +58,8 @@ struct symtab_String
 };
 
 
-/// \struct
-/// \struct structure to do serial mappings
-/// \struct
-/// \struct contains serial relative to different symbols
-/// \struct
+/// \struct structure to do serial mappings contains serial indices
+/// relative to different other symbols
 
 struct SerialMapper
 {
@@ -78,20 +75,17 @@ struct SerialMapper
     int iParent;
 
     /// \note we could add more here :
-    /// \note child number
-    /// \note number of children
-    /// \note post order serial (usefull to init iParent above)
-    /// \note post order ...
-    /// \note more...
+    /// child number
+    /// number of children
+    /// post order serial (usefull to init iParent above)
+    /// post order ...
+    /// more...
     ///
     /// \note Do we need a SerialMapper per space, or a single one
-    /// \note for all spaces ?
+    /// for all spaces ?
 };
 
-/// \def
 /// \def some quick defines to give access to the serial ID's
-/// \def subject to change
-/// \def
 
 #define SerialMapClearToParent(psmap)	\
 	SerialMapSetToParent((psmap),0)
@@ -108,13 +102,8 @@ struct SerialMapper
 struct symtab_HSolveListElement;
 
 
-/* #include "algorithminstance.h" */
-
-
-/// \struct
-/// \struct gives transparant access to all other structures and links them into
-/// \struct a symbol table list.
-/// \struct
+/// \struct gives transparant access to all other structures and links
+/// them into a list.
 
 struct symtab_HSolveListElement
 {
@@ -204,10 +193,7 @@ struct symtab_HSolveListElement
 #include "hierarchy/output/symbols/dimension_space_locators.h"
 
 
-/// \def
 /// \def some quick defines to give access to the serial ID's
-/// \def subject to change
-/// \def
 
 #ifdef PRE_PROTO_TRAVERSAL
 
@@ -273,10 +259,6 @@ struct symtab_HSolveListElement
 #define SymbolSetSegmentNumOfSuccessors(phsle,i)	\
 	SerialMapSetNumOfSuccessors(&(phsle)->smapSegment,(i))
 
-
-
-//f
-//f
 
 #ifndef SWIG
 static inline
@@ -765,9 +747,9 @@ SymbolIncrementAliases(int iType)
 #error Symbols only supports PRE_PROTO_TRAVERSAL for now.
 
 /// \todo #defines to do mappings for POST_PROTO_TRAVERSAL
-/// \todo 
-/// \todo mapping must loop over references for prototypes,
-/// \todo and sum up #SU for each prototype
+/// 
+/// mapping must loop over references for prototypes,
+/// and sum up #SU for each prototype
 
 #endif
 
