@@ -823,6 +823,20 @@ ParameterExport
 {
     int iIndent = iLevel; // (iLevel == 0) ? 0 : (iLevel * 2);
 
+    if (ppar->iFlags & FLAG_PARA_DERIVED)
+    {
+	return 1;
+    }
+
+    // \todo there is at this moment no way to export read-only parameters
+
+    if (ppar->iFlags & FLAG_PARA_READONLY)
+    {
+	fprintf(pfile, "// attempt to export PARAMETER %s, but it is read-only.\n", ParameterGetName(ppar));
+
+	return 1;
+    }
+
     PrintIndent(iIndent, pfile);
 
     if (iType == EXPORTER_TYPE_NDF)
