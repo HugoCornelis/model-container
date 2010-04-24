@@ -562,7 +562,7 @@ BioComponentGetParameter
 
 		/// flags
 
-		FLAG_PARA_READONLY,
+		FLAG_PARA_READONLY | FLAG_PARA_DERIVED,
 
 		/// name of parameter
 
@@ -634,7 +634,7 @@ BioComponentGetParameter
 
 		/// flags
 
-		FLAG_PARA_READONLY,
+		FLAG_PARA_READONLY | FLAG_PARA_DERIVED,
 
 		/// name of parameter
 
@@ -665,7 +665,7 @@ BioComponentGetParameter
 
 		/// flags
 
-		FLAG_PARA_READONLY,
+		FLAG_PARA_READONLY | FLAG_PARA_DERIVED,
 
 		/// name of parameter
 
@@ -696,7 +696,7 @@ BioComponentGetParameter
 
 		/// flags
 
-		FLAG_PARA_READONLY,
+		FLAG_PARA_READONLY | FLAG_PARA_DERIVED,
 
 		/// name of parameter
 
@@ -741,7 +741,7 @@ BioComponentGetParameter
 
 		/// flags
 
-		FLAG_PARA_READONLY,
+		FLAG_PARA_READONLY | FLAG_PARA_DERIVED,
 
 		/// name of parameter
 
