@@ -293,7 +293,7 @@ static inline
 #endif
 int
 BioComponentSetAtXYZ
-(struct symtab_BioComponent *pbio, double dx, double dy, double dz);
+(struct symtab_BioComponent *pbio, double dx, double dy, double dz, int iFlags);
 
 #ifndef SWIG
 static inline
@@ -641,7 +641,7 @@ BioComponentSetPrototype
 
 
 /// 
-/// set coordinates.
+/// set coordinates and apply parameter flags.
 /// 
 
 #ifndef SWIG
@@ -649,7 +649,7 @@ static inline
 #endif
 int
 BioComponentSetAtXYZ
-(struct symtab_BioComponent *pbio, double dx, double dy, double dz)
+(struct symtab_BioComponent *pbio, double dx, double dy, double dz, int iFlags)
 {
     //- set default result : ok
 
@@ -657,26 +657,25 @@ BioComponentSetAtXYZ
 
     //- allocate & insert parameters
 
-    if (SymbolSetParameterDouble(&pbio->ioh.iol.hsle, "X", dx))
     {
-	if (SymbolSetParameterDouble(&pbio->ioh.iol.hsle, "Y", dy))
-	{
-	    if (SymbolSetParameterDouble(&pbio->ioh.iol.hsle, "Z", dz))
-	    {
-	    }
-	    else
-	    {
-		bResult = FALSE;
-	    }
-	}
-	else
-	{
-	    bResult = FALSE;
-	}
+	struct symtab_Parameters *ppar
+	    = SymbolSetParameterDouble(&pbio->ioh.iol.hsle, "X", dx);
+
+	ppar->iFlags = iFlags;
     }
-    else
+
     {
-	bResult = FALSE;
+	struct symtab_Parameters *ppar
+	= SymbolSetParameterDouble(&pbio->ioh.iol.hsle, "Y", dy);
+
+	ppar->iFlags = iFlags;
+    }
+
+    {
+	struct symtab_Parameters *ppar
+	    = SymbolSetParameterDouble(&pbio->ioh.iol.hsle, "Z", dz);
+
+	ppar->iFlags = iFlags;
     }
 
     //- return result

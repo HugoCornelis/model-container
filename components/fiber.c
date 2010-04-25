@@ -198,7 +198,7 @@ struct symtab_Fiber * FiberNewAtXYZ(double dx,double dy,double dz)
 
     //- put at position
 
-    if (!BioComponentSetAtXYZ(&pfibrResult->segr.bio, dx, dy, dz))
+    if (!BioComponentSetAtXYZ(&pfibrResult->segr.bio, dx, dy, dz, 0))
     {
 	return(NULL);
     }

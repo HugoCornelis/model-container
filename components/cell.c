@@ -147,7 +147,7 @@ struct symtab_Cell * CellNewAtXYZ(double dx, double dy, double dz)
 
     //- put at position
 
-    if (!BioComponentSetAtXYZ(&pcellResult->segr.bio, dx, dy, dz))
+    if (!BioComponentSetAtXYZ(&pcellResult->segr.bio, dx, dy, dz, 0))
     {
 	return(NULL);
     }

@@ -200,7 +200,7 @@ struct symtab_Group * GroupNewAtXYZ(double dx, double dy, double dz)
 
     //- put at position
 
-    if (!BioComponentSetAtXYZ(&pgrupResult->bio, dx, dy, dz))
+    if (!BioComponentSetAtXYZ(&pgrupResult->bio, dx, dy, dz, 0))
     {
 	return(NULL);
     }
