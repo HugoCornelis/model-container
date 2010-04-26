@@ -837,11 +837,29 @@ ExporterLibraryFinalizer
 
 	}
 
+	//- export parameter of this biological component
+
+	struct symtab_ParContainer *pparc = pbio->pparc;
+
+	if (pparc)
+	{
+	    if (!ParContainerExport(pparc, ptstr->ppist, pexd->iIndent + 2, pexd->iType, pexd->pfile))
+	    {
+		iResult = TSTR_PROCESSOR_ABORT;
+	    }
+	}
+
 	//t have to deal with prototypes of prototypes here, see also ExporterLibrarySelector()
 
-	//t export this symbol children as aliasses: ExporterChildren() with aliasses only flag
+	//- export this symbol children as aliasses
 
-	//t fprintf this symbol end
+	//t aliasses only flag
+
+	if (iResult != TSTR_PROCESSOR_ABORT
+	    && !ExporterChildren(phsle, ptstr->ppist, pexd))
+	{
+	    iResult = TSTR_PROCESSOR_ABORT;
+	}
 
 	//- if has prototype
 
@@ -1161,11 +1179,16 @@ ExporterSymbolStarter
 	{
 	    //- export children (maybe in prototypes mode)
 
-	    ExporterChildren(phsle, ptstr->ppist, pexd);
+	    if (!ExporterChildren(phsle, ptstr->ppist, pexd))
+	    {
+		iResult = TSTR_PROCESSOR_ABORT;
+	    }
+	    else
+	    {
+		//- now skip to siblings
 
-	    //- now skip to siblings
-
-	    iResult = TSTR_PROCESSOR_SIBLINGS;
+		iResult = TSTR_PROCESSOR_SIBLINGS;
+	    }
 	}
     }
 
