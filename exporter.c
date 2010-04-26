@@ -107,16 +107,21 @@ int
 ExporterSymbolStopper
 (struct TreespaceTraversal *ptstr, void *pvUserdata);
 
-static
-int
-ExporterTagSymbols
-(struct symtab_HSolveListElement *phsle,
- struct PidinStack *ppist,
- struct PidinStack *ppistWildcard,
- int iType,
- int iFlags,
- int iIndent,
- FILE *pfile);
+/* static */
+/* int  */
+/* ExporterSymbolTagger */
+/* (struct TreespaceTraversal *ptstr, void *pvUserdata); */
+
+/* static */
+/* int */
+/* ExporterTagSymbols */
+/* (struct symtab_HSolveListElement *phsle, */
+/*  struct PidinStack *ppist, */
+/*  struct PidinStack *ppistWildcard, */
+/*  int iType, */
+/*  int iFlags, */
+/*  int iIndent, */
+/*  FILE *pfile); */
 
 
 ///
@@ -770,40 +775,46 @@ ExporterLibraryFinalizer
 
 	    if (pexd->iType == EXPORTER_TYPE_NDF)
 	    {
-		char *pcToken
-		    = (pexd->iIndent == 2
-		       ? "ALIAS"
-		       : "CHILD");
+		char *pcToken = "CHILD";
+/* 		    = (pexd->iIndent == 2 */
+/* 		       ? "ALIAS" */
+/* 		       : "CHILD"); */
+
+		char pc[1000];
 
 		if (pcNamespace)
 		{
-		    char pc[1000];
-
 		    strcpy(pc, pcNamespace);
 		    strcat(pc, "::");
 
-		    pcNamespace = &pc[0];
+		    if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
+		    {
+			strcat(pc, "_1");
+		    }
 		}
 
-		fprintf(pexd->pfile, "%s \"%s%s%s\" \"%s\"\n", pcToken, (pcNamespace ? pcNamespace : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
+		fprintf(pexd->pfile, "%s \"%s%s%s\" \"%s\"\n", pcToken, (pcNamespace ? pc : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
 	    }
 	    else
 	    {
-		char *pcToken
-		    = (pexd->iIndent == 2
-		       ? "alias"
-		       : "child");
+		char *pcToken = "child";
+/* 		    = (pexd->iIndent == 2 */
+/* 		       ? "alias" */
+/* 		       : "child"); */
+
+		char pc[1000];
 
 		if (pcNamespace)
 		{
-		    char pc[1000];
-
 		    sprintf(pc, "<namespace>%s::</namespace>", pcNamespace);
 
-		    pcNamespace = &pc[0];
+		    if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
+		    {
+			strcat(pc, "_1");
+		    }
 		}
 
-		fprintf(pexd->pfile, "<%s> %s<prototype>%s%s</prototype> <name>%s</name>\n", pcToken, (pcNamespace ? pcNamespace : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
+		fprintf(pexd->pfile, "<%s> %s<prototype>%s%s</prototype> <name>%s</name>\n", pcToken, (pcNamespace ? pc : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
 	    }
 
 	}
@@ -855,10 +866,20 @@ ExporterLibraryFinalizer
 
 	//t aliasses only flag
 
-	if (iResult != TSTR_PROCESSOR_ABORT
-	    && !ExporterChildren(phsle, ptstr->ppist, pexd))
+	if (iResult != TSTR_PROCESSOR_ABORT)
 	{
-	    iResult = TSTR_PROCESSOR_ABORT;
+	    int iOldFlags = pexd->iFlags;
+
+	    pexd->iFlags |= EXPORTER_FLAG_CHILDREN_INSTANCES;
+
+	    int iExported = ExporterChildren(phsle, ptstr->ppist, pexd);
+
+	    pexd->iFlags = iOldFlags;
+
+	    if (!iExported)
+	    {
+		iResult = TSTR_PROCESSOR_ABORT;
+	    }
 	}
 
 	//- if has prototype
@@ -871,19 +892,19 @@ ExporterLibraryFinalizer
 
 	    if (pexd->iType == EXPORTER_TYPE_NDF)
 	    {
-		char *pcToken
-		    = (pexd->iIndent == 2
-		       ? "ALIAS"
-		       : "CHILD");
+		char *pcToken = "CHILD";
+/* 		    = (pexd->iIndent == 2 */
+/* 		       ? "ALIAS" */
+/* 		       : "CHILD"); */
 
 		fprintf(pexd->pfile, "END %s\n", pcToken);
 	    }
 	    else
 	    {
-		char *pcToken
-		    = (pexd->iIndent == 2
-		       ? "alias"
-		       : "child");
+		char *pcToken = "child";
+/* 		    = (pexd->iIndent == 2 */
+/* 		       ? "alias" */
+/* 		       : "child"); */
 
 		fprintf(pexd->pfile, "</%s>\n", pcToken);
 	    }
@@ -1036,7 +1057,8 @@ ExporterSymbolStarter
 	struct symtab_BioComponent * pbioPrototype
 	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
 
-	if (pbioPrototype && !(pexd->iFlags & EXPORTER_FLAG_ALL))
+	if (pbioPrototype
+	    && !(pexd->iFlags & EXPORTER_FLAG_ALL))
 	{
 	    //- export reference to component
 
@@ -1051,17 +1073,20 @@ ExporterSymbolStarter
 		       ? "ALIAS"
 		       : "CHILD");
 
+		char pc[1000];
+
 		if (pcNamespace)
 		{
-		    char pc[1000];
-
 		    strcpy(pc, pcNamespace);
 		    strcat(pc, "::");
 
-		    pcNamespace = &pc[0];
+		    if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
+		    {
+			strcat(pc, "_1");
+		    }
 		}
 
-		fprintf(pexd->pfile, "%s \"%s%s%s\" \"%s\"\n", pcToken, (pcNamespace ? pcNamespace : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
+		fprintf(pexd->pfile, "%s \"%s%s%s\" \"%s\"\n", pcToken, (pcNamespace ? pc : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
 	    }
 	    else
 	    {
@@ -1070,16 +1095,19 @@ ExporterSymbolStarter
 		       ? "alias"
 		       : "child");
 
+		char pc[1000];
+
 		if (pcNamespace)
 		{
-		    char pc[1000];
-
 		    sprintf(pc, "<namespace>%s::</namespace>", pcNamespace);
 
-		    pcNamespace = &pc[0];
+		    if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
+		    {
+			strcat(pc, "_1");
+		    }
 		}
 
-		fprintf(pexd->pfile, "<%s> %s<prototype>%s%s</prototype> <name>%s</name>\n", pcToken, (pcNamespace ? pcNamespace : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
+		fprintf(pexd->pfile, "<%s> %s<prototype>%s%s</prototype> <name>%s</name>\n", pcToken, (pcNamespace ? pc : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
 	    }
 
 	    //- if there was a namespace
@@ -1094,6 +1122,16 @@ ExporterSymbolStarter
 	    //- if prototypes mode
 
 	    if (!(pexd->iFlags & EXPORTER_FLAG_PROTOTYPES))
+	    {
+		//- set result: only sibling processing
+
+		iResult = TSTR_PROCESSOR_SIBLINGS;
+	    }
+
+	    //- if children instances mode
+
+	    if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES
+		&& pbioPrototype)
 	    {
 		//- set result: only sibling processing
 
@@ -1134,6 +1172,8 @@ ExporterSymbolStarter
 /* 	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle); */
 
 /* 	if (!pbioPrototype) */
+
+	if (!(pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES))
 	{
 	    //- export bindables
 
@@ -1163,13 +1203,16 @@ ExporterSymbolStarter
 
 	//- export parameter of this biological component
 
-	struct symtab_ParContainer *pparc = pbio->pparc;
-
-	if (pparc)
+	if (!(pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES))
 	{
-	    if (!ParContainerExport(pparc, ptstr->ppist, pexd->iIndent + 2, pexd->iType, pexd->pfile))
+	    struct symtab_ParContainer *pparc = pbio->pparc;
+
+	    if (pparc)
 	    {
-		iResult = TSTR_PROCESSOR_ABORT;
+		if (!ParContainerExport(pparc, ptstr->ppist, pexd->iIndent + 2, pexd->iType, pexd->pfile))
+		{
+		    iResult = TSTR_PROCESSOR_ABORT;
+		}
 	    }
 	}
 
@@ -1339,105 +1382,105 @@ ExporterSymbolStopper
 }
 
 
-static
-int 
-ExporterSymbolTagger
-(struct TreespaceTraversal *ptstr, void *pvUserdata)
-{
-    //- set default result : continue with children, then post processing
+/* static */
+/* int  */
+/* ExporterSymbolTagger */
+/* (struct TreespaceTraversal *ptstr, void *pvUserdata) */
+/* { */
+/*     //- set default result : continue with children, then post processing */
 
-    int iResult = TSTR_PROCESSOR_SUCCESS;
+/*     int iResult = TSTR_PROCESSOR_SUCCESS; */
 
-    //- get traversal data
+/*     //- get traversal data */
 
-    struct exporter_data *pexd
-	= (struct exporter_data *)pvUserdata;
+/*     struct exporter_data *pexd */
+/* 	= (struct exporter_data *)pvUserdata; */
 
-    //- set actual symbol
+/*     //- set actual symbol */
 
-    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
+/*     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr); */
 
-    int iType = TstrGetActualType(ptstr);
+/*     int iType = TstrGetActualType(ptstr); */
 
-    //- only for bio components
+/*     //- only for bio components */
 
-    if (subsetof_bio_comp(iType))
-    {
-	//- if is prototype
+/*     if (subsetof_bio_comp(iType)) */
+/*     { */
+/* 	//- if is prototype */
 
-	struct symtab_BioComponent *pbio
-	    = (struct symtab_BioComponent *)phsle;
+/* 	struct symtab_BioComponent *pbio */
+/* 	    = (struct symtab_BioComponent *)phsle; */
 
-	pbio->iOptions |= BIOCOMP_OPTION_TAG_SET;
-    }
+/* 	pbio->iOptions |= BIOCOMP_OPTION_TAG_SET; */
+/*     } */
 
-    //- return result
+/*     //- return result */
 
-    return(iResult);
-}
+/*     return(iResult); */
+/* } */
 
 
-static
-int
-ExporterTagSymbols
-(struct symtab_HSolveListElement *phsle,
- struct PidinStack *ppist,
- struct PidinStack *ppistWildcard,
- int iType,
- int iFlags,
- int iIndent,
- FILE *pfile)
-{
-    //- set default result: ok
+/* static */
+/* int */
+/* ExporterTagSymbols */
+/* (struct symtab_HSolveListElement *phsle, */
+/*  struct PidinStack *ppist, */
+/*  struct PidinStack *ppistWildcard, */
+/*  int iType, */
+/*  int iFlags, */
+/*  int iIndent, */
+/*  FILE *pfile) */
+/* { */
+/*     //- set default result: ok */
 
-    int iResult = 1;
+/*     int iResult = 1; */
 
-    //- allocate traversal structure
+/*     //- allocate traversal structure */
 
-    struct exporter_data exd =
-	{
-	    /// file to write to
+/*     struct exporter_data exd = */
+/* 	{ */
+/* 	    /// file to write to */
 
-	    pfile,
+/* 	    pfile, */
 
-	    /// current indentation level
+/* 	    /// current indentation level */
 
-	    -1,
+/* 	    -1, */
 
-	    /// wildcard selector
+/* 	    /// wildcard selector */
 
-	    ppistWildcard,
+/* 	    ppistWildcard, */
 
-	    /// output type
+/* 	    /// output type */
 
-	    iType,
+/* 	    iType, */
 
-	    /// output flags
+/* 	    /// output flags */
 
-	    iFlags,
-	};
+/* 	    iFlags, */
+/* 	}; */
 
-    //- traverse symbols that match with wildcard
+/*     //- traverse symbols that match with wildcard */
 
-    int iTraversal
-	= SymbolTraverseWildcard
-	  (phsle,
-	   ppist,
-	   ppistWildcard,
-	   ExporterSymbolTagger,
-	   NULL,
-	   (void *)&exd);
+/*     int iTraversal */
+/* 	= SymbolTraverseWildcard */
+/* 	  (phsle, */
+/* 	   ppist, */
+/* 	   ppistWildcard, */
+/* 	   ExporterSymbolTagger, */
+/* 	   NULL, */
+/* 	   (void *)&exd); */
 
-    if (iTraversal != 1)
-    {
-	fprintf(stdout, "*** Error: SymbolTraverseWildcard() failed (or aborted)\n");
+/*     if (iTraversal != 1) */
+/*     { */
+/* 	fprintf(stdout, "*** Error: SymbolTraverseWildcard() failed (or aborted)\n"); */
 
-	iResult = 0;
-    }
+/* 	iResult = 0; */
+/*     } */
 
-    //- return result
+/*     //- return result */
 
-    return(iResult);
-}
+/*     return(iResult); */
+/* } */
 
 

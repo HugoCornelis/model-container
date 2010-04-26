@@ -641,7 +641,7 @@ PRIVATE_MODELS
   END ALIAS
   ALIAS "gate2::/naf_inactivation" "naf_gate_inactivation"
   END ALIAS
-  CHANNEL "NaF"
+  CHANNEL "NaF_prototype"
     BINDABLES
       INPUT Vm,
       OUTPUT G,
@@ -657,7 +657,7 @@ PRIVATE_MODELS
     CHILD "naf_gate_inactivation" "naf_gate_inactivation"
     END CHILD
   END CHANNEL
-  SEGMENT "soma2"
+  SEGMENT "soma_prototype"
     BINDABLES
       OUTPUT Vm,
     END BINDABLES
@@ -671,7 +671,7 @@ PRIVATE_MODELS
       PARAMETER ( CM = 0.0164 ),
       PARAMETER ( ELEAK = -0.08 ),
     END PARAMETERS
-    CHILD "NaF" "NaF"
+    CHILD "NaF_prototype" "NaF"
       BINDINGS
         INPUT ..->Vm,
       END BINDINGS
@@ -682,7 +682,7 @@ END PRIVATE_MODELS
 PUBLIC_MODELS
   CELL "singlea_naf"
     SEGMENT_GROUP "segments"
-      CHILD "soma2" "soma"
+      CHILD "soma_prototype" "soma"
         PARAMETERS
           PARAMETER ( rel_X = 0 ),
           PARAMETER ( rel_Y = 0 ),
@@ -711,7 +711,7 @@ END PUBLIC_MODELS
   </alias>
   <alias> <namespace>gate2::</namespace><prototype>/naf_inactivation</prototype> <name>naf_gate_inactivation</name>
   </alias>
-  <CHANNEL> <name>NaF</name>
+  <CHANNEL> <name>NaF_prototype</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>G</name> </output>
@@ -727,7 +727,7 @@ END PUBLIC_MODELS
     <child> <prototype>naf_gate_inactivation</prototype> <name>naf_gate_inactivation</name>
     </child>
   </CHANNEL>
-  <SEGMENT> <name>soma2</name>
+  <SEGMENT> <name>soma_prototype</name>
     <bindables>
       <output> <name>Vm</name> </output>
     </bindables>
@@ -741,7 +741,7 @@ END PUBLIC_MODELS
       <parameter> <name>CM</name><value>0.0164</value> </parameter>
       <parameter> <name>ELEAK</name><value>-0.08</value> </parameter>
     </parameters>
-    <child> <prototype>NaF</prototype> <name>NaF</name>
+    <child> <prototype>NaF_prototype</prototype> <name>NaF</name>
       <bindings>
         <input> <name>..->Vm</name> </input>
       </bindings>
@@ -752,7 +752,7 @@ END PUBLIC_MODELS
 <public_models>
   <CELL> <name>singlea_naf</name>
     <SEGMENT_GROUP> <name>segments</name>
-      <child> <prototype>soma2</prototype> <name>soma</name>
+      <child> <prototype>soma_prototype</prototype> <name>soma</name>
         <parameters>
           <parameter> <name>rel_X</name><value>0</value> </parameter>
           <parameter> <name>rel_Y</name><value>0</value> </parameter>

@@ -23,7 +23,7 @@ PRIVATE_MODELS
 
 	ALIAS gate2::/naf_inactivation naf_gate_inactivation END ALIAS
 
-	CHANNEL NaF
+	CHANNEL NaF_prototype
 		BINDABLES
 			INPUT Vm,OUTPUT G,OUTPUT I
 		END BINDABLES
@@ -44,7 +44,7 @@ PRIVATE_MODELS
 		END PARAMETERS
 	END CHANNEL
 
-	SEGMENT soma2
+	SEGMENT soma_prototype
 
 		BINDABLES
 			OUTPUT Vm
@@ -64,7 +64,7 @@ PRIVATE_MODELS
 			PARAMETER ( ELEAK = -0.0800 )
 		END PARAMETERS
 
-		CHILD NaF
+		CHILD NaF_prototype
 			NaF
 			BINDINGS
 				INPUT ^->Vm
@@ -81,7 +81,7 @@ PUBLIC_MODELS
 
 		SEGMENT_GROUP segments
 
-			CHILD soma2 soma
+			CHILD soma_prototype soma
 				PARAMETERS
 					PARAMETER ( rel_X = 0.000e-6 ),
 					PARAMETER ( rel_Y = 0.000e-6 ),

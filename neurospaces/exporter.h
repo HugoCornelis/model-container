@@ -63,6 +63,10 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, int iFlags, char 
 
 #define EXPORTER_FLAG_LIBRARY		8
 
+//d export only children that are instances
+
+#define EXPORTER_FLAG_CHILDREN_INSTANCES	16
+
 
 #endif
 
