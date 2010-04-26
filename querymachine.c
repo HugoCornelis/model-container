@@ -1869,9 +1869,25 @@ QueryHandlerExport
     {
 	iFlags = EXPORTER_FLAG_ALL;
     }
+    else if (strcmp(pcFlags, "all_library") == 0)
+    {
+	iFlags = EXPORTER_FLAG_ALL | EXPORTER_FLAG_LIBRARY;
+    }
+    else if (strcmp(pcFlags, "all_library_names") == 0)
+    {
+	iFlags = EXPORTER_FLAG_ALL | EXPORTER_FLAG_LIBRARY | EXPORTER_FLAG_NAMESPACES;
+    }
     else if (strcmp(pcFlags, "all_names") == 0)
     {
 	iFlags = EXPORTER_FLAG_ALL | EXPORTER_FLAG_NAMESPACES;
+    }
+    else if (strcmp(pcFlags, "library") == 0)
+    {
+	iFlags = EXPORTER_FLAG_LIBRARY;
+    }
+    else if (strcmp(pcFlags, "library_names") == 0)
+    {
+	iFlags = EXPORTER_FLAG_LIBRARY | EXPORTER_FLAG_NAMESPACES;
     }
     else if (strcmp(pcFlags, "names") == 0)
     {

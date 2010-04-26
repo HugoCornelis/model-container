@@ -32,28 +32,36 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, int iFlags, char 
 
 //d export the old info type cryptic format.
 
-#define EXPORTER_TYPE_INFO	5
+#define EXPORTER_TYPE_INFO		5
 
 //d export in NDF format.
 
-#define EXPORTER_TYPE_NDF	11
+#define EXPORTER_TYPE_NDF		11
 
 //d export in a custom XML format.
 
-#define EXPORTER_TYPE_XML	12
+#define EXPORTER_TYPE_XML		12
+
+//d export in NDF library format.
+
+#define EXPORTER_TYPE_NDF_LIBRARY	13
 
 
 //d export namespaces
 
-#define EXPORTER_FLAG_NAMESPACES 1
+#define EXPORTER_FLAG_NAMESPACES	1
 
 //d export prototypes
 
-#define EXPORTER_FLAG_PROTOTYPES 2
+#define EXPORTER_FLAG_PROTOTYPES	2
 
 //d export everything
 
-#define EXPORTER_FLAG_ALL 4
+#define EXPORTER_FLAG_ALL		4
+
+//d export library
+
+#define EXPORTER_FLAG_LIBRARY		8
 
 
 #endif

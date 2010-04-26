@@ -88,10 +88,11 @@ struct symtab_BioComponent
 };
 
 
-// \def option to disable the prototype traversal of this bio component
+// \def option only used for tagging
 
-// if I am correct the use of the option field overlaps with
-// FLAG_SEGMENTER_SPHERICAL, what a mess ...
+#define BIOCOMP_OPTION_TAG_SET 64
+
+// \def option to disable the prototype traversal of this bio component
 
 #define BIOCOMP_OPTION_NO_PROTOTYPE_TRAVERSAL 128
 
