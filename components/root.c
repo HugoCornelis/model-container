@@ -493,7 +493,8 @@ RootSymbolTraverse
 
 	    if (iSelectorValue != TSTR_SELECTOR_PROCESS_ONLY_CHILDREN
 		&& iSelectorValue != TSTR_SELECTOR_PROCESS_SIBLING
-		&& ptstr->pfProcessor)
+		&& (ptstr->pfProcessor
+		    || iProcessorValue == TSTR_PROCESSOR_SUCCESS))
 	    {
 		//- call post selector
 
