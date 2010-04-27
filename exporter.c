@@ -82,6 +82,19 @@ static int
 ExporterLibraryFinalizer
 (struct TreespaceTraversal *ptstr,void *pvUserdata);
 
+static
+int 
+ExporterLibraryMain
+(struct PidinStack *ppistWildcard,
+ int iType,
+ int iFlags,
+ int iIndent,
+ FILE *pfile);
+
+static int
+ExporterLibraryMainSelector
+(struct TreespaceTraversal *ptstr,void *pvUserdata);
+
 static int
 ExporterLibraryProcessor
 (struct TreespaceTraversal *ptstr,void *pvUserdata);
@@ -507,6 +520,33 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, int iFlags, char 
 
     if (iFlags & EXPORTER_FLAG_LIBRARY)
     {
+	//- start public models
+
+	if (iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pfile, "PUBLIC_MODELS\n");
+	}
+	else
+	{
+	    fprintf(pfile, "<public_models>\n");
+	}
+
+	//- export dependencies in private section
+
+	iResult
+	    = (iResult && ExporterLibraryMain(ppistWildcard, iType, iFlags, 0, pfile));
+
+	//- end public models
+
+	if (iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pfile, "END PUBLIC_MODELS\n");
+	}
+	else
+	{
+	    fprintf(pfile, "</public_models>\n");
+	}
+
     }
 
     //- else export public symbols
@@ -1083,6 +1123,109 @@ ExporterLibraryFinalizer
 
 	iResult = TSTR_PROCESSOR_SUCCESS;
     }
+
+    //- return result
+
+    return(iResult);
+}
+
+
+static
+int 
+ExporterLibraryMain
+(struct PidinStack *ppistWildcard,
+ int iType,
+ int iFlags,
+ int iIndent,
+ FILE *pfile)
+{
+    //- set default result: ok
+
+    int iResult = 1;
+
+    //- allocate pidin stack pointing to root
+
+    struct PidinStack *ppistRoot = PidinStackCalloc();
+
+    if (!ppistRoot)
+    {
+	return(FALSE);
+    }
+
+    PidinStackSetRooted(ppistRoot);
+
+    struct symtab_HSolveListElement *phsleRoot
+	= PidinStackLookupTopSymbol(ppistRoot);
+
+    //- initialize exporter_data for library traversal
+
+    struct exporter_data exd =
+	{
+	    /// file to write to
+
+	    pfile,
+
+	    /// current indentation level
+
+	    iIndent + 2,
+
+	    /// wildcard selector
+
+	    ppistWildcard,
+
+	    /// output type
+
+	    iType,
+
+	    /// output flags
+
+	    iFlags,
+	};
+
+    //- allocate treespace traversal
+
+    struct TreespaceTraversal *ptstr
+	= TstrNew
+	  (ppistRoot,
+	   ExporterLibraryMainSelector,
+	   /* 	   (void *)&exd, */ NULL,
+	   /* 	   ExporterLibraryProcessor, */ NULL,
+	   (void *)&exd,
+	   ExporterLibraryFinalizer,
+	   (void *)&exd);
+
+    //- traverse symbols, looking for serial
+
+    int iTraversal = TstrGo(ptstr, phsleRoot);
+
+    //- delete treespace traversal
+
+    TstrDelete(ptstr);
+
+    if (iTraversal != 1)
+    {
+	fprintf(stdout, "*** Error: SymbolTraverseWildcard() failed (or aborted)\n");
+
+	iResult = 0;
+    }
+
+    //- free allocated memory
+
+    PidinStackFree(ppistRoot);
+
+    //- return result
+
+    return(iResult);
+}
+
+
+static int
+ExporterLibraryMainSelector
+(struct TreespaceTraversal *ptstr,void *pvUserdata)
+{
+    //- set default result : process only siblings
+
+    int iResult = TSTR_SELECTOR_PROCESS_SIBLING;
 
     //- return result
 
