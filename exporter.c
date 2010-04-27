@@ -767,56 +767,75 @@ ExporterLibraryFinalizer
 
 	if (pbioPrototype)
 	{
-	    //- export reference to component
+/* 	    //- loop over all prototypes */
 
-	    PrintIndent(pexd->iIndent, pexd->pfile);
-
-	    char *pcNamespace = (pexd->iFlags & EXPORTER_FLAG_NAMESPACES) ? pbio->pcNamespace : NULL ;
-
-	    if (pexd->iType == EXPORTER_TYPE_NDF)
+/* 	    while (pbioPrototype) */
 	    {
-		char *pcToken = "CHILD";
-/* 		    = (pexd->iIndent == 2 */
-/* 		       ? "ALIAS" */
-/* 		       : "CHILD"); */
+		//- export reference to component
 
-		char pc[1000];
+		PrintIndent(pexd->iIndent, pexd->pfile);
 
-		if (pcNamespace)
+		char *pcNamespace = (pexd->iFlags & EXPORTER_FLAG_NAMESPACES) ? pbio->pcNamespace : NULL ;
+
+		if (pexd->iType == EXPORTER_TYPE_NDF)
 		{
-		    strcpy(pc, pcNamespace);
-		    strcat(pc, "::");
+		    char *pcToken = "CHILD";
 
-		    if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
+		    char pc[1000];
+
+		    if (pcNamespace)
 		    {
-			strcat(pc, "_1");
+			strcpy(pc, pcNamespace);
+			strcat(pc, "::");
 		    }
+
+		    char pcPrototype[1000];
+
+		    strcpy(pcPrototype, SymbolName(&pbioPrototype->ioh.iol.hsle));
+
+		    char pcName[1000];
+
+/* 		if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES) */
+/* 		if (!pcNamespace && pcPrototype) */
+		    {
+			strcpy(pcName, pcPrototype);
+			strcat(pcName, "_1");
+		    }
+/* 		else */
+/* 		{ */
+/* 		    strcpy(pcName, SymbolName(phsle)); */
+/* 		} */
+
+		    fprintf(pexd->pfile, "%s \"%s%s%s\" \"%s\"\n", pcToken, (pcNamespace ? pc : ""), (pcNamespace ? "/" : ""), pcPrototype, pcName);
+		}
+		else
+		{
+		    char *pcToken = "child";
+
+		    char pc[1000];
+
+		    if (pcNamespace)
+		    {
+			sprintf(pc, "<namespace>%s::</namespace>", pcNamespace);
+		    }
+
+		    char pcPrototype[1000];
+
+		    strcpy(pcPrototype, SymbolName(&pbioPrototype->ioh.iol.hsle));
+
+		    char pcName[1000];
+
+		    strcpy(pcName, SymbolName(phsle));
+
+		    fprintf(pexd->pfile, "<%s> %s<prototype>%s%s</prototype> <name>%s</name>\n", pcToken, (pcNamespace ? pc : ""), (pcNamespace ? "/" : ""), pcPrototype, pcName);
 		}
 
-		fprintf(pexd->pfile, "%s \"%s%s%s\" \"%s\"\n", pcToken, (pcNamespace ? pc : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
+/* 		//- next prototype */
+
+/* 		pbioPrototype */
+/* 		    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbioPrototype->ioh.iol.hsle); */
+
 	    }
-	    else
-	    {
-		char *pcToken = "child";
-/* 		    = (pexd->iIndent == 2 */
-/* 		       ? "alias" */
-/* 		       : "child"); */
-
-		char pc[1000];
-
-		if (pcNamespace)
-		{
-		    sprintf(pc, "<namespace>%s::</namespace>", pcNamespace);
-
-		    if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
-		    {
-			strcat(pc, "_1");
-		    }
-		}
-
-		fprintf(pexd->pfile, "<%s> %s<prototype>%s%s</prototype> <name>%s</name>\n", pcToken, (pcNamespace ? pc : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
-	    }
-
 	}
 
 	//- if no prototype
@@ -893,18 +912,12 @@ ExporterLibraryFinalizer
 	    if (pexd->iType == EXPORTER_TYPE_NDF)
 	    {
 		char *pcToken = "CHILD";
-/* 		    = (pexd->iIndent == 2 */
-/* 		       ? "ALIAS" */
-/* 		       : "CHILD"); */
 
 		fprintf(pexd->pfile, "END %s\n", pcToken);
 	    }
 	    else
 	    {
 		char *pcToken = "child";
-/* 		    = (pexd->iIndent == 2 */
-/* 		       ? "alias" */
-/* 		       : "child"); */
 
 		fprintf(pexd->pfile, "</%s>\n", pcToken);
 	    }
@@ -1079,14 +1092,27 @@ ExporterSymbolStarter
 		{
 		    strcpy(pc, pcNamespace);
 		    strcat(pc, "::");
-
-		    if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
-		    {
-			strcat(pc, "_1");
-		    }
 		}
 
-		fprintf(pexd->pfile, "%s \"%s%s%s\" \"%s\"\n", pcToken, (pcNamespace ? pc : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
+		char pcPrototype[1000];
+
+		strcpy(pcPrototype, SymbolName(&pbioPrototype->ioh.iol.hsle));
+
+		if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
+		{
+		    strcat(pcPrototype, "_1");
+		}
+
+		char pcName[1000];
+
+		strcpy(pcName, SymbolName(phsle));
+
+/* 		if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES) */
+/* 		{ */
+/* 		    strcat(pcName, "_1"); */
+/* 		} */
+
+		fprintf(pexd->pfile, "%s \"%s%s%s\" \"%s\"\n", pcToken, (pcNamespace ? pc : ""), (pcNamespace ? "/" : ""), pcPrototype, pcName);
 	    }
 	    else
 	    {
@@ -1100,14 +1126,22 @@ ExporterSymbolStarter
 		if (pcNamespace)
 		{
 		    sprintf(pc, "<namespace>%s::</namespace>", pcNamespace);
-
-		    if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
-		    {
-			strcat(pc, "_1");
-		    }
 		}
 
-		fprintf(pexd->pfile, "<%s> %s<prototype>%s%s</prototype> <name>%s</name>\n", pcToken, (pcNamespace ? pc : ""), (pcNamespace ? "/" : ""), SymbolName(&pbioPrototype->ioh.iol.hsle), SymbolName(phsle));
+		char pcPrototype[1000];
+
+		strcpy(pcPrototype, SymbolName(&pbioPrototype->ioh.iol.hsle));
+
+		char pcName[1000];
+
+		strcpy(pcName, SymbolName(phsle));
+
+		if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
+		{
+		    strcat(pcPrototype, "_1");
+		}
+
+		fprintf(pexd->pfile, "<%s> %s<prototype>%s%s</prototype> <name>%s</name>\n", pcToken, (pcNamespace ? pc : ""), (pcNamespace ? "/" : ""), pcPrototype, pcName);
 	    }
 
 	    //- if there was a namespace
