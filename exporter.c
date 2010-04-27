@@ -80,11 +80,11 @@ ExporterLibraryChildren
 
 static int
 ExporterLibraryFinalizer
-(struct TreespaceTraversal *ptstr,void *pvUserdata);
+(struct TreespaceTraversal *ptstr, void *pvUserdata);
 
 static
 int 
-ExporterLibraryMain
+ExporterLibraryPublisher
 (struct PidinStack *ppistWildcard,
  int iType,
  int iFlags,
@@ -92,16 +92,20 @@ ExporterLibraryMain
  FILE *pfile);
 
 static int
-ExporterLibraryMainSelector
-(struct TreespaceTraversal *ptstr,void *pvUserdata);
+ExporterLibraryPublisherSelector
+(struct TreespaceTraversal *ptstr, void *pvUserdata);
+
+static int
+ExporterLibraryPublisherProcessor
+(struct TreespaceTraversal *ptstr, void *pvUserdata);
 
 static int
 ExporterLibraryProcessor
-(struct TreespaceTraversal *ptstr,void *pvUserdata);
+(struct TreespaceTraversal *ptstr, void *pvUserdata);
 
 static int
 ExporterLibrarySelector
-(struct TreespaceTraversal *ptstr,void *pvUserdata);
+(struct TreespaceTraversal *ptstr, void *pvUserdata);
 
 static
 int
@@ -534,7 +538,7 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, int iFlags, char 
 	//- export dependencies in private section
 
 	iResult
-	    = (iResult && ExporterLibraryMain(ppistWildcard, iType, iFlags, 0, pfile));
+	    = (iResult && ExporterLibraryPublisher(ppistWildcard, iType, iFlags, 0, pfile));
 
 	//- end public models
 
@@ -778,7 +782,7 @@ ExporterLibraryChildren
 
 static int
 ExporterLibraryFinalizer
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : process children of this symbol
 
@@ -1132,7 +1136,7 @@ ExporterLibraryFinalizer
 
 static
 int 
-ExporterLibraryMain
+ExporterLibraryPublisher
 (struct PidinStack *ppistWildcard,
  int iType,
  int iFlags,
@@ -1187,12 +1191,12 @@ ExporterLibraryMain
     struct TreespaceTraversal *ptstr
 	= TstrNew
 	  (ppistRoot,
-	   ExporterLibraryMainSelector,
-	   /* 	   (void *)&exd, */ NULL,
-	   /* 	   ExporterLibraryProcessor, */ NULL,
+	   ExporterLibraryPublisherSelector,
 	   (void *)&exd,
-	   ExporterLibraryFinalizer,
-	   (void *)&exd);
+	   ExporterLibraryPublisherProcessor,
+	   (void *)&exd,
+	   /* 	   (void *)&exd, */ NULL,
+	   /* 	   ExporterLibraryProcessor, */ NULL);
 
     //- traverse symbols, looking for serial
 
@@ -1220,12 +1224,45 @@ ExporterLibraryMain
 
 
 static int
-ExporterLibraryMainSelector
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+ExporterLibraryPublisherSelector
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : process only siblings
 
-    int iResult = TSTR_SELECTOR_PROCESS_SIBLING;
+    int iResult = TSTR_SELECTOR_PROCESS_CHILDREN;
+
+    //- return result
+
+    return(iResult);
+}
+
+
+static int
+ExporterLibraryPublisherProcessor
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
+{
+    //- set default result : process only siblings
+
+    int iResult = TSTR_PROCESSOR_SIBLINGS;
+
+    //- set actual symbol
+
+    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
+
+    //- get traversal data
+
+    struct exporter_data *pexd
+	= (struct exporter_data *)pvUserdata;
+
+/*     char pc[1000]; */
+
+/*     PidinStackString(ptstr->ppist, pc, 1000); */
+
+/*     fprintf(stdout, "%s\n", pc); */
+
+    fprintf(pexd->pfile, "  CHILD %s_1 %s\n", SymbolName(phsle), SymbolName(phsle));
+
+    fprintf(pexd->pfile, "  END CHILD\n");
 
     //- return result
 
@@ -1235,7 +1272,7 @@ ExporterLibraryMainSelector
 
 static int
 ExporterLibraryProcessor
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : process children of this symbol
 
@@ -1258,7 +1295,7 @@ ExporterLibraryProcessor
 
 static int
 ExporterLibrarySelector
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : process children of this symbol
 
