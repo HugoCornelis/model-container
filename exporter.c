@@ -47,6 +47,10 @@ struct exporter_data
     /// output flags
 
     int iFlags;
+
+    /// serial of the symbol that starts the traversal
+
+    int iStarter;
 };
 
 
@@ -309,7 +313,7 @@ ExporterChildren
 
     int iResult = 1;
 
-    //- if has bindings
+    //- if can have bindings
 
     if (instanceof_iol(phsle))
     {
@@ -327,6 +331,10 @@ ExporterChildren
 	//- free allocated resources
 
 	PidinStackFree(ppistChildren);
+    }
+    else
+    {
+	//t
     }
 
     //- return result
@@ -616,6 +624,11 @@ ExporterSymbol
 	    /// output flags
 
 	    iFlags,
+
+	    /// serial of the symbol that starts the traversal
+
+	    PidinStackToSerial(ppist),
+
 	};
 
     //- traverse symbols that match with wildcard
@@ -799,10 +812,6 @@ ExporterLibraryFinalizer
 
 		int iSerial = TstrGetPrincipalSerial(ptstr);
 
-		char pcSerial[100];
-
-		sprintf(pcSerial, "%i", iSerial);
-
 		char pcPrototype[1000];
 
 		sprintf(pcPrototype, "%s_%i", SymbolName(&pbioPrototype->ioh.iol.hsle), iSerial);
@@ -832,10 +841,6 @@ ExporterLibraryFinalizer
 		char *pcToken = i == iPrototypes - 1 ? SymbolHSLETypeDescribeNDF(pbioPrototype->ioh.iol.hsle.iType) : "child";
 
 		int iSerial = TstrGetPrincipalSerial(ptstr);
-
-		char pcSerial[100];
-
-		sprintf(pcSerial, "%i", iSerial);
 
 		char pcPrototype[1000];
 
@@ -946,35 +951,19 @@ ExporterLibraryFinalizer
 
 		int iSerial = TstrGetPrincipalSerial(ptstr);
 
-		char pcSerial[100];
-
-		sprintf(pcSerial, "%i", iSerial);
-
 		char pcPrototype[1000];
-
-		if (iPrototypes != 0)
-		{
-		    sprintf(pcPrototype, "%s_%i", SymbolName(phsle), iSerial);
-		}
 
 		char pcName[1000];
 
 		if (iPrototypes != 0)
 		{
-		    strcpy(pcName, SymbolName(phsle));
-		    strcat(pcName, "_0");
-		}
-		else
-		{
-		    strcpy(pcName, SymbolName(phsle));
-		}
-
-		if (iPrototypes != 0)
-		{
+		    sprintf(pcPrototype, "%s_%i", SymbolName(phsle), iSerial);
+		    sprintf(pcName, "%s_0_%i", SymbolName(phsle), iSerial);
 		    fprintf(pexd->pfile, "%s \"%s\" \"%s\"\n", pcToken, pcPrototype, pcName);
 		}
 		else
 		{
+		    sprintf(pcName, "%s_%i", SymbolName(phsle), iSerial);
 		    fprintf(pexd->pfile, "%s \"%s\"\n", pcToken, pcName);
 		}
 	    }
@@ -984,35 +973,19 @@ ExporterLibraryFinalizer
 
 		int iSerial = TstrGetPrincipalSerial(ptstr);
 
-		char pcSerial[100];
-
-		sprintf(pcSerial, "%i", iSerial);
-
 		char pcPrototype[1000];
-
-		if (iPrototypes != 0)
-		{
-		    sprintf(pcPrototype, "%s_%i", SymbolName(phsle), iSerial);
-		}
 
 		char pcName[1000];
 
 		if (iPrototypes != 0)
 		{
-		    strcpy(pcName, SymbolName(phsle));
-		    strcat(pcName, "_0");
-		}
-		else
-		{
-		    strcpy(pcName, SymbolName(phsle));
-		}
-
-		if (iPrototypes != 0)
-		{
+		    sprintf(pcPrototype, "%s_%i", SymbolName(phsle), iSerial);
+		    sprintf(pcName, "%s_0_%i", SymbolName(phsle), iSerial);
 		    fprintf(pexd->pfile, "<%s> <prototype>%s</prototype> <name>%s</name>\n", pcToken, pcPrototype, pcName);
 		}
 		else
 		{
+		    sprintf(pcName, "%s_%i", SymbolName(phsle), iSerial);
 		    fprintf(pexd->pfile, "<%s> <name>%s</name>\n", pcToken, pcName);
 		}
 	    }
@@ -1233,8 +1206,9 @@ ExporterSymbolStarter
 	struct symtab_BioComponent * pbioPrototype
 	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
 
-	if (pbioPrototype
-	    && !(pexd->iFlags & EXPORTER_FLAG_ALL))
+	if ((pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
+	    || (pbioPrototype
+		&& !(pexd->iFlags & EXPORTER_FLAG_ALL)))
 	{
 	    //- export reference to component
 
@@ -1259,21 +1233,18 @@ ExporterSymbolStarter
 
 		char pcPrototype[1000];
 
-		strcpy(pcPrototype, SymbolName(&pbioPrototype->ioh.iol.hsle));
-
 		if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
 		{
-		    strcat(pcPrototype, "_0");
+		    sprintf(pcPrototype, "%s_0_%i", SymbolName(phsle), pexd->iStarter);
+		}
+		else
+		{
+		    strcpy(pcPrototype, SymbolName(&pbioPrototype->ioh.iol.hsle));
 		}
 
 		char pcName[1000];
 
 		strcpy(pcName, SymbolName(phsle));
-
-/* 		if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES) */
-/* 		{ */
-/* 		    strcat(pcName, "_0"); */
-/* 		} */
 
 		fprintf(pexd->pfile, "%s \"%s%s%s\" \"%s\"\n", pcToken, (pcNamespace ? pc : ""), (pcNamespace ? "/" : ""), pcPrototype, pcName);
 	    }
@@ -1293,16 +1264,18 @@ ExporterSymbolStarter
 
 		char pcPrototype[1000];
 
-		strcpy(pcPrototype, SymbolName(&pbioPrototype->ioh.iol.hsle));
+		if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
+		{
+		    sprintf(pcPrototype, "%s_0_%i", SymbolName(&pbioPrototype->ioh.iol.hsle), pexd->iStarter);
+		}
+		else
+		{
+		    strcpy(pcPrototype, SymbolName(&pbioPrototype->ioh.iol.hsle));
+		}
 
 		char pcName[1000];
 
 		strcpy(pcName, SymbolName(phsle));
-
-		if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
-		{
-		    strcat(pcPrototype, "_0");
-		}
 
 		fprintf(pexd->pfile, "<%s> %s<prototype>%s%s</prototype> <name>%s</name>\n", pcToken, (pcNamespace ? pc : ""), (pcNamespace ? "/" : ""), pcPrototype, pcName);
 	    }
@@ -1510,7 +1483,9 @@ ExporterSymbolStopper
 	struct symtab_BioComponent * pbioPrototype
 	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
 
-	if (pbioPrototype && !(pexd->iFlags & EXPORTER_FLAG_ALL))
+	if ((pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
+	    || (pbioPrototype
+		&& !(pexd->iFlags & EXPORTER_FLAG_ALL)))
 	{
 	    //- export reference to component
 
@@ -1655,6 +1630,10 @@ ExporterSymbolStopper
 /* 	    /// output flags */
 
 /* 	    iFlags, */
+
+/* 	    /// serial of the symbol that starts the traversal */
+
+/* 	    -1, */
 /* 	}; */
 
 /*     //- traverse symbols that match with wildcard */
