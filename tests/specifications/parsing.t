@@ -3070,7 +3070,25 @@ my $test
 						 ],
 				description => "syntax of pulsegen/pulsegen1.ndf",
 			       },
-		      ],
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-R',
+					      'library/tests/channels/naf.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (tests/channels/naf.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/channels/naf.ndf', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of tests/channels/naf.ndf",
+			       },
+			      ],
        description => "general syntax of library files",
        name => 'parsing.t',
       };

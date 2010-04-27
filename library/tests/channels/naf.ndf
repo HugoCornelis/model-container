@@ -1,0 +1,45 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+// VERSION 0.1
+
+IMPORT
+
+	FILE gate1 "gates/naf_activation.ndf"
+
+	FILE gate2 "gates/naf_inactivation.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+
+	ALIAS gate1::/naf_activation naf_gate_activation END ALIAS
+
+	ALIAS gate2::/naf_inactivation naf_gate_inactivation END ALIAS
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	CHANNEL NaF_prototype
+		BINDABLES
+			INPUT Vm,OUTPUT G,OUTPUT I
+		END BINDABLES
+
+		CHILD naf_gate_activation naf_gate_activation
+		END CHILD
+
+		CHILD naf_gate_inactivation naf_gate_inactivation
+		END CHILD
+
+		PARAMETERS
+			PARAMETER ( G_MAX = 75000.0 ),
+			PARAMETER ( Erev = 0.045 )
+		END PARAMETERS
+	END CHANNEL
+
+END PUBLIC_MODELS
+
+
