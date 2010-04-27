@@ -402,20 +402,18 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, int iFlags, char 
 
     struct DefinedSymbols *pdefsym = ImportedFileGetDefinedSymbols(pif);
 
-    iResult
-	= (iResult
-	   && DefSymPrint(pdefsym, FLAG_SYMBOL_DEPENDENCY, 4, iType, pfile));
+    if (!(iFlags & EXPORTER_FLAG_LIBRARY))
+    {
+	iResult
+	    = (iResult
+	       && DefSymPrint(pdefsym, FLAG_SYMBOL_DEPENDENCY, 4, iType, pfile));
+    }
 
     //- if exporting a library
 
     if (iFlags & EXPORTER_FLAG_LIBRARY)
     {
 	//- tag dependencies
-
-	// \todo export post-order
-	// \todo if has prototype, export as child
-
-	//ExporterTagSymbols
 
 	//- start private models
 
@@ -429,12 +427,6 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, int iFlags, char 
 	}
 
 	//- export dependencies in private section
-
-	//t traverse wildcard, only children, so always TSTR_PROCESSOR_SIBLINGS
-
-	//t callback exports children of children
-
-	//t or post-order traverse wildcard, mark each prototype, skipped marked prototypes
 
 	iResult
 	    = (iResult && ExporterLibraryChildren(ppistWildcard, iType, iFlags, 0, pfile));
@@ -1235,7 +1227,7 @@ ExporterSymbolStarter
 
 		if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
 		{
-		    sprintf(pcPrototype, "%s_0_%i", SymbolName(phsle), pexd->iStarter);
+		    sprintf(pcPrototype, "%s_0_%i", SymbolName(phsle), TstrGetPrincipalSerial(ptstr) + 1 /* pexd->iStarter */);
 		}
 		else
 		{
@@ -1266,7 +1258,7 @@ ExporterSymbolStarter
 
 		if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
 		{
-		    sprintf(pcPrototype, "%s_0_%i", SymbolName(&pbioPrototype->ioh.iol.hsle), pexd->iStarter);
+		    sprintf(pcPrototype, "%s_0_%i", SymbolName(&pbioPrototype->ioh.iol.hsle), TstrGetPrincipalSerial(ptstr) + 1 /* pexd->iStarter */);
 		}
 		else
 		{
