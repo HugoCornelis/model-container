@@ -856,7 +856,7 @@ ExporterLibraryFinalizer
 
 		if (0 && i == 0)
 		{
-		    sprintf(pcName, "%s_0_%i", pcPrototype, iSerial);
+		    sprintf(pcName, "%s_proto_%i", pcPrototype, iSerial);
 		}
 		else
 		{
@@ -886,7 +886,7 @@ ExporterLibraryFinalizer
 
 		if (0 && i == 0)
 		{
-		    sprintf(pcName, "%s_0_%i", pcPrototype, iSerial);
+		    sprintf(pcName, "%s_proto_%i", pcPrototype, iSerial);
 		}
 		else
 		{
@@ -903,6 +903,7 @@ ExporterLibraryFinalizer
 		}
 	    }
 
+	    if (i == iPrototypes - 1)
 	    {
 		//- export bindables
 
@@ -994,7 +995,7 @@ ExporterLibraryFinalizer
 		if (iPrototypes != 0)
 		{
 		    sprintf(pcPrototype, "%s_%i", SymbolName(phsle), iSerial);
-		    sprintf(pcName, "%s_0_%i", SymbolName(phsle), iSerial);
+		    sprintf(pcName, "%s_proto_%i", SymbolName(phsle), iSerial);
 		    fprintf(pexd->pfile, "%s \"%s\" \"%s\"\n", pcToken, pcPrototype, pcName);
 		}
 		else
@@ -1016,7 +1017,7 @@ ExporterLibraryFinalizer
 		if (iPrototypes != 0)
 		{
 		    sprintf(pcPrototype, "%s_%i", SymbolName(phsle), iSerial);
-		    sprintf(pcName, "%s_0_%i", SymbolName(phsle), iSerial);
+		    sprintf(pcName, "%s_proto_%i", SymbolName(phsle), iSerial);
 		    fprintf(pexd->pfile, "<%s> <prototype>%s</prototype> <name>%s</name>\n", pcToken, pcPrototype, pcName);
 		}
 		else
@@ -1027,6 +1028,7 @@ ExporterLibraryFinalizer
 	    }
 	}
 
+	if (iPrototypes == 0)
 	{
 	    //- export bindables
 
@@ -1407,7 +1409,14 @@ ExporterSymbolStarter
 
 		if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
 		{
-		    sprintf(pcPrototype, "%s_0_%i", SymbolName(phsle), TstrGetPrincipalSerial(ptstr) + 1 /* pexd->iStarter */);
+		    if (pbioPrototype)
+		    {
+			sprintf(pcPrototype, "%s_proto_%i", SymbolName(phsle), TstrGetPrincipalSerial(ptstr) + 1 /* pexd->iStarter */);
+		    }
+		    else
+		    {
+			sprintf(pcPrototype, "%s_%i", SymbolName(phsle), TstrGetPrincipalSerial(ptstr) + 2 /* pexd->iStarter */);
+		    }
 		}
 		else
 		{
@@ -1438,7 +1447,7 @@ ExporterSymbolStarter
 
 		if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
 		{
-		    sprintf(pcPrototype, "%s_0_%i", SymbolName(&pbioPrototype->ioh.iol.hsle), TstrGetPrincipalSerial(ptstr) + 1 /* pexd->iStarter */);
+		    sprintf(pcPrototype, "%s_proto_%i", SymbolName(&pbioPrototype->ioh.iol.hsle), TstrGetPrincipalSerial(ptstr) + 1 /* pexd->iStarter */);
 		}
 		else
 		{
