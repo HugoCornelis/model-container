@@ -994,7 +994,7 @@ END PUBLIC_MODELS
 						    timeout => 15,
 						   },
 						  ],
-				 description => "parsing of the generated channel NDF file",
+				 description => "parsing of the generated cell NDF file",
 				},
 				{
 				 arguments => [
@@ -1011,7 +1011,7 @@ END PUBLIC_MODELS
 						    timeout => 15,
 						   },
 						  ],
-				 description => "parsing of the generated channel xml file",
+				 description => "parsing of the generated cell xml file",
 				},
 			       ),
 			       (
