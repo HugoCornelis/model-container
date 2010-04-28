@@ -854,9 +854,9 @@ ExporterLibraryFinalizer
 
 		char pcName[1000];
 
-		if (0 && i == 0)
+		if (i == iPrototypes - 1)
 		{
-		    sprintf(pcName, "%s_proto_%i", pcPrototype, iSerial);
+		    sprintf(pcName, "%s", pcPrototype, iSerial);
 		}
 		else
 		{
@@ -884,9 +884,9 @@ ExporterLibraryFinalizer
 
 		char pcName[1000];
 
-		if (0 && i == 0)
+		if (i == iPrototypes - 1)
 		{
-		    sprintf(pcName, "%s_proto_%i", pcPrototype, iSerial);
+		    sprintf(pcName, "%s", pcPrototype, iSerial);
 		}
 		else
 		{
@@ -973,7 +973,7 @@ ExporterLibraryFinalizer
 	    }
 	}
 
-	//- no prototype
+/* 	//- no prototype */
 
 /* 	else */
 
