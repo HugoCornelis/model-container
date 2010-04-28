@@ -1256,15 +1256,22 @@ ExporterLibraryPublisherProcessor
     struct exporter_data *pexd
 	= (struct exporter_data *)pvUserdata;
 
-/*     char pc[1000]; */
+    if (pexd->iType == EXPORTER_TYPE_NDF)
+    {
+	//t the '1' should be a serial?
 
-/*     PidinStackString(ptstr->ppist, pc, 1000); */
+	fprintf(pexd->pfile, "  CHILD %s_1 %s\n", SymbolName(phsle), SymbolName(phsle));
 
-/*     fprintf(stdout, "%s\n", pc); */
+	fprintf(pexd->pfile, "  END CHILD\n");
+    }
+    else
+    {
+	//t the '1' should be a serial?
 
-    fprintf(pexd->pfile, "  CHILD %s_1 %s\n", SymbolName(phsle), SymbolName(phsle));
+	fprintf(pexd->pfile, "  <child> <prototype>%s_1</prototype> <name>%s</name>\n", SymbolName(phsle), SymbolName(phsle));
 
-    fprintf(pexd->pfile, "  END CHILD\n");
+	fprintf(pexd->pfile, "  </child>\n");
+    }
 
     //- return result
 
@@ -1411,11 +1418,11 @@ ExporterSymbolStarter
 		{
 		    if (pbioPrototype)
 		    {
-			sprintf(pcPrototype, "%s_proto_%i", SymbolName(phsle), TstrGetPrincipalSerial(ptstr) + 1 /* pexd->iStarter */);
+			sprintf(pcPrototype, "%s_proto_%i", SymbolName(phsle), pexd->iStarter + TstrGetPrincipalSerial(ptstr));
 		    }
 		    else
 		    {
-			sprintf(pcPrototype, "%s_%i", SymbolName(phsle), TstrGetPrincipalSerial(ptstr) + 2 /* pexd->iStarter */);
+			sprintf(pcPrototype, "%s_%i", SymbolName(phsle), pexd->iStarter + TstrGetPrincipalSerial(ptstr));
 		    }
 		}
 		else
@@ -1447,7 +1454,14 @@ ExporterSymbolStarter
 
 		if (pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
 		{
-		    sprintf(pcPrototype, "%s_proto_%i", SymbolName(&pbioPrototype->ioh.iol.hsle), TstrGetPrincipalSerial(ptstr) + 1 /* pexd->iStarter */);
+		    if (pbioPrototype)
+		    {
+			sprintf(pcPrototype, "%s_proto_%i", SymbolName(phsle), pexd->iStarter + TstrGetPrincipalSerial(ptstr));
+		    }
+		    else
+		    {
+			sprintf(pcPrototype, "%s_%i", SymbolName(phsle), pexd->iStarter + TstrGetPrincipalSerial(ptstr));
+		    }
 		}
 		else
 		{
