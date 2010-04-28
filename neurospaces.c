@@ -1,4 +1,4 @@
-static char *pcVersionTime="(10/02/17) Wednesday, February 17, 2010 11:08:07 hugo";
+static char *pcVersionTime="(10/04/28) Wednesday, April 28, 2010 10:10:31 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -940,7 +940,7 @@ NeurospacesImport
 
 	    char pcCommand[1000];
 
-	    sprintf(pcCommand, "perl <%s >%s -pe 's(<neurospaces type=\"ndf\"/>)(#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n)gi; s(->)(--##--)gi; s(</(input|output)>)(, )gi; s(<namespace>)()gi; s(</namespace>)()gi; s(</file>)()gi; s(<filename>)(\")gi; s(</filename>)(\")gi; s(<prototype>)()gi; s(</prototype>)()gi; s/<parameter>/parameter ( /gi; s|</parameter>| ), |gi; s|<function>\\s*<name>([^<]*)</name>| = $1 (|gi; s|</function>|), |gi; s(</value>)()gi; s(<value>)( = )gi; s(<name>)()gi; s(</name>)(); s(</)( end )gi; s((<|>))()gi; s(\\/\\/)(//)gi; s(--##--)(->)gi; '", pcQualified, pcTemp);
+	    sprintf(pcCommand, "perl <%s >%s -pe 's(<neurospaces type=\"ndf\"/>)(#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n)gi; s(->)(--##--)gi; s(</(input|output)>)(, )gi; s(<namespace>)()gi; s(</namespace>)()gi; s(</file>)()gi; s(<filename>)(\")gi; s(</filename>)(\")gi; s(<prototype>)()gi; s(</prototype>)()gi; s/<parameter>/parameter ( /gi; s|</parameter>| ), |gi; s|<function>\\s*<name>([^<]*)</name>| = $1 (|gi; s|</function>|), |gi; s(</value>)()gi; s(<value>)( = )gi; s(</string>)()gi; s(<string>)( = )gi; s(<name>)()gi; s(</name>)(); s(</)( end )gi; s((<|>))()gi; s(\\/\\/)(//)gi; s(--##--)(->)gi; '", pcQualified, pcTemp);
 
 	    system(pcCommand);
 
