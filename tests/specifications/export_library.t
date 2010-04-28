@@ -20,7 +20,7 @@ my $test
 						   {
 						    description => "Is neurospaces startup successful ?",
 						    read => [ '-re', './neurospacesparse: No errors for .+?/gates/naf_activation.ndf.', ],
-						    timeout => 15,
+						    timeout => 5,
 						   },
 						   {
 						    description => "Can we export the gate model to an NDF file ?",
@@ -185,7 +185,7 @@ END PUBLIC_MODELS
 						   {
 						    description => "Is neurospaces startup successful ?",
 						    read => [ '-re', './neurospacesparse: No errors for /tmp/1.ndf.', ],
-						    timeout => 15,
+						    timeout => 5,
 						   },
 						  ],
 				 description => "parsing of the generated gate NDF file",
@@ -202,7 +202,7 @@ END PUBLIC_MODELS
 						   {
 						    description => "Is neurospaces startup successful ?",
 						    read => [ '-re', './neurospacesparse: No errors for /tmp/1.xml.', ],
-						    timeout => 15,
+						    timeout => 5,
 						   },
 						  ],
 				 description => "parsing of the generated gate xml file",
@@ -221,7 +221,7 @@ END PUBLIC_MODELS
 						   {
 						    description => "Is neurospaces startup successful ?",
 						    read => [ '-re', './neurospacesparse: No errors for .+?/tests/channels/naf.ndf.', ],
-						    timeout => 15,
+						    timeout => 5,
 						   },
 						   {
 						    description => "Can we export the channel model to an NDF file ?",
@@ -550,7 +550,7 @@ END PUBLIC_MODELS
 						   {
 						    description => "Is neurospaces startup successful ?",
 						    read => [ '-re', './neurospacesparse: No errors for /tmp/1.ndf.', ],
-						    timeout => 15,
+						    timeout => 5,
 						   },
 						  ],
 				 description => "parsing of the generated channel NDF file",
@@ -567,7 +567,7 @@ END PUBLIC_MODELS
 						   {
 						    description => "Is neurospaces startup successful ?",
 						    read => [ '-re', './neurospacesparse: No errors for /tmp/1.xml.', ],
-						    timeout => 15,
+						    timeout => 5,
 						   },
 						  ],
 				 description => "parsing of the generated channel xml file",
@@ -586,7 +586,7 @@ END PUBLIC_MODELS
 						   {
 						    description => "Is neurospaces startup successful ?",
 						    read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/singlea_naf.ndf.', ],
-						    timeout => 15,
+						    timeout => 5,
 						   },
 						   {
 						    description => "Can we export the channel model to an NDF file ?",
@@ -738,7 +738,7 @@ PRIVATE_MODELS
     CHILD "naf_gate_inactivation_inserted_8" "naf_gate_inactivation"
     END CHILD
   END CHANNEL
-  CHILD "NaF_4" "NaF_inserted_4"
+  CHILD "NaF_prototype_4" "NaF_inserted_4"
   END CHILD
   SEGMENT "soma_prototype_3"
     BINDABLES
@@ -757,7 +757,7 @@ PRIVATE_MODELS
     CHILD "NaF_inserted_4" "NaF"
     END CHILD
   END SEGMENT
-  CHILD "soma_3" "soma_inserted_3"
+  CHILD "soma_prototype_3" "soma_inserted_3"
     PARAMETERS
       PARAMETER ( rel_X = 0 ),
       PARAMETER ( rel_Y = 0 ),
@@ -931,7 +931,7 @@ END PUBLIC_MODELS
     <child> <prototype>naf_gate_inactivation_inserted_8</prototype> <name>naf_gate_inactivation</name>
     </child>
   </CHANNEL>
-  <child> <prototype>NaF_4</prototype> <name>NaF_inserted_4</name>
+  <child> <prototype>NaF_prototype_4</prototype> <name>NaF_inserted_4</name>
   </child>
   <SEGMENT> <name>soma_prototype_3</name>
     <bindables>
@@ -950,7 +950,7 @@ END PUBLIC_MODELS
     <child> <prototype>NaF_inserted_4</prototype> <name>NaF</name>
     </child>
   </SEGMENT>
-  <child> <prototype>soma_3</prototype> <name>soma_inserted_3</name>
+  <child> <prototype>soma_prototype_3</prototype> <name>soma_inserted_3</name>
     <parameters>
       <parameter> <name>rel_X</name><value>0</value> </parameter>
       <parameter> <name>rel_Y</name><value>0</value> </parameter>
@@ -991,7 +991,7 @@ END PUBLIC_MODELS
 						   {
 						    description => "Is neurospaces startup successful ?",
 						    read => [ '-re', './neurospacesparse: No errors for /tmp/1.ndf.', ],
-						    timeout => 15,
+						    timeout => 5,
 						   },
 						  ],
 				 description => "parsing of the generated cell NDF file",
@@ -1008,7 +1008,7 @@ END PUBLIC_MODELS
 						   {
 						    description => "Is neurospaces startup successful ?",
 						    read => [ '-re', './neurospacesparse: No errors for /tmp/1.xml.', ],
-						    timeout => 15,
+						    timeout => 5,
 						   },
 						  ],
 				 description => "parsing of the generated cell xml file",
@@ -1032,12 +1032,17 @@ END PUBLIC_MODELS
 							{
 							 description => "Is neurospaces startup successful ?",
 							 read => [ '-re', "./neurospacesparse: No errors for .+?/$ndf.", ],
-							 timeout => 15,
+							 timeout => 5,
 							},
 							{
 							 description => "Can we export the model as NDF ?",
 							 wait => 1,
-							 write => "export no ndf /tmp/1.ndf /**",
+							 write => "export library ndf /tmp/1.ndf /**",
+							},
+							{
+							 description => "Can we export the model as xml ?",
+							 wait => 1,
+							 write => "export library xml /tmp/1.xml /**",
 							},
 						       ],
 				      description => "export of $ndf before reading it back",
@@ -1054,7 +1059,25 @@ END PUBLIC_MODELS
 							{
 							 description => "Is neurospaces startup successful ?",
 							 read => "./neurospacesparse: No errors for /tmp/1.ndf.",
-							 timeout => 15,
+							 timeout => 5,
+							},
+						       ],
+				      description => "reading of $ndf after exporting it",
+				      disabled => ($ndf eq "networks/input.ndf" ? "export of $ndf does not work correctly, connection vectors and connection symbol vectors are messed up." : 0),
+				     },
+				     {
+				      arguments => [
+						    '-q',
+						    '-v',
+						    '1',
+						    '/tmp/1.xml',
+						   ],
+				      command => './neurospacesparse',
+				      command_tests => [
+							{
+							 description => "Is neurospaces startup successful ?",
+							 read => "./neurospacesparse: No errors for /tmp/1.xml.",
+							 timeout => 5,
 							},
 						       ],
 				      description => "reading of $ndf after exporting it",
