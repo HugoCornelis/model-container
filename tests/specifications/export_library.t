@@ -296,7 +296,7 @@ PRIVATE_MODELS
       PARAMETER ( POWER = 3 ),
     END PARAMETERS
   END CHILD
-  CHILD "naf_gate_activation_2" "naf_gate_activation_proto_2"
+  CHILD "naf_gate_activation_2" "naf_gate_activation_inserted_2"
   END CHILD
   GATE_KINETIC "A_6"
     BINDABLES
@@ -355,7 +355,7 @@ PRIVATE_MODELS
       PARAMETER ( POWER = 1 ),
     END PARAMETERS
   END CHILD
-  CHILD "naf_gate_inactivation_5" "naf_gate_inactivation_proto_5"
+  CHILD "naf_gate_inactivation_5" "naf_gate_inactivation_inserted_5"
   END CHILD
   CHANNEL "NaF_prototype_1"
     BINDABLES
@@ -367,9 +367,9 @@ PRIVATE_MODELS
       PARAMETER ( G_MAX = 75000 ),
       PARAMETER ( Erev = 0.045 ),
     END PARAMETERS
-    CHILD "naf_gate_activation_proto_2" "naf_gate_activation"
+    CHILD "naf_gate_activation_inserted_2" "naf_gate_activation"
     END CHILD
-    CHILD "naf_gate_inactivation_proto_5" "naf_gate_inactivation"
+    CHILD "naf_gate_inactivation_inserted_5" "naf_gate_inactivation"
     END CHILD
   END CHANNEL
 END PRIVATE_MODELS
@@ -451,7 +451,7 @@ END PUBLIC_MODELS
       <parameter> <name>POWER</name><value>3</value> </parameter>
     </parameters>
   </child>
-  <child> <prototype>naf_gate_activation_2</prototype> <name>naf_gate_activation_proto_2</name>
+  <child> <prototype>naf_gate_activation_2</prototype> <name>naf_gate_activation_inserted_2</name>
   </child>
   <GATE_KINETIC> <name>A_6</name>
     <bindables>
@@ -510,7 +510,7 @@ END PUBLIC_MODELS
       <parameter> <name>POWER</name><value>1</value> </parameter>
     </parameters>
   </child>
-  <child> <prototype>naf_gate_inactivation_5</prototype> <name>naf_gate_inactivation_proto_5</name>
+  <child> <prototype>naf_gate_inactivation_5</prototype> <name>naf_gate_inactivation_inserted_5</name>
   </child>
   <CHANNEL> <name>NaF_prototype_1</name>
     <bindables>
@@ -522,9 +522,9 @@ END PUBLIC_MODELS
       <parameter> <name>G_MAX</name><value>75000</value> </parameter>
       <parameter> <name>Erev</name><value>0.045</value> </parameter>
     </parameters>
-    <child> <prototype>naf_gate_activation_proto_2</prototype> <name>naf_gate_activation</name>
+    <child> <prototype>naf_gate_activation_inserted_2</prototype> <name>naf_gate_activation</name>
     </child>
-    <child> <prototype>naf_gate_inactivation_proto_5</prototype> <name>naf_gate_inactivation</name>
+    <child> <prototype>naf_gate_inactivation_inserted_5</prototype> <name>naf_gate_inactivation</name>
     </child>
   </CHANNEL>
 </private_models>
@@ -661,7 +661,7 @@ PRIVATE_MODELS
       PARAMETER ( POWER = 3 ),
     END PARAMETERS
   END CHILD
-  CHILD "naf_gate_activation_5" "naf_gate_activation_proto_5"
+  CHILD "naf_gate_activation_5" "naf_gate_activation_inserted_5"
   END CHILD
   GATE_KINETIC "A_9"
     BINDABLES
@@ -720,7 +720,7 @@ PRIVATE_MODELS
       PARAMETER ( POWER = 1 ),
     END PARAMETERS
   END CHILD
-  CHILD "naf_gate_inactivation_8" "naf_gate_inactivation_proto_8"
+  CHILD "naf_gate_inactivation_8" "naf_gate_inactivation_inserted_8"
   END CHILD
   CHANNEL "NaF_prototype_4"
     BINDABLES
@@ -733,12 +733,12 @@ PRIVATE_MODELS
       PARAMETER ( G_MAX = 75000 ),
       PARAMETER ( Erev = 0.045 ),
     END PARAMETERS
-    CHILD "naf_gate_activation_proto_5" "naf_gate_activation"
+    CHILD "naf_gate_activation_inserted_5" "naf_gate_activation"
     END CHILD
-    CHILD "naf_gate_inactivation_proto_8" "naf_gate_inactivation"
+    CHILD "naf_gate_inactivation_inserted_8" "naf_gate_inactivation"
     END CHILD
   END CHANNEL
-  CHILD "NaF_4" "NaF_proto_4"
+  CHILD "NaF_4" "NaF_inserted_4"
   END CHILD
   SEGMENT "soma_prototype_3"
     BINDABLES
@@ -754,10 +754,10 @@ PRIVATE_MODELS
       PARAMETER ( CM = 0.0164 ),
       PARAMETER ( ELEAK = -0.08 ),
     END PARAMETERS
-    CHILD "NaF_proto_4" "NaF"
+    CHILD "NaF_inserted_4" "NaF"
     END CHILD
   END SEGMENT
-  CHILD "soma_3" "soma_proto_3"
+  CHILD "soma_3" "soma_inserted_3"
     PARAMETERS
       PARAMETER ( rel_X = 0 ),
       PARAMETER ( rel_Y = 0 ),
@@ -766,12 +766,12 @@ PRIVATE_MODELS
     END PARAMETERS
   END CHILD
   SEGMENT_GROUP "segments_2"
-    CHILD "soma_proto_3" "soma"
+    CHILD "soma_inserted_3" "soma"
     END CHILD
   END SEGMENT_GROUP
   CELL "singlea_naf_1"
     CHILD "segments_2" "segments"
-      CHILD "soma_proto_3" "soma"
+      CHILD "soma_inserted_3" "soma"
       END CHILD
     END CHILD
   END CELL
@@ -854,7 +854,7 @@ END PUBLIC_MODELS
       <parameter> <name>POWER</name><value>3</value> </parameter>
     </parameters>
   </child>
-  <child> <prototype>naf_gate_activation_5</prototype> <name>naf_gate_activation_proto_5</name>
+  <child> <prototype>naf_gate_activation_5</prototype> <name>naf_gate_activation_inserted_5</name>
   </child>
   <GATE_KINETIC> <name>A_9</name>
     <bindables>
@@ -913,7 +913,7 @@ END PUBLIC_MODELS
       <parameter> <name>POWER</name><value>1</value> </parameter>
     </parameters>
   </child>
-  <child> <prototype>naf_gate_inactivation_8</prototype> <name>naf_gate_inactivation_proto_8</name>
+  <child> <prototype>naf_gate_inactivation_8</prototype> <name>naf_gate_inactivation_inserted_8</name>
   </child>
   <CHANNEL> <name>NaF_prototype_4</name>
     <bindables>
@@ -926,12 +926,12 @@ END PUBLIC_MODELS
       <parameter> <name>G_MAX</name><value>75000</value> </parameter>
       <parameter> <name>Erev</name><value>0.045</value> </parameter>
     </parameters>
-    <child> <prototype>naf_gate_activation_proto_5</prototype> <name>naf_gate_activation</name>
+    <child> <prototype>naf_gate_activation_inserted_5</prototype> <name>naf_gate_activation</name>
     </child>
-    <child> <prototype>naf_gate_inactivation_proto_8</prototype> <name>naf_gate_inactivation</name>
+    <child> <prototype>naf_gate_inactivation_inserted_8</prototype> <name>naf_gate_inactivation</name>
     </child>
   </CHANNEL>
-  <child> <prototype>NaF_4</prototype> <name>NaF_proto_4</name>
+  <child> <prototype>NaF_4</prototype> <name>NaF_inserted_4</name>
   </child>
   <SEGMENT> <name>soma_prototype_3</name>
     <bindables>
@@ -947,10 +947,10 @@ END PUBLIC_MODELS
       <parameter> <name>CM</name><value>0.0164</value> </parameter>
       <parameter> <name>ELEAK</name><value>-0.08</value> </parameter>
     </parameters>
-    <child> <prototype>NaF_proto_4</prototype> <name>NaF</name>
+    <child> <prototype>NaF_inserted_4</prototype> <name>NaF</name>
     </child>
   </SEGMENT>
-  <child> <prototype>soma_3</prototype> <name>soma_proto_3</name>
+  <child> <prototype>soma_3</prototype> <name>soma_inserted_3</name>
     <parameters>
       <parameter> <name>rel_X</name><value>0</value> </parameter>
       <parameter> <name>rel_Y</name><value>0</value> </parameter>
@@ -959,12 +959,12 @@ END PUBLIC_MODELS
     </parameters>
   </child>
   <SEGMENT_GROUP> <name>segments_2</name>
-    <child> <prototype>soma_proto_3</prototype> <name>soma</name>
+    <child> <prototype>soma_inserted_3</prototype> <name>soma</name>
     </child>
   </SEGMENT_GROUP>
   <CELL> <name>singlea_naf_1</name>
     <child> <prototype>segments_2</prototype> <name>segments</name>
-      <child> <prototype>soma_proto_3</prototype> <name>soma</name>
+      <child> <prototype>soma_inserted_3</prototype> <name>soma</name>
       </child>
     </child>
   </CELL>

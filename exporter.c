@@ -995,7 +995,7 @@ ExporterLibraryFinalizer
 		if (iPrototypes != 0)
 		{
 		    sprintf(pcPrototype, "%s_%i", SymbolName(phsle), iSerial);
-		    sprintf(pcName, "%s_proto_%i", SymbolName(phsle), iSerial);
+		    sprintf(pcName, "%s_inserted_%i", SymbolName(phsle), iSerial);
 		    fprintf(pexd->pfile, "%s \"%s\" \"%s\"\n", pcToken, pcPrototype, pcName);
 		}
 		else
@@ -1017,7 +1017,7 @@ ExporterLibraryFinalizer
 		if (iPrototypes != 0)
 		{
 		    sprintf(pcPrototype, "%s_%i", SymbolName(phsle), iSerial);
-		    sprintf(pcName, "%s_proto_%i", SymbolName(phsle), iSerial);
+		    sprintf(pcName, "%s_inserted_%i", SymbolName(phsle), iSerial);
 		    fprintf(pexd->pfile, "<%s> <prototype>%s</prototype> <name>%s</name>\n", pcToken, pcPrototype, pcName);
 		}
 		else
@@ -1418,7 +1418,7 @@ ExporterSymbolStarter
 		{
 		    if (pbioPrototype)
 		    {
-			sprintf(pcPrototype, "%s_proto_%i", SymbolName(phsle), pexd->iStarter + TstrGetPrincipalSerial(ptstr));
+			sprintf(pcPrototype, "%s_inserted_%i", SymbolName(phsle), pexd->iStarter + TstrGetPrincipalSerial(ptstr));
 		    }
 		    else
 		    {
@@ -1456,7 +1456,7 @@ ExporterSymbolStarter
 		{
 		    if (pbioPrototype)
 		    {
-			sprintf(pcPrototype, "%s_proto_%i", SymbolName(phsle), pexd->iStarter + TstrGetPrincipalSerial(ptstr));
+			sprintf(pcPrototype, "%s_inserted_%i", SymbolName(phsle), pexd->iStarter + TstrGetPrincipalSerial(ptstr));
 		    }
 		    else
 		    {
