@@ -1583,7 +1583,9 @@ ExporterSymbolStarter
 
 	//- if not prototypes export
 
-	if (!pbioPrototype || (pexd->iFlags & EXPORTER_FLAG_ALL))
+	if (!(pexd->iFlags & EXPORTER_FLAG_CHILDREN_INSTANCES)
+	    && (!pbioPrototype
+		|| (pexd->iFlags & EXPORTER_FLAG_ALL)))
 	{
 	    //- export children (maybe in prototypes mode)
 

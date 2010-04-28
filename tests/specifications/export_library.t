@@ -771,8 +771,6 @@ PRIVATE_MODELS
   END SEGMENT_GROUP
   CELL "singlea_naf_1"
     CHILD "segments_2" "segments"
-      CHILD "soma_inserted_3" "soma"
-      END CHILD
     END CHILD
   END CELL
 END PRIVATE_MODELS
@@ -964,8 +962,6 @@ END PUBLIC_MODELS
   </SEGMENT_GROUP>
   <CELL> <name>singlea_naf_1</name>
     <child> <prototype>segments_2</prototype> <name>segments</name>
-      <child> <prototype>soma_inserted_3</prototype> <name>soma</name>
-      </child>
     </child>
   </CELL>
 </private_models>
