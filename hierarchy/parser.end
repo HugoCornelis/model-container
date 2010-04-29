@@ -35,12 +35,11 @@ AttachmentSection	/* <patta> */
 
 		    //- set type of attachment
 
-		    if (strcasecmp(IdinName($1), "spikegen") == 0
-			|| strcasecmp(IdinName($1), "spike") == 0)
+		    if (strncasecmp(IdinName($1), "spike", strlen("spike")) == 0)
 		    {
 			AttachmentSetType($3, TYPE_ATTACHMENT_OUTGOING);
 		    }
-		    else if (strcasecmp(IdinName($1), "synapse") == 0)
+		    else if (strncasecmp(IdinName($1), "synapse", strlen("synapse")) == 0)
 		    {
 			AttachmentSetType($3, TYPE_ATTACHMENT_INCOMING);
 		    }
