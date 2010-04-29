@@ -1260,7 +1260,7 @@ ExporterLibraryPublisherProcessor
     {
 	//t the '1' should be a serial?
 
-	fprintf(pexd->pfile, "  CHILD %s_1 %s\n", SymbolName(phsle), SymbolName(phsle));
+	fprintf(pexd->pfile, "  CHILD \"%s_1\" \"%s\"\n", SymbolName(phsle), SymbolName(phsle));
 
 	fprintf(pexd->pfile, "  END CHILD\n");
     }
