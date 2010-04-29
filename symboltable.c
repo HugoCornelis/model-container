@@ -3204,7 +3204,7 @@ SymbolTraverseDescendants
 ///	Traverse all symbols that match the given wildcard.
 /// 
 
-static int 
+int 
 WildcardSelector
 (struct TreespaceTraversal *ptstr,void *pvUserdata)
 {

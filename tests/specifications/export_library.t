@@ -91,7 +91,7 @@ PRIVATE_MODELS
   END HH_GATE
 END PRIVATE_MODELS
 PUBLIC_MODELS
-  CHILD naf_activation_1 naf_activation
+  CHILD "naf_activation_1" "naf_activation"
   END CHILD
 END PUBLIC_MODELS
 ',
@@ -374,7 +374,7 @@ PRIVATE_MODELS
   END CHANNEL
 END PRIVATE_MODELS
 PUBLIC_MODELS
-  CHILD NaF_prototype_1 NaF_prototype
+  CHILD "NaF_prototype_1" "NaF_prototype"
   END CHILD
 END PUBLIC_MODELS
 ',
@@ -775,7 +775,7 @@ PRIVATE_MODELS
   END CELL
 END PRIVATE_MODELS
 PUBLIC_MODELS
-  CHILD singlea_naf_1 singlea_naf
+  CHILD "singlea_naf_1" "singlea_naf"
   END CHILD
 END PUBLIC_MODELS
 ',

@@ -99,6 +99,10 @@ struct TreespaceTraversal
 
     int iStatus;
 
+    /// flags
+
+    int iFlags;
+
     /// number of entries in context stack at initialization
 
     int iFirstEntry;
@@ -106,6 +110,8 @@ struct TreespaceTraversal
     /// actual processed element
 
     struct CoreRoot *pcrActual;
+
+    /// actual type of symbol, useful for alien typing
 
     int iType;
 
@@ -147,11 +153,16 @@ struct TreespaceTraversal
 };
 
 
-/// \def treespace traversal status : 
+/// \def treespace traversal status: 
 
 #define TSTR_STATUS_NEW				1
 #define TSTR_STATUS_INITIALIZED			2
 #define TSTR_STATUS_DONE			3
+
+
+/// \def treespace traversal flags:
+
+#define TSTR_FLAG_NO_PROTOTYPE_TRAVERSAL	1
 
 
 int SymbolCellCounter(struct TreespaceTraversal *ptstr,void *pvUserdata);

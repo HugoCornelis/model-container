@@ -15,9 +15,9 @@ END IMPORT
 
 PRIVATE_MODELS
 
-	ALIAS gate1::/naf_activation naf_gate_activation END ALIAS
+	ALIAS gate1::/naf_activation naf_gate_activation_prototype END ALIAS
 
-	ALIAS gate2::/naf_inactivation naf_gate_inactivation END ALIAS
+	ALIAS gate2::/naf_inactivation naf_gate_inactivation_prototype END ALIAS
 
 END PRIVATE_MODELS
 
@@ -28,10 +28,10 @@ PUBLIC_MODELS
 			INPUT Vm,OUTPUT G,OUTPUT I
 		END BINDABLES
 
-		CHILD naf_gate_activation naf_gate_activation
+		CHILD naf_gate_activation_prototype naf_gate_activation
 		END CHILD
 
-		CHILD naf_gate_inactivation naf_gate_inactivation
+		CHILD naf_gate_inactivation_prototype naf_gate_inactivation
 		END CHILD
 
 		PARAMETERS

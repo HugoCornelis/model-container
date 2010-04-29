@@ -794,12 +794,6 @@ void ChannelInit(struct symtab_Channel *pchan)
 
     BioComponentInit(&pchan->bio);
 
-/*     //- initialize channel specific lists */
-
-/*     HSolveListInit(&pchan->dechan.hslEquations); */
-
-/*     HSolveListInit(&pchan->dechan.hslVirtuals); */
-
     //- set type
 
     pchan->bio.ioh.iol.hsle.iType = HIERARCHY_TYPE_symbols_channel;

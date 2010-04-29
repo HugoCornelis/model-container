@@ -295,6 +295,10 @@ SymbolTraverseDescendants
 /*  TreespaceTraversalProcessor *pfFinalizer, */
 /*  void *pvUserdata); */
 
+int 
+WildcardSelector
+(struct TreespaceTraversal *ptstr,void *pvUserdata);
+
 int
 SymbolTraverseWildcard
 (struct symtab_HSolveListElement *phsle,
