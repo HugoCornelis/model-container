@@ -1,9 +1,5 @@
 -*- outline -*-
 
-* private model section
-Is a mess since children inside children were introduced.  Needs
-cleanup.
-
 * ParContainerDelete()
 ** Problem
 Is sometimes called in reduce methods with parameter arguments not in
