@@ -15,6 +15,7 @@
 %type <pio> OptionalItemInputRelations
 %type <pio> ItemInputRelations
 %type <ppar> OptionalItemParameters
+%type <phsl> OptionalChildren
 %type <ppar> ItemParameters
 %type <ppar> Attributes
 %type <ppar> Parameters

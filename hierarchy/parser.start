@@ -5,6 +5,7 @@
     double dNumber;
     int iCompOptions;
 /*     int iInteger; */
+    struct hsolve_list *phsl;
     struct symtab_Attachment *patta;
     struct symtab_AxonHillock *paxhi;
     struct symtab_BioComponent *pbio;
