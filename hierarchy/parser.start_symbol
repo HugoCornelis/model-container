@@ -551,6 +551,7 @@ PrivateModelsEnumerated
 		TOKEN_CHILD
 			IdentifierHierarchicalNameSpaceRooted
 			Identifier
+			OptionalItemInputRelations
 			OptionalItemParameters
 			OptionalChildSectionOptionalInputOptionalParameters
 		TOKEN_END TOKEN_CHILD
@@ -601,13 +602,13 @@ PrivateModelsEnumerated
 
 			    //- set parameters
 
-			    SymbolAssignParameters(phsle, $5);
+			    SymbolAssignParameters(phsle, $6);
 
 			    //- link children
 
-			    if ($6)
+			    if ($7)
 			    {
-				SymbolAddChild(phsle, $6);
+				SymbolAddChild(phsle, $7);
 
 				//- reset actual symbol
 
@@ -649,6 +650,7 @@ PrivateModelsEnumerated
 		TOKEN_CHILD
 			Identifier
 			Identifier
+			OptionalItemInputRelations
 			OptionalItemParameters
 			OptionalChildSectionOptionalInputOptionalParameters
 		TOKEN_END TOKEN_CHILD
@@ -678,13 +680,13 @@ PrivateModelsEnumerated
 
 			    //- set parameters
 
-			    SymbolAssignParameters(phsle, $5);
+			    SymbolAssignParameters(phsle, $6);
 
 			    //- link children
 
-			    if ($6)
+			    if ($7)
 			    {
-				SymbolAddChild(phsle, $6);
+				SymbolAddChild(phsle, $7);
 
 				//- reset actual symbol
 
