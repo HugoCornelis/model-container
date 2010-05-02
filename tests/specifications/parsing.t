@@ -3088,6 +3088,24 @@ my $test
 						 ],
 				description => "syntax of tests/channels/naf.ndf",
 			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-R',
+					      'library/tests/cells/channel_response.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (tests/cells/channel_response.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/channel_response.ndf', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of tests/cells/channel_response.ndf",
+			       },
 			      ],
        description => "general syntax of library files",
        name => 'parsing.t',
