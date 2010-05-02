@@ -216,7 +216,7 @@ dist-hook: dist-keywords
 	$(srcdir)/install-sh -d $(distdir)/tests/html/specifications
 	$(srcdir)/install-sh -d $(distdir)/tests/html/specifications/algorithms
 	$(srcdir)/install-sh -d $(distdir)/tests/html/specifications/code
-	cp -dp $(srcdir)/tests/{neurospaces_harness,neurospaces_harness.ptkdb,command_extractor,command_extractor.ptkdb,tests_2_html,tests_2_html.ptkdb,tests.config} $(distdir)/tests
+	cp -dp $(srcdir)/tests/{command_extractor,command_extractor.ptkdb,tests_2_html,tests_2_html.ptkdb,tests.config} $(distdir)/tests
 	cp -a $(srcdir)/tests.config $(distdir)
 # get the logos right
 	cp -a $(srcdir)/docs/logos/ns-main-logo-dark2-notext-32x32.jpg $(distdir)/tests/html/ns-main-logo-dark2-notext-32x32.jpg
@@ -238,7 +238,7 @@ dist-hook: dist-keywords
 
 bin_PROGRAMS = neurospacesparse
 
-check_SCRIPTS = $(srcdir)/glue/swig/perl/tests/neurospaces_test.pm $(srcdir)/glue/swig/perl/tests/neurospaces_test_traversal.pm $(srcdir)/glue/swig/perl/tests/neurospaces_test_algorithm.pm $(srcdir)/glue/swig/perl/tests/neurospaces_test_neuromorpho.pm $(srcdir)/tests/neurospaces_harness
+check_SCRIPTS = $(srcdir)/glue/swig/perl/tests/neurospaces_test.pm $(srcdir)/glue/swig/perl/tests/neurospaces_test_traversal.pm $(srcdir)/glue/swig/perl/tests/neurospaces_test_algorithm.pm $(srcdir)/glue/swig/perl/tests/neurospaces_test_neuromorpho.pm
 
 #EXTRA_DIST = `find hierarchy -type f -regex '.*[^~]$'` `find library -type f -regex '.*[^~]$'`
 
@@ -378,7 +378,7 @@ clean-local:
 	$(RM) -rf $(top_srcdir)/docs/html
 	$(RM) -rf $(top_srcdir)/docs/model-container
 
-TESTS = $(srcdir)/tests/neurospaces_harness
+TESTS = /usr/local/bin/neurospaces_harness
 
 hierarchy/output/symbols/.sentinel: $(srcdir)/hierarchy/symbols $(srcdir)/hierarchy/instrumentor neurospaces/config.h
 	$(srcdir)/hierarchy/instrumentor --null-checks $(srcdir)/hierarchy/symbols --output hierarchy/output
