@@ -1059,13 +1059,13 @@ ExporterLibraryFinalizer
 		if (i == 0)
 		{
 		    sprintf(pcName, "%s_inserted_%i", SymbolName(phsle), iSerial);
-		    fprintf(pexd->pfile, "%s \"%s\" \"%s\"\n", pcToken, pcPrototype, pcName);
 		}
 		else
 		{
 		    sprintf(pcName, "%s_%i", SymbolName(&pbioTarget->ioh.iol.hsle), iSerial);
-		    fprintf(pexd->pfile, "%s \"%s\" \"%s\"\n", pcToken, pcPrototype, pcName);
 		}
+
+		fprintf(pexd->pfile, "%s \"%s\" \"%s\"\n", pcToken, pcPrototype, pcName);
 	    }
 	    else
 	    {
@@ -1082,13 +1082,13 @@ ExporterLibraryFinalizer
 		if (i == 0)
 		{
 		    sprintf(pcName, "%s_inserted_%i", SymbolName(phsle), iSerial);
-		    fprintf(pexd->pfile, "<%s> <prototype>%s</prototype> <name>%s</name>\n", pcToken, pcPrototype, pcName);
 		}
 		else
 		{
 		    sprintf(pcName, "%s_%i", SymbolName(&pbioTarget->ioh.iol.hsle), iSerial);
-		    fprintf(pexd->pfile, "<%s> <prototype>%s</prototype> <name>%s</name>\n", pcToken, pcPrototype, pcName);
 		}
+
+		fprintf(pexd->pfile, "<%s> <prototype>%s</prototype> <name>%s</name>\n", pcToken, pcPrototype, pcName);
 	    }
 
 	    if (i != 0)
