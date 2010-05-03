@@ -946,6 +946,8 @@ ExporterLibraryFinalizer
 	    }
 	}
 
+	ppbioPrototypes[iPrototypes] = NULL;
+
 	{
 	    //- export component
 
@@ -961,7 +963,7 @@ ExporterLibraryFinalizer
 
 		char pcName[1000];
 
-		sprintf(pcName, "%s_%i", SymbolName(&pbioPrototype->ioh.iol.hsle), iSerial);
+		sprintf(pcName, "%s_%i_0", SymbolName(&pbioPrototype->ioh.iol.hsle), iSerial);
 		fprintf(pexd->pfile, "%s \"%s\"\n", pcToken, pcName);
 	    }
 	    else
@@ -972,7 +974,7 @@ ExporterLibraryFinalizer
 
 		char pcName[1000];
 
-		sprintf(pcName, "%s_%i", SymbolName(&pbioPrototype->ioh.iol.hsle), iSerial);
+		sprintf(pcName, "%s_%i_0", SymbolName(&pbioPrototype->ioh.iol.hsle), iSerial);
 		fprintf(pexd->pfile, "<%s> <name>%s</name>\n", pcToken, pcName);
 	    }
 
@@ -1052,7 +1054,7 @@ ExporterLibraryFinalizer
 
 		char pcPrototype[1000];
 
-		sprintf(pcPrototype, "%s_%i", SymbolName(&pbioSource->ioh.iol.hsle), iSerial);
+		sprintf(pcPrototype, "%s_%i_%i", SymbolName(&pbioSource->ioh.iol.hsle), iSerial, iPrototypes - i - 1);
 
 		char pcName[1000];
 
@@ -1062,7 +1064,7 @@ ExporterLibraryFinalizer
 		}
 		else
 		{
-		    sprintf(pcName, "%s_%i", SymbolName(&pbioTarget->ioh.iol.hsle), iSerial);
+		    sprintf(pcName, "%s_%i_%i", SymbolName(&pbioTarget->ioh.iol.hsle), iSerial, iPrototypes - i);
 		}
 
 		fprintf(pexd->pfile, "%s \"%s\" \"%s\"\n", pcToken, pcPrototype, pcName);
@@ -1075,7 +1077,7 @@ ExporterLibraryFinalizer
 
 		char pcPrototype[1000];
 
-		sprintf(pcPrototype, "%s_%i", SymbolName(&pbioSource->ioh.iol.hsle), iSerial);
+		sprintf(pcPrototype, "%s_%i_%i", SymbolName(&pbioSource->ioh.iol.hsle), iSerial, iPrototypes - i - 1);
 
 		char pcName[1000];
 
@@ -1085,7 +1087,7 @@ ExporterLibraryFinalizer
 		}
 		else
 		{
-		    sprintf(pcName, "%s_%i", SymbolName(&pbioTarget->ioh.iol.hsle), iSerial);
+		    sprintf(pcName, "%s_%i_%i", SymbolName(&pbioTarget->ioh.iol.hsle), iSerial, iPrototypes - i);
 		}
 
 		fprintf(pexd->pfile, "<%s> <prototype>%s</prototype> <name>%s</name>\n", pcToken, pcPrototype, pcName);
@@ -1293,15 +1295,44 @@ ExporterLibraryPublisherProcessor
     struct exporter_data *pexd
 	= (struct exporter_data *)pvUserdata;
 
+    //- determine number of prototypes
+
+    int iPrototypes = 0;
+
+    struct symtab_BioComponent *pbio = (struct symtab_BioComponent *)phsle;
+
+    struct symtab_BioComponent *ppbioPrototypes[100];
+
+    ppbioPrototypes[iPrototypes] = (struct symtab_BioComponent *)phsle;
+
+    iPrototypes++;
+
+    {
+	struct symtab_BioComponent * pbioPrototype
+	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
+
+	while (pbioPrototype)
+	{
+	    ppbioPrototypes[iPrototypes] = pbioPrototype;
+
+	    //- next prototype
+
+	    iPrototypes++;
+
+	    pbioPrototype
+		= (struct symtab_BioComponent *)SymbolGetPrototype(&pbioPrototype->ioh.iol.hsle);
+	}
+    }
+
     if (pexd->iType == EXPORTER_TYPE_NDF)
     {
-	fprintf(pexd->pfile, "  CHILD \"%s_%i\" \"%s\"\n", SymbolName(phsle), TstrGetPrincipalSerial(ptstr), SymbolName(phsle));
+	fprintf(pexd->pfile, "  CHILD \"%s_%i_%i\" \"%s\"\n", SymbolName(phsle), TstrGetPrincipalSerial(ptstr), iPrototypes - 1, SymbolName(phsle));
 
 	fprintf(pexd->pfile, "  END CHILD\n");
     }
     else
     {
-	fprintf(pexd->pfile, "  <child> <prototype>%s_%i</prototype> <name>%s</name>\n", SymbolName(phsle), TstrGetPrincipalSerial(ptstr), SymbolName(phsle));
+	fprintf(pexd->pfile, "  <child> <prototype>%s_%i_%i</prototype> <name>%s</name>\n", SymbolName(phsle), TstrGetPrincipalSerial(ptstr), iPrototypes - 1, SymbolName(phsle));
 
 	fprintf(pexd->pfile, "  </child>\n");
     }
@@ -1453,7 +1484,36 @@ ExporterSymbolStarter
 		    }
 		    else
 		    {
-			sprintf(pcPrototype, "%s_%i", SymbolName(phsle), pexd->iStarter + TstrGetPrincipalSerial(ptstr));
+			//- determine number of prototypes
+
+			int iPrototypes = 0;
+
+			struct symtab_BioComponent *pbio = (struct symtab_BioComponent *)phsle;
+
+			struct symtab_BioComponent *ppbioPrototypes[100];
+
+			ppbioPrototypes[iPrototypes] = (struct symtab_BioComponent *)phsle;
+
+			iPrototypes++;
+
+			{
+			    struct symtab_BioComponent * pbioPrototype
+				= (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
+
+			    while (pbioPrototype)
+			    {
+				ppbioPrototypes[iPrototypes] = pbioPrototype;
+
+				//- next prototype
+
+				iPrototypes++;
+
+				pbioPrototype
+				    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbioPrototype->ioh.iol.hsle);
+			    }
+			}
+
+			sprintf(pcPrototype, "%s_%i_%i", SymbolName(phsle), pexd->iStarter + TstrGetPrincipalSerial(ptstr), iPrototypes - 1);
 		    }
 		}
 		else
@@ -1491,7 +1551,36 @@ ExporterSymbolStarter
 		    }
 		    else
 		    {
-			sprintf(pcPrototype, "%s_%i", SymbolName(phsle), pexd->iStarter + TstrGetPrincipalSerial(ptstr));
+			//- determine number of prototypes
+
+			int iPrototypes = 0;
+
+			struct symtab_BioComponent *pbio = (struct symtab_BioComponent *)phsle;
+
+			struct symtab_BioComponent *ppbioPrototypes[100];
+
+			ppbioPrototypes[iPrototypes] = (struct symtab_BioComponent *)phsle;
+
+			iPrototypes++;
+
+			{
+			    struct symtab_BioComponent * pbioPrototype
+				= (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
+
+			    while (pbioPrototype)
+			    {
+				ppbioPrototypes[iPrototypes] = pbioPrototype;
+
+				//- next prototype
+
+				iPrototypes++;
+
+				pbioPrototype
+				    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbioPrototype->ioh.iol.hsle);
+			    }
+			}
+
+			sprintf(pcPrototype, "%s_%i_%i", SymbolName(phsle), pexd->iStarter + TstrGetPrincipalSerial(ptstr), iPrototypes - 1);
 		    }
 		}
 		else
