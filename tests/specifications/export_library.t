@@ -38,7 +38,7 @@ my $test
 NEUROSPACES NDF
 
 PRIVATE_MODELS
-  GATE_KINETIC "A_2"
+  GATE_KINETIC "A_2_0"
     BINDABLES
       INPUT Vm,
       OUTPUT rate,
@@ -55,9 +55,9 @@ PRIVATE_MODELS
       PARAMETER ( HH_AB_Tau = -0.01 ),
     END PARAMETERS
   END GATE_KINETIC
-  CHILD "A_2" "A_inserted_2"
+  CHILD "A_2_0" "A_inserted_2"
   END CHILD
-  GATE_KINETIC "B_3"
+  GATE_KINETIC "B_3_0"
     BINDABLES
       INPUT Vm,
       OUTPUT rate,
@@ -74,9 +74,9 @@ PRIVATE_MODELS
       PARAMETER ( HH_AB_Tau = 0.02 ),
     END PARAMETERS
   END GATE_KINETIC
-  CHILD "B_3" "B_inserted_3"
+  CHILD "B_3_0" "B_inserted_3"
   END CHILD
-  HH_GATE "naf_activation_1"
+  HH_GATE "naf_activation_1_0"
     BINDABLES
       INPUT Vm,
       OUTPUT activation,
@@ -88,16 +88,16 @@ PRIVATE_MODELS
       PARAMETER ( state_init = 0.00784064 ),
       PARAMETER ( POWER = 3 ),
     END PARAMETERS
-    CHILD "A_2" "A"
+    CHILD "A_2_0" "A"
     END CHILD
-    CHILD "B_3" "B"
+    CHILD "B_3_0" "B"
     END CHILD
   END HH_GATE
-  CHILD "naf_activation_1" "naf_activation_inserted_1"
+  CHILD "naf_activation_1_0" "naf_activation_inserted_1"
   END CHILD
 END PRIVATE_MODELS
 PUBLIC_MODELS
-  CHILD "naf_activation_1" "naf_activation"
+  CHILD "naf_activation_1_0" "naf_activation"
   END CHILD
 END PUBLIC_MODELS
 ',
@@ -117,7 +117,7 @@ END PUBLIC_MODELS
 							     expected_output => '<neurospaces type="ndf"/>
 
 <private_models>
-  <GATE_KINETIC> <name>A_2</name>
+  <GATE_KINETIC> <name>A_2_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>rate</name> </output>
@@ -134,9 +134,9 @@ END PUBLIC_MODELS
       <parameter> <name>HH_AB_Tau</name><value>-0.01</value> </parameter>
     </parameters>
   </GATE_KINETIC>
-  <child> <prototype>A_2</prototype> <name>A_inserted_2</name>
+  <child> <prototype>A_2_0</prototype> <name>A_inserted_2</name>
   </child>
-  <GATE_KINETIC> <name>B_3</name>
+  <GATE_KINETIC> <name>B_3_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>rate</name> </output>
@@ -153,9 +153,9 @@ END PUBLIC_MODELS
       <parameter> <name>HH_AB_Tau</name><value>0.02</value> </parameter>
     </parameters>
   </GATE_KINETIC>
-  <child> <prototype>B_3</prototype> <name>B_inserted_3</name>
+  <child> <prototype>B_3_0</prototype> <name>B_inserted_3</name>
   </child>
-  <HH_GATE> <name>naf_activation_1</name>
+  <HH_GATE> <name>naf_activation_1_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>activation</name> </output>
@@ -167,16 +167,16 @@ END PUBLIC_MODELS
       <parameter> <name>state_init</name><value>0.00784064</value> </parameter>
       <parameter> <name>POWER</name><value>3</value> </parameter>
     </parameters>
-    <child> <prototype>A_2</prototype> <name>A</name>
+    <child> <prototype>A_2_0</prototype> <name>A</name>
     </child>
-    <child> <prototype>B_3</prototype> <name>B</name>
+    <child> <prototype>B_3_0</prototype> <name>B</name>
     </child>
   </HH_GATE>
-  <child> <prototype>naf_activation_1</prototype> <name>naf_activation_inserted_1</name>
+  <child> <prototype>naf_activation_1_0</prototype> <name>naf_activation_inserted_1</name>
   </child>
 </private_models>
 <public_models>
-  <child> <prototype>naf_activation_1</prototype> <name>naf_activation</name>
+  <child> <prototype>naf_activation_1_0</prototype> <name>naf_activation</name>
   </child>
 </public_models>
 ',
@@ -251,7 +251,7 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 PRIVATE_MODELS
-  GATE_KINETIC "A_3"
+  GATE_KINETIC "A_3_0"
     BINDABLES
       INPUT Vm,
       OUTPUT rate,
@@ -268,9 +268,9 @@ PRIVATE_MODELS
       PARAMETER ( HH_AB_Tau = -0.01 ),
     END PARAMETERS
   END GATE_KINETIC
-  CHILD "A_3" "A_inserted_3"
+  CHILD "A_3_0" "A_inserted_3"
   END CHILD
-  GATE_KINETIC "B_4"
+  GATE_KINETIC "B_4_0"
     BINDABLES
       INPUT Vm,
       OUTPUT rate,
@@ -287,9 +287,9 @@ PRIVATE_MODELS
       PARAMETER ( HH_AB_Tau = 0.02 ),
     END PARAMETERS
   END GATE_KINETIC
-  CHILD "B_4" "B_inserted_4"
+  CHILD "B_4_0" "B_inserted_4"
   END CHILD
-  HH_GATE "naf_activation_2"
+  HH_GATE "naf_activation_2_0"
     BINDABLES
       INPUT Vm,
       OUTPUT activation,
@@ -301,18 +301,18 @@ PRIVATE_MODELS
       PARAMETER ( state_init = 0.00784064 ),
       PARAMETER ( POWER = 3 ),
     END PARAMETERS
-    CHILD "A_3" "A"
+    CHILD "A_3_0" "A"
     END CHILD
-    CHILD "B_4" "B"
+    CHILD "B_4_0" "B"
     END CHILD
   END HH_GATE
-  CHILD "naf_activation_2" "naf_gate_activation_prototype_2"
+  CHILD "naf_activation_2_0" "naf_gate_activation_prototype_2_1"
   END CHILD
-  CHILD "naf_gate_activation_prototype_2" "naf_gate_activation_2"
+  CHILD "naf_gate_activation_prototype_2_1" "naf_gate_activation_2_2"
   END CHILD
-  CHILD "naf_gate_activation_2" "naf_gate_activation_inserted_2"
+  CHILD "naf_gate_activation_2_2" "naf_gate_activation_inserted_2"
   END CHILD
-  GATE_KINETIC "A_6"
+  GATE_KINETIC "A_6_0"
     BINDABLES
       INPUT Vm,
       OUTPUT rate,
@@ -329,9 +329,9 @@ PRIVATE_MODELS
       PARAMETER ( HH_AB_Tau = 0.01 ),
     END PARAMETERS
   END GATE_KINETIC
-  CHILD "A_6" "A_inserted_6"
+  CHILD "A_6_0" "A_inserted_6"
   END CHILD
-  GATE_KINETIC "B_7"
+  GATE_KINETIC "B_7_0"
     BINDABLES
       INPUT Vm,
       OUTPUT rate,
@@ -348,9 +348,9 @@ PRIVATE_MODELS
       PARAMETER ( HH_AB_Tau = -0.018 ),
     END PARAMETERS
   END GATE_KINETIC
-  CHILD "B_7" "B_inserted_7"
+  CHILD "B_7_0" "B_inserted_7"
   END CHILD
-  HH_GATE "naf_inactivation_5"
+  HH_GATE "naf_inactivation_5_0"
     BINDABLES
       INPUT Vm,
       OUTPUT activation,
@@ -362,18 +362,18 @@ PRIVATE_MODELS
       PARAMETER ( state_init = 0.263978 ),
       PARAMETER ( POWER = 1 ),
     END PARAMETERS
-    CHILD "A_6" "A"
+    CHILD "A_6_0" "A"
     END CHILD
-    CHILD "B_7" "B"
+    CHILD "B_7_0" "B"
     END CHILD
   END HH_GATE
-  CHILD "naf_inactivation_5" "naf_gate_inactivation_prototype_5"
+  CHILD "naf_inactivation_5_0" "naf_gate_inactivation_prototype_5_1"
   END CHILD
-  CHILD "naf_gate_inactivation_prototype_5" "naf_gate_inactivation_5"
+  CHILD "naf_gate_inactivation_prototype_5_1" "naf_gate_inactivation_5_2"
   END CHILD
-  CHILD "naf_gate_inactivation_5" "naf_gate_inactivation_inserted_5"
+  CHILD "naf_gate_inactivation_5_2" "naf_gate_inactivation_inserted_5"
   END CHILD
-  CHANNEL "NaF_prototype_1"
+  CHANNEL "NaF_prototype_1_0"
     BINDABLES
       INPUT Vm,
       OUTPUT G,
@@ -388,11 +388,11 @@ PRIVATE_MODELS
     CHILD "naf_gate_inactivation_inserted_5" "naf_gate_inactivation"
     END CHILD
   END CHANNEL
-  CHILD "NaF_prototype_1" "NaF_prototype_inserted_1"
+  CHILD "NaF_prototype_1_0" "NaF_prototype_inserted_1"
   END CHILD
 END PRIVATE_MODELS
 PUBLIC_MODELS
-  CHILD "NaF_prototype_1" "NaF_prototype"
+  CHILD "NaF_prototype_1_0" "NaF_prototype"
   END CHILD
 END PUBLIC_MODELS
 ',
@@ -412,7 +412,7 @@ END PUBLIC_MODELS
 							     expected_output => '<neurospaces type="ndf"/>
 
 <private_models>
-  <GATE_KINETIC> <name>A_3</name>
+  <GATE_KINETIC> <name>A_3_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>rate</name> </output>
@@ -429,9 +429,9 @@ END PUBLIC_MODELS
       <parameter> <name>HH_AB_Tau</name><value>-0.01</value> </parameter>
     </parameters>
   </GATE_KINETIC>
-  <child> <prototype>A_3</prototype> <name>A_inserted_3</name>
+  <child> <prototype>A_3_0</prototype> <name>A_inserted_3</name>
   </child>
-  <GATE_KINETIC> <name>B_4</name>
+  <GATE_KINETIC> <name>B_4_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>rate</name> </output>
@@ -448,9 +448,9 @@ END PUBLIC_MODELS
       <parameter> <name>HH_AB_Tau</name><value>0.02</value> </parameter>
     </parameters>
   </GATE_KINETIC>
-  <child> <prototype>B_4</prototype> <name>B_inserted_4</name>
+  <child> <prototype>B_4_0</prototype> <name>B_inserted_4</name>
   </child>
-  <HH_GATE> <name>naf_activation_2</name>
+  <HH_GATE> <name>naf_activation_2_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>activation</name> </output>
@@ -462,18 +462,18 @@ END PUBLIC_MODELS
       <parameter> <name>state_init</name><value>0.00784064</value> </parameter>
       <parameter> <name>POWER</name><value>3</value> </parameter>
     </parameters>
-    <child> <prototype>A_3</prototype> <name>A</name>
+    <child> <prototype>A_3_0</prototype> <name>A</name>
     </child>
-    <child> <prototype>B_4</prototype> <name>B</name>
+    <child> <prototype>B_4_0</prototype> <name>B</name>
     </child>
   </HH_GATE>
-  <child> <prototype>naf_activation_2</prototype> <name>naf_gate_activation_prototype_2</name>
+  <child> <prototype>naf_activation_2_0</prototype> <name>naf_gate_activation_prototype_2_1</name>
   </child>
-  <child> <prototype>naf_gate_activation_prototype_2</prototype> <name>naf_gate_activation_2</name>
+  <child> <prototype>naf_gate_activation_prototype_2_1</prototype> <name>naf_gate_activation_2_2</name>
   </child>
-  <child> <prototype>naf_gate_activation_2</prototype> <name>naf_gate_activation_inserted_2</name>
+  <child> <prototype>naf_gate_activation_2_2</prototype> <name>naf_gate_activation_inserted_2</name>
   </child>
-  <GATE_KINETIC> <name>A_6</name>
+  <GATE_KINETIC> <name>A_6_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>rate</name> </output>
@@ -490,9 +490,9 @@ END PUBLIC_MODELS
       <parameter> <name>HH_AB_Tau</name><value>0.01</value> </parameter>
     </parameters>
   </GATE_KINETIC>
-  <child> <prototype>A_6</prototype> <name>A_inserted_6</name>
+  <child> <prototype>A_6_0</prototype> <name>A_inserted_6</name>
   </child>
-  <GATE_KINETIC> <name>B_7</name>
+  <GATE_KINETIC> <name>B_7_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>rate</name> </output>
@@ -509,9 +509,9 @@ END PUBLIC_MODELS
       <parameter> <name>HH_AB_Tau</name><value>-0.018</value> </parameter>
     </parameters>
   </GATE_KINETIC>
-  <child> <prototype>B_7</prototype> <name>B_inserted_7</name>
+  <child> <prototype>B_7_0</prototype> <name>B_inserted_7</name>
   </child>
-  <HH_GATE> <name>naf_inactivation_5</name>
+  <HH_GATE> <name>naf_inactivation_5_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>activation</name> </output>
@@ -523,18 +523,18 @@ END PUBLIC_MODELS
       <parameter> <name>state_init</name><value>0.263978</value> </parameter>
       <parameter> <name>POWER</name><value>1</value> </parameter>
     </parameters>
-    <child> <prototype>A_6</prototype> <name>A</name>
+    <child> <prototype>A_6_0</prototype> <name>A</name>
     </child>
-    <child> <prototype>B_7</prototype> <name>B</name>
+    <child> <prototype>B_7_0</prototype> <name>B</name>
     </child>
   </HH_GATE>
-  <child> <prototype>naf_inactivation_5</prototype> <name>naf_gate_inactivation_prototype_5</name>
+  <child> <prototype>naf_inactivation_5_0</prototype> <name>naf_gate_inactivation_prototype_5_1</name>
   </child>
-  <child> <prototype>naf_gate_inactivation_prototype_5</prototype> <name>naf_gate_inactivation_5</name>
+  <child> <prototype>naf_gate_inactivation_prototype_5_1</prototype> <name>naf_gate_inactivation_5_2</name>
   </child>
-  <child> <prototype>naf_gate_inactivation_5</prototype> <name>naf_gate_inactivation_inserted_5</name>
+  <child> <prototype>naf_gate_inactivation_5_2</prototype> <name>naf_gate_inactivation_inserted_5</name>
   </child>
-  <CHANNEL> <name>NaF_prototype_1</name>
+  <CHANNEL> <name>NaF_prototype_1_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>G</name> </output>
@@ -549,11 +549,11 @@ END PUBLIC_MODELS
     <child> <prototype>naf_gate_inactivation_inserted_5</prototype> <name>naf_gate_inactivation</name>
     </child>
   </CHANNEL>
-  <child> <prototype>NaF_prototype_1</prototype> <name>NaF_prototype_inserted_1</name>
+  <child> <prototype>NaF_prototype_1_0</prototype> <name>NaF_prototype_inserted_1</name>
   </child>
 </private_models>
 <public_models>
-  <child> <prototype>NaF_prototype_1</prototype> <name>NaF_prototype</name>
+  <child> <prototype>NaF_prototype_1_0</prototype> <name>NaF_prototype</name>
   </child>
 </public_models>
 ',
@@ -628,7 +628,7 @@ END PUBLIC_MODELS
 NEUROSPACES NDF
 
 PRIVATE_MODELS
-  GATE_KINETIC "A_6"
+  GATE_KINETIC "A_6_0"
     BINDABLES
       INPUT Vm,
       OUTPUT rate,
@@ -645,9 +645,9 @@ PRIVATE_MODELS
       PARAMETER ( HH_AB_Tau = -0.01 ),
     END PARAMETERS
   END GATE_KINETIC
-  CHILD "A_6" "A_inserted_6"
+  CHILD "A_6_0" "A_inserted_6"
   END CHILD
-  GATE_KINETIC "B_7"
+  GATE_KINETIC "B_7_0"
     BINDABLES
       INPUT Vm,
       OUTPUT rate,
@@ -664,9 +664,9 @@ PRIVATE_MODELS
       PARAMETER ( HH_AB_Tau = 0.02 ),
     END PARAMETERS
   END GATE_KINETIC
-  CHILD "B_7" "B_inserted_7"
+  CHILD "B_7_0" "B_inserted_7"
   END CHILD
-  HH_GATE "naf_activation_5"
+  HH_GATE "naf_activation_5_0"
     BINDABLES
       INPUT Vm,
       OUTPUT activation,
@@ -678,18 +678,18 @@ PRIVATE_MODELS
       PARAMETER ( state_init = 0.00784064 ),
       PARAMETER ( POWER = 3 ),
     END PARAMETERS
-    CHILD "A_6" "A"
+    CHILD "A_6_0" "A"
     END CHILD
-    CHILD "B_7" "B"
+    CHILD "B_7_0" "B"
     END CHILD
   END HH_GATE
-  CHILD "naf_activation_5" "naf_gate_activation_5"
+  CHILD "naf_activation_5_0" "naf_gate_activation_5_1"
   END CHILD
-  CHILD "naf_gate_activation_5" "naf_gate_activation_5"
+  CHILD "naf_gate_activation_5_1" "naf_gate_activation_5_2"
   END CHILD
-  CHILD "naf_gate_activation_5" "naf_gate_activation_inserted_5"
+  CHILD "naf_gate_activation_5_2" "naf_gate_activation_inserted_5"
   END CHILD
-  GATE_KINETIC "A_9"
+  GATE_KINETIC "A_9_0"
     BINDABLES
       INPUT Vm,
       OUTPUT rate,
@@ -706,9 +706,9 @@ PRIVATE_MODELS
       PARAMETER ( HH_AB_Tau = 0.01 ),
     END PARAMETERS
   END GATE_KINETIC
-  CHILD "A_9" "A_inserted_9"
+  CHILD "A_9_0" "A_inserted_9"
   END CHILD
-  GATE_KINETIC "B_10"
+  GATE_KINETIC "B_10_0"
     BINDABLES
       INPUT Vm,
       OUTPUT rate,
@@ -725,9 +725,9 @@ PRIVATE_MODELS
       PARAMETER ( HH_AB_Tau = -0.018 ),
     END PARAMETERS
   END GATE_KINETIC
-  CHILD "B_10" "B_inserted_10"
+  CHILD "B_10_0" "B_inserted_10"
   END CHILD
-  HH_GATE "naf_inactivation_8"
+  HH_GATE "naf_inactivation_8_0"
     BINDABLES
       INPUT Vm,
       OUTPUT activation,
@@ -739,18 +739,18 @@ PRIVATE_MODELS
       PARAMETER ( state_init = 0.263978 ),
       PARAMETER ( POWER = 1 ),
     END PARAMETERS
-    CHILD "A_9" "A"
+    CHILD "A_9_0" "A"
     END CHILD
-    CHILD "B_10" "B"
+    CHILD "B_10_0" "B"
     END CHILD
   END HH_GATE
-  CHILD "naf_inactivation_8" "naf_gate_inactivation_8"
+  CHILD "naf_inactivation_8_0" "naf_gate_inactivation_8_1"
   END CHILD
-  CHILD "naf_gate_inactivation_8" "naf_gate_inactivation_8"
+  CHILD "naf_gate_inactivation_8_1" "naf_gate_inactivation_8_2"
   END CHILD
-  CHILD "naf_gate_inactivation_8" "naf_gate_inactivation_inserted_8"
+  CHILD "naf_gate_inactivation_8_2" "naf_gate_inactivation_inserted_8"
   END CHILD
-  CHANNEL "NaF_prototype_4"
+  CHANNEL "NaF_prototype_4_0"
     BINDABLES
       INPUT Vm,
       OUTPUT G,
@@ -766,14 +766,14 @@ PRIVATE_MODELS
     CHILD "naf_gate_inactivation_inserted_8" "naf_gate_inactivation"
     END CHILD
   END CHANNEL
-  CHILD "NaF_prototype_4" "NaF_4"
+  CHILD "NaF_prototype_4_0" "NaF_4_1"
     BINDINGS
       INPUT ..->Vm,
     END BINDINGS
   END CHILD
-  CHILD "NaF_4" "NaF_inserted_4"
+  CHILD "NaF_4_1" "NaF_inserted_4"
   END CHILD
-  SEGMENT "soma_prototype_3"
+  SEGMENT "soma_prototype_3_0"
     BINDABLES
       OUTPUT Vm,
     END BINDABLES
@@ -790,7 +790,7 @@ PRIVATE_MODELS
     CHILD "NaF_inserted_4" "NaF"
     END CHILD
   END SEGMENT
-  CHILD "soma_prototype_3" "soma_3"
+  CHILD "soma_prototype_3_0" "soma_3_1"
     PARAMETERS
       PARAMETER ( rel_X = 0 ),
       PARAMETER ( rel_Y = 0 ),
@@ -798,23 +798,23 @@ PRIVATE_MODELS
       PARAMETER ( DIA = 2.98e-05 ),
     END PARAMETERS
   END CHILD
-  CHILD "soma_3" "soma_inserted_3"
+  CHILD "soma_3_1" "soma_inserted_3"
   END CHILD
-  SEGMENT_GROUP "segments_2"
+  SEGMENT_GROUP "segments_2_0"
     CHILD "soma_inserted_3" "soma"
     END CHILD
   END SEGMENT_GROUP
-  CHILD "segments_2" "segments_inserted_2"
+  CHILD "segments_2_0" "segments_inserted_2"
   END CHILD
-  CELL "singlea_naf_1"
-    CHILD "segments_2" "segments"
+  CELL "singlea_naf_1_0"
+    CHILD "segments_2_0" "segments"
     END CHILD
   END CELL
-  CHILD "singlea_naf_1" "singlea_naf_inserted_1"
+  CHILD "singlea_naf_1_0" "singlea_naf_inserted_1"
   END CHILD
 END PRIVATE_MODELS
 PUBLIC_MODELS
-  CHILD "singlea_naf_1" "singlea_naf"
+  CHILD "singlea_naf_1_0" "singlea_naf"
   END CHILD
 END PUBLIC_MODELS
 ',
@@ -834,7 +834,7 @@ END PUBLIC_MODELS
 							     expected_output => '<neurospaces type="ndf"/>
 
 <private_models>
-  <GATE_KINETIC> <name>A_6</name>
+  <GATE_KINETIC> <name>A_6_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>rate</name> </output>
@@ -851,9 +851,9 @@ END PUBLIC_MODELS
       <parameter> <name>HH_AB_Tau</name><value>-0.01</value> </parameter>
     </parameters>
   </GATE_KINETIC>
-  <child> <prototype>A_6</prototype> <name>A_inserted_6</name>
+  <child> <prototype>A_6_0</prototype> <name>A_inserted_6</name>
   </child>
-  <GATE_KINETIC> <name>B_7</name>
+  <GATE_KINETIC> <name>B_7_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>rate</name> </output>
@@ -870,9 +870,9 @@ END PUBLIC_MODELS
       <parameter> <name>HH_AB_Tau</name><value>0.02</value> </parameter>
     </parameters>
   </GATE_KINETIC>
-  <child> <prototype>B_7</prototype> <name>B_inserted_7</name>
+  <child> <prototype>B_7_0</prototype> <name>B_inserted_7</name>
   </child>
-  <HH_GATE> <name>naf_activation_5</name>
+  <HH_GATE> <name>naf_activation_5_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>activation</name> </output>
@@ -884,18 +884,18 @@ END PUBLIC_MODELS
       <parameter> <name>state_init</name><value>0.00784064</value> </parameter>
       <parameter> <name>POWER</name><value>3</value> </parameter>
     </parameters>
-    <child> <prototype>A_6</prototype> <name>A</name>
+    <child> <prototype>A_6_0</prototype> <name>A</name>
     </child>
-    <child> <prototype>B_7</prototype> <name>B</name>
+    <child> <prototype>B_7_0</prototype> <name>B</name>
     </child>
   </HH_GATE>
-  <child> <prototype>naf_activation_5</prototype> <name>naf_gate_activation_5</name>
+  <child> <prototype>naf_activation_5_0</prototype> <name>naf_gate_activation_5_1</name>
   </child>
-  <child> <prototype>naf_gate_activation_5</prototype> <name>naf_gate_activation_5</name>
+  <child> <prototype>naf_gate_activation_5_1</prototype> <name>naf_gate_activation_5_2</name>
   </child>
-  <child> <prototype>naf_gate_activation_5</prototype> <name>naf_gate_activation_inserted_5</name>
+  <child> <prototype>naf_gate_activation_5_2</prototype> <name>naf_gate_activation_inserted_5</name>
   </child>
-  <GATE_KINETIC> <name>A_9</name>
+  <GATE_KINETIC> <name>A_9_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>rate</name> </output>
@@ -912,9 +912,9 @@ END PUBLIC_MODELS
       <parameter> <name>HH_AB_Tau</name><value>0.01</value> </parameter>
     </parameters>
   </GATE_KINETIC>
-  <child> <prototype>A_9</prototype> <name>A_inserted_9</name>
+  <child> <prototype>A_9_0</prototype> <name>A_inserted_9</name>
   </child>
-  <GATE_KINETIC> <name>B_10</name>
+  <GATE_KINETIC> <name>B_10_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>rate</name> </output>
@@ -931,9 +931,9 @@ END PUBLIC_MODELS
       <parameter> <name>HH_AB_Tau</name><value>-0.018</value> </parameter>
     </parameters>
   </GATE_KINETIC>
-  <child> <prototype>B_10</prototype> <name>B_inserted_10</name>
+  <child> <prototype>B_10_0</prototype> <name>B_inserted_10</name>
   </child>
-  <HH_GATE> <name>naf_inactivation_8</name>
+  <HH_GATE> <name>naf_inactivation_8_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>activation</name> </output>
@@ -945,18 +945,18 @@ END PUBLIC_MODELS
       <parameter> <name>state_init</name><value>0.263978</value> </parameter>
       <parameter> <name>POWER</name><value>1</value> </parameter>
     </parameters>
-    <child> <prototype>A_9</prototype> <name>A</name>
+    <child> <prototype>A_9_0</prototype> <name>A</name>
     </child>
-    <child> <prototype>B_10</prototype> <name>B</name>
+    <child> <prototype>B_10_0</prototype> <name>B</name>
     </child>
   </HH_GATE>
-  <child> <prototype>naf_inactivation_8</prototype> <name>naf_gate_inactivation_8</name>
+  <child> <prototype>naf_inactivation_8_0</prototype> <name>naf_gate_inactivation_8_1</name>
   </child>
-  <child> <prototype>naf_gate_inactivation_8</prototype> <name>naf_gate_inactivation_8</name>
+  <child> <prototype>naf_gate_inactivation_8_1</prototype> <name>naf_gate_inactivation_8_2</name>
   </child>
-  <child> <prototype>naf_gate_inactivation_8</prototype> <name>naf_gate_inactivation_inserted_8</name>
+  <child> <prototype>naf_gate_inactivation_8_2</prototype> <name>naf_gate_inactivation_inserted_8</name>
   </child>
-  <CHANNEL> <name>NaF_prototype_4</name>
+  <CHANNEL> <name>NaF_prototype_4_0</name>
     <bindables>
       <input> <name>Vm</name> </input>
       <output> <name>G</name> </output>
@@ -972,14 +972,14 @@ END PUBLIC_MODELS
     <child> <prototype>naf_gate_inactivation_inserted_8</prototype> <name>naf_gate_inactivation</name>
     </child>
   </CHANNEL>
-  <child> <prototype>NaF_prototype_4</prototype> <name>NaF_4</name>
+  <child> <prototype>NaF_prototype_4_0</prototype> <name>NaF_4_1</name>
     <bindings>
       <input> <name>..->Vm</name> </input>
     </bindings>
   </child>
-  <child> <prototype>NaF_4</prototype> <name>NaF_inserted_4</name>
+  <child> <prototype>NaF_4_1</prototype> <name>NaF_inserted_4</name>
   </child>
-  <SEGMENT> <name>soma_prototype_3</name>
+  <SEGMENT> <name>soma_prototype_3_0</name>
     <bindables>
       <output> <name>Vm</name> </output>
     </bindables>
@@ -996,7 +996,7 @@ END PUBLIC_MODELS
     <child> <prototype>NaF_inserted_4</prototype> <name>NaF</name>
     </child>
   </SEGMENT>
-  <child> <prototype>soma_prototype_3</prototype> <name>soma_3</name>
+  <child> <prototype>soma_prototype_3_0</prototype> <name>soma_3_1</name>
     <parameters>
       <parameter> <name>rel_X</name><value>0</value> </parameter>
       <parameter> <name>rel_Y</name><value>0</value> </parameter>
@@ -1004,23 +1004,23 @@ END PUBLIC_MODELS
       <parameter> <name>DIA</name><value>2.98e-05</value> </parameter>
     </parameters>
   </child>
-  <child> <prototype>soma_3</prototype> <name>soma_inserted_3</name>
+  <child> <prototype>soma_3_1</prototype> <name>soma_inserted_3</name>
   </child>
-  <SEGMENT_GROUP> <name>segments_2</name>
+  <SEGMENT_GROUP> <name>segments_2_0</name>
     <child> <prototype>soma_inserted_3</prototype> <name>soma</name>
     </child>
   </SEGMENT_GROUP>
-  <child> <prototype>segments_2</prototype> <name>segments_inserted_2</name>
+  <child> <prototype>segments_2_0</prototype> <name>segments_inserted_2</name>
   </child>
-  <CELL> <name>singlea_naf_1</name>
-    <child> <prototype>segments_2</prototype> <name>segments</name>
+  <CELL> <name>singlea_naf_1_0</name>
+    <child> <prototype>segments_2_0</prototype> <name>segments</name>
     </child>
   </CELL>
-  <child> <prototype>singlea_naf_1</prototype> <name>singlea_naf_inserted_1</name>
+  <child> <prototype>singlea_naf_1_0</prototype> <name>singlea_naf_inserted_1</name>
   </child>
 </private_models>
 <public_models>
-  <child> <prototype>singlea_naf_1</prototype> <name>singlea_naf</name>
+  <child> <prototype>singlea_naf_1_0</prototype> <name>singlea_naf</name>
   </child>
 </public_models>
 ',
