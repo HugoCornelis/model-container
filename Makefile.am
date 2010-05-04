@@ -377,6 +377,10 @@ clean-local:
 	$(RM) -fr $(srcdir)/hierarchy/output
 	$(RM) -rf $(top_srcdir)/docs/html
 	$(RM) -rf $(top_srcdir)/docs/model-container
+	$(RM) -rf *.deb
+	$(RM) -f *.changes
+	$(RM) -f *.dsc
+	$(RM) -f build_debian.log
 
 TESTS = /usr/local/bin/neurospaces_harness
 
