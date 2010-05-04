@@ -106,7 +106,9 @@ sub ndf_save
 	return "*** Error: no filename given";
     }
 
-    $GENESIS3::model_container->write(undef, $modelname, 'ndf', $filename, );
+#     $GENESIS3::model_container->write(undef, $modelname, 'ndf', $filename, );
+
+    GENESIS3::Commands::querymachine("export library ndf $filename $modelname");
 
     return "*** Ok: ndf_save $filename";
 }
@@ -148,7 +150,9 @@ sub xml_save
 
     my $filename = shift;
 
-    $GENESIS3::model_container->write(undef, $modelname, 'xml', $filename, );
+#     $GENESIS3::model_container->write(undef, $modelname, 'xml', $filename, );
+
+    GENESIS3::Commands::querymachine("export library xml $filename $modelname");
 
     return "*** Ok: xml_save $filename";
 }

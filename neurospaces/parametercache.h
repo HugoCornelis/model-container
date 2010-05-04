@@ -49,6 +49,10 @@ ParameterCacheAddString
 struct ParameterCache * ParameterCacheNew(void);
 
 int
+ParameterCacheExport
+(struct ParameterCache *pparcac, struct PidinStack *ppist, int iIndent, int iType, FILE *pfile);
+
+int
 ParameterCacheInsert
 (struct ParameterCache *pparcac, struct CachedParameter *pcacpar);
 

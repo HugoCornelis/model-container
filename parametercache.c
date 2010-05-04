@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include "neurospaces/cachedparameter.h"
+#include "neurospaces/exporter.h"
 #include "neurospaces/parametercache.h"
 #include "neurospaces/parameters.h"
 
@@ -143,6 +144,198 @@ ParameterCacheAddString
     //- return result
 
     return(pcacparResult);
+}
+
+
+/// 
+/// \arg pparcac parameter cache.
+/// \arg ppist context.
+/// \arg iIndent start indentation level.
+/// \arg iType type of export (0: NDF, 1: XML).
+/// \arg pfile file to export to, NULL for stdout.
+/// 
+/// \return int
+/// 
+///	Success of operation.
+/// 
+/// \brief Export a parameter cache to a file.
+/// 
+
+int
+ParameterCacheExport
+(struct ParameterCache *pparcac, struct PidinStack *ppist, int iIndent, int iType, FILE *pfile)
+{
+    //- set default result: ok
+
+    int iResult = 1;
+
+    struct symtab_HSolveListElement *phsle
+	= PidinStackLookupTopSymbol(ppist);
+
+    if (!phsle)
+    {
+	return(0);
+    }
+
+    //- export header
+
+    PrintIndent(iIndent, pfile);
+
+    if (iType == EXPORTER_TYPE_NDF)
+    {
+	fprintf(pfile, "PARAMETERCACHE\n");
+    }
+    else
+    {
+	fprintf(pfile, "<parametercache>\n");
+    }
+
+    //- loop over parameters in the cache
+
+    int i = 0;
+
+    struct symtab_Parameters *ppar = &pparcac->pcacpar->par;
+
+    while (ppar)
+    {
+	//- convert serial to context
+
+	int iSerial = ppar->iFlags;
+
+	struct PidinStack *ppistSerial 
+	    = SymbolPrincipalSerial2Context(phsle, ppist, iSerial);
+
+	char pcSerial[1000];
+
+	PidinStackString(ppistSerial, pcSerial, 1000);
+
+	//- fill in reference parameter structure
+
+	static struct symtab_Parameters parReference =
+	    {
+		/// link structures into list
+
+		NULL,
+
+		NULL,
+
+		/// first parameter of list
+
+		NULL,
+
+		/// type of parameter
+
+		-1,
+
+		/// flags
+
+		0,
+
+		/// name of parameter
+
+		"NAME_1",
+
+		/// value : number, identifier or function for parameter
+
+		{
+		    0.0,
+		},
+	    };
+
+	char pcName[100];
+
+	sprintf(pcName, "NAME_%i", i);
+
+	parReference.pcIdentifier = pcName;
+
+	parReference.iType = TYPE_PARA_STRING;
+
+	parReference.uValue.pcString = pcSerial;
+
+	//- print parameter info
+
+	if (!ParameterExport(&parReference, ppist, iIndent + 2, iType, pfile))
+	{
+	    iResult = 0;
+
+	    break;
+	}
+
+	//- fill in value parameter structure
+
+	static struct symtab_Parameters parValue =
+	    {
+		/// link structures into list
+
+		NULL,
+
+		NULL,
+
+		/// first parameter of list
+
+		NULL,
+
+		/// type of parameter
+
+		TYPE_PARA_NUMBER,
+
+		/// flags
+
+		0,
+
+		/// name of parameter
+
+		"VALUE_1",
+
+		/// value : number, identifier or function for parameter
+
+		{
+		    0.0,
+		},
+	    };
+
+	char pcValue[100];
+
+	sprintf(pcValue, "VALUE_%i", i);
+
+	parValue.pcIdentifier = pcValue;
+
+	parValue.iType = ppar->iType;
+
+	parValue.uValue = ppar->uValue;
+
+	//- print parameter info
+
+	if (!ParameterExport(&parValue, ppist, iIndent + 2, iType, pfile))
+	{
+	    iResult = 0;
+
+	    break;
+	}
+
+	//- go to next parameter
+
+	i++;
+
+	ppar = ppar->pparNext;
+    }
+
+    //- export trailer
+
+    PrintIndent(iIndent, pfile);
+
+    if (iType == EXPORTER_TYPE_NDF)
+    {
+	fprintf(pfile, "END PARAMETERCACHE\n");
+    }
+    else
+    {
+	fprintf(pfile, "</parametercache>\n");
+    }
+
+    //- return result
+
+    return(iResult);
 }
 
 

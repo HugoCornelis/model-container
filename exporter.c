@@ -999,6 +999,18 @@ ExporterLibraryFinalizer
 		    }
 		}
 
+		//- export parameter caches of this biological component
+
+		struct ParameterCache *pparcac = pbioPrototype->ioh.iol.hsle.pparcac;
+
+		if (pparcac)
+		{
+/* 		    if (!ParameterCacheExport(pparcac, ptstr->ppist, pexd->iIndent + 2, pexd->iType, pexd->pfile)) */
+/* 		    { */
+/* 			iResult = TSTR_PROCESSOR_ABORT; */
+/* 		    } */
+		}
+
 		//- export this symbol children as aliasses
 
 		int iOldFlags = pexd->iFlags;
