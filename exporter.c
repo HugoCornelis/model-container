@@ -1005,10 +1005,10 @@ ExporterLibraryFinalizer
 
 		if (pparcac)
 		{
-/* 		    if (!ParameterCacheExport(pparcac, ptstr->ppist, pexd->iIndent + 2, pexd->iType, pexd->pfile)) */
-/* 		    { */
-/* 			iResult = TSTR_PROCESSOR_ABORT; */
-/* 		    } */
+		    if (!ParameterCacheExport(pparcac, ptstr->ppist, pexd->iIndent + 2, pexd->iType, pexd->pfile))
+		    {
+			iResult = TSTR_PROCESSOR_ABORT;
+		    }
 		}
 
 		//- export this symbol children as aliasses

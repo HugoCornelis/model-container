@@ -465,6 +465,24 @@ ItemInputRelations	/* <pio> */
 		}
 	;
 
+OptionalItemCachedParameters	/* <ppar> */
+	:
+		{
+#line
+		    //- put empty parameter list onto top of stack
+
+		    $$ = NULL;
+		}
+	|
+		ItemCachedParameters
+		{
+#line
+		    //- put parameters onto top of stack
+
+		    $$ = $1;
+		}
+	;
+
 OptionalItemParameters	/* <ppar> */
 	:
 		{
@@ -475,6 +493,17 @@ OptionalItemParameters	/* <ppar> */
 		}
 	|
 		ItemParameters
+		{
+#line
+		    //- put parameters onto top of stack
+
+		    $$ = $1;
+		}
+	;
+
+ItemCachedParameters	/* <ppar> */
+	:
+		CachedParameters
 		{
 #line
 		    //- put parameters onto top of stack
@@ -536,6 +565,26 @@ Attributes	/* <ppar> */
 		    //- push last parameter on stack
 
 		    $$ = $1;
+		}
+	;
+
+CachedParameters	/* <ppar> */
+	:
+		TOKEN_FORWARDPARAMETERS
+			ParametersEnumerated
+		TOKEN_END TOKEN_FORWARDPARAMETERS
+		{
+#line
+		    //- put parameters onto top of stack
+
+		    if ($2)
+		    {
+			$$ = $2->pparFirst;
+		    }
+		    else
+		    {
+			$$ = NULL;
+		    }
 		}
 	;
 

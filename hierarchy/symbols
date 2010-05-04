@@ -1495,6 +1495,27 @@ my $grammar_rules
 		    $$ = $1;
 ',
 							   },
+				e_parametercache_constructor => {
+								 parts => [
+									   'specific_description',
+									   'CachedParameters',
+									  ],
+								 semantic => '#line
+		    //- link parameters
+
+		    SymbolCacheParameter(&$1specific_to_base, -1, $2);
+
+		    //- reset actual symbol
+
+		    ParserContextSetActual
+			((PARSERCONTEXT *)pacParserContext,
+			 &$1specific_to_base);
+
+		    //- put symbol on stack
+
+		    $$ = $1;
+',
+							   },
 			       },
        specific_end => {
 			parts => [

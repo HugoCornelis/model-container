@@ -385,6 +385,7 @@ PrivateModelsEnumerated
 			IdentifierHierarchicalNameSpaceRooted
 			Identifier
 			OptionalItemParameters
+			OptionalItemCachedParameters
 			OptionalChildren
 		TOKEN_END TOKEN_ALIAS
 		{
@@ -434,19 +435,26 @@ PrivateModelsEnumerated
 
 			    SymbolAssignParameters(phsle, $5);
 
+			    //- link parameter caches
+
+			    if ($6)
+			    {
+				SymbolCacheParameter(phsle, -1, $6);
+			    }
+
 			    //- link children
 
-/* 			    if ($6) */
+/* 			    if ($7) */
 			    {
-				HSolveListElement *phsleHead = HSolveListHead($6);
+				HSolveListElement *phsleHead = HSolveListHead($7);
 
-				HSolveListElement *phsleTail = HSolveListTail($6);
+				HSolveListElement *phsleTail = HSolveListTail($7);
 
 				struct symtab_BioComponent *pbio = (struct symtab_BioComponent *)phsle;
 
 				HSolveListMergeAtHead(phsleHead, phsleTail, &pbio->ioh.iohc);
 
-/* 				SymbolAddChild(phsle, $6); */
+/* 				SymbolAddChild(phsle, $7); */
 
 				//- reset actual symbol
 
@@ -489,6 +497,7 @@ PrivateModelsEnumerated
 			Identifier
 			Identifier
 			OptionalItemParameters
+			OptionalItemCachedParameters
 			OptionalChildren
 		TOKEN_END TOKEN_ALIAS
 		{
@@ -519,19 +528,26 @@ PrivateModelsEnumerated
 
 			    SymbolAssignParameters(phsle, $5);
 
+			    //- link parameter caches
+
+			    if ($6)
+			    {
+				SymbolCacheParameter(phsle, -1, $6);
+			    }
+
 			    //- link children
 
-/* 			    if ($6) */
+/* 			    if ($7) */
 			    {
-				HSolveListElement *phsleHead = HSolveListHead($6);
+				HSolveListElement *phsleHead = HSolveListHead($7);
 
-				HSolveListElement *phsleTail = HSolveListTail($6);
+				HSolveListElement *phsleTail = HSolveListTail($7);
 
 				struct symtab_BioComponent *pbio = (struct symtab_BioComponent *)phsle;
 
 				HSolveListMergeAtHead(phsleHead, phsleTail, &pbio->ioh.iohc);
 
-/* 				SymbolAddChild(phsle, $6); */
+/* 				SymbolAddChild(phsle, $7); */
 
 				//- reset actual symbol
 
@@ -569,6 +585,7 @@ PrivateModelsEnumerated
 			Identifier
 			OptionalItemInputRelations
 			OptionalItemParameters
+			OptionalItemCachedParameters
 			OptionalChildren
 		TOKEN_END TOKEN_CHILD
 		{
@@ -620,19 +637,26 @@ PrivateModelsEnumerated
 
 			    SymbolAssignParameters(phsle, $6);
 
+			    //- link parameter caches
+
+			    if ($7)
+			    {
+				SymbolCacheParameter(phsle, -1, $7);
+			    }
+
 			    //- link children
 
-/* 			    if ($7) */
+/* 			    if ($8) */
 			    {
-				HSolveListElement *phsleHead = HSolveListHead($7);
+				HSolveListElement *phsleHead = HSolveListHead($8);
 
-				HSolveListElement *phsleTail = HSolveListTail($7);
+				HSolveListElement *phsleTail = HSolveListTail($8);
 
 				struct symtab_BioComponent *pbio = (struct symtab_BioComponent *)phsle;
 
 				HSolveListMergeAtHead(phsleHead, phsleTail, &pbio->ioh.iohc);
 
-/* 				SymbolAddChild(phsle, $7); */
+/* 				SymbolAddChild(phsle, $8); */
 
 				//- reset actual symbol
 
@@ -676,6 +700,7 @@ PrivateModelsEnumerated
 			Identifier
 			OptionalItemInputRelations
 			OptionalItemParameters
+			OptionalItemCachedParameters
 			OptionalChildren
 		TOKEN_END TOKEN_CHILD
 		{
@@ -706,19 +731,26 @@ PrivateModelsEnumerated
 
 			    SymbolAssignParameters(phsle, $6);
 
+			    //- link parameter caches
+
+			    if ($7)
+			    {
+				SymbolCacheParameter(phsle, -1, $7);
+			    }
+
 			    //- link children
 
-/* 			    if ($7) */
+/* 			    if ($8) */
 			    {
-				HSolveListElement *phsleHead = HSolveListHead($7);
+				HSolveListElement *phsleHead = HSolveListHead($8);
 
-				HSolveListElement *phsleTail = HSolveListTail($7);
+				HSolveListElement *phsleTail = HSolveListTail($8);
 
 				struct symtab_BioComponent *pbio = (struct symtab_BioComponent *)phsle;
 
 				HSolveListMergeAtHead(phsleHead, phsleTail, &pbio->ioh.iohc);
 
-/* 				SymbolAddChild(phsle, $7); */
+/* 				SymbolAddChild(phsle, $8); */
 
 				//- reset actual symbol
 
@@ -831,6 +863,7 @@ PublicModelsEnumerated
 			Identifier
 			Identifier
 			OptionalItemParameters
+			OptionalItemCachedParameters
 			OptionalChildSectionOptionalInputOptionalParameters
 		TOKEN_END TOKEN_ALIAS
 		{
@@ -861,11 +894,18 @@ PublicModelsEnumerated
 
 			    SymbolAssignParameters(phsle, $5);
 
-			    //- link children
+			    //- link parameter caches
 
 			    if ($6)
 			    {
-				SymbolAddChild(phsle, $6);
+				SymbolCacheParameter(phsle, -1, $6);
+			    }
+
+			    //- link children
+
+			    if ($7)
+			    {
+				SymbolAddChild(phsle, $7);
 
 				//- reset actual symbol
 
@@ -902,6 +942,7 @@ PublicModelsEnumerated
 			Identifier
 			Identifier
 			OptionalItemParameters
+			OptionalItemCachedParameters
 			OptionalChildSectionOptionalInputOptionalParameters
 		TOKEN_END TOKEN_CHILD
 		{
@@ -932,11 +973,18 @@ PublicModelsEnumerated
 
 			    SymbolAssignParameters(phsle, $5);
 
-			    //- link children
+			    //- link parameter caches
 
 			    if ($6)
 			    {
-				SymbolAddChild(phsle, $6);
+				SymbolCacheParameter(phsle, -1, $6);
+			    }
+
+			    //- link children
+
+			    if ($7)
+			    {
+				SymbolAddChild(phsle, $7);
 
 				//- reset actual symbol
 

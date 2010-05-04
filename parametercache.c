@@ -183,11 +183,11 @@ ParameterCacheExport
 
     if (iType == EXPORTER_TYPE_NDF)
     {
-	fprintf(pfile, "PARAMETERCACHE\n");
+	fprintf(pfile, "FORWARDPARAMETERS\n");
     }
     else
     {
-	fprintf(pfile, "<parametercache>\n");
+	fprintf(pfile, "<forwardparameters>\n");
     }
 
     //- loop over parameters in the cache
@@ -326,11 +326,11 @@ ParameterCacheExport
 
     if (iType == EXPORTER_TYPE_NDF)
     {
-	fprintf(pfile, "END PARAMETERCACHE\n");
+	fprintf(pfile, "END FORWARDPARAMETERS\n");
     }
     else
     {
-	fprintf(pfile, "</parametercache>\n");
+	fprintf(pfile, "</forwardparameters>\n");
     }
 
     //- return result

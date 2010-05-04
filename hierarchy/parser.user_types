@@ -14,10 +14,13 @@
 %type <pio> FixedItemInputRelations
 %type <pio> OptionalItemInputRelations
 %type <pio> ItemInputRelations
+%type <ppar> OptionalItemCachedParameters
 %type <ppar> OptionalItemParameters
 %type <phsl> OptionalChildren
+%type <ppar> ItemCachedParameters
 %type <ppar> ItemParameters
 %type <ppar> Attributes
+%type <ppar> CachedParameters
 %type <ppar> Parameters
 %type <ppar> ParametersEnumerated
 %type <ppar> Parameter
