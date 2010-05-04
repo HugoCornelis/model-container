@@ -856,57 +856,6 @@ my $class_hierarchy
 						 'Channel',
 						],
 				  specific_allocator => 'SegmentCalloc',
-				  specific_description1 => {
-							   add => '		SegmentDescription
-		TOKEN_OPTIONS
-		SegmentInstanceOptions
-		{
-#line
-		    //- set segment options
-
-		    SymbolSetOptions(&$1->segr.bio.ioh.iol.hsle, $3);
-
-		    //- reset actual symbol
-
-		    ParserContextSetActual
-			((PARSERCONTEXT *)pacParserContext,
-			 &$1->segr.bio.ioh.iol.hsle);
-
-		    //- push segment description on stack
-
-		    $$ = $1;
-		}
-',
-							  },
-				  specific_rules1 => 'SegmentInstanceOptions	/* <iCompOptions> */
-	:
-		{
-#line
-		    //- erase int on stack
-
-		    $$ = 0;
-		}
-	|
-		SegmentInstanceOptions
-		TOKEN_SPHERICAL
-		{
-#line
-		    //- remember spherical option
-
-		    $$ |= FLAG_SEGMENTER_SPHERICAL;
-		}
-	|
-		SegmentInstanceOptions
-		TOKEN_CYLINDRICAL
-		{
-#line
-		    //- remember cylindrical option (erases spherical option)
-
-		    $$ &= ~(FLAG_SEGMENTER_SPHERICAL);
-		}
-	;
-
-',
 				  specific_token => {
 						     class => 'segment',
 						     lexical => 'TOKEN_SEGMENT',
@@ -2832,6 +2781,10 @@ my $tokens
        file => {
 		lexical => 'TOKEN_FILE',
 	       },
+       forwardparameters => {
+			     lexical => 'TOKEN_FORWARDPARAMETERS',
+			     purpose => 'structure',
+			    },
        generates => {
 		     lexical => 'TOKEN_GENERATES',
 		    },
