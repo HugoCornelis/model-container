@@ -841,11 +841,25 @@ ParameterExport
 
     if (iType == EXPORTER_TYPE_NDF)
     {
-	fprintf(pfile, "PARAMETER ( %s = ", ParameterGetName(ppar));
+	if (ParameterIsAttribute(ppar))
+	{
+/* 	    fprintf(pfile, "ATTRIBUTES "); */
+	}
+	else
+	{
+	    fprintf(pfile, "PARAMETER ( %s = ", ParameterGetName(ppar));
+	}
     }
     else
     {
-	fprintf(pfile, "<parameter> <name>%s</name>", ParameterGetName(ppar));
+	if (ParameterIsAttribute(ppar))
+	{
+/* 	    fprintf(pfile, "<attributes> "); */
+	}
+	else
+	{
+	    fprintf(pfile, "<parameter> <name>%s</name>", ParameterGetName(ppar));
+	}
     }
 
     //- for straight number values
@@ -952,11 +966,16 @@ ParameterExport
 
     else if (ParameterIsAttribute(ppar))
     {
-	//- give diagnostics: not implemented yet
+	if (iType == EXPORTER_TYPE_NDF)
+	{
+	    fprintf(pfile, "%s, ", ParameterGetName(ppar));
+	}
+	else
+	{
+	    fprintf(pfile, "<name>%s</name> ", ParameterGetName(ppar));
+	}
 
-	fprintf(stdout, "\nreporting of attribute parameters is not implemented yet\n");
-
-	return 0;
+	return 1;
     }
 
     //- for functions

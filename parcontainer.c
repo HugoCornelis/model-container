@@ -253,13 +253,29 @@ ParContainerExport
 
     PrintIndent(iIndent, pfile);
 
+    struct symtab_Parameters *pparType = pparc->ppars;
+
     if (iType == EXPORTER_TYPE_NDF)
     {
-	fprintf(pfile, "PARAMETERS\n");
+	if (ParameterIsAttribute(pparType))
+	{
+	    fprintf(pfile, "ATTRIBUTES ");
+	}
+	else
+	{
+	    fprintf(pfile, "PARAMETERS\n");
+	}
     }
     else
     {
-	fprintf(pfile, "<parameters>\n");
+	if (ParameterIsAttribute(pparType))
+	{
+	    fprintf(pfile, "<attributes> ");
+	}
+	else
+	{
+	    fprintf(pfile, "<parameters>\n");
+	}
     }
 
     //- loop over parameters
@@ -282,15 +298,31 @@ ParContainerExport
 	pparLoop = pparLoop->pparNext;
     }
 
-    PrintIndent(iIndent, pfile);
-
     if (iType == EXPORTER_TYPE_NDF)
     {
-	fprintf(pfile, "END PARAMETERS\n");
+	if (ParameterIsAttribute(pparType))
+	{
+	    fprintf(pfile, "END ATTRIBUTES\n");
+	}
+	else
+	{
+	    PrintIndent(iIndent, pfile);
+
+	    fprintf(pfile, "END PARAMETERS\n");
+	}
     }
     else
     {
-	fprintf(pfile, "</parameters>\n");
+	if (ParameterIsAttribute(pparType))
+	{
+	    fprintf(pfile, "</attributes>\n");
+	}
+	else
+	{
+	    PrintIndent(iIndent, pfile);
+
+	    fprintf(pfile, "</parameters>\n");
+	}
     }
 
     //- return result
