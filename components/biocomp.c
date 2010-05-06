@@ -500,6 +500,59 @@ BioComponentGetModifiableParameter
 
 
 /// 
+/// \arg pbio component to get parameter for.
+/// \arg ppbioPrototypes resulting prototype array.
+/// \arg iSize number of entries allocated in the array.
+/// 
+/// \return int : number of prototypes in result, -1 for failure.
+/// 
+/// \brief Construct an array of prototypes of this biocomponent,
+/// first in the array is this.
+/// 
+
+int
+BioComponentGetPrototypeList(struct symtab_BioComponent * pbio, struct symtab_BioComponent **ppbioPrototypes, int iSize)
+{
+    //- determine number of prototypes
+
+    int iResult = 0;
+
+    //- set first entry in array
+
+    ppbioPrototypes[iResult] = pbio;
+
+    iResult++;
+
+    //- loop over all prototypes
+
+    struct symtab_BioComponent * pbioPrototype
+	= (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
+
+    while (pbioPrototype)
+    {
+	//- fill in array
+
+	ppbioPrototypes[iResult] = pbioPrototype;
+
+	//- next prototype
+
+	iResult++;
+
+	pbioPrototype
+	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbioPrototype->ioh.iol.hsle);
+    }
+
+    //- NULL terminate the array
+
+    ppbioPrototypes[iResult] = NULL;
+
+    //- return result
+
+    return(iResult);
+}
+
+
+/// 
 /// \arg pbio component to get parameter for
 /// \arg ppist context of symbol
 /// \arg pcName name of parameter to search for

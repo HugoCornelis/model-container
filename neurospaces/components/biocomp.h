@@ -145,6 +145,9 @@ BioComponentGetParameter
  struct PidinStack *ppist,
  char *pcName);
 
+int
+BioComponentGetPrototypeList(struct symtab_BioComponent * pbio, struct symtab_BioComponent **ppbioPrototypes, int iSize);
+
 void BioComponentInit(struct symtab_BioComponent * pbio);
 
 struct symtab_InputOutput *
