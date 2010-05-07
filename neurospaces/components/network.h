@@ -79,9 +79,7 @@ NetworkTraverseConnections
 #include "neurospaces/symboltable.h"
 
 
-/// \struct
 /// \struct network description
-/// \struct
 
 struct descr_Network
 {
@@ -91,9 +89,7 @@ struct descr_Network
 };
 
 
-/// \struct
 /// \struct struct symtab_Network
-/// \struct
 
 struct symtab_Network
 {
