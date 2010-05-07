@@ -36,13 +36,11 @@
 
 
 /// 
-/// 
 /// \return struct symtab_Network * 
 /// 
 ///	Newly allocated network, NULL for failure
 /// 
 /// \brief Allocate a new network symbol table element
-/// \details 
 /// 
 
 struct symtab_Network * NetworkCalloc(void)
@@ -72,13 +70,11 @@ struct symtab_Network * NetworkCalloc(void)
 
 
 /// 
-/// 
 /// \arg pnetw network to count cells for
 /// 
 /// \return int : number of cells in network, -1 for failure
 /// 
 /// \brief count cells in network
-/// \details 
 /// 
 
 int NetworkCountCells
@@ -108,13 +104,13 @@ int NetworkCountCells
 
 
 /// 
-/// 
 /// \arg pnetw network
 /// \arg ppist context of network
 /// 
 /// \return int : number of connections, -1 for failure
 /// 
 /// \brief Get number of connections in network
+/// 
 /// \details 
 /// 
 ///	connections == synapses
@@ -148,14 +144,12 @@ int NetworkCountConnections
 
 
 /// 
-/// 
 /// \arg pnetw symbol to alias
 /// \arg pidin name of new symbol
 /// 
 /// \return struct symtab_HSolveListElement * : alias for original symbol
 /// 
 /// \brief Create alias to given symbol
-/// \details 
 /// 
 
 struct symtab_HSolveListElement * 
@@ -185,13 +179,11 @@ NetworkCreateAlias
 
 
 /// 
-/// 
 /// \arg pnetw network to init
 /// 
 /// \return void
 /// 
 /// \brief init network
-/// \details 
 /// 
 
 void NetworkInit(struct symtab_Network *pnetw)
@@ -207,9 +199,8 @@ void NetworkInit(struct symtab_Network *pnetw)
 
 
 /// 
-/// 
 /// \arg phsle network to traverse cells for
-///	ppist.......: context of network, network assumed to be on top
+/// \arg ppist context of network, network assumed to be on top
 /// \arg pfProcesor cell processor
 /// \arg pfFinalizer cell finalizer
 /// \arg pvUserdata any user data
@@ -217,7 +208,6 @@ void NetworkInit(struct symtab_Network *pnetw)
 /// \return see TstrTraverse()
 /// 
 /// \brief Traverse cells, call pfProcessor on each of them
-/// \details 
 /// 
 
 int NetworkTraverseCells
@@ -258,9 +248,8 @@ int NetworkTraverseCells
 
 
 /// 
-/// 
 /// \arg pnetw network to traverse connections for
-///	ppist.......: context of network, network assumed to be on top
+/// \arg ppist context of network, network assumed to be on top
 /// \arg pfProcessor mechanism processor
 /// \arg pfFinalizer finalizer
 /// \arg pvUserdata any user data
@@ -268,6 +257,7 @@ int NetworkTraverseCells
 /// \return see TstrTraverse()
 /// 
 /// \brief Traverse connections, call pfProcesor on each of them
+/// 
 /// \details 
 /// 
 ///	Does not use a selector to select connections yet, so calls 
