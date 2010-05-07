@@ -47,13 +47,15 @@ int SymbolCellCounter(struct TreespaceTraversal *ptstr, void *pvUserdata)
 
     int *piCells = (int *)pvUserdata;
 
-    //- set actual symbol
+/*     //- set actual symbol */
 
-    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
+/*     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr); */
 
     //- if cell
 
-    if (instanceof_cell(phsle))
+    int iType = TstrGetActualType(ptstr);
+
+    if (subsetof_cell(iType))
     {
 	//- add to counted cells
 
@@ -80,13 +82,15 @@ int SymbolCellSelector(struct TreespaceTraversal *ptstr, void *pvUserdata)
 
     int iResult = TSTR_SELECTOR_PROCESS_CHILDREN;
 
-    //- set actual symbol
+/*     //- set actual symbol */
 
-    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
+/*     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr); */
 
     //- if below cell level
 
-    if (instanceof_segment(phsle))
+    int iType = TstrGetActualType(ptstr);
+
+    if (subsetof_segment(iType))
     {
 	//- do not process, continue with siblings
 
@@ -219,14 +223,16 @@ int SymbolGateKineticSelector(struct TreespaceTraversal *ptstr, void *pvUserdata
 
     int iResult = TSTR_SELECTOR_PROCESS_CHILDREN;
 
-    //- set actual symbol
+/*     //- set actual symbol */
 
-    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
+/*     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr); */
 
     //- if a gate kinetic
 
-    if (instanceof_gate_kinetic(phsle)
-	|| instanceof_concentration_gate_kinetic(phsle))
+    int iType = TstrGetActualType(ptstr);
+
+    if (subsetof_gate_kinetic(iType)
+	|| subsetof_concentration_gate_kinetic(iType))
       {
 	//- process including children
 
@@ -259,7 +265,9 @@ int SymbolProjectionSelector(struct TreespaceTraversal *ptstr, void *pvUserdata)
 
     //- if non-projection
 
-    if (!instanceof_projection(phsle))
+    int iType = TstrGetActualType(ptstr);
+
+    if (!subsetof_projection(iType))
     {
 	//- do not process but continue with children
 
