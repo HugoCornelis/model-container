@@ -82,12 +82,9 @@ struct workload_symbol_config wsc =
 
 
 /// 
-/// 
 /// \arg pwi workload to free.
 /// 
-/// RTN..:
-/// 
-///	int : success of operation.
+/// \return int : success of operation.
 /// 
 /// \details 
 /// 
@@ -130,16 +127,13 @@ int WorkloadFree(struct workload_info *pwi)
 
 
 /// 
-/// 
 /// \arg phsle symbol.
 /// \arg ppist context.
 /// \arg iLevel level of detail needed.
 ///	iFlags..: additional TRAVERSAL_INFO_* flags.
 /// 
-/// RTN..:
-/// 
-///	struct traversal_info : children info with cumulative workload,
-///	NULL for failure.
+/// \return struct traversal_info : children info with cumulative
+/// workload, NULL for failure.
 /// 
 /// \details 
 /// 
@@ -293,13 +287,10 @@ WorkloadNew
 
 
 /// 
-/// 
 /// \arg ptiWorkload cumulative workload report.
 /// \arg iPartitions number of needed partitions.
 /// 
-/// RTN..:
-/// 
-///	int : success of operation.
+/// \return int : success of operation.
 /// 
 /// \details 
 /// 
@@ -426,13 +417,10 @@ int WorkloadPartition(struct workload_info *pwi, int iPartitions)
 
 
 /// 
-/// 
 /// \arg pwi cumulative workload report.
 /// \arg pfile file to print workload report to.
 /// 
-/// RTN..:
-/// 
-///	int : success of operation.
+/// \return int : success of operation.
 /// 
 /// \details 
 /// 
