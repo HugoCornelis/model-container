@@ -11,7 +11,7 @@ use strict;
 
 {
     # $Format: "system 'mkdir --parents \"/tmp/neurospaces/${package}-${label}\"';"$
-system 'mkdir --parents "/tmp/neurospaces/model-container-c29add6329c4c4fd3576b1885c36df996c00ecaa-0"';
+system 'mkdir --parents "/tmp/neurospaces/model-container-6e4e0809e7daba3684c5c6669d237e392faeb500.0"';
 }
 
 if ($?)
@@ -22,7 +22,7 @@ if ($?)
 
 {
     # $Format: "system \"cp '/local_home/local_home/hugo/neurospaces_project/model_container/source/c/snapshots/0/${package}-${label}.tar.gz' '/tmp/neurospaces/${package}-${label}'\";"$
-system "cp '/local_home/local_home/hugo/neurospaces_project/model_container/source/c/snapshots/0/model-container-c29add6329c4c4fd3576b1885c36df996c00ecaa-0.tar.gz' '/tmp/neurospaces/model-container-c29add6329c4c4fd3576b1885c36df996c00ecaa-0'";
+system "cp '/local_home/local_home/hugo/neurospaces_project/model_container/source/c/snapshots/0/model-container-6e4e0809e7daba3684c5c6669d237e392faeb500.0.tar.gz' '/tmp/neurospaces/model-container-6e4e0809e7daba3684c5c6669d237e392faeb500.0'";
 }
 
 if ($?)
@@ -33,7 +33,7 @@ if ($?)
 
 {
     # $Format: "chdir \"/tmp/neurospaces/${package}-${label}\";"$
-chdir "/tmp/neurospaces/model-container-c29add6329c4c4fd3576b1885c36df996c00ecaa-0";
+chdir "/tmp/neurospaces/model-container-6e4e0809e7daba3684c5c6669d237e392faeb500.0";
 }
 
 if ($?)
@@ -44,7 +44,7 @@ if ($?)
 
 {
     # $Format: "system \"tar xfz '${package}-${label}.tar.gz'\";"$
-system "tar xfz 'model-container-c29add6329c4c4fd3576b1885c36df996c00ecaa-0.tar.gz'";
+system "tar xfz 'model-container-6e4e0809e7daba3684c5c6669d237e392faeb500.0.tar.gz'";
 }
 
 if ($?)
@@ -55,7 +55,7 @@ if ($?)
 
 {
     # $Format: "chdir \"${package}-${label}\";"$
-chdir "model-container-c29add6329c4c4fd3576b1885c36df996c00ecaa-0";
+chdir "model-container-6e4e0809e7daba3684c5c6669d237e392faeb500.0";
 }
 
 if ($?)
