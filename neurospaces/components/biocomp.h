@@ -605,6 +605,10 @@ BioComponentSetPrototype
 	BioComponentAssignUniquePrototypeID(pbio);
     }
 
+/*     //- initialize forward parameter references */
+
+/*     SymbolReplaceForwardReferences(&pbio->ioh.iol.hsle, &pbioProto->ioh.iol.hsle); */
+
 #ifdef PRE_PROTO_TRAVERSAL
 
     SymbolSetInvisibleNumOfSuccessors

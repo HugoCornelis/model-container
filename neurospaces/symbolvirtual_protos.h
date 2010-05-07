@@ -168,6 +168,16 @@ int SymbolDeleter(struct TreespaceTraversal *ptstr, void *pvUserdata);
 char *
 BaseSymbolGetID(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist);
 
+int SymbolForwardReferencesResolve(void);
+
+int
+SymbolReplaceForwardReferences
+(struct symtab_HSolveListElement *phsleNew, struct symtab_HSolveListElement *phsleOld);
+
+int
+SymbolAddToForwardReferencers
+(struct symtab_HSolveListElement *phsle, struct symtab_Parameters *ppar);
+
 struct symtab_Parameters *
 SymbolCacheParameter
 (struct symtab_HSolveListElement *phsle, int iSerial, struct symtab_Parameters *ppar);
@@ -204,9 +214,7 @@ int SymbolFree(struct symtab_HSolveListElement *phsle);
 struct AlgorithmInstance *
 SymbolGetAlgorithmInstanceInfo(struct symtab_HSolveListElement *phsle);
 
-int
-SymbolGetWorkloadIndividual
-(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist);
+int SymbolGetWorkloadIndividual(struct TreespaceTraversal *ptstr);
 
 void SymbolInit(struct symtab_HSolveListElement * phsle);
 

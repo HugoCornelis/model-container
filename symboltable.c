@@ -158,9 +158,213 @@ BaseSymbolGetID(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist
 
 /// 
 /// \arg phsle symbol to use for caching.
+/// \arg ppar forward parameter references.
+/// 
+/// \return struct symtab_Parameters *
+/// 
+///	Newly allocated parameters, NULL for failure.
+/// 
+/// \details 
+/// 
+///	Add forward parameter references to be resolve later.
+/// 
+
+#define MAX_FORWARD_REFERENCERS 1000
+
+static struct symtab_HSolveListElement *pphsleForwardRefencers[MAX_FORWARD_REFERENCERS];
+
+static int iForwardReferencers = 0;
+
+
+int SymbolForwardReferencesResolve(void)
+{
+    //- set default result: none
+
+    int iResult = 0;
+
+    if (!SymbolRecalcAllSerials(NULL, NULL))
+    {
+	fprintf(stderr, "Cannot SymbolRecalcAllSerials() in SymbolForwardReferencesResolve()\n");
+    }
+
+    //- get access to root symbol
+
+    struct PidinStack *ppistRoot = PidinStackParse("/");
+
+    struct symtab_HSolveListElement *phsleRoot
+	= PidinStackLookupTopSymbol(ppistRoot);
+
+    //- loop over all forward referencers
+
+    int iIndex;
+
+    for (iIndex = 0 ; iIndex < iForwardReferencers ; iIndex++)
+    {
+	struct symtab_HSolveListElement *phsle = pphsleForwardRefencers[iIndex];
+
+	//- loop over all parameter caches
+
+	struct symtab_Parameters *pparReferences = phsle->pparReferences;
+
+/* 	//- get access to resulting parameter caches */
+
+/* 	struct ParameterCache *pparcac = phsle->pparcac; */
+
+	//- loop over parameters in the cache
+
+	int i = 0;
+
+	struct symtab_Parameters *ppar = pparReferences;
+
+	while (ppar)
+	{
+	    struct symtab_Parameters *pparName = ppar;
+
+	    struct symtab_Parameters *pparValue = ppar->pparNext;
+
+	    double dValue = pparValue->uValue.dNumber;
+
+	    //- convert context without field to serial
+
+	    struct PidinStack *ppistSearched
+		= PidinStackParse(ParameterGetString(pparName));
+
+	    struct symtab_IdentifierIndex *pidinField
+		= PidinStackPop(ppistSearched);
+
+	    if (PidinStackLookupTopSymbol(ppistSearched))
+	    {
+		struct symtab_HSolveListElement *phsleCacher
+		    = ppistSearched->symsst.symst.pphsle[0];
+
+/* 		pparcac = phsleCacher->pparcac; */
+
+		int iSerial = PidinStackToSerial(ppistSearched);
+
+		//- subtract the symbol from the serial
+
+		iSerial -= SymbolGetPrincipalSerialToParent(phsleCacher);
+
+		//- insert a cached parameter for this serial
+
+		struct symtab_Parameters *pparCached
+		    = SymbolCacheParameterDouble(phsleCacher, iSerial, pidinField->pcIdentifier, dValue);
+
+/* 		struct CachedParameter *pcacpar = ParameterCacheAddDouble(pparcac, iSerial, pidinField->pcIdentifier, dValue); */
+
+		if (!pparCached)
+/* 		if (!pcacpar) */
+		{
+		    fprintf(stderr, "Cannot cannot construct cached parameter for forward reference %s in SymbolForwardReferencesResolve()\n", ParameterGetString(pparName));
+		}
+	    }
+	    else
+	    {
+		fprintf(stderr, "Cannot resolve forward reference %s in SymbolForwardReferencesResolve()\n", ParameterGetString(pparName));
+
+		i--;
+	    }
+
+	    //- increment index
+
+	    i++;
+
+	    //- skip value parameter
+
+	    ppar = ppar->pparNext;
+
+	    //- go to next parameter
+
+	    ppar = ppar->pparNext;
+	}
+    }
+
+    //- reset forward references cound
+
+    iForwardReferencers = 0;
+
+    //- return result
+
+    return(iResult);
+}
+
+
+int
+SymbolReplaceForwardReferences
+(struct symtab_HSolveListElement *phsleNew, struct symtab_HSolveListElement *phsleOld)
+{
+    int iIndex;
+
+    for (iIndex = 0 ; iIndex < iForwardReferencers ; iIndex++)
+    {
+	if (pphsleForwardRefencers[iIndex] == phsleOld)
+	{
+	    pphsleForwardRefencers[iIndex] = phsleNew;
+
+	    break;
+	}
+    }
+
+    if (iIndex == iForwardReferencers)
+    {
+	return 1;
+    }
+    else
+    {
+	return 0;
+    }
+}
+
+
+int
+SymbolAddToForwardReferencers
+(struct symtab_HSolveListElement *phsle, struct symtab_Parameters *ppar)
+{
+    //- set result: cached parameter
+
+    if (iForwardReferencers >= MAX_FORWARD_REFERENCERS)
+    {
+	return(0);
+    }
+
+    //- link the parameter list in the forward references
+
+    struct symtab_Parameters *pparLoop = phsle->pparReferences;
+
+    if (!pparLoop)
+    {
+	phsle->pparReferences = ppar;
+    }
+    else
+    {
+	struct symtab_Parameters *pparLast = NULL;
+
+	while (pparLoop)
+	{
+	    pparLast = pparLoop;
+
+	    pparLoop = pparLoop->pparNext;
+	}
+
+	pparLast->pparNext = ppar;
+    }
+
+    //- add symbol to list of forward referencers
+
+    pphsleForwardRefencers[iForwardReferencers] = phsle;
+
+    iForwardReferencers++;
+
+    //- return success
+
+    return(1);
+}
+
+
+/// 
+/// \arg phsle symbol to use for caching.
 /// \arg iSerial serial to use for caching, context of parameter.
-/// \arg pcName name of parameter.
-/// \arg pcValue value of parameter.
+/// \arg ppar parameter to cache.
 /// 
 /// \return struct symtab_Parameters *
 /// 
@@ -180,12 +384,12 @@ SymbolCacheParameter
 
     struct symtab_Parameters * pparResult = NULL;
 
-    struct ImportedFile *pifRootImport = ImportedFileGetRootImport();
+/*     struct ImportedFile *pifRootImport = ImportedFileGetRootImport(); */
 
 /*     fprintf(stdout, "importedfile.c: root import %p\n", pifRootImport); */
 
-    struct symtab_RootSymbol *proot
-	= ImportedFileGetRootSymbol(pifRootImport);
+/*     struct symtab_RootSymbol *proot */
+/* 	= ImportedFileGetRootSymbol(pifRootImport); */
 
 /*     fprintf(stdout, "importedfile.c: root symbol %p\n", proot); */
 
@@ -498,24 +702,42 @@ SymbolFindCachedParameter
 
 	iSerial -= SymbolGetPrincipalSerialToParent(phsleCache);
 
-	//- if there is a parameter cache for the current symbol
+	//- loop over all prototypes
 
-	struct ParameterCache *pparcac = phsleCache->pparcac;
-
-	if (pparcac)
+/* 	while (phsleCache) */
 	{
-	    //- find parameter in the cache
+	    //- if there is a parameter cache for the current symbol
 
-	    pparResult = ParameterCacheLookup(pparcac, iSerial, pcName);
+	    struct ParameterCache *pparcac = phsleCache->pparcac;
 
-	    //- if found
-
-	    if (pparResult)
+	    if (pparcac)
 	    {
-		//- break searching loop
+		//- find parameter in the cache
 
-		break;
+		pparResult = ParameterCacheLookup(pparcac, iSerial, pcName);
+
+		//- if found
+
+		if (pparResult)
+		{
+		    //- break prototype loop
+
+		    break;
+		}
 	    }
+
+/* 	    //- next prototype */
+
+/* 	    phsleCache = SymbolGetPrototype(phsleCache); */
+	}
+
+	//- if found
+
+	if (pparResult)
+	{
+	    //- break searching loop
+
+	    break;
 	}
     }
 
@@ -716,9 +938,7 @@ SymbolGetAlgorithmInstanceInfo(struct symtab_HSolveListElement *phsle)
 /// \brief Get workload for this symbol.
 /// 
 
-int
-SymbolGetWorkloadIndividual
-(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)
+int SymbolGetWorkloadIndividual(struct TreespaceTraversal *ptstr)
 {
     //- set default result : unknown.
 
@@ -726,24 +946,29 @@ SymbolGetWorkloadIndividual
 
     //- set result from table with known symbols
 
-    if (instanceof_attachment(phsle))
+    int iType = TstrGetActualType(ptstr);
+
+    struct symtab_HSolveListElement *phsle
+	= (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
+
+    if (subsetof_attachment(iType))
     {
 	iResult = wsc.iAttachment;
     }
-    else if (instanceof_axon_hillock(phsle))
+    else if (subsetof_axon_hillock(iType))
     {
 	iResult = wsc.iAxonHillock;
     }
-    else if (instanceof_cell(phsle))
+    else if (subsetof_cell(iType))
     {
 	iResult = wsc.iCell;
     }
-    else if (instanceof_connection(phsle))
+    else if (subsetof_connection(iType))
     {
 	iResult = wsc.iConnection;
     }
 
-    //t some weird testing going on here: why not just using instanceof ?
+    //t some weird testing going on here: why not just using subsetof ?
 
     else if (in_dimension_mechanism(phsle))
     {
@@ -756,23 +981,23 @@ SymbolGetWorkloadIndividual
 	    iResult = wsc.mechanisms.iPool;
 	}
     }
-    else if (instanceof_network(phsle))
+    else if (subsetof_network(iType))
     {
 	iResult = wsc.iNetwork;
     }
-    else if (instanceof_population(phsle))
+    else if (subsetof_population(iType))
     {
 	iResult = wsc.iPopulation;
     }
-    else if (instanceof_projection(phsle))
+    else if (subsetof_projection(iType))
     {
 	iResult = wsc.iProjection;
     }
-    else if (instanceof_randomvalue(phsle))
+    else if (subsetof_randomvalue(iType))
     {
 	iResult = wsc.iRandomvalue;
     }
-    else if (instanceof_segment(phsle))
+    else if (subsetof_segment(iType))
     {
 	iResult = wsc.iSegment;
     }

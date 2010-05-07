@@ -94,6 +94,7 @@ FullModelTail
 	:
 		{
 #line
+		    SymbolForwardReferencesResolve();
 		    ParserFinish();
 		}
 	;
@@ -439,7 +440,7 @@ PrivateModelsEnumerated
 
 			    if ($6)
 			    {
-				SymbolCacheParameter(phsle, -1, $6);
+				SymbolAddToForwardReferencers(phsle, $6);
 			    }
 
 			    //- link children
@@ -532,7 +533,7 @@ PrivateModelsEnumerated
 
 			    if ($6)
 			    {
-				SymbolCacheParameter(phsle, -1, $6);
+				SymbolAddToForwardReferencers(phsle, $6);
 			    }
 
 			    //- link children
@@ -641,7 +642,7 @@ PrivateModelsEnumerated
 
 			    if ($7)
 			    {
-				SymbolCacheParameter(phsle, -1, $7);
+				SymbolAddToForwardReferencers(phsle, $7);
 			    }
 
 			    //- link children
@@ -735,7 +736,7 @@ PrivateModelsEnumerated
 
 			    if ($7)
 			    {
-				SymbolCacheParameter(phsle, -1, $7);
+				SymbolAddToForwardReferencers(phsle, $7);
 			    }
 
 			    //- link children
@@ -898,7 +899,7 @@ PublicModelsEnumerated
 
 			    if ($6)
 			    {
-				SymbolCacheParameter(phsle, -1, $6);
+				SymbolAddToForwardReferencers(phsle, $6);
 			    }
 
 			    //- link children
@@ -977,7 +978,7 @@ PublicModelsEnumerated
 
 			    if ($6)
 			    {
-				SymbolCacheParameter(phsle, -1, $6);
+				SymbolAddToForwardReferencers(phsle, $6);
 			    }
 
 			    //- link children

@@ -127,6 +127,10 @@ struct symtab_HSolveListElement
 
     struct ParameterCache *pparcac;
 
+    /// parameter references
+
+    struct symtab_Parameters *pparReferences;
+
     /// gives type of element
 
     int iType;

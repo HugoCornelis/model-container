@@ -202,12 +202,20 @@ ParameterCacheExport
 
 	int iSerial = ppar->iFlags;
 
-	struct PidinStack *ppistSerial 
-	    = SymbolPrincipalSerial2Context(phsle, ppist, iSerial);
+	struct PidinStack *ppistRelative = PidinStackParse("");
+
+	// ppistRelative creates relative references, ppist absolute ones.
+
+	struct PidinStack *ppistSerial
+	    = SymbolPrincipalSerial2Context(phsle, ppist/* Relative */, iSerial);
 
 	char pcSerial[1000];
 
 	PidinStackString(ppistSerial, pcSerial, 1000);
+
+	char pcField[1000];
+
+	sprintf(pcField, "%s->%s", pcSerial, ppar->pcIdentifier);
 
 	//- fill in reference parameter structure
 
@@ -250,7 +258,7 @@ ParameterCacheExport
 
 	parReference.iType = TYPE_PARA_STRING;
 
-	parReference.uValue.pcString = pcSerial;
+	parReference.uValue.pcString = pcField;
 
 	//- print parameter info
 
@@ -313,6 +321,10 @@ ParameterCacheExport
 	    break;
 	}
 
+	PidinStackFree(ppistSerial);
+
+	PidinStackFree(ppistRelative);
+
 	//- go to next parameter
 
 	i++;
@@ -358,11 +370,22 @@ ParameterCacheInsert
 
     int iResult = FALSE;
 
-    //- insert the parameter in the list
+    //- get first and last cached parameter in the given list
 
-    pcacpar->par.pparNext = &pparcac->pcacpar->par;
+    struct CachedParameter *pcacparFirst = pcacpar;
 
-    pparcac->pcacpar = pcacpar;
+    struct CachedParameter *pcacparLast = pcacpar;
+
+    while (pcacparLast->par.pparNext)
+    {
+	pcacparLast = (struct CachedParameter *)pcacparLast->par.pparNext;
+    }
+
+    //- insert the new parameter list in the existing list
+
+    pcacparLast->par.pparNext = &pparcac->pcacpar->par;
+
+    pparcac->pcacpar = pcacparFirst;
 
     //- increment number of parameters in the cache
 

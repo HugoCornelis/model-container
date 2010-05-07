@@ -588,7 +588,7 @@ TraversalInfoCollectorProcessor
     {
 	//- get workload for this child
 
-	pti->piWorkloadIndividual[pti->iChildren] = SymbolGetWorkloadIndividual(phsle, ptstr->ppist);
+	pti->piWorkloadIndividual[pti->iChildren] = SymbolGetWorkloadIndividual(ptstr);
     }
 
     if (pti->iFlagsInfo & TRAVERSAL_INFO_WORKLOAD_CUMULATIVE)
@@ -599,7 +599,7 @@ TraversalInfoCollectorProcessor
 
 	//- register current cumulative workload
 
-	int iWorkloadIndividual = SymbolGetWorkloadIndividual(phsle, ptstr->ppist);
+	int iWorkloadIndividual = SymbolGetWorkloadIndividual(ptstr);
 
 	if (iWorkloadIndividual != -1)
 	{
@@ -669,7 +669,7 @@ TraversalInfoCumulativeInfoCollectorProcessor
     {
 /* 	//- register current cumulative workload */
 
-/* 	int iWorkloadIndividual = SymbolGetWorkloadIndividual(phsle, ptstr->ppist); */
+/* 	int iWorkloadIndividual = SymbolGetWorkloadIndividual(ptstr); */
 
 /* 	if (iWorkloadIndividual != -1) */
 /* 	{ */

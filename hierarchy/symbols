@@ -1503,7 +1503,7 @@ my $grammar_rules
 								 semantic => '#line
 		    //- link parameters
 
-		    SymbolCacheParameter(&$1specific_to_base, -1, $2);
+		    SymbolAddToForwardReferencers(&$1specific_to_base, $2);
 
 		    //- reset actual symbol
 

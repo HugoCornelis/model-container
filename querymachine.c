@@ -8517,7 +8517,7 @@ static int QueryHandlerSerialToContext
 
     /// \note allows namespacing, yet incompatible with parameter caches.
 
-    phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
+    phsle = SymbolsLookupHierarchical(NULL, ppist);
 
     //- if found
 
