@@ -56,5 +56,5 @@ tar.gz$
 .dsc$
 .changes$
 \.log$
-^model-caontainer$
+^RPM_BUILD$
 

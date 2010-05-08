@@ -1,5 +1,5 @@
 # The _WORKING_DIRECTORY_ value will be replaced with the current working directory
-%define _topdir	 	_WORKING_DIRECTORY_/model-container
+%define _topdir	 	_WORKING_DIRECTORY_/RPM_BUILD
 %define _bindir		/usr/local/bin
 %define _mandir		/usr/local/share/man/man1
 
