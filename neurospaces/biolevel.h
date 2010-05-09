@@ -26,12 +26,11 @@
 #define BIOLEVEL_H
 
 
-/// \def
 /// \def biological levels
-/// \def
-/// \def The levels are mainly taken from my phd thesis,
-/// \def some of them will be useless.
-/// \def
+///
+/// The levels are mainly taken from my phd thesis,
+/// some of them will be useless.
+///
 
 #define BIOLEVEL_NERVOUS_SYSTEM		10
 #define BIOLEVEL_BRAIN			20
@@ -51,15 +50,13 @@
 
 
 /// \def highest index used in an array of types
-/// \def equals total number of different types (excluding empty type),
-/// \def types must first be divided by DIVIDER_BIOLEVEL
+/// equals total number of different types (excluding empty type),
+/// types must first be divided by DIVIDER_BIOLEVEL
 
 #define COUNT_BIOLEVEL			((BIOLEVEL_ATOMIC - BIOLEVEL_NERVOUS_SYSTEM) / DIVIDER_BIOLEVEL + 1)
 
 
-/// \struct
 /// \struct select biolevels for traversal
-/// \struct
 
 struct BiolevelSelection
 {
@@ -143,9 +140,7 @@ extern char *ppcBiolevelgroup[];
 #endif
 
 
-/// \def
 /// \def biological level groups
-/// \def
 
 #define BIOLEVELGROUP_NERVOUS_SYSTEM		100000
 #define BIOLEVELGROUP_BRAIN_STRUCTURE		200000
@@ -158,21 +153,19 @@ extern char *ppcBiolevelgroup[];
 
 
 /// \def highest index used in an array of types
-/// \def equals total number of different types (excluding empty type),
-/// \def types must first be divided by DIVIDER_BIOLEVEL
+/// equals total number of different types (excluding empty type),
+/// types must first be divided by DIVIDER_BIOLEVEL
 
 #define COUNT_BIOLEVELGROUP			((BIOLEVELGROUP_MECHANISM - BIOLEVELGROUP_NERVOUS_SYSTEM) / DIVIDER_BIOLEVELGROUP + 1)
 
 
 
 /// 
-/// 
 /// \arg iLevel biological level to get biogroup for.
 /// 
 /// \return int : biogroup of bio level, -1 for failure.
 /// 
 /// \brief Get biogroup of bio level.
-/// \details 
 /// 
 
 #ifndef SWIG
@@ -196,13 +189,11 @@ Biolevel2Biolevelgroup(int iLevel)
 
 
 /// 
-/// 
 /// \arg pcLevel biolevel to get internal code for.
 /// 
 /// \return int : biolevel, -1 for failure.
 /// 
 /// \brief Get internal code for biolevel.
-/// \details 
 /// 
 
 #ifndef SWIG
@@ -234,13 +225,11 @@ Biolevel(char *pcLevel)
 
 
 /// 
-/// 
 /// \arg pcGroup biogroup to get internal code for.
 /// 
 /// \return int : biogroup, -1 for failure.
 /// 
 /// \brief Get internal code for biogroup.
-/// \details 
 /// 
 
 #ifndef SWIG
@@ -272,13 +261,11 @@ Biolevelgroup(char *pcGroup)
 
 
 /// 
-/// 
 /// \arg iGroup biogroup to get biological level for.
 /// 
 /// \return int : bio level of biogroup, -1 for failure.
 /// 
 /// \brief Get bio level of biogroup.
-/// \details 
 /// 
 
 #ifndef SWIG
@@ -302,13 +289,11 @@ Biolevelgroup2Biolevel(int iGroup)
 
 
 /// 
-/// 
 /// \arg iType symbol type to get biological level for.
 /// 
 /// \return int : biolevel of symbol, -1 for failure.
 /// 
 /// \brief Get biolevel of symbol.
-/// \details 
 /// 
 
 #ifndef SWIG
