@@ -86,7 +86,9 @@ GroupSpikeGeneratorCounter
 
     //- if spike generator
 
-    if (instanceof_attachment(phsle)
+    int iType = TstrGetActualType(ptstr);
+
+    if (subsetof_attachment(iType)
 	&& AttachmentPointIsOutgoing((struct symtab_Attachment *)phsle))
     {
 	//- add to counted spike generators

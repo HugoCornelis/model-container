@@ -136,7 +136,9 @@ RandomvalueSpikeGeneratorChecker
 
     //- if incoming attachment
 
-    if (instanceof_attachment(phsle)
+    int iType = TstrGetActualType(ptstr);
+
+    if (subsetof_attachment(iType)
 	&& AttachmentPointIsOutgoing((struct symtab_Attachment *)phsle))
     {
 	//- set result : ok

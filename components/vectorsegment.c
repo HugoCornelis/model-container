@@ -319,13 +319,15 @@ VSegmentSegmentCounter
 
     int *piSegments = (int *)pvUserdata;
 
-    //- set actual symbol
+/*     //- set actual symbol */
 
-    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
+/*     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr); */
 
     //- if segment
 
-    if (instanceof_segment(phsle))
+    int iType = TstrGetActualType(ptstr);
+
+    if (subsetof_segment(iType))
     {
 	//- add to counted segments
 
@@ -453,6 +455,8 @@ VSegmentSegmentSelector
 
     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
 
+    int iType = TstrGetActualType(ptstr);
+
     //- if below segment level
 
     //t must be done with biolevels
@@ -466,7 +470,7 @@ VSegmentSegmentSelector
 
     //- else if non-segment
 
-    else if (!instanceof_segment(phsle))
+    else if (!subsetof_segment(iType))
     {
 	//- do not process but continue with children
 

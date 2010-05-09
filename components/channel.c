@@ -242,29 +242,31 @@ ChannelTyper
     struct channel_children_counts *pccc
 	= (struct channel_children_counts *)pvUserdata;
 
-    //- set actual symbol
+/*     //- set actual symbol */
 
-    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
+/*     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr); */
 
     //- count types
 
-    if (instanceof_equation_exponential(phsle))
+    int iType = TstrGetActualType(ptstr);
+
+    if (subsetof_equation_exponential(iType))
     {
 	pccc->iEquations++;
     }
-    else if (instanceof_h_h_gate(phsle))
+    else if (subsetof_h_h_gate(iType))
     {
 	pccc->iGates++;
     }
-    else if (instanceof_gate_kinetic(phsle))
+    else if (subsetof_gate_kinetic(iType))
     {
 	pccc->iGateKineticsVoltage++;
     }
-    else if (instanceof_concentration_gate_kinetic(phsle))
+    else if (subsetof_concentration_gate_kinetic(iType))
     {
 	pccc->iGateKineticsConcentration++;
     }
-    else if (instanceof_attachment(phsle))
+    else if (subsetof_attachment(iType))
     {
 	pccc->iReceivers++;
     }
@@ -401,7 +403,9 @@ ChannelEquationChecker
 
     //- if equation
 
-    if (instanceof_equation_exponential(phsle))
+    int iType = TstrGetActualType(ptstr);
+
+    if (subsetof_equation_exponential(iType))
     {
 	//- set result : ok
 
@@ -539,7 +543,9 @@ ChannelIncomingVirtualChecker
 
     //- if attachment
 
-    if (instanceof_attachment(phsle))
+    int iType = TstrGetActualType(ptstr);
+
+    if (subsetof_attachment(iType))
     {
 	//- if incoming attachment
 

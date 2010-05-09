@@ -2439,7 +2439,9 @@ SymbolSerialRecalcSelector
 
     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
 
-    if (!instanceof_symbol(phsle))
+    int iType = TstrGetActualType(ptstr);
+
+    if (!subsetof_symbol(iType))
     {
 	return(iResult);
     }

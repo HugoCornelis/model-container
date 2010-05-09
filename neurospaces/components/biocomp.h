@@ -105,8 +105,16 @@ struct symtab_BioComponent
 int
 BioComponentAssignUniquePrototypeID(struct symtab_BioComponent *pbio);
 
+int 
+SymbolSpikeGeneratorSelector
+(struct TreespaceTraversal *ptstr,void *pvUserdata);
+
 int BioComponentCountSpikeGenerators
 (struct symtab_HSolveListElement *phsle, struct PidinStack *ppist);
+
+int
+SymbolSpikeReceiverSelector
+(struct TreespaceTraversal *ptstr,void *pvUserdata);
 
 int BioComponentCountSpikeReceivers
 (struct symtab_HSolveListElement *phsle, struct PidinStack *ppist);

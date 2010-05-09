@@ -559,46 +559,6 @@ RootSymbolTraverse
 }
 
 
-/// 
-/// \arg phsle symbol to traverse spike generators for
-/// \arg ppist context of symbol, symbol assumed to be on top.
-/// \arg pfProcesor spike generator processor
-/// \arg pfFinalizer spike receiver finalizer
-/// \arg pvUserdata any user data
-/// 
-/// \return int : see TstrGo()
-/// 
-/// \brief Traverse spike generators, call pfProcessor on each of them
-/// 
-
-static int 
-SymbolSpikeGeneratorSelector
-(struct TreespaceTraversal *ptstr, void *pvUserdata)
-{
-    //- set default result : process children of this symbol
-
-    int iResult = TSTR_SELECTOR_PROCESS_ONLY_CHILDREN;
-
-    //- set actual symbol
-
-    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
-
-    //- if an attachment point
-
-    if (instanceof_attachment(phsle)
-	&& AttachmentPointIsOutgoing((struct symtab_Attachment *)phsle))
-    {
-	//- select this one to process
-
-	iResult = TSTR_SELECTOR_PROCESS_CHILDREN;
-    }
-
-    //- return result
-
-    return(iResult);
-}
-
-
 int
 RootSymbolTraverseSpikeGenerators
 (struct symtab_HSolveListElement *phsle,
@@ -630,46 +590,6 @@ RootSymbolTraverseSpikeGenerators
     //- delete treespace traversal
 
     TstrDelete(ptstr);
-
-    //- return result
-
-    return(iResult);
-}
-
-
-/// 
-/// \arg phsle symbol to traverse spike receivers for
-/// \arg ppist context of symbol, symbol assumed to be on top.
-/// \arg pfProcesor spike receiver processor
-/// \arg pfFinalizer spike receiver finalizer
-/// \arg pvUserdata any user data
-/// 
-/// \return int : see TstrGo()
-/// 
-/// \brief Traverse spike receivers, call pfProcessor on each of them
-/// 
-
-static int 
-SymbolSpikeReceiverSelector
-(struct TreespaceTraversal *ptstr, void *pvUserdata)
-{
-    //- set default result : process children of this symbol
-
-    int iResult = TSTR_SELECTOR_PROCESS_ONLY_CHILDREN;
-
-    //- set actual symbol
-
-    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
-
-    //- if an attachment point
-
-    if (instanceof_attachment(phsle)
-	&& AttachmentPointIsIncoming((struct symtab_Attachment *)phsle))
-    {
-	//- select this one to process
-
-	iResult = TSTR_SELECTOR_PROCESS_CHILDREN;
-    }
 
     //- return result
 

@@ -156,9 +156,11 @@ SolverInfoSpikeReceiver2ConnectionProcessor
 
     //- if spike receiver
 
+    int iType = TstrGetActualType(ptstr);
+
     /// \note sanity check
 
-    if (instanceof_attachment(phsle)
+    if (subsetof_attachment(iType)
 	&& AttachmentPointIsIncoming((struct symtab_Attachment *)phsle))
     {
 	//- traverse connections onto this spike receiver

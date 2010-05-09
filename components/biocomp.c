@@ -96,7 +96,9 @@ BioComponentSpikeGeneratorCounter
 
     //- if spike generator
 
-    if (instanceof_attachment(phsle)
+    int iType = TstrGetActualType(ptstr);
+
+    if (subsetof_attachment(iType)
 	&& AttachmentPointIsOutgoing((struct symtab_Attachment *)phsle))
     {
 	//- add to counted spikegens
@@ -160,7 +162,9 @@ BioComponentSpikeReceiverCounter
 
     //- if spike receiver
 
-    if (instanceof_attachment(phsle)
+    int iType = TstrGetActualType(ptstr);
+
+    if (subsetof_attachment(iType)
 	&& AttachmentPointIsOutgoing((struct symtab_Attachment *)phsle))
     {
 	//- add to counted spike receivers
@@ -1598,7 +1602,7 @@ BioComponentTraverse
 /// \brief Traverse spike generators, call pfProcessor on each of them
 ///
 
-static int 
+int
 SymbolSpikeGeneratorSelector
 (struct TreespaceTraversal *ptstr,void *pvUserdata)
 {
@@ -1612,7 +1616,9 @@ SymbolSpikeGeneratorSelector
 
     //- if an attachment point
 
-    if (instanceof_attachment(phsle)
+    int iType = TstrGetActualType(ptstr);
+
+    if (subsetof_attachment(iType)
 	&& AttachmentPointIsOutgoing((struct symtab_Attachment *)phsle))
     {
 	//- select this one to process
@@ -1676,7 +1682,7 @@ BioComponentTraverseSpikeGenerators
 /// \brief Traverse spike receivers, call pfProcessor on each of them
 ///
 
-static int 
+int
 SymbolSpikeReceiverSelector
 (struct TreespaceTraversal *ptstr,void *pvUserdata)
 {
@@ -1690,7 +1696,9 @@ SymbolSpikeReceiverSelector
 
     //- if an attachment point
 
-    if (instanceof_attachment(phsle)
+    int iType = TstrGetActualType(ptstr);
+
+    if (subsetof_attachment(iType)
 	&& AttachmentPointIsIncoming((struct symtab_Attachment *)phsle))
     {
 	//- select this one to process

@@ -476,7 +476,9 @@ PopulationSpikeReceiverCompare
 
     //- if spike receiver
 
-    if (instanceof_attachment(phsle)
+    int iType = TstrGetActualType(ptstr);
+
+    if (subsetof_attachment(iType)
 	&& AttachmentPointIsIncoming((struct symtab_Attachment *)phsle))
     {
 	//- if is searched spike receiver
