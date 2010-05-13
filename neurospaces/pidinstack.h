@@ -23,22 +23,32 @@
  * \author Hugo Cornelis
  *
  *
- * pidin stacks are almost exactly what the word says : a stack of 
- * (references to) pidins.  The interface mainly is concerned about
- * stack operations, although sometimes more is needed (like getting 
- * the number of elements in the stack).  It's primarily purpose is
- * context association for symbols / parameters / functions.
+ * pidin stacks are almost exactly what the word says : a stack of
+ * (references to) pidins.  We often refer to such a pidinstack as a
+ * 'context' because it defines the type and content of the symbol it
+ * points to.  The pidinstack interface is mainly concerned with stack
+ * operations, although sometimes more is needed (like getting the
+ * number of elements in the stack).  It's primarily purpose is
+ * context association for symbols (defining its type and content),
+ * parameters (defining their values) and functions (defining how to
+ * evaluate them).  It is probably good to remind that (1) a principal
+ * serial index defines a unique context and the other way around, and
+ * (2) that a principal serial matches with exactly one invisible
+ * serial that is unique at a chosen point in time, but that can
+ * change over time due to compression of the symbol table.  In other
+ * words, both principal serials and invisible serials identify a
+ * symbol, but the mapping and relationship between them can change
+ * over time.
  * 
- * If a context is valid (i.e. the symbol it referes to is present in 
- * Neurospaces) a pidinstack will try to associated a serial mapping 
- * with it.  The maintenance of the serial mapping comes mostly from
- * PidinStackLookupTopSymbol() since pidinstacks are assumed to be
- * give meaningfull serial mappings only for symbols present in 
- * Neurospaces.  If you push 'simple pidins' on a pidin stack, you currently 
- * force the cached serial mapping to be (partially) out of sync.  If you ask 
- * for serials afterwards, they first have to be recalculated.  It is 
- * probably good to remind that a principal serial index completely defines
- *  the context.
+ * If a context is valid (i.e. the symbol it refers to is present in
+ * the model-container) it will also define a serial mapping that
+ * identifies the symbol it points to.  To guarantee consistency of
+ * the serial mapping you must first call PidinStackLookupTopSymbol()
+ * since pidinstacks are assumed to only construct meaningfull serial
+ * mappings for symbols that are present in the model-container.  If
+ * you push 'simple pidins' on a pidin stack, you currently force the
+ * cached serial mapping to go out of sync.  When asking for serials
+ * afterwards, they first must be recalculated.
  *
  * It is possible to push 'points to parent' pidin on a pidin stack.
  * If you want to get rid of these, use compacting routines.
@@ -47,7 +57,7 @@
  * are pushed.  At the moment this clears the pidin stack for some 
  * compacting routines only.
  *
-*/
+ */
 
 
 /*
