@@ -17,69 +17,6 @@
 //'
 //////////////////////////////////////////////////////////////////////////////
 
-/*!
- * \file pidinstack.c
- * \author Hugo Cornelis
- *
- *
- * pidin stacks are almost exactly what the word says : a stack of 
- * (references to) pidins.  The interface mainly is concerned about
- * stack operations, although sometimes more is needed (like getting 
- * the number of elements in the stack).  It's primarily purpose is
- * context association for symbols / parameters / functions.
- * 
- * If a context is valid (i.e. the symbol it referes to is present in 
- * Neurospaces) a pidinstack will try to associated a serial mapping 
- * with it.  The maintenance of the serial mapping comes mostly from
- * PidinStackLookupTopSymbol() since pidinstacks are assumed to be
- * give meaningfull serial mappings only for symbols present in 
- * Neurospaces.  If you push 'simple pidins' on a pidin stack, you currently 
- * force the cached serial mapping to be (partially) out of sync.  If you ask 
- * for serials afterwards, they first have to be recalculated.  It is 
- * probably good to remind that a principal serial index completely defines
- *  the context.
- *
- * It is possible to push 'points to parent' pidin on a pidin stack.
- * If you want to get rid of these, use compacting routines.
- *
- * There is some ambiguity about what to do when multiple rooted pidins
- * are pushed.  At the moment this clears the pidin stack for some 
- * compacting routines only.
- *
-*/
-
-
-//////////////////////////////////////////////////////////////////////////////
-//o
-//o pidin stack intro :
-//o -------------------
-//o
-//o pidin stacks are almost exactly what the word says : a stack of 
-//o (references to) pidins.  The interface mainly is concerned about
-//o stack operations, although sometimes more is needed (like getting 
-//o the number of elements in the stack).  It's primarily purpose is
-//o context association for symbols / parameters / functions.
-//o 
-//o If a context is valid (i.e. the symbol it referes to is present in 
-//o Neurospaces) a pidinstack will try to associated a serial mapping 
-//o with it.  The maintenance of the serial mapping comes mostly from
-//o PidinStackLookupTopSymbol() since pidinstacks are assumed to be
-//o give meaningfull serial mappings only for symbols present in 
-//o Neurospaces.  If you push 'simple pidins' on a pidin stack, you currently 
-//o force the cached serial mapping to be (partially) out of sync.  If you ask 
-//o for serials afterwards, they first have to be recalculated.  It is 
-//o probably good to remind that a principal serial index completely defines
-//o the context.
-//o
-//o It is possible to push 'points to parent' pidin on a pidin stack.
-//o If you want to get rid of these, use compacting routines.
-//o
-//o There is some ambiguity about what to do when multiple rooted pidins
-//o are pushed.  At the moment this clears the pidin stack for some 
-//o compacting routines only.
-//o
-//////////////////////////////////////////////////////////////////////////////
-
 
 #include <stdio.h>
 #include <stdlib.h>

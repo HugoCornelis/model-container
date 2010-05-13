@@ -28,7 +28,7 @@ cached coordinate y = 0.0001
 cached coordinate z = 5e-05
 #coordinates : 439541
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /CerebellarCortex /CerebellarCortex/Golgis/0",
 						  },
 						  {
@@ -38,7 +38,7 @@ cached coordinate y = 0.0001
 cached coordinate z = 5e-05
 #coordinates : 439541
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /CerebellarCortex /CerebellarCortex/Golgis/1",
 						  },
 						  {
@@ -48,7 +48,7 @@ cached coordinate y = 0.000155557
 cached coordinate z = 9.447e-06
 #coordinates : 439541
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /CerebellarCortex /CerebellarCortex/Purkinjes/0/segments/main[0]",
 						  },
 						  {
@@ -58,7 +58,7 @@ cached coordinate y = 0.000163983
 cached coordinate z = 3.1356e-05
 #coordinates : 439541
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /CerebellarCortex /CerebellarCortex/Purkinjes/0/segments/main[1]",
 						  },
 						  {
@@ -68,7 +68,7 @@ cached coordinate y = 0.000165649
 cached coordinate z = 3.8022e-05
 #coordinates : 439541
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /CerebellarCortex /CerebellarCortex/Purkinjes/0/segments/main[2]",
 						  },
 						  {
@@ -78,7 +78,7 @@ cached coordinate y = 0.00016287
 cached coordinate z = 3.9689e-05
 #coordinates : 439541
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /CerebellarCortex /CerebellarCortex/Purkinjes/0/segments/main[3]",
 						  },
 						  {
@@ -88,7 +88,7 @@ cached coordinate y = 1.0571e-05
 cached coordinate z = 3.1356e-05
 #coordinates : 25525
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /CerebellarCortex/Purkinjes/0 /CerebellarCortex/Purkinjes/0/segments/main[1]",
 						  },
 						  {
@@ -98,7 +98,7 @@ cached coordinate y = 1.0571e-05
 cached coordinate z = 3.1356e-05
 #coordinates : 25525
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /CerebellarCortex/Purkinjes/1 /CerebellarCortex/Purkinjes/1/segments/main[1]",
 						  },
 						  {
@@ -108,7 +108,7 @@ cached coordinate y = 1.0571e-05
 cached coordinate z = 3.1356e-05
 #coordinates : 25525
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /CerebellarCortex/Purkinjes/2 /CerebellarCortex/Purkinjes/2/segments/main[1]",
 						  },
 						  {
@@ -118,7 +118,7 @@ cached coordinate y = 1.0571e-05
 cached coordinate z = 3.1356e-05
 #coordinates : 25525
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /CerebellarCortex/Purkinjes/3 /CerebellarCortex/Purkinjes/3/segments/main[1]",
 						  },
 						  {
@@ -128,7 +128,7 @@ cached coordinate y = 1.0571e-05
 cached coordinate z = 3.1356e-05
 #coordinates : 25525
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /CerebellarCortex/Purkinjes/4 /CerebellarCortex/Purkinjes/4/segments/main[1]",
 						  },
 						  {
@@ -138,7 +138,7 @@ cached coordinate y = 1.0571e-05
 cached coordinate z = 3.1356e-05
 #coordinates : 25525
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /CerebellarCortex/Purkinjes/5 /CerebellarCortex/Purkinjes/5/segments/main[1]",
 						  },
 						 ],
@@ -159,7 +159,7 @@ cached coordinate y = 0
 cached coordinate z = 0
 #coordinates : 10
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /section1 /section1/e0/e0_0",
 						  },
 						  {
@@ -169,7 +169,7 @@ cached coordinate y = 0
 cached coordinate z = 0
 #coordinates : 10
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /section1 /section1/e0/e0_1",
 						  },
 						  {
@@ -179,7 +179,7 @@ cached coordinate y = 1e-06
 cached coordinate z = 0
 #coordinates : 10
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /section1 /section1/e0/e0_2",
 						  },
 						  {
@@ -189,7 +189,7 @@ cached coordinate y = 1e-06
 cached coordinate z = 0
 #coordinates : 10
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /section1 /section1/e0/e0_3",
 						  },
 						  {
@@ -199,7 +199,7 @@ cached coordinate y = 0
 cached coordinate z = 1e-08
 #coordinates : 10
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /section1 /section1/e1/e1_0",
 						  },
 						  {
@@ -209,7 +209,7 @@ cached coordinate y = 0
 cached coordinate z = 1e-08
 #coordinates : 10
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /section1 /section1/e1/e1_1",
 						  },
 						  {
@@ -219,7 +219,7 @@ cached coordinate y = 1e-06
 cached coordinate z = 1e-08
 #coordinates : 10
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /section1 /section1/e1/e1_2",
 						  },
 						  {
@@ -229,7 +229,7 @@ cached coordinate y = 1e-06
 cached coordinate z = 1e-08
 #coordinates : 10
 ",
-						   timeout => 25,
+						   timeout => 35,
 						   write => "printcoordinates c /section1 /section1/e1/e1_3",
 						  },
 						 ],

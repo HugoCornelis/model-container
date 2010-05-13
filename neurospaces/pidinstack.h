@@ -18,6 +18,38 @@
 //////////////////////////////////////////////////////////////////////////////
 
 
+/*!
+ * \file pidinstack.h
+ * \author Hugo Cornelis
+ *
+ *
+ * pidin stacks are almost exactly what the word says : a stack of 
+ * (references to) pidins.  The interface mainly is concerned about
+ * stack operations, although sometimes more is needed (like getting 
+ * the number of elements in the stack).  It's primarily purpose is
+ * context association for symbols / parameters / functions.
+ * 
+ * If a context is valid (i.e. the symbol it referes to is present in 
+ * Neurospaces) a pidinstack will try to associated a serial mapping 
+ * with it.  The maintenance of the serial mapping comes mostly from
+ * PidinStackLookupTopSymbol() since pidinstacks are assumed to be
+ * give meaningfull serial mappings only for symbols present in 
+ * Neurospaces.  If you push 'simple pidins' on a pidin stack, you currently 
+ * force the cached serial mapping to be (partially) out of sync.  If you ask 
+ * for serials afterwards, they first have to be recalculated.  It is 
+ * probably good to remind that a principal serial index completely defines
+ *  the context.
+ *
+ * It is possible to push 'points to parent' pidin on a pidin stack.
+ * If you want to get rid of these, use compacting routines.
+ *
+ * There is some ambiguity about what to do when multiple rooted pidins
+ * are pushed.  At the moment this clears the pidin stack for some 
+ * compacting routines only.
+ *
+*/
+
+
 /*
 ** pidin stack support routines
 */
@@ -27,8 +59,8 @@
 
 
 /// \def If following two are combined, the #define PIDINSTACK_SMART_CACHE
-/// \def is defined, which gives a good implementation (and is the only one
-/// \def available at the time of this writing).
+/// is defined, which gives a good implementation (and is the only one
+/// available at the time of this writing).
 
 /// \def have serials associated with a pidin stack
 
@@ -159,13 +191,14 @@ struct PidinStack
 
     /// private symbol cache if possible
 
-    /// \note if change to pointer : modify accordingly
-    /// \note     PidinStackDuplicate()
-    /// \note     PidinStackAppendCompact()
-    /// \note     PidinStackFree()
-    /// \note and copy operation in various place,
-    /// \note look for them with something like
-    /// \note     'grep "=.*\*p\?pist" *.[ch]'
+    /// \note note the following:
+    /// if change to pointer : modify accordingly
+    ///     PidinStackDuplicate()
+    ///     PidinStackAppendCompact()
+    ///     PidinStackFree()
+    /// and copy operation in various place,
+    /// look for them with something like
+    ///     'grep "=.*\*p\?pist" *.[ch]'
 
     struct PSymbolStack symst;
 
