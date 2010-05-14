@@ -1369,7 +1369,7 @@ swigi_parameters_2_array
 
 	//m parameters
 
-	struct symtab_Parameters *ppparameters[100];
+	struct symtab_Parameters **ppparameters;
     };
 
 
@@ -1381,10 +1381,10 @@ swigi_parameters_2_array
 
 	    //m parameters
 
-	    {
-		NULL,
-	    },
+	    NULL,
 	};
+
+    vpars.ppparameters = calloc(10000, sizeof(struct symtab_Parameters *));
 
     //- if this is a biological component
 
