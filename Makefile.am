@@ -178,7 +178,7 @@ show-release-labels:
 	echo "Release information (major-minor-micro): $(RELEASE_MAJOR)-$(RELEASE_MINOR)-$(RELEASE_MICRO)"
 
 dist-keywords:
-	release-expand model-container $(RELEASE_MAJOR) $(RELEASE_MINOR) $(RELEASE_MICRO) $(RELEASE_MAJOR)-$(RELEASE_MINOR) hugo.cornelis@gmail.com --verbose
+	release-expand model-container $(RELEASE_MAJOR) $(RELEASE_MINOR) $(RELEASE_MICRO) $(RELEASE_MAJOR).$(RELEASE_MINOR) hugo.cornelis@gmail.com --verbose
 #	release-expand neurospacesread des 10 0 des-10 hugo.cornelis@gmail.com --verbose
 
 # The file lexsupport.c is compiled as part of analyzer.l, but not as
@@ -381,6 +381,7 @@ clean-local:
 	$(RM) -f *.changes
 	$(RM) -f *.dsc
 	$(RM) -f build_debian.log
+	$(RM) -rf model-container/
 
 TESTS = /usr/local/bin/neurospaces_harness
 
@@ -427,7 +428,7 @@ html-upload: html-upload-prepare
 
 internal-library:
 # $Format: "	tar cfz library-${package}-${label}.tar.gz library/"$
-	tar cfz library-model-container-c29add6329c4c4fd3576b1885c36df996c00ecaa-0.tar.gz library/
+	tar cfz library-model-container-6e4e0809e7daba3684c5c6669d237e392faeb500.0.tar.gz library/
 
 libneurospacesread.so: libneurospacesread.a
 	$(CC) \
@@ -518,13 +519,13 @@ pkg-deb: dist
 	nspkg-deb $(TMP_DIR) $(PACKAGE) $(VERSION)
 
 
+pkg-rpm: dist
+	nspkg-rpm $(PACKAGE) $(VERSION)
+
 
 #perldir = $(prefix)/glue/swig/perl
 
 #nobase_perl_DATA = @PERL_EMBED_DATA@
-
-# doxygen-upload: 
-# 	scp -r docs/model-container docs@repo-genesis3.cbi.utsa.edu:~/doxygen
 
 doxygen: doxygen.cfg
 	$(DOXYGEN) doxygen.cfg
