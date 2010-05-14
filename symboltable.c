@@ -258,8 +258,6 @@ int SymbolForwardReferencesResolve(void)
 
 		pparValueCopy->pcIdentifier = pidinField->pcIdentifier;
 
-		fprintf(stdout, "pparValueCopy %s iType is %i\n", pparValueCopy->pcIdentifier, pparValueCopy->iType);
-
 		struct symtab_Parameters *pparCached
 		    = SymbolCacheParameter(phsleCacher, iSerial, pparValueCopy);
 
