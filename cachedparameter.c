@@ -88,7 +88,7 @@ CachedParameterNewFromNumber
     //- set serial
 
     /// \note flags are not used for cached parameters, or a small redesign
-    /// \note is needed.
+    /// is needed.
 
     pcacparResult->par.iFlags = iSerial;
 
@@ -126,7 +126,7 @@ CachedParameterNewFromParameter
     //- set serial
 
     /// \note flags are not used for cached parameters, or a small redesign
-    /// \note is needed.
+    /// is needed.
 
     pcacparResult->par.iFlags = iSerial;
 
@@ -188,7 +188,7 @@ CachedParameterNewFromString
     //- set serial
 
     /// \note flags are not used for cached parameters, or a small redesign
-    /// \note is needed.
+    /// is needed.
 
     pcacparResult->par.iFlags = iSerial;
 

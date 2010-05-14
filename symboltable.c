@@ -206,10 +206,6 @@ int SymbolForwardReferencesResolve(void)
 
 	struct symtab_Parameters *pparReferences = phsle->pparReferences;
 
-/* 	//- get access to resulting parameter caches */
-
-/* 	struct ParameterCache *pparcac = phsle->pparcac; */
-
 	//- loop over parameters in the cache
 
 	int i = 0;
@@ -221,8 +217,6 @@ int SymbolForwardReferencesResolve(void)
 	    struct symtab_Parameters *pparName = ppar;
 
 	    struct symtab_Parameters *pparValue = ppar->pparNext;
-
-	    double dValue = pparValue->uValue.dNumber;
 
 	    //- convert context without field to serial
 
@@ -237,8 +231,6 @@ int SymbolForwardReferencesResolve(void)
 		struct symtab_HSolveListElement *phsleCacher
 		    = ppistSearched->symsst.symst.pphsle[0];
 
-/* 		pparcac = phsleCacher->pparcac; */
-
 		int iSerial = PidinStackToSerial(ppistSearched);
 
 		//- subtract the symbol from the serial
@@ -247,13 +239,31 @@ int SymbolForwardReferencesResolve(void)
 
 		//- insert a cached parameter for this serial
 
-		struct symtab_Parameters *pparCached
-		    = SymbolCacheParameterDouble(phsleCacher, iSerial, pidinField->pcIdentifier, dValue);
+/* 		struct symtab_Parameters *pparCached */
+/* 		    = SymbolCacheParameterDouble(phsleCacher, iSerial, pidinField->pcIdentifier, pparValue->uValue.dNumber); */
 
-/* 		struct CachedParameter *pcacpar = ParameterCacheAddDouble(pparcac, iSerial, pidinField->pcIdentifier, dValue); */
+		// \note here goes what is likely the biggest hack in
+		// the awful design of parameter caches, here we
+		// create an awesome amount of double references to
+		// the same memory location.  To solve: improve
+		// parameter cache construction methods.
+
+		struct symtab_Parameters *pparValueCopy = calloc(1, sizeof(struct symtab_Parameters));
+
+		*pparValueCopy = *pparValue;
+
+		pparValueCopy->pparNext = NULL;
+		pparValueCopy->pparPrev = NULL;
+		pparValueCopy->pparFirst = NULL;
+
+		pparValueCopy->pcIdentifier = pidinField->pcIdentifier;
+
+		fprintf(stdout, "pparValueCopy %s iType is %i\n", pparValueCopy->pcIdentifier, pparValueCopy->iType);
+
+		struct symtab_Parameters *pparCached
+		    = SymbolCacheParameter(phsleCacher, iSerial, pparValueCopy);
 
 		if (!pparCached)
-/* 		if (!pcacpar) */
 		{
 		    fprintf(stderr, "Cannot cannot construct cached parameter for forward reference %s in SymbolForwardReferencesResolve()\n", ParameterGetString(pparName));
 		}
@@ -279,7 +289,7 @@ int SymbolForwardReferencesResolve(void)
 	}
     }
 
-    //- reset forward references cound
+    //- reset forward references count
 
     iForwardReferencers = 0;
 
