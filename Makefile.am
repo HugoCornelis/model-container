@@ -381,7 +381,8 @@ clean-local:
 	$(RM) -f *.changes
 	$(RM) -f *.dsc
 	$(RM) -f build_debian.log
-	$(RM) -rf model-container/
+	$(RM) -rf RPM_BUILD
+	$(RM) -f build_rpm.log
 
 TESTS = /usr/local/bin/neurospaces_harness
 
