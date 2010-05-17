@@ -38,10 +38,8 @@
 #endif
 
 
-/// \struct
 /// \struct gives transparant access to structures with input/output, inherits from
-/// \struct linked list structure
-/// \struct
+/// linked list structure
 
 struct symtab_IOList
 {
@@ -57,17 +55,6 @@ struct symtab_IOList
 
     struct symtab_IOContainer * piocInputs;
 };
-
-
-/// \def
-/// \def test type(piol) == struct symtab_IOList * at compile time
-/// \def
-
-#define CompileTimeTestIOList(piol)					\
-do {									\
-    struct symtab_IOList iol;						\
-    (piol) == &iol;							\
-} while (0)
 
 
 #include "neurospaces/iocontainer.h"
