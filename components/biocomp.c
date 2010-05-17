@@ -1099,6 +1099,54 @@ BioComponentReduce
 
 
 /// 
+/// \arg pbio biological component to resolve input for.
+/// \arg ppist context of given element.
+/// \arg pcName name of the input.
+/// \arg iPosition input identifier in instantiation.
+/// 
+/// \return struct PidinStack * : context that gives input.
+/// 
+/// \brief Find input to parameter.
+///
+
+struct PidinStack *
+BioComponentResolveInput
+(struct symtab_BioComponent *pbio, struct PidinStack *ppist, char *pcName, int iPosition)
+{
+    //- set default result: none
+
+    struct PidinStack *ppistResult = NULL;
+
+    //- loop over all prototypes including current element
+
+    struct symtab_BioComponent * pbioPrototype = pbio;
+
+    while (pbioPrototype)
+    {
+	//- if current prototypes gives a result
+
+	ppistResult = IOListResolveInput(&pbioPrototype->ioh.iol, ppist, pcName, iPosition);
+
+	if (ppistResult)
+	{
+	    //- return
+
+	    return(ppistResult);
+	}
+
+	//- next prototype
+
+	pbioPrototype
+	    = (struct symtab_BioComponent *)SymbolGetPrototype(&pbioPrototype->ioh.iol.hsle);
+    }
+
+    //- return result
+
+    return(ppistResult);
+}
+
+
+/// 
 /// \arg pbio biological component to resolve input for
 /// \arg ppist context of given element
 /// \arg pcParameter: name of parameter with function

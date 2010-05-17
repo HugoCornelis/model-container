@@ -113,6 +113,7 @@ my $class_hierarchy
 				'parameter_resolve_value' => 'bio_component',
 				'print' => 'bio_component',
 				'reduce' => 'bio_component',
+				'resolve_input' => 'bio_component',
 				'resolve_parameter_functional_input' => 'bio_component',
 				'traverse_spike_generators' => 'bio_component',
 				'traverse_spike_receivers' => 'bio_component',

@@ -43,12 +43,11 @@
 #endif
 
 
-/// \struct
 /// \struct gives transparant access to hierarchical structures with input/output
-/// \struct and parameters, inherits from hierarchical structure
-/// \struct
-/// \struct supposed to be base bio component
-/// \struct
+/// and parameters, inherits from hierarchical structure.
+///
+/// base for all biological components.
+///
 
 struct symtab_BioComponent
 {
@@ -60,15 +59,12 @@ struct symtab_BioComponent
 
     struct symtab_IdentifierIndex *pidinName;
 
-/*     /// optional name of prototype */
-
-/*     char *pcPrototype; */
-
     /// prototype symbol
 
     struct symtab_HSolveListElement *phslePrototype;
 
-    /// allocation identifier of the prototype symbol
+    /// allocation identifier of the prototype symbol, changes after
+    /// parameter modifications
 
     int iPrototype;
 
@@ -180,6 +176,10 @@ int BioComponentPrint
 
 int BioComponentReduce
 (struct symtab_BioComponent *pbio, struct PidinStack *ppist);
+
+struct PidinStack *
+BioComponentResolveInput
+(struct symtab_BioComponent *pbio, struct PidinStack *ppist, char *pcName, int i);
 
 struct symtab_HSolveListElement *
 BioComponentResolveParameterFunctionalInput
