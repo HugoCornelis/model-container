@@ -950,7 +950,7 @@ ExporterLibraryFinalizer
 
 /* 		sprintf(pcName, "%s_%i_0", SymbolName(&pbioPrototype->ioh.iol.hsle), iSerial); */
 
-		sprintf(pcName, "%s_%i_0", SymbolName(&pbioPrototype->ioh.iol.hsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier);
+		sprintf(pcName, "%s_%i_%i", SymbolName(&pbioPrototype->ioh.iol.hsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier);
 
 		fprintf(pexd->pfile, "%s \"%s\"\n", pcToken, pcName);
 	    }
@@ -964,7 +964,7 @@ ExporterLibraryFinalizer
 
 /* 		sprintf(pcName, "%s_%i_0", SymbolName(&pbioPrototype->ioh.iol.hsle), iSerial); */
 
-		sprintf(pcName, "%s_%i_0", SymbolName(&pbioPrototype->ioh.iol.hsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier);
+		sprintf(pcName, "%s_%i_%i", SymbolName(&pbioPrototype->ioh.iol.hsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier);
 
 		fprintf(pexd->pfile, "<%s> <name>%s</name>\n", pcToken, pcName);
 	    }
@@ -1063,7 +1063,7 @@ ExporterLibraryFinalizer
 
 /* 		sprintf(pcPrototype, "%s_%i_%i", SymbolName(&pbioSource->ioh.iol.hsle), iSerial, iPrototypes - i - 1); */
 
-		sprintf(pcPrototype, "%s_%i_%i", SymbolName(&pbioSource->ioh.iol.hsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, iPrototypes - i - 1);
+		sprintf(pcPrototype, "%s_%i_%i", SymbolName(&pbioSource->ioh.iol.hsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, /* iPrototypes - i - 1 */pbioSource->ioh.iol.hsle.iAllocationIdentifier);
 
 		char pcName[1000];
 
@@ -1071,14 +1071,14 @@ ExporterLibraryFinalizer
 		{
 /* 		    sprintf(pcName, "%s_inserted_%i", SymbolName(phsle), iSerial); */
 
-		    sprintf(pcName, "%s_inserted_%i", SymbolName(phsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier);
+		    sprintf(pcName, "%s_inserted_%i", SymbolName(phsle), /* ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier */phsle->iAllocationIdentifier);
 
 		}
 		else
 		{
 /* 		    sprintf(pcName, "%s_%i_%i", SymbolName(&pbioTarget->ioh.iol.hsle), iSerial, iPrototypes - i); */
 
-		    sprintf(pcName, "%s_%i_%i", SymbolName(&pbioTarget->ioh.iol.hsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, iPrototypes - i);
+		    sprintf(pcName, "%s_%i_%i", SymbolName(&pbioTarget->ioh.iol.hsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, /* iPrototypes - i */pbioTarget->ioh.iol.hsle.iAllocationIdentifier);
 
 		}
 
@@ -1094,7 +1094,7 @@ ExporterLibraryFinalizer
 
 /* 		sprintf(pcPrototype, "%s_%i_%i", SymbolName(&pbioSource->ioh.iol.hsle), iSerial, iPrototypes - i - 1); */
 
-		sprintf(pcPrototype, "%s_%i_%i", SymbolName(&pbioSource->ioh.iol.hsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, iPrototypes - i - 1);
+		sprintf(pcPrototype, "%s_%i_%i", SymbolName(&pbioSource->ioh.iol.hsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, /* iPrototypes - i - 1 */pbioSource->ioh.iol.hsle.iAllocationIdentifier);
 
 		char pcName[1000];
 
@@ -1102,13 +1102,13 @@ ExporterLibraryFinalizer
 		{
 /* 		    sprintf(pcName, "%s_inserted_%i", SymbolName(phsle), iSerial); */
 
-		    sprintf(pcName, "%s_inserted_%i", SymbolName(phsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier);
+		    sprintf(pcName, "%s_inserted_%i", SymbolName(phsle), /* ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier */phsle->iAllocationIdentifier);
 		}
 		else
 		{
 /* 		    sprintf(pcName, "%s_%i_%i", SymbolName(&pbioTarget->ioh.iol.hsle), iSerial, iPrototypes - i); */
 
-		    sprintf(pcName, "%s_%i_%i", SymbolName(&pbioTarget->ioh.iol.hsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, iPrototypes - i);
+		    sprintf(pcName, "%s_%i_%i", SymbolName(&pbioTarget->ioh.iol.hsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, /* iPrototypes - i */pbioTarget->ioh.iol.hsle.iAllocationIdentifier);
 		}
 
 		fprintf(pexd->pfile, "<%s> <prototype>%s</prototype> <name>%s</name>\n", pcToken, pcPrototype, pcName);
@@ -1332,7 +1332,7 @@ ExporterLibraryPublisherProcessor
     {
 /* 	fprintf(pexd->pfile, "  CHILD \"%s_%i_%i\" \"%s\"\n", SymbolName(phsle), TstrGetPrincipalSerial(ptstr), iPrototypes - 1, SymbolName(phsle)); */
 
-	fprintf(pexd->pfile, "  CHILD \"%s_%i_%i\" \"%s\"\n", SymbolName(phsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, iPrototypes - 1, SymbolName(phsle));
+	fprintf(pexd->pfile, "  CHILD \"%s_%i_%i\" \"%s\"\n", SymbolName(phsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, /* iPrototypes - 1 */phsle->iAllocationIdentifier, SymbolName(phsle));
 
 	fprintf(pexd->pfile, "  END CHILD\n");
     }
@@ -1340,7 +1340,7 @@ ExporterLibraryPublisherProcessor
     {
 /* 	fprintf(pexd->pfile, "  <child> <prototype>%s_%i_%i</prototype> <name>%s</name>\n", SymbolName(phsle), TstrGetPrincipalSerial(ptstr), iPrototypes - 1, SymbolName(phsle)); */
 
-	fprintf(pexd->pfile, "  <child> <prototype>%s_%i_%i</prototype> <name>%s</name>\n", SymbolName(phsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, iPrototypes - 1, SymbolName(phsle));
+	fprintf(pexd->pfile, "  <child> <prototype>%s_%i_%i</prototype> <name>%s</name>\n", SymbolName(phsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, /* iPrototypes - 1 */phsle->iAllocationIdentifier, SymbolName(phsle));
 
 	fprintf(pexd->pfile, "  </child>\n");
     }
@@ -1498,7 +1498,7 @@ ExporterSymbolStarter
 
 /* 			sprintf(pcPrototype, "%s_inserted_%i", SymbolName(phsle), pexd->iStarter + TstrGetPrincipalSerial(ptstr)); */
 
-			sprintf(pcPrototype, "%s_inserted_%i", SymbolName(phsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier);
+			sprintf(pcPrototype, "%s_inserted_%i", SymbolName(phsle), /* ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier */phsle->iAllocationIdentifier);
 		    }
 		    else
 		    {
@@ -1520,7 +1520,7 @@ ExporterSymbolStarter
 
 /* 			sprintf(pcPrototype, "%s_%i_%i", SymbolName(phsle), pexd->iStarter + TstrGetPrincipalSerial(ptstr), iPrototypes - 1); */
 
-			sprintf(pcPrototype, "%s_%i_%i", SymbolName(phsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, iPrototypes - 1);
+			sprintf(pcPrototype, "%s_%i_%i", SymbolName(phsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, /* iPrototypes - 1 */phsle->iAllocationIdentifier);
 		    }
 		}
 		else
@@ -1564,13 +1564,13 @@ ExporterSymbolStarter
 		    {
 /* 			sprintf(pcPrototype, "%s_inserted_%i", SymbolName(phsle), pexd->iStarter + TstrGetPrincipalSerial(ptstr)); */
 
-			sprintf(pcPrototype, "%s_inserted_%i", SymbolName(phsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier);
+			sprintf(pcPrototype, "%s_inserted_%i", SymbolName(phsle), /* ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier */phsle->iAllocationIdentifier);
 		    }
 		    else
 		    {
 /* 			sprintf(pcPrototype, "%s_%i_%i", SymbolName(phsle), pexd->iStarter + TstrGetPrincipalSerial(ptstr), iPrototypes - 1); */
 
-			sprintf(pcPrototype, "%s_%i_%i", SymbolName(phsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, iPrototypes - 1);
+			sprintf(pcPrototype, "%s_%i_%i", SymbolName(phsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, /* iPrototypes - 1 */phsle->iAllocationIdentifier);
 		    }
 		}
 		else
