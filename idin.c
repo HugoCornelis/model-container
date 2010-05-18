@@ -171,6 +171,11 @@ IdinCreateAlias(struct symtab_IdentifierIndex *pidin, int iCount)
 /// 
 /// \brief get name of IdentifierIndex list
 /// 
+/// \todo
+/// 
+/// Fields are not separated with a field separator but with a symbol
+/// separator, this needs to be fixed.
+/// 
 
 void IdinFullName(struct symtab_IdentifierIndex *pidin, char *pcName)
 {
