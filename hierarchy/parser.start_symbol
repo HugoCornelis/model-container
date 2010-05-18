@@ -634,6 +634,10 @@ PrivateModelsEnumerated
 			    struct symtab_HSolveListElement *phsle
 				= SymbolCreateAlias(phsleProto, IdinName($3), IdinNewFromChars($4));
 
+			    //- bind I/O relations
+
+			    SymbolAssignInputs(phsle, $5);
+
 			    //- set parameters
 
 			    SymbolAssignParameters(phsle, $6);
@@ -727,6 +731,10 @@ PrivateModelsEnumerated
 			{
 			    struct symtab_HSolveListElement *phsle
 				= SymbolCreateAlias(phsleProto, NULL, IdinNewFromChars($4));
+
+			    //- bind I/O relations
+
+			    SymbolAssignInputs(phsle, $5);
 
 			    //- set parameters
 
