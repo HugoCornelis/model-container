@@ -377,12 +377,13 @@ clean-local:
 	$(RM) -fr $(srcdir)/hierarchy/output
 	$(RM) -rf $(top_srcdir)/docs/html
 	$(RM) -rf $(top_srcdir)/docs/model-container
-	$(RM) -rf *.deb
-	$(RM) -f *.changes
-	$(RM) -f *.dsc
-	$(RM) -f build_debian.log
-	$(RM) -rf RPM_BUILD
-	$(RM) -f build_rpm.log
+	$(RM) -rf $(top_srcdir)/*.deb
+	$(RM) -f $(top_srcdir)/*.changes
+	$(RM) -f $(top_srcdir)/*.dsc
+	$(RM) -f $(top_srcdir)/build_debian.log
+	$(RM) -rf $(top_srcdir)/RPM_BUILD
+	$(RM) -f $(top_srcdir)/build_rpm.log
+	$(RM) $(top_srcdir)/model-container*.tar.gz
 
 TESTS = /usr/local/bin/neurospaces_harness
 
@@ -429,7 +430,7 @@ html-upload: html-upload-prepare
 
 internal-library:
 # $Format: "	tar cfz library-${package}-${label}.tar.gz library/"$
-	tar cfz library-model-container-6e4e0809e7daba3684c5c6669d237e392faeb500.0.tar.gz library/
+	tar cfz library-model-container-9ce66a2b378d5005f4bdd8a7d784a56fb2806eaf.0.tar.gz library/
 
 libneurospacesread.so: libneurospacesread.a
 	$(CC) \
