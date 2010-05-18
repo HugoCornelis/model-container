@@ -2157,39 +2157,78 @@ QueryHandlerInputInfo
 
     struct PidinStack *ppist = PidinStackParse(&pcLine[iLength]);
 
-    //- lookup child symbol
+    //- lookup symbol
 
-    /// \note allows namespacing, yet incompatible with parameter caches.
-
-    struct symtab_HSolveListElement *phsle1
-	= SymbolsLookupHierarchical(pneuro->psym, ppist);
-
-    struct symtab_HSolveListElement *phsle2
+    struct symtab_HSolveListElement *phsle
 	= PidinStackLookupTopSymbol(ppist);
 
-    fprintf(stdout, "---\n- parsed context: ");
+    if (phsle)
+    {
+	if (instanceof_bio_comp(phsle))
+	{
+	    int i = 0;
 
-    PidinStackPrint(ppist, stdout);
+	    struct symtab_BioComponent *pbio
+		= (struct symtab_BioComponent *)phsle;
 
-    fprintf(stdout, "\n");
+	    //- construct all input types
 
-/*     if (phsle1) */
-/*     { */
-/* 	fprintf(stdout, "- found using SymbolsLookupHierarchical()\n"); */
-/*     } */
-/*     else */
-/*     { */
-/* 	fprintf(stdout, "- not found using SymbolsLookupHierarchical()\n"); */
-/*     } */
+	    fprintf(stdout, "inputs:\n");
 
-/*     if (phsle2) */
-/*     { */
-/* 	fprintf(stdout, "- found using PidinStackLookupTopSymbol()\n"); */
-/*     } */
-/*     else */
-/*     { */
-/* 	fprintf(stdout, "- not found using PidinStackLookupTopSymbol()\n"); */
-/*     } */
+	    while (pbio)
+	    {
+		//- if input info
+
+		struct symtab_IOContainer *pioc = SymbolGetInputs(phsle);
+
+		if (pioc)
+		{
+		    //- loop over inputs
+
+		    struct symtab_InputOutput *pio = IOContainerIterateRelations(pioc);
+
+		    for ( ; pio ; i++)
+		    {
+			char pc[100];
+
+			//- get info about input
+
+			struct symtab_HSolveListElement *phsleInput = SymbolGetChildFromInput(phsle, pio);
+
+			//- print info about input
+
+			IdinFullName(pio->pidinField, pc);
+
+			fprintf
+			    (stdout,
+			     "%s input %i: %s, %s\n",
+			     SymbolName(&pbio->ioh.iol.hsle),
+			     i,
+			     pc,
+			     phsleInput
+			     ? SymbolHSLETypeDescribe(phsleInput->iType)
+			     : "child not defined in this context");
+
+			//- go to next input
+
+			pio = IOContainerNextRelation(pio);
+		    }
+		}
+
+		//- next prototype
+
+		pbio = (struct symtab_BioComponent *)SymbolGetPrototype(&pbio->ioh.iol.hsle);
+	    }
+	}
+	else
+	{
+	    fprintf(stdout, "symbol is not a biocomponent\n");
+	}
+    }
+    else
+    {
+	fprintf(stdout, "symbol not found\n");
+    }
 
     //- return result
 

@@ -156,11 +156,23 @@ my $test
 						   write => undef,
 						  },
 						  {
-						   description => "Can we get input info on /CerebellarCortex/Purkinjes/0/segments/soma/CaT->I ?",
-						   read => '
-- parsed context: /CerebellarCortex/Purkinjes/0/segments/soma/CaT->I
+						   description => "Can we get input info on /CerebellarCortex/Purkinjes/0/segments/soma/CaT ?",
+						   read => 'inputs:
+CaT input 0: ../Vm, child not defined in this context
+CaT input 1: ../Vm, child not defined in this context
+CaT input 2: ../Vm, child not defined in this context
 ',
-						   write => "input-info /CerebellarCortex/Purkinjes/0/segments/soma/CaT->I",
+						   write => "input-info /CerebellarCortex/Purkinjes/0/segments/soma/CaT",
+						  },
+						  {
+						   description => "Can we get input info on /CerebellarCortex/Purkinjes/0/segments/soma/CaT ?",
+						   read => 'inputs:
+Ca_pool input 0: ../CaT/I, child not defined in this context
+Ca_pool input 1: ../CaT/I, child not defined in this context
+Ca_concen input 2: ../CaT/I, child not defined in this context
+Ca_concen input 3: ../CaT/I, child not defined in this context
+',
+						   write => "input-info /CerebellarCortex/Purkinjes/0/segments/soma/Ca_pool",
 						  },
 						 ],
 				description => "context and field parsing",
