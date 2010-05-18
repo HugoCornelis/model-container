@@ -279,7 +279,6 @@ value = 1.79769e+308
 						  },
 						 ],
 				description => "invalid queries over symbol table structure",
-# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -315,7 +314,6 @@ Inserter instance excitation
 						  },
 						 ],
 				description => "incomplete parameters for the inserter algorithm",
-# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
@@ -338,7 +336,6 @@ not found using PidinStackLookupTopSymbol() for /in12_1/mat_3: /in12_1/mat_3/mat
 						  },
 						 ],
 				description => "invalid parent segment parameter specifications",
-# 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
 			       },
 			       {
 				arguments => [
