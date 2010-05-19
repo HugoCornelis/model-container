@@ -852,7 +852,7 @@ sub register_engine
 sub version
 {
     # $Format: "    my $version=\"${package}-${label}\";"$
-    my $version="model-container-6e4e0809e7daba3684c5c6669d237e392faeb500.0";
+    my $version="model-container-alpha";
 
     return $version;
 }

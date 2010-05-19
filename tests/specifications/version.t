@@ -21,9 +21,9 @@ my $test
 						  },
 						  {
 						   # $Format: "description => \"Does the version information match with ${package}-${label} ?\","$
-description => "Does the version information match with model-container-6e4e0809e7daba3684c5c6669d237e392faeb500.0 ?",
+description => "Does the version information match with model-container-alpha ?",
 						   # $Format: "read => \"${package}-${label}\","$
-read => "model-container-6e4e0809e7daba3684c5c6669d237e392faeb500.0",
+read => "model-container-alpha",
 						   write => "version",
 						  },
 						 ],

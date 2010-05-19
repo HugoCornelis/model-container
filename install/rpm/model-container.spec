@@ -3,14 +3,16 @@
 %define _bindir		/usr/local/bin
 %define _mandir		/usr/local/share/man/man1
 
-# $Format: "%define name	${package}"$
-%define name	model-container
-%define release		1
+# $Format: "%define name		${package}"$
+%define name		model-container
 
+# $Format: "%define release	        ${label}"$
+%define release	        alpha
 
-# $Format: "%define version 	${label}"$
-%define version 	6e4e0809e7daba3684c5c6669d237e392faeb500.0
-%define buildroot 	%{_topdir}/%{name}-%{version}-root
+# $Format: "%define version 	${major}.${minor}.${micro}"$
+%define version 	0.0.0
+
+%define buildroot 	%{_topdir}/%{name}-%{version}-%{release}-root
 
 BuildRoot:		%{buildroot}
 Summary: 		Neurospaces Model Container
@@ -18,7 +20,7 @@ License: 		GPL
 Name: 			%{name}
 Version: 		%{version}
 Release: 		%{release}
-Source: 		%{name}-%{version}.tar.gz
+Source: 		%{name}-%{version}-%{release}.tar.gz
 Prefix: 		/usr/local
 Group: 			Science
 Vendor: 		Hugo Cornelis <hugo.cornelis@gmail.com>
@@ -34,14 +36,14 @@ The Model Container is used as an abstraction layer on top of a simulator and de
 # Group: Science
 # Provides: developer
 
-%prep
+%pre
 echo %_target
 echo %_target_alias
 echo %_target_cpu
 echo %_target_os
 echo %_target_vendor
 echo Building %{name}-%{version}-%{release}
-%setup -q
+%setup -q -n %{name}-%{version}-%{release} 
 
 %build
 ./configure 

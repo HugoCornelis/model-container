@@ -19,12 +19,12 @@ dnl //////////////////////////////////////////////////////////////////////////
 
 dnl Process this file with autoconf to produce a configure script.
 # $Format: "AC_INIT(${package}, ${major}.${minor}.${micro}-${label}, ${email})"$
-AC_INIT(model-container, bf5e6c21e5b0a647f9db1820e729cd0e02847693.0.0-test, hugo.cornelis@gmail.com)
+AC_INIT(model-container, 0.0.0-alpha, hugo.cornelis@gmail.com)
 dnl AC_REVISION($Id: configure.ac 1.40 Wed, 10 Oct 2007 16:57:00 -0500 hugo $)
 
 
 # $Format: "AM_INIT_AUTOMAKE(${package}, ${major}.${minor}.${micro}-${label})"$
-AM_INIT_AUTOMAKE(model-container, bf5e6c21e5b0a647f9db1820e729cd0e02847693.0.0-test)
+AM_INIT_AUTOMAKE(model-container, 0.0.0-alpha)
 
 AC_CONFIG_SRCDIR([neurospaces.c])
 

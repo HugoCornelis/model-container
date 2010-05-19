@@ -434,7 +434,7 @@ html-upload: html-upload-prepare
 
 internal-library:
 # $Format: "	tar cfz library-${package}-${label}.tar.gz library/"$
-	tar cfz library-model-container-d60614d271ad00a79a8230db1b7362d05b688840.0.tar.gz library/
+	tar cfz library-model-container-alpha.tar.gz library/
 
 libneurospacesread.so: libneurospacesread.a
 	$(CC) \
