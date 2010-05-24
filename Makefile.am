@@ -216,7 +216,11 @@ dist-hook:
 	$(srcdir)/install-sh -d $(distdir)/tests/html/specifications
 	$(srcdir)/install-sh -d $(distdir)/tests/html/specifications/algorithms
 	$(srcdir)/install-sh -d $(distdir)/tests/html/specifications/code
-	cp -dp $(srcdir)/tests/{command_extractor,command_extractor.ptkdb,tests_2_html,tests_2_html.ptkdb,tests.config} $(distdir)/tests
+	cp -a $(srcdir)/tests/command_extractor $(distdir)/tests
+	cp -a $(srcdir)/tests/command_extractor.ptkdb $(distdir)/tests
+	cp -a $(srcdir)/tests/tests_2_html $(distdir)/tests
+	cp -a $(srcdir)/tests/tests_2_html.ptkdb $(distdir)/tests
+	cp -a $(srcdir)/tests/tests.config $(distdir)/tests
 	cp -a $(srcdir)/tests.config $(distdir)
 # get the logos right
 	cp -a $(srcdir)/docs/logos/ns-main-logo-dark2-notext-32x32.jpg $(distdir)/tests/html/ns-main-logo-dark2-notext-32x32.jpg
