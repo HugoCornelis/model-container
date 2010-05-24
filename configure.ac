@@ -19,9 +19,13 @@ dnl //////////////////////////////////////////////////////////////////////////
 
 dnl Process this file with autoconf to produce a configure script.
 # $Format: "AC_INIT(${package}, ${major}.${minor}.${micro}-${label}, ${email})"$
-AC_REVISION(model-container, d60614d271ad00a79a8230db1b7362d05b688840.0, hugo.cornelis@gmail.com)
+AC_INIT(model-container, bf5e6c21e5b0a647f9db1820e729cd0e02847693.0.0-test, hugo.cornelis@gmail.com)
 dnl AC_REVISION($Id: configure.ac 1.40 Wed, 10 Oct 2007 16:57:00 -0500 hugo $)
-AC_INIT
+
+
+# $Format: "AM_INIT_AUTOMAKE(${package}, ${major}.${minor}.${micro}-${label})"$
+AM_INIT_AUTOMAKE(model-container, bf5e6c21e5b0a647f9db1820e729cd0e02847693.0.0-test)
+
 AC_CONFIG_SRCDIR([neurospaces.c])
 
 AC_CONFIG_HEADERS([neurospaces/config.h])
@@ -92,12 +96,6 @@ AC_SUBST(PERL_LDADD)
 
 PERL_LDFLAGS=`perl -MExtUtils::Embed -e ldopts`
 AC_SUBST(PERL_LDFLAGS)
-
-
-
-# $Format: "AM_INIT_AUTOMAKE(${package}, ${major}.${minor}.${micro}-${label})"$
-AM_INIT_AUTOMAKE(model-container, d60614d271ad00a79a8230db1b7362d05b688840.0)
-
 
 
 dnl Checks for programs.
