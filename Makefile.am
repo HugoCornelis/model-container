@@ -193,7 +193,7 @@ EXTRA_DIST = \
 
 am__tar = ${AMTAR} chf - --format=posix "$$tardir"
 
-dist-hook: dist-keywords
+dist-hook:
 	if test -n "$$NEUROSPACES_RELEASE" ; then cd $(srcdir) && if test -n "`mtn ls changed `" ; then false ; else true ; fi ; else true ; fi
 	find $(distdir) -name _Inline -exec chmod -R u+w \{\} \;
 	$(RM) -fr `find $(distdir) -name _Inline`
@@ -430,7 +430,7 @@ html-upload: html-upload-prepare
 
 internal-library:
 # $Format: "	tar cfz library-${package}-${label}.tar.gz library/"$
-	tar cfz library-model-container-9ce66a2b378d5005f4bdd8a7d784a56fb2806eaf.0.tar.gz library/
+	tar cfz library-model-container-d60614d271ad00a79a8230db1b7362d05b688840.0.tar.gz library/
 
 libneurospacesread.so: libneurospacesread.a
 	$(CC) \
