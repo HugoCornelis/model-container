@@ -3,14 +3,17 @@
 %define _bindir		/usr/local/bin
 %define _mandir		/usr/local/share/man/man1
 
-# $Format: "%define name		${package}"$
-%define name		model-container
+# $Format: "%define name	${package}"$
+%define name	model-container
+
 
 # $Format: "%define release	        ${label}"$
 %define release	        alpha
 
+
 # $Format: "%define version 	${major}.${minor}.${micro}"$
 %define version 	0.0.0
+
 
 %define buildroot 	%{_topdir}/%{name}-%{version}-%{release}-root
 
@@ -36,7 +39,7 @@ The Model Container is used as an abstraction layer on top of a simulator and de
 # Group: Science
 # Provides: developer
 
-%pre
+%prep
 echo %_target
 echo %_target_alias
 echo %_target_cpu
