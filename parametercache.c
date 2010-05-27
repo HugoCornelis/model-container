@@ -202,128 +202,139 @@ ParameterCacheExport
 
 	int iSerial = ppar->iFlags;
 
-	struct PidinStack *ppistRelative = PidinStackParse("");
+/* 	struct PidinStack *ppistRelative = PidinStackParse(""); */
 
 	// ppistRelative creates relative references, ppist absolute ones.
 
 	struct PidinStack *ppistSerial
 	    = SymbolPrincipalSerial2Context(phsle, ppist/* Relative */, iSerial);
 
-	char pcSerial[1000];
-
-	PidinStackString(ppistSerial, pcSerial, 1000);
-
-	char pcField[1000];
-
-	sprintf(pcField, "%s->%s", pcSerial, ppar->pcIdentifier);
-
-	//- fill in reference parameter structure
-
-	static struct symtab_Parameters parReference =
-	    {
-		/// link structures into list
-
-		NULL,
-
-		NULL,
-
-		/// first parameter of list
-
-		NULL,
-
-		/// type of parameter
-
-		-1,
-
-		/// flags
-
-		0,
-
-		/// name of parameter
-
-		"NAME_1",
-
-		/// value : number, identifier or function for parameter
-
-		{
-		    0.0,
-		},
-	    };
-
-	char pcName[100];
-
-	sprintf(pcName, "NAME_%i", i);
-
-	parReference.pcIdentifier = pcName;
-
-	parReference.iType = TYPE_PARA_STRING;
-
-	parReference.uValue.pcString = pcField;
-
-	//- print parameter info
-
-	if (!ParameterExport(&parReference, ppist, iIndent + 2, iType, pfile))
+	if (ppistSerial)
 	{
-	    iResult = 0;
+	    char pcSerial[1000];
 
-	    break;
+	    PidinStackString(ppistSerial, pcSerial, 1000);
+
+	    char pcField[1000];
+
+	    sprintf(pcField, "%s->%s", pcSerial, ppar->pcIdentifier);
+
+	    //- fill in reference parameter structure
+
+	    static struct symtab_Parameters parReference =
+		{
+		    /// link structures into list
+
+		    NULL,
+
+		    NULL,
+
+		    /// first parameter of list
+
+		    NULL,
+
+		    /// type of parameter
+
+		    -1,
+
+		    /// flags
+
+		    0,
+
+		    /// name of parameter
+
+		    "NAME_1",
+
+		    /// value : number, identifier or function for parameter
+
+		    {
+			0.0,
+		    },
+		};
+
+	    char pcName[100];
+
+	    sprintf(pcName, "NAME_%i", i);
+
+	    parReference.pcIdentifier = pcName;
+
+	    parReference.iType = TYPE_PARA_STRING;
+
+	    parReference.uValue.pcString = pcField;
+
+	    //- print parameter info
+
+	    if (!ParameterExport(&parReference, ppist, iIndent + 2, iType, pfile))
+	    {
+		iResult = 0;
+
+		break;
+	    }
+
+	    //- fill in value parameter structure
+
+	    static struct symtab_Parameters parValue =
+		{
+		    /// link structures into list
+
+		    NULL,
+
+		    NULL,
+
+		    /// first parameter of list
+
+		    NULL,
+
+		    /// type of parameter
+
+		    TYPE_PARA_NUMBER,
+
+		    /// flags
+
+		    0,
+
+		    /// name of parameter
+
+		    "VALUE_1",
+
+		    /// value : number, identifier or function for parameter
+
+		    {
+			0.0,
+		    },
+		};
+
+	    char pcValue[100];
+
+	    sprintf(pcValue, "VALUE_%i", i);
+
+	    parValue.pcIdentifier = pcValue;
+
+	    parValue.iType = ppar->iType;
+
+	    parValue.uValue = ppar->uValue;
+
+	    //- print parameter info
+
+	    if (!ParameterExport(&parValue, ppist, iIndent + 2, iType, pfile))
+	    {
+		iResult = 0;
+
+		break;
+	    }
+
+	    PidinStackFree(ppistSerial);
+	}
+	else
+	{
+	    char pc[1000];
+
+	    PidinStackString(ppist, pc, sizeof(pc));
+
+	    fprintf(stderr, "Error: cannot construct a context for symbol %s, serial %i\n", pc, iSerial);
 	}
 
-	//- fill in value parameter structure
-
-	static struct symtab_Parameters parValue =
-	    {
-		/// link structures into list
-
-		NULL,
-
-		NULL,
-
-		/// first parameter of list
-
-		NULL,
-
-		/// type of parameter
-
-		TYPE_PARA_NUMBER,
-
-		/// flags
-
-		0,
-
-		/// name of parameter
-
-		"VALUE_1",
-
-		/// value : number, identifier or function for parameter
-
-		{
-		    0.0,
-		},
-	    };
-
-	char pcValue[100];
-
-	sprintf(pcValue, "VALUE_%i", i);
-
-	parValue.pcIdentifier = pcValue;
-
-	parValue.iType = ppar->iType;
-
-	parValue.uValue = ppar->uValue;
-
-	//- print parameter info
-
-	if (!ParameterExport(&parValue, ppist, iIndent + 2, iType, pfile))
-	{
-	    iResult = 0;
-
-	    break;
-	}
-
-	PidinStackFree(ppistSerial);
-
-	PidinStackFree(ppistRelative);
+/* 	PidinStackFree(ppistRelative); */
 
 	//- go to next parameter
 
