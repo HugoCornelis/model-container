@@ -2003,6 +2003,15 @@ QueryHandlerExport
 	return(FALSE);
     }
 
+    int iSuccess = SymbolRecalcAllSerials(NULL, NULL);
+
+    if (!iSuccess)
+    {
+	fprintf(stdout, "SymbolRecalcAllSerials() failed, output in %s may be incorrect.", pcFilename);
+
+	return(FALSE);
+    }
+
     //- export model
 
     int iExported = ExporterModel(ppistWildcard, iType, iFlags, pcFilename);
