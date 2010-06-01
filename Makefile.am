@@ -202,7 +202,7 @@ dist-hook:
 	cp $(srcdir)/abstract.txt $(distdir)
 	cp $(srcdir)/license.txt $(distdir)
 	cp $(srcdir)/lexsupport.c $(distdir)
-	cp -a $(srcdir)/docs $(distdir)
+	cp -pR $(srcdir)/docs $(distdir)
 	rm -rf $(distdir)/docs/html
 	rm -rf $(distdir)/docs/latex
 	rm -rf $(distdir)/docs/man
@@ -216,20 +216,20 @@ dist-hook:
 	$(srcdir)/install-sh -d $(distdir)/tests/html/specifications
 	$(srcdir)/install-sh -d $(distdir)/tests/html/specifications/algorithms
 	$(srcdir)/install-sh -d $(distdir)/tests/html/specifications/code
-	cp -a $(srcdir)/tests/command_extractor $(distdir)/tests
-	cp -a $(srcdir)/tests/command_extractor.ptkdb $(distdir)/tests
-	cp -a $(srcdir)/tests/tests_2_html $(distdir)/tests
-	cp -a $(srcdir)/tests/tests_2_html.ptkdb $(distdir)/tests
-	cp -a $(srcdir)/tests/tests.config $(distdir)/tests
-	cp -a $(srcdir)/tests.config $(distdir)
+	cp -pR $(srcdir)/tests/command_extractor $(distdir)/tests
+	cp -pR $(srcdir)/tests/command_extractor.ptkdb $(distdir)/tests
+	cp -pR $(srcdir)/tests/tests_2_html $(distdir)/tests
+	cp -pR $(srcdir)/tests/tests_2_html.ptkdb $(distdir)/tests
+	cp -pR $(srcdir)/tests/tests.config $(distdir)/tests
+	cp -pR $(srcdir)/tests.config $(distdir)
 # get the logos right
-	cp -a $(srcdir)/docs/logos/ns-main-logo-dark2-notext-32x32.jpg $(distdir)/tests/html/ns-main-logo-dark2-notext-32x32.jpg
-	cp -a $(srcdir)/docs/logos/ns-main-logo-dark2-notext-32x32.jpg $(distdir)/tests/html/algorithms/ns-main-logo-dark2-notext-32x32.jpg
-	cp -a $(srcdir)/docs/logos/ns-main-logo-dark2-notext-32x32.jpg $(distdir)/tests/html/code/ns-main-logo-dark2-notext-32x32.jpg
-	cp -a $(srcdir)/docs/logos/ns-main-logo-dark2-notext-32x32.jpg $(distdir)/tests/html/specifications/ns-main-logo-dark2-notext-32x32.jpg
-	cp -a $(srcdir)/docs/logos/ns-main-logo-dark2-notext-32x32.jpg $(distdir)/tests/html/specifications/algorithms/ns-main-logo-dark2-notext-32x32.jpg
-	cp -a $(srcdir)/docs/logos/ns-main-logo-dark2-notext-32x32.jpg $(distdir)/tests/html/specifications/code/ns-main-logo-dark2-notext-32x32.jpg
-	cp -a $(srcdir)/hierarchy $(distdir)
+	cp -pR $(srcdir)/docs/logos/ns-main-logo-dark2-notext-32x32.jpg $(distdir)/tests/html/ns-main-logo-dark2-notext-32x32.jpg
+	cp -pR $(srcdir)/docs/logos/ns-main-logo-dark2-notext-32x32.jpg $(distdir)/tests/html/algorithms/ns-main-logo-dark2-notext-32x32.jpg
+	cp -pR $(srcdir)/docs/logos/ns-main-logo-dark2-notext-32x32.jpg $(distdir)/tests/html/code/ns-main-logo-dark2-notext-32x32.jpg
+	cp -pR $(srcdir)/docs/logos/ns-main-logo-dark2-notext-32x32.jpg $(distdir)/tests/html/specifications/ns-main-logo-dark2-notext-32x32.jpg
+	cp -pR $(srcdir)/docs/logos/ns-main-logo-dark2-notext-32x32.jpg $(distdir)/tests/html/specifications/algorithms/ns-main-logo-dark2-notext-32x32.jpg
+	cp -pR $(srcdir)/docs/logos/ns-main-logo-dark2-notext-32x32.jpg $(distdir)/tests/html/specifications/code/ns-main-logo-dark2-notext-32x32.jpg
+	cp -pR $(srcdir)/hierarchy $(distdir)
 	rm -fr $(distdir)/hierarchy/output
 # prcs diff -k neurospaces.prj `prcs 2>/dev/null execute --not ".*\(directory\|symlink\)" neurospaces.prj | grep -v "neurospaces\.prj" | grep -v "purkinjespine" `
 # $Format: "	( cd $(distdir)/tests && chmod -R u+w . && ./tests_2_html --header '<img src=\"ns-main-logo-dark2-notext-32x32.jpg\" alt=\"Main Neurospaces logo\"> ${package}, ${label}, ${email} <hr>' --introduction introduction.html )" $
