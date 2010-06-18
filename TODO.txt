@@ -1,5 +1,9 @@
 -*- outline -*-
 
+* morphology2ndf
+Has a hardcoded snippet from Data::Utilities::merge().
+Replace this with calls to the Data::Utilities module.
+
 * private model section
 Is a mess since children inside children were introduced.  Needs
 cleanup.

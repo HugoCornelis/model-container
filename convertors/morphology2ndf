@@ -44,6 +44,7 @@ my $option_force_library;
 my $option_optional_configuration_filename;
 my $option_output_format = 'ndf';
 # my $option_prototype_configuration;
+my $option_set_name;
 my $option_shrinkage;
 my $option_soma_offset;
 my $option_spine_prototypes = [];
@@ -503,7 +504,7 @@ sub main
 
     # generate a preamble, initialize output_state
 
-    my $output_state = output({ name => $cellname, }, 'initialize', );
+    my $output_state = output({ name => $option_set_name || $cellname, }, 'initialize', );
 
 
     # convert, line by line
@@ -1680,6 +1681,7 @@ sub read_cmd_line
 	     "output-format=s" => \$option_output_format,
 	     "output-format-list!" => \$option_output_formats,
 # 	     "prototypes=s" => \$option_prototype_configuration,
+	     "set-name=s" => \$option_set_name,
 	     "show-configuration" => \$option_show_configuration,
 	     "show-library" => \$option_show_library,
 	     "shrinkage=s", => \$option_shrinkage,
