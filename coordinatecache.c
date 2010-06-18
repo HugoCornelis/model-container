@@ -38,7 +38,6 @@ CoordinateCacheCoordinateFiller
 
 
 /// 
-/// 
 /// \arg pcc coordinate cache to build caches for.
 /// 
 /// \return int
@@ -46,7 +45,6 @@ CoordinateCacheCoordinateFiller
 ///	Success of operation.
 /// 
 /// \brief Build caches.
-/// \details 
 /// 
 
 static int 
@@ -171,7 +169,6 @@ CoordinateCacheBuildCaches(struct CoordinateCache *pcc)
 
 
 /// 
-/// 
 /// \arg pcc coordinate cache to init.
 /// 
 /// \return int
@@ -179,7 +176,6 @@ CoordinateCacheBuildCaches(struct CoordinateCache *pcc)
 ///	Success of operation.
 /// 
 /// \brief Initialize new coordinate cache, without building caches.
-/// \details 
 /// 
 
 int
@@ -210,7 +206,6 @@ CoordinateCacheInit(struct CoordinateCache *pcc, int iCoordinates)
 
 
 /// 
-/// 
 /// \arg pcc coordinate cache.
 /// \arg iSerial serial to search for.
 /// 
@@ -219,7 +214,6 @@ CoordinateCacheInit(struct CoordinateCache *pcc, int iCoordinates)
 ///	cached coordinate for this serial, NULL for not found.
 /// 
 /// \brief Find the cached coordinate for the given serial.
-/// \details 
 /// 
 
 struct CachedCoordinate *
@@ -276,7 +270,6 @@ CoordinateCacheLookup(struct CoordinateCache *pcc, int iSerial)
 
 
 /// 
-/// 
 /// \arg ptstr traversal that visits symbol to cache coordinates for.
 /// 
 /// \return struct CoordinateCache * 
@@ -284,6 +277,7 @@ CoordinateCacheLookup(struct CoordinateCache *pcc, int iSerial)
 ///	New coordinate cache, NULL for failure.
 /// 
 /// \brief Create new coordinate cache, without building caches.
+/// 
 /// \details 
 /// 
 ///	Note that the semantics of the traversal are not defined.  Probably,
