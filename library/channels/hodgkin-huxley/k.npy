@@ -1,8 +1,14 @@
 #!/usr/bin/python
 
+print "import\n"
+
 import Neurospaces
 
+print "initialize\n"
+
 nmc = Neurospaces.getModelContainer()
+
+print "construct\n"
 
 c = nmc.Channel("/k")
 
