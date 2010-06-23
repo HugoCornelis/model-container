@@ -200,9 +200,19 @@ def prepare(path):
     return [ name, top_symbol ]
 
 def getModelContainer():
+    global nmcGlobal
+    if nmcGlobal == None:
+        backend = SwiggableNeurospaces.NeurospacesNew()
+        SwiggableNeurospaces.NeurospacesRead(backend, 2, [ "Neurospaces.__init__", "utilities/empty_model.ndf", ], )
+        nmcGlobal = ModelContainer(backend)
     return nmcGlobal
 
 def setModelContainer(nmc):
     global nmcGlobal
     nmcGlobal = nmc
+
+
+# if __name__ == '__main__':
+#     pass
+
 

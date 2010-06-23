@@ -1,5 +1,60 @@
 -*- outline -*-
 
+* add stand-alone test for k.npy
+from ipython:
+In [2]: execfile "k.npy"
+------> execfile("k.npy")
+import
+
+initialize
+
+construct
+
+
+In [3]: nmc.query("export no ndf STDOUT /**")
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+END IMPORT
+
+PRIVATE_MODELS
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+  CHANNEL "k"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    GATE_KINETIC "a"
+      PARAMETERS
+        PARAMETER ( HH_AB_Tau = -0.01 ),
+        PARAMETER ( HH_AB_Offset_E = 0.06 ),
+        PARAMETER ( HH_AB_Add = -1 ),
+        PARAMETER ( HH_AB_Factor_Flag = -1 ),
+        PARAMETER ( HH_AB_Mult = 10000 ),
+        PARAMETER ( HH_AB_Scale = -600 ),
+      END PARAMETERS
+    END GATE_KINETIC
+    GATE_KINETIC "b"
+      PARAMETERS
+        PARAMETER ( HH_AB_Tau = 0.08 ),
+        PARAMETER ( HH_AB_Offset_E = 0.07 ),
+        PARAMETER ( HH_AB_Add = 0 ),
+        PARAMETER ( HH_AB_Factor_Flag = -1 ),
+        PARAMETER ( HH_AB_Mult = 0 ),
+        PARAMETER ( HH_AB_Scale = 125 ),
+      END PARAMETERS
+    END GATE_KINETIC
+  END CHANNEL
+END PUBLIC_MODELS
+
+
+
 * morphology2ndf
 Has a hardcoded snippet from Data::Utilities::merge().
 Replace this with calls to the Data::Utilities module.
