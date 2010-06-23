@@ -416,7 +416,7 @@ analyzer.o: parser.h analyzer.l
 parser.c: parser.y
 parser.h: parser.y
 xs_initialize.c:
-	perl -MExtUtils::Embed -e xsinit -- -o - >xs_initialize.c
+	$(PERL) -MExtUtils::Embed -e xsinit -- -o - >xs_initialize.c
 
 test: check
 
