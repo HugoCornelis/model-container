@@ -86,18 +86,6 @@ else
 fi
 
 
-# determine linker flags for perl embedding
-
-PERL_CCOPTS=`perl -MExtUtils::Embed -e ccopts`
-AC_SUBST(PERL_CCOPTS)
-
-PERL_LDADD=`perl -MExtUtils::Embed -e ldopts`
-AC_SUBST(PERL_LDADD)
-
-PERL_LDFLAGS=`perl -MExtUtils::Embed -e ldopts`
-AC_SUBST(PERL_LDFLAGS)
-
-
 dnl Checks for programs.
 AC_PROG_AWK
 AC_PROG_YACC
@@ -222,9 +210,6 @@ WARNED=yes
 
 )
 
-
-dnl Check for some needed programs.
-AC_CHECK_PROGS(PERL, perl5 perl)
 
 AC_PATH_PROGS(DOXYGEN,doxygen,[NULL])
 AC_PATH_PROGS(DOT,dot)
@@ -380,18 +365,42 @@ case "$host_os" in
     AC_SUBST(AR)
     AC_SUBST(ARFLAGS)
     AC_MSG_RESULT([$AR $ARFLAGS])
+    
+    dnl On the MAC we will only look for perl in the standard location for the Apple
+    dnl native perl. 
+    AC_CHECK_PROG(PERL, perl, NULL, [/usr/bin/perl],[/usr/local/bin/perl /opt/local/bin/perl])
+    AC_SUBST(PERL)
+
+    AC_MSG_CHECKING([Checking the perl installation])
+    case $PERL in
+      NULL*)
+        echo ""
+        echo "Error, the standard version of perl for Mac OSX is not found."
+        echo "Non standard versions of perl are known to cause problems."
+        AC_ERROR([Perl for Mac OSX is not found.])
+        ;;
+      *)
+        AC_MSG_RESULT([ $PERL ])
+        ;;
+    esac
+
+
+    
+    
+
+ 
 
     # This is to get rid of the annoying error that occurs when
-    # you use two arch flags. By default these commands produce a -arch for both
+    # you use two arch flags.occur By default these commands produce a -arch for both
     # architectures.
 
-    PERL_CCOPTS=`perl -MExtUtils::Embed -e ccopts | perl -pe 's/\-arch\s\S+\s//g'`
+    PERL_CCOPTS=`$PERL -MExtUtils::Embed -e ccopts | perl -pe 's/\-arch\s\S+\s//g'`
     AC_SUBST(PERL_CCOPTS)
 
-    PERL_LDADD=`perl -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
+    PERL_LDADD=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
     AC_SUBST(PERL_LDADD)
 
-    PERL_LDFLAGS=`perl -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
+    PERL_LDFLAGS=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
     AC_SUBST(PERL_LDFLAGS)
 
     PERLLIB_EXTENSION='dylib'
@@ -505,6 +514,23 @@ case "$host_os" in
     AC_SUBST(ARFLAGS)
     AC_MSG_CHECKING([ranlib invocation ])
     AC_MSG_RESULT([$AR $ARFLAGS])
+
+    dnl Check for some needed programs.
+    AC_CHECK_PROGS(PERL, perl5 perl)
+    AC_SUBST(PERL)
+
+    # determine linker flags for perl embedding
+
+    PERL_CCOPTS=`$PERL -MExtUtils::Embed -e ccopts`
+    AC_SUBST(PERL_CCOPTS)
+
+    PERL_LDADD=`$PERL -MExtUtils::Embed -e ldopts`
+    AC_SUBST(PERL_LDADD)
+
+    PERL_LDFLAGS=`$PERL -MExtUtils::Embed -e ldopts`
+    AC_SUBST(PERL_LDFLAGS)
+
+
 
     PERLLIB_EXTENSION='so'
     AC_SUBST(PERLLIB_EXTENSION)
