@@ -384,12 +384,6 @@ case "$host_os" in
         ;;
     esac
 
-
-    
-    
-
- 
-
     # This is to get rid of the annoying error that occurs when
     # you use two arch flags.occur By default these commands produce a -arch for both
     # architectures.
@@ -402,6 +396,25 @@ case "$host_os" in
 
     PERL_LDFLAGS=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
     AC_SUBST(PERL_LDFLAGS)
+
+
+
+    AC_CHECK_PROG(SWIG, swig, NULL, [/usr/bin/swig],[/usr/local/bin/swig /opt/local/bin/swig])
+    AC_SUBST(SWIG)
+
+    AC_MSG_CHECKING([Checking for swig])
+    case $SWIG in
+      NULL*)
+        echo ""
+        echo "Error, the standard version of swig for Mac OSX is not found."
+        echo "Non standard versions of swig are known to cause problems."
+        AC_ERROR([Swig for Mac OSX is not found.])
+        ;;
+      *)
+        AC_MSG_RESULT([ $SWIG ])
+        ;;
+    esac
+
 
     PERLLIB_EXTENSION='dylib'
     AC_SUBST(PERLLIB_EXTENSION)
@@ -518,6 +531,10 @@ case "$host_os" in
     dnl Check for some needed programs.
     AC_CHECK_PROGS(PERL, perl5 perl)
     AC_SUBST(PERL)
+
+    dnl Need to have the compilation fail if swig and perl are not found at all.
+    AC_CHECK_PROGS(SWIG, swig)
+    AC_SUBST(SWIG)
 
     # determine linker flags for perl embedding
 

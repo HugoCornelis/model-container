@@ -41,7 +41,7 @@ BUILT_SOURCES = \
 	swiggable_neurospaces_wrap.c
 
 SwiggableNeurospaces.py swiggable_neurospaces_wrap.c: $(swig_DATA)
-	swig -DPRE_PROTO_TRAVERSAL -I$(builddir)../../.. -I$(srcdir)/../../.. -python -makedefault -module SwiggableNeurospaces -o swiggable_neurospaces_wrap.c $(srcdir)/neurospaces.i
+	$(SWIG) -DPRE_PROTO_TRAVERSAL -I$(builddir)../../.. -I$(srcdir)/../../.. -python -makedefault -module SwiggableNeurospaces -o swiggable_neurospaces_wrap.c $(srcdir)/neurospaces.i
 
 swiggable_neurospaces_wrap.o: swiggable_neurospaces_wrap.c
 	$(SWIGCOMPILECOMMAND_PYTHON)
