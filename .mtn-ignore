@@ -56,5 +56,5 @@ tar.gz$
 .dsc$
 .changes$
 \.log$
-^RPM_BUILD$
+_BUILD$
 

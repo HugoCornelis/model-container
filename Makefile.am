@@ -385,7 +385,7 @@ clean-local:
 	$(RM) -f $(top_srcdir)/*.changes
 	$(RM) -f $(top_srcdir)/*.dsc
 	$(RM) -f $(top_srcdir)/build_debian.log
-	$(RM) -rf $(top_srcdir)/RPM_BUILD
+	$(RM) -rf $(top_srcdir)/*_BUILD
 	$(RM) -f $(top_srcdir)/build_rpm.log
 	$(RM) $(top_srcdir)/model-container*.tar.gz
 
@@ -527,6 +527,9 @@ pkg-deb: dist
 
 pkg-rpm: dist
 	nspkg-rpm $(PACKAGE) $(VERSION)
+
+pkg-osx: 
+	nspkg-osx $(PACKAGE) $(VERSION)
 
 
 #perldir = $(prefix)/glue/swig/perl
