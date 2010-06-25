@@ -638,7 +638,19 @@ sub load
 	    $filename = $ENV{NEUROSPACES_NMC_MODELS} . "/$filename";
 	}
 
-	my $executable = $options->{executable} || "morphology2ndf --set-name noname";
+	my $executable = $options->{executable};
+
+	if (not $executable)
+	{
+	    if ($filename =~ /swc$/i)
+	    {
+		$executable = "morphology2ndf --set-name noname";
+	    }
+	    else
+	    {
+		$executable = "morphology2ndf";
+	    }
+	}
 
 	my $command = "$executable $command_options \"$filename\" >\"$ndf\"";
 

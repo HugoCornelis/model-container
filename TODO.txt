@@ -116,11 +116,6 @@ For elements that have been reduced.  Applies to the whole subtree.
 
 * Reenable the support for readline
 
-* MAC OSX bug
-** There is an issue with executing "./neurospacesparse -v 1 -q legacy/networks/supernetwork.ndf"
-** on mac osx. The system stalls on a call to the function QueryHandlerPrintSpikeRecieverCount
-** with no CPU activity. 
-
 * PROTOTYPE_IDENTIFIER parameter
 In prototyping.t: 'This test needs to be enhanced with setting
 parameters of symbols and using parameter caches.  Doing so should
