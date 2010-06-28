@@ -57,4 +57,4 @@ tar.gz$
 .changes$
 \.log$
 _BUILD$
-
+.pkg$

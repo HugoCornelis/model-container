@@ -529,7 +529,7 @@ pkg-rpm: dist
 	nspkg-rpm $(PACKAGE) $(VERSION)
 
 pkg-osx: 
-	nspkg-osx $(PACKAGE) $(VERSION)
+	nspkg-osx 
 
 
 #perldir = $(prefix)/glue/swig/perl
