@@ -384,9 +384,8 @@ clean-local:
 	$(RM) -rf $(top_srcdir)/*.deb
 	$(RM) -f $(top_srcdir)/*.changes
 	$(RM) -f $(top_srcdir)/*.dsc
-	$(RM) -f $(top_srcdir)/build_debian.log
 	$(RM) -rf $(top_srcdir)/*_BUILD
-	$(RM) -f $(top_srcdir)/build_rpm.log
+	$(RM) -f $(top_srcdir)/build_*.log
 	$(RM) $(top_srcdir)/model-container*.tar.gz
 
 TESTS = /usr/local/bin/neurospaces_harness
@@ -522,7 +521,7 @@ TMP_DIR = tmp
 
 # Create a deb package
 pkg-deb: dist
-	nspkg-deb $(TMP_DIR) $(PACKAGE) $(VERSION)
+	nspkg-deb $(PACKAGE) $(VERSION)
 
 
 pkg-rpm: dist
