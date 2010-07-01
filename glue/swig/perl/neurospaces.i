@@ -149,6 +149,7 @@ struct symtab_Invisible;
 #include "neurospaces/parsersupport.h"
 #include "neurospaces/pidinstack.h"
 #include "neurospaces/positionD3.h"
+#include "neurospaces/projectionquery.h"
 #include "neurospaces/querymachine.h"
 #include "neurospaces/solverinfo.h"
 #include "neurospaces/symbols.h"
@@ -2816,6 +2817,14 @@ void swig_pq_set(char *pcLine)
 }
 
 
+struct ProjectionQuery *swig_get_global_projectionquery()
+{
+    extern struct Neurospaces *pneuroGlobal;
+
+    return pneuroGlobal->ppq;
+}
+
+
 /// traversal related
 
 int
@@ -3353,6 +3362,16 @@ double symbol_parameter_resolve_scaled_value(void *phsle, void *ppist, char *pc)
 %include "neurospaces/components/group.h"
 %include "neurospaces/components/groupedparameters.h"
 %include "neurospaces/components/hhgate.h"
+%include "neurospaces/components/network.h"
+%include "neurospaces/components/pool.h"
+%include "neurospaces/components/population.h"
+%include "neurospaces/components/projection.h"
+%include "neurospaces/components/randomvalue.h"
+%include "neurospaces/components/segment.h"
+%include "neurospaces/components/segmenter.h"
+%include "neurospaces/components/vector.h"
+%include "neurospaces/components/vectorconnectionsymbol.h"
+%include "neurospaces/components/vectorsegment.h"
 %include "neurospaces/dependencyfile.h"
 %include "neurospaces/exporter.h"
 %include "neurospaces/function.h"
@@ -3360,26 +3379,17 @@ double symbol_parameter_resolve_scaled_value(void *phsle, void *ppist, char *pc)
 %include "neurospaces/importedfile.h"
 %include "neurospaces/inputoutput.h"
 %include "neurospaces/iocontainer.h"
-%include "neurospaces/components/network.h"
 %include "neurospaces/neurospaces.h"
 %include "neurospaces/parameters.h"
 %include "neurospaces/parsersupport.h"
 %include "neurospaces/pidinstack.h"
-%include "neurospaces/components/pool.h"
-%include "neurospaces/components/population.h"
 %include "neurospaces/positionD3.h"
-%include "neurospaces/components/projection.h"
+%include "neurospaces/projectionquery.h"
 %include "neurospaces/querymachine.h"
-%include "neurospaces/components/randomvalue.h"
-%include "neurospaces/components/segment.h"
-%include "neurospaces/components/segmenter.h"
 %include "neurospaces/solverinfo.h"
 %include "neurospaces/symbols.h"
 %include "neurospaces/symboltable.h"
 %include "neurospaces/treespacetraversal.h"
-%include "neurospaces/components/vector.h"
-%include "neurospaces/components/vectorconnectionsymbol.h"
-%include "neurospaces/components/vectorsegment.h"
 %include "neurospaces/workload.h"
 
 %include "neurospaces/symbolvirtual_protos.h"
