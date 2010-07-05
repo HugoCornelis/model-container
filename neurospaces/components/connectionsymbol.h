@@ -58,7 +58,7 @@ double
 ConnectionSymbolGetDelay(struct symtab_ConnectionSymbol *pconsy);
 
 int
-ConnectionSymbolGetPost(struct symtab_ConnectionSymbol *pconsy);
+ConnectionSymbolGetPost(struct symtab_ConnectionSymbol *pconsy, int iTarget);
 
 int
 ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy, int iSource);

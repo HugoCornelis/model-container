@@ -323,12 +323,12 @@ ConnectionSymbolGetDelay(struct symtab_ConnectionSymbol *pconsy)
 
     /// \note without parameter caches
 
-    struct symtab_Parameters *pparPost
-	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "POST");
+    struct symtab_Parameters *pparDelay
+	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "DELAY");
 
     //- set result
 
-    double dDelay = ParameterResolveValue(pparPost, NULL);
+    double dDelay = ParameterResolveValue(pparDelay, NULL);
 
     if (dDelay != DBL_MAX)
     {
@@ -352,7 +352,7 @@ ConnectionSymbolGetDelay(struct symtab_ConnectionSymbol *pconsy)
 /// 
 
 int
-ConnectionSymbolGetPost(struct symtab_ConnectionSymbol *pconsy)
+ConnectionSymbolGetPost(struct symtab_ConnectionSymbol *pconsy, int iTarget)
 {
     //- set default result: failure
 
@@ -370,13 +370,51 @@ ConnectionSymbolGetPost(struct symtab_ConnectionSymbol *pconsy)
     struct symtab_Parameters *pparPost
 	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "POST");
 
+    //- convert target to context
+
+    struct PidinStack *ppistRoot = PidinStackCalloc();
+
+    if (!ppistRoot)
+    {
+	fprintf(stdout, "cannot allocate a context\n");
+
+	return(-1);
+    }
+
+    PidinStackSetRooted(ppistRoot);
+
+    struct symtab_HSolveListElement *phsleRoot
+	= PidinStackLookupTopSymbol(ppistRoot);
+
+    struct PidinStack *ppistTarget
+	= SymbolPrincipalSerial2Context(phsleRoot, ppistRoot, iTarget);
+
+    if (!ppistTarget)
+    {
+	return(-1);
+    }
+
+    //- convert post parameter to context
+
+    struct PidinStack *ppistPost
+	= ParameterResolveToPidinStack(pparPost, ppistTarget);
+
+    if (!ppistPost)
+    {
+	return(-1);
+    }
+
+    //- convert pre context to serial
+
+    PidinStackUpdateCaches(ppistPost);
+
+    int iPost = PidinStackToSerial(ppistPost);
+
     //- set result
 
-    double dResult = ParameterResolveValue(pparPost, NULL);
-
-    if (dResult != DBL_MAX)
+    if (iPost != INT_MAX)
     {
-	iResult = dResult;
+	iResult = iPost;
     }
 
     //- return result
@@ -409,11 +447,6 @@ ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy, int iSource)
 /*     struct symtab_Parameters *pparPre */
 /* 	= SymbolFindParameter(&pconsy->bio.ioh.iol.hsle, ppist, "PRE"); */
 
-/* struct PidinStack * */
-/* ParameterResolveToPidinStack */
-/* (struct symtab_Parameters *ppar, */
-/*  struct PidinStack *ppist) */
-
     /// \note without parameter caches
 
     struct symtab_Parameters *pparPre
@@ -443,7 +476,7 @@ ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy, int iSource)
 	return(-1);
     }
 
-    //- convert pre paramter to context
+    //- convert pre parameter to context
 
     struct PidinStack *ppistPre
 	= ParameterResolveToPidinStack(pparPre, ppistSource);
@@ -454,6 +487,8 @@ ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy, int iSource)
     }
 
     //- convert pre context to serial
+
+    PidinStackUpdateCaches(ppistPre);
 
     int iPre = PidinStackToSerial(ppistPre);
 
@@ -496,12 +531,12 @@ ConnectionSymbolGetWeight(struct symtab_ConnectionSymbol *pconsy)
 
     /// \note without parameter caches
 
-    struct symtab_Parameters *pparPost
-	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "POST");
+    struct symtab_Parameters *pparWeight
+	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "WEIGHT");
 
     //- set result
 
-    double dWeight = ParameterResolveValue(pparPost, NULL);
+    double dWeight = ParameterResolveValue(pparWeight, NULL);
 
     if (dWeight != DBL_MAX)
     {
