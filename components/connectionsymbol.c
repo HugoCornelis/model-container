@@ -35,13 +35,11 @@
 
 
 /// 
-/// 
 /// \return struct symtab_ConnectionSymbol * 
 /// 
 ///	Newly allocated connection, NULL for failure
 /// 
 /// \brief Allocate a new connection symbol table element
-/// \details 
 /// 
 
 struct symtab_ConnectionSymbol * ConnectionSymbolCalloc(void)
@@ -71,16 +69,16 @@ struct symtab_ConnectionSymbol * ConnectionSymbolCalloc(void)
 
 
 /// 
-/// 
-/// \arg pconsy: connection with spike generator reference
-///	phsle symbol relative to which connection occurs (== population)
-///	ppist.: context of connection (== population)
+/// \arg pconsy connection with spike generator reference
+/// \arg phsle symbol relative to which connection occurs (== population)
+/// \arg ppist context of connection (== population)
 /// 
 /// \return struct PidinStack *
 /// 
 ///	spike generator, -1 for failure, NULL for none
 /// 
 /// \brief Get spike generator for connection
+/// 
 /// \details 
 /// 
 ///	ppist is context of source of projection to which this connection
@@ -130,16 +128,16 @@ ConnectionSymbolGetSpikeGenerator
 
 
 /// 
-/// 
-/// \arg pconsy: connection with spike receiver reference
-///	phsle symbol relative to which connection occurs (== population)
-///	ppist.: context of connection (== population)
+/// \arg pconsy connection with spike receiver reference
+/// \arg phsle symbol relative to which connection occurs (== population)
+/// \arg ppist context of connection (== population)
 /// 
 /// \return struct PidinStack *
 /// 
 ///	spike receiver, -1 for failure, NULL for none
 /// 
 /// \brief Get spike receiver for connection
+/// 
 /// \details 
 /// 
 ///	ppist is context of target of projection to which this connection
@@ -189,13 +187,11 @@ ConnectionSymbolGetSpikeReceiver
 
 
 /// 
-/// 
 /// \arg pconsy connection to init
 /// 
 /// \return void
 /// 
 /// \brief init connection
-/// \details 
 /// 
 
 /// next identifier for any connection
@@ -235,19 +231,17 @@ void ConnectionSymbolInit(struct symtab_ConnectionSymbol *pconsy)
 
 
 /// 
-/// 
 /// \arg pconsy connection to print symbols for
-///	bAll.....: TRUE == full list of symbols, FALSE == only given conn
+/// \arg bAll TRUE == full list of symbols, FALSE == only given conn
 /// \arg iIndent number of indentation spaces
 /// \arg pfile file to print output to
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Print symbol info for connection
-/// \details 
 /// 
 
-#define PrintConnectionSymbolIndent(iIndent,pfile)				\
+#define PrintConnectionSymbolIndent(iIndent,pfile)			\
 do									\
 {									\
     PrintIndent(iIndent,pfile);						\
@@ -304,7 +298,6 @@ int ConnectionSymbolPrint
 
 
 /// 
-/// 
 /// \arg pconsy connection to print symbols for.
 /// 
 /// \return double
@@ -312,7 +305,6 @@ int ConnectionSymbolPrint
 ///	Delay of connection, DBL_MAX for failure.
 /// 
 /// \brief Get delay of connection.
-/// \details 
 /// 
 
 double
@@ -350,7 +342,6 @@ ConnectionSymbolGetDelay(struct symtab_ConnectionSymbol *pconsy)
 
 
 /// 
-/// 
 /// \arg pconsy connection to print symbols for.
 /// 
 /// \return int
@@ -358,7 +349,6 @@ ConnectionSymbolGetDelay(struct symtab_ConnectionSymbol *pconsy)
 ///	Serial of post synaptic symbol, -1 for failure.
 /// 
 /// \brief Get serial of post synaptic symbol.
-/// \details 
 /// 
 
 int
@@ -396,7 +386,6 @@ ConnectionSymbolGetPost(struct symtab_ConnectionSymbol *pconsy)
 
 
 /// 
-/// 
 /// \arg pconsy connection to print symbols for.
 /// 
 /// \return int
@@ -404,11 +393,10 @@ ConnectionSymbolGetPost(struct symtab_ConnectionSymbol *pconsy)
 ///	Serial of pre synaptic symbol, -1 for failure.
 /// 
 /// \brief Get serial of pre synaptic symbol.
-/// \details 
 /// 
 
 int
-ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy)
+ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy, int iSource)
 {
     //- set default result: failure
 
@@ -447,7 +435,6 @@ ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy)
 
 
 /// 
-/// 
 /// \arg pconsy connection to print symbols for.
 /// 
 /// \return double
@@ -455,7 +442,6 @@ ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy)
 ///	Weight of connection, DBL_MAX for failure.
 /// 
 /// \brief Get weight of connection.
-/// \details 
 /// 
 
 double

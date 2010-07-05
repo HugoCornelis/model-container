@@ -61,7 +61,7 @@ int
 ConnectionSymbolGetPost(struct symtab_ConnectionSymbol *pconsy);
 
 int
-ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy);
+ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy, int iSource);
 
 double
 ConnectionSymbolGetWeight(struct symtab_ConnectionSymbol *pconsy);
@@ -70,9 +70,7 @@ ConnectionSymbolGetWeight(struct symtab_ConnectionSymbol *pconsy);
 #include "biocomp.h"
 
 
-/// \struct
 /// \struct connectionsymbol description
-/// \struct
 
 struct descr_ConnectionSymbol
 {
@@ -83,9 +81,7 @@ struct descr_ConnectionSymbol
 };
 
 
-/// \struct
 /// \struct struct symtab_ConnectionSymbol
-/// \struct
 
 struct symtab_ConnectionSymbol
 {
