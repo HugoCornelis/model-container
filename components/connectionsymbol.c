@@ -419,13 +419,49 @@ ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy, int iSource)
     struct symtab_Parameters *pparPre
 	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "PRE");
 
+    //- convert source to context
+
+    struct PidinStack *ppistRoot = PidinStackCalloc();
+
+    if (!ppistRoot)
+    {
+	fprintf(stdout, "cannot allocate a context\n");
+
+	return(-1);
+    }
+
+    PidinStackSetRooted(ppistRoot);
+
+    struct symtab_HSolveListElement *phsleRoot
+	= PidinStackLookupTopSymbol(ppistRoot);
+
+    struct PidinStack *ppistSource
+	= SymbolPrincipalSerial2Context(phsleRoot, ppistRoot, iSource);
+
+    if (!ppistSource)
+    {
+	return(-1);
+    }
+
+    //- convert pre paramter to context
+
+    struct PidinStack *ppistPre
+	= ParameterResolveToPidinStack(pparPre, ppistSource);
+
+    if (!ppistPre)
+    {
+	return(-1);
+    }
+
+    //- convert pre context to serial
+
+    int iPre = PidinStackToSerial(ppistPre);
+
     //- set result
 
-    double dResult = ParameterResolveValue(pparPre, NULL);
-
-    if (dResult != DBL_MAX)
+    if (iPre != INT_MAX)
     {
-	iResult = dResult;
+	iResult = iPre;
     }
 
     //- return result
