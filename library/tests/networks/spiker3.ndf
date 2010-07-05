@@ -5,13 +5,15 @@ NEUROSPACES NDF
 
 IMPORT
 
-	FILE mapper "mappers/spikegenerator.ndf"
+	FILE mapper1 "mappers/spikegenerator.ndf"
+	FILE mapper2 "mappers/spikereceiver.ndf"
 
 END IMPORT
 
 PRIVATE_MODELS
 
-	ALIAS mapper::/SpikeGen SpikeGen END ALIAS
+	ALIAS mapper1::/SpikeGen SpikeGen END ALIAS
+	ALIAS mapper2::/Synapse Synapse END ALIAS
 
 	CHANNEL kdr
 		BINDABLES
@@ -341,6 +343,7 @@ PRIVATE_MODELS
 				INPUT activation,OUTPUT G
 			END BINDABLES
 			BINDINGS
+                		INPUT ../synapse->activation
 			END BINDINGS
 
 			PARAMETERS
@@ -349,6 +352,9 @@ PRIVATE_MODELS
 			END PARAMETERS
 
 		END EQUATION_EXPONENTIAL
+
+		CHILD Synapse synapse
+		END CHILD
 
 	END CHANNEL
 
