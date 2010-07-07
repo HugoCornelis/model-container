@@ -45,7 +45,7 @@ PRIVATE_MODELS
 	
 				PARAMETERS
 					PARAMETER ( HH_AB_Scale = -550.0 ),
-					PARAMETER ( HH_AB_Mult = -10000.0 ),
+					PARAMETER ( HH_AB_Mult = 10000.0 ),
 					PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
 					PARAMETER ( HH_AB_Add = -1.0 ),
 					PARAMETER ( HH_AB_Offset_E = 0.055 ),
