@@ -6132,6 +6132,13 @@ static int QueryHandlerPrintSpikeReceiverCount
 
 	    fprintf(stdout, "Number of connections : %i\n", iConnections);
 
+	    //i
+	    //i Bug: These print statements can lead to a stall when stdout is blocking I/O on the 
+	    //i      fprintf statement. 
+	    //i      Bug only seems to be present in Mac OSX Leopard when the machine has other 
+	    //i      programs loaded and is running the nesting.t test in neurospaces_harness. 
+	    //i      Could be a sign of another subprocess putting an I/O lock on stdout.
+
 	    //- diag's
 
 	    fprintf
