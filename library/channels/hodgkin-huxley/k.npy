@@ -30,3 +30,5 @@ gkb.parameter("HH_AB_Add", 0.0 )
 gkb.parameter("HH_AB_Offset_E", 70e-3 )
 gkb.parameter("HH_AB_Tau", 80e-3 )
 
+c.parameter("POWER", 4 )
+
