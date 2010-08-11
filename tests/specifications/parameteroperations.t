@@ -384,6 +384,7 @@ Parameter (Z)
 						 ],
 				description => "finding parameter names, purkinje cell",
 # 				disabled => (!-e "$ENV{NEUROSPACES_NMC_MODELS}/gates/kdr_steadystate.ndf" ? "purkinje cell potassium channels not found" : ""),
+				mac_report => "Non critical bug, OSX sorts \'Tau\' before \'TAU\' while the expect is the opposite.",
 			       },
 			       {
 				arguments => [
