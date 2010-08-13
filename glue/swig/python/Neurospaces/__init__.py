@@ -159,8 +159,8 @@ class ModelContainer:
 
     def read_python(self, filename):
         "read an NPY model file"
-#         execfile("/usr/local/neurospaces/models/library/" + filename)
-        execfile("/local_home/hugo/neurospaces_project/model-container/source/snapshots/0/library/" + filename)
+        execfile("/usr/local/neurospaces/models/library/" + filename)
+#         execfile("/home/hugo/neurospaces_project/model-container/source/snapshots/0/library/" + filename)
 
     class Channel(Symbol):
         "ModelContainer.Channel constructor"
