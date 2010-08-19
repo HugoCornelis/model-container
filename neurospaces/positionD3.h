@@ -22,9 +22,6 @@
 #define POSITIOND3_H
 
 
-#include "double.h"
-
-
 /// \struct
 /// \struct 3D position
 /// \struct
@@ -57,7 +54,6 @@ do {									\
 #define D3SetX(pD3,dX)							\
 do {									\
     CompileTimeTestD3Type(pD3);						\
-    CompileTimeTestDouble(dX);						\
     (pD3)->dx = (dX);							\
 } while (0)
 
@@ -69,7 +65,6 @@ do {									\
 #define D3SetY(pD3,dY)							\
 do {									\
     CompileTimeTestD3Type(pD3);						\
-    CompileTimeTestDouble(dY);						\
     (pD3)->dy = (dY);							\
 } while (0)
 
@@ -81,7 +76,6 @@ do {									\
 #define D3SetZ(pD3,dZ)							\
 do {									\
     CompileTimeTestD3Type(pD3);						\
-    CompileTimeTestDouble(dZ);						\
     (pD3)->dz = (dZ);							\
 } while (0)
 
@@ -93,9 +87,6 @@ do {									\
 #define D3Set(pD3,dX,dY,dZ)						\
 do {									\
     CompileTimeTestD3Type(pD3);						\
-    CompileTimeTestDouble(dX);						\
-    CompileTimeTestDouble(dY);						\
-    CompileTimeTestDouble(dZ);						\
     (pD3)->dx = (dX);							\
     (pD3)->dy = (dY);							\
     (pD3)->dz = (dZ);							\

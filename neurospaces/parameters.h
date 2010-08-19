@@ -27,7 +27,6 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "double.h"
 #include "idin.h"
 /* #include "function.h" */
 

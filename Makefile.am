@@ -267,7 +267,6 @@ nobase_include_HEADERS = \
 	neurospaces/defsym.h \
 	neurospaces/dependencyfile.h \
 	neurospaces/exporter.h \
-	neurospaces/double.h \
 	neurospaces/function.h \
 	neurospaces/genesis/olf/olf_defs.h \
 	neurospaces/genesis/olf/olf_struct.h \
