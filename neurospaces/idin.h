@@ -121,62 +121,6 @@ struct symtab_IdentifierIndex
 /* #define FLAG_IDENTINDEX_RANGE		256 */
 
 
-/// \def
-/// \def test type(pidin) == struct symtab_IdentifierIndex * at compile time
-/// \def
-
-#define CompileTimeTestIdin(pidin)					\
-do {									\
-    struct symtab_IdentifierIndex idin;					\
-    (pidin) == &idin;							\
-} while (0)
-
-
-/// \def
-/// \def set flags for idin
-/// \def
-
-#define IdinSetFlags(pidin,iF)						\
-do {									\
-    CompileTimeTestIdin(pidin);						\
-    (pidin)->iFlags |= (iF);						\
-} while (0)
-
-
-/// \def
-/// \def set name of idin
-/// \def
-
-#define IdinSetName(pidin,pc)						\
-do {									\
-    CompileTimeTestIdin(pidin);						\
-    (pidin)->pcIdentifier = (pc);					\
-} while (0)
-
-
-/// \def
-/// \def remember idin is namespaced
-/// \def
-
-#define IdinSetNamespaced(pidin)					\
-do {									\
-    CompileTimeTestIdin(pidin);						\
-    IdinSetFlags(pidin,FLAG_IDENTINDEX_NAMESPACED);			\
-} while (0)
-
-
-/// \def
-/// \def remember idin is rooted
-/// \def
-
-#define IdinSetRooted(pidin)						\
-do {									\
-    CompileTimeTestIdin(pidin);						\
-    IdinSetFlags(pidin,FLAG_IDENTINDEX_ROOTED);				\
-} while (0)
-
-
-
 struct symtab_IdentifierIndex * IdinCalloc(void);
 
 struct symtab_IdentifierIndex * IdinCallocUnique(char *pc);
@@ -248,6 +192,26 @@ int IdinPointsToCurrent(struct symtab_IdentifierIndex *pidin);
 static inline
 #endif
 int IdinPointsToParent(struct symtab_IdentifierIndex *pidin);
+
+#ifndef SWIG
+static inline
+#endif
+int IdinSetFlags(struct symtab_IdentifierIndex *pidin, int iFlags);
+
+#ifndef SWIG
+static inline
+#endif
+int IdinSetName(struct symtab_IdentifierIndex *pidin, char *pc);
+
+#ifndef SWIG
+static inline
+#endif
+int IdinSetNamespaced(struct symtab_IdentifierIndex *pidin);
+
+#ifndef SWIG
+static inline
+#endif
+int IdinSetRooted(struct symtab_IdentifierIndex *pidin);
 
 
 /// 
@@ -489,6 +453,60 @@ static inline
 int IdinPointsToParent(struct symtab_IdentifierIndex *pidin)
 {
     return(IdinGetFlag(pidin, FLAG_IDENTINDEX_PARENT));
+}
+
+
+///
+/// set flags for idin
+///
+
+#ifndef SWIG
+static inline
+#endif
+int IdinSetFlags(struct symtab_IdentifierIndex *pidin, int iFlags)
+{
+    pidin->iFlags |= iFlags;
+
+    return(pidin->iFlags);
+}
+
+
+///
+/// set name of idin
+///
+
+#ifndef SWIG
+static inline
+#endif
+int IdinSetName(struct symtab_IdentifierIndex *pidin, char *pc)
+{
+    pidin->pcIdentifier = pc;
+}
+
+
+///
+/// remember idin is namespaced
+///
+
+#ifndef SWIG
+static inline
+#endif
+int IdinSetNamespaced(struct symtab_IdentifierIndex *pidin)
+{
+    return(IdinSetFlags(pidin, FLAG_IDENTINDEX_NAMESPACED));
+}
+
+
+///
+/// remember idin is rooted
+///
+
+#ifndef SWIG
+static inline
+#endif
+int IdinSetRooted(struct symtab_IdentifierIndex *pidin)
+{
+    return(IdinSetFlags(pidin, FLAG_IDENTINDEX_ROOTED));
 }
 
 
