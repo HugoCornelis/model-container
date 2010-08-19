@@ -397,7 +397,7 @@ static inline
 #endif
 int IdinIsRooted(struct symtab_IdentifierIndex *pidin)
 {
-    IdinGetFlag(pidin,FLAG_IDENTINDEX_ROOTED);
+    return(IdinGetFlag(pidin,FLAG_IDENTINDEX_ROOTED));
 }
 
 
@@ -475,7 +475,7 @@ static inline
 #endif
 int IdinPointsToCurrent(struct symtab_IdentifierIndex *pidin)
 {
-    IdinGetFlag(pidin, FLAG_IDENTINDEX_CURRENT);
+    return(IdinGetFlag(pidin, FLAG_IDENTINDEX_CURRENT));
 }
 
 
@@ -488,7 +488,7 @@ static inline
 #endif
 int IdinPointsToParent(struct symtab_IdentifierIndex *pidin)
 {
-    IdinGetFlag(pidin, FLAG_IDENTINDEX_PARENT);
+    return(IdinGetFlag(pidin, FLAG_IDENTINDEX_PARENT));
 }
 
 

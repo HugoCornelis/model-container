@@ -29,47 +29,6 @@ LEX_OUTPUT_ROOT = lex.parser
 LFLAGS=-i -l -Pparser
 YFLAGS=-dv -p parser
 AM_CFLAGS=-g3 -fPIC -Wmissing-prototypes -Wmissing-declarations -Wno-declaration-after-statement -include neurospaces/config.h -DPRE_PROTO_TRAVERSAL @PERL_CCOPTS@ -I$(top_builddir)
-CFLAGS = -O0
-
-# 140 -rw-r--r--  1 hugo hugo  138708 2009-04-19 16:03 analyzer.o
-# 168 -rw-r--r--  1 hugo hugo  166312 2009-04-19 16:03 parser.o
-#  92 -rw-r--r--  1 hugo hugo   89924 2009-04-19 16:03 attachment.o
-#  92 -rw-r--r--  1 hugo hugo   86136 2009-04-19 16:04 symbols.o
-#  92 -rw-r--r--  1 hugo hugo   89848 2009-04-19 16:04 importedfile.o
-#  84 -rw-r--r--  1 hugo hugo   80520 2009-04-19 16:04 dependencyfile.o
-#  88 -rw-r--r--  1 hugo hugo   85580 2009-04-19 16:04 defsym.o
-# 208 -rw-r--r--  1 hugo hugo  207132 2009-04-19 16:04 symboltable.o
-# 116 -rw-r--r--  1 hugo hugo  112360 2009-04-19 16:05 parsersupport.o
-
-# 108 -rw-r--r--  1 hugo hugo  105048 2009-04-19 16:05 pidinstack.o
-# 348 -rw-r--r--  1 hugo hugo  348996 2009-04-19 16:05 neurospaces.o
-#  88 -rw-r--r--  1 hugo hugo   83900 2009-04-19 16:05 inputoutput.o
-
-# for the startup test, the guilty one can be isolated to
-
-#  84 -rw-r--r--  1 hugo hugo   81756 2009-04-19 16:05 idin.o
-
-# which includes headers 
-
-#include "neurospaces/idin.h"
-#include "neurospaces/namespace.h"
-#include "neurospaces/symbols.h"
-##include "neurospaces.h"
-##include "algorithmset.h"
-##include "pidinstack.h"
-##include "symboltable.h"
-
-
-#include "neurospaces/components/vectorconnection.h"
-##include "connection.h"
-##include "vector.h"
-
-# for parsing of network-test.ndf, the guilty ones are idin.o and
-# pidinstack.o, but 80 tests still fail.  It seems related to
-# pidinstack logic at first sight.
-
-# also do a grep for 'optimize' in pidinstack.h, pragma based but
-# does not work.
 
 pkglib_LIBRARIES = libneurospacesread.a
 
