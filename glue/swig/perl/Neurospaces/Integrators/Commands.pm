@@ -74,9 +74,14 @@ sub ndf_load
 {
     my $filename = shift;
 
-    $GENESIS3::model_container->read(undef, [ 'genesis-g3', $filename, ], );
-
-    return "*** Ok: ndf_load $filename";
+    if ($GENESIS3::model_container->read(undef, [ 'genesis-g3', $filename, ], ))
+    {
+	return "*** Ok: ndf_load $filename";
+    }
+    else
+    {
+	return "*** Error: ndf_load $filename";
+    }
 }
 
 

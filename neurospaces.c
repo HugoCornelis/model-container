@@ -1,4 +1,4 @@
-static char *pcVersionTime="(10/04/28) Wednesday, April 28, 2010 10:10:31 hugo";
+static char *pcVersionTime="(10/08/24) Tuesday, August 24, 2010 02:53:01 cornelis";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -1283,6 +1283,10 @@ int NeurospacesRead(struct Neurospaces *pneuro, int argc, char *argv[])
     //- set default result : ok
 
     int iResult = TRUE;
+
+    //- initialize error count
+
+    pneuro->iErrorCount = 0;
 
     //- default : no configuration
 
