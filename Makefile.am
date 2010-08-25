@@ -154,8 +154,6 @@ am__tar = ${AMTAR} chf - --format=posix "$$tardir"
 
 dist-hook:
 	if test -n "$$NEUROSPACES_RELEASE" ; then cd $(srcdir) && if test -n "`mtn ls changed `" ; then false ; else true ; fi ; else true ; fi
-	find $(distdir) -name _Inline -exec chmod -R u+w \{\} \;
-	$(RM) -fr `find $(distdir) -name _Inline`
 	$(RM) -fr hierarchy/output
 	cp $(srcdir)/neurospaces.prj $(distdir)
 	cp $(srcdir)/abstract.txt $(distdir)
@@ -335,7 +333,6 @@ CLEANFILES = \
 
 clean-local:
 	find $(srcdir) -type d -exec chmod -R u+w \{\} \;
-	$(RM) -fr `find $(srcdir) -name _Inline`
 	$(RM) -fr $(srcdir)/hierarchy/output
 	$(RM) -rf $(top_srcdir)/docs/html
 	$(RM) -rf $(top_srcdir)/docs/model-container
