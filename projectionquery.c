@@ -483,6 +483,101 @@ int ProjectionQueryCountConnections(struct ProjectionQuery *ppq)
 
 /// 
 /// \arg ppq projection query
+/// 
+/// \return int : number of different pre-synaptic serials, -1 for
+/// failure
+/// 
+/// \brief Count number of different pre-synaptic serials for all
+/// projections in query.
+/// 
+
+int ProjectionQueryCountPreSerials(struct ProjectionQuery *ppq)
+{
+    //- set default result : failure
+
+    int iResult = -1;
+
+    //- if no caches for projection query
+
+    if ((!ppq->pcc
+	 || !ppq->poccPre
+	 || !ppq->poccPost)
+	&& ppq->bCaching)
+    {
+	//- build caches first
+
+	if (!ProjectionQueryBuildCaches(ppq))
+	{
+	    return(-1);
+	}
+    }
+
+    //- if cursor already in use
+
+    if (ppq->iCursor != -1)
+    {
+	//- return failure
+
+	return(-1);
+    }
+
+    //- if no connections
+
+    int iConnections = ConnectionCacheGetNumberOfConnections(ppq->pcc);
+
+    if (iConnections == -1)
+    {
+	return(-1);
+    }
+
+    if (iConnections == 0)
+    {
+	//- then no connections either
+
+	return(0);
+    }
+
+    //- loop over the pre-synaptically ordered connection cache
+
+    iResult = 0;
+
+    int i;
+
+    int iLastPre = -1;
+
+    for (i = 0 ; i < ConnectionCacheGetNumberOfConnections(ppq->pcc) ; i++)
+    {
+	//- if this connection has a different pre-synaptic serial
+
+	struct CachedConnection *pcconn = OrderedConnectionCacheGetEntry(ppq->poccPre, i);
+
+	if (iLastPre != pcconn->iPre)
+	{
+	    iLastPre = pcconn->iPre;
+
+	    //- increment number of serials seen
+
+	    iResult++;
+	}
+    }
+
+    //- if the projection query is not from a file cache
+
+    if (ppq->iCursor != 100000)
+    {
+	//- reset cursor
+
+	ppq->iCursor = -1;
+    }
+
+    //- return result
+
+    return(iResult);
+}
+
+
+/// 
+/// \arg ppq projection query
 /// \arg ppist spike generator
 /// 
 /// \return int : number of connections, -1 for failure
