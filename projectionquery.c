@@ -545,7 +545,7 @@ int ProjectionQueryCountPreSerials(struct ProjectionQuery *ppq)
 
     int iLastPre = -1;
 
-    for (i = 0 ; i < ConnectionCacheGetNumberOfConnections(ppq->pcc) ; i++)
+    for (i = 0 ; i < iConnections ; i++)
     {
 	//- if this connection has a different pre-synaptic serial
 
