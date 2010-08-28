@@ -43,13 +43,11 @@ static int iRegistrationMax = 0;
 
 
 /// 
-/// 
 /// \return struct SolverInfo * 
 /// 
 ///	Newly allocated solver info, NULL for failure
 /// 
 /// \brief Allocate a new solver info
-/// \details 
 /// 
 
 struct SolverInfo * SolverInfoCalloc()
@@ -69,14 +67,12 @@ struct SolverInfo * SolverInfoCalloc()
 
 
 /// 
-/// 
 /// \arg psi solver info
 /// \arg ppq projection query
 /// 
 /// \return int : number of incoming connections, -1 for failure
 /// 
 /// \brief Count incoming connections in projection query for given solver
-/// \details 
 /// 
 
 struct SolverInfoIncomingConnectionData
@@ -265,13 +261,11 @@ int SolverInfoCountIncomingConnections
 
 
 /// 
-/// 
 /// \arg psi solver info to free
 /// 
 /// \return void
 /// 
 /// \brief Free solver info
-/// \details 
 /// 
 
 void SolverInfoFree(struct SolverInfo * psi)
@@ -290,13 +284,11 @@ void SolverInfoFree(struct SolverInfo * psi)
 
 
 /// 
-/// 
 /// \arg psi solver info to get info on
 /// 
 /// \return char * : solver identification
 /// 
 /// \brief Get solver path from solver info
-/// \details 
 /// 
 
 char * SolverInfoGetSolver(struct SolverInfo *psi)
@@ -308,7 +300,6 @@ char * SolverInfoGetSolver(struct SolverInfo *psi)
 
 
 /// 
-/// 
 /// \arg psi solver info to init
 /// \arg ppist context stack of solved symbol
 ///	pcSolver.: init string, path specification
@@ -316,7 +307,6 @@ char * SolverInfoGetSolver(struct SolverInfo *psi)
 /// \return void
 /// 
 /// \brief Init solver info
-/// \details 
 /// 
 /// \note  
 /// 
@@ -350,7 +340,6 @@ void SolverInfoInit
 
 
 /// 
-/// 
 /// \arg psi solver info
 /// \arg iPrincipal principal serial ID for symbol solved by psi
 /// 
@@ -359,7 +348,6 @@ void SolverInfoInit
 ///	solved symbol, NULL for failure
 /// 
 /// \brief Convert solver serial ID to symbol info.
-/// \details 
 /// 
 /// \note 
 /// 
@@ -604,14 +592,12 @@ SolverInfoLookupContextFromPrincipalSerial
 
 
 /// 
-/// 
 /// \arg psi solver info
 /// \arg ppist: context to lookup
 /// 
 /// \return int  serial ID relative to solver info, -1 for failure
 /// 
 /// \brief Get a solver serial ID.
-/// \details 
 /// 
 /// \note 
 /// 
@@ -686,13 +672,13 @@ int SolverInfoLookupPrincipalSerial
 
 
 /// 
-/// 
 /// \arg psi solver info
 /// \arg iSerial rooted symbol serial
 /// 
 /// \return int : serial relative to given solver info, -1 for failure
 /// 
 /// \brief Recalculate rooted serial to serial relative to solver info.
+/// 
 /// \details 
 /// 
 ///	This function will fail if the serial is not in the solved set.
@@ -743,7 +729,6 @@ int SolverInfoLookupRelativeSerial(struct SolverInfo *psi,int iSerial)
 
 
 /// 
-/// 
 /// \arg psi solver info
 /// \arg ppist: receives context of topmost symbol
 /// 
@@ -752,7 +737,6 @@ int SolverInfoLookupRelativeSerial(struct SolverInfo *psi,int iSerial)
 ///	ppist: receives context of topmost symbol
 /// 
 /// \brief Lookup solved top symbol
-/// \details 
 /// 
 
 struct symtab_HSolveListElement *
@@ -796,13 +780,11 @@ SolverInfoLookupTopSymbol(struct SolverInfo *psi,struct PidinStack *ppist)
 
 
 /// 
-/// 
 /// \arg psi solver info
 /// 
 /// \return struct PidinStack * : context associated by psi
 /// 
 /// \brief Get context associated with psi
-/// \details 
 /// 
 
 struct PidinStack * SolverInfoPidinStack(struct SolverInfo * psi)
@@ -818,14 +800,12 @@ struct PidinStack * SolverInfoPidinStack(struct SolverInfo * psi)
 
 
 /// 
-/// 
 /// \arg psi solver info
 /// \arg iPrincipal serial ID in principal space to convert
 /// 
 /// \return int : serial ID in segment space, -1 for failure
 /// 
 /// \brief Convert a principal serial to segment serial.
-/// \details 
 /// 
 
 #ifdef TREESPACES_SUBSET_SEGMENT
@@ -916,14 +896,12 @@ SolverInfoPrincipalSerial2SegmentSerial
 
 
 /// 
-/// 
 /// \arg pv must be NULL
 /// \arg psi solver info to register
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Register that a solver has been registered for a symbol
-/// \details 
 /// 
 
 int SolverInfoRegistrationAdd(void *pv,struct SolverInfo *psi)
@@ -957,11 +935,9 @@ int SolverInfoRegistrationAdd(void *pv,struct SolverInfo *psi)
 
 
 /// 
-/// 
 /// \return int : success of operation
 /// 
 /// \brief Add registration entries
-/// \details 
 /// 
 
 static int SolverInfoRegistrationAddEntries(void)
@@ -1005,7 +981,6 @@ static int SolverInfoRegistrationAddEntries(void)
 
 
 /// 
-/// 
 /// \arg pv must be NULL
 /// \arg ppist wildcard for solved symbols
 /// \arg pcSolver name of solver (identification path)
@@ -1013,7 +988,6 @@ static int SolverInfoRegistrationAddEntries(void)
 /// \return struct SolverInfo * : allocated solver info, NULL for failure
 /// 
 /// \brief Initialize solver info and register in global table.
-/// \details 
 /// 
 
 struct SolverInfo *SolverInfoRegistrationAddFromContext
@@ -1036,11 +1010,9 @@ struct SolverInfo *SolverInfoRegistrationAddFromContext
 
 
 /// 
-/// 
 /// \return int : success of operation
 /// 
 /// \brief Give some info about all solver info registrations
-/// \details 
 /// 
 
 int SolverInfoRegistrationEnumerate(void)
@@ -1069,13 +1041,13 @@ int SolverInfoRegistrationEnumerate(void)
 
 
 /// 
-/// 
 /// \arg pv must be NULL
 /// \arg ppist symbol context
 /// 
 /// \return struct SolverInfo * : solver info, NULL for failure
 /// 
 /// \brief Try to find solver info for given symbol with context
+/// 
 /// \details 
 /// 
 ///	if returned solver info does not match solver info in symbol, you 
@@ -1133,14 +1105,12 @@ SolverInfoRegistrationGet(void *pv,struct PidinStack *ppist)
 
 
 /// 
-/// 
 /// \arg pv must be NULL.
 /// \arg iSerial rooted symbol serial.
 /// 
 /// \return struct SolverInfo * : solver info, NULL for failure
 /// 
 /// \brief Try to find solver info for given serial.
-/// \details 
 /// 
 /// \note 
 /// 
@@ -1181,14 +1151,12 @@ SolverInfoRegistrationGetForAbsoluteSerial(void *pv,int iSerial)
 
 
 /// 
-/// 
 /// \arg psi solver info.
 /// \arg iSerial rooted symbol serial.
 /// 
 /// \return int : TRUE if serial in solved set.
 /// 
 /// \brief Check if serial in solved set.
-/// \details 
 /// 
 
 int SolverInfoSerialInSolvedSet(struct SolverInfo *psi,int iSerial)
