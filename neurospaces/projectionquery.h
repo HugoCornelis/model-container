@@ -141,6 +141,8 @@ struct ProjectionQuery *ProjectionQueryClone(struct ProjectionQuery *ppq);
 
 int ProjectionQueryCountConnections(struct ProjectionQuery *ppq);
 
+int ProjectionQueryCountPreSerials(struct ProjectionQuery *ppq);
+
 int
 ProjectionQueryCountConnectionsForSpikeGenerator
 (struct ProjectionQuery *ppq,struct PidinStack *ppist);
