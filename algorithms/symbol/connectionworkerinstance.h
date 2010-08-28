@@ -26,6 +26,19 @@ struct PidinStack *
 ConnectionWorkerInstanceGetParameterContext
 (struct AlgorithmInstance *palgi);
 
+struct PidinStack *
+ConnectionWorkerInstanceGetNetwork
+(struct AlgorithmInstance *palgi, struct ParserContext *pac);
+
+
+struct PidinStack *
+ConnectionWorkerInstanceGetProjection
+(struct AlgorithmInstance *palgi, struct ParserContext *pac, char *pcProjection);
+
+
+struct PidinStack *
+ConnectionWorkerInstanceGetSource
+(struct AlgorithmInstance *palgi, struct ParserContext *pac);
 
 #endif
 

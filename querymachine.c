@@ -59,6 +59,7 @@ extern "C" {
 
 #include "neurospaces/algorithmset.h"
 #include "neurospaces/biolevel.h"
+#include "neurospaces/cachedconnection.h"
 #include "neurospaces/components/attachment.h"
 #include "neurospaces/components/root.h"
 #include "neurospaces/components/segment.h"
@@ -3083,12 +3084,12 @@ static int QueryHandlerPQCount
 		(stdout,
 		 "user time = %lis, %lius\n",
 		 tvUser.tv_sec,
-		 tvUser.tv_usec);
+		 (long int)tvUser.tv_usec);
 	    fprintf
 		(stdout,
 		 "system time = %lis, %lius\n",
 		 tvSystem.tv_sec,
-		 tvSystem.tv_usec);
+		 (long int)tvSystem.tv_usec);
 
 	    //- free cloned projection query
 
@@ -3761,12 +3762,12 @@ static int QueryHandlerPQSet
 		    (stdout,
 		     "user time = %lis, %lius\n",
 		     tvUser.tv_sec,
-		     tvUser.tv_usec);
+		     (long int)tvUser.tv_usec);
 		fprintf
 		    (stdout,
 		     "system time = %lis, %lius\n",
 		     tvSystem.tv_sec,
-		     tvSystem.tv_usec);
+		     (long int)tvSystem.tv_usec);
 
 	    }
 
@@ -4048,12 +4049,12 @@ static int QueryHandlerPQSetAll
 		    (stdout,
 		     "user time = %lis, %lius\n",
 		     tvUser.tv_sec,
-		     tvUser.tv_usec);
+		     (long int)tvUser.tv_usec);
 		fprintf
 		    (stdout,
 		     "system time = %lis, %lius\n",
 		     tvSystem.tv_sec,
-		     tvSystem.tv_usec);
+		     (long int)tvSystem.tv_usec);
 
 	    }
 
@@ -4143,11 +4144,11 @@ QueryMachineNeuroConnectionTraverser
 
 	if (subsetof_cached_connection(iType))
 	{
-	    CachedConnectionPrint(pconn, TRUE, 8, stdout);
+	  CachedConnectionPrint(pconn, TRUE, 8, stdout);
 	}
 	else if (subsetof_connection(iType))
 	{
-	    ConnectionPrint(pconn, TRUE, 8, stdout);
+	  ConnectionPrint(pconn, TRUE, 8, stdout);
 	}
 
 	//- increment serial count
@@ -4330,12 +4331,12 @@ static int QueryHandlerPQTraverse
 		(stdout,
 		 "user time = %lis, %lius\n",
 		 tvUser.tv_sec,
-		 tvUser.tv_usec);
+		 (long int)tvUser.tv_usec);
 	    fprintf
 		(stdout,
 		 "system time = %lis, %lius\n",
 		 tvSystem.tv_sec,
-		 tvSystem.tv_usec);
+		 (long int)tvSystem.tv_usec);
 
 	}
 
@@ -4654,12 +4655,12 @@ static int QueryHandlerPrintConnectionCount
 	    (stdout,
 	     "user time = %lis, %lius\n",
 	     tvUser.tv_sec,
-	     tvUser.tv_usec);
+	     (long int)tvUser.tv_usec);
 	fprintf
 	    (stdout,
 	     "system time = %lis, %lius\n",
 	     tvSystem.tv_sec,
-	     tvSystem.tv_usec);
+	     (long int)tvSystem.tv_usec);
     }
 
     //- else
@@ -4841,12 +4842,12 @@ static int QueryHandlerPrintCoordinates
 		    (stdout,
 		     "user time = %lis, %lius\n",
 		     tvUser.tv_sec,
-		     tvUser.tv_usec);
+		     (long int)tvUser.tv_usec);
 		fprintf
 		    (stdout,
 		     "system time = %lis, %lius\n",
 		     tvSystem.tv_sec,
-		     tvSystem.tv_usec);
+		     (long int)tvSystem.tv_usec);
 	    }
 	    else
 	    {
@@ -5764,7 +5765,7 @@ ParameterNameComparator
     char *pc1 = ParameterGetName(*pppar1);
     char *pc2 = ParameterGetName(*pppar2);
 
-    return strcasecmp(pc1, pc2);
+    return strcmp(pc1, pc2);
 }
 
 static int
@@ -6145,12 +6146,12 @@ static int QueryHandlerPrintSpikeReceiverCount
 		(stdout,
 		 "user time = %lis, %lius\n",
 		 tvUser.tv_sec,
-		 tvUser.tv_usec);
+		 (long int)tvUser.tv_usec);
 	    fprintf
 		(stdout,
 		 "system time = %lis, %lius\n",
 		 tvSystem.tv_sec,
-		 tvSystem.tv_usec);
+		 (long int)tvSystem.tv_usec);
 
 	}
 
@@ -6386,12 +6387,12 @@ static int QueryHandlerPrintSpikeSenderCount
 		(stdout,
 		 "user time = %lis, %lius\n",
 		 tvUser.tv_sec,
-		 tvUser.tv_usec);
+		 (long int)tvUser.tv_usec);
 	    fprintf
 		(stdout,
 		 "system time = %lis, %lius\n",
 		 tvSystem.tv_sec,
-		 tvSystem.tv_usec);
+		 (long int)tvSystem.tv_usec);
 
 	}
 
@@ -6849,12 +6850,12 @@ static int QueryHandlerProjectionQuery
 		(stdout,
 		 "user time = %lis, %lius\n",
 		 tvUser.tv_sec,
-		 tvUser.tv_usec);
+		 (long int)tvUser.tv_usec);
 	    fprintf
 		(stdout,
 		 "system time = %lis, %lius\n",
 		 tvSystem.tv_sec,
-		 tvSystem.tv_usec);
+		 (long int)tvSystem.tv_usec);
 
 	}
 
@@ -7211,12 +7212,12 @@ static int QueryHandlerProjectionQueryCount
 		(stdout,
 		 "user time = %lis, %lius\n",
 		 tvUser.tv_sec,
-		 tvUser.tv_usec);
+		 (long int)tvUser.tv_usec);
 	    fprintf
 		(stdout,
 		 "system time = %lis, %lius\n",
 		 tvSystem.tv_sec,
-		 tvSystem.tv_usec);
+		 (long int)tvSystem.tv_usec);
 
 	    //- free projection query
 

@@ -1,4 +1,4 @@
-static char *pcVersionTime="(10/08/24) Tuesday, August 24, 2010 02:53:01 cornelis";
+static char *pcVersionTime="(10/08/28) Saturday, August 28, 2010 01:31:00 Abominous";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -1136,7 +1136,7 @@ NeurospacesMessage
     }
     else
     {
-	fprintf(stdout, pcFormat);
+        fprintf(stdout, "%s", pcFormat);
     }
 
     //- if timings report for all messages
@@ -1816,7 +1816,7 @@ static int NeurospacesStartTimingReport(void)
 	(stdout,
 	 "<gettimeofday sec=\"%li\" usec=\"%li\" />",
 	 tvReport.tv_sec,
-	 tvReport.tv_usec);
+	 (long int)tvReport.tv_usec);
 
     //- put resource usage
 
@@ -1830,7 +1830,7 @@ static int NeurospacesStartTimingReport(void)
 	(stdout,
 	 "<ru_utime sec=\"%li\" usec=\"%li\" />",
 	 ru.ru_utime.tv_sec,
-	 ru.ru_utime.tv_usec);
+	 (long int)ru.ru_utime.tv_usec);
     fprintf(stdout, "</getrusage>");
 
     /// \todo other possibilities :

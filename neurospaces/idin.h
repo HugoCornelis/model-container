@@ -320,8 +320,16 @@ int IdinIsPrintable(struct symtab_IdentifierIndex *pidin)
 
     /// \todo this gives a warning on 64bit architectures.
     /// \todo I might need to do a different cast here.
+    /// \note 8/28/2010 - A long or long int cast solved the warning on 64bit arch since a long is 
+    /// also 64bits. The preprocessor commands to detect 64 bit don't seem to be working on a Xeon.
+    
+/* #if defined(_M_X64) */
+/*     if ((long int)pidin & 1) */
+/* #else */
+/*     if ((int)pidin & 1) */
+/* #endif */
 
-    if ((int)pidin & 1)
+    if ((int)pidin & 1) 
     {
 	return(FALSE);
     }
