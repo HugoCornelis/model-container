@@ -7487,7 +7487,7 @@ static int QueryHandlerResolveSolverID
 	    fprintf
 		(stdout,
 		 "Solver = %s, solver serial ID = %i\n",
-		 SolverInfoGetSolver(psi),
+		 SolverInfoGetSolverString(psi),
 		 iSerialID);
 
 	    //- convert serial back to context
@@ -9199,7 +9199,7 @@ static int QueryHandlerSolverGet
     {
 	//- get solver
 
-	char *pcSolver = SolverInfoGetSolver(psi);
+	char *pcSolver = SolverInfoGetSolverString(psi);
 
 	if (pcSolver)
 	{

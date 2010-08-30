@@ -128,12 +128,16 @@ my $test
 						   description => "Have the solvers been registered right ?",
 						   read => "
   - name: /Granules
+    solver: not registered
     context: /CerebellarCortex/Granules/**
   - name: /Golgis
+    solver: not registered
     context: /CerebellarCortex/Golgis/**
   - name: /Purkinje[0]
+    solver: not registered
     context: /CerebellarCortex/Purkinjes/0/**
   - name: /Purkinje[1]
+    solver: not registered
     context: /CerebellarCortex/Purkinjes/1/**
 ",
 						   write => "solverregistrations",

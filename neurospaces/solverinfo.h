@@ -28,9 +28,13 @@ struct SolverInfo;
 
 struct SolverInfo
 {
-    /// (absolute ?) path specification, identifies a solver
+    /// human readable solver ID
 
     char *pcSolver;
+
+    /// internal solver ID, solver or proxy
+
+    void *pvSolver;
 
     /// context stack of solved symbol
 
@@ -60,46 +64,47 @@ int SolverInfoCountIncomingConnections
 
 void SolverInfoFree(struct SolverInfo * psi);
 
-char * SolverInfoGetSolver(struct SolverInfo *psi);
+char * SolverInfoGetSolverString(struct SolverInfo *psi);
 
-void SolverInfoInit
-(struct SolverInfo * psi,struct PidinStack *ppist,char *pcSolver);
+int
+SolverInfoInit
+(struct SolverInfo * psi, void *pvSolver, struct PidinStack *ppist, char *pcSolver);
 
 struct PidinStack *
 SolverInfoLookupContextFromPrincipalSerial
-(struct SolverInfo *psi,int iPrincipal);
+(struct SolverInfo *psi, int iPrincipal);
 
 int SolverInfoLookupPrincipalSerial
-(struct SolverInfo *psi,struct PidinStack *ppist);
+(struct SolverInfo *psi, struct PidinStack *ppist);
 
-int SolverInfoLookupRelativeSerial(struct SolverInfo *psi,int iSerial);
+int SolverInfoLookupRelativeSerial(struct SolverInfo *psi, int iSerial);
 
 struct symtab_HSolveListElement *
-SolverInfoLookupTopSymbol(struct SolverInfo *psi,struct PidinStack *ppist);
+SolverInfoLookupTopSymbol(struct SolverInfo *psi, struct PidinStack *ppist);
 
 struct PidinStack * SolverInfoPidinStack(struct SolverInfo * psi);
 
 #ifdef TREESPACES_SUBSET_SEGMENT
 int 
 SolverInfoPrincipalSerial2SegmentSerial
-(struct SolverInfo *psi,int iPrincipal);
+(struct SolverInfo *psi, int iPrincipal);
 #endif
 
-int SolverInfoRegistrationAdd(void *pv,struct SolverInfo * psi);
+int SolverInfoRegistrationAdd(void *pv, struct SolverInfo * psi);
 
 struct SolverInfo *SolverInfoRegistrationAddFromContext
-(void *pv,struct PidinStack *ppist,char *pcSolver);
+(void *pv,struct PidinStack *ppist, char *pcSolver);
 
 int SolverInfoRegistrationEnumerate(void);
 
 struct SolverInfo * 
 SolverInfoRegistrationGet
-(void *pv,struct PidinStack *ppist);
+(void *pv, struct PidinStack *ppist);
 
 struct SolverInfo *
-SolverInfoRegistrationGetForAbsoluteSerial(void *pv,int iSerial);
+SolverInfoRegistrationGetForAbsoluteSerial(void *pv, int iSerial);
 
-int SolverInfoSerialInSolvedSet(struct SolverInfo *psi,int iSerial);
+int SolverInfoSerialInSolvedSet(struct SolverInfo *psi, int iSerial);
 
 
 #endif

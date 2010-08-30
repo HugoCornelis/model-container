@@ -680,7 +680,7 @@ sub output_2_solverinfo
 	return "No solver info found for $component_name";
     }
 
-    my $solver = $solverinfo->SolverInfoGetSolver();
+    my $solver = $solverinfo->SolverInfoGetSolverString();
 
     if (!defined $solver)
     {

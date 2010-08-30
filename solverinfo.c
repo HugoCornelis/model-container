@@ -291,7 +291,7 @@ void SolverInfoFree(struct SolverInfo * psi)
 /// \brief Get solver path from solver info
 /// 
 
-char * SolverInfoGetSolver(struct SolverInfo *psi)
+char * SolverInfoGetSolverString(struct SolverInfo *psi)
 {
     //- return result
 
@@ -314,8 +314,9 @@ char * SolverInfoGetSolver(struct SolverInfo *psi)
 ///	same solver, "**" is appended to indicate (== wildcard).
 /// 
 
-void SolverInfoInit
-(struct SolverInfo * psi, struct PidinStack *ppist, char *pcSolver)
+int
+SolverInfoInit
+(struct SolverInfo * psi, void *pvSolver, struct PidinStack *ppist, char *pcSolver)
 {
     //- wildcard to add if necessary
 
@@ -325,9 +326,7 @@ void SolverInfoInit
 
     //- allocate & copy string
 
-    psi->pcSolver = (char *)calloc(1 + strlen(pcSolver), 1);
-
-    strcpy(psi->pcSolver, pcSolver);
+    psi->pcSolver = strdup(pcSolver);
 
     //- copy context of solved symbol
 
@@ -336,6 +335,10 @@ void SolverInfoInit
     //- push wildcard
 
     PidinStackPush(psi->ppist, pidin);
+
+    //- register internal solver ID, note: can be a proxy
+
+    psi->pvSolver = pvSolver;
 }
 
 
@@ -981,23 +984,24 @@ static int SolverInfoRegistrationAddEntries(void)
 
 
 /// 
-/// \arg pv must be NULL
-/// \arg ppist wildcard for solved symbols
-/// \arg pcSolver name of solver (identification path)
+/// \arg pvSolver solver or proxy pointer.
+/// \arg ppist wildcard for solved symbols.
+/// \arg pcSolver name of solver (identification path).
 /// 
 /// \return struct SolverInfo * : allocated solver info, NULL for failure
 /// 
 /// \brief Initialize solver info and register in global table.
 /// 
 
-struct SolverInfo *SolverInfoRegistrationAddFromContext
-(void *pv, struct PidinStack *ppist, char *pcSolver)
+struct SolverInfo *
+SolverInfoRegistrationAddFromContext
+(void *pvSolver, struct PidinStack *ppist, char *pcSolver)
 {
     //- set result : allocate and init new solver info
 
     struct SolverInfo *psiResult = SolverInfoCalloc();
 
-    SolverInfoInit(psiResult, ppist, pcSolver);
+    SolverInfoInit(psiResult, pvSolver, ppist, pcSolver);
 
     //- register in global table
 
@@ -1032,6 +1036,8 @@ int SolverInfoRegistrationEnumerate(void)
 	//- print info
 
 	fprintf(stdout, "  - name: %s\n", ppsiRegistrations[i]->pcSolver);
+
+	fprintf(stdout, "    solver: %s\n", (ppsiRegistrations[i]->pvSolver == NULL) ? "not registered" : "registered");
 
 	fprintf(stdout, "    context: ");
 
