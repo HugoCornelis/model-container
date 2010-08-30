@@ -20,7 +20,6 @@ my $test
 						   description => "Is neurospaces startup successful ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/network-test.ndf.', ],
 						   timeout => 100,
-						   write => undef,
 						  },
 						  {
 						   description => "What is the number of connections on the AMPA channel of the first Golgi cell ?",
@@ -127,21 +126,15 @@ my $test
 						  },
 						  {
 						   description => "Have the solvers been registered right ?",
-						   read => "Solver registration 0 :
-/CerebellarCortex/Granules/**
-		Solved by (/Granules)
-
-Solver registration 1 :
-/CerebellarCortex/Golgis/**
-		Solved by (/Golgis)
-
-Solver registration 2 :
-/CerebellarCortex/Purkinjes/0/**
-		Solved by (/Purkinje[0])
-
-Solver registration 3 :
-/CerebellarCortex/Purkinjes/1/**
-		Solved by (/Purkinje[1])
+						   read => "
+  - name: /Granules
+    context: /CerebellarCortex/Granules/**
+  - name: /Golgis
+    context: /CerebellarCortex/Golgis/**
+  - name: /Purkinje[0]
+    context: /CerebellarCortex/Purkinjes/0/**
+  - name: /Purkinje[1]
+    context: /CerebellarCortex/Purkinjes/1/**
 ",
 						   write => "solverregistrations",
 						  },

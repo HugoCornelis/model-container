@@ -35,11 +35,11 @@ static int SolverInfoRegistrationAddEntries(void);
 
 /// all solver registrations
 
-static struct SolverInfo **ppsiRegistrations = NULL;
+struct SolverInfo **ppsiRegistrations = NULL;
 
-static int iRegistrations = 0;
+int iRegistrations = 0;
 
-static int iRegistrationMax = 0;
+int iRegistrationMax = 0;
 
 
 /// 
@@ -58,7 +58,7 @@ struct SolverInfo * SolverInfoCalloc()
 
     //- allocate
 
-    psiResult = (struct SolverInfo *)calloc(1,sizeof(struct SolverInfo));
+    psiResult = (struct SolverInfo *)calloc(1, sizeof(struct SolverInfo));
 
     //- return result
 
@@ -91,7 +91,7 @@ struct SolverInfoIncomingConnectionData
 
 static int 
 SolverInfoIncomingConnectionCounter
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     /// \note We know this will only be called on connections
     /// \note associated with a registered spike receiver
@@ -123,7 +123,7 @@ SolverInfoIncomingConnectionCounter
     }
     else
     {
-	fprintf(stdout,"Encountering non-connections for spike receiver\n");
+	fprintf(stdout, "Encountering non-connections for spike receiver\n");
     }
 
     //- return result : remember will not go any deeper
@@ -133,7 +133,7 @@ SolverInfoIncomingConnectionCounter
 
 static int 
 SolverInfoSpikeReceiver2ConnectionProcessor
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     /// \note We know this will only be called on spike receivers
 
@@ -180,7 +180,7 @@ SolverInfoSpikeReceiver2ConnectionProcessor
     }
     else
     {
-	fprintf(stdout,"Encountering non-attachments for spike receiver\n");
+	fprintf(stdout, "Encountering non-attachments for spike receiver\n");
     }
 
     //- return result : remember will not go any deeper
@@ -189,7 +189,7 @@ SolverInfoSpikeReceiver2ConnectionProcessor
 }
 
 int SolverInfoCountIncomingConnections
-(struct SolverInfo *psi,struct ProjectionQuery *ppq)
+(struct SolverInfo *psi, struct ProjectionQuery *ppq)
 {
     //- set default result : none
 
@@ -217,7 +217,7 @@ int SolverInfoCountIncomingConnections
     struct PidinStack *ppist = PidinStackCalloc();
 
     struct symtab_HSolveListElement *phsleSolved
-	= SolverInfoLookupTopSymbol(psi,ppist);
+	= SolverInfoLookupTopSymbol(psi, ppist);
 
     if (!phsleSolved)
     {
@@ -315,19 +315,19 @@ char * SolverInfoGetSolver(struct SolverInfo *psi)
 /// 
 
 void SolverInfoInit
-(struct SolverInfo * psi,struct PidinStack *ppist,char *pcSolver)
+(struct SolverInfo * psi, struct PidinStack *ppist, char *pcSolver)
 {
     //- wildcard to add if necessary
 
     struct symtab_IdentifierIndex *pidin = IdinCalloc();
 
-    IdinSetName(pidin,"**");
+    IdinSetName(pidin, "**");
 
     //- allocate & copy string
 
-    psi->pcSolver = (char *)calloc(1 + strlen(pcSolver),1);
+    psi->pcSolver = (char *)calloc(1 + strlen(pcSolver), 1);
 
-    strcpy(psi->pcSolver,pcSolver);
+    strcpy(psi->pcSolver, pcSolver);
 
     //- copy context of solved symbol
 
@@ -335,7 +335,7 @@ void SolverInfoInit
 
     //- push wildcard
 
-    PidinStackPush(psi->ppist,pidin);
+    PidinStackPush(psi->ppist, pidin);
 }
 
 
@@ -374,7 +374,7 @@ void SolverInfoInit
 
 /* static int  */
 /* SolverInfoPrincipal2SymbolSelector */
-/* (struct TreespaceTraversal *ptstr,void *pvUserdata) */
+/* (struct TreespaceTraversal *ptstr, void *pvUserdata) */
 /* { */
 /*     //- set default result : siblings */
 
@@ -437,7 +437,7 @@ void SolverInfoInit
 
 /* static int  */
 /* SolverInfoPrincipal2SymbolConvertor */
-/* (struct TreespaceTraversal *ptstr,void *pvUserdata) */
+/* (struct TreespaceTraversal *ptstr, void *pvUserdata) */
 /* { */
 /*     //- set default result : siblings */
 
@@ -490,7 +490,7 @@ void SolverInfoInit
 
 struct PidinStack *
 SolverInfoLookupContextFromPrincipalSerial
-(struct SolverInfo *psi,int iPrincipal)
+(struct SolverInfo *psi, int iPrincipal)
 {
     //- set default result : not found
 
@@ -528,7 +528,7 @@ SolverInfoLookupContextFromPrincipalSerial
     struct PidinStack *ppistSolved = PidinStackCalloc();
 
     struct symtab_HSolveListElement *phsleSolved
-	= SolverInfoLookupTopSymbol(psi,ppistSolved);
+	= SolverInfoLookupTopSymbol(psi, ppistSolved);
 
     if (!phsleSolved)
     {
@@ -566,7 +566,7 @@ SolverInfoLookupContextFromPrincipalSerial
 
 /*     //- traverse symbols, looking for serial */
 
-/*     iTraversal = TstrTraverse(ptstr,phsleSolved); */
+/*     iTraversal = TstrTraverse(ptstr, phsleSolved); */
 
 /*     //- delete treespace traversal */
 
@@ -575,7 +575,7 @@ SolverInfoLookupContextFromPrincipalSerial
     //- get result from single symbol
 
     ppistResult
-	= SymbolPrincipalSerial2Context(phsleSolved,ppistSolved,iPrincipal);
+	= SymbolPrincipalSerial2Context(phsleSolved, ppistSolved, iPrincipal);
 
     //- free allocated memory
 
@@ -607,7 +607,7 @@ SolverInfoLookupContextFromPrincipalSerial
 /// 
 
 int SolverInfoLookupPrincipalSerial
-(struct SolverInfo *psi,struct PidinStack *ppistSearched)
+(struct SolverInfo *psi, struct PidinStack *ppistSearched)
 {
     //- set default result : not found
 
@@ -629,7 +629,7 @@ int SolverInfoLookupPrincipalSerial
     struct PidinStack *ppistSolved = PidinStackCalloc();
 
     struct symtab_HSolveListElement *phsleSolved
-	= SolverInfoLookupTopSymbol(psi,ppistSolved);
+	= SolverInfoLookupTopSymbol(psi, ppistSolved);
 
     if (!phsleSolved)
     {
@@ -685,7 +685,7 @@ int SolverInfoLookupPrincipalSerial
 ///	In that case -1 is returned.
 /// 
 
-int SolverInfoLookupRelativeSerial(struct SolverInfo *psi,int iSerial)
+int SolverInfoLookupRelativeSerial(struct SolverInfo *psi, int iSerial)
 {
     //- set default result : failure
 
@@ -696,7 +696,7 @@ int SolverInfoLookupRelativeSerial(struct SolverInfo *psi,int iSerial)
     struct PidinStack *ppistSolved = PidinStackCalloc();
 
     struct symtab_HSolveListElement *phsleSolved
-	= SolverInfoLookupTopSymbol(psi,ppistSolved);
+	= SolverInfoLookupTopSymbol(psi, ppistSolved);
 
     //- get serial and successors of solved set
 
@@ -740,7 +740,7 @@ int SolverInfoLookupRelativeSerial(struct SolverInfo *psi,int iSerial)
 /// 
 
 struct symtab_HSolveListElement *
-SolverInfoLookupTopSymbol(struct SolverInfo *psi,struct PidinStack *ppist)
+SolverInfoLookupTopSymbol(struct SolverInfo *psi, struct PidinStack *ppist)
 {
     //- set default result : not found
 
@@ -762,7 +762,7 @@ SolverInfoLookupTopSymbol(struct SolverInfo *psi,struct PidinStack *ppist)
 
     //- if no wildcard
 
-    if (!IdinIsWildCard(pidinWildcard,"**"))
+    if (!IdinIsWildCard(pidinWildcard, "**"))
     {
 	//- return failure
 
@@ -811,7 +811,7 @@ struct PidinStack * SolverInfoPidinStack(struct SolverInfo * psi)
 #ifdef TREESPACES_SUBSET_SEGMENT
 int 
 SolverInfoPrincipalSerial2SegmentSerial
-(struct SolverInfo *psi,int iPrincipal)
+(struct SolverInfo *psi, int iPrincipal)
 {
     //- set default result : not found
 
@@ -834,7 +834,7 @@ SolverInfoPrincipalSerial2SegmentSerial
     //- convert principal to context
 
     struct PidinStack *ppistInter
-	= SolverInfoLookupContextFromPrincipalSerial(psi,iPrincipal);
+	= SolverInfoLookupContextFromPrincipalSerial(psi, iPrincipal);
 
     if (!ppistInter)
     {
@@ -847,7 +847,7 @@ SolverInfoPrincipalSerial2SegmentSerial
 
     ppistSolved = PidinStackCalloc();
 
-    phsleSolved = SolverInfoLookupTopSymbol(psi,ppistSolved);
+    phsleSolved = SolverInfoLookupTopSymbol(psi, ppistSolved);
 
     if (!phsleSolved)
     {
@@ -904,7 +904,7 @@ SolverInfoPrincipalSerial2SegmentSerial
 /// \brief Register that a solver has been registered for a symbol
 /// 
 
-int SolverInfoRegistrationAdd(void *pv,struct SolverInfo *psi)
+int SolverInfoRegistrationAdd(void *pv, struct SolverInfo *psi)
 {
     //- set default result : ok
 
@@ -955,7 +955,7 @@ static int SolverInfoRegistrationAddEntries(void)
     int iSize
 	= sizeof(struct SolverInfo *) * (iRegistrationMax + NEW_ENTRIES);
 
-    ppsiRegistrations = (struct SolverInfo **)realloc(ppsiRegistrations,iSize);
+    ppsiRegistrations = (struct SolverInfo **)realloc(ppsiRegistrations, iSize);
 
     if (!ppsiRegistrations)
     {
@@ -968,7 +968,7 @@ static int SolverInfoRegistrationAddEntries(void)
 
     iSize = sizeof(struct SolverInfo *) * (NEW_ENTRIES);
 
-    memset(&ppsiRegistrations[iRegistrationMax],0,iSize);
+    memset(&ppsiRegistrations[iRegistrationMax], 0, iSize);
 
     iRegistrationMax += NEW_ENTRIES;
 
@@ -991,17 +991,17 @@ static int SolverInfoRegistrationAddEntries(void)
 /// 
 
 struct SolverInfo *SolverInfoRegistrationAddFromContext
-(void *pv,struct PidinStack *ppist,char *pcSolver)
+(void *pv, struct PidinStack *ppist, char *pcSolver)
 {
     //- set result : allocate and init new solver info
 
     struct SolverInfo *psiResult = SolverInfoCalloc();
 
-    SolverInfoInit(psiResult,ppist,pcSolver);
+    SolverInfoInit(psiResult, ppist, pcSolver);
 
     //- register in global table
 
-    SolverInfoRegistrationAdd(NULL,psiResult);
+    SolverInfoRegistrationAdd(NULL, psiResult);
 
     //- return result
 
@@ -1021,17 +1021,25 @@ int SolverInfoRegistrationEnumerate(void)
 
     int iResult = TRUE;
 
-    int i;
+    fprintf(stdout, "\n---\n");
 
     //- loop over registrations
 
+    int i;
+
     for (i = 0 ; i < iRegistrations ; i++)
     {
-	fprintf(stdout,"Solver registration %i :\n",i);
-	PidinStackPrint(ppsiRegistrations[i]->ppist,stdout);
-	fprintf(stdout,"\n");
-	fprintf
-	    (stdout,"\t\tSolved by (%s)\n\n",ppsiRegistrations[i]->pcSolver);
+	//- print info
+
+	fprintf(stdout, "  - name: %s\n", ppsiRegistrations[i]->pcSolver);
+
+	fprintf(stdout, "    context: ");
+
+	struct PidinStack *ppistSolved = SolverInfoPidinStack(ppsiRegistrations[i]);
+
+	PidinStackPrint(ppistSolved, stdout);
+
+	fprintf(stdout, "\n");
     }
 
     //- return result
@@ -1067,7 +1075,7 @@ int SolverInfoRegistrationEnumerate(void)
 /// 
 
 struct SolverInfo * 
-SolverInfoRegistrationGet(void *pv,struct PidinStack *ppist)
+SolverInfoRegistrationGet(void *pv, struct PidinStack *ppist)
 {
     //- set default result : failure
 
@@ -1081,12 +1089,11 @@ SolverInfoRegistrationGet(void *pv,struct PidinStack *ppist)
     {
 	//- get solved context
 
-	struct PidinStack *ppistSolved
-	    = SolverInfoPidinStack(ppsiRegistrations[i]);
+	struct PidinStack *ppistSolved = SolverInfoPidinStack(ppsiRegistrations[i]);
 
 	//- if matches given context
 
-	if (PidinStackMatch(ppist,ppistSolved))
+	if (PidinStackMatch(ppist, ppistSolved))
 	{
 	    //- set result
 
@@ -1118,7 +1125,7 @@ SolverInfoRegistrationGet(void *pv,struct PidinStack *ppist)
 /// 
 
 struct SolverInfo *
-SolverInfoRegistrationGetForAbsoluteSerial(void *pv,int iSerial)
+SolverInfoRegistrationGetForAbsoluteSerial(void *pv, int iSerial)
 {
     //- set default result : failure
 
@@ -1132,7 +1139,7 @@ SolverInfoRegistrationGetForAbsoluteSerial(void *pv,int iSerial)
     {
 	//- if given serial in solved set
 
-	if (SolverInfoSerialInSolvedSet(ppsiRegistrations[i],iSerial))
+	if (SolverInfoSerialInSolvedSet(ppsiRegistrations[i], iSerial))
 	{
 	    //- set result
 
@@ -1167,7 +1174,7 @@ int SolverInfoSerialInSolvedSet(struct SolverInfo *psi,int iSerial)
 
     //- do lookup on relative serial
 
-    int iRelative = SolverInfoLookupRelativeSerial(psi,iSerial);
+    int iRelative = SolverInfoLookupRelativeSerial(psi, iSerial);
 
     //- set result
 

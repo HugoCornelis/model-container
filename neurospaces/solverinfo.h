@@ -38,6 +38,17 @@ struct SolverInfo
 };
 
 
+/// all solver registrations
+
+// \todo: register this in the global pneuroGlobal
+
+extern struct SolverInfo **ppsiRegistrations;
+
+extern int iRegistrations;
+
+extern int iRegistrationMax;
+
+
 #include "pidinstack.h"
 #include "projectionquery.h"
 
