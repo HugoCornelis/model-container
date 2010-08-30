@@ -2716,6 +2716,13 @@ Principal serial ID = 1141 of 153157 Principal successors
 						   write => "pqcount n",
 						  },
 						  {
+						   comment => "The number of Golgi and granule cells plus the number of mossy fibers",
+						   description => "What is the number of pre-synaptic elements in the defined projectionquery ?",
+						   read => "number of pre-synaptic serials: 6290
+",
+						   write => "pqcountpre",
+						  },
+						  {
 						   description => "What is the number of connections in the defined projectionquery for the first Golgi cell's domain mapper, caching mode ?",
 						   read => "#connections = 624
 ",

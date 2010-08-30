@@ -20,7 +20,6 @@ my $test
 						   description => "Is neurospaces startup successful ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/network-test.ndf.', ],
 						   timeout => 100,
-						   write => undef,
 						  },
 						  {
 						   description => "Load the projectionquery cache.",
@@ -37,8 +36,6 @@ poccPost(available)
 iCloned(0)
 iCursor(100000)
 ",
-						   #! uh ?!?, large timeout needed, but only during tests.
-
 						   timeout => 10,
 						   write => "pqget",
 						  },

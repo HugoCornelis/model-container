@@ -165,6 +165,7 @@ static QueryHandler QueryHandlerListSymbols;
 static QueryHandler QueryHandlerMesh;
 static QueryHandler QueryHandlerNameSpaces;
 static QueryHandler QueryHandlerPQCount;
+static QueryHandler QueryHandlerPQCountPre;
 static QueryHandler QueryHandlerPQGet;
 static QueryHandler QueryHandlerPQLoad;
 static QueryHandler QueryHandlerPQSave;
@@ -530,6 +531,17 @@ static QueryHandlerAssociation pquhasTable[] =
     {
 	"pqcount",
 	QueryHandlerPQCount,
+#ifdef USE_READLINE
+	1,
+	QueryMachineSymbolGenerator,
+#endif
+    },
+
+    /// global projection query : count pre-synaptic serials
+
+    {
+	"pqcountpre",
+	QueryHandlerPQCountPre,
 #ifdef USE_READLINE
 	1,
 	QueryMachineSymbolGenerator,
@@ -3111,6 +3123,49 @@ static int QueryHandlerPQCount
     if (ppistAttachment)
     {
 	PidinStackFree(ppistAttachment);
+    }
+
+    //- return result
+
+    return(bResult);
+}
+
+
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Count pre-synaptic serials in projection query.
+/// 
+
+static int QueryHandlerPQCountPre
+(char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
+{
+    //- set result : ok
+
+    int bResult = TRUE;
+
+    {
+	//- get projection query
+
+	struct ProjectionQuery *ppq = pneuro->ppq;
+
+	//- if clone projection query
+
+	if (ppq)
+	{
+	    fprintf(stdout, "number of pre-synaptic serials: %i\n", ProjectionQueryCountPreSerials(ppq));
+	}
+
+	//- else
+
+	else
+	{
+	    //- diag's
+
+	    fprintf(stdout, "No projection query defined yet.\n");
+	}
     }
 
     //- return result
