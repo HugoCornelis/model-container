@@ -1131,7 +1131,7 @@ SolverInfoRegistrationGet(void *pv, struct PidinStack *ppist)
 /// 
 
 struct SolverInfo *
-SolverInfoRegistrationGetForAbsoluteSerial(void *pv, int iSerial)
+SolverInfoRegistrationGetForAbsoluteSerial(int iSerial)
 {
     //- set default result : failure
 

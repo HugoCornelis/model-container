@@ -102,7 +102,7 @@ SolverInfoRegistrationGet
 (void *pv, struct PidinStack *ppist);
 
 struct SolverInfo *
-SolverInfoRegistrationGetForAbsoluteSerial(void *pv, int iSerial);
+SolverInfoRegistrationGetForAbsoluteSerial(int iSerial);
 
 int SolverInfoSerialInSolvedSet(struct SolverInfo *psi, int iSerial);
 
