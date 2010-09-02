@@ -333,155 +333,6 @@ SolverInfoInit
 }
 
 
-/// 
-/// \arg psi solver info
-/// \arg iPrincipal principal serial ID for symbol solved by psi
-/// 
-/// \return struct PidinStack *
-/// 
-///	solved symbol, NULL for failure
-/// 
-/// \brief Convert solver serial ID to symbol info.
-/// 
-/// \note 
-/// 
-///	Still relys on the fact that solvers solve all subsymbols of one 
-///	common symbol. This makes the implementation of this procedure 
-///	straightforward using the principal serial space.
-/// 
-
-/* struct SolverInfoPrincipal2ContextData */
-/* { */
-/*     /// result of operation */
-
-/*     struct PidinStack *ppistResult; */
-
-/*     /// number of skipped successors */
-
-/*     int iSkippedSuccessors; */
-
-/*     /// relative principal ID */
-
-/*     int iPrincipal; */
-/* }; */
-
-
-/* static int  */
-/* SolverInfoPrincipal2SymbolSelector */
-/* (struct TreespaceTraversal *ptstr, void *pvUserdata) */
-/* { */
-/*     //- set default result : siblings */
-
-/*     int iResult = SYMBOL_SELECTOR_PROCESS_SIBLING; */
-
-/*     //- get pointer to conversion data */
-
-/*     struct SolverInfoPrincipal2ContextData *psip2c */
-/* 	= (struct SolverInfoPrincipal2ContextData *)pvUserdata; */
-
-/*     //- set actual symbol */
-
-/*     struct symtab_HSolveListElement *phsle = TstrGetActual(ptstr); */
-
-/*     //- get number of successors */
-
-/*     int iSuccessors = SymbolGetPrincipalNumOfSuccessors(phsle); */
-
-/*     //- get principal serial relative to parent */
-
-/*     int iSerial = SymbolGetPrincipalSerialToParent(phsle); */
-
-/*     //- if #SU + this symbol >= relative principal ID,  */
-/*     //- or this is the symbol we are looking for */
-
-/*     if (psip2c->iSkippedSuccessors + iSuccessors + 1 >= psip2c->iPrincipal */
-/* 	|| iSerial == psip2c->iPrincipal) */
-/*     { */
-/* 	//- subtract principal serials */
-
-/* 	psip2c->iPrincipal -= iSerial; */
-
-/* 	//- register number of skipped successors : zero */
-
-/* 	psip2c->iSkippedSuccessors = 0; */
-
-/* 	//- set result : process children */
-
-/* 	iResult = SYMBOL_SELECTOR_PROCESS_CHILDREN; */
-/*     } */
-
-/*     //- else */
-
-/*     else */
-/*     { */
-/* 	//- register that all successors and current symbol are skipped */
-
-/* 	psip2c->iSkippedSuccessors += iSuccessors + 1; */
-
-/* 	//- set result : process siblings */
-
-/* 	iResult = SYMBOL_SELECTOR_PROCESS_SIBLING; */
-/*     } */
-
-/*     //- return result */
-
-/*     return(iResult); */
-/* } */
-
-
-/* static int  */
-/* SolverInfoPrincipal2SymbolConvertor */
-/* (struct TreespaceTraversal *ptstr, void *pvUserdata) */
-/* { */
-/*     //- set default result : siblings */
-
-/*     int iResult = SYMBOL_PROCESSOR_SUCCESS; */
-
-/*     //- get pointer to conversion data */
-
-/*     struct SolverInfoPrincipal2ContextData *psip2c */
-/* 	= (struct SolverInfoPrincipal2ContextData *)pvUserdata; */
-
-/*     //- set actual symbol */
-
-/*     struct symtab_HSolveListElement *phsle = TstrGetActual(ptstr); */
-
-/*     //- get number of successors */
-
-/*     int iSuccessors = SymbolGetPrincipalNumOfSuccessors(phsle); */
-
-/*     //- if match */
-
-/*     if (0 == psip2c->iPrincipal) */
-/*     { */
-/* 	//- set result : current symbol */
-
-/* 	psip2c->ppistResult = PidinStackDuplicate(ptstr->ppist); */
-
-/* 	//- abort traversal */
-
-/* 	return(SYMBOL_PROCESSOR_ABORT); */
-/*     } */
-
-/*     //- if #SU < relative principal ID or negative serial */
-
-/*     if (iSuccessors < psip2c->iPrincipal || psip2c->iPrincipal < 0) */
-/*     { */
-/* 	printf */
-/* 	    ("SolverInfoLookupContextFromPrincipalSerial() :" */
-/* 	     " internal error\n"); */
-
-/* 	//- we have an internal error : abort */
-
-/* 	iResult = SYMBOL_PROCESSOR_ABORT; */
-/*     } */
-
-/*     //- return result */
-
-/*     return(iResult); */
-/* } */
-
-
 struct PidinStack *
 SolverInfoLookupContextFromPrincipalSerial
 (struct SolverInfo *psi, int iPrincipal)
@@ -489,33 +340,6 @@ SolverInfoLookupContextFromPrincipalSerial
     //- set default result : not found
 
     struct PidinStack *ppistResult = NULL;
-
-/*     /// treespace traversal to go over successors */
-
-/*     struct TreespaceTraversal *ptstr = NULL; */
-
-/*     int iTraversal = 0; */
-
-/*     /// number of successors for top of solved symbol tree */
-
-/*     int iSuccessors = 0; */
-
-/*     /// traversal user data */
-
-/*     struct SolverInfoPrincipal2ContextData sip2c = */
-/*     { */
-/* 	/// result of operation */
-
-/* 	NULL, */
-
-/* 	/// number of skipped successors */
-
-/* 	0, */
-
-/* 	/// relative principal ID */
-
-/* 	iPrincipal, */
-/*     }; */
 
     //- get top of solved symbol tree
 
@@ -529,43 +353,6 @@ SolverInfoLookupContextFromPrincipalSerial
 	return(NULL);
     }
 
-/*     //- get #SU for symbol */
-
-/*     iSuccessors = SymbolGetPrincipalNumOfSuccessors(phsleSolved); */
-
-/*     //- if serial greater than #SU */
-
-/*     if (iPrincipal > iSuccessors) */
-/*     { */
-/* 	//- free allocated memory */
-
-/* 	PidinStackFree(ppistSolved); */
-
-/* 	//- serial ID unknown, return failure */
-
-/* 	return(NULL); */
-/*     } */
-
-/*     //- allocate treespace traversal */
-
-/*     ptstr */
-/* 	= TstrNew */
-/* 	  (ppistSolved, */
-/* 	   SolverInfoPrincipal2SymbolSelector, */
-/* 	   (void *)&sip2c, */
-/* 	   SolverInfoPrincipal2SymbolConvertor, */
-/* 	   (void *)&sip2c, */
-/* 	   NULL, */
-/* 	   NULL); */
-
-/*     //- traverse symbols, looking for serial */
-
-/*     iTraversal = TstrTraverse(ptstr, phsleSolved); */
-
-/*     //- delete treespace traversal */
-
-/*     TstrDelete(ptstr); */
-
     //- get result from single symbol
 
     ppistResult
@@ -574,10 +361,6 @@ SolverInfoLookupContextFromPrincipalSerial
     //- free allocated memory
 
     PidinStackFree(ppistSolved);
-
-/*     //- set result from traversal data */
-
-/*     ppistResult = sip2c.ppistResult; */
 
     //- return result
 
