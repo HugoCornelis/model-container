@@ -29,9 +29,7 @@
 #include "hines_list.h"
 
 
-/// \struct
 /// \struct algorithm set
-/// \struct
 
 struct AlgorithmSet
 {
@@ -58,6 +56,7 @@ typedef struct AlgorithmSet AlgorithmSet;
 //#include "modelevent.h"
 #include "algorithminstance.h"
 #include "neurospaces/components/algorithmsymbol.h"
+#include "parameters.h"
 #include "parsersupport.h"
 
 

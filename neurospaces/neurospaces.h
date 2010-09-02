@@ -133,9 +133,9 @@ struct Neurospaces
 
     struct ProjectionQuery *ppq;
 
-    /// solver mappers
+/*     /// solver mappers */
 
-    struct SolverMapper *psm;
+/*     struct SolverMapper *psm; */
 
     /// parsed command line
 
