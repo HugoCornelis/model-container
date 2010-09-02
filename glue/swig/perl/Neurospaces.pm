@@ -671,7 +671,9 @@ sub output_2_solverinfo
 
     $context->PidinStackLookupTopSymbol();
 
-    my $solverinfo = SwiggableNeurospaces::SolverRegistryGet(undef, $context);
+    my $solver_registry = SwiggableNeurospaces::swig_get_global_solver_registry();
+
+    my $solverinfo = SwiggableNeurospaces::SolverRegistryGet($solver_registry, undef, $context);
 
     $context->PidinStackFree();
 
@@ -759,7 +761,9 @@ sub register_engine
 	{
 	    # register the engine name for the this model
 
-	    my $solverinfo = SwiggableNeurospaces::SolverRegistryAddFromContext(undef, undef, $context, $engine_name);
+	    my $solver_registry = SwiggableNeurospaces::swig_get_global_solver_registry();
+
+	    my $solverinfo = SwiggableNeurospaces::SolverRegistryAddFromContext($solver_registry, undef, $context, $engine_name);
 
 	    if (defined $solverinfo)
 	    {

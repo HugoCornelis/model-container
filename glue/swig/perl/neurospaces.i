@@ -2825,6 +2825,14 @@ struct ProjectionQuery *swig_get_global_projectionquery()
 }
 
 
+struct SolverRegistry *swig_get_global_solver_registry()
+{
+    extern struct Neurospaces *pneuroGlobal;
+
+    return pneuroGlobal->psr;
+}
+
+
 /// traversal related
 
 int
