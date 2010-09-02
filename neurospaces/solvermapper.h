@@ -23,34 +23,34 @@
 #define SOLVERMAPPER_H
 
 
-#include "neurospaces.h"
-#include "pidinstack.h"
-#include "symboltable.h"
+/* #include "neurospaces.h" */
+/* #include "pidinstack.h" */
+/* #include "symboltable.h" */
 
 
-/// function to call to do setup of solution engine.
-/// 
-/// \return int : success of operation
+/* /// function to call to do setup of solution engine. */
+/* ///  */
+/* /// \return int : success of operation */
 
-typedef 
-int 
-NeurospacesSetupSymbol
-(struct Neurospaces *pneuro,
- void *pvUserdata,
- struct symtab_HSolveListElement *phsle,
- struct PidinStack *ppist);
+/* typedef  */
+/* int  */
+/* NeurospacesSetupSymbol */
+/* (struct Neurospaces *pneuro, */
+/*  void *pvUserdata, */
+/*  struct symtab_HSolveListElement *phsle, */
+/*  struct PidinStack *ppist); */
 
 
-/// \struct create array of this one to map named solver classes to solution
-/// \struct engines.
+/* /// \struct create array of this one to map named solver classes to solution */
+/* /// \struct engines. */
 
-struct SolverMapper
-{
-    char *pcSolverClass;
-    int iSymbolType;
-    void *pvUserdata;
-    NeurospacesSetupSymbol *setup;
-};
+/* struct SolverMapper */
+/* { */
+/*     char *pcSolverClass; */
+/*     int iSymbolType; */
+/*     void *pvUserdata; */
+/*     NeurospacesSetupSymbol *setup; */
+/* }; */
 
 
 #endif

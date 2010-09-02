@@ -259,15 +259,15 @@ int
 NeurospacesSetProjectionQuery
 (struct Neurospaces *pneuro, struct ProjectionQuery *ppq);
 
-int
-NeurospacesSetSolverMapper
-(struct Neurospaces *pneuro, struct SolverMapper *psm);
+/* int */
+/* NeurospacesSetSolverMapper */
+/* (struct Neurospaces *pneuro, struct SolverMapper *psm); */
 
-int
-NeurospacesSetupSolverInstance
-(struct Neurospaces *pneuro,
- char *pcName,
- struct PidinStack *ppist);
+/* int */
+/* NeurospacesSetupSolverInstance */
+/* (struct Neurospaces *pneuro, */
+/*  char *pcName, */
+/*  struct PidinStack *ppist); */
 
 
 struct Neurospaces *NeurospacesNew(void);

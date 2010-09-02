@@ -1,4 +1,4 @@
-static char *pcVersionTime="(10/08/28) Saturday, August 28, 2010 01:31:00 Abominous";
+static char *pcVersionTime="(10/09/02) Thursday, September 2, 2010 10:16:40 cornelis";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -1500,199 +1500,199 @@ NeurospacesSetProjectionQuery
 }
 
 
-/// 
-/// \arg pneuro neurospaces.
-/// \arg psm solver mapper array.
-/// 
-/// \return int : success of operation
-/// 
-/// \brief Register solver mapper array.
-///
-/// \details 
-/// 
-///	psm ends with 
-///		{
-///		    NULL,	
-///		    -1,
-///		    NULL,
-///		    NULL,
-///		}
-/// 
+/* ///  */
+/* /// \arg pneuro neurospaces. */
+/* /// \arg psm solver mapper array. */
+/* ///  */
+/* /// \return int : success of operation */
+/* ///  */
+/* /// \brief Register solver mapper array. */
+/* /// */
+/* /// \details  */
+/* ///  */
+/* ///	psm ends with  */
+/* ///		{ */
+/* ///		    NULL,	 */
+/* ///		    -1, */
+/* ///		    NULL, */
+/* ///		    NULL, */
+/* ///		} */
+/* ///  */
 
-int
-NeurospacesSetSolverMapper
-(struct Neurospaces *pneuro, struct SolverMapper *psm)
-{
-    //- set default result : ok
+/* int */
+/* NeurospacesSetSolverMapper */
+/* (struct Neurospaces *pneuro, struct SolverMapper *psm) */
+/* { */
+/*     //- set default result : ok */
 
-    int bResult = TRUE;
+/*     int bResult = TRUE; */
 
-    //- register solver mapper
+/*     //- register solver mapper */
 
-    if (!pneuro->psm)
-    {
-	pneuro->psm = psm;
-    }
-    else
-    {
-	fprintf(stderr, "Neurospaces : could not register solver mapper\n");
+/*     if (!pneuro->psm) */
+/*     { */
+/* 	pneuro->psm = psm; */
+/*     } */
+/*     else */
+/*     { */
+/* 	fprintf(stderr, "Neurospaces : could not register solver mapper\n"); */
 
-	bResult = FALSE;
-    }
+/* 	bResult = FALSE; */
+/*     } */
 
-    //- return result
+/*     //- return result */
 
-    return(bResult);
-}
+/*     return(bResult); */
+/* } */
 
 
-/// 
-/// \arg pneuro neurospaces.
-/// \arg pcName name of solver class.
-/// \arg ppist context of symbol to setup.
-/// 
-/// \return int : success of operation
-/// 
-/// \brief Setup a solution engine.
-/// 
+/* ///  */
+/* /// \arg pneuro neurospaces. */
+/* /// \arg pcName name of solver class. */
+/* /// \arg ppist context of symbol to setup. */
+/* ///  */
+/* /// \return int : success of operation */
+/* ///  */
+/* /// \brief Setup a solution engine. */
+/* ///  */
 
-int
-NeurospacesSetupSolverInstance
-(struct Neurospaces *pneuro, char *pcName, struct PidinStack *ppist)
-{
-    //- set default result
+/* int */
+/* NeurospacesSetupSolverInstance */
+/* (struct Neurospaces *pneuro, char *pcName, struct PidinStack *ppist) */
+/* { */
+/*     //- set default result */
 
-    int iResult = 0;
+/*     int iResult = 0; */
 
-    int i;
+/*     int i; */
 
-    int iSolver = -1;
+/*     int iSolver = -1; */
 
-    /// indicates mismatch between symbol type and registered type
+/*     /// indicates mismatch between symbol type and registered type */
 
-    int bMismatch = FALSE;
+/*     int bMismatch = FALSE; */
 
-    struct symtab_HSolveListElement *phsle = NULL;
+/*     struct symtab_HSolveListElement *phsle = NULL; */
 
-    //- lookup symbol
+/*     //- lookup symbol */
 
-    phsle = SymbolsLookupHierarchical(pneuro->psym, ppist);
+/*     phsle = SymbolsLookupHierarchical(pneuro->psym, ppist); */
 
-    //- if found
+/*     //- if found */
 
-    if (phsle)
-    {
-	//- loop over the registered mappings
+/*     if (phsle) */
+/*     { */
+/* 	//- loop over the registered mappings */
 
-	for (i = 0 ; pneuro->psm[i].pcSolverClass ; i++)
-	{
-	    char *pcSolverClass = pneuro->psm[i].pcSolverClass;
+/* 	for (i = 0 ; pneuro->psm[i].pcSolverClass ; i++) */
+/* 	{ */
+/* 	    char *pcSolverClass = pneuro->psm[i].pcSolverClass; */
 
-	    //- found matching solver class name ?
+/* 	    //- found matching solver class name ? */
 
-	    if (strncmp(pcSolverClass, pcName, strlen(pcSolverClass)) == 0)
-	    {
-		//- if symbol type matches registered type for solver class
+/* 	    if (strncmp(pcSolverClass, pcName, strlen(pcSolverClass)) == 0) */
+/* 	    { */
+/* 		//- if symbol type matches registered type for solver class */
 
-		if (pneuro->psm[i].iSymbolType == phsle->iType)
-		{
-		    //- remember : found
+/* 		if (pneuro->psm[i].iSymbolType == phsle->iType) */
+/* 		{ */
+/* 		    //- remember : found */
 
-		    iSolver = i;
+/* 		    iSolver = i; */
 
-		    //- break loop
+/* 		    //- break loop */
 
-		    break;
-		}
+/* 		    break; */
+/* 		} */
 
-		//- else
+/* 		//- else */
 
-		else
-		{
-		    //- register : mismatch for diag's purposes
+/* 		else */
+/* 		{ */
+/* 		    //- register : mismatch for diag's purposes */
 
-		    bMismatch = TRUE;
+/* 		    bMismatch = TRUE; */
 
-		    //- but we continue attempting to get a next match
+/* 		    //- but we continue attempting to get a next match */
 
-		    continue;
-		}
-	    }
-	}
-    }
+/* 		    continue; */
+/* 		} */
+/* 	    } */
+/* 	} */
+/*     } */
 
-    //- if solver class found
+/*     //- if solver class found */
 
-    if (iSolver != -1)
-    {
-	//- if solver class has associated setup method
+/*     if (iSolver != -1) */
+/*     { */
+/* 	//- if solver class has associated setup method */
 
-	if (pneuro->psm[iSolver].setup)
-	{
-	    //- create and init solvers from the query
+/* 	if (pneuro->psm[iSolver].setup) */
+/* 	{ */
+/* 	    //- create and init solvers from the query */
 
-	    iResult
-		= pneuro->psm[iSolver].setup
-		  (pneuro, pneuro->psm[iSolver].pvUserdata, phsle, ppist);
-	}
-	else
-	{
-	    //- diag's
+/* 	    iResult */
+/* 		= pneuro->psm[iSolver].setup */
+/* 		  (pneuro, pneuro->psm[iSolver].pvUserdata, phsle, ppist); */
+/* 	} */
+/* 	else */
+/* 	{ */
+/* 	    //- diag's */
 
-	    fprintf
-		(stdout,
-		 "%s is an unimplemented solver class (symbol ",
-		 pcName);
+/* 	    fprintf */
+/* 		(stdout, */
+/* 		 "%s is an unimplemented solver class (symbol ", */
+/* 		 pcName); */
 
-	    PidinStackPrint(ppist, stdout);
+/* 	    PidinStackPrint(ppist, stdout); */
 
-	    fprintf(stdout, ")\n");
-	}
-    }
+/* 	    fprintf(stdout, ")\n"); */
+/* 	} */
+/*     } */
 
-    //- else
+/*     //- else */
 
-    else
-    {
-	//- error : not implemented
+/*     else */
+/*     { */
+/* 	//- error : not implemented */
 
-	if (phsle)
-	{
-	    if (bMismatch)
-	    {
-		fprintf
-		    (stdout,
-		     "NeurospacesSetupSolverInstance() :"
-		     " not implemented for solver class %s :"
-		     " symbol type mismatch\n",
-		     pcName);
-	    }
-	    else
-	    {
-		fprintf
-		    (stdout,
-		     "NeurospacesSetupSolverInstance() :"
-		     " not implemented for solver class %s\n",
-		     pcName);
-	    }
-	}
+/* 	if (phsle) */
+/* 	{ */
+/* 	    if (bMismatch) */
+/* 	    { */
+/* 		fprintf */
+/* 		    (stdout, */
+/* 		     "NeurospacesSetupSolverInstance() :" */
+/* 		     " not implemented for solver class %s :" */
+/* 		     " symbol type mismatch\n", */
+/* 		     pcName); */
+/* 	    } */
+/* 	    else */
+/* 	    { */
+/* 		fprintf */
+/* 		    (stdout, */
+/* 		     "NeurospacesSetupSolverInstance() :" */
+/* 		     " not implemented for solver class %s\n", */
+/* 		     pcName); */
+/* 	    } */
+/* 	} */
 
-	//- else
+/* 	//- else */
 
-	else
-	{
-	    //- diag's
+/* 	else */
+/* 	{ */
+/* 	    //- diag's */
 
-	    fprintf(stdout, "symbol ");
-	    PidinStackPrint(ppist, stdout);
-	    fprintf(stdout, " not found\n");
-	}
-    }
+/* 	    fprintf(stdout, "symbol "); */
+/* 	    PidinStackPrint(ppist, stdout); */
+/* 	    fprintf(stdout, " not found\n"); */
+/* 	} */
+/*     } */
 
-    //- return result
+/*     //- return result */
 
-    return(iResult);
-}
+/*     return(iResult); */
+/* } */
 
 
 /// 
