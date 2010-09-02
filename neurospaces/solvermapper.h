@@ -23,9 +23,6 @@
 #define SOLVERMAPPER_H
 
 
-struct solverMapping;
-
-
 #include "neurospaces.h"
 #include "pidinstack.h"
 #include "symboltable.h"
