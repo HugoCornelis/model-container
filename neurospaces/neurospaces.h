@@ -205,8 +205,6 @@ NeurospacesLogFileTree
 
 #ifndef SWIG
 
-/// \todo I guess the va_list stuff gives problems on 64bit architectures.
-
 int
 NeurospacesMessage
 (int iPriority,
