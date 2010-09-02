@@ -769,6 +769,15 @@ struct SolverInfo *
 SolverRegistryAddFromContext
 (struct SolverRegistry *psr, void *pvSolver, struct PidinStack *ppist, char *pcSolver)
 {
+    //- default is to use the global neurospaces
+
+    if (psr)
+    {
+	extern struct Neurospaces *pneuroGlobal;
+
+	psr = pneuroGlobal->psr;
+    }
+
     //- set result : allocate and init new solver info
 
     struct SolverInfo *psiResult = SolverInfoCalloc();
@@ -905,6 +914,15 @@ SolverRegistryGet(struct SolverRegistry *psr, void *pv, struct PidinStack *ppist
 struct SolverInfo *
 SolverRegistryGetForAbsoluteSerial(struct SolverRegistry *psr, int iSerial)
 {
+    //- default is to use the global neurospaces
+
+    if (psr)
+    {
+	extern struct Neurospaces *pneuroGlobal;
+
+	psr = pneuroGlobal->psr;
+    }
+
     //- set default result : failure
 
     struct SolverInfo * psiResult = NULL;
