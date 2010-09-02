@@ -853,7 +853,7 @@ int SolverRegistryEnumerate(struct SolverRegistry *psr)
 /// 
 
 struct SolverInfo * 
-SolverRegistryGet(struct SolverRegistry *psr, void *pv, struct PidinStack *ppist)
+SolverRegistryGet(struct SolverRegistry *psr, struct PidinStack *ppist)
 {
     //- set default result : failure
 

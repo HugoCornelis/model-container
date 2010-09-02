@@ -673,7 +673,7 @@ sub output_2_solverinfo
 
     my $solver_registry = SwiggableNeurospaces::swig_get_global_solver_registry();
 
-    my $solverinfo = SwiggableNeurospaces::SolverRegistryGet($solver_registry, undef, $context);
+    my $solverinfo = SwiggableNeurospaces::SolverRegistryGet($solver_registry, $context);
 
     $context->PidinStackFree();
 
