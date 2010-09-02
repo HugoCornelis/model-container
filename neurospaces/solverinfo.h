@@ -44,13 +44,21 @@ struct SolverInfo
 
 /// all solver registrations
 
-// \todo: register this in the global pneuroGlobal
+struct SolverRegistry
+{
+    /// array of registrations.
 
-extern struct SolverInfo **ppsiRegistrations;
+    struct SolverInfo **ppsiRegistrations;
 
-extern int iRegistrations;
+    /// total number of registrations in the array
 
-extern int iRegistrationMax;
+    int iRegistrationMax;
+
+    /// number of active registrations in the array
+
+    int iRegistrations;
+
+};
 
 
 #include "pidinstack.h"
@@ -90,21 +98,23 @@ SolverInfoPrincipalSerial2SegmentSerial
 (struct SolverInfo *psi, int iPrincipal);
 #endif
 
-int SolverInfoRegistrationAdd(void *pv, struct SolverInfo * psi);
+int SolverInfoSerialInSolvedSet(struct SolverInfo *psi, int iSerial);
 
-struct SolverInfo *SolverInfoRegistrationAddFromContext
-(void *pv,struct PidinStack *ppist, char *pcSolver);
-
-int SolverInfoRegistrationEnumerate(void);
-
-struct SolverInfo * 
-SolverInfoRegistrationGet
-(void *pv, struct PidinStack *ppist);
+int SolverRegistryAdd(struct SolverRegistry *psr, void *pv, struct SolverInfo *psi);
 
 struct SolverInfo *
-SolverInfoRegistrationGetForAbsoluteSerial(int iSerial);
+SolverRegistryAddFromContext
+(struct SolverRegistry *psr, void *pvSolver, struct PidinStack *ppist, char *pcSolver);
 
-int SolverInfoSerialInSolvedSet(struct SolverInfo *psi, int iSerial);
+int SolverRegistryEnumerate(struct SolverRegistry *psr);
+
+struct SolverInfo * 
+SolverRegistryGet(struct SolverRegistry *psr, void *pv, struct PidinStack *ppist);
+
+struct SolverInfo *
+SolverRegistryGetForAbsoluteSerial(struct SolverRegistry *psr, int iSerial);
+
+struct SolverRegistry * SolverRegistryCalloc(int iSize);
 
 
 #endif

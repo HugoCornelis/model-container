@@ -26,7 +26,6 @@
 
 
 /// 
-/// 
 /// \arg iSize Initial size.
 /// 
 /// \return struct CacheRegistry *
@@ -34,7 +33,6 @@
 ///	Newly allocated cache registry, NULL for failure.
 /// 
 /// \brief Allocate a cache registry.
-/// \details 
 /// 
 
 struct CacheRegistry *
@@ -76,7 +74,6 @@ CacheRegistryCalloc(int iSize)
 
 
 /// 
-/// 
 /// \arg pcr cache registry.
 /// \arg iIdentifier cache identifier for lookup.
 /// 
@@ -85,7 +82,6 @@ CacheRegistryCalloc(int iSize)
 ///	New registered cache entry, NULL for failure.
 /// 
 /// \brief Register a new cache, duplicate identifiers not allowed.
-/// \details 
 /// 
 
 struct RegisteredCache *
@@ -122,7 +118,6 @@ CacheRegistryLookup(struct CacheRegistry *pcr, int iIdentifier)
 
 
 /// 
-/// 
 /// \arg pcr cache registry.
 /// \arg iType cache type.
 /// \arg iIdentifier cache identifier for lookup.
@@ -134,7 +129,6 @@ CacheRegistryLookup(struct CacheRegistry *pcr, int iIdentifier)
 ///	New registered cache entry, NULL for failure.
 /// 
 /// \brief Register a new cache, duplicate identifiers not allowed.
-/// \details 
 /// 
 
 struct RegisteredCache *

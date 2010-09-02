@@ -30,16 +30,7 @@
 
 
 
-static int SolverInfoRegistrationAddEntries(void);
-
-
-/// all solver registrations
-
-struct SolverInfo **ppsiRegistrations = NULL;
-
-int iRegistrations = 0;
-
-int iRegistrationMax = 0;
+static int SolverRegistryAddEntries(struct SolverRegistry *psr, int iEntries);
 
 
 /// 
@@ -907,7 +898,7 @@ SolverInfoPrincipalSerial2SegmentSerial
 /// \brief Register that a solver has been registered for a symbol
 /// 
 
-int SolverInfoRegistrationAdd(void *pv, struct SolverInfo *psi)
+int SolverRegistryAdd(struct SolverRegistry *psr, void *pv, struct SolverInfo *psi)
 {
     //- set default result : ok
 
@@ -915,9 +906,9 @@ int SolverInfoRegistrationAdd(void *pv, struct SolverInfo *psi)
 
     //- add more registration entries if needed
 
-    if (iRegistrations == iRegistrationMax)
+    if (psr->iRegistrations == psr->iRegistrationMax)
     {
-	if (SolverInfoRegistrationAddEntries() == 0)
+	if (SolverRegistryAddEntries(psr, 10) == 0)
 	{
 	    return(FALSE);
 	}
@@ -925,11 +916,11 @@ int SolverInfoRegistrationAdd(void *pv, struct SolverInfo *psi)
 
     //- register solver info
 
-    ppsiRegistrations[iRegistrations] = psi;
+    psr->ppsiRegistrations[psr->iRegistrations] = psi;
 
     //- increment number of registrations
 
-    iRegistrations++;
+    psr->iRegistrations++;
 
     //- return result
 
@@ -938,44 +929,42 @@ int SolverInfoRegistrationAdd(void *pv, struct SolverInfo *psi)
 
 
 /// 
+/// \arg iEntries requested new number of entries.
+/// 
 /// \return int : success of operation
 /// 
 /// \brief Add registration entries
 /// 
 
-static int SolverInfoRegistrationAddEntries(void)
+static int SolverRegistryAddEntries(struct SolverRegistry *psr, int iEntries)
 {
     //- set default result : ok
 
     int iResult = TRUE;
 
-#define NEW_ENTRIES 10
-
     //- reallocate for some extra entries
 
-    struct SolverInfo **ppsiOld = ppsiRegistrations;
+    struct SolverInfo **ppsiOld = psr->ppsiRegistrations;
 
     int iSize
-	= sizeof(struct SolverInfo *) * (iRegistrationMax + NEW_ENTRIES);
+	= sizeof(struct SolverInfo *) * (psr->iRegistrationMax + iEntries);
 
-    ppsiRegistrations = (struct SolverInfo **)realloc(ppsiRegistrations, iSize);
+    psr->ppsiRegistrations = (struct SolverInfo **)realloc(psr->ppsiRegistrations, iSize);
 
-    if (!ppsiRegistrations)
+    if (!psr->ppsiRegistrations)
     {
-	ppsiRegistrations = ppsiOld;
+	psr->ppsiRegistrations = ppsiOld;
 
 	return(FALSE);
     }
 
     //- zero out new memory
 
-    iSize = sizeof(struct SolverInfo *) * (NEW_ENTRIES);
+    iSize = sizeof(struct SolverInfo *) * (iEntries);
 
-    memset(&ppsiRegistrations[iRegistrationMax], 0, iSize);
+    memset(&psr->ppsiRegistrations[psr->iRegistrationMax], 0, iSize);
 
-    iRegistrationMax += NEW_ENTRIES;
-
-#undef NEW_ENTRIES
+    psr->iRegistrationMax += iEntries;
 
     //- return result
 
@@ -994,8 +983,8 @@ static int SolverInfoRegistrationAddEntries(void)
 /// 
 
 struct SolverInfo *
-SolverInfoRegistrationAddFromContext
-(void *pvSolver, struct PidinStack *ppist, char *pcSolver)
+SolverRegistryAddFromContext
+(struct SolverRegistry *psr, void *pvSolver, struct PidinStack *ppist, char *pcSolver)
 {
     //- set result : allocate and init new solver info
 
@@ -1005,7 +994,7 @@ SolverInfoRegistrationAddFromContext
 
     //- register in global table
 
-    SolverInfoRegistrationAdd(NULL, psiResult);
+    SolverRegistryAdd(psr, NULL, psiResult);
 
     //- return result
 
@@ -1019,7 +1008,7 @@ SolverInfoRegistrationAddFromContext
 /// \brief Give some info about all solver info registrations
 /// 
 
-int SolverInfoRegistrationEnumerate(void)
+int SolverRegistryEnumerate(struct SolverRegistry *psr)
 {
     //- set default result : ok
 
@@ -1031,17 +1020,17 @@ int SolverInfoRegistrationEnumerate(void)
 
     int i;
 
-    for (i = 0 ; i < iRegistrations ; i++)
+    for (i = 0 ; i < psr->iRegistrations ; i++)
     {
 	//- print info
 
-	fprintf(stdout, "  - name: %s\n", ppsiRegistrations[i]->pcSolver);
+	fprintf(stdout, "  - name: %s\n", psr->ppsiRegistrations[i]->pcSolver);
 
-	fprintf(stdout, "    solver: %s\n", (ppsiRegistrations[i]->pvSolver == NULL) ? "not registered" : "registered");
+	fprintf(stdout, "    solver: %s\n", (psr->ppsiRegistrations[i]->pvSolver == NULL) ? "not registered" : "registered");
 
 	fprintf(stdout, "    context: ");
 
-	struct PidinStack *ppistSolved = SolverInfoPidinStack(ppsiRegistrations[i]);
+	struct PidinStack *ppistSolved = SolverInfoPidinStack(psr->ppsiRegistrations[i]);
 
 	PidinStackPrint(ppistSolved, stdout);
 
@@ -1081,7 +1070,7 @@ int SolverInfoRegistrationEnumerate(void)
 /// 
 
 struct SolverInfo * 
-SolverInfoRegistrationGet(void *pv, struct PidinStack *ppist)
+SolverRegistryGet(struct SolverRegistry *psr, void *pv, struct PidinStack *ppist)
 {
     //- set default result : failure
 
@@ -1091,11 +1080,11 @@ SolverInfoRegistrationGet(void *pv, struct PidinStack *ppist)
 
     int i;
 
-    for (i = 0 ; i < iRegistrations ; i++)
+    for (i = 0 ; i < psr->iRegistrations ; i++)
     {
 	//- get solved context
 
-	struct PidinStack *ppistSolved = SolverInfoPidinStack(ppsiRegistrations[i]);
+	struct PidinStack *ppistSolved = SolverInfoPidinStack(psr->ppsiRegistrations[i]);
 
 	//- if matches given context
 
@@ -1103,7 +1092,7 @@ SolverInfoRegistrationGet(void *pv, struct PidinStack *ppist)
 	{
 	    //- set result
 
-	    psiResult = ppsiRegistrations[i];
+	    psiResult = psr->ppsiRegistrations[i];
 
 	    //- break loop
 
@@ -1127,11 +1116,11 @@ SolverInfoRegistrationGet(void *pv, struct PidinStack *ppist)
 /// 
 /// \note 
 /// 
-///	See SolverInfoRegistrationGet()
+///	See SolverRegistryGet()
 /// 
 
 struct SolverInfo *
-SolverInfoRegistrationGetForAbsoluteSerial(int iSerial)
+SolverRegistryGetForAbsoluteSerial(struct SolverRegistry *psr, int iSerial)
 {
     //- set default result : failure
 
@@ -1141,15 +1130,15 @@ SolverInfoRegistrationGetForAbsoluteSerial(int iSerial)
 
     int i;
 
-    for (i = 0 ; i < iRegistrations ; i++)
+    for (i = 0 ; i < psr->iRegistrations ; i++)
     {
 	//- if given serial in solved set
 
-	if (SolverInfoSerialInSolvedSet(ppsiRegistrations[i], iSerial))
+	if (SolverInfoSerialInSolvedSet(psr->ppsiRegistrations[i], iSerial))
 	{
 	    //- set result
 
-	    psiResult = ppsiRegistrations[i];
+	    psiResult = psr->ppsiRegistrations[i];
 
 	    //- break loop
 
@@ -1189,6 +1178,37 @@ int SolverInfoSerialInSolvedSet(struct SolverInfo *psi,int iSerial)
     //- return result
 
     return(bResult);
+}
+
+
+/// 
+/// \arg iSize number of expected solver registrations.
+/// 
+/// \return struct SolverRegistry *
+///
+///	New solver registry, NULL for failure.
+/// 
+/// \brief Initialize a new solver registry.
+/// 
+
+struct SolverRegistry * SolverRegistryCalloc(int iSize)
+{
+    //- set default result: new registry
+
+    struct SolverRegistry *psrResult
+	= (struct SolverRegistry *)calloc(1, sizeof(struct SolverRegistry));
+
+    //- initialize the registry
+
+    psrResult->iRegistrationMax = 0;
+    psrResult->iRegistrations = 0;
+    psrResult->ppsiRegistrations = NULL;
+
+    SolverRegistryAddEntries(psrResult, iSize);
+
+    //- return result
+
+    return(psrResult);
 }
 
 

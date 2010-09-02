@@ -1,4 +1,4 @@
-static char *pcVersionTime="(10/09/02) Thursday, September 2, 2010 10:16:40 cornelis";
+static char *pcVersionTime="(10/09/02) Thursday, September 2, 2010 10:51:28 cornelis";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -1893,6 +1893,19 @@ struct Neurospaces *NeurospacesNew(void)
 
     if (!pneuroResult->pcr)
     {
+	free(pneuroResult);
+
+	return(NULL);
+    }
+
+    //- allocate the solver registrations
+
+    pneuroResult->psr = SolverRegistryCalloc(100);
+
+    if (!pneuroResult->psr)
+    {
+	free(pneuroResult->pcr);
+
 	free(pneuroResult);
 
 	return(NULL);

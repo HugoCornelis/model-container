@@ -7525,7 +7525,7 @@ static int QueryHandlerResolveSolverID
 
 	    //- get solver info for symbol
 
-	    psi = SolverInfoRegistrationGet(NULL, ppist);
+	    psi = SolverRegistryGet(pneuro->psr, NULL, ppist);
 
 	    if (!psi)
 	    {
@@ -9246,7 +9246,7 @@ static int QueryHandlerSolverGet
     //- get solver registration
 
     struct SolverInfo *psi
-	= SolverInfoRegistrationGet(NULL, ppist);
+	= SolverRegistryGet(pneuro->psr, NULL, ppist);
 
     //- if found
 
@@ -9306,7 +9306,7 @@ static int QueryHandlerSolverRegistrations
 
     //- give some info about all solver info registrations
 
-    bResult = SolverInfoRegistrationEnumerate();
+    bResult = SolverRegistryEnumerate(pneuro->psr);
 
     //- return result
 
@@ -9363,7 +9363,7 @@ static int QueryHandlerSolverSet
 
 	    //- set solver
 
-	    SolverInfoRegistrationAddFromContext(NULL, ppist, pcSolver);
+	    SolverRegistryAddFromContext(pneuro->psr, NULL, ppist, pcSolver);
 	}
 
 	//- else

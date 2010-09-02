@@ -137,6 +137,10 @@ struct Neurospaces
 
 /*     struct SolverMapper *psm; */
 
+    /// solver registrations
+
+    struct SolverRegistry *psr;
+
     /// parsed command line
 
     struct NeurospacesConfig *pnsc;
