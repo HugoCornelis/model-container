@@ -167,7 +167,18 @@ struct symtab_Invisible;
 %inline %{
 
 
-/// br2p derived
+struct Heccer;
+
+struct SolverInfo *
+solver_heccer_register
+(struct SolverRegistry *psr, struct Heccer *pheccer, struct PidinStack *ppist, char *pcSolver);
+
+struct SolverInfo *
+solver_heccer_register
+(struct SolverRegistry *psr, struct Heccer *pheccer, struct PidinStack *ppist, char *pcSolver)
+{
+    return(SolverRegistryAddFromContext(psr, pheccer, ppist, pcSolver));
+}
 
 static
 AV *

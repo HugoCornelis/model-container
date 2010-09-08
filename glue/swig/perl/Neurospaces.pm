@@ -765,7 +765,7 @@ sub register_engine
 
 	    my $engine_backend = $engine->backend()->backend();
 
-	    my $solverinfo = $solver_registry->SolverRegistryAddFromContext($engine_backend, $context, $engine_name);
+	    my $solverinfo = $solver_registry->solver_heccer_register($engine_backend, $context, $engine_name);
 
 	    if (defined $solverinfo)
 	    {
