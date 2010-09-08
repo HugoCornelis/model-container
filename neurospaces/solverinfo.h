@@ -74,10 +74,6 @@ void SolverInfoFree(struct SolverInfo * psi);
 
 char * SolverInfoGetSolverString(struct SolverInfo *psi);
 
-int
-SolverInfoInit
-(struct SolverInfo * psi, void *pvSolver, struct PidinStack *ppist, char *pcSolver);
-
 struct PidinStack *
 SolverInfoLookupContextFromPrincipalSerial
 (struct SolverInfo *psi, int iPrincipal);
@@ -100,7 +96,7 @@ SolverInfoPrincipalSerial2SegmentSerial
 
 int SolverInfoSerialInSolvedSet(struct SolverInfo *psi, int iSerial);
 
-int SolverRegistryAdd(struct SolverRegistry *psr, void *pv, struct SolverInfo *psi);
+int SolverRegistryAdd(struct SolverRegistry *psr, struct SolverInfo *psi);
 
 struct SolverInfo *
 SolverRegistryAddFromContext

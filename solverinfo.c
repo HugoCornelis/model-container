@@ -30,6 +30,11 @@
 
 
 
+static
+int
+SolverInfoInit
+(struct SolverInfo * psi, void *pvSolver, struct PidinStack *ppist, char *pcSolver);
+
 static int SolverRegistryAddEntries(struct SolverRegistry *psr, int iEntries);
 
 
@@ -58,8 +63,8 @@ struct SolverInfo * SolverInfoCalloc()
 
 
 /// 
-/// \arg psi solver info
-/// \arg ppq projection query
+/// \arg psi solver info.
+/// \arg ppq projection query.
 /// 
 /// \return int : number of incoming connections, -1 for failure
 /// 
@@ -252,7 +257,7 @@ int SolverInfoCountIncomingConnections
 
 
 /// 
-/// \arg psi solver info to free
+/// \arg psi solver info to free.
 /// 
 /// \return void
 /// 
@@ -275,7 +280,7 @@ void SolverInfoFree(struct SolverInfo * psi)
 
 
 /// 
-/// \arg psi solver info to get info on
+/// \arg psi solver info to get info on.
 /// 
 /// \return char * : solver identification
 /// 
@@ -291,9 +296,10 @@ char * SolverInfoGetSolverString(struct SolverInfo *psi)
 
 
 /// 
-/// \arg psi solver info to init
-/// \arg ppist context stack of solved symbol
-///	pcSolver.: init string, path specification
+/// \arg psi solver info to init.
+/// \arg pvSolver solver or proxy pointer.
+/// \arg ppist context stack of solved symbol.
+/// \arg pcSolver init string, path specification.
 /// 
 /// \return void
 /// 
@@ -305,6 +311,7 @@ char * SolverInfoGetSolverString(struct SolverInfo *psi)
 ///	same solver, "**" is appended to indicate (== wildcard).
 /// 
 
+static
 int
 SolverInfoInit
 (struct SolverInfo * psi, void *pvSolver, struct PidinStack *ppist, char *pcSolver)
@@ -369,8 +376,8 @@ SolverInfoLookupContextFromPrincipalSerial
 
 
 /// 
-/// \arg psi solver info
-/// \arg ppist: context to lookup
+/// \arg psi solver info.
+/// \arg ppist: context to lookup.
 /// 
 /// \return int  serial ID relative to solver info, -1 for failure
 /// 
@@ -449,8 +456,8 @@ int SolverInfoLookupPrincipalSerial
 
 
 /// 
-/// \arg psi solver info
-/// \arg iSerial rooted symbol serial
+/// \arg psi solver info.
+/// \arg iSerial rooted symbol serial.
 /// 
 /// \return int : serial relative to given solver info, -1 for failure
 /// 
@@ -506,8 +513,8 @@ int SolverInfoLookupRelativeSerial(struct SolverInfo *psi, int iSerial)
 
 
 /// 
-/// \arg psi solver info
-/// \arg ppist: receives context of topmost symbol
+/// \arg psi solver info.
+/// \arg ppist: receives context of topmost symbol.
 /// 
 /// \return struct symtab_HSolveListElement * : top symbol that is solved
 /// 
@@ -557,7 +564,7 @@ SolverInfoLookupTopSymbol(struct SolverInfo *psi, struct PidinStack *ppist)
 
 
 /// 
-/// \arg psi solver info
+/// \arg psi solver info.
 /// 
 /// \return struct PidinStack * : context associated by psi
 /// 
@@ -577,8 +584,8 @@ struct PidinStack * SolverInfoPidinStack(struct SolverInfo * psi)
 
 
 /// 
-/// \arg psi solver info
-/// \arg iPrincipal serial ID in principal space to convert
+/// \arg psi solver info.
+/// \arg iPrincipal serial ID in principal space to convert.
 /// 
 /// \return int : serial ID in segment space, -1 for failure
 /// 
@@ -673,15 +680,15 @@ SolverInfoPrincipalSerial2SegmentSerial
 
 
 /// 
-/// \arg pv must be NULL
-/// \arg psi solver info to register
+/// \arg psr solver registry.
+/// \arg psi solver info to register.
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Register that a solver has been registered for a symbol
 /// 
 
-int SolverRegistryAdd(struct SolverRegistry *psr, void *pv, struct SolverInfo *psi)
+int SolverRegistryAdd(struct SolverRegistry *psr, struct SolverInfo *psi)
 {
     //- set default result : ok
 
@@ -712,6 +719,7 @@ int SolverRegistryAdd(struct SolverRegistry *psr, void *pv, struct SolverInfo *p
 
 
 /// 
+/// \arg psr solver registry.
 /// \arg iEntries requested new number of entries.
 /// 
 /// \return int : success of operation
@@ -756,6 +764,7 @@ static int SolverRegistryAddEntries(struct SolverRegistry *psr, int iEntries)
 
 
 /// 
+/// \arg psr solver registry.
 /// \arg pvSolver solver or proxy pointer.
 /// \arg ppist wildcard for solved symbols.
 /// \arg pcSolver name of solver (identification path).
@@ -777,7 +786,7 @@ SolverRegistryAddFromContext
 
     //- register in global table
 
-    SolverRegistryAdd(psr, NULL, psiResult);
+    SolverRegistryAdd(psr, psiResult);
 
     //- return result
 
@@ -786,6 +795,8 @@ SolverRegistryAddFromContext
 
 
 /// 
+/// \arg psr solver registry.
+///
 /// \return int : success of operation
 /// 
 /// \brief Give some info about all solver info registrations
@@ -827,8 +838,8 @@ int SolverRegistryEnumerate(struct SolverRegistry *psr)
 
 
 /// 
-/// \arg pv must be NULL
-/// \arg ppist symbol context
+/// \arg psr solver registry.
+/// \arg ppist symbol context.
 /// 
 /// \return struct SolverInfo * : solver info, NULL for failure
 /// 
@@ -890,7 +901,7 @@ SolverRegistryGet(struct SolverRegistry *psr, struct PidinStack *ppist)
 
 
 /// 
-/// \arg pv must be NULL.
+/// \arg psr solver registry.
 /// \arg iSerial rooted symbol serial.
 /// 
 /// \return struct SolverInfo * : solver info, NULL for failure

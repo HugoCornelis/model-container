@@ -763,7 +763,9 @@ sub register_engine
 
 	    my $solver_registry = SwiggableNeurospaces::swig_get_global_solver_registry();
 
-	    my $solverinfo = SwiggableNeurospaces::SolverRegistryAddFromContext($solver_registry, undef, $context, $engine_name);
+	    my $engine_backend = $engine->backend()->backend();
+
+	    my $solverinfo = $solver_registry->SolverRegistryAddFromContext($engine_backend, $context, $engine_name);
 
 	    if (defined $solverinfo)
 	    {
