@@ -765,7 +765,20 @@ sub register_engine
 
 	    my $engine_backend = $engine->backend()->backend();
 
-	    my $solverinfo = $solver_registry->solver_heccer_register($engine_backend, $context, $engine_name);
+	    my $solverinfo;
+
+	    if ($engine->backend() =~ /des/i)
+	    {
+		$solverinfo = $solver_registry->solver_des_register($engine_backend, $context, $engine_name);
+	    }
+	    elsif ($engine->backend() =~ /heccer/i)
+	    {
+		$solverinfo = $solver_registry->solver_heccer_register($engine_backend, $context, $engine_name);
+	    }
+	    else
+	    {
+		die "$0: Neurospaces::register_engine() for $modelname with an unknown solver type $engine_backend";
+	    }
 
 	    if (defined $solverinfo)
 	    {

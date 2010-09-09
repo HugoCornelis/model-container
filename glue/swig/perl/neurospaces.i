@@ -168,6 +168,8 @@ struct symtab_Invisible;
 
 
 struct Heccer;
+struct DES;
+
 
 struct SolverInfo *
 solver_heccer_register
@@ -178,6 +180,17 @@ solver_heccer_register
 (struct SolverRegistry *psr, struct Heccer *pheccer, struct PidinStack *ppist, char *pcSolver)
 {
     return(SolverRegistryAddFromContext(psr, pheccer, ppist, pcSolver));
+}
+
+struct SolverInfo *
+solver_des_register
+(struct SolverRegistry *psr, struct DES *pdes, struct PidinStack *ppist, char *pcSolver);
+
+struct SolverInfo *
+solver_des_register
+(struct SolverRegistry *psr, struct DES *pdes, struct PidinStack *ppist, char *pcSolver)
+{
+    return(SolverRegistryAddFromContext(psr, pdes, ppist, pcSolver));
 }
 
 static
