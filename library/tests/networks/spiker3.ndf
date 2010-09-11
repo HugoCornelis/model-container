@@ -428,7 +428,7 @@ PUBLIC_MODELS
 						PARAMETER ( PRE = source/soma/spikegen ),
 						PARAMETER ( POST = target1/soma/s/synapse ),
 						PARAMETER ( WEIGHT = 1.0 ),
-						PARAMETER ( DELAY = 1.0 ),
+						PARAMETER ( DELAY = 0.001 ),
 
 					END PARAMETERS
 
@@ -441,7 +441,7 @@ PUBLIC_MODELS
 						PARAMETER ( PRE = source/soma/spikegen ),
 						PARAMETER ( POST = target2/soma/s/synapse ),
 						PARAMETER ( WEIGHT = 2.0 ),
-						PARAMETER ( DELAY = 2.0 ),
+						PARAMETER ( DELAY = 0.002 ),
 
 					END PARAMETERS
 
