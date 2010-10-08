@@ -5,13 +5,15 @@ NEUROSPACES NDF
 
 IMPORT
 
-	FILE mapper "mappers/spikegenerator.ndf"
+	FILE mapper1 "mappers/spikegenerator.ndf"
+	FILE mapper2 "mappers/spikereceiver.ndf"
 
 END IMPORT
 
 PRIVATE_MODELS
 
-	ALIAS mapper::/SpikeGen SpikeGen END ALIAS
+	ALIAS mapper1::/SpikeGen SpikeGen END ALIAS
+	ALIAS mapper2::/Synapse Synapse END ALIAS
 
 	CHANNEL kdr
 		BINDABLES
@@ -31,7 +33,7 @@ PRIVATE_MODELS
 				INPUT ..->Vm
 			END BINDINGS
 	
-			GATE_KINETIC_A forward
+			GATE_KINETIC_A A
 	
 				BINDABLES
 					INPUT Vm, OUTPUT rate
@@ -52,7 +54,7 @@ PRIVATE_MODELS
 	
 			END GATE_KINETIC_A
 	
-			GATE_KINETIC_B backward
+			GATE_KINETIC_B B
 	
 				BINDABLES
 					INPUT Vm, OUTPUT rate
@@ -119,7 +121,7 @@ PRIVATE_MODELS
 				INPUT ..->Vm
 			END BINDINGS
 	
-			GATE_KINETIC_A forward
+			GATE_KINETIC_A A
 	
 				BINDABLES
 					INPUT Vm, OUTPUT rate
@@ -140,7 +142,7 @@ PRIVATE_MODELS
 	
 			END GATE_KINETIC_A
 	
-			GATE_KINETIC_B backward
+			GATE_KINETIC_B B
 	
 				BINDABLES
 					INPUT Vm, OUTPUT rate
@@ -191,7 +193,7 @@ PRIVATE_MODELS
 				INPUT ..->Vm
 			END BINDINGS
 	
-			GATE_KINETIC_A forward
+			GATE_KINETIC_A A
 	
 				BINDABLES
 					INPUT Vm, OUTPUT rate
@@ -212,7 +214,7 @@ PRIVATE_MODELS
 	
 			END GATE_KINETIC_A
 	
-			GATE_KINETIC_B backward
+			GATE_KINETIC_B B
 	
 				BINDABLES
 					INPUT Vm, OUTPUT rate
@@ -311,7 +313,7 @@ PRIVATE_MODELS
         			INPUT ^->Vm
 			END BINDINGS
 			PARAMETERS
-				PARAMETER ( THRESHOLD = 0.0 ),
+				PARAMETER ( THRESHOLD = 0 ),
 				PARAMETER ( REFRACTORY = 0.001 )
 			END PARAMETERS
 		END CHILD
@@ -326,70 +328,74 @@ PRIVATE_MODELS
 
 	END CELL
 
-// 	CHANNEL synchan
-// 		BINDABLES
-// 			INPUT Vm,OUTPUT exp2->G,OUTPUT I
-// 		END BINDABLES
+	CHANNEL synchan
+		BINDABLES
+			INPUT Vm,OUTPUT exp2->G,OUTPUT I
+		END BINDABLES
 
-// 		PARAMETERS
-// 			PARAMETER ( G_MAX = FIXED ( PARAMETER ( value = 6.87071723162637e-10 ), PARAMETER ( scale = 1.0 ), ), ),
-// 			PARAMETER ( Erev = 0.0 ),
-// 		END PARAMETERS
+		PARAMETERS
+			PARAMETER ( G_MAX = FIXED ( PARAMETER ( value = 6.87071723162637e-10 ), PARAMETER ( scale = 1.0 ), ), ),
+			PARAMETER ( Erev = 0.0 ),
+		END PARAMETERS
 
-// 		EQUATION_EXPONENTIAL exp2
-// 			BINDABLES
-// 				INPUT activation,OUTPUT G
-// 			END BINDABLES
-// 			BINDINGS
-// 			END BINDINGS
+		EQUATION_EXPONENTIAL exp2
+			BINDABLES
+				INPUT activation,OUTPUT G
+			END BINDABLES
+			BINDINGS
+                		INPUT ../synapse->activation
+			END BINDINGS
 
-// 			PARAMETERS
-// 				PARAMETER ( TAU1 = 0.50e-3 ),
-// 				PARAMETER ( TAU2 = 1.20e-3 )
-// 			END PARAMETERS
+			PARAMETERS
+				PARAMETER ( TAU1 = 0.50e-3 ),
+				PARAMETER ( TAU2 = 1.20e-3 )
+			END PARAMETERS
 
-// 		END EQUATION_EXPONENTIAL
+		END EQUATION_EXPONENTIAL
 
-// 	END CHANNEL
+		CHILD Synapse synapse
+		END CHILD
 
-// 	SEGMENT target_soma
+	END CHANNEL
 
-// 		BINDABLES
-// 			OUTPUT Vm
-// 		END BINDABLES
+	SEGMENT target_soma
 
-// 		BINDINGS
-//                		INPUT s->I,
-// 		END BINDINGS
+		BINDABLES
+			OUTPUT Vm
+		END BINDABLES
 
-// // 		OPTIONS SPHERICAL
+		BINDINGS
+               		INPUT s->I,
+		END BINDINGS
 
-// 		PARAMETERS
-// 			PARAMETER ( Vm_init = -0.080 ),
-// 			PARAMETER ( RM = 1.000 ),
-// 			PARAMETER ( RA = 2.50 ),
-// 			PARAMETER ( CM = 0.0164 ),
-// 			PARAMETER ( ELEAK = -0.0800 ),
+// 		OPTIONS SPHERICAL
 
-// 			PARAMETER ( rel_X = 0.000e-6 ),
-// 			PARAMETER ( rel_Y = 0.000e-6 ),
-// 			PARAMETER ( rel_Z = 0.000e-6 ),
-// 			PARAMETER ( DIA = 29.80e-6 ),
+		PARAMETERS
+			PARAMETER ( Vm_init = -0.065 ),
+			PARAMETER ( RM = 1.000 ),
+			PARAMETER ( RA = 2.50 ),
+			PARAMETER ( CM = 0.0164 ),
+			PARAMETER ( ELEAK = -0.0800 ),
 
-// 		END PARAMETERS
+			PARAMETER ( rel_X = 0.000e-6 ),
+			PARAMETER ( rel_Y = 0.000e-6 ),
+			PARAMETER ( rel_Z = 0.000e-6 ),
+			PARAMETER ( DIA = 29.80e-6 ),
 
-// 		CHILD synchan s
-// 		END CHILD
+		END PARAMETERS
 
-// 	END SEGMENT
+		CHILD synchan s
+		END CHILD
 
-// 	CELL target
+	END SEGMENT
 
-// 		CHILD target_soma
-// 			soma
-// 		END CHILD
+	CELL target
 
-// 	END CELL
+		CHILD target_soma
+			soma
+		END CHILD
+
+	END CELL
 
 END PRIVATE_MODELS
 
@@ -397,50 +403,85 @@ PUBLIC_MODELS
 
 	NETWORK spiker4
 
-		CHILD source source END CHILD
+		CHILD source source1 END CHILD
 
-// 		CHILD target target1 END CHILD
+		CHILD source source2 END CHILD
 
-// 		CHILD target target2 END CHILD
+		CHILD target target1 END CHILD
 
-// 		PROJECTION projection1
+		CHILD target target2 END CHILD
 
-// 			PARAMETERS
-// 				PARAMETER ( SOURCE = /spiker3 ),
-// 				PARAMETER ( TARGET = /spiker3 )
-// 			END PARAMETERS
+		PROJECTION projection1
 
-// 			CONNECTION_GROUP connections
+			PARAMETERS
 
-// 				CONNECTION c1
+				//t why are these encoded as absolute contexts ?
 
-// 					PARAMETERS
+				PARAMETER ( SOURCE = /spiker3 ),
+				PARAMETER ( TARGET = /spiker3 )
+			END PARAMETERS
 
-// 						PARAMETER ( PRE = source/soma/spikegen ),
-// 						PARAMETER ( POST = target1/soma/s/synapse ),
-// 						PARAMETER ( WEIGHT = 1.0 ),
-// 						PARAMETER ( DELAY = 1.0 ),
+			CONNECTION_GROUP source1
 
-// 					END PARAMETERS
+				CONNECTION c1
 
-// 				END CONNECTION
+					PARAMETERS
 
-// 				CONNECTION c2
+						PARAMETER ( PRE = source1/soma/spikegen ),
+						PARAMETER ( POST = target1/soma/s/synapse ),
+						PARAMETER ( WEIGHT = 1.0 ),
+						PARAMETER ( DELAY = 0.001 ),
 
-// 					PARAMETERS
+					END PARAMETERS
 
-// 						PARAMETER ( PRE = source/soma/spikegen ),
-// 						PARAMETER ( POST = target2/soma/s/synapse ),
-// 						PARAMETER ( WEIGHT = 2.0 ),
-// 						PARAMETER ( DELAY = 2.0 ),
+				END CONNECTION
 
-// 					END PARAMETERS
+				CONNECTION c2
 
-// 				END CONNECTION
+					PARAMETERS
 
-// 			END CONNECTION_GROUP
+						PARAMETER ( PRE = source1/soma/spikegen ),
+						PARAMETER ( POST = target2/soma/s/synapse ),
+						PARAMETER ( WEIGHT = 2.0 ),
+						PARAMETER ( DELAY = 0.002 ),
 
-// 		END PROJECTION
+					END PARAMETERS
+
+				END CONNECTION
+
+			END CONNECTION_GROUP
+
+			CONNECTION_GROUP source2
+
+				CONNECTION c1
+
+					PARAMETERS
+
+						PARAMETER ( PRE = source2/soma/spikegen ),
+						PARAMETER ( POST = target1/soma/s/synapse ),
+						PARAMETER ( WEIGHT = 3.0 ),
+						PARAMETER ( DELAY = 0.003 ),
+
+					END PARAMETERS
+
+				END CONNECTION
+
+				CONNECTION c2
+
+					PARAMETERS
+
+						PARAMETER ( PRE = source2/soma/spikegen ),
+						PARAMETER ( POST = target2/soma/s/synapse ),
+						PARAMETER ( WEIGHT = 4.0 ),
+						PARAMETER ( DELAY = 0.004 ),
+
+					END PARAMETERS
+
+				END CONNECTION
+
+			END CONNECTION_GROUP
+
+		END PROJECTION
 
 	END NETWORK
 
