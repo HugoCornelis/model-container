@@ -12,6 +12,100 @@ my $test
 					      '-v',
 					      '1',
 					      '-q',
+					      'tests/networks/spiker4.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/networks/spiker4.ndf.', ],
+						  },
+						  {
+						   description => "Can we define an index over all projections ?",
+						   read => 'connections = 4
+',
+						   write => "pqsetall c",
+						  },
+						  {
+						   description => "Can we traverse the connections of the first source cell?",
+						   read => "Connection (00000)
+        CCONN  pre(15.000000) -> post(34.000000)
+        CCONN  Delay, Weight (0.001000,1.000000)
+
+Connection (00001)
+        CCONN  pre(15.000000) -> post(39.000000)
+        CCONN  Delay, Weight (0.002000,2.000000)
+
+",
+						   write => "pqtraverse c /spiker4/source1/soma/spikegen",
+						  },
+						  {
+						   description => "Can we traverse the connections of the second source cell?",
+						   read => "Connection (00000)
+        CCONN  pre(29.000000) -> post(34.000000)
+        CCONN  Delay, Weight (0.003000,3.000000)
+
+Connection (00001)
+        CCONN  pre(29.000000) -> post(39.000000)
+        CCONN  Delay, Weight (0.004000,4.000000)
+
+",
+						   write => "pqtraverse c /spiker4/source2/soma/spikegen",
+						  },
+						  {
+						   description => "Does the first target serial correspond with the second target cell?",
+						   read => "serial id /,34 -> /spiker4/target1/soma/s/synapse",
+						   write => "serial2context / 34",
+						  },
+						  {
+						   description => "Does the first target serial correspond with the second target cell?",
+						   read => "serial id /,39 -> /spiker4/target2/soma/s/synapse",
+						   write => "serial2context / 39",
+						  },
+						  {
+						   description => "Can we traverse the connections of the first target cell?",
+						   read => "Connection (00000)
+        CCONN  pre(15.000000) -> post(34.000000)
+        CCONN  Delay, Weight (0.001000,1.000000)
+
+Connection (00001)
+        CCONN  pre(29.000000) -> post(34.000000)
+        CCONN  Delay, Weight (0.003000,3.000000)
+
+",
+						   write => "pqtraverse c /spiker4/target1/soma/s/synapse",
+						  },
+						  {
+						   description => "Can we traverse the connections of the second target cell?",
+						   read => "Connection (00000)
+        CCONN  pre(15.000000) -> post(39.000000)
+        CCONN  Delay, Weight (0.002000,2.000000)
+
+Connection (00001)
+        CCONN  pre(29.000000) -> post(39.000000)
+        CCONN  Delay, Weight (0.004000,4.000000)
+
+",
+						   write => "pqtraverse c /spiker4/target2/soma/s/synapse",
+						  },
+						  {
+						   description => "Does the first source serial correspond with the first source cell?",
+						   read => "serial id /,15 -> /spiker4/source1/soma/spikegen",
+						   write => "serial2context / 15",
+						  },
+						  {
+						   description => "Does the second source serial correspond with the second source cell?",
+						   read => "serial id /,29 -> /spiker4/source2/soma/spikegen",
+						   write => "serial2context / 29",
+						  },
+						 ],
+				description => "spiker4 test network model - connections index",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-q',
 					      'legacy/networks/network-test.ndf',
 					     ],
 				command => './neurospacesparse',

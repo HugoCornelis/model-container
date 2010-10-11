@@ -3106,6 +3106,25 @@ my $test
 						 ],
 				description => "syntax of tests/cells/channel_response.ndf",
 			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'tests/networks/spiker4.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (tests/networks/spiker4.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/networks/spiker4.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of tests/networks/spiker4.ndf",
+			       },
 			      ],
        description => "general syntax of library files",
        name => 'parsing.t',
