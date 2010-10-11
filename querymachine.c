@@ -3297,7 +3297,7 @@ static int QueryHandlerPQLoad
 
     //pcFilename = malloc((1 + iSize) * sizeof(char));
 
-    strncpy(pcFilename,&pcLine[iLength + 1],iSize);
+    strncpy(pcFilename, &pcLine[iLength + 1], iSize);
 
     pcFilename[iSize] = '\0';
 
@@ -4265,7 +4265,15 @@ static int QueryHandlerPQTraverse
 
     //- go to next arg
 
-    iLength += strpbrk(&pcLine[iLength + 1], " \t") - &pcLine[iLength];
+    if (strpbrk(&pcLine[iLength + 1], " \t") == 0)
+    {
+	iLength += strlen(&pcLine[iLength + 1]);
+    }
+    else
+    {
+	iLength += strpbrk(&pcLine[iLength + 1], " \t") - &pcLine[iLength];
+    }
+
 
     //- parse command line element, get spike(gen|rec)
 
