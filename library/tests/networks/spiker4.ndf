@@ -417,8 +417,8 @@ PUBLIC_MODELS
 
 				//t why are these encoded as absolute contexts ?
 
-				PARAMETER ( SOURCE = /spiker3 ),
-				PARAMETER ( TARGET = /spiker3 )
+				PARAMETER ( SOURCE = /spiker4 ),
+				PARAMETER ( TARGET = /spiker4 )
 			END PARAMETERS
 
 			CONNECTION_GROUP source1
