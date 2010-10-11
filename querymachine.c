@@ -8644,7 +8644,7 @@ static int QueryHandlerSerialToContext
     {
 	//- get context
 
-	struct PidinStack *ppistSerial 
+	struct PidinStack *ppistSerial
 	    = SymbolPrincipalSerial2Context(phsle, ppist, iSerial);
 
 	//- if found
