@@ -694,6 +694,38 @@ my $class_hierarchy
 		   parameters => {
 				 },
 		  },
+	  izhikevich => {
+			 allows => {
+				    'create_alias' => 'izhikevich',
+				   },
+			 annotations => {
+					 'piSymbolType2Biolevel' => 'BIOLEVEL_CELL',
+					},
+			 description => 'implementation of the izhikevich simple neuron model',
+			 grammar => {
+				     components => [],
+				     specific_allocator => 'IzhikevichCalloc',
+				     specific_token => {
+							class => 'izhikevich',
+							lexical => 'TOKEN_IZHIKEVICH',
+							purpose => 'physical',
+						       },
+				     typing => {
+						base => 'phsle',
+						id => 'pidin',
+						spec => 'pizhi',
+						to_base => '->segr.bio.ioh.iol.hsle',
+					       },
+				    },
+			 isa => 'segmenter',
+			 name => 'symtab_Izhikevich',
+			 parameters => {
+					IHZI_A => 'A izhikevich simple neuron model parameter',
+					IHZI_B => 'B izhikevich simple neuron model parameter',
+					IHZI_C => 'C izhikevich simple neuron model parameter',
+					IHZI_D => 'D izhikevich simple neuron model parameter',
+				       },
+			},
 	  fiber => {
 		    allows => {
 			       'create_alias' => 'fiber',
@@ -1080,6 +1112,7 @@ my $class_hierarchy
 					     'GateKineticPart',
 					     'Group',
 					     'HHGate',
+					     'Izhikevich',
 					     'Network',
 					     'Pool',
 					     'Population',

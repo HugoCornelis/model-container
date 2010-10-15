@@ -2,7 +2,7 @@
 // Neurospaces: a library which implements a global typed symbol table to
 // be used in neurobiological model maintenance and simulation.
 //
-// $Id: fiber.h 1.12 Fri, 28 Sep 2007 22:25:58 -0500 hugo $
+//
 //
 
 //////////////////////////////////////////////////////////////////////////////
@@ -18,14 +18,14 @@
 //////////////////////////////////////////////////////////////////////////////
 
 
-#ifndef FIBER_H
-#define FIBER_H
+#ifndef IZHIKEVICH_H
+#define IZHIKEVICH_H
 
 
 /// \struct structure declarations
 
-struct descr_Fiber;
-struct symtab_Fiber;
+struct descr_Izhikevich;
+struct symtab_Izhikevich;
 
 
 #include "neurospaces/idin.h"
@@ -36,45 +36,45 @@ struct symtab_Fiber;
 
 
 
-struct symtab_Fiber * FiberCalloc(void);
+struct symtab_Izhikevich * IzhikevichCalloc(void);
 
-int FiberCountSpikeGenerators
+int IzhikevichCountSpikeGenerators
 (struct symtab_HSolveListElement *phsle, struct PidinStack *ppist);
 
 struct symtab_HSolveListElement * 
-FiberCreateAlias
-(struct symtab_Fiber *pfibr,
+IzhikevichCreateAlias
+(struct symtab_Izhikevich *pihzi,
  char *pcNamespace,
  struct symtab_IdentifierIndex *pidin);
 
-void FiberInit(struct symtab_Fiber *pfibr);
+void IzhikevichInit(struct symtab_Izhikevich *pihzi);
 
-struct symtab_Fiber * FiberNewAtXYZ(double dx, double dy, double dz);
+struct symtab_Izhikevich * IzhikevichNewAtXYZ(double dx, double dy, double dz);
 
 
 #include "biocomp.h"
 #include "neurospaces/inputoutput.h"
 
 
-/// \struct fiber
+/// \struct izhikevich
 
-struct descr_Fiber
+struct descr_Izhikevich
 {
     int iHappy;
 };
 
 
-/// \struct struct symtab_Fiber
+/// \struct struct symtab_Izhikevich
 
-struct symtab_Fiber
+struct symtab_Izhikevich
 {
     /// base struct : segmenter
 
     struct symtab_Segmenter segr;
 
-    /// fiber description
+    /// izhikevich description
 
-    struct descr_Fiber defibr;
+    struct descr_Izhikevich deihzi;
 };
 
 

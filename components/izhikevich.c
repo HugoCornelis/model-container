@@ -2,7 +2,7 @@
 // Neurospaces: a library which implements a global typed symbol table to
 // be used in neurobiological model maintenance and simulation.
 //
-// $Id: fiber.c 1.17 Fri, 28 Sep 2007 22:25:58 -0500 hugo $
+//
 //
 
 //////////////////////////////////////////////////////////////////////////////
@@ -22,53 +22,53 @@
 
 
 #include "neurospaces/components/attachment.h"
-#include "neurospaces/components/fiber.h"
+#include "neurospaces/components/izhikevich.h"
 #include "neurospaces/idin.h"
 
 
 /// 
-/// \return struct symtab_Fiber * 
+/// \return struct symtab_Izhikevich * 
 /// 
-///	Newly allocated fiber, NULL for failure
+///	Newly allocated izhikevich, NULL for failure
 /// 
-/// \brief Allocate a new fiber symbol table element
+/// \brief Allocate a new izhikevich symbol table element
 /// 
 
-struct symtab_Fiber * FiberCalloc(void)
+struct symtab_Izhikevich * IzhikevichCalloc(void)
 {
     //- set default result : failure
 
-    struct symtab_Fiber *pfibrResult = NULL;
+    struct symtab_Izhikevich *pihziResult = NULL;
 
-#include "hierarchy/output/symbols/fiber_vtable.c"
+#include "hierarchy/output/symbols/izhikevich_vtable.c"
 
-    //- allocate fiber
+    //- allocate izhikevich
 
-    pfibrResult
-	= (struct symtab_Fiber *)
-	  SymbolCalloc(1, sizeof(struct symtab_Fiber), _vtable_fiber, HIERARCHY_TYPE_symbols_fiber);
+    pihziResult
+	= (struct symtab_Izhikevich *)
+	  SymbolCalloc(1, sizeof(struct symtab_Izhikevich), _vtable_izhikevich, HIERARCHY_TYPE_symbols_izhikevich);
 
-    //- initialize fiber
+    //- initialize izhikevich
 
-    FiberInit(pfibrResult);
+    IzhikevichInit(pihziResult);
 
     //- return result
 
-    return(pfibrResult);
+    return(pihziResult);
 }
 
 
 /// 
-/// \arg pfibr fiber to count spike generators for
+/// \arg pihzi izhikevich to count spike generators for
 /// \arg ppist context, izhikevich on top
 /// 
-/// \return int : number of spike generators in fiber, -1 for failure
+/// \return int : number of spike generators in izhikevich, -1 for failure
 /// 
-/// \brief count all spike generators in fiber
+/// \brief count all spike generators in izhikevich
 /// 
 
 static int 
-FiberSpikeGeneratorCounter
+IzhikevichSpikeGeneratorCounter
 (struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : ok
@@ -100,17 +100,17 @@ FiberSpikeGeneratorCounter
     return(iResult);
 }
 
-int FiberCountSpikeGenerators
+int IzhikevichCountSpikeGenerators
 (struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)
 {
     //- set default result : none
 
     int iResult = 0;
 
-    //- traverse fiber spike generators and count them
+    //- traverse izhikevich spike generators and count them
 
     if (SymbolTraverseSpikeGenerators
-	(phsle, ppist, FiberSpikeGeneratorCounter, NULL, (void *)&iResult)
+	(phsle, ppist, IzhikevichSpikeGeneratorCounter, NULL, (void *)&iResult)
 	== FALSE)
     {
 	iResult = -1;
@@ -123,7 +123,7 @@ int FiberCountSpikeGenerators
 
 
 /// 
-/// \arg pfibr symbol to alias
+/// \arg pihzi symbol to alias
 /// \arg pidin name of new symbol
 /// 
 /// \return struct symtab_HSolveListElement * : alias for original symbol
@@ -132,48 +132,48 @@ int FiberCountSpikeGenerators
 /// 
 
 struct symtab_HSolveListElement * 
-FiberCreateAlias
-(struct symtab_Fiber *pfibr,
+IzhikevichCreateAlias
+(struct symtab_Izhikevich *pihzi,
  char *pcNamespace,
  struct symtab_IdentifierIndex *pidin)
 {
     //- set default result : allocate
 
-    struct symtab_Fiber *pfibrResult = FiberCalloc();
+    struct symtab_Izhikevich *pihziResult = IzhikevichCalloc();
 
     //- set name, namespace and prototype
 
-    SymbolSetName(&pfibrResult->segr.bio.ioh.iol.hsle, pidin);
-    SymbolSetNamespace(&pfibrResult->segr.bio.ioh.iol.hsle, pcNamespace);
-    SymbolSetPrototype(&pfibrResult->segr.bio.ioh.iol.hsle, &pfibr->segr.bio.ioh.iol.hsle);
+    SymbolSetName(&pihziResult->segr.bio.ioh.iol.hsle, pidin);
+    SymbolSetNamespace(&pihziResult->segr.bio.ioh.iol.hsle, pcNamespace);
+    SymbolSetPrototype(&pihziResult->segr.bio.ioh.iol.hsle, &pihzi->segr.bio.ioh.iol.hsle);
 
     //- increment number of created aliases
 
-    SymbolIncrementAliases(HIERARCHY_TYPE_symbols_fiber);
+    SymbolIncrementAliases(HIERARCHY_TYPE_symbols_izhikevich);
 
     //- return result
 
-    return(&pfibrResult->segr.bio.ioh.iol.hsle);
+    return(&pihziResult->segr.bio.ioh.iol.hsle);
 }
 
 
 /// 
-/// \arg pfibr fiber to init
+/// \arg pihzi izhikevich to init
 /// 
 /// \return void
 /// 
-/// \brief init fiber
+/// \brief init izhikevich
 /// 
 
-void FiberInit(struct symtab_Fiber *pfibr)
+void IzhikevichInit(struct symtab_Izhikevich *pihzi)
 {
     //- initialize base symbol
 
-    SegmenterInit(&pfibr->segr);
+    SegmenterInit(&pihzi->segr);
 
     //- set type
 
-    pfibr->segr.bio.ioh.iol.hsle.iType = HIERARCHY_TYPE_symbols_fiber;
+    pihzi->segr.bio.ioh.iol.hsle.iType = HIERARCHY_TYPE_symbols_izhikevich;
 }
 
 
@@ -182,7 +182,7 @@ void FiberInit(struct symtab_Fiber *pfibr)
 /// \arg dy Y coordinate
 /// \arg dz Z coordinate
 /// 
-/// \return struct symtab_Fiber * : resulting cell, NULL for failure
+/// \return struct symtab_Izhikevich * : resulting cell, NULL for failure
 /// 
 /// \brief Allocate cell, put at specified position.
 ///
@@ -191,23 +191,23 @@ void FiberInit(struct symtab_Fiber *pfibr)
 ///	Contains memory leak.
 /// 
 
-struct symtab_Fiber * FiberNewAtXYZ(double dx, double dy, double dz)
+struct symtab_Izhikevich * IzhikevichNewAtXYZ(double dx, double dy, double dz)
 {
     //- set result : new cell
 
-    struct symtab_Fiber *pfibrResult 
-	= FiberCalloc();
+    struct symtab_Izhikevich *pihziResult 
+	= IzhikevichCalloc();
 
     //- put at position
 
-    if (!BioComponentSetAtXYZ(&pfibrResult->segr.bio, dx, dy, dz, 0))
+    if (!BioComponentSetAtXYZ(&pihziResult->segr.bio, dx, dy, dz, 0))
     {
 	return(NULL);
     }
 
     //- return result
 
-    return(pfibrResult);
+    return(pihziResult);
 }
 
 

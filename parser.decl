@@ -44,6 +44,7 @@
 #include "neurospaces/components/fiber.h"
 #include "neurospaces/components/group.h"
 #include "neurospaces/components/hhgate.h"
+#include "neurospaces/components/izhikevich.h"
 #include "neurospaces/idin.h"
 #include "neurospaces/inputoutput.h"
 #include "neurospaces/iocontainer.h"

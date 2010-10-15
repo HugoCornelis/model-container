@@ -3125,6 +3125,25 @@ my $test
 						 ],
 				description => "syntax of tests/networks/spiker4.ndf",
 			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'cells/izhikevich.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (cells/izhikevich.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/izhikevich.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of cells/izhikevich.ndf",
+			       },
 			      ],
        description => "general syntax of library files",
        name => 'parsing.t',

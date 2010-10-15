@@ -12,7 +12,6 @@
     struct symtab_Cell *pcell;
     struct symtab_Channel *pchan;
     struct symtab_ConcentrationGateKinetic *pcgatk;
-    struct symtab_HHGate *pgathh;
     struct symtab_Connection *pconn;
     struct symtab_ConnectionSymbol *pconsy;
     struct symtab_ContourPoint *pcpnt;
@@ -23,10 +22,12 @@
     struct symtab_GateKinetic *pgatk;
     struct symtab_Group *pgrup;
     struct symtab_GroupedParameters *pgrpp;
+    struct symtab_HHGate *pgathh;
     struct symtab_HSolveListElement *phsle;
     struct symtab_IOContainer *pioc;
     struct symtab_IdentifierIndex *pidin;
     struct symtab_InputOutput *pio;
+    struct symtab_Izhikevich *pizhi;
     struct symtab_Network *pnetw;
     struct symtab_Parameters *ppar;
     struct symtab_Pool * ppool;

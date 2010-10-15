@@ -1,0 +1,25 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+PUBLIC_MODELS
+
+	/* parameters taken from the G-2 example izcell */
+
+	IZHIKEVICH
+
+		PARAMETERS
+			PARAMETER ( IHZI_A = 20 ),
+			PARAMETER ( IHZI_B = 200 ),
+			PARAMETER ( IHZI_C = -0.065 ),
+			PARAMETER ( IHZI_D = 8.0 ),
+
+
+			PARAMETER ( V_MAX = -1.0 ),
+
+		END PARAMETERS
+
+	END IZHIKEVICH
+
+END PUBLIC_MODELS
