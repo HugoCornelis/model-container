@@ -7,7 +7,7 @@ PUBLIC_MODELS
 
 	/* parameters taken from the G-2 example izcell */
 
-	IZHIKEVICH
+	IZHIKEVICH iz_cell
 
 		PARAMETERS
 			PARAMETER ( IHZI_A = 20 ),
