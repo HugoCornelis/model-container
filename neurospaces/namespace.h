@@ -65,6 +65,12 @@
 #define IDENTIFIER_CHILD_CHAR			'/'
 #define IDENTIFIER_CHILD_STRING			"/"
 
+/// \def define field value selectors
+
+#define IDENTIFIER_SELECTOR			[
+#define IDENTIFIER_SELECTOR_CHAR		'['
+#define IDENTIFIER_SELECTOR_STRING		"["
+
 
 // all legal seperators in a table of strings
 

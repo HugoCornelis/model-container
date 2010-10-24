@@ -35,9 +35,7 @@
 #include <string.h>
 
 
-/// \struct
-/// \struct identifier with optional index
-/// \struct
+/// \struct identifier
 
 struct symtab_IdentifierIndex
 {
@@ -59,6 +57,45 @@ struct symtab_IdentifierIndex
 };
 
 
+/// \struct identifier with a parsed selector
+
+typedef struct test_type {
+    char	field_id;
+    char	name[80];
+    short	op;
+    float	value;
+    struct test_type *next;
+} Test;
+
+typedef struct {
+    char	path[1000];
+    Test	*test;
+} PathInfo;
+
+struct symtab_IdentifierIndexSelector
+{
+    /// link structures in list
+
+    struct symtab_IdentifierIndex *pidinNext;
+
+    /// give each idin pointer to root for hierarchical idins
+
+    struct symtab_IdentifierIndex *pidinRoot;
+
+    /// flags, see FLAG_IDENTINDEX_*, this struct has FLAG_IDENTINDEX_SELECTOR set.
+
+    int iFlags;
+
+    /// name of identifier
+
+    char *pcIdentifier;
+
+    /// parsed selector information
+
+    PathInfo pinfo;
+};
+
+
 /// \note some if these should be done via inheritance :
 /// \note function ?
 /// \note wildcards ?
@@ -75,9 +112,9 @@ struct symtab_IdentifierIndex
 
 #define FLAG_IDENTINDEX_FIELD		4
 
-/* /// \def contains converted value */
+/// \def is selector
 
-/* #define FLAG_IDENTINDEX_VALUE		8 */
+#define FLAG_IDENTINDEX_SELECTOR	8
 
 /// \def identifier is not given
 
@@ -122,6 +159,9 @@ struct symtab_IdentifierIndex
 
 
 struct symtab_IdentifierIndex * IdinCalloc(void);
+
+struct symtab_IdentifierIndexSelector *
+IdinSelectorCalloc(void);
 
 struct symtab_IdentifierIndex * IdinCallocUnique(char *pc);
 
@@ -370,6 +410,19 @@ static inline
 int IdinIsRooted(struct symtab_IdentifierIndex *pidin)
 {
     return(IdinGetFlag(pidin,FLAG_IDENTINDEX_ROOTED));
+}
+
+
+/// 
+/// check if idin is a selector
+/// 
+
+#ifndef SWIG
+static inline 
+#endif
+int IdinIsSelector(struct symtab_IdentifierIndex *pidin)
+{
+    return(IdinGetFlag(pidin,FLAG_IDENTINDEX_SELECTOR));
 }
 
 

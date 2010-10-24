@@ -983,12 +983,12 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
 
 /// 
-/// \arg ppist1 pidin stack to test
-/// \arg ppist2 pidin stack to test, wildcards recognized
+/// \arg ppist1 pidin stack to test.
+/// \arg ppist2 pidin stack to test, wildcards and selectors granted.
 /// 
-/// \return int : TRUE if match
+/// \return int : TRUE if match.
 /// 
-/// \brief check if two pidinstacks match, wildcards allowed
+/// \brief check if two pidinstacks match, wildcards allowed.
 /// 
 
 int PidinStackMatch(struct PidinStack *ppist1, struct PidinStack *ppist2)
@@ -1149,6 +1149,17 @@ int PidinStackMatch(struct PidinStack *ppist1, struct PidinStack *ppist2)
 		i1++;
 		i2++;
 	    }
+	}
+
+	//- else if selector match
+
+	else if (IdinIsSelector(PidinStackElementPidin(ppist2, i2)))
+	{
+	    //- lookup the element to be matched
+
+	    struct symtab_HSolveListElement *phsle1 = PidinStackLookupTopSymbol(ppist1);
+
+	    
 	}
 
 	//- else : no match
@@ -1492,6 +1503,8 @@ PidinStackParse(char *pc)
 
 	int iField = 0;
 
+	int iSelector = 0;
+
 	//- if first char is symbol separator
 
 	if (strncmp
@@ -1520,6 +1533,15 @@ PidinStackParse(char *pc)
 	    //- register as field
 
 	    iField = 1;
+
+	    //- if this is a selector operator
+
+	    if (&pc[iPos] == IDENTIFIER_SELECTOR_CHAR)
+	    {
+		//- register as selector
+
+		iSelector = 1;
+	    }		
 	}
 
 	//- else
@@ -1573,7 +1595,14 @@ PidinStackParse(char *pc)
 
 	//- allocate idin
 
-	pidin = IdinCalloc();
+	if (!iSelector)
+	{
+	    pidin = IdinCalloc();
+	}
+	else
+	{
+	    pidin = (struct symtab_IdentifierIndex *)IdinSelectorCalloc();
+	}
 
 	//- fill in name
 
@@ -1603,6 +1632,13 @@ PidinStackParse(char *pc)
 	{
 	    IdinSetFlags(pidin, FLAG_IDENTINDEX_FIELD);
 	}
+
+/* 	//- if selector */
+
+/* 	if (iSelector) */
+/* 	{ */
+/* 	    IdinSetFlags(pidin, FLAG_IDENTINDEX_SELECTOR); */
+/* 	} */
 
 	IdinSetName(pidin, pcName);
 

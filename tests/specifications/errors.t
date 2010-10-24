@@ -20,7 +20,6 @@ my $test
 						  {
 						   description => "Is neurospaces startup successful ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/segments/purkinje_maind_passive.ndf.', ],
-						   write => undef,
 						  },
 						  {
 						   description => "Do we get sensible feedback after an unrecognized querymachine command ?",
@@ -46,7 +45,6 @@ NEUROSPACES_NMC_PROJECT_MODELS, NEUROSPACES_NMC_SYSTEM_MODELS or NEUROSPACES_NMC
 to point to a library where the required model is located,
 or use the -m switch to configure where neurospaces looks for models.
 ', ],
-						   write => undef,
 						  },
 						  {
 						   description => "A single symbol expansion, without a model loaded",
@@ -69,7 +67,10 @@ or use the -m switch to configure where neurospaces looks for models.
 						  {
 						   description => "Is neurospaces startup successful ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/segments/purkinje_maind_passive.ndf.', ],
-						   write => undef,
+						  },
+						  {
+						   description => "Wait for the command prompt.",
+						   read => "neurospaces ",
 						  },
 						  {
 						   description => "A single symbol expansion, but symbol not found",
@@ -92,7 +93,6 @@ or use the -m switch to configure where neurospaces looks for models.
 						  {
 						   description => "Is neurospaces startup successful ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/segments/purkinje_maind_passive.ndf.', ],
-						   write => undef,
 						  },
 						  {
 						   description => "What happens if we try to scale a parameter that does not have all the necessary dependencies ?",
@@ -116,7 +116,6 @@ or use the -m switch to configure where neurospaces looks for models.
 						  {
 						   description => "Is neurospaces startup successful ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/utilities/circle.ndf', ],
-						   write => undef,
 						  },
 						  {
 						   description => "What happens if we try to resolve a parameter that has circular dependencies ?",
@@ -172,7 +171,6 @@ value = 1.79769e+308
 						  {
 						   description => "Has neurospaces reported the syntax error ?",
 						   read => [ 'syntax error', ],
-						   write => undef,
 						  },
 						 ],
 				description => "a simple syntax error",
@@ -310,7 +308,6 @@ Inserter instance excitation
 .+?/neurospacesparse: Parse of .*?utilities/incomplete_inserter.ndf failed with 3 \(cumulative\) errors.
 ',
 							   ],
-						   write => undef,
 						  },
 						 ],
 				description => "incomplete parameters for the inserter algorithm",
