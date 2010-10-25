@@ -1408,8 +1408,7 @@ ProjectionVolumeInstanceSymbolHandler
 	     "ProjectionVolumeInstance",
 	     "(%s) Projection algorithm handler on non network %s\n",
 	     AlgorithmInstanceGetName(&ppvi->algi),
-	     "(no pidin)");
-/* 	     SymbolName(phsle)); */
+	     SymbolName(phsle) ? SymbolName(phsle) : "(no identifier)" );
     }
 
     //- return result
