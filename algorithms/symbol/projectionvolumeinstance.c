@@ -43,15 +43,17 @@
 #include "projectionvolumeinstance.h"
 
 
-/// \struct projection algorithm private data
-
-/*s */
-/*s struct with projection options */
-/*S */
+/// \struct projection algorithm private data: projection options
 
 struct ProjectionVolumeOptions_type
 {
 //			{ -name BackwardProjection -randseed 1212 -prob 1.0 -pre spikegen -post pf_AMPA -source box -1e10 -1e10 -1e10 1e10 1e10 1e10 -dest ellipse -0.00015 -0.00015 0 0.00015 0.00015 0}
+
+    /*m name of instances to be created */
+
+    /// this was added for the purpose of backward compatibility
+
+    char *pcInstanceName;
 
     /*m name of symbol to attach to */
 
@@ -114,9 +116,7 @@ struct ProjectionVolumeOptions_type
 typedef struct ProjectionVolumeOptions_type ProjectionVolumeOptions;
 
 
-/// \struct
 /// \struct projection variables
-/// \struct
 
 struct ProjectionVolumeVariables_type
 {
@@ -246,7 +246,6 @@ ProjectionVolumeSpikeReceiverProcessor
 
 
 /// 
-/// 
 /// \arg std AlgorithmHandler args
 /// 
 /// \return struct AlgorithmInstance *  
@@ -254,7 +253,6 @@ ProjectionVolumeSpikeReceiverProcessor
 ///	created algorithm instance, NULL for failure
 /// 
 /// \brief Algorithm handler to create instance of projectionVolume algorithm.
-/// \details 
 /// 
 
 struct AlgorithmInstance *
@@ -285,6 +283,25 @@ ProjectionVolumeInstanceNew
 	struct PidinStack *ppist = ParserContextGetPidinContext(pacContext);
 
 	struct symtab_HSolveListElement *phsle = PidinStackLookupTopSymbol(ppist);
+
+	// \todo not sure anymore if the INSTANCE_NAME is necessary, was copied from grid3dinstance for the ns-sli
+
+	/// \todo should use ParameterResolveSymbol()
+
+	struct symtab_Parameters *pparInstanceName
+	    = SymbolFindParameter(&palgs->hsle, ppist, "INSTANCE_NAME");
+
+	//- scan prototype name
+
+	if (pparInstanceName)
+	{
+	    ppvi->pro.pcInstanceName = ParameterGetString(pparInstanceName);
+	}
+	else
+	{
+	    ppvi->pro.pcInstanceName = "%i";
+	}
+
 
 	/// \todo should use ParameterResolveSymbol()
 
@@ -433,19 +450,17 @@ ProjectionVolumeInstanceNew
 
 
 /// 
-/// 
 /// \arg ppvi projectionVolume instance.
 /// \arg pproj projection symbol to add connection groups to.
 /// \arg ppistProjection 
-///	phsleSource.....: source population / cell of projection.
+/// \arg phsleSource source population / cell of projection.
 /// \arg ppistSource 
-///	phsleTarget.....: target population / cell of projection.
-///	ppistTarget.....: 
+/// \arg phsleTarget target population / cell of projection.
+/// \arg ppistTarget
 /// 
 /// \return int : success of operation
 /// 
 /// \brief Adds connection groups with connections to projection.
-/// \details 
 /// 
 
 struct ProjectionVolumeInstanceAddConnectionGroups_data
@@ -999,13 +1014,11 @@ ProjectionVolumeInstanceAddConnectionGroups
 
 
 /// 
-/// 
 /// \arg std AlgorithmHandler args
 /// 
 /// \return int  std AlgorithmHandler return value
 /// 
 /// \brief Algorithm handler to print info on projectionVolume instance.
-/// \details 
 /// 
 
 static int ProjectionVolumeInstancePrintInfo
@@ -1095,12 +1108,12 @@ static int ProjectionVolumeInstancePrintInfo
 
 
 /// 
-/// 
-///	AlgorithmInstanceSymbolHandler args.
+/// \arg AlgorithmInstanceSymbolHandler args.
 /// 
 /// \return int : std AlgorithmHandler return value
 /// 
 /// \brief Algorithm handler to add projectionVolume on given symbol
+/// 
 /// \details 
 /// 
 ///	Does it do a clean update of serials ?
