@@ -957,10 +957,10 @@ ProjectionVolumeInstanceAddConnectionGroups
 
 /*     int iSources */
 /* 	= PopulationCountSpikeGenerators */
-/* 	  ((struct symtab_HSolveListElement *)ppopuSource,ppistSource); */
+/* 	  ((struct symtab_HSolveListElement *)ppopuSource, ppistSource); */
 /*     int iTargets */
 /* 	= PopulationCountSpikeReceivers */
-/* 	  (struct symtab_HSolveListElement *)(ppopuTarget,ppistTarget); */
+/* 	  (struct symtab_HSolveListElement *)(ppopuTarget, ppistTarget); */
 
     //- add a connection group to the projection
      0;
@@ -968,7 +968,7 @@ ProjectionVolumeInstanceAddConnectionGroups
 
     struct symtab_IdentifierIndex *pidin = IdinCallocUnique("v_group_");
 
-    SymbolSetName(&pvconn->vect.bio.ioh.iol.hsle,pidin);
+    SymbolSetName(&pvconn->vect.bio.ioh.iol.hsle, pidin);
 
     //- process spike mapping elements and add connections
 
@@ -1140,9 +1140,14 @@ ProjectionVolumeInstanceSymbolHandler
     struct ProjectionVolumeInstance *ppvi
 	= (struct ProjectionVolumeInstance *)palgi;
 
+    char pc[1000];
+
+    PidinStackString(ppist, pc, sizeof(pc));
+
     //- if network
 
-    if (instanceof_network(phsle))
+    if (instanceof_network(phsle)
+	|| strcmp(pc, "/") == 0)
     {
 	int i = 0;
 
@@ -1160,7 +1165,7 @@ ProjectionVolumeInstanceSymbolHandler
 	    = PidinStackParse(ppvi->pro.pcProjection);
 
 	PidinStackAppendCompact
-	    (ppvi->prv.ppistProjection,ppvi->prv.ppistArgument);
+	    (ppvi->prv.ppistProjection, ppvi->prv.ppistArgument);
 
 	//- lookup projection symbol
 
@@ -1179,13 +1184,13 @@ ProjectionVolumeInstanceSymbolHandler
 
 	    pparSource
 		= SymbolFindParameter
-		  (ppvi->prv.phsleProjection,ppvi->prv.ppistProjection,"SOURCE");
+		  (ppvi->prv.phsleProjection, ppvi->prv.ppistProjection, "SOURCE");
 
 	    if (pparSource)
 	    {
 		ppvi->prv.ppistSource
 		    = ParameterResolveToPidinStack
-		      (pparSource,ppvi->prv.ppistProjection);
+		      (pparSource, ppvi->prv.ppistProjection);
 
 		ppvi->prv.phsleSource
 		    = PidinStackLookupTopSymbol(ppvi->prv.ppistSource);
@@ -1193,13 +1198,13 @@ ProjectionVolumeInstanceSymbolHandler
 
 	    pparTarget
 		= SymbolFindParameter
-		  (ppvi->prv.phsleProjection,ppvi->prv.ppistProjection,"TARGET");
+		  (ppvi->prv.phsleProjection, ppvi->prv.ppistProjection, "TARGET");
 
 	    if (pparTarget)
 	    {
 		ppvi->prv.ppistTarget
 		    = ParameterResolveToPidinStack
-		      (pparTarget,ppvi->prv.ppistProjection);
+		      (pparTarget, ppvi->prv.ppistProjection);
 
 		ppvi->prv.phsleTarget
 		    = PidinStackLookupTopSymbol(ppvi->prv.ppistTarget);
@@ -1332,7 +1337,7 @@ ProjectionVolumeInstanceSymbolHandler
 		    //- recalculate serial ID's for affected symbols
 
 		    SymbolRecalcAllSerials
-			(ppvi->prv.phsleNetwork,ppvi->prv.ppistNetwork);
+			(ppvi->prv.phsleNetwork, ppvi->prv.ppistNetwork);
 		}
 	    }
 
