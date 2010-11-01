@@ -22,7 +22,7 @@ NEUROSPACES NDF
 
 // UNITS seconds meters voltage siemens
 
-PUBLIC_MODELS
+PRIVATE_MODELS
 
 	// normal definition for segments of a thick dendrite of a
 	// Purkinje cell
@@ -45,6 +45,15 @@ PUBLIC_MODELS
 
 	END SEGMENT
 
-END PUBLIC_MODELS
+	ALIAS Purk_thickd thickd END ALIAS
 
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	ALIAS Purk_thickd Purk_thickd END ALIAS
+
+	ALIAS Purk_thickd thickd END ALIAS
+
+END PUBLIC_MODELS
 
