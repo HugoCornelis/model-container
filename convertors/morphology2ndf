@@ -40,6 +40,7 @@ use strict;
 
 
 my $option_configuration_filename;
+my $option_configuration_template;
 my $option_force_library;
 my $option_optional_configuration_filename;
 my $option_output_format = 'ndf';
@@ -1674,6 +1675,7 @@ sub read_cmd_line
 	    (
 	     "accumulator-columns=s" => $column_option_parser,
 	     "configuration-filename=s" => \$option_configuration_filename,
+	     "configuration-template=s" => \$option_configuration_template,
 	     "force-library!" => \$option_force_library,
 	     "help!" => \$option_help,
 	     "input-format-list!" => \$option_input_formats,
@@ -1696,28 +1698,12 @@ sub read_cmd_line
 	= {
 	   prototypes => {
 			  aliasses => [
-				       "segments/spines/purkinje.ndf::Purk_spine",
-				       'segments/purkinje/maind.ndf::maind',
-				       'segments/purkinje/soma.ndf::soma',
-				       'segments/purkinje/spinyd.ndf::spinyd',
-				       'segments/purkinje/thickd.ndf::thickd',
+				       'segments/purkinje_spinyd_passive.ndf::spinyd',
 				      ],
 			  parameter_2_prototype => [
 						    {
-						     dia => 3.18e-6,
-						     prototype => 'spinyd',
-						    },
-						    {
-						     dia => 7.71e-6,
-						     prototype => 'thickd',
-						    },
-						    {
-						     dia => 2.8e-5,
-						     prototype => 'maind',
-						    },
-						    {
 						     dia => 1,
-						     prototype => 'soma',
+						     prototype => 'spinyd',
 						    },
 						   ],
 			  spine_prototypes => [],
@@ -1739,6 +1725,66 @@ sub read_cmd_line
 		      },
 	  };
 
+    my $configuration_templates
+	= {
+	   purkinje => {
+			prototypes => {
+				       aliasses => [
+						    "segments/spines/purkinje.ndf::Purk_spine",
+						    'segments/purkinje/maind.ndf::maind',
+						    'segments/purkinje/soma.ndf::soma',
+						    'segments/purkinje/spinyd.ndf::spinyd',
+						    'segments/purkinje/thickd.ndf::thickd',
+						   ],
+				       parameter_2_prototype => [
+								 {
+								  dia => 3.18e-6,
+								  prototype => 'spinyd',
+								 },
+								 {
+								  dia => 7.71e-6,
+								  prototype => 'thickd',
+								 },
+								 {
+								  dia => 2.8e-5,
+								  prototype => 'maind',
+								 },
+								 {
+								  dia => 1,
+								  prototype => 'soma',
+								 },
+								],
+				       spine_prototypes => [],
+				      },
+			variables => {
+				      origin => {
+						 x => 0,
+						 y => 0,
+						 z => 0,
+						},
+				     },
+			options => {
+				    histology => {
+						  shrinkage => 1,
+						 },
+				    relocation => {
+						   soma_offset => 1,
+						  },
+				   },
+		       },
+	  };
+
+    if (defined $option_configuration_template)
+    {
+	if (exists $configuration_templates->{$option_configuration_template})
+	{
+	    $default_configuration = $configuration_templates->{$option_configuration_template};
+	}
+	else
+	{
+	    die "$0: configuration_template $option_configuration_template does not exist.";
+	}
+    }
 
     use YAML 'LoadFile';
 
@@ -2007,7 +2053,8 @@ fSpineFrequency: 1.0
 	$prototype_configuration = $configuration->{prototypes};
     }
 
-    if (exists $prototype_configuration->{parameter_2_prototype}->[0]->{dia})
+    if (exists $prototype_configuration->{parameter_2_prototype}
+	&& exists $prototype_configuration->{parameter_2_prototype}->[0]->{dia})
     {
 	$prototype_configuration->{parameter_2_prototype}
 	    = [
@@ -2034,7 +2081,7 @@ fSpineFrequency: 1.0
 
     # process aliasses to a structured format
 
-    my $aliasses = $prototype_configuration->{aliasses};
+    my $aliasses = $prototype_configuration->{aliasses} || [];
 
     foreach my $alias (sort @$aliasses)
     {
@@ -2061,7 +2108,7 @@ fSpineFrequency: 1.0
 
     # check if the prototype configuration is consistent
 
-    foreach my $relation (@{ $prototype_configuration->{parameter_2_prototype} })
+    foreach my $relation (@{ $prototype_configuration->{parameter_2_prototype} || [] })
     {
 	my $prototype = $relation->{prototype};
 
