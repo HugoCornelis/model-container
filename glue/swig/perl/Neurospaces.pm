@@ -521,7 +521,7 @@ sub load
 
 	if ($options->{'configuration'})
 	{
-	    $command_options .= " --configuration \"$options->{'configuration'}\"";
+	    $command_options .= " --configuration-filename \"$options->{'configuration'}\"";
 	}
 
 	if ($options->{'no-use-library'})
