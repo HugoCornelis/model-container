@@ -185,6 +185,13 @@ ParameterContextGetFunctionContext
 /// 
 /// \brief Get function attached to this parameter.
 /// 
+/// \todo I don't understand anymore what *exactly* this function is
+/// supposed to do.  Also it seems only to be tested during
+/// integration tests with ssp and alike, but not tested with the
+/// model-container tests.  Maybe this function needs to be replaced
+/// with a simpler one that does exactly whatever is supposed to
+/// happen here.
+/// 
 
 struct symtab_Function *
 ParameterContextGetFunction
@@ -200,7 +207,16 @@ ParameterContextGetFunction
     {
 	//- get context referenced to by the parameter
 
-	struct PidinStack *ppistPar2 = ParameterResolveToPidinStack(ppar, ppistPar1);
+	struct PidinStack *ppistPar2 = NULL;
+
+	if (ParameterIsNumber(ppar))
+	{
+	    ppistPar2 = PidinStackDuplicate(ppistPar1);
+	}
+	else
+	{
+	    ppistPar2 = ParameterResolveToPidinStack(ppar, ppistPar1);
+	}
 
 	struct symtab_HSolveListElement *phsle2 = PidinStackLookupTopSymbol(ppistPar2);
 
@@ -1362,22 +1378,23 @@ ParameterResolveSymbol
 
 
 /// 
-/// \arg ppar parameter to resolve input for
-/// \arg ppist context of parameter
+/// \arg ppar parameter to resolve to a context.
+/// \arg ppist context of parameter.
 /// 
 /// \return struct PidinStack *
 /// 
-///	Context pointed to by parameter
+///	Context pointed to by parameter.
 /// 
-/// \brief Resolve a parameter to a context.
+/// \brief Resolve a parameter to a context, NULL for failure.
 ///
 /// \details 
 /// 
-///	The symbolic parameter is dereferenced, a number parameter is
-///	left alone, a copy is returned.
+///	The symbolic parameter is dereferenced.
+///
+///	A number parameter returns NULL.
 /// 
-///	The resulting context looses the field specification from the
-///	given parameter (if any).
+///	The resulting context does not have the field specification
+///	from the given parameter (if any).
 /// 
 
 struct PidinStack *
@@ -1385,18 +1402,26 @@ ParameterResolveToPidinStack
 (struct symtab_Parameters *ppar,
  struct PidinStack *ppist)
 {
-    //- set result : pidin stack from given context
+    //- set default result: failure
 
-    struct PidinStack *ppistResult
-	= PidinStackDuplicate(ppist);
+    struct PidinStack *ppistResult = NULL;
+
+    //- if function parameter
+
+    if (ParameterIsFunction(ppar))
+    {
+	//- set initial result: pidin stack from given context
+
+	ppistResult = PidinStackDuplicate(ppist);
+    }
 
     //- if symbolic parameter
 
     if (ParameterIsSymbolic(ppar))
     {
-/* 	//- set initial result: pidin stack from given context */
+	//- set initial result: pidin stack from given context
 
-/* 	ppistResult = PidinStackDuplicate(ppist); */
+	ppistResult = PidinStackDuplicate(ppist);
 
 	/// \todo rewrite using only one allocation :
 	/// \todo 
@@ -1434,9 +1459,9 @@ ParameterResolveToPidinStack
 
     else if (ParameterIsField(ppar))
     {
-/* 	//- set initial result: pidin stack from given context */
+	//- set initial result: pidin stack from given context
 
-/* 	ppistResult = PidinStackDuplicate(ppist); */
+	ppistResult = PidinStackDuplicate(ppist);
 
 	/// \todo rewrite using only one allocation, define a function
 	/// PidinStackAppendCompactFromParameterSymbols().
@@ -1496,11 +1521,17 @@ ParameterResolveToPidinStack
 
 		pparInit = SymbolFindParameter(phsleField, ppistResult, pcTmp);
 
-		//- resolve resulting parameter
+		if (ParameterIsNumber(pparInit))
+		{
+		}
+		else
+		{
+		    //- resolve resulting parameter
 
-		ppistResult = ParameterResolveToPidinStack(pparInit, ppistResult);
+		    ppistResult = ParameterResolveToPidinStack(pparInit, ppistResult);
 
-		/// \todo memory leak: fist ppistResult
+		    // \todo memory leak: fist ppistResult ??
+		}
 	    }
 
 	    //- else
@@ -1520,11 +1551,14 @@ ParameterResolveToPidinStack
 
 		    if (iCount < 100)
 		    {
-			//- resolve pidinstack
+			if (!ParameterIsNumber(pparField))
+			{
+			    //- resolve pidinstack
 
-			ppistResult = ParameterResolveToPidinStack(pparField, ppistResult);
+			    ppistResult = ParameterResolveToPidinStack(pparField, ppistResult);
+			}
 
-			/// \todo memory leak: fist ppistResult
+			// \todo memory leak: fist ppistResult??
 
 			iCount--;
 		    }
@@ -1568,6 +1602,47 @@ ParameterResolveToPidinStack
 	//- free parameter pidin stack
 
 	PidinStackFree(ppistPar);
+    }
+
+    //- if string parameter
+
+    else if (ParameterIsString(ppar))
+    {
+	//- set initial result: pidin stack from given context
+
+	ppistResult = PidinStackDuplicate(ppist);
+
+	//- get pidinstack from parameter string
+
+	char *pcPar = ParameterGetString(ppar);
+
+	struct PidinStack *ppistPar = PidinStackParse(pcPar);
+
+	//- if rooted
+
+	if (PidinStackIsRooted(ppistPar))
+	{
+	    PidinStackFree(ppistResult);
+
+	    ppistResult = ppistPar;
+	}
+
+	//- else
+
+	else
+	{
+	    //- append pidinstacks
+
+	    PidinStackAppendCompact(ppistResult, ppistPar);
+
+	    //- free parameter pidin stack
+
+	    PidinStackFree(ppistPar);
+	}
+    }
+    else
+    {
+	fprintf(stderr, "Warning: ParameterResolveToPidinStack() does not perform any operations.\n");
     }
 
     //- return result

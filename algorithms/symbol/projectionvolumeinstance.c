@@ -1217,7 +1217,9 @@ ProjectionVolumeInstanceSymbolHandler
 		&& (instanceof_population(ppvi->prv.phsleSource)
 		    || instanceof_cell(ppvi->prv.phsleSource))
 		&& (instanceof_population(ppvi->prv.phsleTarget)
-		    || instanceof_cell(ppvi->prv.phsleTarget)))
+		    || instanceof_cell(ppvi->prv.phsleTarget))
+		|| (strcmp(SymbolGetName(ppvi->prv.phsleSource), "/") == 0
+		    && strcmp(SymbolGetName(ppvi->prv.phsleSource), "/") == 0))
 	    {
 		//- lookup global cache
 
