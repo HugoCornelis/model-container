@@ -465,6 +465,11 @@ int IdinMatch(struct symtab_IdentifierIndex *pidin1, struct symtab_IdentifierInd
     {
 	char * pcPattern = strpbrk(pidin2->pcIdentifier, "*");
 
+	if (!pcPattern)
+	{
+	    pcPattern = strstr(pidin2->pcIdentifier, "[]");
+	}
+
 	if (pcPattern)
 	{
 	    size_t sLength = pcPattern - pidin2->pcIdentifier;

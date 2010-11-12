@@ -67,13 +67,21 @@ struct ProjectionVolumeOptions_type
 
     double dProbability;
 
-    /*m pre synaptic part */
+    /*m pre synaptic part: component name */
 
     char *pcPre;
 
-    /*m post synaptic part */
+    /*m pre synaptic part: context */
+
+    char *ppistPre;
+
+    /*m post synaptic part: component name */
 
     char *pcPost;
+
+    /*m post synaptic part: context */
+
+    char *ppistPost;
 
     /*m source type : box or ellipse */
 
@@ -238,11 +246,11 @@ ProjectionVolumeInstanceSymbolHandler
 
 static int 
 ProjectionVolumeSpikeGeneratorProcessor
-(struct TreespaceTraversal *ptstr,void *pvUserdata);
+(struct TreespaceTraversal *ptstr, void *pvUserdata);
 
 static int 
 ProjectionVolumeSpikeReceiverProcessor
-(struct TreespaceTraversal *ptstr,void *pvUserdata);
+(struct TreespaceTraversal *ptstr, void *pvUserdata);
 
 
 /// 
@@ -320,19 +328,45 @@ ProjectionVolumeInstanceNew
 
 	ppvi->pro.dProbability = SymbolParameterResolveValue(&palgs->hsle, ppist, "PROBABILITY");
 
-	//- scan presynaptic part
+	//- scan presynaptic part: component name
 
 	struct symtab_Parameters *pparPre
 	    = SymbolFindParameter(&palgs->hsle, ppist, "PRE");
 
-	ppvi->pro.pcPre = ParameterGetString(pparPre);
+	if (pparPre)
+	{
+	    ppvi->pro.pcPre = ParameterGetString(pparPre);
+	}
 
-	//- scan postsynaptic part
+	//- scan presynaptic part: context
+
+	struct symtab_Parameters *pparPreContext
+	    = SymbolFindParameter(&palgs->hsle, ppist, "PRE_CONTEXT");
+
+	if (pparPreContext)
+	{
+	    ppvi->pro.ppistPre = PidinStackParse(ParameterGetString(pparPreContext));
+	}
+
+	//- scan postsynaptic part: component name
 
 	struct symtab_Parameters *pparPost
 	    = SymbolFindParameter(&palgs->hsle, ppist, "POST");
 
-	ppvi->pro.pcPost = ParameterGetString(pparPost);
+	if (pparPost)
+	{
+	    ppvi->pro.pcPost = ParameterGetString(pparPost);
+	}
+
+	//- scan postsynaptic part: context
+
+	struct symtab_Parameters *pparPostContext
+	    = SymbolFindParameter(&palgs->hsle, ppist, "POST_CONTEXT");
+
+	if (pparPostContext)
+	{
+	    ppvi->pro.ppistPost = PidinStackParse(ParameterGetString(pparPostContext));
+	}
 
 	//- scan source type
 
@@ -519,7 +553,7 @@ struct ProjectionVolumeInstanceAddConnectionGroups_data
 
 static int 
 ProjectionVolumeSpikeGeneratorProcessor
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : ok
 
@@ -537,13 +571,27 @@ ProjectionVolumeSpikeGeneratorProcessor
 
     //- if name does not match -pre
 
-    if (strcmp(IdinName(SymbolGetPidin(phsle)), ppiac->ppvi->pro.pcPre) != 0)
+    if (ppiac->ppvi->pro.pcPre)
     {
-	//- return result : do not process
+	if (strcmp(IdinName(SymbolGetPidin(phsle)), ppiac->ppvi->pro.pcPre) != 0)
+	{
+	    //- return result : do not process
 
-	iResult = TSTR_PROCESSOR_FAILURE;
+	    iResult = TSTR_PROCESSOR_FAILURE;
 
-	return(iResult);
+	    return(iResult);
+	}
+    }
+    else
+    {
+	if (PidinStackMatch(ptstr->ppist, ppiac->ppvi->pro.ppistPre) != 1)
+	{
+	    //- return result : do not process
+
+	    iResult = TSTR_PROCESSOR_FAILURE;
+
+	    return(iResult);
+	}
     }
 
     struct D3Position *pD3Generator = NULL;
@@ -669,7 +717,7 @@ ProjectionVolumeSpikeGeneratorProcessor
 
 static int 
 ProjectionVolumeSpikeReceiverProcessor
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : ok
 
@@ -696,13 +744,27 @@ ProjectionVolumeSpikeReceiverProcessor
 
     //- if name does not match -post
 
-    if (strcmp(IdinName(pidinChannel), ppiac->ppvi->pro.pcPost) != 0)
+    if (ppiac->ppvi->pro.pcPost)
     {
-	//- return result : do not process
+	if (strcmp(IdinName(pidinChannel), ppiac->ppvi->pro.pcPost) != 0)
+	{
+	    //- return result : do not process
 
-	iResult = TSTR_PROCESSOR_FAILURE;
+	    iResult = TSTR_PROCESSOR_FAILURE;
 
-	return(iResult);
+	    return(iResult);
+	}
+    }
+    else
+    {
+	if (PidinStackMatch(ptstr->ppist, ppiac->ppvi->pro.ppistPost) != 1)
+	{
+	    //- return result : do not process
+
+	    iResult = TSTR_PROCESSOR_FAILURE;
+
+	    return(iResult);
+	}
     }
 
     struct D3Position *pD3Receiver = NULL;

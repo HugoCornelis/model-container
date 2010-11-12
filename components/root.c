@@ -162,6 +162,25 @@ void RootSymbolFree(struct symtab_RootSymbol *proot)
 /// \brief Get pidin of root.
 /// 
 
+char *
+RootSymbolGetName(struct symtab_RootSymbol *proot)
+{
+    //- return name
+
+    return(IdinName(SymbolGetPidin(proot)));
+}
+
+
+/// 
+/// \arg proot root to init
+/// 
+/// \return struct symtab_IdentifierIndex *
+/// 
+///	Pidin of root, shared over all roots.
+/// 
+/// \brief Get pidin of root.
+/// 
+
 struct symtab_IdentifierIndex *
 RootSymbolGetPidin(struct symtab_RootSymbol *proot)
 {
@@ -183,7 +202,7 @@ RootSymbolGetPidin(struct symtab_RootSymbol *proot)
 
 	/// name of identifier
 
-	NULL,
+	"/",
     };
 
     //- return rooted pidin

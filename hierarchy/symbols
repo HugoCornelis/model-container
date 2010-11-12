@@ -1433,6 +1433,7 @@ my $class_hierarchy
 			allows => {
 				   'add_child' => 'root_symbol',
 				   (`cat 2>/dev/null neurospaces/config.h || cat /usr/local/include/neurospaces/config.h` =~ /define DELETE_OPERATION 1/ ? ('delete_child' => 'root_symbol') : ()),
+				   'get_name' => 'root_symbol',
 				   'get_pidin' => 'root_symbol',
 				   'lookup_hierarchical' => 'root_symbol',
 				   'traverse' => 'root_symbol',

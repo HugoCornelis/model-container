@@ -62,6 +62,9 @@ void RootSymbolFree(struct symtab_RootSymbol *phyro);
 struct symtab_IdentifierIndex *
 RootSymbolGetPidin(struct symtab_RootSymbol *phyro);
 
+char *
+RootSymbolGetName(struct symtab_RootSymbol *proot);
+
 void RootSymbolInit(struct symtab_RootSymbol *phyro);
 
 struct symtab_HSolveListElement *
