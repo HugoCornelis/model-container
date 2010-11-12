@@ -1,5 +1,8 @@
 -*- outline -*-
 
+* solve problems with global variables
+** add pneuroGlobal to struct PidinStack
+
 * add stand-alone test for k.npy
 from ipython:
 In [2]: execfile "k.npy"
