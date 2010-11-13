@@ -52,6 +52,11 @@ char *
 ChannelGetChannelType
 (struct symtab_Channel *pchan, struct PidinStack *ppist);
 
+static
+int
+ChannelGetNumberOfSynapses
+(struct symtab_Channel *pchan, struct PidinStack *ppist);
+
 static int ChannelTable_READ(struct symtab_Channel *pchan, char *pcFilename);
 
 
@@ -519,6 +524,54 @@ ChannelGetGenesisObject(struct symtab_Channel *pchan)
 
 
 /// 
+/// \arg pchan channel to get channel type for.
+/// \arg ppist context of channel.
+/// \arg pcr cache registry.
+/// 
+/// \return int
+/// 
+///	number of connections of this channel, -1 for failure.
+/// 
+/// \brief Get nsynapses parameter for this channel.
+/// 
+
+static
+int
+ChannelGetNumberOfSynapses
+(struct symtab_Channel *pchan, struct PidinStack *ppist)
+{
+    //- set default result: failure
+
+    int iResult = -1;
+
+    // \todo this should come from ppist
+
+    extern struct Neurospaces *pneuroGlobal;
+
+    struct ProjectionQuery *ppq = NeurospacesGetProjectionQuery(pneuroGlobal);
+
+/*     //- get serial of channel */
+
+/*     PidinStackLookupTopSymbol(ppist); */
+
+/*     int iChannel = PidinStackToSerial(ppist); */
+
+    //- compute the number of connections for this channel
+
+    iResult = ProjectionQueryCountConnectionsForSpikeReceiver(ppq, ppist);
+
+    if (iResult == -1)
+    {
+	iResult = -1;
+    }
+
+    //- return result
+
+    return(iResult);
+}
+
+
+/// 
 /// \arg pchan channel to check
 /// \arg ppist context of channel
 /// 
@@ -656,6 +709,18 @@ ChannelGetParameter
 	    pparResult
 		= SymbolSetParameterString
 		  (&pchan->bio.ioh.iol.hsle, "CHANNEL_TYPE", pc);
+	}
+	else if (0 == strcmp(pcName, "nsynapses"))
+	{
+	    //- get number of connections
+
+	    int iConnections = ChannelGetNumberOfSynapses(pchan, ppist);
+
+	    //- set parameter
+
+	    pparResult
+		= SymbolSetParameterDouble
+		  (&pchan->bio.ioh.iol.hsle, "nsynapses", (double) iConnections);
 	}
     }
 
