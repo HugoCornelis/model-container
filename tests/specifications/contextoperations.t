@@ -17,9 +17,9 @@ my $test
 						   description => "Is neurospaces startup successful ?",
 						   read => 'neurospaces ',
 						   timeout => 3,
-						   write => undef,
 						  },
 						  {
+						   comment => "IIRC this is related to the way solver registration works: a solver is registered with a component (implying the component's subtree), but not with the wildcard that matches will the components in the subtree.  This is currently a shortcoming in the design of the solver registration mechanism.",
 						   description => "A symbol must match with its entire subtree",
 						   read => "Match",
 						   write => "match /Purk /Purk/**",
@@ -74,6 +74,40 @@ my $test
 						   read => "Match",
 						   write => "match /CerebellarCortex/Purkinjes/0/segments/b0s01[1]/Purkinje_spine/head/par /CerebellarCortex/Purkinjes/0/**",
 						  },
+
+						  {
+						   description => "A deeply nested symbol must match with a wildcard, prefixed with the same context, suffixed with the same context.",
+						   read => "Match",
+						   write => "match /CerebellarCortex/Purkinjes/0/segments/b0s01[1]/Purkinje_spine/head/par /CerebellarCortex/Purkinjes/0/segments/b0s01*/Purkinje_spine/head/par",
+						  },
+						  {
+						   description => "A deeply nested symbol must match with a wildcard, prefixed with the same context, suffixed with the same context, G-2 wildcard syntax.",
+						   read => "Match",
+						   write => "match /CerebellarCortex/Purkinjes/0/segments/b0s01[1]/Purkinje_spine/head/par /CerebellarCortex/Purkinjes/0/segments/b0s01[]/Purkinje_spine/head/par",
+						  },
+
+						  {
+						   description => "A deeply nested symbol must not match with a wildcard, prefixed with a different context, suffixed with the same context.",
+						   read => "No match",
+						   write => "match /CerebellarCortex/Purkinjes/0/segments/b0s01[1]/Purkinje_spine/head/par /Cerebellar/Purkinjes/0/segments/b0s01*/Purkinje_spine/head/par",
+						  },
+						  {
+						   description => "A deeply nested symbol must not match with a wildcard, prefixed with a different context, suffixed with the same context, G-2 wildcard syntax.",
+						   read => "No match",
+						   write => "match /CerebellarCortex/Purkinjes/0/segments/b0s01[1]/Purkinje_spine/head/par /Cerebellar/Purkinjes/0/segments/b0s01[]/Purkinje_spine/head/par",
+						  },
+
+						  {
+						   description => "A deeply nested symbol must match with a wildcard, prefixed with the same context, suffixed with a different context.",
+						   read => "No match",
+						   write => "match /CerebellarCortex/Purkinjes/0/segments/b0s01[1]/Purkinje_spine/head/par /CerebellarCortex/Purkinjes/0/segments/b0s01*/Purkinje/head/par",
+						  },
+						  {
+						   description => "A deeply nested symbol must match with a wildcard, prefixed with the same context, suffixed with a different context, G-2 wildcard syntax.",
+						   read => "No match",
+						   write => "match /CerebellarCortex/Purkinjes/0/segments/b0s01[1]/Purkinje_spine/head/par /CerebellarCortex/Purkinjes/0/segments/b0s01[]/Purkinje/head/par",
+						  },
+
 						 ],
 				description => "path selections",
 			       },
@@ -90,7 +124,6 @@ my $test
 						   description => "Is neurospaces startup successful ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/network-test.ndf.', ],
 						   timeout => 100,
-						   write => undef,
 						  },
 						  {
 						   description => "Can we get parse info on /CerebellarCortex/Purkinjes ?",
@@ -153,7 +186,6 @@ my $test
 						   description => "Is neurospaces startup successful ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/network-test.ndf.', ],
 						   timeout => 100,
-						   write => undef,
 						  },
 						  {
 						   description => "Can we get input info on /CerebellarCortex/Purkinjes/0/segments/soma/CaT ?",
@@ -190,7 +222,6 @@ Ca_concen input 3: ../CaT/I, child not defined in this context
 						   description => "Is neurospaces startup successful ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/networksmall.ndf.', ],
 						   timeout => 3,
-						   write => undef,
 						  },
 						  {
 						   description => "A single symbol expansion",
@@ -334,7 +365,6 @@ Ca_concen input 3: ../CaT/I, child not defined in this context
 						   description => "Is neurospaces startup successful ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/pool1.ndf.', ],
 						   timeout => 3,
-						   write => undef,
 						  },
 						  {
 						   comment => "for conversion of a genesis SLI CHANNEL message",
@@ -418,7 +448,6 @@ second-first: ../.././ca_pool
 						   description => "Is neurospaces startup successful ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/cells/pool1.ndf.', ],
 						   timeout => 3,
-						   write => undef,
 						  },
 						  {
 						   description => "Can we do a context subraction, edge case last descendant, child - parent ?",
