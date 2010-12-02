@@ -167,17 +167,17 @@ struct symtab_Invisible;
 %inline %{
 
 
-struct Heccer;
+struct simobj_Heccer;
 struct DES;
 
 
 struct SolverInfo *
 solver_heccer_register
-(struct SolverRegistry *psr, struct Heccer *pheccer, struct PidinStack *ppist, char *pcSolver);
+(struct SolverRegistry *psr, struct simobj_Heccer *pheccer, struct PidinStack *ppist, char *pcSolver);
 
 struct SolverInfo *
 solver_heccer_register
-(struct SolverRegistry *psr, struct Heccer *pheccer, struct PidinStack *ppist, char *pcSolver)
+(struct SolverRegistry *psr, struct simobj_Heccer *pheccer, struct PidinStack *ppist, char *pcSolver)
 {
     return(SolverRegistryAddFromContext(psr, pheccer, ppist, pcSolver));
 }
