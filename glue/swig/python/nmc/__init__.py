@@ -1,5 +1,7 @@
 """!
-The nmc pythom module is a Pythonic abstraction over the
+@package nmc
+
+The nmc python module is a Pythonic abstraction over the
 Neurospaces Model Container. It's purpose is to allow
 scripting functionality to the Model Container via Python,
 while providing a usuable API that does not require knowledge
