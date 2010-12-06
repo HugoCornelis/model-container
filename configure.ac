@@ -22,16 +22,16 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(model-container, 0.0.0-alpha, hugo.cornelis@gmail.com)
 dnl AC_REVISION($Id: configure.ac 1.40 Wed, 10 Oct 2007 16:57:00 -0500 hugo $)
 
+dnl Obtain operating system information.
+AC_CANONICAL_TARGET
 
-# $Format: "AM_INIT_AUTOMAKE(${package}, ${major}.${minor}.${micro}-${label})"$
-AM_INIT_AUTOMAKE(model-container, 0.0.0-alpha)
 
 AC_CONFIG_SRCDIR([neurospaces.c])
 
 AC_CONFIG_HEADERS([neurospaces/config.h])
 
-dnl Obtain operating system information.
-AC_CANONICAL_TARGET
+# $Format: "AM_INIT_AUTOMAKE(${package}, ${major}.${minor}.${micro}-${label})"$
+AM_INIT_AUTOMAKE(model-container, 0.0.0-alpha)
 
 dnl Determine whether symbols in prototypes have serial ID's lower or higher than in instances / references. 1 means lower (prototype symbols come first in regular traversals)
 
