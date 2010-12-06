@@ -547,7 +547,7 @@ case "$host_os" in
     AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
 
 
-    SWIGLDLINKSFORPYTHON='-L$(PYTHON_HEADERS) -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -lreadline -framework Python -flat_namespace -undefined suppress -dylib 	-bundle 	-bundle_loader $(PYTHON_EXE)'
+    SWIGLDLINKSFORPYTHON='-L$(PYTHON_LDFLAGS) -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -lreadline -framework Python -flat_namespace -undefined suppress -dylib 	-bundle 	-bundle_loader $(PYTHON_EXE)'
     AC_SUBST(SWIGLDLINKSFORPYTHON)
 
 
