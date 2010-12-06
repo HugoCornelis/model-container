@@ -519,26 +519,13 @@ case "$host_os" in
     dnl probably need to make this section neater sometime. 
     case "$host_os" in
 	dnl 10.2 and greater is snow leopard
-	*darwin10.2.0)
+	*darwin10.2.0 | *darwin10.3.0 | *darwin10.4.0)
 
             SWIGLINKCOMMAND_PERL='ld $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
             AC_SUBST(SWIGLINKCOMMAND_PERL)
 
 	;;
 
-	*darwin10.3.0)
-
-            SWIGLINKCOMMAND_PERL='ld $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
-
-            AC_SUBST(SWIGLINKCOMMAND_PERL)
-	;;
-
-	*darwin10.4.0)
-
-            SWIGLINKCOMMAND_PERL='ld $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
-
-            AC_SUBST(SWIGLINKCOMMAND_PERL)
-	;;
 
 	*)
 	    dnl This probably needs to be patitioned into leopard, tiger, panther. etc
@@ -552,7 +539,7 @@ case "$host_os" in
     PYTHONLIB_EXTENSION='so'
     AC_SUBST(PYTHONLIB_EXTENSION)
     
-    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL -I$(PYTHON_HEADERS) -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols -fPIC'
+    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL -I$(PYTHON_INCLUDE) -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols -fPIC'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
 
 
@@ -565,22 +552,7 @@ case "$host_os" in
 
 
     case "$host_os" in
-	*darwin10.2.0)
-
-
-            SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
-            AC_SUBST(SWIGLINKCOMMAND_PYTHON)
-
-	;;
-	*darwin10.3.0)
-
-
-            SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
-            AC_SUBST(SWIGLINKCOMMAND_PYTHON)
-
-	;;
-
-	*darwin10.4.0)
+	*darwin10.2.0 | *darwin10.3.0 | *darwin10.4.0)
 
 
             SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
@@ -657,13 +629,13 @@ case "$host_os" in
     PYTHONLIB_EXTENSION='so'
     AC_SUBST(PYTHONLIB_EXTENSION)
 
-    SWIGCOMPILELINKSFORPYTHON='-g 	-DPRE_PROTO_TRAVERSAL 	-I$(PYTHON_HEADERS) 	-I$(builddir)../../.. 	-I$(srcdir)/../../.. 	-I$(builddir)../../../hierarchy/output/symbols 	-I$(srcdir)/../../../hierarchy/output/symbols/ 	-fPIC 	-Xlinker 	-export-dynamic'
+    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL -I$(PYTHON_INCLUDE) 	-I$(builddir)../../.. 	-I$(srcdir)/../../.. 	-I$(builddir)../../../hierarchy/output/symbols 	-I$(srcdir)/../../../hierarchy/output/symbols/ 	-fPIC 	-Xlinker 	-export-dynamic'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
    
-    SWIGCOMPILECOMMAND_PYTHON='gcc -Wno-declaration-after-statement       $(SWIGCOMPILELINKSFORPYTHON)        -c swiggable_neurospaces_wrap.c'
+    SWIGCOMPILECOMMAND_PYTHON='gcc -Wno-declaration-after-statement $(SWIGCOMPILELINKSFORPYTHON) -c swiggable_neurospaces_wrap.c'
     AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
 
-    SWIGLDLINKSFORPYTHON='-g 	-shared swiggable_neurospaces_wrap.o 	-L../../.. 	-lneurospacesread 	-L../../../algorithms/event 	-levent_algorithms 	-L../../../algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline 	-fPIC 	-Xlinker 	-export-dynamic'
+    SWIGLDLINKSFORPYTHON='-g 	-shared swiggable_neurospaces_wrap.o 	-L../../.. 	-lneurospacesread 	-L../../../algorithms/event 	-levent_algorithms 	-L../../../algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline 	-fPIC 	-Xlinker -export-dynamic $(PYTHON_LDFLAGS)'
     AC_SUBST(SWIGLDLINKSFORPYTHON)
   
     SWIGLINKCOMMAND_PYTHON='gcc -Wno-declaration-after-statement 	$(SWIGLDLINKSFORPYTHON) 	-o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
