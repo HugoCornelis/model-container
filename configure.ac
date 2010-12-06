@@ -647,8 +647,11 @@ case "$host_os" in
     SWIGLDLINKSFORPYTHON='-g 	-shared swiggable_neurospaces_wrap.o 	-L../../.. 	-lneurospacesread 	-L../../../algorithms/event 	-levent_algorithms 	-L../../../algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline 	-fPIC 	-Xlinker -export-dynamic $(PYTHON_LDFLAGS)'
     AC_SUBST(SWIGLDLINKSFORPYTHON)
   
-    SWIGLINKCOMMAND_PYTHON='gcc -Wno-declaration-after-statement 	$(SWIGLDLINKSFORPYTHON) 	-o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
+    SWIGLINKCOMMAND_PYTHON='gcc -Wno-declaration-after-statement $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
     AC_SUBST(SWIGLINKCOMMAND_PYTHON)
+
+    NMC_SWIGLINKCOMMAND_PYTHON='gcc -Wno-declaration-after-statement $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/nmc/_nmc_base.so'
+    AC_SUBST(NMC_SWIGLINKCOMMAND_PYTHON)
 
     dnl }}} End of General Settings
   
