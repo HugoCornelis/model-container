@@ -154,7 +154,7 @@ AM_PATH_PYTHON(,[],[
    exit -1
 ])
 
-AC_MSG_CHECKING([Python prefix is!!!!!])
+AC_MSG_CHECKING([Python prefix is ])
   AC_MSG_RESULT(['$PYTHON_PREFIX'])
 
 dnl
@@ -558,6 +558,11 @@ case "$host_os" in
             SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
             AC_SUBST(SWIGLINKCOMMAND_PYTHON)
 
+	    # Using the $(srcdir) or other relative links is a bit tacky but not much of a choice here.
+
+	    NMC_SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/nmc/_nmc_base.so /usr/lib/bundle1.o nmc_wrap.o'
+            AC_SUBST(NMC_SWIGLINKCOMMAND_PYTHON)
+
 	;;
 
 	*)
@@ -565,6 +570,10 @@ case "$host_os" in
 
             SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) swiggable_neurospaces_wrap.o'
             AC_SUBST(SWIGLINKCOMMAND_PYTHON)
+
+	    NMC_SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/nmc/_nmc_base.so nmc_wrap.o'
+            AC_SUBST(NMC_SWIGLINKCOMMAND_PYTHON)
+
             
 	;;
     esac 

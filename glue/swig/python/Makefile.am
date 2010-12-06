@@ -37,6 +37,8 @@ python_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.py _SwiggableNeurospa
 
 
 BUILT_SOURCES = \
+	nmc_wrap.c \
+	./nmc/nmc_base.py \
 	SwiggableNeurospaces.py \
 	swiggable_neurospaces_wrap.c
 
@@ -51,12 +53,37 @@ swiggable_neurospaces_wrap.o: swiggable_neurospaces_wrap.c
 _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION): swiggable_neurospaces_wrap.o
 	$(SWIGLINKCOMMAND_PYTHON)
 
-all: _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)
+
+
+
+#---------------------------------------------------------
+#----------- Rules for building the nmc swig binding -----
+
+
+nmc_wrap.o: nmc_wrap.c
+	gcc $(SWIGCOMPILELINKSFORPYTHON) -c $(srcdir)/nmc_wrap.c
+
+nmc_wrap.c ./nmc/nmc_base.py: 
+	$(SWIG) -DPRE_PROTO_TRAVERSAL -I$(top_builddir) -python -outdir $(srcdir)/nmc -o nmc_wrap.c $(srcdir)/nmc.i
+
+_nmc_base.so: nmc_wrap.o
+	$(NMC_SWIGLINKCOMMAND_PYTHON)
+
+#--------------------- End rules for nmc swig ------------
+#---------------------------------------------------------
+
+
+
+all: _nmc_base.so _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) 
 
 CLEANFILES = \
-	SwiggableNeurospaces.py \
-	swiggable_neurospaces_wrap.c \
-	swiggable_neurospaces_wrap.o \
-	_SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)
+	$(srcdir)/nmc_wrap.c \
+	$(srcdir)/nmc_wrap.o \
+	$(srcdir)/nmc/_nmc_base.so \
+	$(srcdir)/nmc/nmc_base.py \
+	$(srcdir)/SwiggableNeurospaces.py \
+	$(srcdir)/swiggable_neurospaces_wrap.c \
+	$(srcdir)/swiggable_neurospaces_wrap.o \
+	$(srcdir)/_SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)
 
 
