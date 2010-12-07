@@ -539,7 +539,7 @@ case "$host_os" in
     PYTHONLIB_EXTENSION='so'
     AC_SUBST(PYTHONLIB_EXTENSION)
     
-    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL -I$(PYTHON_INCLUDE) -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols -fPIC'
+    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL -I$(PYTHON_INCLUDE) -I${top_builddir} -I${top_builddir}/hierarchy/output/symbols -fPIC'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
 
 
@@ -638,19 +638,19 @@ case "$host_os" in
     PYTHONLIB_EXTENSION='so'
     AC_SUBST(PYTHONLIB_EXTENSION)
 
-    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL -I$(PYTHON_INCLUDE) 	-I$(builddir)../../.. 	-I$(srcdir)/../../.. 	-I$(builddir)../../../hierarchy/output/symbols 	-I$(srcdir)/../../../hierarchy/output/symbols/ 	-fPIC 	-Xlinker 	-export-dynamic'
+    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL -I$(PYTHON_INCLUDE) -I${top_builddir} -I${top_builddir}/hierarchy/output/symbols -fPIC -Xlinker -export-dynamic'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
    
     SWIGCOMPILECOMMAND_PYTHON='gcc -Wno-declaration-after-statement $(SWIGCOMPILELINKSFORPYTHON) -c swiggable_neurospaces_wrap.c'
     AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
 
-    SWIGLDLINKSFORPYTHON='-g 	-shared swiggable_neurospaces_wrap.o 	-L../../.. 	-lneurospacesread 	-L../../../algorithms/event 	-levent_algorithms 	-L../../../algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline 	-fPIC 	-Xlinker -export-dynamic $(PYTHON_LDFLAGS)'
+    SWIGLDLINKSFORPYTHON='-L${top_builddir} -lneurospacesread -L${top_builddir}/algorithms/event -levent_algorithms -L${top_builddir}/algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline 	-fPIC 	-Xlinker -export-dynamic $(PYTHON_LDFLAGS)'
     AC_SUBST(SWIGLDLINKSFORPYTHON)
   
-    SWIGLINKCOMMAND_PYTHON='gcc -Wno-declaration-after-statement $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
+    SWIGLINKCOMMAND_PYTHON='gcc -Wno-declaration-after-statement $(SWIGLDLINKSFORPYTHON) -g -shared swiggable_neurospaces_wrap.o -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
     AC_SUBST(SWIGLINKCOMMAND_PYTHON)
 
-    NMC_SWIGLINKCOMMAND_PYTHON='gcc -Wno-declaration-after-statement $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/nmc/_nmc_base.so'
+    NMC_SWIGLINKCOMMAND_PYTHON='gcc -Wno-declaration-after-statement $(SWIGLDLINKSFORPYTHON) -g -shared nmc_wrap.o -o $(srcdir)/nmc/_nmc_base.so'
     AC_SUBST(NMC_SWIGLINKCOMMAND_PYTHON)
 
     dnl }}} End of General Settings
