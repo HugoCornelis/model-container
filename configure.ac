@@ -99,13 +99,13 @@ AC_PROG_RANLIB
 
 dnl Checks for libraries.
 dnl Replace `main' with a function in -lcurses:
-AC_CHECK_LIB(curses, main,[echo "Found! lib curses."],[
+AC_CHECK_LIB(curses, main,[],[
    echo "Error! lib curses is not installed."
    exit -1
 ])
 
 dnl Replace `main' with a function in -lfl:
-AC_CHECK_LIB(fl, main,[echo "Found! lib flex."],[
+AC_CHECK_LIB(fl, main,[],[
    echo "Error! lib flex is not installed."
    exit -1
 ])
@@ -117,7 +117,7 @@ dnl    exit -1
 dnl ])
 
 dnl Replace `main' with a function in -lm:
-AC_CHECK_LIB(m, main,[echo "Found! lib m."],[
+AC_CHECK_LIB(m, main,[],[
    echo "Error! lib math is not installed."
    exit -1
 ])
@@ -536,7 +536,7 @@ case "$host_os" in
     PYTHONLIB_EXTENSION='so'
     AC_SUBST(PYTHONLIB_EXTENSION)
     
-    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL -I$(PYTHON_INCLUDE) -I${top_builddir} -I${top_builddir}/hierarchy/output/symbols -fPIC'
+    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL $(PYTHON_INCLUDE) -I${top_builddir} -I${top_builddir}/hierarchy/output/symbols -fPIC'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
 
 
@@ -635,7 +635,7 @@ case "$host_os" in
     PYTHONLIB_EXTENSION='so'
     AC_SUBST(PYTHONLIB_EXTENSION)
 
-    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL -I$(PYTHON_INCLUDE) -I${top_builddir} -I${top_builddir}/hierarchy/output/symbols -fPIC -Xlinker -export-dynamic'
+    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL $(PYTHON_INCLUDE) -I${top_builddir} -I${top_builddir}/hierarchy/output/symbols -fPIC -Xlinker -export-dynamic'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
    
     SWIGCOMPILECOMMAND_PYTHON='gcc -Wno-declaration-after-statement $(SWIGCOMPILELINKSFORPYTHON) -c swiggable_neurospaces_wrap.c'
