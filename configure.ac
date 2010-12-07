@@ -635,19 +635,21 @@ case "$host_os" in
     PYTHONLIB_EXTENSION='so'
     AC_SUBST(PYTHONLIB_EXTENSION)
 
-    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL $(PYTHON_INCLUDE) -I${top_builddir} -I${top_builddir}/hierarchy/output/symbols -fPIC -Xlinker -export-dynamic'
+    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL $(PYTHON_INCLUDE) -I${top_builddir} -I${top_builddir}/hierarchy/output/symbols -fPIC -Xlinker'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
    
     SWIGCOMPILECOMMAND_PYTHON='gcc -Wno-declaration-after-statement $(SWIGCOMPILELINKSFORPYTHON) -c swiggable_neurospaces_wrap.c'
     AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
 
-    SWIGLDLINKSFORPYTHON='-L${top_builddir} -lneurospacesread -L${top_builddir}/algorithms/event -levent_algorithms -L${top_builddir}/algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline 	-fPIC 	-Xlinker -export-dynamic $(PYTHON_LDFLAGS)'
+    SWIGLDLINKSFORPYTHON='-L${top_builddir} -lneurospacesread -L${top_builddir}/algorithms/event -levent_algorithms -L${top_builddir}/algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline 	-fPIC -Xlinker -export-dynamic $(PYTHON_LDFLAGS)'
     AC_SUBST(SWIGLDLINKSFORPYTHON)
   
-    SWIGLINKCOMMAND_PYTHON='gcc -Wno-declaration-after-statement $(SWIGLDLINKSFORPYTHON) -g -shared swiggable_neurospaces_wrap.o -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
+    SWIGLINKCOMMAND_PYTHON='gcc -shared swiggable_neurospaces_wrap.o $(SWIGLDLINKSFORPYTHON)  -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
     AC_SUBST(SWIGLINKCOMMAND_PYTHON)
 
-    NMC_SWIGLINKCOMMAND_PYTHON='gcc -Wno-declaration-after-statement $(SWIGLDLINKSFORPYTHON) -g -shared nmc_wrap.o -o $(srcdir)/nmc/_nmc_base.so'
+    # note: Must remember that the "-shared objectfile.o" part must be FIRST, otherwise it will silently
+    # not link the symbols but give the appearance that it has completed successully. 
+    NMC_SWIGLINKCOMMAND_PYTHON='gcc -shared nmc_wrap.o $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/nmc/_nmc_base.so'
     AC_SUBST(NMC_SWIGLINKCOMMAND_PYTHON)
 
     dnl }}} End of General Settings
