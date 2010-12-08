@@ -9,7 +9,6 @@ of each data structure that the Model Container employs.
 
 """
 
-
 __author__ = 'Mando Rodriguez'
 __credits__ = []
 __license__ = "GPL"
@@ -86,6 +85,14 @@ class ModelContainer:
         return self._nmc_root
 
 #---------------------------------------------------------------------------
+
+    def SetParameter(symbol, parameter, value):
+        """!
+        @brief Sets a parameter value to a symbol in the model container.
+        """
+        pass
+
+#---------------------------------------------------------------------------
     
     def Read(self, filename):
         """!
@@ -128,9 +135,88 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
-    def read_python(self, filename):
-        "read an NPY model file"
+    def ReadPython(self, filename):
+        """!
+        @brief read an NPY model file
+        """
+        
+        if not os.path.isfile(filename):
+
+            # Make my own exception? check for the ndf suffix?
+            raise Exception("%s is not a valid file or does not exist" % (filename))
+        
         execfile("/usr/local/neurospaces/models/library/" + filename)
-#         execfile("/home/hugo/neurospaces_project/model-container/source/snapshots/0/library/" + filename)
 
 #*************************** End ModelContainer **************************
+
+
+
+
+
+
+#*************************** Start Symbol **************************
+
+
+class Symbol:
+    """!
+    @class Symbol
+
+    A base object for a symbol in the model container. Object contains
+    the 
+    Can be inherited
+    by more complex objects for more complex symbols.
+    """
+
+    def __init__(self,nmc):
+
+        self._context = None
+        self._name = ""
+        
+
+#---------------------------------------------------------------------------
+
+    def GetParameter(self, parameter):
+
+        pass
+
+#---------------------------------------------------------------------------
+
+    def SetParameter(self, parameter, value):
+
+        pass
+
+#---------------------------------------------------------------------------
+
+
+    def SetParameterDouble(self, parameter, value):
+
+        pass
+
+
+#---------------------------------------------------------------------------
+
+
+    def backend_object(self):
+        return self.backend
+    
+    def insert_child(self, child):
+        s = self.backend_object()
+        c = child.backend_object()
+        return SwiggableNeurospaces.SymbolAddChild(s, c)
+        
+    def parameter(self, name, value):
+        return SwiggableNeurospaces.SymbolSetParameterDouble(self.backend_object(), name, value)
+
+
+#*************************** End Symbol ****************************
+
+class Cell(Symbol):
+    "Cell class"
+    def __init__(self, name):
+        cell = SwiggableNeurospaces.CellCalloc()
+        SwiggableNeurospaces.SymbolSetName(cell.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
+        self.backend = cell
+
+    def backend_object(self):
+        return self.backend.segr.bio.ioh.iol.hsle
+
