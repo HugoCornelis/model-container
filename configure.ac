@@ -635,10 +635,10 @@ case "$host_os" in
     PYTHONLIB_EXTENSION='so'
     AC_SUBST(PYTHONLIB_EXTENSION)
 
-    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL $(PYTHON_INCLUDE) -I${top_builddir} -I${top_builddir}/hierarchy/output/symbols -fPIC -Xlinker'
+    SWIGCOMPILELINKSFORPYTHON='-g -Wno-declaration-after-statement -DPRE_PROTO_TRAVERSAL $(PYTHON_INCLUDE) -I${top_builddir} -I${top_builddir}/hierarchy/output/symbols -fPIC -Xlinker -export-dynamic'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
    
-    SWIGCOMPILECOMMAND_PYTHON='gcc -Wno-declaration-after-statement $(SWIGCOMPILELINKSFORPYTHON) -c swiggable_neurospaces_wrap.c'
+    SWIGCOMPILECOMMAND_PYTHON='gcc $(SWIGCOMPILELINKSFORPYTHON) -c swiggable_neurospaces_wrap.c'
     AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
 
     SWIGLDLINKSFORPYTHON='-L${top_builddir} -lneurospacesread -L${top_builddir}/algorithms/event -levent_algorithms -L${top_builddir}/algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline 	-fPIC -Xlinker -export-dynamic $(PYTHON_LDFLAGS)'
