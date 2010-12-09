@@ -1186,22 +1186,22 @@ PUBLIC_MODELS
           END PARAMETERS
           GATE_KINETIC "A"
             PARAMETERS
-              PARAMETER ( HH_AB_Tau = -0.012 ),
+              PARAMETER ( HH_AB_Div_E = -0.012 ),
               PARAMETER ( HH_AB_Offset_E = 0.027 ),
-              PARAMETER ( HH_AB_Add = 1 ),
+              PARAMETER ( HH_AB_Add_Den = 1 ),
               PARAMETER ( HH_AB_Factor_Flag = -1 ),
               PARAMETER ( HH_AB_Mult = 0 ),
-              PARAMETER ( HH_AB_Scale = 1400 ),
+              PARAMETER ( HH_AB_Add_Num = 1400 ),
             END PARAMETERS
           END GATE_KINETIC
           GATE_KINETIC "B"
             PARAMETERS
-              PARAMETER ( HH_AB_Tau = 0.004 ),
+              PARAMETER ( HH_AB_Div_E = 0.004 ),
               PARAMETER ( HH_AB_Offset_E = 0.03 ),
-              PARAMETER ( HH_AB_Add = 1 ),
+              PARAMETER ( HH_AB_Add_Den = 1 ),
               PARAMETER ( HH_AB_Factor_Flag = -1 ),
               PARAMETER ( HH_AB_Mult = 0 ),
-              PARAMETER ( HH_AB_Scale = 490 ),
+              PARAMETER ( HH_AB_Add_Num = 490 ),
             END PARAMETERS
           END GATE_KINETIC
         END HH_GATE
@@ -1213,22 +1213,22 @@ PUBLIC_MODELS
           END PARAMETERS
           GATE_KINETIC "A"
             PARAMETERS
-              PARAMETER ( HH_AB_Tau = 0.008 ),
+              PARAMETER ( HH_AB_Div_E = 0.008 ),
               PARAMETER ( HH_AB_Offset_E = 0.05 ),
-              PARAMETER ( HH_AB_Add = 1 ),
+              PARAMETER ( HH_AB_Add_Den = 1 ),
               PARAMETER ( HH_AB_Factor_Flag = -1 ),
               PARAMETER ( HH_AB_Mult = 0 ),
-              PARAMETER ( HH_AB_Scale = 17.5 ),
+              PARAMETER ( HH_AB_Add_Num = 17.5 ),
             END PARAMETERS
           END GATE_KINETIC
           GATE_KINETIC "B"
             PARAMETERS
-              PARAMETER ( HH_AB_Tau = -0.01 ),
+              PARAMETER ( HH_AB_Div_E = -0.01 ),
               PARAMETER ( HH_AB_Offset_E = 0.013 ),
-              PARAMETER ( HH_AB_Add = 1 ),
+              PARAMETER ( HH_AB_Add_Den = 1 ),
               PARAMETER ( HH_AB_Factor_Flag = -1 ),
               PARAMETER ( HH_AB_Mult = 0 ),
-              PARAMETER ( HH_AB_Scale = 1300 ),
+              PARAMETER ( HH_AB_Add_Num = 1300 ),
             END PARAMETERS
           END GATE_KINETIC
         END HH_GATE
@@ -1305,22 +1305,22 @@ PUBLIC_MODELS
           END PARAMETERS
           GATE_KINETIC "A"
             PARAMETERS
-              PARAMETER ( HH_AB_Tau = -0.012 ),
+              PARAMETER ( HH_AB_Div_E = -0.012 ),
               PARAMETER ( HH_AB_Offset_E = 0.027 ),
-              PARAMETER ( HH_AB_Add = 1 ),
+              PARAMETER ( HH_AB_Add_Den = 1 ),
               PARAMETER ( HH_AB_Factor_Flag = -1 ),
               PARAMETER ( HH_AB_Mult = 0 ),
-              PARAMETER ( HH_AB_Scale = 1400 ),
+              PARAMETER ( HH_AB_Add_Num = 1400 ),
             END PARAMETERS
           END GATE_KINETIC
           GATE_KINETIC "B"
             PARAMETERS
-              PARAMETER ( HH_AB_Tau = 0.004 ),
+              PARAMETER ( HH_AB_Div_E = 0.004 ),
               PARAMETER ( HH_AB_Offset_E = 0.03 ),
-              PARAMETER ( HH_AB_Add = 1 ),
+              PARAMETER ( HH_AB_Add_Den = 1 ),
               PARAMETER ( HH_AB_Factor_Flag = -1 ),
               PARAMETER ( HH_AB_Mult = 0 ),
-              PARAMETER ( HH_AB_Scale = 490 ),
+              PARAMETER ( HH_AB_Add_Num = 490 ),
             END PARAMETERS
           END GATE_KINETIC
         END HH_GATE
@@ -1332,22 +1332,22 @@ PUBLIC_MODELS
           END PARAMETERS
           GATE_KINETIC "A"
             PARAMETERS
-              PARAMETER ( HH_AB_Tau = 0.008 ),
+              PARAMETER ( HH_AB_Div_E = 0.008 ),
               PARAMETER ( HH_AB_Offset_E = 0.05 ),
-              PARAMETER ( HH_AB_Add = 1 ),
+              PARAMETER ( HH_AB_Add_Den = 1 ),
               PARAMETER ( HH_AB_Factor_Flag = -1 ),
               PARAMETER ( HH_AB_Mult = 0 ),
-              PARAMETER ( HH_AB_Scale = 17.5 ),
+              PARAMETER ( HH_AB_Add_Num = 17.5 ),
             END PARAMETERS
           END GATE_KINETIC
           GATE_KINETIC "B"
             PARAMETERS
-              PARAMETER ( HH_AB_Tau = -0.01 ),
+              PARAMETER ( HH_AB_Div_E = -0.01 ),
               PARAMETER ( HH_AB_Offset_E = 0.013 ),
-              PARAMETER ( HH_AB_Add = 1 ),
+              PARAMETER ( HH_AB_Add_Den = 1 ),
               PARAMETER ( HH_AB_Factor_Flag = -1 ),
               PARAMETER ( HH_AB_Mult = 0 ),
-              PARAMETER ( HH_AB_Scale = 1300 ),
+              PARAMETER ( HH_AB_Add_Num = 1300 ),
             END PARAMETERS
           END GATE_KINETIC
         END HH_GATE
@@ -1409,22 +1409,22 @@ PUBLIC_MODELS
           END PARAMETERS
           GATE_KINETIC "A"
             PARAMETERS
-              PARAMETER ( HH_AB_Tau = -0.012 ),
+              PARAMETER ( HH_AB_Div_E = -0.012 ),
               PARAMETER ( HH_AB_Offset_E = 0.027 ),
-              PARAMETER ( HH_AB_Add = 1 ),
+              PARAMETER ( HH_AB_Add_Den = 1 ),
               PARAMETER ( HH_AB_Factor_Flag = -1 ),
               PARAMETER ( HH_AB_Mult = 0 ),
-              PARAMETER ( HH_AB_Scale = 1400 ),
+              PARAMETER ( HH_AB_Add_Num = 1400 ),
             END PARAMETERS
           END GATE_KINETIC
           GATE_KINETIC "B"
             PARAMETERS
-              PARAMETER ( HH_AB_Tau = 0.004 ),
+              PARAMETER ( HH_AB_Div_E = 0.004 ),
               PARAMETER ( HH_AB_Offset_E = 0.03 ),
-              PARAMETER ( HH_AB_Add = 1 ),
+              PARAMETER ( HH_AB_Add_Den = 1 ),
               PARAMETER ( HH_AB_Factor_Flag = -1 ),
               PARAMETER ( HH_AB_Mult = 0 ),
-              PARAMETER ( HH_AB_Scale = 490 ),
+              PARAMETER ( HH_AB_Add_Num = 490 ),
             END PARAMETERS
           END GATE_KINETIC
         END HH_GATE
@@ -1435,22 +1435,22 @@ PUBLIC_MODELS
           END PARAMETERS
           GATE_KINETIC "A"
             PARAMETERS
-              PARAMETER ( HH_AB_Tau = 0.008 ),
+              PARAMETER ( HH_AB_Div_E = 0.008 ),
               PARAMETER ( HH_AB_Offset_E = 0.05 ),
-              PARAMETER ( HH_AB_Add = 1 ),
+              PARAMETER ( HH_AB_Add_Den = 1 ),
               PARAMETER ( HH_AB_Factor_Flag = -1 ),
               PARAMETER ( HH_AB_Mult = 0 ),
-              PARAMETER ( HH_AB_Scale = 17.5 ),
+              PARAMETER ( HH_AB_Add_Num = 17.5 ),
             END PARAMETERS
           END GATE_KINETIC
           GATE_KINETIC "B"
             PARAMETERS
-              PARAMETER ( HH_AB_Tau = -0.01 ),
+              PARAMETER ( HH_AB_Div_E = -0.01 ),
               PARAMETER ( HH_AB_Offset_E = 0.013 ),
-              PARAMETER ( HH_AB_Add = 1 ),
+              PARAMETER ( HH_AB_Add_Den = 1 ),
               PARAMETER ( HH_AB_Factor_Flag = -1 ),
               PARAMETER ( HH_AB_Mult = 0 ),
-              PARAMETER ( HH_AB_Scale = 1300 ),
+              PARAMETER ( HH_AB_Add_Num = 1300 ),
             END PARAMETERS
           END GATE_KINETIC
         END HH_GATE
@@ -1508,22 +1508,22 @@ PUBLIC_MODELS
           END PARAMETERS
           GATE_KINETIC "A"
             PARAMETERS
-              PARAMETER ( HH_AB_Tau = -0.012 ),
+              PARAMETER ( HH_AB_Div_E = -0.012 ),
               PARAMETER ( HH_AB_Offset_E = 0.027 ),
-              PARAMETER ( HH_AB_Add = 1 ),
+              PARAMETER ( HH_AB_Add_Den = 1 ),
               PARAMETER ( HH_AB_Factor_Flag = -1 ),
               PARAMETER ( HH_AB_Mult = 0 ),
-              PARAMETER ( HH_AB_Scale = 1400 ),
+              PARAMETER ( HH_AB_Add_Num = 1400 ),
             END PARAMETERS
           END GATE_KINETIC
           GATE_KINETIC "B"
             PARAMETERS
-              PARAMETER ( HH_AB_Tau = 0.004 ),
+              PARAMETER ( HH_AB_Div_E = 0.004 ),
               PARAMETER ( HH_AB_Offset_E = 0.03 ),
-              PARAMETER ( HH_AB_Add = 1 ),
+              PARAMETER ( HH_AB_Add_Den = 1 ),
               PARAMETER ( HH_AB_Factor_Flag = -1 ),
               PARAMETER ( HH_AB_Mult = 0 ),
-              PARAMETER ( HH_AB_Scale = 490 ),
+              PARAMETER ( HH_AB_Add_Num = 490 ),
             END PARAMETERS
           END GATE_KINETIC
         END HH_GATE
@@ -1534,22 +1534,22 @@ PUBLIC_MODELS
           END PARAMETERS
           GATE_KINETIC "A"
             PARAMETERS
-              PARAMETER ( HH_AB_Tau = 0.008 ),
+              PARAMETER ( HH_AB_Div_E = 0.008 ),
               PARAMETER ( HH_AB_Offset_E = 0.05 ),
-              PARAMETER ( HH_AB_Add = 1 ),
+              PARAMETER ( HH_AB_Add_Den = 1 ),
               PARAMETER ( HH_AB_Factor_Flag = -1 ),
               PARAMETER ( HH_AB_Mult = 0 ),
-              PARAMETER ( HH_AB_Scale = 17.5 ),
+              PARAMETER ( HH_AB_Add_Num = 17.5 ),
             END PARAMETERS
           END GATE_KINETIC
           GATE_KINETIC "B"
             PARAMETERS
-              PARAMETER ( HH_AB_Tau = -0.01 ),
+              PARAMETER ( HH_AB_Div_E = -0.01 ),
               PARAMETER ( HH_AB_Offset_E = 0.013 ),
-              PARAMETER ( HH_AB_Add = 1 ),
+              PARAMETER ( HH_AB_Add_Den = 1 ),
               PARAMETER ( HH_AB_Factor_Flag = -1 ),
               PARAMETER ( HH_AB_Mult = 0 ),
-              PARAMETER ( HH_AB_Scale = 1300 ),
+              PARAMETER ( HH_AB_Add_Num = 1300 ),
             END PARAMETERS
           END GATE_KINETIC
         END HH_GATE

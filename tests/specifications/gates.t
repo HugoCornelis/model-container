@@ -32,9 +32,9 @@ my $test
 						   # standard gate parameters
 
 						   {
-						    description => "Do we find the HH_AB_Scale parameter with a correct value in the A gate kinetic ?",
+						    description => "Do we find the HH_AB_Add_Num parameter with a correct value in the A gate kinetic ?",
 						    read => '35000',
-						    write => 'printparameter /naf_activation/A HH_AB_Scale',
+						    write => 'printparameter /naf_activation/A HH_AB_Add_Num',
 						   },
 						   {
 						    description => "Do we find the HH_AB_Mult parameter with a correct value in the A gate kinetic ?",
@@ -47,9 +47,9 @@ my $test
 						    write => 'printparameter /naf_activation/A HH_AB_Factor_Flag',
 						   },
 						   {
-						    description => "Do we find the HH_AB_Add parameter with a correct value in the A gate kinetic ?",
+						    description => "Do we find the HH_AB_Add_Den parameter with a correct value in the A gate kinetic ?",
 						    read => '= 0',
-						    write => 'printparameter /naf_activation/A HH_AB_Add',
+						    write => 'printparameter /naf_activation/A HH_AB_Add_Den',
 						   },
 						   {
 						    description => "Do we find the HH_AB_Offset_E parameter with a correct value in the A gate kinetic ?",
@@ -57,9 +57,9 @@ my $test
 						    write => 'printparameter /naf_activation/A HH_AB_Offset_E',
 						   },
 						   {
-						    description => "Do we find the HH_AB_Tau parameter with a correct value in the A gate kinetic ?",
+						    description => "Do we find the HH_AB_Div_E parameter with a correct value in the A gate kinetic ?",
 						    read => '= -0.01',
-						    write => 'printparameter /naf_activation/A HH_AB_Tau',
+						    write => 'printparameter /naf_activation/A HH_AB_Div_E',
 						   },
 						  ),
 						  (
@@ -76,9 +76,9 @@ my $test
 						   # standard gate parameters
 
 						   {
-						    description => "Do we find the HH_AB_Scale parameter with a correct value in the B gate kinetic ?",
+						    description => "Do we find the HH_AB_Add_Num parameter with a correct value in the B gate kinetic ?",
 						    read => '7000',
-						    write => 'printparameter /naf_activation/B HH_AB_Scale',
+						    write => 'printparameter /naf_activation/B HH_AB_Add_Num',
 						   },
 						   {
 						    description => "Do we find the HH_AB_Mult parameter with a correct value in the B gate kinetic ?",
@@ -91,9 +91,9 @@ my $test
 						    write => 'printparameter /naf_activation/B HH_AB_Factor_Flag',
 						   },
 						   {
-						    description => "Do we find the HH_AB_Add parameter with a correct value in the B gate kinetic ?",
+						    description => "Do we find the HH_AB_Add_Den parameter with a correct value in the B gate kinetic ?",
 						    read => '= 0',
-						    write => 'printparameter /naf_activation/B HH_AB_Add',
+						    write => 'printparameter /naf_activation/B HH_AB_Add_Den',
 						   },
 						   {
 						    description => "Do we find the HH_AB_Offset_E parameter with a correct value in the B gate kinetic ?",
@@ -101,9 +101,9 @@ my $test
 						    write => 'printparameter /naf_activation/B HH_AB_Offset_E',
 						   },
 						   {
-						    description => "Do we find the HH_AB_Tau parameter with a correct value in the B gate kinetic ?",
+						    description => "Do we find the HH_AB_Div_E parameter with a correct value in the B gate kinetic ?",
 						    read => '0.02',
-						    write => 'printparameter /naf_activation/B HH_AB_Tau',
+						    write => 'printparameter /naf_activation/B HH_AB_Div_E',
 						   },
 						  ),
 						  (

@@ -25,12 +25,12 @@ PRIVATE_MODELS
 			END BINDINGS
 
 			PARAMETERS
-				PARAMETER ( HH_AB_Scale = 35.0e3 ),
+				PARAMETER ( HH_AB_Add_Num = 35.0e3 ),
 				PARAMETER ( HH_AB_Mult = 0.0 ),
 				PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
-				PARAMETER ( HH_AB_Add = 0.0 ),
+				PARAMETER ( HH_AB_Add_Den = 0.0 ),
 				PARAMETER ( HH_AB_Offset_E = 5.0e-3 ),
-				PARAMETER ( HH_AB_Tau = -10.0e-3 ),
+				PARAMETER ( HH_AB_Div_E = -10.0e-3 ),
 			END PARAMETERS
 
 		END GATE_KINETIC_A
@@ -46,12 +46,12 @@ PRIVATE_MODELS
 			END BINDINGS
 
 			PARAMETERS
-				PARAMETER ( HH_AB_Scale = 7.0e3 ),
+				PARAMETER ( HH_AB_Add_Num = 7.0e3 ),
 				PARAMETER ( HH_AB_Mult = 0.0 ),
 				PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
-				PARAMETER ( HH_AB_Add = 0.0 ),
+				PARAMETER ( HH_AB_Add_Den = 0.0 ),
 				PARAMETER ( HH_AB_Offset_E = 65.0e-3 ),
-				PARAMETER ( HH_AB_Tau = 20.0e-3 ),
+				PARAMETER ( HH_AB_Div_E = 20.0e-3 ),
 			END PARAMETERS
 
 		END GATE_KINETIC_B
@@ -97,12 +97,12 @@ PRIVATE_MODELS
 			END BINDINGS
 
 			PARAMETERS
-				PARAMETER ( HH_AB_Scale = 0.225e3 ),
+				PARAMETER ( HH_AB_Add_Num = 0.225e3 ),
 				PARAMETER ( HH_AB_Mult = 0.0 ),
 				PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
-				PARAMETER ( HH_AB_Add = 1.0 ),
+				PARAMETER ( HH_AB_Add_Den = 1.0 ),
 				PARAMETER ( HH_AB_Offset_E = 80.0e-3 ),
-				PARAMETER ( HH_AB_Tau = 10.0e-3 ),
+				PARAMETER ( HH_AB_Div_E = 10.0e-3 ),
 			END PARAMETERS
 
 		END GATE_KINETIC_A
@@ -118,12 +118,12 @@ PRIVATE_MODELS
 			END BINDINGS
 
 			PARAMETERS
-				PARAMETER ( HH_AB_Scale = 7.5e3 ),
+				PARAMETER ( HH_AB_Add_Num = 7.5e3 ),
 				PARAMETER ( HH_AB_Mult = 0.0 ),
 				PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
-				PARAMETER ( HH_AB_Add = 0.0 ),
+				PARAMETER ( HH_AB_Add_Den = 0.0 ),
 				PARAMETER ( HH_AB_Offset_E = -3.0e-3 ),
-				PARAMETER ( HH_AB_Tau = -18.0e-3 ),
+				PARAMETER ( HH_AB_Div_E = -18.0e-3 ),
 			END PARAMETERS
 
 		END GATE_KINETIC_B
@@ -179,12 +179,12 @@ PRIVATE_MODELS
 // 			END BINDINGS
 
 // 			PARAMETERS
-// 				PARAMETER ( HH_AB_Scale = -600.0 ),
+// 				PARAMETER ( HH_AB_Add_Num = -600.0 ),
 // 				PARAMETER ( HH_AB_Mult = -10000 ),
 // 				PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
-// 				PARAMETER ( HH_AB_Add = -1.0 ),
+// 				PARAMETER ( HH_AB_Add_Den = -1.0 ),
 // 				PARAMETER ( HH_AB_Offset_E = 60e-3 ),
-// 				PARAMETER ( HH_AB_Tau = -10.0e-3 ),
+// 				PARAMETER ( HH_AB_Div_E = -10.0e-3 ),
 // 			END PARAMETERS
 
 // 		END GATE_KINETIC_A
@@ -200,12 +200,12 @@ PRIVATE_MODELS
 // 			END BINDINGS
 
 // 			PARAMETERS
-// 				PARAMETER ( HH_AB_Scale = 125.0 ),
+// 				PARAMETER ( HH_AB_Add_Num = 125.0 ),
 // 				PARAMETER ( HH_AB_Mult = 0.0 ),
 // 				PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
-// 				PARAMETER ( HH_AB_Add = 0.0 ),
+// 				PARAMETER ( HH_AB_Add_Den = 0.0 ),
 // 				PARAMETER ( HH_AB_Offset_E = 70e-3 ),
-// 				PARAMETER ( HH_AB_Tau = 80e-3 ),
+// 				PARAMETER ( HH_AB_Div_E = 80e-3 ),
 // 			END PARAMETERS
 
 // 		END GATE_KINETIC_B

@@ -47,12 +47,12 @@ PRIVATE_MODELS
       INPUT ..->Vm,
     END BINDINGS
     PARAMETERS
-      PARAMETER ( HH_AB_Scale = 35000 ),
+      PARAMETER ( HH_AB_Add_Num = 35000 ),
       PARAMETER ( HH_AB_Mult = 0 ),
       PARAMETER ( HH_AB_Factor_Flag = -1 ),
-      PARAMETER ( HH_AB_Add = 0 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
       PARAMETER ( HH_AB_Offset_E = 0.005 ),
-      PARAMETER ( HH_AB_Tau = -0.01 ),
+      PARAMETER ( HH_AB_Div_E = -0.01 ),
     END PARAMETERS
   END GATE_KINETIC
   CHILD "A_4_4" "A_inserted_4"
@@ -66,12 +66,12 @@ PRIVATE_MODELS
       INPUT ..->Vm,
     END BINDINGS
     PARAMETERS
-      PARAMETER ( HH_AB_Scale = 7000 ),
+      PARAMETER ( HH_AB_Add_Num = 7000 ),
       PARAMETER ( HH_AB_Mult = 0 ),
       PARAMETER ( HH_AB_Factor_Flag = -1 ),
-      PARAMETER ( HH_AB_Add = 0 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
       PARAMETER ( HH_AB_Offset_E = 0.065 ),
-      PARAMETER ( HH_AB_Tau = 0.02 ),
+      PARAMETER ( HH_AB_Div_E = 0.02 ),
     END PARAMETERS
   END GATE_KINETIC
   CHILD "B_5_5" "B_inserted_5"
@@ -126,12 +126,12 @@ END PUBLIC_MODELS
       <input> <name>..->Vm</name> </input>
     </bindings>
     <parameters>
-      <parameter> <name>HH_AB_Scale</name><value>35000</value> </parameter>
+      <parameter> <name>HH_AB_Add_Num</name><value>35000</value> </parameter>
       <parameter> <name>HH_AB_Mult</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Factor_Flag</name><value>-1</value> </parameter>
-      <parameter> <name>HH_AB_Add</name><value>0</value> </parameter>
+      <parameter> <name>HH_AB_Add_Den</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Offset_E</name><value>0.005</value> </parameter>
-      <parameter> <name>HH_AB_Tau</name><value>-0.01</value> </parameter>
+      <parameter> <name>HH_AB_Div_E</name><value>-0.01</value> </parameter>
     </parameters>
   </GATE_KINETIC>
   <child> <prototype>A_4_4</prototype> <name>A_inserted_4</name>
@@ -145,12 +145,12 @@ END PUBLIC_MODELS
       <input> <name>..->Vm</name> </input>
     </bindings>
     <parameters>
-      <parameter> <name>HH_AB_Scale</name><value>7000</value> </parameter>
+      <parameter> <name>HH_AB_Add_Num</name><value>7000</value> </parameter>
       <parameter> <name>HH_AB_Mult</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Factor_Flag</name><value>-1</value> </parameter>
-      <parameter> <name>HH_AB_Add</name><value>0</value> </parameter>
+      <parameter> <name>HH_AB_Add_Den</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Offset_E</name><value>0.065</value> </parameter>
-      <parameter> <name>HH_AB_Tau</name><value>0.02</value> </parameter>
+      <parameter> <name>HH_AB_Div_E</name><value>0.02</value> </parameter>
     </parameters>
   </GATE_KINETIC>
   <child> <prototype>B_5_5</prototype> <name>B_inserted_5</name>
@@ -260,12 +260,12 @@ PRIVATE_MODELS
       INPUT ..->Vm,
     END BINDINGS
     PARAMETERS
-      PARAMETER ( HH_AB_Scale = 35000 ),
+      PARAMETER ( HH_AB_Add_Num = 35000 ),
       PARAMETER ( HH_AB_Mult = 0 ),
       PARAMETER ( HH_AB_Factor_Flag = -1 ),
-      PARAMETER ( HH_AB_Add = 0 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
       PARAMETER ( HH_AB_Offset_E = 0.005 ),
-      PARAMETER ( HH_AB_Tau = -0.01 ),
+      PARAMETER ( HH_AB_Div_E = -0.01 ),
     END PARAMETERS
   END GATE_KINETIC
   CHILD "A_6_6" "A_inserted_6"
@@ -279,12 +279,12 @@ PRIVATE_MODELS
       INPUT ..->Vm,
     END BINDINGS
     PARAMETERS
-      PARAMETER ( HH_AB_Scale = 7000 ),
+      PARAMETER ( HH_AB_Add_Num = 7000 ),
       PARAMETER ( HH_AB_Mult = 0 ),
       PARAMETER ( HH_AB_Factor_Flag = -1 ),
-      PARAMETER ( HH_AB_Add = 0 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
       PARAMETER ( HH_AB_Offset_E = 0.065 ),
-      PARAMETER ( HH_AB_Tau = 0.02 ),
+      PARAMETER ( HH_AB_Div_E = 0.02 ),
     END PARAMETERS
   END GATE_KINETIC
   CHILD "B_7_7" "B_inserted_7"
@@ -321,12 +321,12 @@ PRIVATE_MODELS
       INPUT ..->Vm,
     END BINDINGS
     PARAMETERS
-      PARAMETER ( HH_AB_Scale = 225 ),
+      PARAMETER ( HH_AB_Add_Num = 225 ),
       PARAMETER ( HH_AB_Mult = 0 ),
       PARAMETER ( HH_AB_Factor_Flag = -1 ),
-      PARAMETER ( HH_AB_Add = 1 ),
+      PARAMETER ( HH_AB_Add_Den = 1 ),
       PARAMETER ( HH_AB_Offset_E = 0.08 ),
-      PARAMETER ( HH_AB_Tau = 0.01 ),
+      PARAMETER ( HH_AB_Div_E = 0.01 ),
     END PARAMETERS
   END GATE_KINETIC
   CHILD "A_11_11" "A_inserted_11"
@@ -340,12 +340,12 @@ PRIVATE_MODELS
       INPUT ..->Vm,
     END BINDINGS
     PARAMETERS
-      PARAMETER ( HH_AB_Scale = 7500 ),
+      PARAMETER ( HH_AB_Add_Num = 7500 ),
       PARAMETER ( HH_AB_Mult = 0 ),
       PARAMETER ( HH_AB_Factor_Flag = -1 ),
-      PARAMETER ( HH_AB_Add = 0 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
       PARAMETER ( HH_AB_Offset_E = -0.003 ),
-      PARAMETER ( HH_AB_Tau = -0.018 ),
+      PARAMETER ( HH_AB_Div_E = -0.018 ),
     END PARAMETERS
   END GATE_KINETIC
   CHILD "B_12_12" "B_inserted_12"
@@ -421,12 +421,12 @@ END PUBLIC_MODELS
       <input> <name>..->Vm</name> </input>
     </bindings>
     <parameters>
-      <parameter> <name>HH_AB_Scale</name><value>35000</value> </parameter>
+      <parameter> <name>HH_AB_Add_Num</name><value>35000</value> </parameter>
       <parameter> <name>HH_AB_Mult</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Factor_Flag</name><value>-1</value> </parameter>
-      <parameter> <name>HH_AB_Add</name><value>0</value> </parameter>
+      <parameter> <name>HH_AB_Add_Den</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Offset_E</name><value>0.005</value> </parameter>
-      <parameter> <name>HH_AB_Tau</name><value>-0.01</value> </parameter>
+      <parameter> <name>HH_AB_Div_E</name><value>-0.01</value> </parameter>
     </parameters>
   </GATE_KINETIC>
   <child> <prototype>A_6_6</prototype> <name>A_inserted_6</name>
@@ -440,12 +440,12 @@ END PUBLIC_MODELS
       <input> <name>..->Vm</name> </input>
     </bindings>
     <parameters>
-      <parameter> <name>HH_AB_Scale</name><value>7000</value> </parameter>
+      <parameter> <name>HH_AB_Add_Num</name><value>7000</value> </parameter>
       <parameter> <name>HH_AB_Mult</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Factor_Flag</name><value>-1</value> </parameter>
-      <parameter> <name>HH_AB_Add</name><value>0</value> </parameter>
+      <parameter> <name>HH_AB_Add_Den</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Offset_E</name><value>0.065</value> </parameter>
-      <parameter> <name>HH_AB_Tau</name><value>0.02</value> </parameter>
+      <parameter> <name>HH_AB_Div_E</name><value>0.02</value> </parameter>
     </parameters>
   </GATE_KINETIC>
   <child> <prototype>B_7_7</prototype> <name>B_inserted_7</name>
@@ -482,12 +482,12 @@ END PUBLIC_MODELS
       <input> <name>..->Vm</name> </input>
     </bindings>
     <parameters>
-      <parameter> <name>HH_AB_Scale</name><value>225</value> </parameter>
+      <parameter> <name>HH_AB_Add_Num</name><value>225</value> </parameter>
       <parameter> <name>HH_AB_Mult</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Factor_Flag</name><value>-1</value> </parameter>
-      <parameter> <name>HH_AB_Add</name><value>1</value> </parameter>
+      <parameter> <name>HH_AB_Add_Den</name><value>1</value> </parameter>
       <parameter> <name>HH_AB_Offset_E</name><value>0.08</value> </parameter>
-      <parameter> <name>HH_AB_Tau</name><value>0.01</value> </parameter>
+      <parameter> <name>HH_AB_Div_E</name><value>0.01</value> </parameter>
     </parameters>
   </GATE_KINETIC>
   <child> <prototype>A_11_11</prototype> <name>A_inserted_11</name>
@@ -501,12 +501,12 @@ END PUBLIC_MODELS
       <input> <name>..->Vm</name> </input>
     </bindings>
     <parameters>
-      <parameter> <name>HH_AB_Scale</name><value>7500</value> </parameter>
+      <parameter> <name>HH_AB_Add_Num</name><value>7500</value> </parameter>
       <parameter> <name>HH_AB_Mult</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Factor_Flag</name><value>-1</value> </parameter>
-      <parameter> <name>HH_AB_Add</name><value>0</value> </parameter>
+      <parameter> <name>HH_AB_Add_Den</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Offset_E</name><value>-0.003</value> </parameter>
-      <parameter> <name>HH_AB_Tau</name><value>-0.018</value> </parameter>
+      <parameter> <name>HH_AB_Div_E</name><value>-0.018</value> </parameter>
     </parameters>
   </GATE_KINETIC>
   <child> <prototype>B_12_12</prototype> <name>B_inserted_12</name>
@@ -637,12 +637,12 @@ PRIVATE_MODELS
       INPUT ..->Vm,
     END BINDINGS
     PARAMETERS
-      PARAMETER ( HH_AB_Scale = 35000 ),
+      PARAMETER ( HH_AB_Add_Num = 35000 ),
       PARAMETER ( HH_AB_Mult = 0 ),
       PARAMETER ( HH_AB_Factor_Flag = -1 ),
-      PARAMETER ( HH_AB_Add = 0 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
       PARAMETER ( HH_AB_Offset_E = 0.005 ),
-      PARAMETER ( HH_AB_Tau = -0.01 ),
+      PARAMETER ( HH_AB_Div_E = -0.01 ),
     END PARAMETERS
   END GATE_KINETIC
   CHILD "A_9_9" "A_inserted_9"
@@ -656,12 +656,12 @@ PRIVATE_MODELS
       INPUT ..->Vm,
     END BINDINGS
     PARAMETERS
-      PARAMETER ( HH_AB_Scale = 7000 ),
+      PARAMETER ( HH_AB_Add_Num = 7000 ),
       PARAMETER ( HH_AB_Mult = 0 ),
       PARAMETER ( HH_AB_Factor_Flag = -1 ),
-      PARAMETER ( HH_AB_Add = 0 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
       PARAMETER ( HH_AB_Offset_E = 0.065 ),
-      PARAMETER ( HH_AB_Tau = 0.02 ),
+      PARAMETER ( HH_AB_Div_E = 0.02 ),
     END PARAMETERS
   END GATE_KINETIC
   CHILD "B_10_10" "B_inserted_10"
@@ -698,12 +698,12 @@ PRIVATE_MODELS
       INPUT ..->Vm,
     END BINDINGS
     PARAMETERS
-      PARAMETER ( HH_AB_Scale = 225 ),
+      PARAMETER ( HH_AB_Add_Num = 225 ),
       PARAMETER ( HH_AB_Mult = 0 ),
       PARAMETER ( HH_AB_Factor_Flag = -1 ),
-      PARAMETER ( HH_AB_Add = 1 ),
+      PARAMETER ( HH_AB_Add_Den = 1 ),
       PARAMETER ( HH_AB_Offset_E = 0.08 ),
-      PARAMETER ( HH_AB_Tau = 0.01 ),
+      PARAMETER ( HH_AB_Div_E = 0.01 ),
     END PARAMETERS
   END GATE_KINETIC
   CHILD "A_14_14" "A_inserted_14"
@@ -717,12 +717,12 @@ PRIVATE_MODELS
       INPUT ..->Vm,
     END BINDINGS
     PARAMETERS
-      PARAMETER ( HH_AB_Scale = 7500 ),
+      PARAMETER ( HH_AB_Add_Num = 7500 ),
       PARAMETER ( HH_AB_Mult = 0 ),
       PARAMETER ( HH_AB_Factor_Flag = -1 ),
-      PARAMETER ( HH_AB_Add = 0 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
       PARAMETER ( HH_AB_Offset_E = -0.003 ),
-      PARAMETER ( HH_AB_Tau = -0.018 ),
+      PARAMETER ( HH_AB_Div_E = -0.018 ),
     END PARAMETERS
   END GATE_KINETIC
   CHILD "B_15_15" "B_inserted_15"
@@ -843,12 +843,12 @@ END PUBLIC_MODELS
       <input> <name>..->Vm</name> </input>
     </bindings>
     <parameters>
-      <parameter> <name>HH_AB_Scale</name><value>35000</value> </parameter>
+      <parameter> <name>HH_AB_Add_Num</name><value>35000</value> </parameter>
       <parameter> <name>HH_AB_Mult</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Factor_Flag</name><value>-1</value> </parameter>
-      <parameter> <name>HH_AB_Add</name><value>0</value> </parameter>
+      <parameter> <name>HH_AB_Add_Den</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Offset_E</name><value>0.005</value> </parameter>
-      <parameter> <name>HH_AB_Tau</name><value>-0.01</value> </parameter>
+      <parameter> <name>HH_AB_Div_E</name><value>-0.01</value> </parameter>
     </parameters>
   </GATE_KINETIC>
   <child> <prototype>A_9_9</prototype> <name>A_inserted_9</name>
@@ -862,12 +862,12 @@ END PUBLIC_MODELS
       <input> <name>..->Vm</name> </input>
     </bindings>
     <parameters>
-      <parameter> <name>HH_AB_Scale</name><value>7000</value> </parameter>
+      <parameter> <name>HH_AB_Add_Num</name><value>7000</value> </parameter>
       <parameter> <name>HH_AB_Mult</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Factor_Flag</name><value>-1</value> </parameter>
-      <parameter> <name>HH_AB_Add</name><value>0</value> </parameter>
+      <parameter> <name>HH_AB_Add_Den</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Offset_E</name><value>0.065</value> </parameter>
-      <parameter> <name>HH_AB_Tau</name><value>0.02</value> </parameter>
+      <parameter> <name>HH_AB_Div_E</name><value>0.02</value> </parameter>
     </parameters>
   </GATE_KINETIC>
   <child> <prototype>B_10_10</prototype> <name>B_inserted_10</name>
@@ -904,12 +904,12 @@ END PUBLIC_MODELS
       <input> <name>..->Vm</name> </input>
     </bindings>
     <parameters>
-      <parameter> <name>HH_AB_Scale</name><value>225</value> </parameter>
+      <parameter> <name>HH_AB_Add_Num</name><value>225</value> </parameter>
       <parameter> <name>HH_AB_Mult</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Factor_Flag</name><value>-1</value> </parameter>
-      <parameter> <name>HH_AB_Add</name><value>1</value> </parameter>
+      <parameter> <name>HH_AB_Add_Den</name><value>1</value> </parameter>
       <parameter> <name>HH_AB_Offset_E</name><value>0.08</value> </parameter>
-      <parameter> <name>HH_AB_Tau</name><value>0.01</value> </parameter>
+      <parameter> <name>HH_AB_Div_E</name><value>0.01</value> </parameter>
     </parameters>
   </GATE_KINETIC>
   <child> <prototype>A_14_14</prototype> <name>A_inserted_14</name>
@@ -923,12 +923,12 @@ END PUBLIC_MODELS
       <input> <name>..->Vm</name> </input>
     </bindings>
     <parameters>
-      <parameter> <name>HH_AB_Scale</name><value>7500</value> </parameter>
+      <parameter> <name>HH_AB_Add_Num</name><value>7500</value> </parameter>
       <parameter> <name>HH_AB_Mult</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Factor_Flag</name><value>-1</value> </parameter>
-      <parameter> <name>HH_AB_Add</name><value>0</value> </parameter>
+      <parameter> <name>HH_AB_Add_Den</name><value>0</value> </parameter>
       <parameter> <name>HH_AB_Offset_E</name><value>-0.003</value> </parameter>
-      <parameter> <name>HH_AB_Tau</name><value>-0.018</value> </parameter>
+      <parameter> <name>HH_AB_Div_E</name><value>-0.018</value> </parameter>
     </parameters>
   </GATE_KINETIC>
   <child> <prototype>B_15_15</prototype> <name>B_inserted_15</name>

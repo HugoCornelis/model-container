@@ -26,12 +26,12 @@ PUBLIC_MODELS
 			END BINDINGS
 
 			PARAMETERS
-				PARAMETER ( HH_AB_Scale = 0.0175e3 ),
+				PARAMETER ( HH_AB_Add_Num = 0.0175e3 ),
 				PARAMETER ( HH_AB_Mult = 0.0 ),
 				PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
-				PARAMETER ( HH_AB_Add = 1.0 ),
+				PARAMETER ( HH_AB_Add_Den = 1.0 ),
 				PARAMETER ( HH_AB_Offset_E = 0.050 ),
-				PARAMETER ( HH_AB_Tau = 8e-3 ),
+				PARAMETER ( HH_AB_Div_E = 8e-3 ),
 			END PARAMETERS
 
 		END GATE_KINETIC_A
@@ -47,12 +47,12 @@ PUBLIC_MODELS
 			END BINDINGS
 
 			PARAMETERS
-				PARAMETER ( HH_AB_Scale = 1.30e3 ),
+				PARAMETER ( HH_AB_Add_Num = 1.30e3 ),
 				PARAMETER ( HH_AB_Mult = 0.0 ),
 				PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
-				PARAMETER ( HH_AB_Add = 1.0 ),
+				PARAMETER ( HH_AB_Add_Den = 1.0 ),
 				PARAMETER ( HH_AB_Offset_E = 0.013 ),
-				PARAMETER ( HH_AB_Tau = -10e-3 ),
+				PARAMETER ( HH_AB_Div_E = -10e-3 ),
 			END PARAMETERS
 
 		END GATE_KINETIC_B
