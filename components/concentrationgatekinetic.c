@@ -298,7 +298,7 @@ GateKineticGetTabulationFlag
     if (pparEntry0)
     {
 	/// \todo should do something for range etc.
-	/// \todo see also TODO comments below.
+	/// see also TODO comments below.
 
 	//- set result: yes
 
@@ -316,18 +316,20 @@ GateKineticGetTabulationFlag
 	/// \todo so here we have to link to the tabulation service of heccer
 
 	/// \todo heccer compilation of a model
-	/// \todo should first ask for the tabulation flag
-	/// \todo   if not present
-	/// \todo     bail out
-	/// \todo   else
-	/// \todo     ask for tables, take over tables (stdized table representation).
+	/// should first ask for the tabulation flag
+	///   if not present
+	///     bail out
+	///   else
+	///     ask for tables, take over tables (stdized table representation).
 	///
 
 	/// \todo tabulation config should be mirrored as gate parameters ?
-	/// \todo guess not, because is
+	/// guess not, because is
     }
 
     //- return result
 
     return(iResult);
 }
+
+

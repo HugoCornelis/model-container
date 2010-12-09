@@ -45,14 +45,22 @@ GateKineticGetTabulationFlag
 (struct symtab_GateKinetic *pgatk, struct PidinStack *ppist);
 
 
-/// 
+/*  Old name                          G-2    New Name      G-2 */
+
+/*  HH_AB_Scale + HH_AB_Offset_M       A     Add_Num        A */
+/*  HH_AB_Mult                        -B     Mult           B */
+/*  HH_AB_Add                          C     Add_Den        C */
+/*  HH_AB_Offset_E                     D     Offset_E       D */
+/*  HH_AB_Tau                          F     Div_E          F */
+/*                                           Mult_Exp       1.0 */
+
+
 /// 
 /// \return struct symtab_GateKinetic * 
 /// 
 ///	Newly allocated gate kinetic, NULL for failure
 /// 
 /// \brief Allocate a new gate kinetic symbol table element
-/// \details 
 /// 
 
 struct symtab_GateKinetic * GateKineticCalloc(void)
@@ -82,14 +90,12 @@ struct symtab_GateKinetic * GateKineticCalloc(void)
 
 
 /// 
-/// 
 /// \arg pgatk symbol to alias
 /// \arg pidin name of new symbol
 /// 
 /// \return struct symtab_HSolveListElement * : alias for original symbol
 /// 
 /// \brief Create alias to given symbol
-/// \details 
 /// 
 
 struct symtab_HSolveListElement * 
@@ -119,7 +125,6 @@ GateKineticCreateAlias
 
 
 /// 
-/// 
 /// \arg pgatk symbol to get parameter for.
 /// \arg ppist context of symbol.
 /// \arg pcName name of parameter.
@@ -129,7 +134,6 @@ GateKineticCreateAlias
 ///	Parameter structure, NULL for failure.
 /// 
 /// \brief Get specific parameter of symbol.
-/// \details 
 /// 
 
 struct symtab_Parameters * 
@@ -282,13 +286,13 @@ GateKineticGetParameter
 
 
 /// 
-/// 
 /// \arg pgatk gate kinetic symbol.
 /// \arg ppist context of gate kinetic symbol.
 /// 
 /// \return double : HH_AB_Offset, DBL_MAX for failure.
 /// 
 /// \brief Get HH_AB_Offset of gate kinetic.
+/// 
 /// \details 
 /// 
 ///	If the HH_AB_Offset parameter is not present, it is taken to
@@ -314,7 +318,6 @@ GateKineticGetHHOffset
 
 
 /// 
-/// 
 /// \arg pgatk gate kinetic to init
 /// \arg ppist context of kinetic symbol
 /// 
@@ -323,7 +326,6 @@ GateKineticGetHHOffset
 ///	Number of entries in the table, DBL_MAX for no table.
 /// 
 /// \brief Calculate the number of entries in the gate kinetic table.
-/// \details 
 /// 
 
 static
@@ -372,13 +374,13 @@ GateKineticGetNumTableEntries
 
 
 /// 
-/// 
 /// \arg pgatk gate kinetic symbol.
 /// \arg ppist context of gate kinetic symbol.
 /// 
 /// \return int : TRUE if this table can be tabulated.
 /// 
 /// \brief Get tabulation flag of gate kinetic.
+/// 
 /// \details 
 /// 
 ///	A gate kinetic can be presented as a table if it contains a
@@ -439,13 +441,11 @@ GateKineticGetTabulationFlag
 
 
 /// 
-/// 
 /// \arg pgatk gate kinetic to init
 /// 
 /// \return void
 /// 
 /// \brief init gate kinetic
-/// \details 
 /// 
 
 void GateKineticInit(struct symtab_GateKinetic *pgatk)

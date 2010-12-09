@@ -55,9 +55,7 @@ void ConcentrationGateKineticInit(struct symtab_ConcentrationGateKinetic *pgatk)
 #include "biocomp.h"
 
 
-/// \struct
 /// \struct gate kinetic description
-/// \struct
 
 struct descr_ConcentrationGateKinetic
 {
@@ -67,9 +65,7 @@ struct descr_ConcentrationGateKinetic
 };
 
 
-/// \struct
 /// \struct struct symtab_ConcentrationGateKinetic
-/// \struct
 
 struct symtab_ConcentrationGateKinetic
 {
