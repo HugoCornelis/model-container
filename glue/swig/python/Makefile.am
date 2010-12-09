@@ -27,14 +27,15 @@ SUBDIRS =
 dist-hook:
 	cp $(srcdir)/neurospaces.i $(distdir)
 	cp $(srcdir)/nmc.i $(distdir)
+	cp -rf $(srcdir)/nmc $(distdir)
 	$(INSTALL) -d $(distdir)/tests
 	cp $(srcdir)/tests/*.py $(distdir)/tests
 
 pythondir = $(prefix)/glue/swig/python
 
-nobase_python_HEADERS = Neurospaces/__init__.py Neurospaces/SingleCellContainer.py Neurospaces/SimpleHeccer.py $(srcdir)/nmc.i $(srcdir)/nmc/__init__py $(srcdir)/nmc/errors.py $(srcdir)/nmc/__cbi__.py 
+nobase_python_HEADERS = Neurospaces/__init__.py Neurospaces/SingleCellContainer.py Neurospaces/SimpleHeccer.py 
 
-python_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.py _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) tests/neurospaces_test.py $(srcdir)/nmc.i $(srcdir)/nmc/__init__py $(srcdir)/nmc/errors.py $(srcdir)/nmc/__cbi__.py 
+python_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.py _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) tests/neurospaces_test.py $(srcdir)/nmc $(srcdir)/nmc.i $(srcdir)/nmc/__init__.py $(srcdir)/nmc/errors.py $(srcdir)/nmc/__cbi__.py 
 
 
 BUILT_SOURCES = \
