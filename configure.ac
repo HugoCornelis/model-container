@@ -99,13 +99,13 @@ AC_PROG_RANLIB
 
 dnl Checks for libraries.
 dnl Replace `main' with a function in -lcurses:
-AC_CHECK_LIB(curses, main,[echo "Found! lib curses."],[
+AC_CHECK_LIB(curses, main,[],[
    echo "Error! lib curses is not installed."
    exit -1
 ])
 
 dnl Replace `main' with a function in -lfl:
-AC_CHECK_LIB(fl, main,[echo "Found! lib flex."],[
+AC_CHECK_LIB(fl, main,[],[
    echo "Error! lib flex is not installed."
    exit -1
 ])
@@ -117,7 +117,7 @@ dnl    exit -1
 dnl ])
 
 dnl Replace `main' with a function in -lm:
-AC_CHECK_LIB(m, main,[echo "Found! lib m."],[
+AC_CHECK_LIB(m, main,[],[
    echo "Error! lib math is not installed."
    exit -1
 ])
@@ -154,7 +154,7 @@ AM_PATH_PYTHON(,[],[
    exit -1
 ])
 
-AC_MSG_CHECKING([Python prefix is!!!!!])
+AC_MSG_CHECKING([Python prefix is ])
   AC_MSG_RESULT(['$PYTHON_PREFIX'])
 
 dnl
@@ -240,9 +240,6 @@ else
   # that do not have python-config can get the python info
   # This has always been a bit error prone, particularly if the 
   # user has more than one python version installed.
- 
-  AC_MSG_CHECKING([Herp])
-  AC_MSG_RESULT([Derp])
 
   PYTHON_PREFIX=`echo $PYTHON | sed -e "s,[[^/]]*$,,;s,/$,,;s,^$,.,"`
   PYTHON_PREFIX=`echo $PYTHON_PREFIX | sed -e "s,[[^/]]*$,,;s,/$,,;s,^$,.,"`
@@ -539,7 +536,7 @@ case "$host_os" in
     PYTHONLIB_EXTENSION='so'
     AC_SUBST(PYTHONLIB_EXTENSION)
     
-    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL -I$(PYTHON_INCLUDE) -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols -fPIC'
+    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL $(PYTHON_INCLUDE) -I${top_builddir} -I${top_builddir}/hierarchy/output/symbols -fPIC'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
 
 
@@ -547,7 +544,7 @@ case "$host_os" in
     AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
 
 
-    SWIGLDLINKSFORPYTHON='-L$(PYTHON_LDFLAGS) -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -lreadline -framework Python -flat_namespace -undefined suppress -dylib 	-bundle 	-bundle_loader $(PYTHON_EXE)'
+    SWIGLDLINKSFORPYTHON='$(PYTHON_LDFLAGS) -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -lreadline -framework Python -flat_namespace -undefined suppress -bundle -bundle_loader $(PYTHON_EXE)'
     AC_SUBST(SWIGLDLINKSFORPYTHON)
 
 
@@ -558,6 +555,11 @@ case "$host_os" in
             SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
             AC_SUBST(SWIGLINKCOMMAND_PYTHON)
 
+	    # Using the $(srcdir) or other relative links is a bit tacky but not much of a choice here.
+
+	    NMC_SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/nmc/_nmc_base.so /usr/lib/bundle1.o nmc_wrap.o'
+            AC_SUBST(NMC_SWIGLINKCOMMAND_PYTHON)
+
 	;;
 
 	*)
@@ -565,6 +567,10 @@ case "$host_os" in
 
             SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) swiggable_neurospaces_wrap.o'
             AC_SUBST(SWIGLINKCOMMAND_PYTHON)
+
+	    NMC_SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/nmc/_nmc_base.so nmc_wrap.o'
+            AC_SUBST(NMC_SWIGLINKCOMMAND_PYTHON)
+
             
 	;;
     esac 
@@ -629,17 +635,22 @@ case "$host_os" in
     PYTHONLIB_EXTENSION='so'
     AC_SUBST(PYTHONLIB_EXTENSION)
 
-    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL -I$(PYTHON_INCLUDE) 	-I$(builddir)../../.. 	-I$(srcdir)/../../.. 	-I$(builddir)../../../hierarchy/output/symbols 	-I$(srcdir)/../../../hierarchy/output/symbols/ 	-fPIC 	-Xlinker 	-export-dynamic'
+    SWIGCOMPILELINKSFORPYTHON='-g -Wno-declaration-after-statement -DPRE_PROTO_TRAVERSAL $(PYTHON_INCLUDE) -I${top_builddir} -I${top_builddir}/hierarchy/output/symbols -fPIC -Xlinker -export-dynamic'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
    
-    SWIGCOMPILECOMMAND_PYTHON='gcc -Wno-declaration-after-statement $(SWIGCOMPILELINKSFORPYTHON) -c swiggable_neurospaces_wrap.c'
+    SWIGCOMPILECOMMAND_PYTHON='gcc $(SWIGCOMPILELINKSFORPYTHON) -c swiggable_neurospaces_wrap.c'
     AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
 
-    SWIGLDLINKSFORPYTHON='-g 	-shared swiggable_neurospaces_wrap.o 	-L../../.. 	-lneurospacesread 	-L../../../algorithms/event 	-levent_algorithms 	-L../../../algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline 	-fPIC 	-Xlinker -export-dynamic $(PYTHON_LDFLAGS)'
+    SWIGLDLINKSFORPYTHON='-L${top_builddir} -lneurospacesread -L${top_builddir}/algorithms/event -levent_algorithms -L${top_builddir}/algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline 	-fPIC -Xlinker -export-dynamic $(PYTHON_LDFLAGS)'
     AC_SUBST(SWIGLDLINKSFORPYTHON)
   
-    SWIGLINKCOMMAND_PYTHON='gcc -Wno-declaration-after-statement 	$(SWIGLDLINKSFORPYTHON) 	-o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
+    SWIGLINKCOMMAND_PYTHON='gcc -shared swiggable_neurospaces_wrap.o $(SWIGLDLINKSFORPYTHON)  -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
     AC_SUBST(SWIGLINKCOMMAND_PYTHON)
+
+    # note: Must remember that the "-shared objectfile.o" part must be FIRST, otherwise it will silently
+    # not link the symbols but give the appearance that it has completed successully. 
+    NMC_SWIGLINKCOMMAND_PYTHON='gcc -shared nmc_wrap.o $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/nmc/_nmc_base.so'
+    AC_SUBST(NMC_SWIGLINKCOMMAND_PYTHON)
 
     dnl }}} End of General Settings
   
