@@ -45,23 +45,23 @@ class ModelContainer:
         """
         
         # this is the "low level" model container object.
-        self._nmc_root = None
+        self._nmc_core = None
         
         if nmc == None:
 
             # Here we construct a new root model container 
-            self._nmc_root = nmc_base.NeurospacesNew()
+            self._nmc_core = nmc_base.NeurospacesNew()
             
         else:
 
             if isinstance(nmc,ModelContainer):
 
-                self._nmc_root = nmc.GetRootModelContainer()
+                self._nmc_core = nmc.GetRootModelContainer()
 
             elif isinstance(nmc,nmc_base.Neurospaces):
                 
                 # Recycling an existing ModelContainer for the python interface
-                self._nmc_root = nmc
+                self._nmc_core = nmc
 
             else:
 
@@ -70,7 +70,7 @@ class ModelContainer:
                 
                 raise TypeError(errormsg)
             
-            pif = self._nmc_root.pifRootImport
+            pif = self._nmc_core.pifRootImport
             
             nmc_base.ImportedFileSetRootImport(pif)
 
@@ -82,7 +82,7 @@ class ModelContainer:
 
         Returns the \"Neurospaces\" core data object
         """
-        return self._nmc_root
+        return self._nmc_core
 
 #---------------------------------------------------------------------------
 
@@ -104,7 +104,7 @@ class ModelContainer:
             # Make my own exception? check for the ndf suffix?
             raise Exception("%s is not a valid file or does not exist" % (filename))
         
-        nmc_base.NeurospacesRead(self._nmc_root, 2, [ "python", filename ] )
+        nmc_base.NeurospacesRead(self._nmc_core, 2, [ "python", filename ] )
 
 
 #---------------------------------------------------------------------------
@@ -145,7 +145,7 @@ class ModelContainer:
         """!
         @brief submit querymachine commands to the model container
         """
-        nmc_base.QueryMachineHandle(self._nmc_root, command)
+        nmc_base.QueryMachineHandle(self._nmc_core, command)
 
 
 #---------------------------------------------------------------------------
@@ -174,19 +174,36 @@ class ModelContainer:
 
 class Symbol:
     """!
-    @class Symbol
+    @class Symbol An abstract class used for all symbols.
 
     A base object for a symbol in the model container. Object contains
-    the 
-    Can be inherited
-    by more complex objects for more complex symbols.
+    the only methods needed to  perform basic symbol manipulation such
+    as adding parameters.
+    Can be inherited by more complex objects for more complex symbols.
     """
 
-    def __init__(self,nmc):
 
-        self._context = None
-        self._name = ""
-        
+#---------------------------------------------------------------------------
+
+    def GetCore(self):
+        """!
+        @brief Returns the core object in the Symbol abstraction
+
+        Returns the Hsolve list element pointer that is managed by
+        the object. Replaces the previous \"backend_object\",hopefully
+        is more clear :)
+        """
+        return self._core
+
+
+    def InsertChild(self, child):
+
+        core_symbol = self.GetCore()
+        core_child = child.GetCore()
+
+        result = nmc_base.SymbolAddChild(core_symbol,core_child)
+
+        return result
 
 #---------------------------------------------------------------------------
 
@@ -197,30 +214,49 @@ class Symbol:
 #---------------------------------------------------------------------------
 
     def SetParameter(self, parameter, value):
+        """!
+        @brief Sets a parameter for the symbol
 
-        pass
+        A \"smart\" method that will determine the value
+        type and pass it to the appropriate model container
+        parameter set method.
+        """
+        result = None
+        
+        if isinstance(value,float):
 
+            result = self.SetParameterDouble(value)
+
+
+        return result
+    
 #---------------------------------------------------------------------------
 
 
     def SetParameterDouble(self, parameter, value):
+        """!
+        @brief Sets a double parameter
 
-        pass
+        Should note that python does not use actual doubles but
+        instead uses floats, so we check for a float value. Name is kept
+        the same to ensure compatability with the model container code.
+        """
+        if isinstance(value,float):
+
+            return None
+
+        symbol = self.GetCore()
+        
+        result = nmc_base.SymbolSetParameterDouble(symbol, name, value)
+
+        return result
 
 
 #---------------------------------------------------------------------------
 
 
-    def backend_object(self):
-        return self.backend
-    
-    def insert_child(self, child):
-        s = self.backend_object()
-        c = child.backend_object()
-        return SwiggableNeurospaces.SymbolAddChild(s, c)
+
         
-    def parameter(self, name, value):
-        return SwiggableNeurospaces.SymbolSetParameterDouble(self.backend_object(), name, value)
 
 
 #*************************** End Symbol ****************************
