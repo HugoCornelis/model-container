@@ -121,6 +121,21 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
+    def InsertSymbol(self, path, symbol):
+        """!
+        @brief Adds a symbol to the model container.
+        @param path The path to add the symbol to
+        @param symbol Symbol to add to the model container
+        
+        """
+        context = nmc_base.PidinStackParse(path)
+        
+        top = nmc_base.PidinStackLookupTopSymbol(context)
+        
+        nmc_base.SymbolAddChild(top, symbol.backend_object())
+
+#---------------------------------------------------------------------------
+
     def Lookup(self, name):
         pass
 
@@ -209,6 +224,32 @@ class Symbol:
 
 
 #*************************** End Symbol ****************************
+
+
+
+#*************************** Start Symbol **************************
+
+class Segment(Symbol):
+    
+    "Segment class"
+    def __init__(self, name):
+        segment = SwiggableNeurospaces.SegmentCalloc()
+        SwiggableNeurospaces.SymbolSetName(segment.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
+        self.backend = segment
+
+    def backend_object(self):
+        return self.backend.segr.bio.ioh.iol.hsle
+
+    def parameter(self, name, value):
+        SwiggableNeurospaces.SymbolSetParameterDouble(self.backend.segr.bio.ioh.iol.hsle, name, value)
+
+
+#*************************** End Symbol ****************************
+
+
+
+
+
 
 class Cell(Symbol):
     "Cell class"
