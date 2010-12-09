@@ -29,10 +29,10 @@
 
 
 
-static
-double
-GateKineticGetHHOffset
-(struct symtab_GateKinetic *pgatk, struct PidinStack *ppist);
+/* static */
+/* double */
+/* GateKineticGetHHOffset */
+/* (struct symtab_GateKinetic *pgatk, struct PidinStack *ppist); */
 
 static 
 double 
@@ -154,26 +154,27 @@ GateKineticGetParameter
 
     if (!pparResult)
     {
-	//- if offset
+/* 	//- if offset */
 
-	if (0 == strcmp(pcName, "HH_AB_Offset"))
-	{
-	    //- calculate offset
+/* 	if (0 == strcmp(pcName, "HH_AB_Offset")) */
+/* 	{ */
+/* 	    //- calculate offset */
 
-	    double dHHOffset = GateKineticGetHHOffset(pgatk, ppist);
+/* 	    double dHHOffset = GateKineticGetHHOffset(pgatk, ppist); */
 
-	    //- cache offset
+/* 	    //- cache offset */
 
-	    pparResult
-		= SymbolSetParameterDouble
-		  (&pgatk->bio.ioh.iol.hsle, "HH_AB_Offset", dHHOffset);
+/* 	    pparResult */
+/* 		= SymbolSetParameterDouble */
+/* 		  (&pgatk->bio.ioh.iol.hsle, "HH_AB_Offset", dHHOffset); */
 
-	    pparResult->iFlags |= FLAG_PARA_DERIVED;
-	}
+/* 	    pparResult->iFlags |= FLAG_PARA_DERIVED; */
+/* 	} */
 
 	//- if tabulation flag
 
-	else if (0 == strcmp(pcName, "HH_Has_Table"))
+/* 	else */
+	    if (0 == strcmp(pcName, "HH_Has_Table"))
 	{
 	    //- check for table
 
@@ -285,36 +286,36 @@ GateKineticGetParameter
 }
 
 
-/// 
-/// \arg pgatk gate kinetic symbol.
-/// \arg ppist context of gate kinetic symbol.
-/// 
-/// \return double : HH_AB_Offset, DBL_MAX for failure.
-/// 
-/// \brief Get HH_AB_Offset of gate kinetic.
-/// 
-/// \details 
-/// 
-///	If the HH_AB_Offset parameter is not present, it is taken to
-///	be the same as the HH_AB_Offset_E parameter.  Existence of the
-///	HH_AB_Offset is not done in this function, must be done
-///	elsewhere.
-/// 
+/* ///  */
+/* /// \arg pgatk gate kinetic symbol. */
+/* /// \arg ppist context of gate kinetic symbol. */
+/* ///  */
+/* /// \return double : HH_AB_Offset, DBL_MAX for failure. */
+/* ///  */
+/* /// \brief Get HH_AB_Offset of gate kinetic. */
+/* ///  */
+/* /// \details  */
+/* ///  */
+/* ///	If the HH_AB_Offset parameter is not present, it is taken to */
+/* ///	be the same as the HH_AB_Offset_E parameter.  Existence of the */
+/* ///	HH_AB_Offset is not done in this function, must be done */
+/* ///	elsewhere. */
+/* ///  */
 
-static
-double
-GateKineticGetHHOffset
-(struct symtab_GateKinetic *pgatk, struct PidinStack *ppist)
-{
-    //- set result: same as offset_e
+/* static */
+/* double */
+/* GateKineticGetHHOffset */
+/* (struct symtab_GateKinetic *pgatk, struct PidinStack *ppist) */
+/* { */
+/*     //- set result: same as offset_e */
 
-    double dResult
-	= SymbolParameterResolveValue(&pgatk->bio.ioh.iol.hsle, ppist, "HH_AB_Offset_E");
+/*     double dResult */
+/* 	= SymbolParameterResolveValue(&pgatk->bio.ioh.iol.hsle, ppist, "HH_AB_Offset_E"); */
 
-    //- return result
+/*     //- return result */
 
-    return(dResult);
-}
+/*     return(dResult); */
+/* } */
 
 
 /// 

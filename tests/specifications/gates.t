@@ -67,6 +67,7 @@ my $test
 
 						   {
 						    description => "Do we find the HH_AB_Offset parameter with the same values as HH_OffsetE in the A gate kinetic ?",
+						    disabled => "The HH_AB_Offset parameter has been removed.",
 						    read => '0.005',
 						    write => 'printparameter /naf_activation/A HH_AB_Offset',
 						   },
@@ -110,6 +111,7 @@ my $test
 
 						   {
 						    description => "Do we find the HH_AB_Offset parameter with the same values as HH_OffsetE in the A gate kinetic ?",
+						    disabled => "The HH_AB_Offset parameter has been removed.",
 						    read => '0.065',
 						    write => 'printparameter /naf_activation/B HH_AB_Offset',
 						   },
