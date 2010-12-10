@@ -102,14 +102,6 @@ pcIdentifiers everywhere.
 * check the tools directory of G2
 contains a couple of useful model operations.
 
-* neurospaces/config.h
-DELETE_OPERATION is checked for hierarchy/symbols by reading
-neurospaces/config.h and using pattern matching.  Unfortunately, the
-file path of neurospaces/config.h is not known by hierarchy/symbols,
-the file is read as if it is in the current directory with path name
-neurospaces/config.h.  This does not work when hierarchy/symbols is
-loaded by other modules, such as the gshell.
-
 * reduce flag
 For elements that have been reduced.  Applies to the whole subtree.
 
