@@ -36,6 +36,11 @@
 
 static 
 double 
+GateKineticGetMultExp
+(struct symtab_GateKinetic *pgatk, struct PidinStack *ppist);
+
+static 
+double 
 GateKineticGetNumTableEntries
 (struct symtab_GateKinetic *pgatk, struct PidinStack *ppist);
 
@@ -278,6 +283,27 @@ GateKineticGetParameter
 		pparResult->iFlags |= FLAG_PARA_DERIVED;
 	    }
 	}
+
+	//- if HH_AB_Mult_Exp
+
+	else if (0 == strcmp(pcName, "HH_AB_Mult_Exp"))
+	{
+	    //- get the HH_AB_Mult_Exp value
+
+	    double dHHMultExp = GateKineticGetMultExp(pgatk, ppist);
+
+	    if (dHHMultExp == DBL_MAX)
+	    {
+		return NULL;
+	    }
+
+	    pparResult
+		= SymbolSetParameterDouble
+		  (&pgatk->bio.ioh.iol.hsle, "HH_AB_Mult_Exp", dHHMultExp);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
+	}
+
     }
 
     //- return result
@@ -316,6 +342,32 @@ GateKineticGetParameter
 
 /*     return(dResult); */
 /* } */
+
+
+/// 
+/// \arg pgatk gate kinetic to init
+/// \arg ppist context of kinetic symbol
+/// 
+/// \return double
+/// 
+///	HH_AB_Mult_Exp value, 1 is the default.
+/// 
+/// \brief Calculate the number of entries in the gate kinetic table.
+/// 
+
+static
+double
+GateKineticGetMultExp
+(struct symtab_GateKinetic *pgatk, struct PidinStack *ppist)
+{
+    //- set default result: 1
+
+    double dResult = 1;
+
+    //- return result
+
+    return(dResult);
+}
 
 
 /// 

@@ -61,6 +61,11 @@ my $test
 						    read => '= -0.01',
 						    write => 'printparameter /naf_activation/A HH_AB_Div_E',
 						   },
+						   {
+						    description => "Do we find the HH_AB_Mult_Exp parameter with a correct value in the A gate kinetic ?",
+						    read => '1',
+						    write => 'printparameter /naf_activation/A HH_AB_Mult_Exp',
+						   },
 						  ),
 						  (
 						   # additional tests
@@ -104,6 +109,11 @@ my $test
 						    description => "Do we find the HH_AB_Div_E parameter with a correct value in the B gate kinetic ?",
 						    read => '0.02',
 						    write => 'printparameter /naf_activation/B HH_AB_Div_E',
+						   },
+						   {
+						    description => "Do we find the HH_AB_Mult_Exp parameter with a correct value in the B gate kinetic ?",
+						    read => '1',
+						    write => 'printparameter /naf_activation/B HH_AB_Mult_Exp',
 						   },
 						  ),
 						  (
