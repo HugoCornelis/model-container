@@ -80,12 +80,10 @@ IOHierarchyAddChild
 (struct symtab_IOHierarchy *pioh,
  struct symtab_HSolveListElement *phsleChild);
 
-#ifdef DELETE_OPERATION
 int
 IOHierarchyDeleteChild
 (struct symtab_IOHierarchy *pioh,
  struct symtab_HSolveListElement *phsleChild);
-#endif
 
 IOHContainer *
 IOHierarchyGetChildren

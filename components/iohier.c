@@ -70,8 +70,6 @@ IOHierarchyAddChild
 }
 
 
-#ifdef DELETE_OPERATION
-
 /// 
 /// \arg pioh symbol container
 /// \arg phsleChild child to delete
@@ -106,8 +104,6 @@ IOHierarchyDeleteChild
 
     return(iResult);
 }
-
-#endif
 
 
 /// 

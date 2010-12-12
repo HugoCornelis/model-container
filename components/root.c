@@ -96,8 +96,6 @@ struct symtab_RootSymbol * RootSymbolCalloc(void)
 }
 
 
-#ifdef DELETE_OPERATION
-
 /// 
 /// \arg proot root symbol container.
 /// \arg phsleChild child to delete.
@@ -132,8 +130,6 @@ RootSymbolDeleteChild
 
     return(iResult);
 }
-
-#endif
 
 
 /// 

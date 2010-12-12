@@ -1552,8 +1552,6 @@ int
 QueryHandlerDelete
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
 {
-#ifdef DELETE_OPERATION
-
     //- set result : ok
 
     int bResult = TRUE;
@@ -1608,15 +1606,6 @@ QueryHandlerDelete
     //- return result
 
     return(bResult);
-
-#else
-
-    fprintf(stdout, "the delete operation is not enabled by default, before compiling neurospaces, use 'configure --with-delete-operation' to enable the delete operation\n");
-
-    return(0);
-
-#endif
-
 }
 
 

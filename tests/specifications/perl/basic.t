@@ -79,40 +79,14 @@ report:
 				command_tests => [
 						  {
 						   description => "Can we add query machine commands for simple processing of a model ?",
-						   read => (`cat $::config->{core_directory}/neurospaces/config.h` =~ /define DELETE_OPERATION 1/
-							    ? "query: 'echo start'
+						   read => "query: 'echo start'
  start
 query: 'expand /**'
 ---
 - /Golgi
 query: 'echo end'
  end
-"
-							    : "query: 'delete /Golgi/Golgi_soma'
-the delete operation is not enabled by default, before compiling neurospaces, use 'configure --with-delete-operation' to enable the delete operation
-query: 'echo start'
- start
-query: 'expand /**'
----
-- /Golgi
-- /Golgi/Golgi_soma
-- /Golgi/Golgi_soma/spikegen
-- /Golgi/Golgi_soma/Ca_pool
-- /Golgi/Golgi_soma/CaHVA
-- /Golgi/Golgi_soma/H
-- /Golgi/Golgi_soma/InNa
-- /Golgi/Golgi_soma/KA
-- /Golgi/Golgi_soma/KDr
-- /Golgi/Golgi_soma/Moczyd_KC
-- /Golgi/Golgi_soma/mf_AMPA
-- /Golgi/Golgi_soma/mf_AMPA/synapse
-- /Golgi/Golgi_soma/mf_AMPA/exp2
-- /Golgi/Golgi_soma/pf_AMPA
-- /Golgi/Golgi_soma/pf_AMPA/synapse
-- /Golgi/Golgi_soma/pf_AMPA/exp2
-query: 'echo end'
- end
-" ),
+",
 						  },
 						 ],
 				description => "query machine commands for simple processing of a model",
@@ -210,7 +184,6 @@ query: 'echo end'
 						  },
 						 ],
 				description => "deleting components from the perl interface",
-				disabled => (`cat $::config->{core_directory}/neurospaces/config.h` =~ /define DELETE_OPERATION 1/ ? '' : 'neurospaces was not configured to include the delete operation'),
 			       },
 			       {
 				arguments => [

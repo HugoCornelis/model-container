@@ -298,7 +298,6 @@ Principal serial ID = 12 of 12 Principal successors
 						  },
 						 ],
 				description => "deletions of components of a simple neuron model",
-				disabled => (`cat $::config->{core_directory}/neurospaces/config.h` =~ m/define DELETE_OPERATION\s*1/ ? 0 : 'use configure --with-delete-operation to enable these tests'),
 			       },
 			      ],
        comment => 'Because delete operations are only supported at the forestspace level, delete operations on nested data structures do not make much sense.  Not tested.',

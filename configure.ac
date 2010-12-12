@@ -70,22 +70,6 @@ else
 fi
 
 
-# Check for delete operation
-AC_ARG_ENABLE(delete_operation, AS_HELP_STRING([--with-delete-operation   enable the delete operation]) )
-
-if test x"$with_delete_operation" == "xyes" ; then
-
-    echo "delete operation is enabled"
-
-    AC_DEFINE(DELETE_OPERATION, 1, [enable the delete operation])
-
-else
-
-    echo "delete operation is disabled"
-
-fi
-
-
 dnl Checks for programs.
 AC_PROG_AWK
 AC_PROG_YACC
