@@ -35,8 +35,9 @@ pythondir = $(prefix)/glue/swig/python
 
 nobase_python_HEADERS = Neurospaces/__init__.py Neurospaces/SingleCellContainer.py Neurospaces/SimpleHeccer.py 
 
-python_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.py _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) tests/neurospaces_test.py $(srcdir)/nmc $(srcdir)/nmc.i $(srcdir)/nmc/__init__.py $(srcdir)/nmc/errors.py $(srcdir)/nmc/__cbi__.py 
+python_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.py _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) tests/neurospaces_test.py  
 
+EXTRA_DIST = $(srcdir)/nmc/ $(srcdir)/nmc.i $(srcdir)/nmc/__init__.py $(srcdir)/nmc/errors.py $(srcdir)/nmc/__cbi__.py
 
 BUILT_SOURCES = \
 	nmc_wrap.c \
