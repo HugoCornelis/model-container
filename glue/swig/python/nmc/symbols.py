@@ -7,25 +7,15 @@ container.
 """
 
 
+try:
+
+    import nmc_base
+
+except ImportError:
+    sys.exit("Could not import compiled SWIG nmc_base library: %s")
 
 
 
-
-#*************************** Start Symbol **************************
-
-class Segment(Symbol):
-    
-    "Segment class"
-    def __init__(self, name):
-        segment = SwiggableNeurospaces.SegmentCalloc()
-        SwiggableNeurospaces.SymbolSetName(segment.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
-        self.backend = segment
-
-    def backend_object(self):
-        return self.backend.segr.bio.ioh.iol.hsle
-
-    def parameter(self, name, value):
-        SwiggableNeurospaces.SymbolSetParameterDouble(self.backend.segr.bio.ioh.iol.hsle, name, value)
 
 
 #*************************** Start Symbol **************************
@@ -120,119 +110,144 @@ class Symbol:
 
 
 
-
-
-class Cell(Symbol):
-    "Cell class"
-    def __init__(self, name):
-        cell = SwiggableNeurospaces.CellCalloc()
-        SwiggableNeurospaces.SymbolSetName(cell.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
-        self.backend = cell
-
-    def backend_object(self):
-        return self.backend.segr.bio.ioh.iol.hsle
-
-
-
-
-    class Channel(Symbol):
-        "ModelContainer.Channel constructor"
-        def __init__(self, path):
-            [ name, top_symbol ] = prepare(path)
-            import Neurospaces
-            channel = Neurospaces.Channel(name.pcIdentifier)
-            if top_symbol == None:
-                print "Error: top_symbol is None"
-            else:
-                SwiggableNeurospaces.SymbolAddChild(top_symbol, channel.backend.bio.ioh.iol.hsle)
-            self.backend = channel
-        
-        def parameter(self, name, value):
-            self.backend.parameter(name, value)
-
-    class GateKinetic(Symbol):
-        "ModelContainer.GateKinetic constructor"
-        def __init__(self, path):
-            [ name, top_symbol ] = prepare(path)
-            import Neurospaces
-            gk = Neurospaces.GateKinetic(name.pcIdentifier)
-            if top_symbol == None:
-                print "Error: top_symbol is None"
-            else:
-                SwiggableNeurospaces.SymbolAddChild(top_symbol, gk.backend.bio.ioh.iol.hsle)
-            self.backend = gk
-        
-        def parameter(self, name, value):
-            self.backend.parameter(name, value)
-
-
-
-
-class ContourGroup(Symbol):
-    "ContourGroup class"
-    def __init__(self, name):
-        group = SwiggableNeurospaces.VContourCalloc()
-        SwiggableNeurospaces.SymbolSetName(group.vect.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
-        self.backend = group
-
-    def backend_object(self):
-        return self.backend.vect.bio.ioh.iol.hsle
-
-class ContourPoint(Symbol):
-    "ContourPoint class"
-    def __init__(self, name):
-        point = SwiggableNeurospaces.ContourPointCalloc()
-        SwiggableNeurospaces.SymbolSetName(point.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
-        self.backend = point
-
-    def backend_object(self):
-        return self.backend.bio.ioh.iol.hsle
-
-class EMContour(Symbol):
-    "EMContour class"
-    def __init__(self, name):
-        contour = SwiggableNeurospaces.EMContourCalloc()
-        SwiggableNeurospaces.SymbolSetName(contour.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
-        self.backend = contour
-
-    def backend_object(self):
-        return self.backend.bio.ioh.iol.hsle
+#*************************** Start Segment ****************************
 
 class Segment(Symbol):
-    "Segment class"
+    
+    """!
+    @class Segment An object for managing a Segment symbol in the model container
+    
+    """
     def __init__(self, name):
-        segment = SwiggableNeurospaces.SegmentCalloc()
-        SwiggableNeurospaces.SymbolSetName(segment.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
-        self.backend = segment
+        """!
+        @brief Constructor
 
-    def backend_object(self):
-        return self.backend.segr.bio.ioh.iol.hsle
+        @param The name for the Segment Symbol object
+        """
+        
+        segment = nmc_base.SegmentCalloc()
 
-    def parameter(self, name, value):
-        SwiggableNeurospaces.SymbolSetParameterDouble(self.backend.segr.bio.ioh.iol.hsle, name, value)
+        if not segment:
 
-class Channel(Symbol):
-    "Channel class"
-    def __init__(self, name):
-        channel = SwiggableNeurospaces.ChannelCalloc()
-        SwiggableNeurospaces.SymbolSetName(channel.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
-        self.backend = channel
+            raise Exception("Error allocating the Segment")
 
-    def backend_object(self):
-        return self.backend.bio.ioh.iol.hsle
+        nmc_base.SymbolSetName(segment.segr.bio.ioh.iol.hsle, nmc_base.IdinCallocUnique(name))
+        
+        self._core = segment
 
-    def parameter(self, name, value):
-        SwiggableNeurospaces.SymbolSetParameterDouble(self.backend.bio.ioh.iol.hsle, name, value)
 
-class GateKinetic(Symbol):
-    "GateKinetic class"
-    def __init__(self, name):
-        gk = SwiggableNeurospaces.GateKineticCalloc()
-        SwiggableNeurospaces.SymbolSetName(gk.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
-        self.backend = gk
+    def GetCore(self):
+        """!
+        @brief Returns the core object.
 
-    def backend_object(self):
-        return self.backend.bio.ioh.iol.hsle
+        Overloads the GetCore method from the symbol base class.
+        """
+        return self._core.segr.bio.ioh.iol.hsle
 
-    def parameter(self, name, value):
-        SwiggableNeurospaces.SymbolSetParameterDouble(self.backend.bio.ioh.iol.hsle, name, value)
+
+
+#*************************** End Segment ****************************
+
+
+
+# class Cell(Symbol):
+#     "Cell class"
+#     def __init__(self, name):
+#         cell = SwiggableNeurospaces.CellCalloc()
+#         SwiggableNeurospaces.SymbolSetName(cell.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
+#         self.backend = cell
+
+#     def backend_object(self):
+#         return self.backend.segr.bio.ioh.iol.hsle
+
+
+
+
+#     class Channel(Symbol):
+#         "ModelContainer.Channel constructor"
+#         def __init__(self, path):
+#             [ name, top_symbol ] = prepare(path)
+#             import Neurospaces
+#             channel = Neurospaces.Channel(name.pcIdentifier)
+#             if top_symbol == None:
+#                 print "Error: top_symbol is None"
+#             else:
+#                 SwiggableNeurospaces.SymbolAddChild(top_symbol, channel.backend.bio.ioh.iol.hsle)
+#             self.backend = channel
+        
+#         def parameter(self, name, value):
+#             self.backend.parameter(name, value)
+
+#     class GateKinetic(Symbol):
+#         "ModelContainer.GateKinetic constructor"
+#         def __init__(self, path):
+#             [ name, top_symbol ] = prepare(path)
+#             import Neurospaces
+#             gk = Neurospaces.GateKinetic(name.pcIdentifier)
+#             if top_symbol == None:
+#                 print "Error: top_symbol is None"
+#             else:
+#                 SwiggableNeurospaces.SymbolAddChild(top_symbol, gk.backend.bio.ioh.iol.hsle)
+#             self.backend = gk
+        
+#         def parameter(self, name, value):
+#             self.backend.parameter(name, value)
+
+
+
+
+# class ContourGroup(Symbol):
+#     "ContourGroup class"
+#     def __init__(self, name):
+#         group = SwiggableNeurospaces.VContourCalloc()
+#         SwiggableNeurospaces.SymbolSetName(group.vect.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
+#         self.backend = group
+
+#     def backend_object(self):
+#         return self.backend.vect.bio.ioh.iol.hsle
+
+# class ContourPoint(Symbol):
+#     "ContourPoint class"
+#     def __init__(self, name):
+#         point = SwiggableNeurospaces.ContourPointCalloc()
+#         SwiggableNeurospaces.SymbolSetName(point.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
+#         self.backend = point
+
+#     def backend_object(self):
+#         return self.backend.bio.ioh.iol.hsle
+
+# class EMContour(Symbol):
+#     "EMContour class"
+#     def __init__(self, name):
+#         contour = SwiggableNeurospaces.EMContourCalloc()
+#         SwiggableNeurospaces.SymbolSetName(contour.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
+#         self.backend = contour
+
+#     def backend_object(self):
+#         return self.backend.bio.ioh.iol.hsle
+
+# class Channel(Symbol):
+#     "Channel class"
+#     def __init__(self, name):
+#         channel = SwiggableNeurospaces.ChannelCalloc()
+#         SwiggableNeurospaces.SymbolSetName(channel.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
+#         self.backend = channel
+
+#     def backend_object(self):
+#         return self.backend.bio.ioh.iol.hsle
+
+#     def parameter(self, name, value):
+#         SwiggableNeurospaces.SymbolSetParameterDouble(self.backend.bio.ioh.iol.hsle, name, value)
+
+# class GateKinetic(Symbol):
+#     "GateKinetic class"
+#     def __init__(self, name):
+#         gk = SwiggableNeurospaces.GateKineticCalloc()
+#         SwiggableNeurospaces.SymbolSetName(gk.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
+#         self.backend = gk
+
+#     def backend_object(self):
+#         return self.backend.bio.ioh.iol.hsle
+
+#     def parameter(self, name, value):
+#         SwiggableNeurospaces.SymbolSetParameterDouble(self.backend.bio.ioh.iol.hsle, name, value)

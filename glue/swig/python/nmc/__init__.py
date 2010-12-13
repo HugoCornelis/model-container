@@ -15,6 +15,8 @@ __license__ = "GPL"
 __version__ = "0.1"
 __status__ = "Development"
 
+import os
+import sys
 
 try:
 
@@ -22,6 +24,16 @@ try:
 
 except ImportError:
     sys.exit("Could not import compiled SWIG nmc_base library: %s")
+
+
+
+try:
+
+    import symbols
+
+except ImportError:
+    sys.exit("Could not import the model container symbols module: %s")
+
 
 
 #************************* Begin ModelContainer **************************
@@ -99,10 +111,10 @@ class ModelContainer:
         @brief read an NDF model file
         """
 
-        if not os.path.isfile(filename):
+        #if not os.path.isfile(filename):
 
             # Make my own exception? check for the ndf suffix?
-            raise Exception("%s is not a valid file or does not exist" % (filename))
+         #   raise Exception("%s is not a valid file or does not exist" % (filename))
         
         nmc_base.NeurospacesRead(self._nmc_core, 2, [ "python", filename ] )
 
@@ -138,6 +150,20 @@ class ModelContainer:
 
     def Lookup(self, name):
         pass
+
+#---------------------------------------------------------------------------
+
+    def PrintParameter(self, path, parameter):
+        """!
+        @brief Sends print commands to the query handler.
+
+        Will print the parameter at the given path. Accepts
+        wildcards in the path.
+        """
+        command = "printparameter %s %s" % (path,parameter)
+
+        self.Query(command)
+
 
 #---------------------------------------------------------------------------
 
