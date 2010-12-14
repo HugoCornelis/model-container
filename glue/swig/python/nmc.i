@@ -168,10 +168,8 @@
 %include "neurospaces/workload.h"
 %include "neurospaces/symbolvirtual_protos.h"
 
-# Error when creating a deb on this one, not sure what the
-# issue is just yet but commented it out to get the deb built
 
-#%include "hierarchy/output/symbols/all_callees_headers.i"
+%include "hierarchy/output/symbols/all_callees_headers.i"
 
 
 

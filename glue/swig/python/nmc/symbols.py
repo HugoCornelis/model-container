@@ -67,7 +67,7 @@ class Symbol:
     def SetParameter(self, parameter, value):
         """!
         @brief Sets a parameter for the symbol
-
+2
         A \"smart\" method that will determine the value
         type and pass it to the appropriate model container
         parameter set method.
@@ -118,23 +118,30 @@ class Segment(Symbol):
     @class Segment An object for managing a Segment symbol in the model container
     
     """
-    def __init__(self, name):
+    def __init__(self, path):
         """!
         @brief Constructor
 
-        @param The name for the Segment Symbol object
+        @param path The complete path to the Segment object.
         """
         
-        segment = nmc_base.SegmentCalloc()
-
-        if not segment:
-
-            raise Exception("Error allocating the Segment")
-
-        nmc_base.SymbolSetName(segment.segr.bio.ioh.iol.hsle, nmc_base.IdinCallocUnique(name))
+        context = nmc_base.PidinStackParse(path)
         
-        self._core = segment
+        name = nmc_base.PidinStackTop(context)
 
+        # Here we pop and return the top symbol, which would now be the parent
+        # symbol.
+        
+        nmc_base.PidinStackPop(context)
+        
+        top_symbol = nmc_base.PidinStackLookupTopSymbol(context)
+
+        self._core = self.__AllocateSegment(name.pcIdentifier)
+
+        # Make our current symbol a child of the parent
+        
+        nmc_base.SymbolAddChild(top_symbol, self.GetCore())
+        
 
     def GetCore(self):
         """!
@@ -145,6 +152,27 @@ class Segment(Symbol):
         return self._core.segr.bio.ioh.iol.hsle
 
 
+    def __AllocateSegment(self,name):
+        """!
+        @brief Allocates and sets the name for a segment.
+
+        Method is name mangled since it should never be called
+        outside of initialization.
+        """
+        
+        segment = nmc_base.SegmentCalloc()
+
+        if not segment:
+
+            raise Exception("Error allocating the Segment")
+
+        nmc_base.SymbolSetName(segment.segr.bio.ioh.iol.hsle, nmc_base.IdinCallocUnique(path))
+        
+        return segment
+        
+
+# an alias
+Compartment = Segment
 
 #*************************** End Segment ****************************
 
