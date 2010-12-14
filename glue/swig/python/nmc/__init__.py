@@ -125,13 +125,6 @@ class ModelContainer:
         pass
 
 #---------------------------------------------------------------------------
-    
-    def insert(self, path, symbol):
-        context = SwiggableNeurospaces.PidinStackParse(path)
-        top = SwiggableNeurospaces.PidinStackLookupTopSymbol(context)
-        SwiggableNeurospaces.SymbolAddChild(top, symbol.backend_object())
-
-#---------------------------------------------------------------------------
 
     def InsertSymbol(self, path, symbol):
         """!
@@ -144,7 +137,7 @@ class ModelContainer:
         
         top = nmc_base.PidinStackLookupTopSymbol(context)
         
-        nmc_base.SymbolAddChild(top, symbol.backend_object())
+        nmc_base.SymbolAddChild(top, symbol.GetCore())
 
 #---------------------------------------------------------------------------
 

@@ -135,6 +135,7 @@ class Segment(Symbol):
         
         self._core = segment
 
+#---------------------------------------------------------------------------
 
     def GetCore(self):
         """!
@@ -149,16 +150,44 @@ class Segment(Symbol):
 #*************************** End Segment ****************************
 
 
+#*************************** Start Cell ****************************
 
-# class Cell(Symbol):
-#     "Cell class"
-#     def __init__(self, name):
-#         cell = SwiggableNeurospaces.CellCalloc()
-#         SwiggableNeurospaces.SymbolSetName(cell.segr.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
-#         self.backend = cell
+class Cell(Symbol):
+    """
+    Cell class
+    """
+    def __init__(self, name):
+        
+        cell = nmc_base.CellCalloc()
+
+        if not segment:
+
+            raise Exception("Error allocating the Cell")
+        
+        nmc_base.SymbolSetName(cell.segr.bio.ioh.iol.hsle, nmc_base.IdinCallocUnique(name))
+        
+        self._core = cell
+
+
+
+#---------------------------------------------------------------------------
+
+    def GetCore(self):
+        """!
+        @brief Returns the core object.
+
+        Overloads the GetCore method from the symbol base class.
+        """
+        return self._core.segr.bio.ioh.iol.hsle
 
 #     def backend_object(self):
 #         return self.backend.segr.bio.ioh.iol.hsle
+
+
+
+#*************************** End Cell ****************************
+
+
 
 
 
