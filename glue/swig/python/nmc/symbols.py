@@ -67,7 +67,7 @@ class Symbol:
     def SetParameter(self, parameter, value):
         """!
         @brief Sets a parameter for the symbol
-2
+
         A \"smart\" method that will determine the value
         type and pass it to the appropriate model container
         parameter set method.
@@ -153,6 +153,9 @@ class Segment(Symbol):
         """
         return self._core.segr.bio.ioh.iol.hsle
 
+
+
+#---------------------------------------------------------------------------
 
     def __AllocateSegment(self,name):
         """!
