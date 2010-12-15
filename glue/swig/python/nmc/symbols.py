@@ -49,8 +49,8 @@ class Symbol:
 
     def InsertChild(self, child):
 
-        core_symbol = self.GetCore()
-        core_child = child.GetCore()
+        core_symbol = self.GetSymbol()
+        core_child = child.GetSymbol()
 
         result = nmc_base.SymbolAddChild(core_symbol,core_child)
 
@@ -96,7 +96,7 @@ class Symbol:
 
             return None
 
-        symbol = self.GetCore()
+        symbol = self.GetSymbol()
         
         result = nmc_base.SymbolSetParameterDouble(symbol, name, value)
 
@@ -104,6 +104,29 @@ class Symbol:
 
 
 #---------------------------------------------------------------------------
+
+    def _CreateNameAndSymbol(self,path):
+        """!
+        @brief Creates a name and context
+        @returns result A tuple with a name and symbol 
+
+        An internal helper method that creates a name and symbol
+        """
+        context = nmc_base.PidinStackParse(path)
+        
+        name = nmc_base.PidinStackTop(context)
+
+        # Here we pop and return the top symbol, which would now be the parent
+        # symbol.
+        
+        nmc_base.PidinStackPop(context)
+        
+        top_symbol = nmc_base.PidinStackLookupTopSymbol(context)
+
+        result = [name, top_symbol]
+        
+        return result
+
 
 #*************************** End Symbol ****************************
 
@@ -124,32 +147,22 @@ class Segment(Symbol):
 
         @param path The complete path to the Segment object.
         """
-        
-        context = nmc_base.PidinStackParse(path)
-        
-        name = nmc_base.PidinStackTop(context)
 
-        # Here we pop and return the top symbol, which would now be the parent
-        # symbol.
-        
-        nmc_base.PidinStackPop(context)
-        
-        top_symbol = nmc_base.PidinStackLookupTopSymbol(context)
+        name, top_symbol = self._CreateNameAndSymbol(path)
 
         self._core = self.__AllocateSegment(name.pcIdentifier)
 
         # Make our current symbol a child of the parent
         
-        nmc_base.SymbolAddChild(top_symbol, self.GetCore())
+        nmc_base.SymbolAddChild(top_symbol, self.GetSymbol())
         
 
 #---------------------------------------------------------------------------
 
-    def GetCore(self):
+    def GetSymbol(self):
         """!
-        @brief Returns the core object.
+        @brief Returns the core objects hsolve list element (symbol).
 
-        Overloads the GetCore method from the symbol base class.
         """
         return self._core.segr.bio.ioh.iol.hsle
 
@@ -188,32 +201,52 @@ class Cell(Symbol):
     """
     Cell class
     """
-    def __init__(self, name):
-        
-        cell = nmc_base.CellCalloc()
+    def __init__(self, path):
 
-        if not segment:
 
-            raise Exception("Error allocating the Cell")
+        """!
+        @brief Constructor
+
+        @param path The complete path to the Segment object.
+        """
+
+        name, top_symbol = self._CreateNameAndSymbol(path)
+
+        self._core = self.__AllocateCell(name.pcIdentifier)
+
+        # Make our current symbol a child of the parent
         
-        nmc_base.SymbolSetName(cell.segr.bio.ioh.iol.hsle, nmc_base.IdinCallocUnique(name))
-        
-        self._core = cell
+        nmc_base.SymbolAddChild(top_symbol, self.GetSymbol())
 
 
 
 #---------------------------------------------------------------------------
 
-    def GetCore(self):
+    def GetSymbol(self):
         """!
-        @brief Returns the core object.
+        @brief Returns the core objects hsolve list element (symbol).
 
-        Overloads the GetCore method from the symbol base class.
         """
         return self._core.segr.bio.ioh.iol.hsle
 
-#     def backend_object(self):
-#         return self.backend.segr.bio.ioh.iol.hsle
+
+    def __AllocateCell(self,name):
+        """!
+        @brief Allocates and sets the name for a segment.
+
+        Method is name mangled since it should never be called
+        outside of initialization.
+        """
+        
+        cell = nmc_base.CellCalloc()
+
+        if not cell:
+
+            raise Exception("Error allocating the Cell")
+
+        nmc_base.SymbolSetName(cell.segr.bio.ioh.iol.hsle, nmc_base.IdinCallocUnique(path))
+        
+        return cell
 
 
 
