@@ -25,9 +25,6 @@ SUBDIRS =
 #t expert takes a look at it.
 
 dist-hook:
-	cp $(srcdir)/neurospaces.i $(distdir)
-	cp $(srcdir)/nmc.i $(distdir)
-	cp -rf $(srcdir)/nmc $(distdir)
 	$(INSTALL) -d $(distdir)/tests
 	cp $(srcdir)/tests/*.py $(distdir)/tests
 
@@ -35,9 +32,15 @@ pythondir = $(prefix)/glue/swig/python
 
 nobase_python_HEADERS = Neurospaces/__init__.py Neurospaces/SingleCellContainer.py Neurospaces/SimpleHeccer.py 
 
-python_DATA = $(srcdir)/neurospaces.i SwiggableNeurospaces.py _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) tests/neurospaces_test.py  
+python_DATA = SwiggableNeurospaces.py _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) tests/neurospaces_test.py  
 
-EXTRA_DIST = $(srcdir)/nmc/ $(srcdir)/nmc.i $(srcdir)/nmc/__init__.py $(srcdir)/nmc/errors.py $(srcdir)/nmc/__cbi__.py
+EXTRA_DIST = \
+	$(srcdir)/neurospaces.i \
+	$(srcdir)/nmc.i \
+	$(srcdir)/nmc/ \
+	$(srcdir)/nmc/__init__.py \
+	$(srcdir)/nmc/errors.py \
+	$(srcdir)/nmc/__cbi__.py
 
 BUILT_SOURCES = \
 	nmc_wrap.c \

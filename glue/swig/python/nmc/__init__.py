@@ -58,7 +58,7 @@ class ModelContainer:
         
         # this is the "low level" model container object.
         self._nmc_core = None
-        
+
         if nmc == None:
 
             # Here we construct a new root model container 
@@ -85,6 +85,7 @@ class ModelContainer:
             pif = self._nmc_core.pifRootImport
             
             nmc_base.ImportedFileSetRootImport(pif)
+
 
 #---------------------------------------------------------------------------
 
@@ -180,6 +181,12 @@ class ModelContainer:
             raise Exception("%s is not a valid file or does not exist" % (filename))
         
         execfile("/usr/local/neurospaces/models/library/" + filename)
+
+
+
+    def SetOutputFile(self,filename):
+
+        self._output_file = filename
 
 #*************************** End ModelContainer **************************
 
