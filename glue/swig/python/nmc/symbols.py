@@ -5,7 +5,7 @@
 File contains the implentation for symbols in the model
 container.
 """
-
+import pdb
 
 try:
 
@@ -76,7 +76,7 @@ class Symbol:
         
         if isinstance(value,float):
 
-            result = self.SetParameterDouble(value)
+            result = self.SetParameterDouble(parameter,value)
 
 
         return result
@@ -112,6 +112,7 @@ class Symbol:
 
         An internal helper method that creates a name and symbol
         """
+
         context = nmc_base.PidinStackParse(path)
         
         name = nmc_base.PidinStackTop(context)
@@ -153,8 +154,10 @@ class Segment(Symbol):
         self._core = self.__AllocateSegment(name.pcIdentifier)
 
         # Make our current symbol a child of the parent
-        
-        nmc_base.SymbolAddChild(top_symbol, self.GetSymbol())
+
+        if top_symbol is not None:
+            
+            nmc_base.SymbolAddChild(top_symbol, self.GetSymbol())
         
 
 #---------------------------------------------------------------------------
@@ -167,7 +170,111 @@ class Segment(Symbol):
         return self._core.segr.bio.ioh.iol.hsle
 
 
+#---------------------------------------------------------------------------
 
+    def SetInitialVm(self,value):
+        """!
+        @brief Sets the initial membrane potential
+        @param value float value for the membrane potential
+
+        Sets the parameter \"Vm_init\" in the segment symbol
+        in the model container.
+        """
+        self.SetParameter("Vm_init",value)
+        
+#---------------------------------------------------------------------------
+
+    def SetRm(self,value):
+        """!
+        @brief Sets the membrane resistance
+        @param value A float value to set the membrane resistance
+        @sa SetParameter
+
+        Just a simple wrapper to SetParameter. Sets the \"RM\"
+        parameter in the model container.
+        """
+        self.SetParameter("RM",value)
+
+#---------------------------------------------------------------------------
+
+    def SetRa(self,value):
+        """!
+        @brief Sets the axial resistance
+        @param value A float value to set the axial resistance
+        @sa SetParameter
+
+        Just a simple wrapper to SetParameter. Sets the \"RA\"
+        parameter in the model container.
+
+        """
+        self.SetParameter("RA",value)
+
+#---------------------------------------------------------------------------
+
+    def SetCm(self,value):
+        """!
+        @brief Sets the membrane capacitance
+        @param value A float value to set the membrane capacitance
+        @sa SetParameter
+
+        Just a simple wrapper to SetParameter. Sets the \"CM\"
+        parameter in the model container.
+        """
+        self.SetParameter("CM",value)
+
+#---------------------------------------------------------------------------
+
+    def SetDia(self,value):
+        """!
+        @brief Sets the segment diameter
+        @param value A float value to set the segment diameter
+        @sa SetParameter
+
+        Just a simple wrapper to SetParameter. Sets the \"DIA\"
+        parameter in the model container.
+        """
+        self.SetParameter("DIA",value)
+
+#---------------------------------------------------------------------------
+
+    def SetEleak(self,value):
+        """!
+        @brief Sets Eleak
+        @param value A float value to set Eleak
+        @sa SetParameter
+
+        Just a simple wrapper to SetParameter. Sets the \"ELEAK\"
+        parameter in the model container.
+        """
+        self.SetParameter("ELEAK",value)
+
+#---------------------------------------------------------------------------
+
+    def SetLength(self,value):
+        """!
+        @brief Sets Segment Length
+        @param value A float value to set the segment length
+        @sa SetParameter
+
+        Just a simple wrapper to SetParameter. Sets the \"LENGTH\"
+        parameter in the model container.
+        """
+        self.SetParameter("LENGTH",value)
+
+#---------------------------------------------------------------------------
+
+    def SetInject(self,value):
+        """!
+        @brief Sets the injection value
+        @param value A float value to set the injection voltage
+        @sa SetParameter
+
+        Just a simple wrapper to SetParameter. Sets the \"INJECT\"
+        parameter in the model container.
+        """
+        self.SetParameter("INJECT",value)
+
+        
 #---------------------------------------------------------------------------
 
     def __AllocateSegment(self,name):
@@ -184,7 +291,9 @@ class Segment(Symbol):
 
             raise Exception("Error allocating the Segment")
 
-        nmc_base.SymbolSetName(segment.segr.bio.ioh.iol.hsle, nmc_base.IdinCallocUnique(path))
+        idin = nmc_base.IdinCallocUnique(name)
+
+        nmc_base.SymbolSetName(segment.segr.bio.ioh.iol.hsle, idin)
         
         return segment
         
@@ -195,11 +304,16 @@ Compartment = Segment
 #*************************** End Segment ****************************
 
 
+
+
 #*************************** Start Cell ****************************
 
 class Cell(Symbol):
     """
-    Cell class
+    @class Cell A class object for managing a Cell symbol
+    @brief A class object for managing a Cell symbol
+
+    
     """
     def __init__(self, path):
 
@@ -215,8 +329,10 @@ class Cell(Symbol):
         self._core = self.__AllocateCell(name.pcIdentifier)
 
         # Make our current symbol a child of the parent
-        
-        nmc_base.SymbolAddChild(top_symbol, self.GetSymbol())
+
+        if top_symbol is not None:
+            
+            nmc_base.SymbolAddChild(top_symbol, self.GetSymbol())
 
 
 
@@ -229,8 +345,9 @@ class Cell(Symbol):
         """
         return self._core.segr.bio.ioh.iol.hsle
 
+#---------------------------------------------------------------------------
 
-    def __AllocateCell(self,name):
+    def __AllocateCell(self, name):
         """!
         @brief Allocates and sets the name for a segment.
 
@@ -244,7 +361,9 @@ class Cell(Symbol):
 
             raise Exception("Error allocating the Cell")
 
-        nmc_base.SymbolSetName(cell.segr.bio.ioh.iol.hsle, nmc_base.IdinCallocUnique(path))
+        idin =  nmc_base.IdinCallocUnique(name)
+
+        nmc_base.SymbolSetName(cell.segr.bio.ioh.iol.hsle, idin)
         
         return cell
 
