@@ -146,6 +146,15 @@ class ModelContainer:
             
             nmc_base.SymbolSetParameterDouble(phsle, parameter, value)
 
+        elif isinstance(value, str):
+
+            pass
+
+        else:
+
+            raise Exception("Invalid parameter type")
+
+        
 
 #---------------------------------------------------------------------------
     
