@@ -127,11 +127,25 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
-    def SetParameter(symbol, parameter, value):
+    def SetParameter(self, path, parameter, value):
         """!
         @brief Sets a parameter value to a symbol in the model container.
+
+        Not complete, only sets doubles at the moment.
         """
-        pass
+        
+        ppist = nmc_base.PidinStackParse(path)
+
+        phsle = nmc_base.PidinStackLookupTopSymbol(ppist)
+
+        if phsle is None:
+
+            return None
+
+        if isinstance(value, (int, long, float, complex)):
+            
+            nmc_base.SymbolSetParameterDouble(phsle, parameter, value)
+
 
 #---------------------------------------------------------------------------
     

@@ -198,9 +198,38 @@ Done!
 
 
 						  },
+
+
+
 						 ],
 				description => "parameter query 3",
 			       },
+
+
+
+
+
+			       {
+				arguments => [
+					     ],
+				command => 'tests/python/get_parameter_1.py',
+				command_tests => [
+						  {
+						   description => "Can we retrieve a parameter and set a parameter ?",
+						   read => 'Soma CM is 0.016400 and EREV is 0.147021
+Soma CM is 300.000000 and EREV is 0.147021
+Done!
+',
+
+
+						  },
+						 ],
+				description => "A simple retrieval of a parameter and a set of that same parameter",
+			       },
+
+
+
+
 
 			      ],
        description => "parameter operations in python",
