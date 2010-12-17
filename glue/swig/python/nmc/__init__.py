@@ -107,6 +107,26 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
+    def GetParameter(self, path, parameter):
+        """!
+        @brief Returns a parameter value from the model container.
+        @param path The path to a symbol in the model container
+        @param parameter The parameter value to look up
+        """
+        ppist = nmc_base.PidinStackParse(path)
+
+        phsle = nmc_base.PidinStackLookupTopSymbol(ppist)
+
+        if phsle is None:
+
+            return None
+
+        value = nmc_base.SymbolParameterResolveValue(phsle, ppist, parameter)
+
+        return value
+
+#---------------------------------------------------------------------------
+
     def SetParameter(symbol, parameter, value):
         """!
         @brief Sets a parameter value to a symbol in the model container.
