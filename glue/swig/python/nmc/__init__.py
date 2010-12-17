@@ -22,8 +22,8 @@ try:
 
     import nmc_base
 
-except ImportError as e:
-    sys.exit("Could not import compiled SWIG nmc_base library: %s" % e)
+except ImportError:
+    sys.exit("Could not import compiled SWIG nmc_base library")
 
 
 
@@ -31,8 +31,8 @@ try:
 
     import symbols
 
-except ImportError as e:
-    sys.exit("Could not import the model container symbols module: %s" % e)
+except ImportError:
+    sys.exit("Could not import the model container symbols module")
 
 
 
