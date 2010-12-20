@@ -33,6 +33,22 @@ class Symbol:
     an Abstract class and a concrete class when they are user defined.
     """
 
+#---------------------------------------------------------------------------
+
+    def __init__(self, path):
+        """!
+        @brief Constructor
+        """
+        self._path = path
+
+#---------------------------------------------------------------------------
+
+    def GetPath(self):
+        """!
+        @brief Returns the saved pathname in a python string
+        @returns self._path The class variable that holds the path for the symbol
+        """
+        return self._path
 
 #---------------------------------------------------------------------------
 
@@ -46,9 +62,12 @@ class Symbol:
         """
         return self._core
 
+#---------------------------------------------------------------------------
 
     def InsertChild(self, child):
-
+        """!
+        @brief Inserts the child object under the core_symbol 
+        """
         core_symbol = self.GetSymbol()
         core_child = child.GetSymbol()
 
@@ -59,8 +78,24 @@ class Symbol:
 #---------------------------------------------------------------------------
 
     def GetParameter(self, parameter):
+        """!
+        @brief Returns a parameter value from the current symbol.
+        @param parameter The parameter value to look up
+        """
 
-        pass
+        path = self.GetPath()
+        
+        ppist = nmc_base.PidinStackParse(path)
+
+        phsle = self.GetSymbol()
+                               
+        if phsle is None:
+
+            return None
+
+        value = nmc_base.SymbolParameterResolveValue(phsle, ppist, parameter)
+
+        return value
 
 #---------------------------------------------------------------------------
 
@@ -148,6 +183,7 @@ class Segment(Symbol):
 
         @param path The complete path to the Segment object.
         """
+        Symbol.__init__(self, path)
 
         name, top_symbol = self._CreateNameAndSymbol(path)
 

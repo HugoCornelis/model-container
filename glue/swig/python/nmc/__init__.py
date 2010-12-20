@@ -196,6 +196,17 @@ class ModelContainer:
     def Lookup(self, name):
         pass
 
+
+    def CreateSegment(self, path):
+
+        pass
+
+    def CreateCompartment(self, path):
+
+        return CreateCompartment(path)
+
+    
+
 #---------------------------------------------------------------------------
 
     def PrintParameter(self, path, parameter):
