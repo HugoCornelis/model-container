@@ -66,11 +66,13 @@ class ModelContainer:
             
         else:
 
-            if isinstance(nmc,ModelContainer):
+            # isinstance Duck typing should be ok here since
+            # we're testing for a C class struct and a class.
+            if isinstance(nmc, ModelContainer):
 
                 self._nmc_core = nmc.GetRootModelContainer()
 
-            elif isinstance(nmc,nmc_base.Neurospaces):
+            elif isinstance(nmc, nmc_base.Neurospaces):
                 
                 # Recycling an existing ModelContainer for the python interface
                 self._nmc_core = nmc

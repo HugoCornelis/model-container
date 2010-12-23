@@ -107,12 +107,7 @@ class Symbol:
         type and pass it to the appropriate model container
         parameter set method.
         """
-        result = None
-        
-        if isinstance(value,float):
-
-            result = self.SetParameterDouble(parameter,value)
-
+        result = self.SetParameterDouble(parameter,value)
 
         return result
     
@@ -127,13 +122,10 @@ class Symbol:
         instead uses floats, so we check for a float value. Name is kept
         the same to ensure compatability with the model container code.
         """
-        if isinstance(value,float):
-
-            return None
 
         symbol = self.GetSymbol()
         
-        result = nmc_base.SymbolSetParameterDouble(symbol, name, value)
+        result = nmc_base.SymbolSetParameterDouble(symbol, parameter, value)
 
         return result
 
