@@ -1,4 +1,5 @@
 ---
+comment: annotation of the model-container model library for integration with the documentation system.
 type: filesystem
 files:
   projections/keep.ndf:
