@@ -188,64 +188,76 @@ SegmentGetBranchpointFlag
 	struct PidinStack *ppistBase
 	    = ParameterResolveToPidinStack(pparBase, ppist);
 
-	struct symtab_HSolveListElement *phsleBase
-	    = PidinStackLookupTopSymbol(ppistBase);
-
-	//- build linearized caches
-
-	struct symtab_Segmenter *psegrBase
-	    = (struct symtab_Segmenter *)phsleBase;
-
-	if (SegmenterLinearize(psegrBase, ppistBase))
+	if (ppistBase)
 	{
-	    //- get serial of ppist
+	    struct symtab_HSolveListElement *phsleBase
+		= PidinStackLookupTopSymbol(ppistBase);
 
-	    int iSerial = PidinStackToSerial(ppist);
+	    //- build linearized caches
 
-	    //- loop over all segments contained in the base
+	    struct symtab_Segmenter *psegrBase
+		= (struct symtab_Segmenter *)phsleBase;
 
-	    int i;
-
-	    for (i = 0 ; i < psegrBase->desegmenter.iSegments ; i++)
+	    if (SegmenterLinearize(psegrBase, ppistBase))
 	    {
-		//- get current segment
+		//- get serial of ppist
 
-		struct cable_structure *pcs = &psegrBase->desegmenter.pcs[i];
+		int iSerial = PidinStackToSerial(ppist);
 
-		//- if it is the one of the branchpoint flag request
+		//- loop over all segments contained in the base
 
-		if (pcs->iSerial == iSerial)
+		int i;
+
+		for (i = 0 ; i < psegrBase->desegmenter.iSegments ; i++)
 		{
-		    //- ok, stop searching loop
+		    //- get current segment
 
-		    break;
+		    struct cable_structure *pcs = &psegrBase->desegmenter.pcs[i];
+
+		    //- if it is the one of the branchpoint flag request
+
+		    if (pcs->iSerial == iSerial)
+		    {
+			//- ok, stop searching loop
+
+			break;
+		    }
+		}
+
+		//- set current segment parent index
+
+		if (i < psegrBase->desegmenter.iSegments)
+		{
+		    //- branchpoint flag is number of children minus 1 (1 means linear cable extension)
+
+		    dResult = psegrBase->desegmenter.piChildren[i] - 1;
+		}
+		else
+		{
+		    /// \note not found, this is an internal error
+
+		    fprintf
+			(stderr,
+			 "internal error: SegmenterLinearize() was used to obtain the branchpoint flag on a segment that does not belong to its own container\n");
+
+		    dResult = DBL_MAX;
 		}
 	    }
 
-	    //- set current segment parent index
+	    //- free allocated memory
 
-	    if (i < psegrBase->desegmenter.iSegments)
-	    {
-		//- branchpoint flag is number of children minus 1 (1 means linear cable extension)
-
-		dResult = psegrBase->desegmenter.piChildren[i] - 1;
-	    }
-	    else
-	    {
-		/// \note not found, this is an internal error
-
-		fprintf
-		    (stderr,
-		     "internal error: SegmenterLinearize() was used to obtain the branchpoint flag on a segment that does not belong to its own container\n");
-
-		dResult = DBL_MAX;
-	    }
+	    PidinStackFree(ppistBase);
 	}
+	else
+	{
+	    fprintf
+		(stderr,
+		 "*** Error: SegmentGetBranchpointFlag(): segmenter base cannot be found\n");
 
-	//- free allocated memory
+	    ParameterPrintInfoRecursive(pparBase, ppist, 0, stderr);
 
-	PidinStackFree(ppistBase);
-
+	    dResult = DBL_MAX;
+	}
     }
 
     //- return result

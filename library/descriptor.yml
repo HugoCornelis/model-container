@@ -1,0 +1,1174 @@
+---
+type: filesystem
+files:
+  projections/keep.ndf:
+    tags:
+      - empty
+  cells/nonBurtstL5.hoc:
+    tags:
+      - cell
+      - model
+      - computational
+  cells/purkinje/edsjb1994_partitioned.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  cells/purkinje/edsjb1994_spinesurface.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  cells/purkinje/edsjb1994.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  cells/purkinje/edsjb1994_passive.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  cells/purkinje/edsjb1994_dendrogram.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  cells/j4aNew.hoc:
+    tags:
+      - cell
+      - model
+      - computational
+  cells/cell1.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  cells/izhikevich.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  cells/stand_alone.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  segments/purkinje_thickd_passive.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  segments/purkinje_maind_passive.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  segments/hodgkin_huxley.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  segments/purkinje_soma_passive.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  segments/micron2.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  segments/purkinje/soma.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  segments/purkinje/thickd.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  segments/purkinje/spinyd.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  segments/purkinje/maind.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  segments/purkinje_spinyd_passive.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  segments/spines/purkinje.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  segments/spines/mushroom.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  segments/spines/thin.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  segments/spines/stubby.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  morphologies/purk2m9.tex:
+    tags:
+      - morphology
+      - model
+  morphologies/purk2m9s.tex:
+    tags:
+      - morphology
+      - model
+  morphologies/C170897A-P3.CNG.swc:
+    tags:
+      - morphology
+      - model
+  morphologies/Purk2M9s.p:
+    tags:
+      - morphology
+      - model
+  pulsegen/pulsegen1.ndf:
+    tags:
+      - artificial
+      - model
+      - computational
+  examples/nmda.ndf:
+    tags:
+      - synaptic
+      - channel
+      - model
+      - computational
+  examples/hh_soma_syns.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  examples/hh_soma.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  examples/hh_neuron.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  contours/section1.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  tests/cells/fork3p.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/pool1_feedback1.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/table_nap.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/table_cat.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/fork4p3.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/hh1.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/fork4p1.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/triplep.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/table_naf.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/table_kdr.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/springmass4.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/singlep.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/table_cap.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/table_k2.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/tensizesp.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/doublea_aggregator.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/pool1_feedback2.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/c1c2p2.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/doublep.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/pool2.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/addressing_aggregator1.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/purk_test_soma.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/pool1.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/fork4p2.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/purk_test.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/singlea_naf2_aggregator.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/pool1_contributors2.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/table_ka.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/hardcoded_tables2.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/reducing.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/table_km.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/channel_response.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/purk_test_segment.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/table_kc.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/c1c2p1.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/table_kh.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/singlea_naf.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/hardcoded_tables1.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/channel2_nernst2.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/channel1_nernst1.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/cells/springmass3.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  tests/segments/soma.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  tests/segments/purkinje/test_segment.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  tests/segments/maind.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  tests/populations/empty.ndf:
+    tags:
+      - empty
+  tests/populations/subpopulation.ndf:
+    tags:
+      - population
+      - model
+      - computational
+  tests/channels/naf.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  tests/networks/spiker1.ndf:
+    tags:
+      - network
+      - model
+      - computational
+  tests/networks/spiker4.ndf:
+    tags:
+      - network
+      - model
+      - computational
+  tests/networks/spiker3.ndf:
+    tags:
+      - network
+      - model
+      - computational
+  utilities/parents.ndf:
+    tags:
+      - model
+      - computational
+  utilities/empty_model.ndf:
+    tags:
+      - model
+      - computational
+  utilities/functions.ndf:
+    tags:
+      - model
+      - computational
+  utilities/incomplete_inserter.ndf:
+    tags:
+      - model
+      - computational
+  utilities/some_segments.ndf:
+    tags:
+      - model
+      - computational
+  utilities/syntaxerror.ndf:
+    tags:
+      - model
+      - computational
+  utilities/circle.ndf:
+    tags:
+      - model
+      - computational
+  populations/keep.ndf:
+    tags:
+      - empty
+  fibers/mossyfiberlarge.ndf:
+    tags:
+      - population
+      - model
+      - computational
+  fibers/mossyfibersmall.ndf:
+    tags:
+      - population
+      - model
+      - computational
+  fibers/mossyfiber.xml:
+    tags:
+      - population
+      - model
+      - computational
+  fibers/mossyfiber.ndf:
+    tags:
+      - population
+      - model
+      - computational
+  legacy/cells/granule.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  legacy/cells/purkinjesmall.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  legacy/cells/golgi.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  legacy/cells/purk2m9s_partitioned.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  legacy/cells/purk2m9s.ndf:
+    tags:
+      - cell
+      - model
+      - computational
+  legacy/segments/purkinje_maind_small.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  legacy/segments/purkinje_thickd.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  legacy/segments/purkinje_soma_small.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  legacy/segments/purkinje_spinyd.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  legacy/segments/purkinje_soma.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  legacy/segments/purkinje_maind.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  legacy/segments/purkinje_soma2.ndf:
+    tags:
+      - segment
+      - model
+      - computational
+  legacy/populations/granulesmall.ndf:
+    tags:
+      - population
+      - model
+      - computational
+  legacy/populations/golgismall.ndf:
+    tags:
+      - population
+      - model
+      - computational
+  legacy/populations/granule.ndf:
+    tags:
+      - population
+      - model
+      - computational
+  legacy/populations/purkinjesmall.ndf:
+    tags:
+      - population
+      - model
+      - computational
+  legacy/populations/purkinje.ndf:
+    tags:
+      - population
+      - model
+      - computational
+  legacy/populations/golgi.ndf:
+    tags:
+      - population
+      - model
+      - computational
+  legacy/populations/golgilarge.ndf:
+    tags:
+      - population
+      - model
+      - computational
+  legacy/populations/granulelarge.ndf:
+    tags:
+      - population
+      - model
+      - computational
+  legacy/channels/granule_h.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Purkinje_km.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/purkinje_cap.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/purkinje_ka.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/granule_inna.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/purkinje_kdr.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/granule_ka.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/golgi_h.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Golgi_ka37.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/golgi_ka.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/purkinje_k2.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Purkinje_cap.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Purkinje_kc.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/purkinje_naf.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/purkinje_h2.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Golgi_kdr37.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/golgi_inna.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Granule_cahva37.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Purkinje_cat.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/golgi_kdr.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Purkinje_h1.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Purkinje_ka.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Granule_ka37.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Golgi_inna37.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Granule_kca37.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Purkinje_k2.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/purkinje_kc.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/granule_kc.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Purkinje_nap.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/granule_cahva.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Granule_h37.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Purkinje_h2.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Granule_kdr37.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Purkinje_kdr.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Granule_inna37.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/granule_kdr.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/purkinje_cat.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Purkinje_naf.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Golgi_h37.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/golgi_cahva.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/golgi_kc.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/purkinje_km.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Golgi_cahva37.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/purkinje_h1.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/Golgi_kca37.tab:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/purkinje_naf2.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/channels/purkinje_nap.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  legacy/networks/supernetwork.ndf:
+    tags:
+      - network
+      - model
+      - computational
+  legacy/networks/network.ndf:
+    tags:
+      - network
+      - model
+      - computational
+  legacy/networks/purkinje-cell-layer.ndf:
+    tags:
+      - network
+      - model
+      - computational
+  legacy/networks/network-test.ndf:
+    tags:
+      - network
+      - model
+      - computational
+  legacy/networks/supernetworksmall.ndf:
+    tags:
+      - network
+      - model
+      - computational
+  legacy/networks/granular-layer.ndf:
+    tags:
+      - network
+      - model
+      - computational
+  legacy/networks/cerebellar-cortex.ndf:
+    tags:
+      - network
+      - model
+      - computational
+  legacy/networks/networklarge.ndf:
+    tags:
+      - network
+      - model
+      - computational
+  legacy/networks/networksmall.ndf:
+    tags:
+      - network
+      - model
+      - computational
+  event_data/events.yml:
+    tags:
+      - events
+      - model
+  event_data/event_0.001.yml:
+    tags:
+      - events
+      - model
+  event_data/soma_vm_trace.yml:
+    tags:
+      - signal
+      - model
+      - computational
+  conversions/morphology2ndf_error_soma_dendrite.yml:
+    tags:
+      - model
+      - configuration
+  conversions/morphology2ndf_inconsistent_alias.yml:
+    tags:
+      - model
+      - configuration
+  conversions/morphology2ndf.yml:
+    tags:
+      - model
+      - configuration
+  conversions/morphology2ndf_error.yml:
+    tags:
+      - model
+      - configuration
+  conversions/morphology2ndf_soma_dendrite.yml:
+    tags:
+      - model
+      - configuration
+  conversions/morphology2ndf_edsjb1994.yml:
+    tags:
+      - model
+      - configuration
+  algorithm_data/inserter_spines.heights:
+    tags:
+      - model
+      - algorithm
+  algorithm_data/inserter_inhibition.heights:
+    tags:
+      - model
+      - algorithm
+  algorithm_data/inserter_excitation.heights:
+    tags:
+      - model
+      - algorithm
+  mappers/spikereceiver.ndf:
+    tags:
+      - model
+      - paradigm
+  mappers/spikegenerator.ndf:
+    tags:
+      - model
+      - paradigm
+  pools/golgi_ca.ndf:
+    tags:
+      - concentration
+      - model
+      - computational
+  pools/granule_ca.ndf:
+    tags:
+      - concentration
+      - model
+      - computational
+  pools/purkinje_ca.ndf:
+    tags:
+      - concentration
+      - model
+      - computational
+  gates/kh.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  gates/naf_inactivation.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  gates/nap_activation.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  gates/cat_activation.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  gates/ka_inactivation.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  gates/cat_inactivation.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  gates/k2_activation.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  gates/ka_activation.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  gates/kdr_steadystate.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  gates/cap_inactivation.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  gates/kc_activation.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  gates/cap_activation.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  gates/kc_concentration.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  gates/naf_activation.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  gates/kdr_tau.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  gates/k2_concentration.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  gates/km.ndf:
+    tags:
+      - channel_gate
+      - model
+      - computational
+  channels/nmda.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/purkinje_basket.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/granule_nmda.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/gaba.xml:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/traub/k_ahp.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/golgi_gabab.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/purkinje/kh.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/purkinje/cap.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/purkinje/kc.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/purkinje/cat.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/purkinje/naf.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/purkinje/kdr.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/purkinje/nap.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/purkinje/ka.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/purkinje/km.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/purkinje/k2.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/gaba.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/granule_gabab.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/golgi_gabaa.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/granule_ampa.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/hodgkin-huxley/sodium.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/hodgkin-huxley/k.npy:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/hodgkin-huxley/potassium.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/hodgkin-huxley.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/granule_gabaa.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/golgi_nmda.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/non_nmda.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/golgi_ampa.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  channels/purkinje_climb.ndf:
+    tags:
+      - channel
+      - model
+      - computational
+  networks/input.ndf:
+    tags:
+      - network
+      - model
+      - computational
+  networks/white-matter.ndf:
+    tags:
+      - network
+      - model
+      - computational
+  projectionqueries/complete:
+    tags:
+      - cache
+      - model
+      - computational
+  projectionqueries/nopars:
+    tags:
+      - cache
+      - model
+      - computational

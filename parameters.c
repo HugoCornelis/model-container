@@ -712,10 +712,19 @@ ParameterPrintInfoRecursive
 	    struct PidinStack *ppistValue = ParameterResolveToPidinStack(ppar, ppist);
 
 	    PrintIndent(iIndent, pfile);
-	    PidinStackString(ppistValue, pc, sizeof(pc));  
-	    fprintf(pfile, "'resolved value': %s%s%s\n", pc, "->", pcFieldName);
 
-	    PidinStackFree(ppistValue);
+	    if (ppistValue)
+	    {
+		PidinStackString(ppistValue, pc, sizeof(pc));
+
+		fprintf(pfile, "'resolved value': %s%s%s\n", pc, "->", pcFieldName);
+
+		PidinStackFree(ppistValue);
+	    }
+	    else
+	    {
+		fprintf(pfile, "'resolved value': (context cannot be resolved) ->%s\n", pc, "->", pcFieldName);
+	    }
 	}
 
 	return 1;
