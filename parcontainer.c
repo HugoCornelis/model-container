@@ -44,7 +44,7 @@ ParContainerAssignParameters
     pparc->ppars = ppar;
 
     return(TRUE);
-};
+}
 
 
 /// 
