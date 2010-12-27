@@ -34,7 +34,7 @@
 /// 
 /// \return int : success of operation.
 /// 
-/// \brief Assign parameters.
+/// \brief Assign parameters, loosing old values.
 /// 
 
 int
