@@ -18,7 +18,7 @@
 ##############################################################################
 
 
-SUBDIRS = perl python
+SUBDIRS = perl python python_old
 
 
 #t the following rules are crap complete, would be good if a auto

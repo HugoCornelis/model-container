@@ -20,51 +20,31 @@
 
 SUBDIRS = 
 
-
-#t the following rules are crap complete, would be good if a auto
-#t expert takes a look at it.
-
 dist-hook:
 	$(INSTALL) -d $(distdir)/tests
 	cp $(srcdir)/tests/*.py $(distdir)/tests
 
-pythondir = $(prefix)/glue/swig/python
+pythondir = $(prefix)/glue/swig/python/g3
 
-nobase_python_HEADERS = Neurospaces/__init__.py Neurospaces/SingleCellContainer.py Neurospaces/SimpleHeccer.py 
+nobase_python_HEADERS = \
+	nmc/__cbi__.py \
+	nmc/__init__.py \
+	nmc/errors.py
 
-python_DATA = SwiggableNeurospaces.py _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) tests/neurospaces_test.py  
+python_DATA = \
+	nmc/nmc_base.py \
+	nmc/_nmc_base.so
 
 EXTRA_DIST = \
-	$(srcdir)/neurospaces.i \
-	$(srcdir)/nmc.i \
-	$(srcdir)/nmc/ \
-	$(srcdir)/nmc/__init__.py \
-	$(srcdir)/nmc/errors.py \
-	$(srcdir)/nmc/__cbi__.py
+	$(srcdir)/nmc.i 
 
 BUILT_SOURCES = \
-	nmc_wrap.c \
-	./nmc/nmc_base.py \
-	SwiggableNeurospaces.py \
-	swiggable_neurospaces_wrap.c
-
-SwiggableNeurospaces.py swiggable_neurospaces_wrap.c: $(swig_DATA)
-	$(SWIG) -DPRE_PROTO_TRAVERSAL -I$(builddir)../../.. -I$(srcdir)/../../.. -python -makedefault -module SwiggableNeurospaces -o swiggable_neurospaces_wrap.c $(srcdir)/neurospaces.i
-
-swiggable_neurospaces_wrap.o: swiggable_neurospaces_wrap.c
-	$(SWIGCOMPILECOMMAND_PYTHON)
-
-#t this line needs -f PIC for some architectures, and -lncurses for some architectures
-
-_SwiggableNeurospaces.$(PYTHONLIB_EXTENSION): swiggable_neurospaces_wrap.o
-	$(SWIGLINKCOMMAND_PYTHON)
-
-
+	$(srcdir)/nmc_wrap.c \
+	$(srcdir)/nmc/nmc_base.py 
 
 
 #---------------------------------------------------------
 #----------- Rules for building the nmc swig binding -----
-
 
 nmc_wrap.o: nmc_wrap.c
 	gcc $(SWIGCOMPILELINKSFORPYTHON) -c $(srcdir)/nmc_wrap.c
@@ -79,17 +59,12 @@ _nmc_base.so: nmc_wrap.o
 #---------------------------------------------------------
 
 
-
-all: _nmc_base.so _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) 
+all: _nmc_base.so
 
 CLEANFILES = \
 	$(srcdir)/nmc_wrap.c \
 	$(srcdir)/nmc_wrap.o \
 	$(srcdir)/nmc/_nmc_base.so \
-	$(srcdir)/nmc/nmc_base.py \
-	$(srcdir)/SwiggableNeurospaces.py \
-	$(srcdir)/swiggable_neurospaces_wrap.c \
-	$(srcdir)/swiggable_neurospaces_wrap.o \
-	$(srcdir)/_SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)
+	$(srcdir)/nmc/nmc_base.py 
 
 

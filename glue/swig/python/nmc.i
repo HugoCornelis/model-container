@@ -57,7 +57,6 @@ struct symtab_Invisible;
 #include "neurospaces/treespacetraversal.h"
 
 #include "neurospaces/symbolvirtual_protos.h"
-
 #include "hierarchy/output/symbols/all_callees_headers.h"
 #include "hierarchy/output/symbols/runtime_casters.h"
 #include "hierarchy/output/symbols/runtime_casters.c"

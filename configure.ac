@@ -652,6 +652,7 @@ AC_OUTPUT(Makefile \
 	convertors/Makefile \
 	glue/swig/Makefile \
 	glue/swig/perl/Makefile \
-	glue/swig/python/Makefile 
-)
+	glue/swig/python/Makefile \
+	glue/swig/python_old/Makefile 
+	)
 

@@ -28,6 +28,8 @@ seg.SetCm(0.0164)
 seg.SetEleak(-0.0800)
 seg.SetInject(1e-9)
 
+pdb.set_trace()
+par = seg.GetParameter("RM")
 #my_model_container.Query("setparameterconcept spine::/Purk_spine/head/par 25")
 
 #my_model_container.Query("setparameterconcept thickd::gaba::/Purk_GABA 1")
