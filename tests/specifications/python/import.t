@@ -22,6 +22,23 @@ Done!
 						 ],
 				description => "a simple application that imports the built nmc python modules",
 			       },
+
+			       {
+				arguments => [
+					     ],
+				command => 'tests/python/import_test_1.py',
+				command_tests => [
+						  {
+						   description => "Can we import the nmc module and it's base class from the installed location ?",
+						   read => 'Importing nmc_base
+Importing nmc
+Done!
+',
+						  },
+						 ],
+				description => "A simple application that imports the built nmc python modules from /usr/local/glue/swig/python",
+			       },
+
 			      ],
        description => "Simple python functionality tests",
        name => 'python/import.t',

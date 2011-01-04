@@ -24,14 +24,18 @@ dist-hook:
 	$(INSTALL) -d $(distdir)/tests
 	cp $(srcdir)/tests/*.py $(distdir)/tests
 
+# The nmc module is installed under the g3 module from the developer
+# package. Since it comes first in the user workflow, it should 
+# be installed first.
 pythondir = $(prefix)/glue/swig/python/g3
 
 nobase_python_HEADERS = \
 	nmc/__cbi__.py \
 	nmc/__init__.py \
-	nmc/errors.py
+	nmc/errors.py \
+	nmc/symbols.py
 
-python_DATA = \
+nobase_python_DATA = \
 	nmc/nmc_base.py \
 	nmc/_nmc_base.so
 
