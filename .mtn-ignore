@@ -1,3 +1,4 @@
+^a.out.dSYM
 tests/convertors
 tests/glue
 \.dylib$
@@ -25,6 +26,7 @@ Makefile$
 ^glue/swig/python_old/SwiggableNeurospaces.py$
 ^glue/swig/python_old/swiggable_neurospaces_wrap.c$
 ^glue/swig/python/nmc/nmc_base.py$
+^glue/swig/python/nmc/_nmc_base.so$
 ^glue/swig/python/nmc_wrap.c$
 ^hierarchy/output
 ^html/htdocs/neurospaces_project/neurospaces/
