@@ -27,6 +27,7 @@ Done!
 				arguments => [
 					     ],
 				command => 'tests/python/import_test_1.py',
+				disabled => 'Disabling this until the standard location installation is done.',
 				command_tests => [
 						  {
 						   description => "Can we import the nmc module and it's base class from the installed location ?",
