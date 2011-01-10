@@ -135,6 +135,7 @@ struct symtab_Invisible;
 * create low level data classes out of the member structs. Apparently this
 * line must be at the end of the file otherwise SWIG will ignore my typemaps.
 *------------------------------------------------------------------------*/
+
 %include "neurospaces/algorithminstance.h"
 %include "neurospaces/algorithmset.h"
 %include "neurospaces/components/algorithmsymbol.h"
@@ -182,11 +183,11 @@ struct symtab_Invisible;
 %include "neurospaces/components/vectorconnectionsymbol.h"
 %include "neurospaces/components/vectorcontour.h"
 %include "neurospaces/components/vectorsegment.h"
-
 %include "neurospaces/symbolvirtual_protos.h"
 
-%include "hierarchy/output/symbols/all_callees_headers.i"
+%include "hierarchy/output/symbols/runtime_casters.h"
 
+%include "hierarchy/output/symbols/all_callees_headers.i"
 
 
 

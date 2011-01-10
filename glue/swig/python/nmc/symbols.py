@@ -11,8 +11,8 @@ try:
 
     import nmc_base
 
-except ImportError:
-    sys.exit("Could not import compiled SWIG nmc_base library: %s")
+except ImportError, e:
+    sys.exit("Could not import compiled SWIG nmc_base library: %s", e)
 
 
 
@@ -326,7 +326,7 @@ class Segment(Symbol):
         return segment
         
 
-# an alias
+# An alias
 Compartment = Segment
 
 #*************************** End Segment ****************************
