@@ -20,9 +20,9 @@
 
 SUBDIRS = 
 
-dist-hook:
-	$(INSTALL) -d $(distdir)/tests
-	cp $(srcdir)/tests/*.py $(distdir)/tests
+#dist-hook:
+#	$(INSTALL) -d $(distdir)/tests
+#	cp $(srcdir)/tests/*.py $(distdir)/tests
 
 # The nmc module is installed under the g3 module from the developer
 # package. Since it comes first in the user workflow, it should 
