@@ -30,6 +30,10 @@ dist-hook:
 
 pythondir = $(prefix)/glue/swig/python
 
+
+EXTRA_DIST = \
+	$(srcdir)/neurospaces.i 
+
 nobase_python_HEADERS = Neurospaces/__init__.py Neurospaces/SingleCellContainer.py Neurospaces/SimpleHeccer.py 
 
 python_DATA = SwiggableNeurospaces.py _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) tests/neurospaces_test.py  
