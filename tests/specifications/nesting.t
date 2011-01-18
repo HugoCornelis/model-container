@@ -323,7 +323,7 @@ inputs (if any) :
 			      ],
        description => "nesting of networks",
        disabled => (
-		    $ENV{OSTYPE} =~ /^darwin/i
+		    $^O =~ /^darwin/i
 		    ? "this test is disabled on darwin (aka MAC) based systems"
 		    : ""
 		   ),
