@@ -322,8 +322,13 @@ inputs (if any) :
 			       },
 			      ],
        description => "nesting of networks",
-       name => 'nesting.t',
+       disabled => (
+		    $ENV{OSTYPE} =~ /^darwin/i
+		    ? "this test is disabled on darwin (aka MAC) based systems"
+		    : ""
+		   ),
        mac_report => 'Test will fail if the machine is under a heavy load. In particular the pqsetall command will take a long time to complete causing all of the tests afterward to fail. At random times an IO lock will occur, however it is impossible to tell when it will happen.',
+       name => 'nesting.t',
       };
 
 
