@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import Heccer
-import experiment 
+import SwiggableExperiment 
 
 
 # import SwiggableNeurospaces
@@ -21,7 +21,7 @@ def new(nmc, modelname, filename):
     heccer.timestep(our_dt)
     global schedulees
     schedulees.append(heccer)
-    schedulees.append(experiment.Output(filename))
+    schedulees.append(SwiggableExperiment.Output(filename))
 
 def output(serial, field):
     global schedulees
