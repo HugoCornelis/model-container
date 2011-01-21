@@ -535,7 +535,7 @@ case "$host_os" in
 
 
     case "$host_os" in
-	*darwin10.2.0 | *darwin10.3.0 | *darwin10.4.0)
+	*darwin10.2.0 | *darwin10.3.0 | *darwin10.4.0 | *darwin10.5.0 | *darwin10.6.0)
 
 
             SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
