@@ -10,7 +10,7 @@ my $test
 			       {
 				arguments => [
 					     ],
-				command => './glue/swig/python/tests/neurospaces_test.py',
+				command => './glue/swig/python_old/tests/neurospaces_test.py',
 				command_tests => [
 						  {
 						   description => "Can we run a simple application that binds to the python interface ?",
@@ -22,7 +22,7 @@ my $test
 			       {
 				arguments => [
 					     ],
-				command => './glue/swig/python/tests/neurospaces_test_purkinje.py',
+				command => './glue/swig/python_old/tests/neurospaces_test_purkinje.py',
 				command_tests => [
 						  {
 						   comment => 'Tests many functions, should be split in many tests',
