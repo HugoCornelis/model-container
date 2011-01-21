@@ -502,7 +502,7 @@ case "$host_os" in
 
 	dnl 10.2 and greater is snow leopard
 
-	*darwin10.2.0 | *darwin10.3.0 | *darwin10.4.0)
+	*darwin10.2.0 | *darwin10.3.0 | *darwin10.4.0 | *darwin10.5.0 | *darwin10.6.0)
 
             SWIGLINKCOMMAND_PERL='ld $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
             AC_SUBST(SWIGLINKCOMMAND_PERL)
