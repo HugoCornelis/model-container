@@ -409,7 +409,7 @@ AC_SUBST(ALGORITHM_DATA)
 
 # determine the test library to install
 
-TEST_SPECIFICATION_FILES=`/bin/echo -n "tests/introduction.html " && find tests/specifications -iname "*.t" | perl -pe 's/\n/ /g' && find tests/specifications/strings -iname "*.txt" | perl -pe 's/\n/ /g'`
+TEST_SPECIFICATION_FILES=`/bin/echo -n "tests/introduction.html " && find tests/specifications -iname "*.t" | perl -pe 's/\n/ /g'`
 AC_SUBST(TEST_SPECIFICATION_FILES)
 
 
@@ -502,7 +502,7 @@ case "$host_os" in
 
 	dnl 10.2 and greater is snow leopard
 
-	*darwin10.2.0 | *darwin10.3.0 | *darwin10.4.0 | *darwin10.5.0 | *darwin10.6.0)
+	darwin10*)
 
             SWIGLINKCOMMAND_PERL='ld $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
             AC_SUBST(SWIGLINKCOMMAND_PERL)
@@ -535,7 +535,7 @@ case "$host_os" in
 
 
     case "$host_os" in
-	*darwin10.2.0 | *darwin10.3.0 | *darwin10.4.0 | *darwin10.5.0 | *darwin10.6.0)
+	darwin10*)
 
 
             SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
