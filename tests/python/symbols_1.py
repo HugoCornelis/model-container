@@ -19,7 +19,6 @@ import nmc.symbols
 my_model_container = nmc.ModelContainer(None)
 
 seg = nmc.symbols.Segment("/test")
-# data gets corrupted around here
 
 seg.SetParameter("TEST", 100.0)
 

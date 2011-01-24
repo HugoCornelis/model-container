@@ -15,7 +15,6 @@ import nmc
 
 my_nmc = nmc.ModelContainer(None)
 
-my_nmc.Read("utilities/empty_model.ndf")
 
 print "Done!"
 
