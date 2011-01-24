@@ -1,8 +1,6 @@
 #! /usr/bin/env python
 """
 This test checks symbol allocation
-
-Currently gives a bus error. 
 """
 import os
 import sys

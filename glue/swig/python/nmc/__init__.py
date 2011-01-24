@@ -63,10 +63,14 @@ class ModelContainer:
 
             # Here we construct a new root model container 
             self._nmc_core = nmc_base.NeurospacesNew()
+
+            # We need to load a an empty model to prevent it from
+            # giving an error when looking up the root
+            self.Read("utilities/empty_model.ndf")
             
         else:
 
-            # isinstance Duck typing should be ok here since
+            # isinstance typing should be ok here since
             # we're testing for a C class struct and a class.
             if isinstance(nmc, ModelContainer):
 
@@ -85,7 +89,7 @@ class ModelContainer:
                 raise TypeError(errormsg)
             
             pif = self._nmc_core.pifRootImport
-            
+
             nmc_base.ImportedFileSetRootImport(pif)
 
 #---------------------------------------------------------------------------
