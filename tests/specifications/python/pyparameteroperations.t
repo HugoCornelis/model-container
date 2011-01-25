@@ -229,6 +229,23 @@ Done!
 
 
 
+			       {
+				arguments => [
+					     ],
+				command => 'tests/python/symbols_1.py',
+				command_tests => [
+						  {
+						   description => "Can we create a parameter via a call to nmc.symbols ?",
+						   read => 'Value is 100.000000
+Done!
+',
+
+
+						  },
+						 ],
+				description => "A simple retrieval of a parameter created via nmc.symbols",
+			       },
+
 
 
 			      ],
