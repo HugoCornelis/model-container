@@ -251,6 +251,19 @@ class ModelContainer:
         """
         nmc_base.QueryMachineHandle(self._nmc_core, command)
 
+#---------------------------------------------------------------------------
+
+    def GetSerial(self, path, field):
+        """
+        @brief A simple method for retrieving a serial
+        """
+        context = nmc_base.PidinStackParse(path)
+
+        nmc_base.PidinStackLookupTopSymbol(context)
+
+        serial = nmc_base.PidinStackToSerial(context)
+
+        return serial
 
 #---------------------------------------------------------------------------
 
