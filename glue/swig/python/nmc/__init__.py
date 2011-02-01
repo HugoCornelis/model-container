@@ -204,14 +204,30 @@ class ModelContainer:
 
 
     def CreateSegment(self, path):
+        """
+        
+        """
+        seg = symbols.Segment(path)
 
-        pass
+        # exception check?
+
+        return seg
+
 
     def CreateCompartment(self, path):
+        """
 
-        return CreateCompartment(path)
+        """
+        return CreateSegment(path)
 
-    
+
+    def CreateCell(self, path):
+
+        cell = symbols.Cell(path)
+
+        # exception check?
+
+        return cell
 
 #---------------------------------------------------------------------------
 
