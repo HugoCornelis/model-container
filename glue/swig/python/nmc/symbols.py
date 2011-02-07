@@ -109,8 +109,30 @@ class Symbol:
         """
         result = self.SetParameterDouble(parameter,value)
 
+        # Exception if bad?
+        
         return result
-    
+
+
+#---------------------------------------------------------------------------
+
+    def SetParameters(self, parameters):
+        """
+        @brief Sets a set of parameters in a dictionary
+        """
+
+        try:
+
+            items = parameters.items()
+            
+        except AttributeError:
+
+            raise errors.ParameterError("Error Invalid dictionary: %s" % str(parameters))
+
+        for key, value in parameters.iteritems():
+
+            self.SetParameter(key, value)
+            
 #---------------------------------------------------------------------------
 
 

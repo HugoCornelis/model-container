@@ -12,5 +12,10 @@ class NoOutputFilenameError:
     def __init__(self, errormsg):
 
         self.__str__ = errormsg
-        
+
 #*************************** End NoOutputFilenameError **************************
+
+class PrameterError:
+    def __init__(self, errormsg):
+
+        self.__str__ = errormsg
