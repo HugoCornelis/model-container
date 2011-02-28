@@ -77,6 +77,36 @@ class Symbol:
 
 #---------------------------------------------------------------------------
 
+    def ImportChild(self, nmc, path):
+        """!
+        @brief Imports a child into the current symbol from the given path
+        """
+        if nmc is None:
+
+            return None
+
+        import re
+
+        p = re.split("::", path)
+
+        if len(p) != 2:
+
+            raise errors.ImportChildError("Error importing '%s' into symbol '%s'" %
+                                          path, self._path)
+
+        filename = p[0]
+        component = p[1]
+
+        
+        nmc.Read(filename)
+
+        child = nmc.Lookup(component)
+
+        self.InsertChild(child)
+        
+
+#---------------------------------------------------------------------------
+
     def GetParameter(self, parameter):
         """!
         @brief Returns a parameter value from the current symbol.

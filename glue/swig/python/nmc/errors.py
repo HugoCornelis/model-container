@@ -19,3 +19,9 @@ class PrameterError:
     def __init__(self, errormsg):
 
         self.__str__ = errormsg
+
+class ImportChildError(self, errormsg):
+
+    def __init__(self, errormsg):
+
+        self.__str__ = errormsg
