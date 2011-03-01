@@ -6,6 +6,7 @@ File contains the implentation for symbols in the model
 container.
 """
 import pdb
+import errors
 
 try:
 
@@ -35,11 +36,18 @@ class Symbol:
 
 #---------------------------------------------------------------------------
 
-    def __init__(self, path):
+    def __init__(self, path=None, model=None):
         """!
         @brief Constructor
         """
+
+        if path is None:
+
+            raise errors.SymbolError("Cannot create symbol, no path given")
+        
         self._path = path
+
+        self._nmc_core = model
 
 #---------------------------------------------------------------------------
 
@@ -66,10 +74,22 @@ class Symbol:
 
     def InsertChild(self, child):
         """!
-        @brief Inserts the child object under the core_symbol 
+        @brief Inserts the child object under the core_symbol
+
+ 
         """
         core_symbol = self.GetSymbol()
-        core_child = child.GetSymbol()
+
+        try:
+
+            core_child = child.GetSymbol()
+
+        except AttributeError:
+
+            # if it is not a high level object symbol
+            # we assume it is a core C struct symbol
+            core_child = child
+
 
         result = nmc_base.SymbolAddChild(core_symbol,core_child)
 
@@ -77,13 +97,13 @@ class Symbol:
 
 #---------------------------------------------------------------------------
 
-    def ImportChild(self, nmc, path):
+    def ImportChild(self, path):
         """!
         @brief Imports a child into the current symbol from the given path
         """
-        if nmc is None:
+        if self._nmc_core is None:
 
-            return None
+            raise errors.ImportChildError("No model container defined for symbol '%s', can't perform child import for '%s'" % (self._path, path))
 
         import re
 
@@ -97,13 +117,23 @@ class Symbol:
         filename = p[0]
         component = p[1]
 
-        
-        nmc.Read(filename)
+        result = nmc_base.NeurospacesRead(self._nmc_core, 2, [ "python", filename ] )
 
-        child = nmc.Lookup(component)
+        if result < 1:
 
-        self.InsertChild(child)
+            raise errors.ImportChildError("Error importing '%s' into symbol '%s'" %
+                                          path, self._path)
+
+        context = nmc_base.PidinStackParse(component)
         
+        top = nmc_base.PidinStackLookupTopSymbol(context)
+#        pdb.set_trace()
+
+
+
+        self.InsertChild(top)
+        
+        # check result 
 
 #---------------------------------------------------------------------------
 
@@ -221,13 +251,13 @@ class Segment(Symbol):
     @class Segment An object for managing a Segment symbol in the model container
     
     """
-    def __init__(self, path):
+    def __init__(self, path=None, model=None):
         """!
         @brief Constructor
 
         @param path The complete path to the Segment object.
         """
-        Symbol.__init__(self, path)
+        Symbol.__init__(self, path, model)
 
         name, top_symbol = self._CreateNameAndSymbol(path)
 
@@ -395,7 +425,7 @@ class Cell(Symbol):
 
     
     """
-    def __init__(self, path):
+    def __init__(self, path=None, model=None):
 
 
         """!
@@ -403,6 +433,7 @@ class Cell(Symbol):
 
         @param path The complete path to the Segment object.
         """
+        Symbol.__init__(self, path, model)
 
         name, top_symbol = self._CreateNameAndSymbol(path)
 

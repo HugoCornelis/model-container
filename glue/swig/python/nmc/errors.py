@@ -8,20 +8,43 @@ for use in reporting errors in nmc.
 
 #*************************** Begin NoOutputFilenameError ************************
 
-class NoOutputFilenameError:
+class NoOutputFilenameError(Exception):
     def __init__(self, errormsg):
 
-        self.__str__ = errormsg
+        self.errormsg = errormsg
 
+    def __str__(self):
+
+        return self.errormsg
+    
 #*************************** End NoOutputFilenameError **************************
 
-class PrameterError:
+class ParameterError(Exception):
     def __init__(self, errormsg):
 
-        self.__str__ = errormsg
+        self.errormsg = errormsg
 
-class ImportChildError(self, errormsg):
+    def __str__(self):
+
+        return self.errormsg
+        
+class ImportChildError(Exception):
 
     def __init__(self, errormsg):
 
-        self.__str__ = errormsg
+        self.errormsg = "Symbol Import Child Error: %s" % errormsg
+
+    def __str__(self):
+
+        return self.errormsg
+
+
+class SymbolError(Exception):
+
+    def __init__(self, errormsg):
+
+        self.errormsg = "Symbol Error: %s" % errormsg
+
+    def __str__(self):
+
+        return self.errormsg

@@ -174,7 +174,9 @@ class ModelContainer:
             # Make my own exception? check for the ndf suffix?
          #   raise Exception("%s is not a valid file or does not exist" % (filename))
         
-        nmc_base.NeurospacesRead(self._nmc_core, 2, [ "python", filename ] )
+        result = nmc_base.NeurospacesRead(self._nmc_core, 2, [ "python", filename ] )
+
+        # exception on bad result?
 
 
 #---------------------------------------------------------------------------
@@ -203,16 +205,19 @@ class ModelContainer:
         pass
 
 
+#---------------------------------------------------------------------------
+
     def CreateSegment(self, path):
         """
         
         """
-        seg = symbols.Segment(path)
+        seg = symbols.Segment(path, self._nmc_core)
 
         # exception check?
 
         return seg
 
+#---------------------------------------------------------------------------
 
     def CreateCompartment(self, path):
         """
@@ -220,6 +225,8 @@ class ModelContainer:
         """
         return CreateSegment(path)
 
+
+#---------------------------------------------------------------------------
 
     def CreateCell(self, path):
 

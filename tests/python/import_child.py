@@ -27,9 +27,16 @@ my_segment.SetCm(0.0164)
 my_segment.SetEleak(-0.0800)
 my_segment.SetInject(1e-9)
 
+print "Current model is"
+my_nmc.Query("expand /**")
 
-my_segment.ImportChild(my_nmc, "channels/hodgkin-huxley.ndf::/k")
-my_segment.ImportChild(my_nmc, "channels/hodgkin-huxley.ndf::/na")
+print "! end ---\n\n"
+my_segment.ImportChild("channels/hodgkin-huxley.ndf::/k")
+my_segment.ImportChild("channels/hodgkin-huxley.ndf::/na")
 
+print "Model after child imports is"
+my_nmc.Query("expand /**")
+
+print "! end ---\n\n"
 print "Done!"
 
