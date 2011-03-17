@@ -16,6 +16,7 @@ __version__ = "0.1"
 __status__ = "Development"
 
 import os
+import pdb
 import sys
 
 try:
@@ -55,6 +56,11 @@ class ModelContainer:
 
         @param nmc An existing ModelContainer or Neurospaces object.
         """
+
+        if not self.CheckEnvironment():
+
+            raise errors.LibraryPathError()
+
         
         # this is the "low level" model container object.
         self._nmc_core = None
@@ -72,6 +78,7 @@ class ModelContainer:
 
             # isinstance typing should be ok here since
             # we're testing for a C class struct and a class.
+            # - duck type?
             if isinstance(nmc, ModelContainer):
 
                 self._nmc_core = nmc.GetRootModelContainer()
@@ -91,6 +98,37 @@ class ModelContainer:
             pif = self._nmc_core.pifRootImport
 
             nmc_base.ImportedFileSetRootImport(pif)
+
+#---------------------------------------------------------------------------
+
+    def CheckEnvironment(self):
+
+        env = ['NEUROSPACES_NMC_USER_MODELS', 'NEUROSPACES_NMC_PROJECT_MODELS',
+               'NEUROSPACES_NMC_SYSTEM_MODELS', 'NEUROSPACES_NMC_MODELS']
+
+        library_path = ""
+
+        library_exists = False
+        
+        for e in env:
+
+            try:
+                
+                library_path = os.environ[e]
+
+            except KeyError:
+
+                next
+
+            if os.path.exists(library_path):
+                        
+                library_exists = True 
+
+
+        return library_exists
+
+            
+
 
 #---------------------------------------------------------------------------
 
