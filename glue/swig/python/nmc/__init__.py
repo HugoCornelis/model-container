@@ -118,7 +118,7 @@ class ModelContainer:
 
             except KeyError:
 
-                next
+                continue
 
             if os.path.exists(library_path):
                         
