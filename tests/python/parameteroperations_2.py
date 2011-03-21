@@ -1,6 +1,10 @@
 #! /usr/bin/env python
 """
-Test for parameter operations
+Test for parameter operations.
+
+Test causes a segmentation fault on Ubuntu with
+python 2.5. Error occurs when trying to do a vtable
+lookup in file: hierarchy/output/symbols/callee_get_parameter.c:38
 """
 import os
 import sys
