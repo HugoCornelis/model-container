@@ -57,9 +57,9 @@ class ModelContainer:
         @param nmc An existing ModelContainer or Neurospaces object.
         """
 
-        if not self.CheckEnvironment():
+#         if not self.CheckEnvironment():
 
-            raise errors.LibraryPathError()
+#             raise errors.LibraryPathError()
 
         
         # this is the "low level" model container object.
