@@ -198,7 +198,20 @@ class ModelContainer:
 
             raise Exception("Invalid parameter type")
 
+#---------------------------------------------------------------------------
+
+
+    def SetParameterConcept(self, path, parameter, value):
+        """!
+        @brief Sets parameters to a namespace
+
+        So far only sets numbers. The only examples present set numbers.
+        """
+
+        set_command = "setparameterconcept %s %s %s %s" % (path, parameter,
+                                                           "number", str(value))
         
+        self.Query(set_command)
 
 #---------------------------------------------------------------------------
     
@@ -325,6 +338,7 @@ class ModelContainer:
         execfile("/usr/local/neurospaces/models/library/" + filename)
 
 
+#---------------------------------------------------------------------------
 
     def SetOutputFile(self,filename):
 
