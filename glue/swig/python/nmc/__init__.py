@@ -311,7 +311,7 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
-    def GetSerial(self, path, field):
+    def GetSerial(self, path):
         """
         @brief A simple method for retrieving a serial
         """
