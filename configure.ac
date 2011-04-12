@@ -17,6 +17,10 @@ dnl coding ............	Hugo Cornelis, hugo.cornelis@gmail.com
 dnl
 dnl //////////////////////////////////////////////////////////////////////////
 
+
+
+
+
 dnl Process this file with autoconf to produce a configure script.
 # $Format: "AC_INIT(${package}, ${major}.${minor}.${micro}-${label}, ${email})"$
 AC_INIT(model-container, 0.0.0-alpha, hugo.cornelis@gmail.com)
@@ -69,23 +73,30 @@ else
 
 fi
 
-
 AC_MSG_CHECKING(whether we build universal binaries.)
 AC_ARG_WITH(universal,
 [AS_HELP_STRING([--with-universal],
               [Build universal binaries on Mac OS X.])],
 [ case "$val" in
   no)
+
     AC_MSG_RESULT(no)
+    OSX_UNIVERSAL="no"
+
     ;;
   *)
+
     AC_MSG_RESULT(yes)
-    AC_DEFINE(OSX_UNIVERSAL, 1, [Define to enable building universal binaries.])
+    MY_AUTOMAKE_OPTIONS=no-dependencies
+    
+    OSX_UNIVERSAL="yes"
 
     ;;
   esac ],
   AC_MSG_RESULT(no)
+  OSX_UNIVERSAL="no"
 )
+AC_SUBST(OSX_UNIVERSAL)
 
 
 dnl Checks for programs.
@@ -472,16 +483,31 @@ case "$host_os" in
     # This is to get rid of the annoying error that occurs when
     # you use two arch flags.occur By default these commands produce a -arch for both
     # architectures.
+    if test "$OSX_UNIVERSAL" == "yes"; then
 
-    PERL_CCOPTS=`$PERL -MExtUtils::Embed -e ccopts | perl -pe 's/\-arch\s\S+\s//g'`
-    AC_SUBST(PERL_CCOPTS)
 
-    PERL_LDADD=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
-    AC_SUBST(PERL_LDADD)
+      PERL_CCOPTS=`$PERL -MExtUtils::Embed -e ccopts`
+      AC_SUBST(PERL_CCOPTS)
 
-    PERL_LDFLAGS=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
-    AC_SUBST(PERL_LDFLAGS)
+      PERL_LDADD=`$PERL -MExtUtils::Embed -e ldopts`
+      AC_SUBST(PERL_LDADD)
 
+      PERL_LDFLAGS=`$PERL -MExtUtils::Embed -e ldopts`
+      AC_SUBST(PERL_LDFLAGS)
+
+
+    else
+
+      PERL_CCOPTS=`$PERL -MExtUtils::Embed -e ccopts | perl -pe 's/\-arch\s\S+\s//g'`
+      AC_SUBST(PERL_CCOPTS)
+
+      PERL_LDADD=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
+      AC_SUBST(PERL_LDADD)
+
+      PERL_LDFLAGS=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
+      AC_SUBST(PERL_LDFLAGS)
+
+    fi
 
 
     AC_CHECK_PROG(SWIG, swig, NULL, [/usr/bin/swig],[/usr/local/bin/swig /opt/local/bin/swig])
