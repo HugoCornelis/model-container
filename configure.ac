@@ -70,6 +70,24 @@ else
 fi
 
 
+AC_MSG_CHECKING(whether we build universal binaries.)
+AC_ARG_WITH(universal,
+[AS_HELP_STRING([--with-universal],
+              [Build universal binaries on Mac OS X.])],
+[ case "$val" in
+  no)
+    AC_MSG_RESULT(no)
+    ;;
+  *)
+    AC_MSG_RESULT(yes)
+    AC_DEFINE(OSX_UNIVERSAL, 1, [Define to enable building universal binaries.])
+
+    ;;
+  esac ],
+  AC_MSG_RESULT(no)
+)
+
+
 dnl Checks for programs.
 AC_PROG_AWK
 AC_PROG_YACC
