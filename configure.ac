@@ -535,7 +535,9 @@ case "$host_os" in
     AC_SUBST(SWIGCOMPILECOMMAND_PERL)
 
 
-#    
+    # Mando: If building universal binaries we need different flags for libtool
+    # can possibly use libtool for both builds but not going to replace
+    # the working one just yet.    
     if test "$OSX_UNIVERSAL" == "yes"; then 
 
       SWIGLDLINKSFORPERL='-dynamic -undefined suppress -flat_namespace -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses $(PERL_LDFLAGS)'
@@ -551,8 +553,6 @@ case "$host_os" in
     dnl Here we check for specific versions of mac osx since flags are different for each version
     dnl probably need to make this section neater sometime. 
     case "$host_os" in
-
-	dnl 10.2 and greater is snow leopard
 
 	darwin10*)
 
@@ -591,21 +591,40 @@ case "$host_os" in
     AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
 
 
-    SWIGLDLINKSFORPYTHON='$(PYTHON_LDFLAGS) -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -lreadline -framework Python -flat_namespace -undefined suppress -bundle -bundle_loader $(PYTHON_EXE)'
+    if test "$OSX_UNIVERSAL" == "yes"; then 
+
+      SWIGLDLINKSFORPYTHON='-dynamic -undefined suppress -flat_namespace -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses $(PYTHON_LDFLAGS)'
+
+    else
+
+      SWIGLDLINKSFORPYTHON='$(PYTHON_LDFLAGS) -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -lreadline -flat_namespace -undefined suppress -bundle -bundle_loader $(PYTHON_EXE)'
+
+    fi
+
+    
     AC_SUBST(SWIGLDLINKSFORPYTHON)
 
 
     case "$host_os" in
 	darwin10*)
 
+          if test "$OSX_UNIVERSAL" == "yes"; then 
+
+            SWIGLINKCOMMAND_PYTHON='$(AR) $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) swiggable_neurospaces_wrap.o'
+
+	    NMC_SWIGLINKCOMMAND_PYTHON='$(AR) $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/nmc/_nmc_base.so nmc_wrap.o'
+
+          else
 
             SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
-            AC_SUBST(SWIGLINKCOMMAND_PYTHON)
 
-	    # Using the $(srcdir) or other relative links is a bit tacky but not much of a choice here.
 
 	    NMC_SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/nmc/_nmc_base.so /usr/lib/bundle1.o nmc_wrap.o'
-            AC_SUBST(NMC_SWIGLINKCOMMAND_PYTHON)
+ 
+          fi
+            
+          AC_SUBST(SWIGLINKCOMMAND_PYTHON)
+          AC_SUBST(NMC_SWIGLINKCOMMAND_PYTHON)
 
 	;;
 
