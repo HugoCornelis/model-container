@@ -489,7 +489,8 @@ case "$host_os" in
       
       PERL_LDADD=`$PERL -MExtUtils::Embed -e ldopts`
 
-      PERL_LDFLAGS=`$PERL -MExtUtils::Embed -e ldopts`
+      # When using libtool, you can't use arch arguments.
+      PERL_LDFLAGS=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
 
     else
 
@@ -534,7 +535,17 @@ case "$host_os" in
     AC_SUBST(SWIGCOMPILECOMMAND_PERL)
 
 
-    SWIGLDLINKSFORPERL='-L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -dylib -undefined suppress -flat_namespace $(PERL_LDFLAGS)'
+#    
+    if test "$OSX_UNIVERSAL" == "yes"; then 
+
+      SWIGLDLINKSFORPERL='-dynamic -undefined suppress -flat_namespace -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses $(PERL_LDFLAGS)'
+
+    else
+
+      SWIGLDLINKSFORPERL='-L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -dylib -undefined suppress -flat_namespace $(PERL_LDFLAGS)'
+
+    fi
+
     AC_SUBST(SWIGLDLINKSFORPERL)
 
     dnl Here we check for specific versions of mac osx since flags are different for each version
@@ -545,8 +556,17 @@ case "$host_os" in
 
 	darwin10*)
 
-            SWIGLINKCOMMAND_PERL='ld $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
-            AC_SUBST(SWIGLINKCOMMAND_PERL)
+          if test "$OSX_UNIVERSAL" == "yes"; then
+  
+            SWIGLINKCOMMAND_PERL='$(AR) $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION) swiggable_neurospaces_wrap.o'
+          
+          else
+
+            SWIGLINKCOMMAND_PERL='ld $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION) /usr/lib/bundle1.o  swiggable_neurospaces_wrap.o'
+
+          fi
+
+          AC_SUBST(SWIGLINKCOMMAND_PERL)
 
 	;;
 
@@ -554,7 +574,7 @@ case "$host_os" in
 	*)
 	    dnl This probably needs to be patitioned into leopard, tiger, panther. etc
 
-            SWIGLINKCOMMAND_PERL='ld $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION) swiggable_neurospaces_wrap.o'
+          SWIGLINKCOMMAND_PERL='ld $(SWIGLDLINKSFORPERL) -o SwiggableNeurospaces.$(PERLLIB_EXTENSION) swiggable_neurospaces_wrap.o'
             AC_SUBST(SWIGLINKCOMMAND_PERL)
 	;;
     esac 
