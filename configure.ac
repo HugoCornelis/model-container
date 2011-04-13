@@ -485,29 +485,26 @@ case "$host_os" in
     # architectures.
     if test "$OSX_UNIVERSAL" == "yes"; then
 
-
       PERL_CCOPTS=`$PERL -MExtUtils::Embed -e ccopts`
-      AC_SUBST(PERL_CCOPTS)
-
+      
       PERL_LDADD=`$PERL -MExtUtils::Embed -e ldopts`
-      AC_SUBST(PERL_LDADD)
 
       PERL_LDFLAGS=`$PERL -MExtUtils::Embed -e ldopts`
-      AC_SUBST(PERL_LDFLAGS)
-
 
     else
 
       PERL_CCOPTS=`$PERL -MExtUtils::Embed -e ccopts | perl -pe 's/\-arch\s\S+\s//g'`
-      AC_SUBST(PERL_CCOPTS)
-
+    
       PERL_LDADD=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
-      AC_SUBST(PERL_LDADD)
 
       PERL_LDFLAGS=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
-      AC_SUBST(PERL_LDFLAGS)
 
     fi
+    
+    AC_SUBST(PERL_CCOPTS)
+    AC_SUBST(PERL_LDADD)
+    AC_SUBST(PERL_LDFLAGS)
+
 
 
     AC_CHECK_PROG(SWIG, swig, NULL, [/usr/bin/swig],[/usr/local/bin/swig /opt/local/bin/swig])
