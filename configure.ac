@@ -528,7 +528,7 @@ case "$host_os" in
     PERLLIB_EXTENSION='dylib'
     AC_SUBST(PERLLIB_EXTENSION)
 
-    SWIGCOMPILELINKSFORPERL='-g -Wno-declaration-after-statement -DPRE_PROTO_TRAVERSAL -I$(builddir)../../.. -I$(srcdir)/../../.. -I$(builddir)../../../hierarchy/output/symbols -I$(srcdir)/../../../hierarchy/output/symbols/ -fPIC -dynamic $(PERL_CCOPTS)'
+    SWIGCOMPILELINKSFORPERL='-g -Wno-declaration-after-statement -DPRE_PROTO_TRAVERSAL -I$(top_builddir) -I$(top_builddir)/hierarchy/output/symbols -fPIC -dynamic $(PERL_CCOPTS)'
     AC_SUBST(SWIGCOMPILELINKSFORPERL)
 
     SWIGCOMPILECOMMAND_PERL='gcc -Wno-declaration-after-statement $(SWIGCOMPILELINKSFORPERL) -c swiggable_neurospaces_wrap.c'
@@ -540,11 +540,11 @@ case "$host_os" in
     # the working one just yet.    
     if test "$OSX_UNIVERSAL" == "yes"; then 
 
-      SWIGLDLINKSFORPERL='-dynamic -undefined suppress -flat_namespace -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses $(PERL_LDFLAGS)'
+      SWIGLDLINKSFORPERL='-dynamic -undefined suppress -flat_namespace -L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms -L$(top_builddir)/algorithms/symbol -lsymbol_algorithms $(PERL_LDFLAGS)'
 
     else
 
-      SWIGLDLINKSFORPERL='-L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -dylib -undefined suppress -flat_namespace $(PERL_LDFLAGS)'
+      SWIGLDLINKSFORPERL='-L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms -L$(top_builddir)/algorithms/symbol -lsymbol_algorithms -lncurses -dylib -undefined suppress -flat_namespace $(PERL_LDFLAGS)'
 
     fi
 
@@ -593,11 +593,11 @@ case "$host_os" in
 
     if test "$OSX_UNIVERSAL" == "yes"; then 
 
-      SWIGLDLINKSFORPYTHON='-dynamic -undefined suppress -flat_namespace -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses $(PYTHON_LDFLAGS)'
+      SWIGLDLINKSFORPYTHON='-dynamic -undefined suppress -flat_namespace -L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms -L$(top_builddir)/algorithms/symbol -lsymbol_algorithms -lncurses $(PYTHON_LDFLAGS)'
 
     else
 
-      SWIGLDLINKSFORPYTHON='$(PYTHON_LDFLAGS) -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol -lsymbol_algorithms -lncurses -lreadline -flat_namespace -undefined suppress -bundle -bundle_loader $(PYTHON_EXE)'
+      SWIGLDLINKSFORPYTHON='$(PYTHON_LDFLAGS) -L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms -L$(top_builddir)/algorithms/symbol -lsymbol_algorithms -lncurses -lreadline -flat_namespace -undefined suppress -bundle -bundle_loader $(PYTHON_EXE)'
 
     fi
 
@@ -682,13 +682,13 @@ case "$host_os" in
     PERLLIB_EXTENSION='so'
     AC_SUBST(PERLLIB_EXTENSION)
 
-    SWIGCOMPILELINKSFORPERL='-g 	-DPRE_PROTO_TRAVERSAL 	-I$(builddir)../../.. 	-I$(srcdir)/../../.. 	-I$(builddir)../../../hierarchy/output/symbols 	-I$(srcdir)/../../../hierarchy/output/symbols/ 	-fPIC 	`perl -MExtUtils::Embed -e ccopts`'
+    SWIGCOMPILELINKSFORPERL='-g -DPRE_PROTO_TRAVERSAL -I$(top_builddir) -I$(top_builddir)/hierarchy/output/symbols 	-I$(top_builddir)/hierarchy/output/symbols/ -fPIC $(PERL_CCOPTS)'
     AC_SUBST(SWIGCOMPILELINKSFORPERL)
 
-    SWIGCOMPILECOMMAND_PERL='gcc -Wno-declaration-after-statement        $(SWIGCOMPILELINKSFORPERL)         -c swiggable_neurospaces_wrap.c' 
+    SWIGCOMPILECOMMAND_PERL='gcc -Wno-declaration-after-statement        $(SWIGCOMPILELINKSFORPERL) -c swiggable_neurospaces_wrap.c' 
     AC_SUBST(SWIGCOMPILECOMMAND_PERL)
 
-    SWIGLDLINKSFORPERL='-g 	-shared swiggable_neurospaces_wrap.o 	-L../../.. 	-lneurospacesread 	-L../../../algorithms/event 	-levent_algorithms 	-L../../../algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline'
+    SWIGLDLINKSFORPERL='-g -shared swiggable_neurospaces_wrap.o 	-L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms 	-L$(top_builddir)/algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline'
     AC_SUBST(SWIGLDLINKSFORPERL)
 
     SWIGLINKCOMMAND_PERL='gcc -Wno-declaration-after-statement        $(SWIGLDLINKSFORPERL)         -o SwiggableNeurospaces.$(PERLLIB_EXTENSION)'
