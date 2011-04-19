@@ -31,8 +31,13 @@ CLASSIFIERS = [
     'Topic :: Research :: Neuroscience',
 ]
 
-
-APP = ['gtube.py']
+OPTIONS={
+    'sdist': {
+        'formats': ['gztar','zip'],
+        'force_manifest': True,
+        },
+    
+    }
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
@@ -46,24 +51,11 @@ setup(
     license=LICENSE,
     keywords=KEYWORDS,
     url=URL,
-    packages=['gtube'],
+    packages=['nmc'],
     long_description=LONG_DESCRIPTION,
     classifiers=CLASSIFIERS,
     app=APP,
-    options={
-        'py2app': {
-            'argv_emulation': True,
-            'includes': ['gtube'],
-            'packages' : 'wx',
-            'plist' : 'dist/osx/Info.plist',
-            'iconfile' : 'dist/osx/Gtube.icns'
-            },
-        'sdist': {
-            'formats': ['gztar','zip'],
-            'force_manifest': True,
-            },
-        
-        },
+    options=OPTIONS,
     setup_requires=['py2app'],
 )
 
