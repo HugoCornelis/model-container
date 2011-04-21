@@ -181,6 +181,10 @@ else:
 #
 # Extension API http://pydoc.org/2.5.1/distutils.extension.html
 #
+# commands for determining library arch on mac osx:
+#    lipo -info
+#    otool -hv
+#
 EXT_MODULES=[
     
     Extension("_nmc_base",
