@@ -1,10 +1,20 @@
+import imp
 import os
 import pdb
 import sys
-from distutils.core import setup
-from distutils.command.install_data import install_data
-import nmc.__cbi__ as cbi
 
+from distutils import log
+from distutils.core import setup, Extension
+from distutils.command.install_data import install_data
+
+# import the cbi module. We use this since the check
+# for the compiled swig nmc_base gives an error
+# if we import from nmc.__cbi__
+cbi = imp.load_source('__cbi__', './nmc/__cbi__.py')
+
+#
+# API for the platform class http://docs.python.org/library/platform.html
+#
 
 #-------------------------------------------------------------------------------
 
@@ -51,6 +61,31 @@ def fullsplit(path, result=None):
     if head == path:
         return result
     return fullsplit(head, [tail] + result)
+
+#-------------------------------------------------------------------------------
+
+# borrowed from Pysco's setup.py
+
+class ProcessorAutodetectError(Exception):
+     pass
+def autodetect():
+     platform = sys.platform.lower()
+     if platform.startswith('win'):   # assume an Intel Windows
+         return 'i386'
+     # assume we have 'uname'
+     mach = os.popen('uname -m', 'r').read().strip()
+     if not mach:
+         raise ProcessorAutodetectError, "cannot run 'uname -m'"
+     try:
+         return {'i386': 'i386',
+                 'i486': 'i386',
+                 'i586': 'i386',
+                 'i686': 'i386',
+                 'i86pc': 'i386',    # Solaris/Intel
+                 'x86':   'i386',    # Apple
+                 }[mach]
+     except KeyError:
+         raise ProcessorAutodetectError, "unsupported processor '%s'" % mach
 
 #-------------------------------------------------------------------------------
 
@@ -133,6 +168,31 @@ else:
     CMDCLASS = {'install_data': install_data}
 
 
+# swig: /usr/bin/swig -DPRE_PROTO_TRAVERSAL -I../../.. -python -outdir ./nmc -o nmc_wrap.c ./nmc.i
+#
+# compile: gcc -g -DPRE_PROTO_TRAVERSAL -I/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6
+# -I/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6 -I../../.. -I../../../hierarchy/output/symbols
+# -fPIC -c ./nmc_wrap.c
+#
+# linking: -L/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/config -ldl -framework CoreFoundation
+#  -lpython2.6 -L../../.. -lneurospacesread -L../../../algorithms/event -levent_algorithms -L../../../algorithms/symbol
+#   -lsymbol_algorithms -lncurses -lreadline -flat_namespace -undefined suppress -bundle -bundle_loader
+#   /Library/Frameworks/Python.framework/Versions/2.6/bin/python -o ./nmc/_nmc_base.so /usr/lib/bundle1.o nmc_wrap.o
+#
+# Extension API http://pydoc.org/2.5.1/distutils.extension.html
+#
+EXT_MODULES=[
+    
+    Extension("_nmc_base",
+              sources=["nmc_wrap.c", "nmc.i"],
+              swig_opts=["-DPRE_PROTO_TRAVERSAL", "-I../../.."],
+              extra_compile_args=["-DPRE_PROTO_TRAVERSAL"],
+              library_dirs=["../../..", "../../../algorithms/event", "../../../algorithms/symbol"],
+              include_dirs=["../../..", "../../../hierarchy/output/symbols", ],
+              libraries=["neurospacesread", "event_algorithms", "symbol_algorithms", "ncurses", "readline"],
+              ),
+    ]
+pdb.set_trace()
 #-------------------------------------------------------------------------------
 
 setup(
@@ -143,6 +203,7 @@ setup(
     cmdclass=CMDCLASS,
 #    data_files=DATA_FILES,
     description=DESCRIPTION,
+    ext_modules=EXT_MODULES,
     long_description=LONG_DESCRIPTION,
     license=LICENSE,
     keywords=KEYWORDS,
