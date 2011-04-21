@@ -65,6 +65,14 @@ _nmc_base.so: nmc_wrap.o
 
 all: _nmc_base.so
 
+
+clean-local:
+	$(RM) -rf $(srcdir)/docs/html
+	echo "Removing all compiled byte code files"
+	$(RM) `find . -name "*.pyc"`
+	$(RM) -rf $(srcdir)/build
+	$(RM) -rf $(srcdir)/dist/
+
 CLEANFILES = \
 	$(srcdir)/nmc_wrap.c \
 	$(srcdir)/nmc_wrap.o \

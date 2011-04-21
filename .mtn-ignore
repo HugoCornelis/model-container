@@ -64,3 +64,5 @@ tar.gz$
 \.log$
 _BUILD$
 .pkg$
+^build$
+^dist$
