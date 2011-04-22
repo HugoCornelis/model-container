@@ -188,7 +188,8 @@ else:
 
 class NMCModule(Extension):
     """
-    
+    A class that abstracts methods that detect flags and paths
+    for the target machine in a machine independent way. 
     """
     def __init__(self):
 
@@ -226,7 +227,12 @@ class NMCModule(Extension):
     def get_libraries(self):
 
         return ["neurospacesread", "event_algorithms", "symbol_algorithms", "ncurses", "readline"]
-        
+
+# Apperently it is trying to link the same file twice, and libtool is complaining about the
+# duplicate symbol. 
+# 
+# gcc-4.2 -Wl,-F. -bundle -undefined dynamic_lookup -arch i386 -arch ppc -arch x86_64 build/temp.macosx-10.6-universal-2.6/nmc_wrap.o build/temp.macosx-10.6-universal-2.6/nmc_wrap.o -L../../.. -L../../../algorithms/event -L../../../algorithms/symbol -lneurospacesread -levent_algorithms -lsymbol_algorithms -lncurses -lreadline -o build/lib.macosx-10.6-universal-2.6/_nmc_base.so
+#
 EXT_MODULES=[
     
     Extension("_nmc_base",
@@ -238,7 +244,7 @@ EXT_MODULES=[
               libraries=["neurospacesread", "event_algorithms", "symbol_algorithms", "ncurses", "readline"],
               ),
     ]
-pdb.set_trace()
+#pdb.set_trace()
 #-------------------------------------------------------------------------------
 
 setup(
