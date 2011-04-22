@@ -185,6 +185,48 @@ else:
 #    lipo -info
 #    otool -hv
 #
+
+class NMCModule(Extension):
+    """
+    
+    """
+    def __init__(self):
+
+        self.name = "_nmc_base"
+        self.sources = ["nmc_wrap.c", "nmc.i"]
+        self.swig_opts = self.get_swig_opts()
+        self.extra_compile_args = self.get_extra_compile_args()
+        self.libraries = self.get_libraries()
+        
+        Extension.__init__(self,
+                           self.name,
+                           swig_opts=self.swig_opts,
+                           extra_compile_args=self.extra_compile_args,
+                           library_dirs=self.library_dirs,
+                           include_dirs=self.include_dirs,
+                           libraries=self.libraries
+                           )
+
+    def get_extra_compile_args(self):
+
+        return ["-DPRE_PROTO_TRAVERSAL"]
+
+    def get_swig_opts(self):
+
+        return ["-DPRE_PROTO_TRAVERSAL", "-I../../.."]
+
+    def get_library_dirs(self):
+
+        return ["../../..", "../../../algorithms/event", "../../../algorithms/symbol"]
+
+    def get_include_dirs(self):
+
+        return ["../../..", "../../../hierarchy/output/symbols", ]
+
+    def get_libraries(self):
+
+        return ["neurospacesread", "event_algorithms", "symbol_algorithms", "ncurses", "readline"]
+        
 EXT_MODULES=[
     
     Extension("_nmc_base",
