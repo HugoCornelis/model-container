@@ -1,7 +1,9 @@
 import imp
 import os
 import pdb
+import re
 import sys
+from commands import getoutput
 
 from distutils import log
 from distutils.core import setup, Extension
@@ -186,6 +188,7 @@ else:
 #    otool -hv
 #
 
+#-------------------------------------------------------------------------------
 class NMCModule(Extension):
     """
     A class that abstracts methods that detect flags and paths
@@ -193,19 +196,27 @@ class NMCModule(Extension):
     """
     def __init__(self):
 
-        self.name = "_nmc_base"
-        self.sources = ["nmc_wrap.c", "nmc.i"]
+        self._library_files = ["libneurospacesread.a", "libsymbol_algorithms.a", "libevent_algorithms.a" ]
+        self._library_paths = ["../../..", "../../../algorithms/symbol/", "../../../algorithms/event/",
+                               "/usr/local/lib/model-container", ]
+
+        self._include_files = []
+        self._include_paths = ["../../..", "/usr/local/include/model-container/" ]
+        
+        self.name = "nmc._nmc_base"
+        self.sources = ["nmc.i"]
         self.swig_opts = self.get_swig_opts()
         self.extra_compile_args = self.get_extra_compile_args()
         self.libraries = self.get_libraries()
         
         Extension.__init__(self,
                            self.name,
-                           swig_opts=self.swig_opts,
-                           extra_compile_args=self.extra_compile_args,
-                           library_dirs=self.library_dirs,
-                           include_dirs=self.include_dirs,
-                           libraries=self.libraries
+                           sources=self.sources,
+                           swig_opts=self.get_swig_opts(),
+                           extra_compile_args=self.get_extra_compile_args(),
+                           library_dirs=self.get_library_dirs(),
+                           include_dirs=self.get_include_dirs(),
+                           libraries=self.get_libraries()
                            )
 
     def get_extra_compile_args(self):
@@ -218,7 +229,55 @@ class NMCModule(Extension):
 
     def get_library_dirs(self):
 
-        return ["../../..", "../../../algorithms/event", "../../../algorithms/symbol"]
+        library_dirs = []
+
+        for lib_file in self._library_files:
+
+            this_path = self._get_path(self._library_paths, lib_file)
+
+            if this_path is None:
+
+                raise Exception("Can't find library path for %s, can't build extension\n" % lib_file)
+
+            else:
+
+                if not this_path in library_dirs:
+
+                    library_dirs.append(this_path)
+
+                    
+        return library_dirs
+
+
+    def _get_path(self, dirs, file):
+        """
+        helper method, picks which path the given file is in and returns it.
+        None if not found. 
+        """
+        
+        for d in dirs:
+
+            full_path = os.path.join(d, file)
+            
+            if os.path.isfile(full_path):
+
+                return d
+
+        return None
+
+    
+    def _in_path(self, dirs, file):
+
+        for d in dirs:
+
+            full_path = os.path.join(d, file)
+            
+            if os.path.isfile(full_path):
+
+                return True
+
+        return False
+
 
     def get_include_dirs(self):
 
@@ -226,25 +285,44 @@ class NMCModule(Extension):
 
     def get_libraries(self):
 
-        return ["neurospacesread", "event_algorithms", "symbol_algorithms", "ncurses", "readline"]
+        return ["neurospacesread", "event_algorithms",
+                "symbol_algorithms", "ncurses", "readline"]
 
-# Apperently it is trying to link the same file twice, and libtool is complaining about the
-# duplicate symbol. 
-# 
-# gcc-4.2 -Wl,-F. -bundle -undefined dynamic_lookup -arch i386 -arch ppc -arch x86_64 build/temp.macosx-10.6-universal-2.6/nmc_wrap.o build/temp.macosx-10.6-universal-2.6/nmc_wrap.o -L../../.. -L../../../algorithms/event -L../../../algorithms/symbol -lneurospacesread -levent_algorithms -lsymbol_algorithms -lncurses -lreadline -o build/lib.macosx-10.6-universal-2.6/_nmc_base.so
-#
+    def get_mac_architectures(self, file):
+        """
+        Returns string identifiers for the architecures present in the
+        given file.
+
+        """
+        lipo_output = getoutput("lipo -info %s" % file)
+
+        if re.search("can't figure out the architecture type of", lipo_output) or re.search("can't open input file", lipo_output):
+            
+            return None
+
+        else:
+            
+            arches = lipo_output.split(':')[-1]
+
+            return arches.split()
+        
+        
+#-------------------------------------------------------------------------------
+
+nmc_module=NMCModule()
+# my_ext = Extension("test",
+#                    sources=["test.c"],
+#                    swig_opts=["-DPRE_PROTO_TRAVERSAL", "-I../../.."],
+#                    extra_compile_args=["-DPRE_PROTO_TRAVERSAL"],
+#                    library_dirs=["../../..", "../../../algorithms/event", "../../../algorithms/symbol"],
+#                    include_dirs=["../../..", "../../../hierarchy/output/symbols", ],
+#                    libraries= ["neurospacesread", "event_algorithms","symbol_algorithms", "ncurses", "readline"]
+#                    )
+
 EXT_MODULES=[
-    
-    Extension("_nmc_base",
-              sources=["nmc_wrap.c", "nmc.i"],
-              swig_opts=["-DPRE_PROTO_TRAVERSAL", "-I../../.."],
-              extra_compile_args=["-DPRE_PROTO_TRAVERSAL"],
-              library_dirs=["../../..", "../../../algorithms/event", "../../../algorithms/symbol"],
-              include_dirs=["../../..", "../../../hierarchy/output/symbols", ],
-              libraries=["neurospacesread", "event_algorithms", "symbol_algorithms", "ncurses", "readline"],
-              ),
+    nmc_module,
     ]
-#pdb.set_trace()
+
 #-------------------------------------------------------------------------------
 
 setup(
