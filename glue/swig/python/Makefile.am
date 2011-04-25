@@ -77,6 +77,7 @@ CLEANFILES = \
 	$(srcdir)/nmc_wrap.c \
 	$(srcdir)/nmc_wrap.o \
 	$(srcdir)/nmc/_nmc_base.so \
-	$(srcdir)/nmc/nmc_base.py 
+	$(srcdir)/nmc/nmc_base.py \
+	$(srcdir)/nmc_base.py 
 
 

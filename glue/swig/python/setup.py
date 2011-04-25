@@ -186,7 +186,7 @@ else:
 # commands for determining library arch on mac osx:
 #    lipo -info
 #    otool -hv
-#
+#    uname -m
 
 #-------------------------------------------------------------------------------
 class NMCModule(Extension):
@@ -197,10 +197,9 @@ class NMCModule(Extension):
     def __init__(self):
 
         self._library_files = ["libneurospacesread.a", "libsymbol_algorithms.a", "libevent_algorithms.a" ]
-        self._library_paths = ["../../..", "../../../algorithms/symbol/", "../../../algorithms/event/",
-                               "/usr/local/lib/model-container", ]
+        self._library_paths = ["../../..", "../../../algorithms/symbol/", "../../../algorithms/event/", "/usr/local/lib/model-container"]
 
-        self._include_files = []
+        self._include_files = ["neurospaces/neurospaces.h"]
         self._include_paths = ["../../..", "/usr/local/include/model-container/" ]
         
         self.name = "nmc._nmc_base"
@@ -249,6 +248,11 @@ class NMCModule(Extension):
         return library_dirs
 
 
+    def get_include_dirs(self):
+
+        return ["../../..", "../../../hierarchy/output/symbols", ]
+
+
     def _get_path(self, dirs, file):
         """
         helper method, picks which path the given file is in and returns it.
@@ -279,10 +283,6 @@ class NMCModule(Extension):
         return False
 
 
-    def get_include_dirs(self):
-
-        return ["../../..", "../../../hierarchy/output/symbols", ]
-
     def get_libraries(self):
 
         return ["neurospacesread", "event_algorithms",
@@ -310,14 +310,6 @@ class NMCModule(Extension):
 #-------------------------------------------------------------------------------
 
 nmc_module=NMCModule()
-# my_ext = Extension("test",
-#                    sources=["test.c"],
-#                    swig_opts=["-DPRE_PROTO_TRAVERSAL", "-I../../.."],
-#                    extra_compile_args=["-DPRE_PROTO_TRAVERSAL"],
-#                    library_dirs=["../../..", "../../../algorithms/event", "../../../algorithms/symbol"],
-#                    include_dirs=["../../..", "../../../hierarchy/output/symbols", ],
-#                    libraries= ["neurospacesread", "event_algorithms","symbol_algorithms", "ncurses", "readline"]
-#                    )
 
 EXT_MODULES=[
     nmc_module,
