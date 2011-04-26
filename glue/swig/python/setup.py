@@ -149,7 +149,7 @@ CLASSIFIERS = [
     'Topic :: Research :: Neuroscience',
 ]
 
-PACKAGE_FILES=find_files('heccer')
+PACKAGE_FILES=find_files('nmc')
 
 OPTIONS={
     'sdist': {
