@@ -156,6 +156,10 @@ OPTIONS={
         'formats': ['gztar','zip'],
         'force_manifest': True,
         },
+    'bdist_mpkg': {
+        'zipdist': True,
+
+        }
     }
 
 PLATFORMS=["Unix", "Lunix", "MacOS X"]
@@ -169,8 +173,9 @@ if sys.platform == "darwin":
 else: 
     CMDCLASS = {'install_data': install_data}
 
+DATA_FILES=[]
 
-# swig: /usr/bin/swig -DPRE_PROTO_TRAVERSAL -I../../.. -python -outdir ./nmc -o nmc_wrap.c ./nmc.i
+
 #
 # compile: gcc -g -DPRE_PROTO_TRAVERSAL -I/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6
 # -I/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6 -I../../.. -I../../../hierarchy/output/symbols
@@ -194,14 +199,17 @@ class NMCModule(Extension):
     A class that abstracts methods that detect flags and paths
     for the target machine in a machine independent way. 
     """
-    def __init__(self):
+    def __init__(self, library_files=None, library_paths=None,
+                include_files=None, include_paths=None):
 
-        self._library_files = ["libneurospacesread.a", "libsymbol_algorithms.a", "libevent_algorithms.a" ]
-        self._library_paths = ["../../..", "../../../algorithms/symbol/", "../../../algorithms/event/", "/usr/local/lib/model-container"]
 
-        self._include_files = ["neurospaces/neurospaces.h"]
-        self._include_paths = ["../../..", "/usr/local/include/model-container/" ]
-        
+
+        self._library_files = library_files
+        self._library_paths = library_paths
+
+        self._include_files = include_files
+        self._include_paths = include_paths
+
         self.name = "nmc._nmc_base"
         self.sources = ["nmc.i"]
         self.swig_opts = self.get_swig_opts()
@@ -217,7 +225,6 @@ class NMCModule(Extension):
                            include_dirs=self.get_include_dirs(),
                            libraries=self.get_libraries()
                            )
-
     def get_extra_compile_args(self):
 
         return ["-DPRE_PROTO_TRAVERSAL"]
@@ -250,6 +257,27 @@ class NMCModule(Extension):
 
     def get_include_dirs(self):
 
+        include_dirs = []
+
+        for inc_file in self._include_files:
+
+            this_path = self._get_path(self._include_paths, inc_file)
+
+            if this_path is None:
+
+                raise Exception("Can't find path to headers for %s, can't build extension\n")
+
+            else:
+
+                if not this_path in include_dirs:
+
+                    include_dirs.append(this_path)
+
+        return include_dirs
+
+                
+
+                
         return ["../../..", "../../../hierarchy/output/symbols", ]
 
 
@@ -309,7 +337,36 @@ class NMCModule(Extension):
         
 #-------------------------------------------------------------------------------
 
-nmc_module=NMCModule()
+
+home_dir = os.getenv('USERPROFILE') or os.getenv('HOME')
+
+_developer_dir = os.path.join(home_dir,
+                             'neurospaces_project',
+                             'model-container',
+                             'source',
+                             'snapshots',
+                             '0'
+                             )
+
+_library_files = ["libneurospacesread.a", "libsymbol_algorithms.a", "libevent_algorithms.a" ]
+_library_paths = [_developer_dir,
+                 os.path.join(_developer_dir, 'algorithms', 'symbol'),
+                 os.path.join(_developer_dir, 'algorithms', 'event'),
+                 "../../..",
+                 "../../../algorithms/symbol/",
+                 "../../../algorithms/event/",
+                 "/usr/local/lib/model-container"]
+
+_include_files = ["neurospaces/neurospaces.h", "all_callees_headers.h"]
+_include_paths = [_developer_dir,
+                 os.path.join(_developer_dir, 'hierarchy', 'output', 'symbols'),
+                 "../../..",
+                 "/usr/local/include/model-container/" ]
+
+nmc_module=NMCModule(library_paths=_library_paths,
+                     library_files=_library_files,
+                     include_paths=_include_paths,
+                     include_files=_include_files)
 
 EXT_MODULES=[
     nmc_module,
@@ -323,7 +380,7 @@ setup(
     author=AUTHOR,
     author_email=AUTHOR_EMAIL,
     cmdclass=CMDCLASS,
-#    data_files=DATA_FILES,
+    data_files=DATA_FILES,
     description=DESCRIPTION,
     ext_modules=EXT_MODULES,
     long_description=LONG_DESCRIPTION,
@@ -336,6 +393,5 @@ setup(
     classifiers=CLASSIFIERS,
     options=OPTIONS,
     platforms=PLATFORMS,
-    setup_requires=['g3'],
 )
 
