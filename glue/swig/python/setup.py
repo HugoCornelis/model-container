@@ -40,6 +40,8 @@ class osx_install_data(install_data):
 
 #-------------------------------------------------------------------------------
 
+
+
 """
 Function for reading in a file and outputting it as a string. 
 """
@@ -63,6 +65,7 @@ def fullsplit(path, result=None):
     if head == path:
         return result
     return fullsplit(head, [tail] + result)
+
 
 #-------------------------------------------------------------------------------
 
@@ -92,33 +95,57 @@ def autodetect():
 #-------------------------------------------------------------------------------
 
 
+
+def filetype(p, file_types):
+    return p and p[0] != '.' and p[-1] != '~' and os.path.splitext(p)[1] in file_types
+
 """
 Returns a list of all files matching the given file types.
+
+Section 3.5 of this document explains the process of installing
+additional files:
+
+    http://docs.python.org/release/2.3.5/dist/setup-script.html
 """
 _file_types = ['.py']
 
 def find_files(root_directory, file_types=_file_types):
 
-    package_files = []
+    files = []
 
-    for path, directories, files in os.walk( root_directory ):
-        
-        for f in files:
-            
-            path_parts = fullsplit( os.path.join(path, f) )
+    packages = []
 
-            path_parts.pop(0)
+    for curdir, dirnames, filenames in os.walk(root_directory):
+        # Ignore dirnames that start with '.'
+        for i, dirname in enumerate(dirnames):
+            if dirname.startswith('.'):
 
-            this_file = '/'.join(path_parts)
+                del dirnames[i]
 
-            basename, extension = os.path.splitext( this_file )
-            
-            if extension in file_types:
+        if '__init__.py' in filenames:
+            packages.append('.'.join(fullsplit(curdir)))
 
-                package_files.append(this_file)
+        elif filenames:
 
-    return package_files
+            for i, f in enumerate(filenames):
 
+                # remove files from the list that don't have
+                # the suffix we require.
+                basename, extension = os.path.splitext( f )
+                if not extension in file_types:
+
+                    del filenames[i]
+
+            if len(filenames) != 0:
+                
+                files.append([curdir, [os.path.join(curdir, f) for f in filenames]])
+
+    pdb.set_trace()
+    return files
+
+
+
+library_files = find_files('../../../library', ['.ndf'])
 
 #-------------------------------------------------------------------------------
 NAME = cbi.GetPackageName()
@@ -173,8 +200,9 @@ if sys.platform == "darwin":
 else: 
     CMDCLASS = {'install_data': install_data}
 
-DATA_FILES=[]
 
+
+DATA_FILES=[('/usr/local/neurospaces/models/library/', library_files)]
 
 #
 # compile: gcc -g -DPRE_PROTO_TRAVERSAL -I/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6
@@ -274,11 +302,6 @@ class NMCModule(Extension):
                     include_dirs.append(this_path)
 
         return include_dirs
-
-                
-
-                
-        return ["../../..", "../../../hierarchy/output/symbols", ]
 
 
     def _get_path(self, dirs, file):
