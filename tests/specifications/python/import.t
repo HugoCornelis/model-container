@@ -14,8 +14,8 @@ my $test
 				command_tests => [
 						  {
 						   description => "Can we import the nmc module and it's base class ?",
-						   read => 'Importing nmc_base
-Importing nmc
+						   read => 'Importing model_container_base
+Importing model container
 Done!
 ',
 						  },

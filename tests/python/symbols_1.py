@@ -13,12 +13,13 @@ nmc_path = root_path + "/glue/swig/python/"
 sys.path.append(nmc_path)
 
 
-import nmc
-import nmc.symbols
+import neurospaces.model_container as nmc
+import neurospaces.model_container.symbols as symbols
+
 
 my_model_container = nmc.ModelContainer(None)
 
-seg = nmc.symbols.Segment("/test")
+seg = symbols.Segment("/test")
 
 seg.SetParameter("TEST", 100.0)
 

@@ -12,10 +12,10 @@ python_path = "/usr/local/glue/swig/python/"
 sys.path.append(python_path)
 
 
-print "Importing nmc_base"
-import g3.nmc.nmc_base
+print "Importing model_container_base"
+import neurospaces.model_container.model_container_base
 
 print "Importing nmc"
-import g3.nmc
+import neurospaces.model_container
 
 print "Done!"

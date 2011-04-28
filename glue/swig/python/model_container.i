@@ -1,4 +1,4 @@
-%module nmc_base	
+%module model_container_base	
 
 /***************************************************
 * Start C code block

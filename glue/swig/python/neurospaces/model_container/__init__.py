@@ -21,10 +21,10 @@ import sys
 
 try:
 
-    import nmc_base
+    import model_container_base as nmc_base
 
 except ImportError, e:
-    sys.exit("Could not import compiled SWIG nmc_base library: %s" % e)
+    sys.exit("Could not import compiled SWIG model container base library: %s" % e)
 
 
 
@@ -50,7 +50,7 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
-    def __init__(self, nmc=None):
+    def __init__(self, model=None):
         """!
         @brief ModelContainer constructor
 
@@ -65,7 +65,7 @@ class ModelContainer:
         # this is the "low level" model container object.
         self._nmc_core = None
 
-        if nmc == None:
+        if model == None:
 
             # Here we construct a new root model container 
             self._nmc_core = nmc_base.NeurospacesNew()
@@ -79,14 +79,14 @@ class ModelContainer:
             # isinstance typing should be ok here since
             # we're testing for a C class struct and a class.
             # - duck type?
-            if isinstance(nmc, ModelContainer):
+            if isinstance(model, ModelContainer):
 
-                self._nmc_core = nmc.GetRootModelContainer()
+                self._nmc_core = model.GetRootModelContainer()
 
-            elif isinstance(nmc, nmc_base.Neurospaces):
+            elif isinstance(model, nmc_base.Neurospaces):
                 
                 # Recycling an existing ModelContainer for the python interface
-                self._nmc_core = nmc
+                self._nmc_core = model
 
             else:
 

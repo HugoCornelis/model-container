@@ -24,46 +24,46 @@ SUBDIRS =
 #	$(INSTALL) -d $(distdir)/tests
 #	cp $(srcdir)/tests/*.py $(distdir)/tests
 
-# The nmc module is installed under the g3 module from the developer
+# The neurospaces/model_container module is installed under the g3 module from the developer
 # package. Since it comes first in the user workflow, it should 
 # be installed first.
 pythondir = $(prefix)/glue/swig/python/g3
 
 nobase_python_HEADERS = \
-	nmc/__cbi__.py \
-	nmc/__init__.py \
-	nmc/errors.py \
-	nmc/symbols.py
+	neurospaces/model_container/__cbi__.py \
+	neurospaces/model_container/__init__.py \
+	neurospaces/model_container/errors.py \
+	neurospaces/model_container/symbols.py
 
 nobase_python_DATA = \
-	nmc/nmc_base.py \
-	nmc/_nmc_base.so
+	neurospaces/model_container/model_container_base.py \
+	neurospaces/model_container/_model_container_base.so
 
 EXTRA_DIST = \
-	$(srcdir)/nmc.i 
+	$(srcdir)/model_container.i 
 
 BUILT_SOURCES = \
-	$(srcdir)/nmc_wrap.c \
-	$(srcdir)/nmc/nmc_base.py 
+	$(srcdir)/model_container_wrap.c \
+	$(srcdir)/neurospaces/model_container/model_container_base.py 
 
 
 #---------------------------------------------------------
-#----------- Rules for building the nmc swig binding -----
+#----------- Rules for building the neurospaces/model_container swig binding -----
 
-nmc_wrap.o: nmc_wrap.c
-	gcc $(SWIGCOMPILELINKSFORPYTHON) -c $(srcdir)/nmc_wrap.c
+model_container_wrap.o: model_container_wrap.c
+	gcc $(SWIGCOMPILELINKSFORPYTHON) -c $(srcdir)/model_container_wrap.c
 
-nmc_wrap.c ./nmc/nmc_base.py: 
-	$(SWIG) -DPRE_PROTO_TRAVERSAL -I$(top_builddir) -python -outdir $(srcdir)/nmc -o nmc_wrap.c $(srcdir)/nmc.i
+model_container_wrap.c ./neurospaces/model_container/model_container_base.py: 
+	$(SWIG) -DPRE_PROTO_TRAVERSAL -I$(top_builddir) -python -outdir $(srcdir)/neurospaces/model_container -o model_container_wrap.c $(srcdir)/model_container.i
 
-_nmc_base.so: nmc_wrap.o
-	$(NMC_SWIGLINKCOMMAND_PYTHON)
+neurospaces/model_container/_model_container_base.so: model_container_wrap.o
+	$(MODEL_CONTAINER_SWIGLINKCOMMAND_PYTHON)
 
-#--------------------- End rules for nmc swig ------------
+#--------------------- End rules for neurospaces/model_container swig ------------
 #---------------------------------------------------------
 
 
-all: _nmc_base.so
+all: neurospaces/model_container/_model_container_base.so
 
 
 clean-local:
@@ -74,10 +74,10 @@ clean-local:
 	$(RM) -rf $(srcdir)/dist/
 
 CLEANFILES = \
-	$(srcdir)/nmc_wrap.c \
-	$(srcdir)/nmc_wrap.o \
-	$(srcdir)/nmc/_nmc_base.so \
-	$(srcdir)/nmc/nmc_base.py \
-	$(srcdir)/nmc_base.py 
+	$(srcdir)/model_container_wrap.c \
+	$(srcdir)/model_container_wrap.o \
+	$(srcdir)/neurospaces/model_container/_model_container_base.so \
+	$(srcdir)/neurospaces/model_container/model_container_base.py \
+	$(srcdir)/model_container_base.py 
 
 

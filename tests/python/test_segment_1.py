@@ -12,14 +12,14 @@ my_path = root_path + "/glue/swig/python/"
 
 sys.path.append(my_path)
 
-import nmc
-import nmc.symbols
+import neurospaces.model_container as nmc
+import neurospaces.model_container.symbols as symbols
 
 my_model_container = nmc.ModelContainer(None)
 
-cell = nmc.symbols.Cell("/cell")
+cell = symbols.Cell("/cell")
 
-seg = nmc.symbols.Segment("/cell/soma")
+seg = symbols.Segment("/cell/soma")
 
 seg.SetInitialVm(-0.0680)
 seg.SetRm(1.000)

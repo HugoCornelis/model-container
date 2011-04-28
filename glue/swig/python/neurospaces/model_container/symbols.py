@@ -10,10 +10,10 @@ import errors
 
 try:
 
-    import nmc_base
+    import model_container_base as nmc_base
 
 except ImportError, e:
-    sys.exit("Could not import compiled SWIG nmc_base library: %s", e)
+    sys.exit("Could not import compiled SWIG model container base library: %s", e)
 
 
 

@@ -612,19 +612,19 @@ case "$host_os" in
 
             SWIGLINKCOMMAND_PYTHON='$(AR) $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) swiggable_neurospaces_wrap.o'
 
-	    NMC_SWIGLINKCOMMAND_PYTHON='$(AR) $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/nmc/_nmc_base.so nmc_wrap.o'
+	    MODEL_CONTAINER_SWIGLINKCOMMAND_PYTHON='$(AR) $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/neurospaces/model_container/_model_container_base.so model_container_wrap.o'
 
           else
 
             SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) /usr/lib/bundle1.o swiggable_neurospaces_wrap.o'
 
 
-	    NMC_SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/nmc/_nmc_base.so /usr/lib/bundle1.o nmc_wrap.o'
+	    MODEL_CONTAINER_SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/neurospaces/model_container/_model_container_base.so /usr/lib/bundle1.o model_container_wrap.o'
  
           fi
             
           AC_SUBST(SWIGLINKCOMMAND_PYTHON)
-          AC_SUBST(NMC_SWIGLINKCOMMAND_PYTHON)
+          AC_SUBST(MODEL_CONTAINER_SWIGLINKCOMMAND_PYTHON)
 
 	;;
 
@@ -634,8 +634,8 @@ case "$host_os" in
             SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION) swiggable_neurospaces_wrap.o'
             AC_SUBST(SWIGLINKCOMMAND_PYTHON)
 
-	    NMC_SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/nmc/_nmc_base.so nmc_wrap.o'
-            AC_SUBST(NMC_SWIGLINKCOMMAND_PYTHON)
+	    MODEL_CONTAINER_SWIGLINKCOMMAND_PYTHON='ld $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/neurospaces/model_container/_nmc_base.so nmc_wrap.o'
+            AC_SUBST(MODEL_CONTAINER_SWIGLINKCOMMAND_PYTHON)
 
             
 	;;
@@ -715,8 +715,8 @@ case "$host_os" in
 
     # note: Must remember that the "-shared objectfile.o" part must be FIRST, otherwise it will silently
     # not link the symbols but give the appearance that it has completed successully. 
-    NMC_SWIGLINKCOMMAND_PYTHON='gcc -shared nmc_wrap.o $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/nmc/_nmc_base.so'
-    AC_SUBST(NMC_SWIGLINKCOMMAND_PYTHON)
+    MODEL_CONTAINER_SWIGLINKCOMMAND_PYTHON='gcc -shared model_container_wrap.o $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/neurospaces/model_container/_model_container_base.so'
+    AC_SUBST(MODEL_CONTAINER_SWIGLINKCOMMAND_PYTHON)
 
     dnl }}} End of General Settings
   

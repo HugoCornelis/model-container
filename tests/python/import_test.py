@@ -14,10 +14,10 @@ nmc_path = root_path + "/glue/swig/python/"
 sys.path.append(nmc_path)
 
 
-print "Importing nmc_base"
-import nmc.nmc_base
+print "Importing model_container_base"
+import neurospaces.model_container.model_container_base
 
-print "Importing nmc"
-import nmc
+print "Importing model container"
+import neurospaces.model_container
 
 print "Done!"

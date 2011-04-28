@@ -12,7 +12,7 @@ my_path = root_path + "/glue/swig/python/"
 
 sys.path.append(my_path)
 
-import nmc
+import neurospaces.model_container as nmc
 
 my_model_container = nmc.ModelContainer(None)
 
