@@ -27,7 +27,7 @@ SUBDIRS =
 # The neurospaces/model_container module is installed under the g3 module from the developer
 # package. Since it comes first in the user workflow, it should 
 # be installed first.
-pythondir = $(prefix)/glue/swig/python/g3
+pythondir = $(prefix)/glue/swig/python/
 
 nobase_python_HEADERS = \
 	neurospaces/model_container/__cbi__.py \
