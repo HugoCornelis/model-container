@@ -28,6 +28,8 @@ Makefile$
 ^glue/swig/python/nmc/nmc_base.py$
 ^glue/swig/python/nmc/_nmc_base.so$
 ^glue/swig/python/nmc_wrap.c$
+^glue/swig/python/neurospaces/model_container/model_container_base.py$
+^glue/swig/python/model_container_wrap.c$
 ^hierarchy/output
 ^html/htdocs/neurospaces_project/neurospaces/
 ^installed$
