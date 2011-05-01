@@ -146,6 +146,9 @@ def find_files(root_directory, file_types=_file_types):
 library_files=[]
 #library_files = find_files('../../../library', ['.ndf'])
 
+
+home_dir = os.getenv('USERPROFILE') or os.getenv('HOME')
+
 #-------------------------------------------------------------------------------
 NAME = cbi.GetPackageName()
 VERSION = cbi.GetVersion()
@@ -184,6 +187,7 @@ OPTIONS={
         },
     'bdist_mpkg': {
         'zipdist': True,
+        'license' : '%s/license.txt' % home_dir,
 
         }
     }
