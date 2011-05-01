@@ -12,7 +12,7 @@ from distutils.command.install_data import install_data
 # import the cbi module. We use this since the check
 # for the compiled swig nmc_base gives an error
 # if we import from nmc.__cbi__
-cbi = imp.load_source('__cbi__', './nmc/__cbi__.py')
+cbi = imp.load_source('__cbi__', './neurospaces/model_container/__cbi__.py')
 
 #
 # API for the platform class http://docs.python.org/library/platform.html
@@ -140,12 +140,11 @@ def find_files(root_directory, file_types=_file_types):
                 
                 files.append([curdir, [os.path.join(curdir, f) for f in filenames]])
 
-    pdb.set_trace()
     return files
 
 
-
-library_files = find_files('../../../library', ['.ndf'])
+library_files=[]
+#library_files = find_files('../../../library', ['.ndf'])
 
 #-------------------------------------------------------------------------------
 NAME = cbi.GetPackageName()
@@ -176,7 +175,7 @@ CLASSIFIERS = [
     'Topic :: Research :: Neuroscience',
 ]
 
-PACKAGE_FILES=find_files('nmc')
+PACKAGE_FILES=find_files('neurospaces/model_containers')
 
 OPTIONS={
     'sdist': {
@@ -191,7 +190,7 @@ OPTIONS={
 
 PLATFORMS=["Unix", "Lunix", "MacOS X"]
 
-PY_MODULES=['heccer']
+PY_MODULES=['neurospaces.model_container']
 
 
 CMDCLASS = None
@@ -238,8 +237,8 @@ class NMCModule(Extension):
         self._include_files = include_files
         self._include_paths = include_paths
 
-        self.name = "nmc._nmc_base"
-        self.sources = ["nmc.i"]
+        self.name = "neurospaces.model_container._model_container_base"
+        self.sources = ["model_container.i"]
         self.swig_opts = self.get_swig_opts()
         self.extra_compile_args = self.get_extra_compile_args()
         self.libraries = self.get_libraries()
@@ -410,8 +409,8 @@ setup(
     license=LICENSE,
     keywords=KEYWORDS,
     url=URL,
-    packages=['nmc'],
-    package_data={'nmc' : PACKAGE_FILES},
+    packages=['neurospaces.model_container'],
+    package_data={'neurospaces.model_container' : PACKAGE_FILES},
 #     package_dir={'' : ''},
     classifiers=CLASSIFIERS,
     options=OPTIONS,
