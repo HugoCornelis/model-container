@@ -1,3 +1,20 @@
+/**********************************************************
+python list methods from http://www.swig.org/Doc1.3/Python.html
+
+
+PyObject *PyList_New(int size);
+int       PyList_Size(PyObject *list);
+PyObject *PyList_GetItem(PyObject *list, int i);
+int       PyList_SetItem(PyObject *list, int i, PyObject *item);
+int       PyList_Insert(PyObject *list, int i, PyObject *item);
+int       PyList_Append(PyObject *list, PyObject *item);
+PyObject *PyList_GetSlice(PyObject *list, int i, int j);
+int       PyList_SetSlice(PyObject *list, int i, int , PyObject *list2);
+int       PyList_Sort(PyObject *list);
+int       PyList_Reverse(PyObject *list);
+PyObject *PyList_AsTuple(PyObject *list);
+int       PyList_Check(PyObject *);
+***********************************************************/
 
 %{
 
