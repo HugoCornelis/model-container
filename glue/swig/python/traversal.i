@@ -1,3 +1,5 @@
+/* -*- c -*- */
+
 /**********************************************************
 python list methods from http://www.swig.org/Doc1.3/Python.html
 
@@ -18,71 +20,236 @@ int       PyList_Check(PyObject *);
 
 %{
 
-char * NeurospacesGetObject(struct Neurospaces *pneuro)
+//--------------------------- Start neurospaces includes ---------------------
+#include "neurospaces/algorithminstance.h"
+#include "neurospaces/biolevel.h"
+#include "neurospaces/cachedconnection.h"
+#include "neurospaces/components/algorithmsymbol.h"
+#include "neurospaces/components/attachment.h"
+#include "neurospaces/components/axonhillock.h"
+#include "neurospaces/components/biocomp.h"
+#include "neurospaces/components/cell.h"
+#include "neurospaces/components/channel.h"
+#include "neurospaces/components/connection.h"
+#include "neurospaces/components/emcontour.h"
+#include "neurospaces/components/equationexponential.h"
+#include "neurospaces/components/fiber.h"
+#include "neurospaces/components/gatekinetic.h"
+#include "neurospaces/components/group.h"
+#include "neurospaces/components/hhgate.h"
+#include "neurospaces/components/network.h"
+#include "neurospaces/components/pool.h"
+#include "neurospaces/components/population.h"
+#include "neurospaces/components/projection.h"
+#include "neurospaces/components/randomvalue.h"
+#include "neurospaces/components/segment.h"
+#include "neurospaces/components/segmenter.h"
+#include "neurospaces/components/vector.h"
+#include "neurospaces/components/vectorconnectionsymbol.h"
+#include "neurospaces/components/vectorsegment.h"
+#include "neurospaces/dependencyfile.h"
+#include "neurospaces/function.h"
+#include "neurospaces/idin.h"
+#include "neurospaces/importedfile.h"
+#include "neurospaces/inputoutput.h"
+#include "neurospaces/iocontainer.h"
+#include "neurospaces/neurospaces.h"
+#include "neurospaces/parameters.h"
+#include "neurospaces/parsersupport.h"
+#include "neurospaces/pidinstack.h"
+#include "neurospaces/positionD3.h"
+#include "neurospaces/querymachine.h"
+#include "neurospaces/solverinfo.h"
+#include "neurospaces/symbols.h"
+#include "neurospaces/symboltable.h"
+#include "neurospaces/traversalinfo.h"
+#include "neurospaces/treespacetraversal.h"
+#include "neurospaces/workload.h"
+#include "neurospaces/symbolvirtual_protos.h"
+#include "hierarchy/output/symbols/all_callees_headers.h"
+//--------------------------- End neurospaces includes ------------------------
+
+
+#include <Python.h>
+
+
+//-----------------------------------------------------------------------------
+/*
+ * \param pneuro A pointer to a Neurospaces object
+ * \returns A pointer to a python list
+ *  
+ *  
+ */
+PyObject * SymbolsToList(struct Neurospaces *pneuro)
 {
-    static char pcResult[100];
 
-    sprintf(pcResult, "pneuro (%p), root import (%p)\n", pneuro, pneuro->pifRootImport);
-
-/*     fprintf(stdout, "NeurospacesGetObject(): %s", pcResult); */
-
-    return(pcResult);
-}
-
-
-struct Neurospaces * NeurospacesSetObject(char *pcNeurospaces)
-{
-    void *pv;
-
-    struct Neurospaces *pneuroResult = NULL;
-
-    sscanf(pcNeurospaces, "pneuro (%p), root import (%p)", &pneuroResult, &pv);
-
-/*     fprintf(stdout, "NeurospacesSetObject(): pneuro (%p), root import (%p)\n", pneuroResult, pneuroResult->pifRootImport); */
-
-    return(pneuroResult);
-}
+  int i;
+  int iTraverse;
+  PyObject * ppoSymbolList = NULL;
+  PyObject * ppoTmpName = NULL;
+  struct traversal_info ci;
+  struct TreespaceTraversal *ptstr = NULL;
 
 
-int treespace_traversal_go(struct traversal *pt)
-{
-    int iResult = 0;
+  //- Start out with an empty list
 
-    struct symtab_HSolveListElement *phsle
-	= PidinStackLookupTopSymbol(pt->ptstr->ppist);
+  PyObject * ppoSymbolList = PyList_New(0);
 
-    if (phsle)
+  if( !ppoSymbolList )
+  {
+    PyErr_SetString(PyExc_MemoryError,"can't allocate symbol list");
+    return NULL;
+  }
+
+  //- construct children info
+
+  struct traversal_info ci =
     {
-	iResult = TstrGo(pt->ptstr, phsle);
+      //m information request flags
+      
+      (TRAVERSAL_INFO_NAMES
+       | TRAVERSAL_INFO_TYPES
+       | TRAVERSAL_INFO_COORDS_LOCAL
+       | TRAVERSAL_INFO_COORDS_ABSOLUTE),
+
+      //m traversal method flags
+
+      0,
+
+      //m traversal result for CHILDREN_TRAVERSAL_FIXED_RETURN
+
+      0,
+
+      //m current child index
+
+      0,
+
+      //m pidinstack pointing to root
+
+      NULL,
+
+      //m serials of symbols
+
+      NULL,
+
+      //m types of symbols
+
+      NULL,
+
+      //m chars with complete contexts
+
+      NULL,
+
+      //m chars with symbol names
+
+      NULL,
+
+      //m chars with symbol types
+
+      NULL,
+
+      //m local coordinates of symbols
+
+      NULL,
+
+      //m absolute coordinates of symbols
+
+      NULL,
+
+      //m absolute coordinates of parent segments
+
+      NULL,
+
+      NULL,
+
+      //m non-cumulative workload for symbols
+
+      NULL,
+
+      //m cumulative workload for symbols
+
+      NULL,
+
+      //m current cumulative workload
+
+      0,
+
+      //m stack top
+
+      -1,
+
+      //m stack used for accumulation
+
+      NULL,
+
+      //m stack used to track the traversal index of visited symbols
+
+      NULL,
+
+      //m allocation count
+
+      0,
+    };
+
+
+  struct TreespaceTraversal *ptstr
+    = TstrNew
+    (ppist,
+     NULL,
+     NULL,
+     TraversalInfoCollectorProcessor,
+     (void *)&ci,
+     NULL,
+     NULL);
+
+
+  int iTraverse = TstrGo(ptstr, phsle);
+
+  TstrDelete(ptstr);
+
+  // Loop through all found children and append them to the list
+
+  if (ci.iChildren)
+  {
+
+    for (i = 0; i < ci.iChildren; i++)
+    {
+      
+      if ( !ci.ppcNames[i] )
+	continue;
+
+      ppoName = PyString_AsString(ci.ppcNames[i]);
+
+      if (PyString_Check(ppoName))
+      {
+
+	ppoTmpName = PyString_AsString(PyList_GetItem($source,i));
+
+      }
+      else {
+
+	PyErr_SetString(PyExc_TypeError,"list must contain strings");
+	free(ppoSymbolList);
+	return NULL;
+
+      }
+
+      // After converting the string to a python string we append 
+      PyList_Append(ppoSymbolList, ppoTmpName);
+
     }
+  }
 
-    TstrDelete(pt->ptstr);
+  //- free allocated memory
 
-    free(pt);
+  TraversalInfoFree(&ci);
 
-    return(iResult);
+  return ppoSymbolList
 }
 
+//-----------------------------------------------------------------------------
 
-struct traversal *
-treespace_traversal_new
-(struct PidinStack *ppist,
- void *pvPerlTraversal,
- void *pvSelector,
- void *pvProcessor,
- void *pvFinalizer)
-{
-    struct traversal *pt = calloc(1, sizeof(struct traversal));
 
-    pt->pvPerlTraversal = pvPerlTraversal;
-    pt->pvSelector = pvSelector;
-    pt->pvProcessor = pvProcessor;
-    pt->pvFinalizer = pvFinalizer;
-    
-    pt->ptstr = TstrNew(ppist, treespace_traversal_selector, pt, treespace_traversal_processor, pt, treespace_traversal_finalizer, pt);
-
-    return(pt);
-}
 
 %}
 

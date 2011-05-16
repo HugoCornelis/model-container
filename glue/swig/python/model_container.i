@@ -1,3 +1,5 @@
+/* -*- c -*- */
+
 %module model_container_base	
 
 /***************************************************
@@ -7,6 +9,7 @@
 
 
 struct symtab_Invisible;
+
 
 #include "neurospaces/algorithminstance.h"
 #include "neurospaces/algorithmset.h"
@@ -93,24 +96,26 @@ struct symtab_Invisible;
     $1 = $input;
 };
 
+// Taken from the python SWIG documentation.
+
 // This tells SWIG to treat char ** as a special case
 %typemap(in) char ** {
   /* Check if is a list */
-  if (PyList_Check($input)) {
-    int size = PyList_Size($input);
+  if (PyList_Check($source)) {
+    int size = PyList_Size($source);
     int i = 0;
-    $1 = (char **) malloc((size+1)*sizeof(char *));
+    $target = (char **) malloc((size+1)*sizeof(char *));
     for (i = 0; i < size; i++) {
-      PyObject *o = PyList_GetItem($input,i);
+      PyObject *o = PyList_GetItem($source,i);
       if (PyString_Check(o))
-	$1[i] = PyString_AsString(PyList_GetItem($input,i));
+	$target[i] = PyString_AsString(PyList_GetItem($source,i));
       else {
 	PyErr_SetString(PyExc_TypeError,"list must contain strings");
-	free($1);
+	free($target);
 	return NULL;
       }
     }
-    $1[i] = 0;
+    $target[i] = 0;
   } else {
     PyErr_SetString(PyExc_TypeError,"not a list");
     return NULL;
@@ -119,9 +124,22 @@ struct symtab_Invisible;
 
 // This cleans up the char ** array we malloc'd before the function call
 %typemap(freearg) char ** {
-  free((char *) $1);
+  free((char *) $source);
 }
 
+// This allows a C function to return a char ** as a Python list
+%typemap(out) char ** {
+  int len,i;
+  len = 0;
+  while ($source[len]) len++;
+  $target = PyList_New(len);
+  for (i = 0; i < len; i++) {
+    PyList_SetItem($target,i,PyString_FromString($source[i]));
+  }
+}
+
+
+}
 /***************************************************
 * End Imports and Typemaps
 ***************************************************/
