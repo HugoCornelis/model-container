@@ -200,9 +200,13 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
-    def ChildrenToList(self, path):
+    def ChildrenToList(self, path, typed=False):
         """!
-        @brief 
+        @brief Returns all child symbols of the given path as a list
+        @param path A path to an element in the model container
+        @param typed If true return the name with the type
+
+        Returns the immediate children to the symbol found at the given path
         """
         
         ppist = nmc_base.PidinStackParse(path)
@@ -211,9 +215,17 @@ class ModelContainer:
 
         if phsle is None:
 
-            return None
+            raise Exception("No symbol found at '%s'" % path)
 
-        symbol_list = nmc_base.ChildSymbolsToList(phsle, ppist)
+        symbol_list = []
+
+        if typed:
+
+            symbol_list = nmc_base.ChildTypedSymbolsToList(phsle, ppist)
+
+        else:
+            
+            symbol_list = nmc_base.ChildSymbolsToList(phsle, ppist)
 
         return symbol_list
 

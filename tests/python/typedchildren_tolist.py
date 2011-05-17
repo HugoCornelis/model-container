@@ -28,9 +28,10 @@ except Exception, e:
 my_model_container.Read("cells/purkinje/edsjb1994.ndf")
 
 
-children = my_model_container.ChildrenToList('/')
+children = my_model_container.ChildrenToList('/', typed=True)
 
-print "Top level child is: %s" % children[0]
+print "Top level child is:",
+print children[0]
 
 print "Done!"
 
