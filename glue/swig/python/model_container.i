@@ -138,6 +138,7 @@ struct symtab_Invisible;
   }
 }
 
+%include "traversal.i"
 
 
 /***************************************************

@@ -80,20 +80,19 @@ int       PyList_Check(PyObject *);
  *  
  *  
  */
-PyObject * SymbolsToList(struct Neurospaces *pneuro)
+PyObject * SymbolsToList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)
 {
 
   int i;
   int iTraverse;
   PyObject * ppoSymbolList = NULL;
   PyObject * ppoTmpName = NULL;
-  struct traversal_info ci;
   struct TreespaceTraversal *ptstr = NULL;
 
 
   //- Start out with an empty list
 
-  PyObject * ppoSymbolList = PyList_New(0);
+  ppoSymbolList = PyList_New(0);
 
   if( !ppoSymbolList )
   {
@@ -192,18 +191,16 @@ PyObject * SymbolsToList(struct Neurospaces *pneuro)
     };
 
 
-  struct TreespaceTraversal *ptstr
-    = TstrNew
-    (ppist,
-     NULL,
-     NULL,
-     TraversalInfoCollectorProcessor,
-     (void *)&ci,
-     NULL,
-     NULL);
+  ptstr = TstrNew(ppist,
+		  NULL,
+		  NULL,
+		  TraversalInfoCollectorProcessor,
+		  (void *)&ci,
+		  NULL,
+		  NULL);
 
 
-  int iTraverse = TstrGo(ptstr, phsle);
+  iTraverse = TstrGo(ptstr, phsle);
 
   TstrDelete(ptstr);
 
@@ -218,15 +215,10 @@ PyObject * SymbolsToList(struct Neurospaces *pneuro)
       if ( !ci.ppcNames[i] )
 	continue;
 
-      ppoName = PyString_AsString(ci.ppcNames[i]);
+      ppoTmpName = PyString_AsString(ci.ppcNames[i]);
 
-      if (PyString_Check(ppoName))
+      if (!PyString_Check(ppoTmpName))
       {
-
-	ppoTmpName = PyString_AsString(PyList_GetItem($source,i));
-
-      }
-      else {
 
 	PyErr_SetString(PyExc_TypeError,"list must contain strings");
 	free(ppoSymbolList);
@@ -244,7 +236,14 @@ PyObject * SymbolsToList(struct Neurospaces *pneuro)
 
   TraversalInfoFree(&ci);
 
-  return ppoSymbolList
+  if( !PyList_Check(ppoSymbolList) )
+  {
+
+    PyErr_SetString(PyExc_Exception,"invalid list was generated from the model container");
+
+  }
+
+  return ppoSymbolList;
 }
 
 //-----------------------------------------------------------------------------
