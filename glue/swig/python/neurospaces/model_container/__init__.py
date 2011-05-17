@@ -200,6 +200,25 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
+    def ChildrenToList(self, path):
+        """!
+        @brief 
+        """
+        
+        ppist = nmc_base.PidinStackParse(path)
+
+        phsle = nmc_base.PidinStackLookupTopSymbol(ppist)
+
+        if phsle is None:
+
+            return None
+
+        symbol_list = nmc_base.ChildSymbolsToList(phsle, ppist)
+
+        return symbol_list
+
+#---------------------------------------------------------------------------
+
 
     def SetParameterConcept(self, path, parameter, value):
         """!

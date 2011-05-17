@@ -16,71 +16,37 @@ int       PyList_Sort(PyObject *list);
 int       PyList_Reverse(PyObject *list);
 PyObject *PyList_AsTuple(PyObject *list);
 int       PyList_Check(PyObject *);
+
+Link to the PyString API functions: http://docs.python.org/c-api/string.html
 ***********************************************************/
 
 %{
-
-//--------------------------- Start neurospaces includes ---------------------
-#include "neurospaces/algorithminstance.h"
-#include "neurospaces/biolevel.h"
-#include "neurospaces/cachedconnection.h"
-#include "neurospaces/components/algorithmsymbol.h"
-#include "neurospaces/components/attachment.h"
-#include "neurospaces/components/axonhillock.h"
-#include "neurospaces/components/biocomp.h"
-#include "neurospaces/components/cell.h"
-#include "neurospaces/components/channel.h"
-#include "neurospaces/components/connection.h"
-#include "neurospaces/components/emcontour.h"
-#include "neurospaces/components/equationexponential.h"
-#include "neurospaces/components/fiber.h"
-#include "neurospaces/components/gatekinetic.h"
-#include "neurospaces/components/group.h"
-#include "neurospaces/components/hhgate.h"
-#include "neurospaces/components/network.h"
-#include "neurospaces/components/pool.h"
-#include "neurospaces/components/population.h"
-#include "neurospaces/components/projection.h"
-#include "neurospaces/components/randomvalue.h"
-#include "neurospaces/components/segment.h"
-#include "neurospaces/components/segmenter.h"
-#include "neurospaces/components/vector.h"
-#include "neurospaces/components/vectorconnectionsymbol.h"
-#include "neurospaces/components/vectorsegment.h"
-#include "neurospaces/dependencyfile.h"
-#include "neurospaces/function.h"
-#include "neurospaces/idin.h"
-#include "neurospaces/importedfile.h"
-#include "neurospaces/inputoutput.h"
-#include "neurospaces/iocontainer.h"
-#include "neurospaces/neurospaces.h"
-#include "neurospaces/parameters.h"
-#include "neurospaces/parsersupport.h"
-#include "neurospaces/pidinstack.h"
-#include "neurospaces/positionD3.h"
-#include "neurospaces/querymachine.h"
-#include "neurospaces/solverinfo.h"
-#include "neurospaces/symbols.h"
-#include "neurospaces/symboltable.h"
+//------------------------- Start Neurospaces includes -------------------------
 #include "neurospaces/traversalinfo.h"
-#include "neurospaces/treespacetraversal.h"
-#include "neurospaces/workload.h"
-#include "neurospaces/symbolvirtual_protos.h"
-#include "hierarchy/output/symbols/all_callees_headers.h"
-//--------------------------- End neurospaces includes ------------------------
+//------------------------- End Neurospaces includes ---------------------------
 
 
 #include <Python.h>
+%}
+
+
+%inline %{
+
+ 
+PyObject * ChildSymbolsToList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist);
 
 
 //-----------------------------------------------------------------------------
 /*
- * \param pneuro A pointer to a Neurospaces object
- * \returns A pointer to a python list
- *  
- *  
+ * \fun PyObject * SymbolsToList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)
+ * \param phsle A pointer to an hsolve list element  
+ * \param ppist A pointer to an identifier context
+ * \returns A pointer to a python list object
+ *
+ * Performs a traversal and returns a list of all symbols that are children to the given
+ * symbol+context. 
  */
-PyObject * SymbolsToList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)
+PyObject * ChildSymbolsToList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)
 {
 
   int i;
@@ -214,8 +180,9 @@ PyObject * SymbolsToList(struct symtab_HSolveListElement *phsle, struct PidinSta
       
       if ( !ci.ppcNames[i] )
 	continue;
-
-      ppoTmpName = PyString_AsString(ci.ppcNames[i]);
+      
+      // Converts the regular string into a python string object
+      ppoTmpName = PyString_FromString(ci.ppcNames[i]);
 
       if (!PyString_Check(ppoTmpName))
       {
@@ -247,13 +214,6 @@ PyObject * SymbolsToList(struct symtab_HSolveListElement *phsle, struct PidinSta
 }
 
 //-----------------------------------------------------------------------------
-
-
-
-%}
-
-
-%inline %{
 
 %}
 
