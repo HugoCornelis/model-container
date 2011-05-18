@@ -47,6 +47,54 @@ PyObject * ChildTypedSymbolsToList(struct symtab_HSolveListElement *phsle, struc
 
 //------------------------------------------------------------------------------
 /*
+ * Returns a dict of coodinates in the form ['key'](x, y z)
+ * Attempts cleanup of objects in the event of an error.
+ */
+static PyObject * CoordinateDict(char *pcKey, double dX, double dY, double dZ)
+{
+
+  PyObject * ppoDict = NULL;
+  PyObject * ppoTuple = NULL;
+
+  if(!pcKey)
+  {
+    return NULL;
+  }
+
+  ppoDict = PyDict_New();
+
+
+  if( !ppoDict )
+  {
+    PyErr_SetString(PyExc_MemoryError,"can't allocate coordinate dict");
+    return NULL;
+  } 
+  
+  ppoTuple = CoordinateTuple(dX, dY, dZ);
+
+  if( !ppoTuple )
+  {
+    PyDict_Clear(ppoDict);
+    return NULL;
+  }
+  
+  PyDict_SetItemString(ppoDict, pcKey, ppoTuple);
+
+  if( !PyDict_Check(ppoDict) )
+  {
+    PyDict_Clear(ppoDict);
+
+    return NULL;
+  }
+
+}
+
+//------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------
+/*
  * Returns a tuple of coodinates in the form (x, y z)
  * Attempts cleanup of objects in the event of an error.
  */
@@ -133,11 +181,13 @@ PyObject * ChildSymbolsToDictList(struct symtab_HSolveListElement *phsle, struct
   int iTraverse;
   PyObject * ppoList = NULL;
   PyObject * ppoTmpDict = NULL;
+  PyObject * ppoTmpSubDict = NULL;
+  PyObject * ppoTmpCoord = NULL;
   PyObject * ppoTmpName = NULL;
   PyObject * ppoTmpKey = NULL;
   PyObject * ppoTmpType = NULL;
-  PyObject * ppoTmpCoord = NULL;
   struct TreespaceTraversal *ptstr = NULL;
+  double dX, dY, dZ;
 
 
   //- Start out with an empty list
@@ -317,11 +367,68 @@ PyObject * ChildSymbolsToDictList(struct symtab_HSolveListElement *phsle, struct
       }
       
       // Add the different levels of coordinates here
+      // Should be set as:
+      //               ['coordinate']['local']
+      //               ['coordinate']['absolute']
+      //               ['coordinate']['absolute_parent']
       if( iCoordsLocal || iCoordsAbsolute || iCoordsAbsoluteParent )
       {
 	
-	
+	ppoTmpSubDict = PyDict_New();
+	  
+	if(!ppoTmpSubDict)
+	{
+	  PyErr_SetString(PyExc_MemoryError,
+			  "can't allocate dict object for coordinates");
+	  return NULL;
+	}
 
+	// Short circuiting to make sure it doesn't crash
+	if( iCoordsLocal && ci.ppD3CoordsLocal && 
+	    ci.ppD3CoordsLocal[i] && ci.ppD3CoordsLocal[i]->dx != DBL_MAX )
+	{
+
+	  ppoTmpCoord = CoordinateTuple(ci.ppD3CoordsLocal[i]->dx,
+					ci.ppD3CoordsLocal[i]->dy,
+					ci.ppD3CoordsLocal[i]->dz);
+	  
+	  PyDict_SetItemString(ppoTmpSubDict, "local", ppoTmpCoord);
+
+	  ppoTmpCoord = NULL;
+
+	}
+
+	if( iCoordsAbsolute && ci.ppD3CoordsAbsolute && 
+	    ci.ppD3CoordsAbsolute[i] && ci.ppD3CoordsAbsolute[i]->dx != DBL_MAX )
+	{
+
+	  ppoTmpCoord = CoordinateTuple(ci.ppD3CoordsAbsolute[i]->dx,
+					ci.ppD3CoordsAbsolute[i]->dy,
+					ci.ppD3CoordsAbsolute[i]->dz);
+
+	  PyDict_SetItemString(ppoTmpSubDict, "absolute", ppoTmpCoord);
+
+	  ppoTmpCoord = NULL;
+
+	}
+
+	if( iCoordsAbsoluteParent && ci.ppD3CoordsAbsoluteParent && 
+	    ci.ppD3CoordsAbsoluteParent[i] && 
+	    ci.ppD3CoordsAbsoluteParent[i]->dx != DBL_MAX )
+	{
+
+	  ppoTmpCoord = CoordinateTuple(ci.ppD3CoordsAbsoluteParent[i]->dx,
+					ci.ppD3CoordsAbsoluteParent[i]->dy,
+					ci.ppD3CoordsAbsoluteParent[i]->dz);
+
+	  PyDict_SetItemString(ppoTmpSubDict, "absolute_parent", ppoTmpCoord);
+
+	  ppoTmpCoord = NULL;
+	}
+
+	// Place all coordinates from the dict into the top level dict
+
+	PyDict_SetItemString(ppoTmpDict, "coordinate", ppoTmpSubDict);
 
       }
 
