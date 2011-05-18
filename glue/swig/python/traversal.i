@@ -45,8 +45,10 @@ PyObject * ChildTypedSymbolsToList(struct symtab_HSolveListElement *phsle, struc
 //------------------------------------------ End Prototypes ---------------------------
 
 
+//------------------------------------------------------------------------------
 /*
  * Returns a tuple of coodinates in the form (x, y z)
+ * Attempts cleanup of objects in the event of an error.
  */
 static PyObject * CoordinateTuple(double dX, double dY, double dZ)
 {
@@ -114,9 +116,10 @@ static PyObject * CoordinateTuple(double dX, double dY, double dZ)
   return ppoTuple;
 
 }
+//------------------------------------------------------------------------------
 
 
-
+//------------------------------------------------------------------------------
 /*
  *
  * Depending on flags given it will construct a python dict object. 
@@ -342,6 +345,8 @@ PyObject * ChildSymbolsToDictList(struct symtab_HSolveListElement *phsle, struct
 
   return ppoList;
 }
+//------------------------------------------------------------------------------
+
 
 
 //-----------------------------------------------------------------------------

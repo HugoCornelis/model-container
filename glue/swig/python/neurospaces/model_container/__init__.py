@@ -200,6 +200,31 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
+    def ChildrenToDictList(self, path):
+        """!
+        @brief Returns all child symbols of the given path as a list
+        @param path A path to an element in the model container
+        @param typed If true return the name with the type
+
+        Returns the immediate children to the symbol found at the given path
+        """
+        
+        ppist = nmc_base.PidinStackParse(path)
+
+        phsle = nmc_base.PidinStackLookupTopSymbol(ppist)
+
+        if phsle is None:
+
+            raise Exception("No symbol found at '%s'" % path)
+
+        symbol_list = []
+    
+        symbol_list = nmc_base.ChildSymbolsToDictList(phsle, ppist, 1, 1, 1,1, 1, 1)
+
+        return symbol_list
+    
+#---------------------------------------------------------------------------
+
     def ChildrenToList(self, path, typed=False):
         """!
         @brief Returns all child symbols of the given path as a list
