@@ -186,6 +186,8 @@ class ModelContainer:
 
             return None
 
+        nmc_base.PidinStackFree(ppist)
+
         if isinstance(value, (int, long, float, complex)):
             
             nmc_base.SymbolSetParameterDouble(phsle, parameter, value)
@@ -221,6 +223,8 @@ class ModelContainer:
     
         symbol_list = nmc_base.ChildSymbolsToDictList(phsle, ppist, 1, 1, 1,1, 1, 1)
 
+        nmc_base.PidinStackFree(ppist)
+
         return symbol_list
     
 #---------------------------------------------------------------------------
@@ -252,6 +256,8 @@ class ModelContainer:
             
             symbol_list = nmc_base.ChildSymbolsToList(phsle, ppist)
 
+        nmc_base.PidinStackFree(ppist)
+
         return symbol_list
 
 #---------------------------------------------------------------------------
@@ -276,6 +282,8 @@ class ModelContainer:
         symbol_list = []
 
         symbol_list = nmc_base.CoordinatesToDictList(phsle, ppist, level, mode)
+
+        nmc_base.PidinStackFree(ppist)
 
         return symbol_list
 
