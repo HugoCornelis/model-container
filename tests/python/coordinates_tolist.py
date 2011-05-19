@@ -5,6 +5,7 @@ containers children symbols.
 """
 import os
 import pdb
+import pprint
 import sys
 
 my_path = os.path.join(os.environ['HOME'], 'neurospaces_project', 'model-container', 'source',
@@ -28,12 +29,13 @@ except Exception, e:
 my_model_container.Read("cells/purkinje/edsjb1994.ndf")
 
 
-children = my_model_container.CoordinatesToList('/', 1, 1)
+children = my_model_container.CoordinatesToList('/', 1, 10)
 
-pdb.set_trace()
+#pdb.set_trace()
+pp = pprint.PrettyPrinter()
+print "List is: ",
 
-print "Top level child is:",
-print children[0]
+pp.pprint(children)
 
 print "Done!"
 
