@@ -262,7 +262,7 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
-    def CoordinatesToList(self, path, level, mode):
+    def CoordinatesToList(self, path=None, level=1, mode=1):
         """!
         @brief Returns a list of coordinates
         @param path A path to an element in the model container
@@ -270,6 +270,9 @@ class ModelContainer:
         @param mode The mode to use, biolevel inclusive or children traversal.
         @returns A list of dict objects containing coordinates.
         """
+        if path is None:
+
+            raise Exception("No path given")
         
         ppist = nmc_base.PidinStackParse(path)
 

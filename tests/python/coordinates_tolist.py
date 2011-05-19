@@ -29,7 +29,7 @@ except Exception, e:
 my_model_container.Read("cells/purkinje/edsjb1994.ndf")
 
 
-children = my_model_container.CoordinatesToList('/', 1, 5)
+children = my_model_container.CoordinatesToList('/', 1, 1)
 
 #pdb.set_trace()
 pp = pprint.PrettyPrinter()

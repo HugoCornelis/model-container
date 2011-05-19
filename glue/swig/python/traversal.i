@@ -509,11 +509,11 @@ PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct 
 
       //m traversal method flags
 
-      iMode == SELECTOR_BIOLEVEL_INCLUSIVE ? CHILDREN_TRAVERSAL_FIXED_RETURN : 0,
+      (iMode == SELECTOR_BIOLEVEL_INCLUSIVE) ? CHILDREN_TRAVERSAL_FIXED_RETURN : 0,
 
       //m traversal result for CHILDREN_TRAVERSAL_FIXED_RETURN
 
-      iMode == SELECTOR_BIOLEVEL_INCLUSIVE ? TSTR_PROCESSOR_SUCCESS : 0,
+      (iMode == SELECTOR_BIOLEVEL_INCLUSIVE) ? TSTR_PROCESSOR_SUCCESS : 0,
 
 /* 	    //m traversal method flags */
 
