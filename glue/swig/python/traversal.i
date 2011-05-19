@@ -42,6 +42,8 @@ static PyObject * CoordinateTuple(double dX, double dY, double dZ);
 PyObject * ChildSymbolsToList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist);
 
 PyObject * ChildTypedSymbolsToList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist);
+
+PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, int iLevel, int iMode);
 //------------------------------------------ End Prototypes ---------------------------
 
 
@@ -436,6 +438,345 @@ PyObject * ChildSymbolsToDictList(struct symtab_HSolveListElement *phsle, struct
       PyList_Append(ppoList, ppoTmpDict);
 
     }
+  }
+
+  //- free allocated memory
+
+  TraversalInfoFree(&ci);
+
+  if( !PyList_Check(ppoList) )
+  {
+
+    PyErr_SetString(PyExc_Exception,"invalid dict list was generated from the model container");
+    free(ppoList);
+
+  }
+
+  return ppoList;
+}
+//------------------------------------------------------------------------------
+
+
+
+
+//------------------------------------------------------------------------------
+/*
+ *
+ * Depending on flags given it will construct a python dict object. 
+ */
+PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, int iLevel, int iMode)
+{
+
+  int i;
+  int iTraverse;
+  int iSuccess;
+  PyObject * ppoList = NULL;
+  PyObject * ppoTmpDia = NULL;
+  PyObject * ppoTmpDict = NULL;
+  PyObject * ppoTmpSubDict = NULL;
+  PyObject * ppoTmpCoord = NULL;
+  PyObject * ppoTmpName = NULL;
+  PyObject * ppoTmpSerial = NULL;
+  PyObject * ppoTmpKey = NULL;
+  PyObject * ppoTmpType = NULL;
+  struct TreespaceTraversal *ptstr = NULL;
+  double dX, dY, dZ;
+
+
+  //- Start out with an empty list
+
+  ppoList = PyList_New(0);
+
+  if( !ppoList )
+  {
+    PyErr_SetString(PyExc_MemoryError,"can't allocate coordinate dict list");
+    return NULL;
+  }
+
+  //- construct children info
+
+  int iTraversalFlags = TRAVERSAL_INFO_NAMES
+    | TRAVERSAL_INFO_COORDS_LOCAL
+    | TRAVERSAL_INFO_COORDS_ABSOLUTE
+    | TRAVERSAL_INFO_COORDS_ABSOLUTE_PARENT
+    | TRAVERSAL_INFO_TYPES;
+
+  struct traversal_info ci =
+    {
+      //m information request flags
+      
+      iTraversalFlags,
+
+      //m traversal method flags
+
+      iMode == SELECTOR_BIOLEVEL_INCLUSIVE ? CHILDREN_TRAVERSAL_FIXED_RETURN : 0,
+
+      //m traversal result for CHILDREN_TRAVERSAL_FIXED_RETURN
+
+      iMode == SELECTOR_BIOLEVEL_INCLUSIVE ? TSTR_PROCESSOR_SUCCESS : 0,
+
+/* 	    //m traversal method flags */
+
+/* 	    0, */
+
+/* 	    //m traversal result for CHILDREN_TRAVERSAL_FIXED_RETURN */
+
+/* 	    0, */
+
+      //m current child index
+
+      0,
+
+      //m pidinstack pointing to root
+
+      NULL,
+
+      //m serials of symbols
+
+      NULL,
+
+      //m types of symbols
+
+      NULL,
+
+      //m chars with complete contexts
+
+      NULL,
+
+      //m chars with symbol names
+
+      NULL,
+
+      //m chars with symbol types
+
+      NULL,
+
+      //m local coordinates of symbols
+
+      NULL,
+
+      //m absolute coordinates of symbols
+
+      NULL,
+
+      //m absolute coordinates of parent segments
+
+      NULL,
+
+      NULL,
+
+      //m non-cumulative workload for symbols
+
+      NULL,
+
+      //m cumulative workload for symbols
+
+      NULL,
+
+      //m current cumulative workload
+
+      0,
+
+      //m stack top
+
+      -1,
+
+      //m stack used for accumulation
+
+      NULL,
+
+      //m stack used to track the traversal index of visited symbols
+
+      NULL,
+
+      //m allocation count
+
+      0,
+    };
+
+  struct BiolevelSelection bls =
+    {
+      //m chained user data
+      
+      NULL,
+
+      //m mode : exclusive, inclusive
+
+      iMode,
+
+      //m selected level
+
+      iLevel,
+
+      //m all levels follow, not used for now
+    };
+
+
+  iSuccess = SymbolTraverseBioLevels(phsle,
+				     ppist,
+				     &bls,
+				     TraversalInfoCollectorProcessor,
+				     NULL,
+				     (void *)&ci);
+
+
+  // Loop through all found children and append them to the list
+
+  if (iSuccess == 1 && ci.iChildren)
+  {
+
+    for (i = 0; i < ci.iChildren; i++)
+    {
+      
+
+      if (strcmp(ci.ppcTypes[i], "segmen") == 0
+	  || strcmp(ci.ppcTypes[i], "cell  ") == 0
+	  || strcmp(ci.ppcTypes[i], "contou") == 0
+	  || strcmp(ci.ppcTypes[i], "e_m_co") == 0
+	  || strcmp(ci.ppcTypes[i], "fiber ") == 0
+	  || strcmp(ci.ppcTypes[i], "popula") == 0
+	  || strcmp(ci.ppcTypes[i], "networ") == 0
+	  || strcmp(ci.ppcTypes[i], "random") == 0)
+      {
+
+	ppoTmpDict = PyDict_New();
+
+	if( !ppoTmpDict )
+	{
+	  PyErr_SetString(PyExc_MemoryError,"can't allocate dict for child");
+	  return NULL;
+	}
+      
+      
+	// Sets the name string ------------------------------------------------
+	ppoTmpName = PyString_FromString(ci.ppcNames[i]);
+
+	if (!PyString_Check(ppoTmpName))
+	{
+
+	  PyErr_SetString(PyExc_TypeError,"\"name\" dict key must contain strings");
+	  PyDict_Clear(ppoTmpDict);
+	  free(ppoList);
+	  return NULL;
+
+	}
+
+	PyDict_SetItemString(ppoTmpDict, "name", ppoTmpName);
+	//- End name set --------------------------------------------------------
+
+
+	// Sets the serial value -----------------------------------------------
+	ppoTmpSerial = PyInt_FromLong(ci.piSerials[i]);
+
+	if (!PyString_Check(ppoTmpSerial))
+	{
+
+	  PyErr_SetString(PyExc_TypeError,"\"serial\" dict key must contain an integer");
+	  PyDict_Clear(ppoTmpDict);
+	  free(ppoList);
+	  return NULL;
+
+	}
+
+	PyDict_SetItemString(ppoTmpDict, "serial", ppoTmpSerial);
+	//- End setting the serial value ---------------------------------------
+
+	
+	// Sets the Dia value --------------------------------------------------
+	ppoTmpDia = PyFloat_FromDouble(ci.pdDia[i]);
+
+	if (!PyFloat_Check(ppoTmpDia))
+	{
+
+	  PyErr_SetString(PyExc_TypeError,"\"dia\" dict key must contain a double");
+	  PyDict_Clear(ppoTmpDict);
+	  free(ppoList);
+	  return NULL;
+
+	}
+
+	PyDict_SetItemString(ppoTmpDict, "dia", ppoTmpDia);
+	//- End setting dia value ----------------------------------------------
+
+
+	// Add the type string here --------------------------------------------
+	ppoTmpType = PyString_FromString(ci.ppcTypes[i]);
+	
+	PyDict_SetItemString(ppoTmpDict, "type", ppoTmpType);
+	//- End setting type value ---------------------------------------------
+
+
+	// Add the different levels of coordinates here
+	// Should be set as:
+	//               ['coordinate']['local']
+	//               ['coordinate']['absolute']
+	//               ['coordinate']['absolute_parent']
+	
+	ppoTmpSubDict = PyDict_New();
+	  
+	if(!ppoTmpSubDict)
+	{
+	  PyErr_SetString(PyExc_MemoryError,
+			  "can't allocate dict object for coordinates");
+	  return NULL;
+	}
+
+	// Short circuiting to make sure it doesn't crash
+	if( ci.ppD3CoordsLocal && ci.ppD3CoordsLocal[i] && 
+	    ci.ppD3CoordsLocal[i]->dx != DBL_MAX )
+	{
+
+	  ppoTmpCoord = CoordinateTuple(ci.ppD3CoordsLocal[i]->dx,
+					ci.ppD3CoordsLocal[i]->dy,
+					ci.ppD3CoordsLocal[i]->dz);
+	  
+	  PyDict_SetItemString(ppoTmpSubDict, "local", ppoTmpCoord);
+
+	  ppoTmpCoord = NULL;
+
+	}
+
+	if( ci.ppD3CoordsAbsolute && ci.ppD3CoordsAbsolute[i] && 
+	    ci.ppD3CoordsAbsolute[i]->dx != DBL_MAX )
+	{
+
+	  ppoTmpCoord = CoordinateTuple(ci.ppD3CoordsAbsolute[i]->dx,
+					ci.ppD3CoordsAbsolute[i]->dy,
+					ci.ppD3CoordsAbsolute[i]->dz);
+
+	  PyDict_SetItemString(ppoTmpSubDict, "absolute", ppoTmpCoord);
+	    
+	  ppoTmpCoord = NULL;
+
+	}
+
+	if( ci.ppD3CoordsAbsoluteParent && ci.ppD3CoordsAbsoluteParent[i] && 
+	    ci.ppD3CoordsAbsoluteParent[i]->dx != DBL_MAX )
+	{
+
+	  ppoTmpCoord = CoordinateTuple(ci.ppD3CoordsAbsoluteParent[i]->dx,
+					ci.ppD3CoordsAbsoluteParent[i]->dy,
+					ci.ppD3CoordsAbsoluteParent[i]->dz);
+
+	  PyDict_SetItemString(ppoTmpSubDict, "parent", ppoTmpCoord);
+	    
+	  ppoTmpCoord = NULL;
+	}
+
+	// Place all coordinates from the dict into the top level dict
+
+	PyDict_SetItemString(ppoTmpDict, "coordinate", ppoTmpSubDict);
+	//- End the coordinate setting -----------------------------------------
+
+
+	// After constructing the dict we append 
+	PyList_Append(ppoList, ppoTmpDict);
+
+
+      } // End visible if check
+
+    } // End child loop
+
   }
 
   //- free allocated memory
