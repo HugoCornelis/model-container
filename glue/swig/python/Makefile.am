@@ -40,7 +40,8 @@ nobase_python_DATA = \
 	neurospaces/model_container/_model_container_base.so
 
 EXTRA_DIST = \
-	$(srcdir)/model_container.i 
+	$(srcdir)/model_container.i \
+	$(srcdir)/traversal.i
 
 BUILT_SOURCES = \
 	$(srcdir)/model_container_wrap.c \
