@@ -43,6 +43,8 @@ PyObject * ChildSymbolsToList(struct symtab_HSolveListElement *phsle, struct Pid
 
 PyObject * ChildTypedSymbolsToList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist);
 
+PyObject * GetVisibleCoordinates(char *pcPath, int iLevel, int iMode);
+
 PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, int iLevel, int iMode);
 //------------------------------------------ End Prototypes ---------------------------
 
@@ -423,7 +425,7 @@ PyObject * ChildSymbolsToDictList(struct symtab_HSolveListElement *phsle, struct
 					ci.ppD3CoordsAbsoluteParent[i]->dy,
 					ci.ppD3CoordsAbsoluteParent[i]->dz);
 
-	  PyDict_SetItemString(ppoTmpSubDict, "absolute_parent", ppoTmpCoord);
+	  PyDict_SetItemString(ppoTmpSubDict, "parent", ppoTmpCoord);
 
 	  ppoTmpCoord = NULL;
 	}
@@ -457,6 +459,81 @@ PyObject * ChildSymbolsToDictList(struct symtab_HSolveListElement *phsle, struct
 //------------------------------------------------------------------------------
 
 
+
+PyObject * GetVisibleCoordinates(char *pcPath, int iLevel, int iMode)
+{
+
+  int iContext;
+  struct PidinStack * ppist;
+  PyObject * ppoList = NULL;
+
+  struct PidinStack *ppistRoot = PidinStackParse("/");
+
+  struct symtab_HSolveListElement *phsleRoot = PidinStackLookupTopSymbol(ppistRoot);
+
+  if (!phsleRoot)
+  {
+    return(NULL);
+  }
+
+  //- get context
+
+  ppist = PidinStackParse(pcPath);
+
+  iContext = PidinStackToSerial(ppist);
+
+  struct PidinStack *ppistContext
+    = SymbolPrincipalSerial2Context(phsleRoot,ppistRoot,iContext);
+  
+  if(!ppistContext)
+  {
+
+    PyErr_SetString(PyExc_TypeError, "Can't get principal context");
+
+    return NULL;
+
+  }
+
+  //- get symbol under consideration
+
+  struct symtab_HSolveListElement *phsleContext = PidinStackLookupTopSymbol(ppistContext);
+
+  if (!phsleContext)
+  {
+    PidinStackFree(ppistRoot);
+
+    PidinStackFree(ppist);
+    
+    ppistRoot = NULL;
+
+    PidinStackFree(ppistContext);
+
+    ppistContext = NULL;
+
+    printf("Unable to find this symbol, lookup failed (internal error).\n");
+
+    return NULL;
+  }
+
+  char pcContext[1000];
+
+  PidinStackString(ppistContext,pcContext,1000);
+
+  printf("Getting children from %s\n", pcContext);
+
+  ppoList = CoordinatesToDictList(phsleContext, ppistContext, iLevel, iMode);
+
+  //- free allocated memory
+
+  PidinStackFree(ppistRoot);
+
+  PidinStackFree(ppistContext);
+
+  PidinStackFree(ppist);
+  
+  return ppoList;
+
+}
 
 
 //------------------------------------------------------------------------------

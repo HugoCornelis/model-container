@@ -18,18 +18,12 @@ import neurospaces.model_container as nmc
 my_model_container = nmc.ModelContainer(None)
 
 
-try:
-    
-    children = my_model_container.CoordinatesToList('/', 1, 1)
-    
-except Exception, e:
-
-    print "%s" % e
-
 my_model_container.Read("cells/purkinje/edsjb1994.ndf")
 
 
-children = my_model_container.CoordinatesToList('/', 1, 1)
+my_model_container.Query("expand /*")
+
+children = my_model_container.CoordinatesToList2('/', 2, 1)
 
 #pdb.set_trace()
 pp = pprint.PrettyPrinter()

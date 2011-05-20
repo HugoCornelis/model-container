@@ -206,7 +206,6 @@ class ModelContainer:
         """!
         @brief Returns all child symbols of the given path as a list
         @param path A path to an element in the model container
-        @param typed If true return the name with the type
 
         Returns the immediate children to the symbol found at the given path
         """
@@ -224,6 +223,54 @@ class ModelContainer:
         symbol_list = nmc_base.ChildSymbolsToDictList(phsle, ppist, 1, 1, 1,1, 1, 1)
 
         nmc_base.PidinStackFree(ppist)
+
+        return symbol_list
+
+#---------------------------------------------------------------------------
+
+
+    def AllChildrenToDictList(self, path):
+        """!
+        @brief Returns all child symbols of the given path recursively as a list
+        @param path A path to an element in the model container
+
+        Returns all children under the given path. Note: very slow
+        """
+        
+        ppist = nmc_base.PidinStackParse(path)
+
+        phsle = nmc_base.PidinStackLookupTopSymbol(ppist)
+
+        if phsle is None:
+
+            nmc_base.PidinStackFree(ppist)
+
+            return []
+
+        symbol_list = []
+    
+        symbol_list = nmc_base.ChildSymbolsToDictList(phsle, ppist, 1, 1, 1, 1, 1, 1)
+
+        nmc_base.PidinStackFree(ppist)
+
+        if not symbol_list:
+
+            return []
+
+        else:
+
+            for s in symbol_list:
+                try:
+                    
+                    tmp_list = self.AllChildrenToDictList('/'.join([path, s['name']]))
+
+                except Exception, e:
+
+                    pdb.set_trace()
+                    
+                if tmp_list:
+                    
+                    symbol_list.extend(tmp_list)
 
         return symbol_list
     
@@ -260,6 +307,8 @@ class ModelContainer:
 
         return symbol_list
 
+
+
 #---------------------------------------------------------------------------
 
     def CoordinatesToList(self, path=None, level=1, mode=1):
@@ -290,6 +339,23 @@ class ModelContainer:
 
         return symbol_list
 
+#---------------------------------------------------------------------------
+
+    def CoordinatesToList2(self, path=None, level=1, mode=1):
+        """!
+        @brief Returns a list of coordinates
+        @param path A path to an element in the model container
+        @param level Integer for the level to descend into the model container
+        @param mode The mode to use, biolevel inclusive or children traversal.
+        @returns A list of dict objects containing coordinates.
+        """
+        if path is None:
+
+            raise Exception("No path given")        
+        
+        symbol_list = nmc_base.GetVisibleCoordinates(path, level, mode)
+
+        return symbol_list
 
 #---------------------------------------------------------------------------
 
@@ -413,6 +479,8 @@ class ModelContainer:
         nmc_base.PidinStackLookupTopSymbol(context)
 
         serial = nmc_base.PidinStackToSerial(context)
+
+        nmc_base.PidinStackFree(context)
 
         return serial
 
