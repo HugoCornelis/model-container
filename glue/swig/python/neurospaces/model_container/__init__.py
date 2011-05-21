@@ -222,7 +222,7 @@ class ModelContainer:
 
         symbol_list = []
     
-        symbol_list = nmc_base.ChildSymbolsToDictList(phsle, ppist, 1, 1, 1,1, 1, 1)
+        symbol_list = nmc_base.ChildSymbolsToDictList(path)
 
         nmc_base.PidinStackFree(ppist)
 
@@ -251,7 +251,7 @@ class ModelContainer:
 
         symbol_list = []
     
-        symbol_list = nmc_base.ChildSymbolsToDictList(phsle, ppist, 1, 1, 1, 1, 1, 1)
+        symbol_list = nmc_base.ChildSymbolsToDictList(path)
 
         nmc_base.PidinStackFree(ppist)
 

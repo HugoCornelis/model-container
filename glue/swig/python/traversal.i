@@ -33,9 +33,7 @@ Link to the PyString API functions: http://docs.python.org/c-api/string.html
 %inline %{
 
 //------------------------------------------ Prototypes -------------------------------
-PyObject * ChildSymbolsToDictList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, 
-				  int iTypes, int iCoordsLocal, int iCoordsAbsolute, int iCoordsAbsoluteParent,
-				  int iLevel, int iMode);
+PyObject * ChildSymbolsToDictList(char *pcPath);
 
 static PyObject * CoordinateTuple(double dX, double dY, double dZ);
 
@@ -176,13 +174,10 @@ static PyObject * CoordinateTuple(double dX, double dY, double dZ)
  *
  * Depending on flags given it will construct a python dict object. 
  */
-PyObject * ChildSymbolsToDictList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, 
-				  int iTypes, int iCoordsLocal, int iCoordsAbsolute, int iCoordsAbsoluteParent,
-				  int iLevel, int iMode)
+PyObject * ChildSymbolsToDictList(char *pcPath)
 {
 
   int i;
-  int iTraverse;
   PyObject * ppoList = NULL;
   PyObject * ppoTmpDict = NULL;
   PyObject * ppoTmpSubDict = NULL;
@@ -190,7 +185,7 @@ PyObject * ChildSymbolsToDictList(struct symtab_HSolveListElement *phsle, struct
   PyObject * ppoTmpName = NULL;
   PyObject * ppoTmpKey = NULL;
   PyObject * ppoTmpType = NULL;
-  struct TreespaceTraversal *ptstr = NULL;
+  struct traversal_info * pti;
   double dX, dY, dZ;
 
 
@@ -204,135 +199,23 @@ PyObject * ChildSymbolsToDictList(struct symtab_HSolveListElement *phsle, struct
     return NULL;
   }
 
-  //- construct children info
 
-  int iTraversalFlags = TRAVERSAL_INFO_NAMES;
+  pti = SelectTraversal(pcPath, 
+			TRAVERSAL_SELECT_CHILDREN, 
+			NULL, 0, 0);
 
-  if( iTypes )
+  if( !pti )
   {
-    iTraversalFlags |= TRAVERSAL_INFO_TYPES;
+    PyErr_SetString(PyExc_Exception,"traversal can't be performed");
+    return NULL;
   }
-
-  if( iCoordsLocal )
-  {
-    iTraversalFlags |= TRAVERSAL_INFO_COORDS_LOCAL;
-  }
-
-  if( iCoordsAbsolute )
-  {
-    iTraversalFlags |= TRAVERSAL_INFO_COORDS_ABSOLUTE;
-  }
-
-  if( iCoordsAbsoluteParent )
-  {
-    iTraversalFlags |= TRAVERSAL_INFO_COORDS_ABSOLUTE_PARENT;
-  }
-
-  struct traversal_info ci =
-    {
-      //m information request flags
-      
-      iTraversalFlags,
-
-      //m traversal method flags
-
-      0,
-
-      //m traversal result for CHILDREN_TRAVERSAL_FIXED_RETURN
-
-      0,
-
-      //m current child index
-
-      0,
-
-      //m pidinstack pointing to root
-
-      NULL,
-
-      //m serials of symbols
-
-      NULL,
-
-      //m types of symbols
-
-      NULL,
-
-      //m chars with complete contexts
-
-      NULL,
-
-      //m chars with symbol names
-
-      NULL,
-
-      //m chars with symbol types
-
-      NULL,
-
-      //m local coordinates of symbols
-
-      NULL,
-
-      //m absolute coordinates of symbols
-
-      NULL,
-
-      //m absolute coordinates of parent segments
-
-      NULL,
-
-      NULL,
-
-      //m non-cumulative workload for symbols
-
-      NULL,
-
-      //m cumulative workload for symbols
-
-      NULL,
-
-      //m current cumulative workload
-
-      0,
-
-      //m stack top
-
-      -1,
-
-      //m stack used for accumulation
-
-      NULL,
-
-      //m stack used to track the traversal index of visited symbols
-
-      NULL,
-
-      //m allocation count
-
-      0,
-    };
-
-
-  ptstr = TstrNew(ppist,
-		  NULL,
-		  NULL,
-		  TraversalInfoCollectorProcessor,
-		  (void *)&ci,
-		  NULL,
-		  NULL);
-
-
-  iTraverse = TstrGo(ptstr, phsle);
-
-  TstrDelete(ptstr);
 
   // Loop through all found children and append them to the list
 
-  if (ci.iChildren)
+  if (pti->iChildren)
   {
 
-    for (i = 0; i < ci.iChildren; i++)
+    for (i = 0; i < pti->iChildren; i++)
     {
       
       ppoTmpDict = PyDict_New();
@@ -346,7 +229,7 @@ PyObject * ChildSymbolsToDictList(struct symtab_HSolveListElement *phsle, struct
       // First we set the name to the dict
       
       // Converts the regular string into a python string object
-      ppoTmpName = PyString_FromString(ci.ppcNames[i]);
+      ppoTmpName = PyString_FromString(pti->ppcNames[i]);
 
       if (!PyString_Check(ppoTmpName))
       {
@@ -360,91 +243,84 @@ PyObject * ChildSymbolsToDictList(struct symtab_HSolveListElement *phsle, struct
       PyDict_SetItemString(ppoTmpDict, "name", ppoTmpName);
 
 
-      // If we want types we add the type here
-      if( iTypes )
-      {
+      ppoTmpType = PyString_FromString(pti->ppcTypes[i]);
 
-	ppoTmpType = PyString_FromString(ci.ppcTypes[i]);
+      PyDict_SetItemString(ppoTmpDict, "type", ppoTmpType);
 
-	PyDict_SetItemString(ppoTmpDict, "type", ppoTmpType);
-
-      }
       
       // Add the different levels of coordinates here
       // Should be set as:
       //               ['coordinate']['local']
       //               ['coordinate']['absolute']
-      //               ['coordinate']['absolute_parent']
-      if( iCoordsLocal || iCoordsAbsolute || iCoordsAbsoluteParent )
+      //               ['coordinate']['absolute_parent']	
+      ppoTmpSubDict = PyDict_New();
+	  
+      if(!ppoTmpSubDict)
       {
-	
-	ppoTmpSubDict = PyDict_New();
+	PyErr_SetString(PyExc_MemoryError,
+			"can't allocate dict object for coordinates");
+	return NULL;
+      }
+
+      // Short circuiting to make sure it doesn't crash
+      if( pti->ppD3CoordsLocal && 
+	  pti->ppD3CoordsLocal[i] && pti->ppD3CoordsLocal[i]->dx != DBL_MAX )
+      {
+
+	ppoTmpCoord = CoordinateTuple(pti->ppD3CoordsLocal[i]->dx,
+				      pti->ppD3CoordsLocal[i]->dy,
+				      pti->ppD3CoordsLocal[i]->dz);
 	  
-	if(!ppoTmpSubDict)
-	{
-	  PyErr_SetString(PyExc_MemoryError,
-			  "can't allocate dict object for coordinates");
-	  return NULL;
-	}
+	PyDict_SetItemString(ppoTmpSubDict, "local", ppoTmpCoord);
 
-	// Short circuiting to make sure it doesn't crash
-	if( iCoordsLocal && ci.ppD3CoordsLocal && 
-	    ci.ppD3CoordsLocal[i] && ci.ppD3CoordsLocal[i]->dx != DBL_MAX )
-	{
-
-	  ppoTmpCoord = CoordinateTuple(ci.ppD3CoordsLocal[i]->dx,
-					ci.ppD3CoordsLocal[i]->dy,
-					ci.ppD3CoordsLocal[i]->dz);
-	  
-	  PyDict_SetItemString(ppoTmpSubDict, "local", ppoTmpCoord);
-
-	  ppoTmpCoord = NULL;
-
-	}
-
-	if( iCoordsAbsolute && ci.ppD3CoordsAbsolute && 
-	    ci.ppD3CoordsAbsolute[i] && ci.ppD3CoordsAbsolute[i]->dx != DBL_MAX )
-	{
-
-	  ppoTmpCoord = CoordinateTuple(ci.ppD3CoordsAbsolute[i]->dx,
-					ci.ppD3CoordsAbsolute[i]->dy,
-					ci.ppD3CoordsAbsolute[i]->dz);
-
-	  PyDict_SetItemString(ppoTmpSubDict, "absolute", ppoTmpCoord);
-
-	  ppoTmpCoord = NULL;
-
-	}
-
-	if( iCoordsAbsoluteParent && ci.ppD3CoordsAbsoluteParent && 
-	    ci.ppD3CoordsAbsoluteParent[i] && 
-	    ci.ppD3CoordsAbsoluteParent[i]->dx != DBL_MAX )
-	{
-
-	  ppoTmpCoord = CoordinateTuple(ci.ppD3CoordsAbsoluteParent[i]->dx,
-					ci.ppD3CoordsAbsoluteParent[i]->dy,
-					ci.ppD3CoordsAbsoluteParent[i]->dz);
-
-	  PyDict_SetItemString(ppoTmpSubDict, "parent", ppoTmpCoord);
-
-	  ppoTmpCoord = NULL;
-	}
-
-	// Place all coordinates from the dict into the top level dict
-
-	PyDict_SetItemString(ppoTmpDict, "coordinate", ppoTmpSubDict);
+	ppoTmpCoord = NULL;
 
       }
 
-      // After converting the string to a python string we append 
-      PyList_Append(ppoList, ppoTmpDict);
+      if( pti->ppD3CoordsAbsolute && 
+	  pti->ppD3CoordsAbsolute[i] && pti->ppD3CoordsAbsolute[i]->dx != DBL_MAX )
+      {
+
+	ppoTmpCoord = CoordinateTuple(pti->ppD3CoordsAbsolute[i]->dx,
+				      pti->ppD3CoordsAbsolute[i]->dy,
+				      pti->ppD3CoordsAbsolute[i]->dz);
+
+	PyDict_SetItemString(ppoTmpSubDict, "absolute", ppoTmpCoord);
+	  
+	ppoTmpCoord = NULL;
+
+      }
+
+      if( pti->ppD3CoordsAbsoluteParent && 
+	  pti->ppD3CoordsAbsoluteParent[i] && 
+	  pti->ppD3CoordsAbsoluteParent[i]->dx != DBL_MAX )
+      {
+
+	ppoTmpCoord = CoordinateTuple(pti->ppD3CoordsAbsoluteParent[i]->dx,
+				      pti->ppD3CoordsAbsoluteParent[i]->dy,
+				      pti->ppD3CoordsAbsoluteParent[i]->dz);
+
+	PyDict_SetItemString(ppoTmpSubDict, "parent", ppoTmpCoord);
+
+	ppoTmpCoord = NULL;
+      }
+
+      // Place all coordinates from the dict into the top level dict
+
+      PyDict_SetItemString(ppoTmpDict, "coordinate", ppoTmpSubDict);
 
     }
+
+    // After converting the string to a python string we append 
+    PyList_Append(ppoList, ppoTmpDict);
+
   }
 
   //- free allocated memory
 
-  TraversalInfoFree(&ci);
+  TraversalInfoFree(pti);
+
+  free(pti);
 
   if( !PyList_Check(ppoList) )
   {
