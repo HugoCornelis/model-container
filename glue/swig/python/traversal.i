@@ -37,13 +37,13 @@ PyObject * ChildSymbolsToDictList(char *pcPath);
 
 static PyObject * CoordinateTuple(double dX, double dY, double dZ);
 
-PyObject * ChildSymbolsToList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist);
+PyObject * ChildSymbolsToList(char *pcPath);
 
-PyObject * ChildTypedSymbolsToList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist);
+PyObject * ChildTypedSymbolsToList(char *pcPath);
 
-PyObject * GetVisibleCoordinates(char *pcPath, int iLevel, int iMode);
+//PyObject * GetVisibleCoordinates(char *pcPath, int iLevel, int iMode);
 
-PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, int iLevel, int iMode);
+PyObject * CoordinatesToDictList(char *pcPath, int iLevel, int iMode);
 //------------------------------------------ End Prototypes ---------------------------
 
 
@@ -199,7 +199,7 @@ PyObject * ChildSymbolsToDictList(char *pcPath)
     return NULL;
   }
 
-
+  // Perform a child traversal along the given path
   pti = SelectTraversal(pcPath, 
 			TRAVERSAL_SELECT_CHILDREN, 
 			NULL, 0, 0);
@@ -336,80 +336,80 @@ PyObject * ChildSymbolsToDictList(char *pcPath)
 
 
 
-PyObject * GetVisibleCoordinates(char *pcPath, int iLevel, int iMode)
-{
+/* PyObject * GetVisibleCoordinates(char *pcPath, int iLevel, int iMode) */
+/* { */
 
-  int iContext;
-  struct PidinStack * ppist;
-  PyObject * ppoList = NULL;
+/*   int iContext; */
+/*   struct PidinStack * ppist; */
+/*   PyObject * ppoList = NULL; */
 
-  struct PidinStack *ppistRoot = PidinStackParse("/");
+/*   struct PidinStack *ppistRoot = PidinStackParse("/"); */
 
-  struct symtab_HSolveListElement *phsleRoot = PidinStackLookupTopSymbol(ppistRoot);
+/*   struct symtab_HSolveListElement *phsleRoot = PidinStackLookupTopSymbol(ppistRoot); */
 
-  if (!phsleRoot)
-  {
-    return(NULL);
-  }
+/*   if (!phsleRoot) */
+/*   { */
+/*     return(NULL); */
+/*   } */
 
-  //- get context
+/*   //- get context */
 
-  ppist = PidinStackParse(pcPath);
+/*   ppist = PidinStackParse(pcPath); */
 
-  iContext = PidinStackToSerial(ppist);
+/*   iContext = PidinStackToSerial(ppist); */
 
-  struct PidinStack *ppistContext
-    = SymbolPrincipalSerial2Context(phsleRoot,ppistRoot,iContext);
+/*   struct PidinStack *ppistContext */
+/*     = SymbolPrincipalSerial2Context(phsleRoot,ppistRoot,iContext); */
   
-  if(!ppistContext)
-  {
+/*   if(!ppistContext) */
+/*   { */
 
-    PyErr_SetString(PyExc_TypeError, "Can't get principal context");
+/*     PyErr_SetString(PyExc_TypeError, "Can't get principal context"); */
 
-    return NULL;
+/*     return NULL; */
 
-  }
+/*   } */
 
-  //- get symbol under consideration
+/*   //- get symbol under consideration */
 
-  struct symtab_HSolveListElement *phsleContext = PidinStackLookupTopSymbol(ppistContext);
+/*   struct symtab_HSolveListElement *phsleContext = PidinStackLookupTopSymbol(ppistContext); */
 
-  if (!phsleContext)
-  {
-    PidinStackFree(ppistRoot);
+/*   if (!phsleContext) */
+/*   { */
+/*     PidinStackFree(ppistRoot); */
 
-    PidinStackFree(ppist);
+/*     PidinStackFree(ppist); */
     
-    ppistRoot = NULL;
+/*     ppistRoot = NULL; */
 
-    PidinStackFree(ppistContext);
+/*     PidinStackFree(ppistContext); */
 
-    ppistContext = NULL;
+/*     ppistContext = NULL; */
 
-    printf("Unable to find this symbol, lookup failed (internal error).\n");
+/*     printf("Unable to find this symbol, lookup failed (internal error).\n"); */
 
-    return NULL;
-  }
+/*     return NULL; */
+/*   } */
 
-  char pcContext[1000];
+/*   char pcContext[1000]; */
 
-  PidinStackString(ppistContext,pcContext,1000);
+/*   PidinStackString(ppistContext,pcContext,1000); */
 
-  printf("Getting children from %s\n", pcContext);
+/*   printf("Getting children from %s\n", pcContext); */
 
-  ppoList = CoordinatesToDictList(phsleContext, ppistContext, iLevel, iMode);
+/*   ppoList = CoordinatesToDictList(phsleContext, ppistContext, iLevel, iMode); */
 
-  //- free allocated memory
+/*   //- free allocated memory */
 
-  PidinStackFree(ppistRoot);
+/*   PidinStackFree(ppistRoot); */
 
-  PidinStackFree(ppistContext);
+/*   PidinStackFree(ppistContext); */
 
-  PidinStackFree(ppist);
+/*   PidinStackFree(ppist); */
   
-  return ppoList;
+/*   return ppoList; */
 
-}
+/* } */
 
 
 //------------------------------------------------------------------------------
@@ -417,12 +417,11 @@ PyObject * GetVisibleCoordinates(char *pcPath, int iLevel, int iMode)
  *
  * Depending on flags given it will construct a python dict object. 
  */
-PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, int iLevel, int iMode)
+PyObject * CoordinatesToDictList(char *pcPath, int iLevel, int iMode)
 {
 
   int i;
-  int iTraverse;
-  int iSuccess;
+  struct traversal_info * pti = NULL;
   PyObject * ppoList = NULL;
   PyObject * ppoTmpDia = NULL;
   PyObject * ppoTmpDict = NULL;
@@ -432,7 +431,6 @@ PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct 
   PyObject * ppoTmpSerial = NULL;
   PyObject * ppoTmpKey = NULL;
   PyObject * ppoTmpType = NULL;
-  struct TreespaceTraversal *ptstr = NULL;
   double dX, dY, dZ;
 
 
@@ -446,150 +444,35 @@ PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct 
     return NULL;
   }
 
-  //- construct children info
 
-  int iTraversalFlags = TRAVERSAL_INFO_NAMES
-    | TRAVERSAL_INFO_COORDS_LOCAL
-    | TRAVERSAL_INFO_COORDS_ABSOLUTE
-    | TRAVERSAL_INFO_COORDS_ABSOLUTE_PARENT
-    | TRAVERSAL_INFO_TYPES;
+  // Perform a child traversal along the given path
+  pti = SelectTraversal(pcPath, 
+			TRAVERSAL_SELECT_COORDINATES, 
+			NULL, iLevel, iMode);
 
-  struct traversal_info ci =
-    {
-      //m information request flags
-      
-      iTraversalFlags,
-
-      //m traversal method flags
-
-      (iMode == SELECTOR_BIOLEVEL_INCLUSIVE) ? CHILDREN_TRAVERSAL_FIXED_RETURN : 0,
-
-      //m traversal result for CHILDREN_TRAVERSAL_FIXED_RETURN
-
-      (iMode == SELECTOR_BIOLEVEL_INCLUSIVE) ? TSTR_PROCESSOR_SUCCESS : 0,
-
-/* 	    //m traversal method flags */
-
-/* 	    0, */
-
-/* 	    //m traversal result for CHILDREN_TRAVERSAL_FIXED_RETURN */
-
-/* 	    0, */
-
-      //m current child index
-
-      0,
-
-      //m pidinstack pointing to root
-
-      NULL,
-
-      //m serials of symbols
-
-      NULL,
-
-      //m types of symbols
-
-      NULL,
-
-      //m chars with complete contexts
-
-      NULL,
-
-      //m chars with symbol names
-
-      NULL,
-
-      //m chars with symbol types
-
-      NULL,
-
-      //m local coordinates of symbols
-
-      NULL,
-
-      //m absolute coordinates of symbols
-
-      NULL,
-
-      //m absolute coordinates of parent segments
-
-      NULL,
-
-      NULL,
-
-      //m non-cumulative workload for symbols
-
-      NULL,
-
-      //m cumulative workload for symbols
-
-      NULL,
-
-      //m current cumulative workload
-
-      0,
-
-      //m stack top
-
-      -1,
-
-      //m stack used for accumulation
-
-      NULL,
-
-      //m stack used to track the traversal index of visited symbols
-
-      NULL,
-
-      //m allocation count
-
-      0,
-    };
-
-  struct BiolevelSelection bls =
-    {
-      //m chained user data
-      
-      NULL,
-
-      //m mode : exclusive, inclusive
-
-      iMode,
-
-      //m selected level
-
-      iLevel,
-
-      //m all levels follow, not used for now
-    };
-
-
-  iSuccess = SymbolTraverseBioLevels(phsle,
-				     ppist,
-				     &bls,
-				     TraversalInfoCollectorProcessor,
-				     NULL,
-				     (void *)&ci);
-
+  if( !pti )
+  {
+    PyErr_SetString(PyExc_Exception,"traversal can't be performed");
+    return NULL;
+  }
 
   // Loop through all found children and append them to the list
 
-  if (iSuccess == 1 && ci.iChildren)
+  if (pti->iChildren)
   {
 
-    for (i = 0; i < ci.iChildren; i++)
+    for (i = 0; i < pti->iChildren; i++)
     {
       
 
-      if (strcmp(ci.ppcTypes[i], "segmen") == 0
-	  || strcmp(ci.ppcTypes[i], "cell  ") == 0
-	  || strcmp(ci.ppcTypes[i], "contou") == 0
-	  || strcmp(ci.ppcTypes[i], "e_m_co") == 0
-	  || strcmp(ci.ppcTypes[i], "fiber ") == 0
-	  || strcmp(ci.ppcTypes[i], "popula") == 0
-	  || strcmp(ci.ppcTypes[i], "networ") == 0
-	  || strcmp(ci.ppcTypes[i], "random") == 0)
+      if (strcmp(pti->ppcTypes[i], "segmen") == 0
+	  || strcmp(pti->ppcTypes[i], "cell  ") == 0
+	  || strcmp(pti->ppcTypes[i], "contou") == 0
+	  || strcmp(pti->ppcTypes[i], "e_m_co") == 0
+	  || strcmp(pti->ppcTypes[i], "fiber ") == 0
+	  || strcmp(pti->ppcTypes[i], "popula") == 0
+	  || strcmp(pti->ppcTypes[i], "networ") == 0
+	  || strcmp(pti->ppcTypes[i], "random") == 0)
       {
 
 	ppoTmpDict = PyDict_New();
@@ -602,7 +485,7 @@ PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct 
       
       
 	// Sets the name string ------------------------------------------------
-	ppoTmpName = PyString_FromString(ci.ppcNames[i]);
+	ppoTmpName = PyString_FromString(pti->ppcNames[i]);
 
 	if (!PyString_Check(ppoTmpName))
 	{
@@ -619,7 +502,7 @@ PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct 
 
 
 	// Sets the serial value -----------------------------------------------
-	ppoTmpSerial = PyInt_FromLong(ci.piSerials[i]);
+	ppoTmpSerial = PyInt_FromLong(pti->piSerials[i]);
 
 	if (!PyString_Check(ppoTmpSerial))
 	{
@@ -636,7 +519,7 @@ PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct 
 
 	
 	// Sets the Dia value --------------------------------------------------
-	ppoTmpDia = PyFloat_FromDouble(ci.pdDia[i]);
+	ppoTmpDia = PyFloat_FromDouble(pti->pdDia[i]);
 
 	if (!PyFloat_Check(ppoTmpDia))
 	{
@@ -653,7 +536,7 @@ PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct 
 
 
 	// Add the type string here --------------------------------------------
-	ppoTmpType = PyString_FromString(ci.ppcTypes[i]);
+	ppoTmpType = PyString_FromString(pti->ppcTypes[i]);
 	
 	PyDict_SetItemString(ppoTmpDict, "type", ppoTmpType);
 	//- End setting type value ---------------------------------------------
@@ -675,13 +558,13 @@ PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct 
 	}
 
 	// Short circuiting to make sure it doesn't crash
-	if( ci.ppD3CoordsLocal && ci.ppD3CoordsLocal[i] && 
-	    ci.ppD3CoordsLocal[i]->dx != DBL_MAX )
+	if( pti->ppD3CoordsLocal && pti->ppD3CoordsLocal[i] && 
+	    pti->ppD3CoordsLocal[i]->dx != DBL_MAX )
 	{
 
-	  ppoTmpCoord = CoordinateTuple(ci.ppD3CoordsLocal[i]->dx,
-					ci.ppD3CoordsLocal[i]->dy,
-					ci.ppD3CoordsLocal[i]->dz);
+	  ppoTmpCoord = CoordinateTuple(pti->ppD3CoordsLocal[i]->dx,
+					pti->ppD3CoordsLocal[i]->dy,
+					pti->ppD3CoordsLocal[i]->dz);
 	  
 	  PyDict_SetItemString(ppoTmpSubDict, "local", ppoTmpCoord);
 
@@ -689,13 +572,13 @@ PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct 
 
 	}
 
-	if( ci.ppD3CoordsAbsolute && ci.ppD3CoordsAbsolute[i] && 
-	    ci.ppD3CoordsAbsolute[i]->dx != DBL_MAX )
+	if( pti->ppD3CoordsAbsolute && pti->ppD3CoordsAbsolute[i] && 
+	    pti->ppD3CoordsAbsolute[i]->dx != DBL_MAX )
 	{
 
-	  ppoTmpCoord = CoordinateTuple(ci.ppD3CoordsAbsolute[i]->dx,
-					ci.ppD3CoordsAbsolute[i]->dy,
-					ci.ppD3CoordsAbsolute[i]->dz);
+	  ppoTmpCoord = CoordinateTuple(pti->ppD3CoordsAbsolute[i]->dx,
+					pti->ppD3CoordsAbsolute[i]->dy,
+					pti->ppD3CoordsAbsolute[i]->dz);
 
 	  PyDict_SetItemString(ppoTmpSubDict, "absolute", ppoTmpCoord);
 	    
@@ -703,13 +586,13 @@ PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct 
 
 	}
 
-	if( ci.ppD3CoordsAbsoluteParent && ci.ppD3CoordsAbsoluteParent[i] && 
-	    ci.ppD3CoordsAbsoluteParent[i]->dx != DBL_MAX )
+	if( pti->ppD3CoordsAbsoluteParent && pti->ppD3CoordsAbsoluteParent[i] && 
+	    pti->ppD3CoordsAbsoluteParent[i]->dx != DBL_MAX )
 	{
 
-	  ppoTmpCoord = CoordinateTuple(ci.ppD3CoordsAbsoluteParent[i]->dx,
-					ci.ppD3CoordsAbsoluteParent[i]->dy,
-					ci.ppD3CoordsAbsoluteParent[i]->dz);
+	  ppoTmpCoord = CoordinateTuple(pti->ppD3CoordsAbsoluteParent[i]->dx,
+					pti->ppD3CoordsAbsoluteParent[i]->dy,
+					pti->ppD3CoordsAbsoluteParent[i]->dz);
 
 	  PyDict_SetItemString(ppoTmpSubDict, "parent", ppoTmpCoord);
 	    
@@ -734,7 +617,9 @@ PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct 
 
   //- free allocated memory
 
-  TraversalInfoFree(&ci);
+  TraversalInfoFree(pti);
+
+  free(pti);
 
   if( !PyList_Check(ppoList) )
   {
@@ -760,14 +645,13 @@ PyObject * CoordinatesToDictList(struct symtab_HSolveListElement *phsle, struct 
  * Performs a traversal and returns a list of all symbols that are children to the given
  * symbol+context. 
  */
-PyObject * ChildSymbolsToList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)
+PyObject * ChildSymbolsToList(char *pcPath)
 {
 
   int i;
-  int iTraverse;
+  struct traversal_info * pti = NULL;
   PyObject * ppoSymbolList = NULL;
   PyObject * ppoTmpName = NULL;
-  struct TreespaceTraversal *ptstr = NULL;
 
 
   //- Start out with an empty list
@@ -780,120 +664,32 @@ PyObject * ChildSymbolsToList(struct symtab_HSolveListElement *phsle, struct Pid
     return NULL;
   }
 
-  //- construct children info
-
-  struct traversal_info ci =
-    {
-      //m information request flags
-      
-      (TRAVERSAL_INFO_NAMES),
-
-      //m traversal method flags
-
-      0,
-
-      //m traversal result for CHILDREN_TRAVERSAL_FIXED_RETURN
-
-      0,
-
-      //m current child index
-
-      0,
-
-      //m pidinstack pointing to root
-
-      NULL,
-
-      //m serials of symbols
-
-      NULL,
-
-      //m types of symbols
-
-      NULL,
-
-      //m chars with complete contexts
-
-      NULL,
-
-      //m chars with symbol names
-
-      NULL,
-
-      //m chars with symbol types
-
-      NULL,
-
-      //m local coordinates of symbols
-
-      NULL,
-
-      //m absolute coordinates of symbols
-
-      NULL,
-
-      //m absolute coordinates of parent segments
-
-      NULL,
-
-      NULL,
-
-      //m non-cumulative workload for symbols
-
-      NULL,
-
-      //m cumulative workload for symbols
-
-      NULL,
-
-      //m current cumulative workload
-
-      0,
-
-      //m stack top
-
-      -1,
-
-      //m stack used for accumulation
-
-      NULL,
-
-      //m stack used to track the traversal index of visited symbols
-
-      NULL,
-
-      //m allocation count
-
-      0,
-    };
 
 
-  ptstr = TstrNew(ppist,
-		  NULL,
-		  NULL,
-		  TraversalInfoCollectorProcessor,
-		  (void *)&ci,
-		  NULL,
-		  NULL);
+  // Perform a child traversal along the given path
+  pti = SelectTraversal(pcPath, 
+			TRAVERSAL_SELECT_CHILDREN, 
+			NULL, 0, 0);
 
-
-  iTraverse = TstrGo(ptstr, phsle);
-
-  TstrDelete(ptstr);
+  if( !pti )
+  {
+    PyErr_SetString(PyExc_Exception,"traversal can't be performed");
+    return NULL;
+  }
 
   // Loop through all found children and append them to the list
 
-  if (ci.iChildren)
+  if (pti->iChildren)
   {
 
-    for (i = 0; i < ci.iChildren; i++)
+    for (i = 0; i < pti->iChildren; i++)
     {
       
-      if ( !ci.ppcNames[i] )
+      if ( !pti->ppcNames[i] )
 	continue;
       
       // Converts the regular string into a python string object
-      ppoTmpName = PyString_FromString(ci.ppcNames[i]);
+      ppoTmpName = PyString_FromString(pti->ppcNames[i]);
 
       if (!PyString_Check(ppoTmpName))
       {
@@ -912,7 +708,9 @@ PyObject * ChildSymbolsToList(struct symtab_HSolveListElement *phsle, struct Pid
 
   //- free allocated memory
 
-  TraversalInfoFree(&ci);
+  TraversalInfoFree(pti);
+
+  free(pti);
 
   if( !PyList_Check(ppoSymbolList) )
   {
@@ -940,16 +738,15 @@ PyObject * ChildSymbolsToList(struct symtab_HSolveListElement *phsle, struct Pid
  * Performs a traversal and returns a list of all symbols that are children to the given
  * symbol+context with the approrpiate type.
  */
-PyObject * ChildTypedSymbolsToList(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)
+PyObject * ChildTypedSymbolsToList(char *pcPath)
 {
 
   int i;
-  int iTraverse;
+  struct traversal_info * pti = NULL;
   PyObject * ppoList = NULL;
   PyObject * ppoTmpName = NULL;
   PyObject * ppoTmpType = NULL;
   PyObject * ppoTmpTuple = NULL;
-  struct TreespaceTraversal *ptstr = NULL;
 
 
   //- Start out with an empty list
@@ -962,122 +759,32 @@ PyObject * ChildTypedSymbolsToList(struct symtab_HSolveListElement *phsle, struc
     return NULL;
   }
 
-  //- construct children info
 
-  struct traversal_info ci =
-    {
-      //m information request flags
-      
-      (TRAVERSAL_INFO_NAMES	     
-       | TRAVERSAL_INFO_TYPES),
+  // Perform a child traversal along the given path
+  pti = SelectTraversal(pcPath, 
+			TRAVERSAL_SELECT_CHILDREN, 
+			NULL, 0, 0);
 
-      //m traversal method flags
-
-      0,
-
-      //m traversal result for CHILDREN_TRAVERSAL_FIXED_RETURN
-
-      0,
-
-      //m current child index
-
-      0,
-
-      //m pidinstack pointing to root
-
-      NULL,
-
-      //m serials of symbols
-
-      NULL,
-
-      //m types of symbols
-
-      NULL,
-
-      //m chars with complete contexts
-
-      NULL,
-
-      //m chars with symbol names
-
-      NULL,
-
-      //m chars with symbol types
-
-      NULL,
-
-      //m local coordinates of symbols
-
-      NULL,
-
-      //m absolute coordinates of symbols
-
-      NULL,
-
-      //m absolute coordinates of parent segments
-
-      NULL,
-
-      NULL,
-
-      //m non-cumulative workload for symbols
-
-      NULL,
-
-      //m cumulative workload for symbols
-
-      NULL,
-
-      //m current cumulative workload
-
-      0,
-
-      //m stack top
-
-      -1,
-
-      //m stack used for accumulation
-
-      NULL,
-
-      //m stack used to track the traversal index of visited symbols
-
-      NULL,
-
-      //m allocation count
-
-      0,
-    };
-
-
-  ptstr = TstrNew(ppist,
-		  NULL,
-		  NULL,
-		  TraversalInfoCollectorProcessor,
-		  (void *)&ci,
-		  NULL,
-		  NULL);
-
-
-  iTraverse = TstrGo(ptstr, phsle);
-
-  TstrDelete(ptstr);
+  if( !pti )
+  {
+    PyErr_SetString(PyExc_Exception,"traversal can't be performed");
+    return NULL;
+  }
 
   // Loop through all found children and append them to the list
 
-  if (ci.iChildren)
+  if (pti->iChildren)
   {
 
-    for (i = 0; i < ci.iChildren; i++)
+    for (i = 0; i < pti->iChildren; i++)
     {
       
-      if ( !ci.ppcNames[i] || !ci.ppcTypes[i] )
+      if ( !pti->ppcNames[i] || !pti->ppcTypes[i] )
 	continue; // This might not be a good idea, no error reporting
       
       // Converts the regular string into a python string object
-      ppoTmpName = PyString_FromString(ci.ppcNames[i]);
-      ppoTmpType = PyString_FromString(ci.ppcTypes[i]);
+      ppoTmpName = PyString_FromString(pti->ppcNames[i]);
+      ppoTmpType = PyString_FromString(pti->ppcTypes[i]);
       
 
       if (!PyString_Check(ppoTmpName) || !PyString_Check(ppoTmpType))
@@ -1121,7 +828,9 @@ PyObject * ChildTypedSymbolsToList(struct symtab_HSolveListElement *phsle, struc
 
   //- free allocated memory
 
-  TraversalInfoFree(&ci);
+  TraversalInfoFree(pti);
+
+  free(pti);
 
   if( !PyList_Check(ppoList) )
   {

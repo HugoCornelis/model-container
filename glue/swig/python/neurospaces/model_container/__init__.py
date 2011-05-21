@@ -218,6 +218,8 @@ class ModelContainer:
 
         if phsle is None:
 
+            nmc_base.PidinStackFree(ppist)
+
             raise Exception("No symbol found at '%s'" % path)
 
         symbol_list = []
@@ -293,17 +295,13 @@ class ModelContainer:
 
         if phsle is None:
 
+            nmc_base.PidinStackFree(ppist)
+
             raise Exception("No symbol found at '%s'" % path)
 
         symbol_list = []
 
-        if typed:
-
-            symbol_list = nmc_base.ChildTypedSymbolsToList(phsle, ppist)
-
-        else:
-            
-            symbol_list = nmc_base.ChildSymbolsToList(phsle, ppist)
+        symbol_list = nmc_base.ChildSymbolsToList(path)
 
         nmc_base.PidinStackFree(ppist)
 
@@ -331,11 +329,13 @@ class ModelContainer:
 
         if phsle is None:
 
+            nmc_base.PidinStackFree(ppist)
+
             raise Exception("No symbol found at '%s'" % path)
 
         symbol_list = []
 
-        symbol_list = nmc_base.CoordinatesToDictList(phsle, ppist, level, mode)
+        symbol_list = nmc_base.CoordinatesToDictList(path, level, mode)
 
         nmc_base.PidinStackFree(ppist)
 
@@ -354,8 +354,9 @@ class ModelContainer:
         if path is None:
 
             raise Exception("No path given")        
+        symbol_list = []
         
-        symbol_list = nmc_base.GetVisibleCoordinates(path, level, mode)
+        #symbol_list = nmc_base.GetVisibleCoordinates(path, level, mode)
 
         return symbol_list
 
