@@ -54,7 +54,7 @@ class ModelContainer:
         """!
         @brief ModelContainer constructor
 
-        @param nmc An existing ModelContainer or Neurospaces object.
+        @param model An existing ModelContainer or Neurospaces object.
         """
 
         if not self.CheckEnvironment():
@@ -166,6 +166,8 @@ class ModelContainer:
             return None
 
         value = nmc_base.SymbolParameterResolveValue(phsle, ppist, parameter)
+
+        nmc_base.PidinStackFree(ppist)
 
         return value
 

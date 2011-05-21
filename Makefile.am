@@ -106,6 +106,7 @@ libneurospacesread_a_SOURCES = \
 	psymbolserialstack.c \
 	psymbolstack.c \
 	querymachine.c \
+	selecttraversal.c \
 	solverinfo.c \
 	symbols.c \
 	symboltable.c \

@@ -42,6 +42,16 @@
 #define CHILDREN_TRAVERSAL_FIXED_RETURN		1
 
 
+// Probably don't need these to be powers of 2
+// since they can't be used concurrently but
+// leaving it like this just in case. 
+#define TRAVERSAL_SELECT_CHILDREN               1
+#define TRAVERSAL_SELECT_COORDINATES            2
+#define TRAVERSAL_SELECT_GENERATORS             4
+#define TRAVERSAL_SELECT_PROJECTIONS            8
+#define TRAVERSAL_SELECT_RECIEVERS             16
+#define TRAVERSAL_SELECT_WILDCARD              32
+
 struct traversal_info
 {
     /// information request flags
@@ -139,6 +149,7 @@ TraversalInfoCollectorProcessor
 
 void TraversalInfoFree(struct traversal_info *pti);
 
+struct traversal_info * SelectTraversal(char *pcPath, int iSelect, char *pcWildcard, int iMode, int iLevel);
 
 #endif
 
