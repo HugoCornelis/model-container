@@ -232,7 +232,7 @@ struct traversal_info * SelectTraversal(char *pcPath, int iSelect, int iMode, in
 		    NULL);
 
 
-    iSuccess = TstrGo(ptstr,phsle);
+    iSuccess = TstrGo(ptstr,phsleRoot);
 
     PidinStackFree(ppist);
 

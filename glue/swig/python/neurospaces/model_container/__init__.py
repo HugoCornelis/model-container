@@ -233,50 +233,22 @@ class ModelContainer:
 #---------------------------------------------------------------------------
 
 
-    def AllChildrenToDictList(self, path):
+    def AllChildrenToDictList(self):
         """!
         @brief Returns all child symbols of the given path recursively as a list
         @param path A path to an element in the model container
-
-        Returns all children under the given path. Note: very slow
         """
         
-        ppist = nmc_base.PidinStackParse(path)
-
-        phsle = nmc_base.PidinStackLookupTopSymbol(ppist)
-
-        if phsle is None:
-
-            nmc_base.PidinStackFree(ppist)
-
-            return []
-
-        symbol_list = []
     
-        symbol_list = nmc_base.ChildSymbolsToDictList(path)
-
-        nmc_base.PidinStackFree(ppist)
+        symbol_list = nmc_base.AllChildSymbolsToList()
 
         if not symbol_list:
 
             return []
 
         else:
-
-            for s in symbol_list:
-                try:
-                    
-                    tmp_list = self.AllChildrenToDictList('/'.join([path, s['name']]))
-
-                except Exception, e:
-
-                    pdb.set_trace()
-                    
-                if tmp_list:
-                    
-                    symbol_list.extend(tmp_list)
-
-        return symbol_list
+            
+            return symbol_list
     
 #---------------------------------------------------------------------------
 

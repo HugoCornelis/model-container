@@ -44,6 +44,8 @@ PyObject * ChildTypedSymbolsToList(char *pcPath);
 //PyObject * GetVisibleCoordinates(char *pcPath, int iLevel, int iMode);
 
 PyObject * CoordinatesToDictList(char *pcPath, int iLevel, int iMode);
+
+PyObject * AllChildSymbolsToList();
 //------------------------------------------ End Prototypes ---------------------------
 
 
@@ -207,6 +209,177 @@ PyObject * ChildSymbolsToDictList(char *pcPath)
   if( !pti )
   {
     PyErr_SetString(PyExc_Exception,"traversal can't be performed");
+    return NULL;
+  }
+
+  // Loop through all found children and append them to the list
+
+  if (pti->iChildren)
+  {
+
+    for (i = 0; i < pti->iChildren; i++)
+    {
+      
+      ppoTmpDict = PyDict_New();
+
+      if( !ppoTmpDict )
+      {
+	PyErr_SetString(PyExc_MemoryError,"can't allocate dict for child");
+	return NULL;
+      }
+      
+      // First we set the name to the dict
+      
+      // Converts the regular string into a python string object
+      ppoTmpName = PyString_FromString(pti->ppcNames[i]);
+
+      if (!PyString_Check(ppoTmpName))
+      {
+
+	PyErr_SetString(PyExc_TypeError,"list must contain strings");
+	free(ppoList);
+	return NULL;
+
+      }
+
+      PyDict_SetItemString(ppoTmpDict, "name", ppoTmpName);
+
+
+      ppoTmpType = PyString_FromString(pti->ppcTypes[i]);
+
+      PyDict_SetItemString(ppoTmpDict, "type", ppoTmpType);
+
+      
+      // Add the different levels of coordinates here
+      // Should be set as:
+      //               ['coordinate']['local']
+      //               ['coordinate']['absolute']
+      //               ['coordinate']['absolute_parent']	
+      ppoTmpSubDict = PyDict_New();
+	  
+      if(!ppoTmpSubDict)
+      {
+	PyErr_SetString(PyExc_MemoryError,
+			"can't allocate dict object for coordinates");
+	return NULL;
+      }
+
+      // Short circuiting to make sure it doesn't crash
+      if( pti->ppD3CoordsLocal && 
+	  pti->ppD3CoordsLocal[i] && pti->ppD3CoordsLocal[i]->dx != DBL_MAX )
+      {
+
+	ppoTmpCoord = CoordinateTuple(pti->ppD3CoordsLocal[i]->dx,
+				      pti->ppD3CoordsLocal[i]->dy,
+				      pti->ppD3CoordsLocal[i]->dz);
+	  
+	PyDict_SetItemString(ppoTmpSubDict, "local", ppoTmpCoord);
+
+	ppoTmpCoord = NULL;
+
+      }
+
+      if( pti->ppD3CoordsAbsolute && 
+	  pti->ppD3CoordsAbsolute[i] && pti->ppD3CoordsAbsolute[i]->dx != DBL_MAX )
+      {
+
+	ppoTmpCoord = CoordinateTuple(pti->ppD3CoordsAbsolute[i]->dx,
+				      pti->ppD3CoordsAbsolute[i]->dy,
+				      pti->ppD3CoordsAbsolute[i]->dz);
+
+	PyDict_SetItemString(ppoTmpSubDict, "absolute", ppoTmpCoord);
+	  
+	ppoTmpCoord = NULL;
+
+      }
+
+      if( pti->ppD3CoordsAbsoluteParent && 
+	  pti->ppD3CoordsAbsoluteParent[i] && 
+	  pti->ppD3CoordsAbsoluteParent[i]->dx != DBL_MAX )
+      {
+
+	ppoTmpCoord = CoordinateTuple(pti->ppD3CoordsAbsoluteParent[i]->dx,
+				      pti->ppD3CoordsAbsoluteParent[i]->dy,
+				      pti->ppD3CoordsAbsoluteParent[i]->dz);
+
+	PyDict_SetItemString(ppoTmpSubDict, "parent", ppoTmpCoord);
+
+	ppoTmpCoord = NULL;
+      }
+
+      // Place all coordinates from the dict into the top level dict
+
+      PyDict_SetItemString(ppoTmpDict, "coordinate", ppoTmpSubDict);
+
+    }
+
+    // After converting the string to a python string we append 
+    PyList_Append(ppoList, ppoTmpDict);
+
+  }
+
+  //- free allocated memory
+
+  TraversalInfoFree(pti);
+
+  free(pti);
+
+  if( !PyList_Check(ppoList) )
+  {
+
+    PyErr_SetString(PyExc_Exception,"invalid dict list was generated from the model container");
+    free(ppoList);
+
+  }
+
+  return ppoList;
+}
+//------------------------------------------------------------------------------
+
+
+
+
+
+
+
+//------------------------------------------------------------------------------
+/*
+ *
+ * Depending on flags given it will construct a python dict object. 
+ */
+PyObject * AllChildSymbolsToList()
+{
+
+  int i;
+  PyObject * ppoList = NULL;
+  PyObject * ppoTmpDict = NULL;
+  PyObject * ppoTmpSubDict = NULL;
+  PyObject * ppoTmpCoord = NULL;
+  PyObject * ppoTmpName = NULL;
+  PyObject * ppoTmpKey = NULL;
+  PyObject * ppoTmpType = NULL;
+  struct traversal_info * pti;
+  double dX, dY, dZ;
+
+
+  //- Start out with an empty list
+
+  ppoList = PyList_New(0);
+
+  if( !ppoList )
+  {
+    PyErr_SetString(PyExc_MemoryError,"can't allocate dict list");
+    return NULL;
+  }
+
+  // Perform a child traversal along the given path
+  pti = SelectTraversal("**", 
+			TRAVERSAL_SELECT_WILDCARD, 
+			0, 0);
+
+  if( !pti )
+  {
+    PyErr_SetString(PyExc_Exception,"wildcard traversal can't be performed");
     return NULL;
   }
 
