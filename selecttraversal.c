@@ -202,7 +202,10 @@ struct traversal_info * SelectTraversal(char *pcPath, int iSelect, int iMode, in
 
     if (!ppistRoot)
     {
-	return NULL;
+
+      PidinStackFree(ppist);
+
+      return NULL;
     }
 
     PidinStackSetRooted(ppistRoot);
@@ -211,6 +214,8 @@ struct traversal_info * SelectTraversal(char *pcPath, int iSelect, int iMode, in
 
     if( !phsleRoot )
     {
+
+      PidinStackFree(ppist);
 
       PidinStackFree(ppistRoot);
 
@@ -228,6 +233,8 @@ struct traversal_info * SelectTraversal(char *pcPath, int iSelect, int iMode, in
 
 
     iSuccess = TstrGo(ptstr,phsle);
+
+    PidinStackFree(ppist);
 
     PidinStackFree(ppistRoot);
 
