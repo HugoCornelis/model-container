@@ -20,16 +20,25 @@ static struct traversal_info * TraversalInfoCalloc();
 
 /*!
 * \returns A traversal info struct with traversal data, null on error or no operation
+*
+* \param pcPath The path to the element to start traversal at. 
+* \param iSelect The traversal mode
+* \param iMode The mode to use for biolevel traversals.
+* \param iLevel The depth of level to traverse in biolevel traversals.
+*
+* Performs a traversal starting from the given path. If a wildcard traversal is selected
+* then the path must contain a wildcard. If it is a null pointer then "/**" is used.
 */
-struct traversal_info * SelectTraversal(char *pcPath, int iSelect, char *pcWildcard, 
-					int iMode, int iLevel)
+struct traversal_info * SelectTraversal(char *pcPath, int iSelect, int iMode, int iLevel)
 {
   int iSuccess = 0;
   struct traversal_info *pti = NULL;
   struct BiolevelSelection bls;
   struct PidinStack *ppist = NULL;
+  struct PidinStack *ppistRoot = NULL; 
   struct symtab_HSolveListElement *phsle = NULL;
-  struct TreespaceTraversal *ptstr;
+  struct symtab_HSolveListElement *phsleRoot = NULL;
+ struct TreespaceTraversal *ptstr;
   int iTraversalFlags = 0;
 
 
@@ -52,6 +61,8 @@ struct traversal_info * SelectTraversal(char *pcPath, int iSelect, char *pcWildc
 
   if( !pti )
   {
+    PidinStackFree(ppist);
+
     return NULL;
   }
 
@@ -187,11 +198,47 @@ struct traversal_info * SelectTraversal(char *pcPath, int iSelect, char *pcWildc
   else if( iSelect & TRAVERSAL_SELECT_WILDCARD )
   {
 
+    ppistRoot = PidinStackCalloc();
+
+    if (!ppistRoot)
+    {
+	return NULL;
+    }
+
+    PidinStackSetRooted(ppistRoot);
+
+    phsleRoot = PidinStackLookupTopSymbol(ppistRoot);
+
+    if( !phsleRoot )
+    {
+
+      PidinStackFree(ppistRoot);
+
+      return NULL;
+
+    }
+
+    ptstr = TstrNew(ppistRoot, 
+		    WildcardSelector,
+		    (void *)ppist, //- This should be our wildcard
+		    TraversalInfoCollectorProcessor,
+		    (void*)pti,
+		    NULL,
+		    NULL);
+
+
+    iSuccess = TstrGo(ptstr,phsle);
+
+    PidinStackFree(ppistRoot);
+
+    TstrDelete(ptstr);
+
   }
   //----------------------------------------------------------------------------
   // End Treespace traversal 
   //----------------------------------------------------------------------------
 
+  PidinStackFree(ppist);
 
   return pti;
 

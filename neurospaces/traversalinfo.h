@@ -149,7 +149,7 @@ TraversalInfoCollectorProcessor
 
 void TraversalInfoFree(struct traversal_info *pti);
 
-struct traversal_info * SelectTraversal(char *pcPath, int iSelect, char *pcWildcard, int iMode, int iLevel);
+struct traversal_info * SelectTraversal(char *pcPath, int iSelect, int iMode, int iLevel);
 
 #endif
 

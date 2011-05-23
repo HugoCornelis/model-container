@@ -202,7 +202,7 @@ PyObject * ChildSymbolsToDictList(char *pcPath)
   // Perform a child traversal along the given path
   pti = SelectTraversal(pcPath, 
 			TRAVERSAL_SELECT_CHILDREN, 
-			NULL, 0, 0);
+			0, 0);
 
   if( !pti )
   {
@@ -448,7 +448,7 @@ PyObject * CoordinatesToDictList(char *pcPath, int iLevel, int iMode)
   // Perform a child traversal along the given path
   pti = SelectTraversal(pcPath, 
 			TRAVERSAL_SELECT_COORDINATES, 
-			NULL, iLevel, iMode);
+			iLevel, iMode);
 
   if( !pti )
   {
@@ -669,7 +669,7 @@ PyObject * ChildSymbolsToList(char *pcPath)
   // Perform a child traversal along the given path
   pti = SelectTraversal(pcPath, 
 			TRAVERSAL_SELECT_CHILDREN, 
-			NULL, 0, 0);
+			0, 0);
 
   if( !pti )
   {
@@ -763,7 +763,7 @@ PyObject * ChildTypedSymbolsToList(char *pcPath)
   // Perform a child traversal along the given path
   pti = SelectTraversal(pcPath, 
 			TRAVERSAL_SELECT_CHILDREN, 
-			NULL, 0, 0);
+			0, 0);
 
   if( !pti )
   {
