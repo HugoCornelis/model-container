@@ -43,7 +43,7 @@ PyObject * ChildTypedSymbolsToList(char *pcPath);
 
 //PyObject * GetVisibleCoordinates(char *pcPath, int iLevel, int iMode);
 
-PyObject * CoordinatesToDictList(char *pcPath, int iLevel, int iMode);
+PyObject * CoordinatesToList(char *pcPath, struct Neurospaces *pneuro);
 
 PyObject * AllChildSymbolsToList();
 //------------------------------------------ End Prototypes ---------------------------
@@ -204,7 +204,7 @@ PyObject * ChildSymbolsToDictList(char *pcPath)
   // Perform a child traversal along the given path
   pti = SelectTraversal(pcPath, 
 			TRAVERSAL_SELECT_CHILDREN, 
-			0, 0);
+			0, 0, NULL);
 
   if( !pti )
   {
@@ -373,9 +373,9 @@ PyObject * AllChildSymbolsToList()
   }
 
   // Perform a child traversal along the given path
-  pti = SelectTraversal("**", 
+  pti = SelectTraversal("/**", 
 			TRAVERSAL_SELECT_WILDCARD, 
-			0, 0);
+			0, 0, NULL);
 
   if( !pti )
   {
@@ -590,7 +590,7 @@ PyObject * AllChildSymbolsToList()
  *
  * Depending on flags given it will construct a python dict object. 
  */
-PyObject * CoordinatesToDictList(char *pcPath, int iLevel, int iMode)
+PyObject * CoordinatesToList(char *pcPath, struct Neurospaces *pneuro)
 {
 
   int i;
@@ -620,8 +620,9 @@ PyObject * CoordinatesToDictList(char *pcPath, int iLevel, int iMode)
 
   // Perform a child traversal along the given path
   pti = SelectTraversal(pcPath, 
-			TRAVERSAL_SELECT_COORDINATES, 
-			iLevel, iMode);
+			TRAVERSAL_SELECT_WILDCARD, 
+			2, 1,
+			pneuro);
 
   if( !pti )
   {
@@ -676,8 +677,8 @@ PyObject * CoordinatesToDictList(char *pcPath, int iLevel, int iMode)
 
 	// Sets the serial value -----------------------------------------------
 	ppoTmpSerial = PyInt_FromLong(pti->piSerials[i]);
-
-	if (!PyString_Check(ppoTmpSerial))
+   
+	if (!PyInt_Check(ppoTmpSerial))
 	{
 
 	  PyErr_SetString(PyExc_TypeError,"\"serial\" dict key must contain an integer");
@@ -842,7 +843,7 @@ PyObject * ChildSymbolsToList(char *pcPath)
   // Perform a child traversal along the given path
   pti = SelectTraversal(pcPath, 
 			TRAVERSAL_SELECT_CHILDREN, 
-			0, 0);
+			0, 0, NULL);
 
   if( !pti )
   {
@@ -936,7 +937,7 @@ PyObject * ChildTypedSymbolsToList(char *pcPath)
   // Perform a child traversal along the given path
   pti = SelectTraversal(pcPath, 
 			TRAVERSAL_SELECT_CHILDREN, 
-			0, 0);
+			0, 0, NULL);
 
   if( !pti )
   {

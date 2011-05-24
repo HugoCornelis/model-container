@@ -283,7 +283,7 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
-    def CoordinatesToList(self, path=None, level=1, mode=1):
+    def CoordinatesToList(self, path=None):
         """!
         @brief Returns a list of coordinates
         @param path A path to an element in the model container
@@ -295,21 +295,10 @@ class ModelContainer:
 
             raise Exception("No path given")
         
-        ppist = nmc_base.PidinStackParse(path)
-
-        phsle = nmc_base.PidinStackLookupTopSymbol(ppist)
-
-        if phsle is None:
-
-            nmc_base.PidinStackFree(ppist)
-
-            raise Exception("No symbol found at '%s'" % path)
 
         symbol_list = []
 
-        symbol_list = nmc_base.CoordinatesToDictList(path, level, mode)
-
-        nmc_base.PidinStackFree(ppist)
+        symbol_list = nmc_base.CoordinatesToList(path, self._nmc_core)
 
         return symbol_list
 
