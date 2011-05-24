@@ -28,6 +28,7 @@ except Exception, e:
 
 my_model_container.Read("cells/purkinje/edsjb1994.ndf")
 
+#my_model_container.Query("expand /**");
 
 children = my_model_container.AllChildrenToDictList()
 

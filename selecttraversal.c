@@ -223,16 +223,23 @@ struct traversal_info * SelectTraversal(char *pcPath, int iSelect, int iMode, in
 
     }
 
-    ptstr = TstrNew(ppistRoot, 
-		    WildcardSelector,
-		    (void *)ppist, //- This should be our wildcard
-		    TraversalInfoCollectorProcessor,
-		    (void*)pti,
-		    NULL,
-		    NULL);
+
+    iSuccess = SymbolTraverseWildcard(phsleRoot,
+				      ppistRoot,
+				      ppist,
+				      TraversalInfoCollectorProcessor,
+				      NULL,
+				      NULL);
+/*     ptstr = TstrNew(ppistRoot,  */
+/* 		    WildcardSelector, */
+/* 		    (void *)ppist, //- This should be our wildcard */
+/* 		    TraversalInfoCollectorProcessor, */
+/* 		    (void*)pti, */
+/* 		    NULL, */
+/* 		    NULL); */
 
 
-    iSuccess = TstrGo(ptstr,phsleRoot);
+/*    iSuccess = TstrGo(ptstr,phsleRoot); */
 
     PidinStackFree(ppist);
 
