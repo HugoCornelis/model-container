@@ -239,7 +239,7 @@ struct traversal_info * SelectTraversal(char *pcPath, int iSelect, int iMode, in
     ptstr = TstrNew(ppist,
 		   NULL,
 		   NULL,
-		   TraversalInfoCollectorProcessor,
+		   TraversalInfoCollectorPostProcessor,
 		   (void *)pti,
 		   NULL,
 		   NULL);
@@ -259,7 +259,7 @@ struct traversal_info * SelectTraversal(char *pcPath, int iSelect, int iMode, in
     iSuccess = SymbolTraverseBioLevels(phsle,
 				       ppist,
 				       &bls,
-				       TraversalInfoCollectorProcessor,
+				       TraversalInfoCollectorPostProcessor,
 				       NULL,
 				       (void *)pti);    
 
@@ -270,7 +270,7 @@ struct traversal_info * SelectTraversal(char *pcPath, int iSelect, int iMode, in
 
     SymbolTraverseSpikeGenerators(phsle,
 				  ppist,
-				  TraversalInfoCollectorProcessor,
+				  TraversalInfoCollectorPostProcessor,
 				  NULL,
 				  (void *)pti);
 
@@ -282,7 +282,7 @@ struct traversal_info * SelectTraversal(char *pcPath, int iSelect, int iMode, in
     ptstr = TstrNew(ppist,
 		    SymbolProjectionSelector,
 		    NULL,
-		    TraversalInfoCollectorProcessor,
+		    TraversalInfoCollectorPostProcessor,
 		    (void *)pti,
 		    NULL,
 		    NULL);
@@ -296,7 +296,7 @@ struct traversal_info * SelectTraversal(char *pcPath, int iSelect, int iMode, in
 
     iSelect = SymbolTraverseSpikeReceivers(phsle,
 					   ppist,
-					   TraversalInfoCollectorProcessor,
+					   TraversalInfoCollectorPostProcessor,
 					   NULL,
 					   (void *)pti);
 
@@ -304,12 +304,9 @@ struct traversal_info * SelectTraversal(char *pcPath, int iSelect, int iMode, in
   else if( iSelect & TRAVERSAL_SELECT_WILDCARD )
   {
 
-    
-
     phsle = NULL;
 
     ppist = PidinStackParse(pcPath);
-
 
     pidin = PidinStackElementPidin(ppist, 0);
 
@@ -391,34 +388,35 @@ struct traversal_info * SelectTraversal(char *pcPath, int iSelect, int iMode, in
       phsleTraversal = phsleRoot;
       ppistTraversal = ppistRoot;
 
+    }
 
-      if( phsleTraversal )
+    if( phsleTraversal )
+    {
+
+      iSuccess = SymbolTraverseWildcard(phsleRoot,
+					ppistRoot,
+					ppist,
+					TraversalInfoCollectorPostProcessor,
+					NULL,
+					(void*)pti);
+      
+      PidinStackFree(ppistTraversal);
+
+
+      if( iSuccess != 1 )
       {
-
-	iSuccess = SymbolTraverseWildcard(phsleRoot,
-					  ppistRoot,
-					  ppist,
-					  TraversalInfoCollectorProcessor,
-					  NULL,
-					  (void*)pti);
-
-
-
-
-	if( iSuccess != 1 )
-	{
-	  return NULL;
-	}
-
-      }
-      else
-      {
-	// No model loaded
 	return NULL;
-
       }
 
     }
+    else
+    {
+      // No model loaded
+      return NULL;
+      
+    }
+
+    
 
   }
   //----------------------------------------------------------------------------
@@ -426,8 +424,6 @@ struct traversal_info * SelectTraversal(char *pcPath, int iSelect, int iMode, in
   //----------------------------------------------------------------------------
 
   PidinStackFree(ppist);
-
-  PidinStackFree(ppistTraversal);
 
   return pti;
 

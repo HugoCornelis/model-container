@@ -147,6 +147,10 @@ int
 TraversalInfoCollectorProcessor
 (struct TreespaceTraversal *ptstr,void *pvUserdata);
 
+int 
+TraversalInfoCollectorPostProcessor
+(struct TreespaceTraversal *ptstr, void *pvUserdata);
+
 void TraversalInfoFree(struct traversal_info *pti);
 
 struct traversal_info * SelectTraversal(char *pcPath, int iSelect, int iMode, int iLevel, struct Neurospaces *pneuro);
