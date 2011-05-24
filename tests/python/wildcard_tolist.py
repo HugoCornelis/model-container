@@ -18,21 +18,18 @@ import neurospaces.model_container as nmc
 my_model_container = nmc.ModelContainer(None)
 
 
-
 my_model_container.Read("cells/purkinje/edsjb1994.ndf")
 
-#my_model_container.Query("expand /**");
 
-children = my_model_container.AllChildrenToDictList()
+#my_model_container.Query("expand /Purkinje")
 
+children = my_model_container.AllChildrenToList()
 
+#pdb.set_trace()
 pp = pprint.PrettyPrinter()
-print "List is: \n"
+print "List is: ",
 
 pp.pprint(children)
-
-print "Top level child is: %s" % children[0]['name']
-print "Number of elements is %s" % len(children)
 
 print "Done!"
 

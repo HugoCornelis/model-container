@@ -240,7 +240,7 @@ class ModelContainer:
         """
         
     
-        symbol_list = nmc_base.AllChildSymbolsToList()
+        symbol_list = nmc_base.AllChildSymbolsToList(self._nmc_core)
 
         if not symbol_list:
 

@@ -45,7 +45,7 @@ PyObject * ChildTypedSymbolsToList(char *pcPath);
 
 PyObject * CoordinatesToList(char *pcPath, struct Neurospaces *pneuro);
 
-PyObject * AllChildSymbolsToList();
+PyObject * AllChildSymbolsToList(struct Neurospaces *pneuro);
 //------------------------------------------ End Prototypes ---------------------------
 
 
@@ -347,7 +347,7 @@ PyObject * ChildSymbolsToDictList(char *pcPath)
  *
  * Depending on flags given it will construct a python dict object. 
  */
-PyObject * AllChildSymbolsToList()
+PyObject * AllChildSymbolsToList(struct Neurospaces *pneuro)
 {
 
   int i;
@@ -375,7 +375,7 @@ PyObject * AllChildSymbolsToList()
   // Perform a child traversal along the given path
   pti = SelectTraversal("/**", 
 			TRAVERSAL_SELECT_WILDCARD, 
-			0, 0, NULL);
+			0, 0, pneuro);
 
   if( !pti )
   {
@@ -509,80 +509,6 @@ PyObject * AllChildSymbolsToList()
 
 
 
-/* PyObject * GetVisibleCoordinates(char *pcPath, int iLevel, int iMode) */
-/* { */
-
-/*   int iContext; */
-/*   struct PidinStack * ppist; */
-/*   PyObject * ppoList = NULL; */
-
-/*   struct PidinStack *ppistRoot = PidinStackParse("/"); */
-
-/*   struct symtab_HSolveListElement *phsleRoot = PidinStackLookupTopSymbol(ppistRoot); */
-
-/*   if (!phsleRoot) */
-/*   { */
-/*     return(NULL); */
-/*   } */
-
-/*   //- get context */
-
-/*   ppist = PidinStackParse(pcPath); */
-
-/*   iContext = PidinStackToSerial(ppist); */
-
-/*   struct PidinStack *ppistContext */
-/*     = SymbolPrincipalSerial2Context(phsleRoot,ppistRoot,iContext); */
-  
-/*   if(!ppistContext) */
-/*   { */
-
-/*     PyErr_SetString(PyExc_TypeError, "Can't get principal context"); */
-
-/*     return NULL; */
-
-/*   } */
-
-/*   //- get symbol under consideration */
-
-/*   struct symtab_HSolveListElement *phsleContext = PidinStackLookupTopSymbol(ppistContext); */
-
-/*   if (!phsleContext) */
-/*   { */
-/*     PidinStackFree(ppistRoot); */
-
-/*     PidinStackFree(ppist); */
-    
-/*     ppistRoot = NULL; */
-
-/*     PidinStackFree(ppistContext); */
-
-/*     ppistContext = NULL; */
-
-/*     printf("Unable to find this symbol, lookup failed (internal error).\n"); */
-
-/*     return NULL; */
-/*   } */
-
-/*   char pcContext[1000]; */
-
-/*   PidinStackString(ppistContext,pcContext,1000); */
-
-/*   printf("Getting children from %s\n", pcContext); */
-
-/*   ppoList = CoordinatesToDictList(phsleContext, ppistContext, iLevel, iMode); */
-
-/*   //- free allocated memory */
-
-/*   PidinStackFree(ppistRoot); */
-
-/*   PidinStackFree(ppistContext); */
-
-/*   PidinStackFree(ppist); */
-  
-/*   return ppoList; */
-
-/* } */
 
 
 //------------------------------------------------------------------------------

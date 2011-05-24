@@ -5,6 +5,7 @@ containers children symbols.
 """
 import os
 import pdb
+import pprint
 import sys
 
 my_path = os.path.join(os.environ['HOME'], 'neurospaces_project', 'model-container', 'source',
@@ -30,7 +31,14 @@ my_model_container.Read("cells/purkinje/edsjb1994.ndf")
 
 children = my_model_container.ChildrenToList('/')
 
+#pdb.set_trace()
+#pp = pprint.PrettyPrinter()
+#print "List is: ",
+
+#pp.pprint(children)
+
 print "Top level child is: %s" % children[0]
+print "Number of elements is %s" % len(children)
 
 print "Done!"
 
