@@ -57,6 +57,8 @@ class ModelContainer:
         @param model An existing ModelContainer or Neurospaces object.
         """
 
+        self.library_path = None
+
         if not self.CheckEnvironment():
 
             raise errors.LibraryPathError()
@@ -121,7 +123,9 @@ class ModelContainer:
                 continue
 
             if os.path.exists(library_path):
-                        
+
+                self.library_path = library_path
+                
                 library_exists = True 
 
 
@@ -138,6 +142,13 @@ class ModelContainer:
         """
         return self._nmc_core
 
+#---------------------------------------------------------------------------
+
+    def GetLibraryPath(self):
+        """!
+        @brief Returns the model containers default library path
+        """
+        return self.library_path
 
 #---------------------------------------------------------------------------
 
@@ -285,7 +296,7 @@ class ModelContainer:
 
     def CoordinatesToList(self, path=None):
         """!
-        @brief Returns a list of coordinates
+        @brief Returns a list of visible coordinates
         @param path A path to an element in the model container
         @param level Integer for the level to descend into the model container
         @param mode The mode to use, biolevel inclusive or children traversal.
