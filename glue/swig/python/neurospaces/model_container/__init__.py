@@ -304,25 +304,6 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
-    def CoordinatesToList2(self, path=None, level=1, mode=1):
-        """!
-        @brief Returns a list of coordinates
-        @param path A path to an element in the model container
-        @param level Integer for the level to descend into the model container
-        @param mode The mode to use, biolevel inclusive or children traversal.
-        @returns A list of dict objects containing coordinates.
-        """
-        if path is None:
-
-            raise Exception("No path given")        
-        symbol_list = []
-        
-        #symbol_list = nmc_base.GetVisibleCoordinates(path, level, mode)
-
-        return symbol_list
-
-#---------------------------------------------------------------------------
-
 
     def SetParameterConcept(self, path, parameter, value):
         """!
