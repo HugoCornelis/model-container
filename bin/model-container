@@ -99,9 +99,9 @@ $0 <options>
 $0: configure the heccer solver.
 
 options:
-    help               print usage information.
-    verbose            set verbosity level.
-    version            give version information.
+    --help               print usage information.
+    --verbose            set verbosity level.
+    --version            give version information.
 ";
 
 	exit 1;
