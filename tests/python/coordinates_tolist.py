@@ -33,6 +33,5 @@ children = my_model_container.CoordinatesToList('/**')
 print "Top level child is: %s" % children[0]['name']
 print "Number of elements is %s" % len(children)
 
-
 print "Done!"
 

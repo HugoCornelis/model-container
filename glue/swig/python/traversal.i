@@ -33,9 +33,12 @@ Link to the PyString API functions: http://docs.python.org/c-api/string.html
 %inline %{
 
 //------------------------------------------ Prototypes -------------------------------
-PyObject * ChildSymbolsToDictList(char *pcPath);
+
+int SerialToString(char *pcName, struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, int iSerial);
 
 static PyObject * CoordinateTuple(double dX, double dY, double dZ);
+
+PyObject * ChildSymbolsToDictList(char *pcPath);
 
 PyObject * ChildSymbolsToList(char *pcPath);
 
@@ -47,6 +50,43 @@ PyObject * CoordinatesToList(char *pcPath, struct Neurospaces *pneuro);
 
 PyObject * AllChildSymbolsToList(struct Neurospaces *pneuro);
 //------------------------------------------ End Prototypes ---------------------------
+
+
+
+//------------------------------------------------------------------------------
+/*
+ * Sets a string in pcName with the full pathname of a serial
+ */
+int SerialToString(char *pcName, struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, int iSerial)
+{
+  struct PidinStack *ppistSerial = NULL;
+
+  if( !phsle || !ppist || iSerial < 0 )
+  {
+
+    return 0;
+
+  }
+
+  ppistSerial = SymbolPrincipalSerial2Context(phsle, ppist, iSerial);
+
+  if( !ppistSerial )
+  {
+    
+    return 0;
+
+  }
+
+
+  PidinStackString(ppistSerial, pcName, 1024);
+
+  PidinStackFree(ppistSerial);
+
+  return 1;
+
+}
+//------------------------------------------------------------------------------
+
 
 
 //------------------------------------------------------------------------------
@@ -180,6 +220,9 @@ PyObject * ChildSymbolsToDictList(char *pcPath)
 {
 
   int i;
+  char pcName[1024];
+  struct PidinStack *ppistRoot = NULL;
+  struct symtab_HSolveListElement *phsleRoot = NULL;
   PyObject * ppoList = NULL;
   PyObject * ppoTmpDict = NULL;
   PyObject * ppoTmpSubDict = NULL;
@@ -189,6 +232,28 @@ PyObject * ChildSymbolsToDictList(char *pcPath)
   PyObject * ppoTmpType = NULL;
   struct traversal_info * pti;
   double dX, dY, dZ;
+
+  //- Get the root context information for serial to name resolution
+  ppistRoot = PidinStackCalloc();
+
+  if (!ppistRoot)
+  {
+
+    return NULL;
+  }
+
+  PidinStackSetRooted(ppistRoot);
+
+  phsleRoot = PidinStackLookupTopSymbol(ppistRoot);
+
+  if( !phsleRoot )
+  {
+
+    PidinStackFree(ppistRoot);
+
+    return NULL;
+
+  }
 
 
   //- Start out with an empty list
@@ -520,6 +585,10 @@ PyObject * CoordinatesToList(char *pcPath, struct Neurospaces *pneuro)
 {
 
   int i;
+
+  char pcName[1024];
+  struct PidinStack *ppistRoot = NULL;
+  struct symtab_HSolveListElement *phsleRoot = NULL;
   struct traversal_info * pti = NULL;
   PyObject * ppoList = NULL;
   PyObject * ppoTmpDia = NULL;
@@ -532,6 +601,28 @@ PyObject * CoordinatesToList(char *pcPath, struct Neurospaces *pneuro)
   PyObject * ppoTmpType = NULL;
   double dX, dY, dZ;
 
+
+  //- Get the root context information for serial to name resolution
+  ppistRoot = PidinStackCalloc();
+
+  if (!ppistRoot)
+  {
+
+    return NULL;
+  }
+
+  PidinStackSetRooted(ppistRoot);
+
+  phsleRoot = PidinStackLookupTopSymbol(ppistRoot);
+
+  if( !phsleRoot )
+  {
+
+    PidinStackFree(ppistRoot);
+
+    return NULL;
+
+  }
 
   //- Start out with an empty list
 
@@ -585,7 +676,11 @@ PyObject * CoordinatesToList(char *pcPath, struct Neurospaces *pneuro)
       
       
 	// Sets the name string ------------------------------------------------
-	ppoTmpName = PyString_FromString(pti->ppcNames[i]);
+	
+	SerialToString(pcName, phsleRoot, ppistRoot, pti->piSerials[i]);
+
+	ppoTmpName = PyString_FromString(pcName);
+	//	ppoTmpName = PyString_FromString(pti->ppcNames[i]);
 
 	if (!PyString_Check(ppoTmpName))
 	{
@@ -716,6 +811,8 @@ PyObject * CoordinatesToList(char *pcPath, struct Neurospaces *pneuro)
   }
 
   //- free allocated memory
+
+  PidinStackFree(ppistRoot);
 
   TraversalInfoFree(pti);
 

@@ -36,7 +36,7 @@ Done!
 				command_tests => [
 						  {
 						   description => "Can we retrieve a python list of all visible elements in the Purkinje cell ?",
-						   read => "Top level child is: Purkinje
+						   read => "Top level child is: /Purkinje
 Number of elements is 4549
 Done!
 ",
