@@ -32,6 +32,6 @@ children = my_model_container.CoordinatesToList('/**')
 #pp.pprint(children)
 print "Top level child is: %s" % children[0]['name']
 print "Number of elements is %s" % len(children)
-pdb.set_trace()
+#pdb.set_trace()
 print "Done!"
 
