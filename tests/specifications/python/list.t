@@ -14,7 +14,7 @@ my $test
 				command_tests => [
 						  {
 						   description => "Can we retrieve a python list of all elements in the Purkinje cell ?",
-						   read => "Top level child is: Purkinje
+						   read => "Top level child is: /Purkinje
 Number of elements is 65623
 Done!
 ",
