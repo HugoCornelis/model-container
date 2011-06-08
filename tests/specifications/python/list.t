@@ -27,6 +27,26 @@ Done!
 			       },
 
 
+			       {
+				arguments => [
+					     ],
+				command => 'tests/python/children_todictlist.py',
+				command_tests => [
+						  {
+						   description => "Can we retrieve a python list of all elements in the Purkinje cell ?",
+						   read => "Top level child is: Purkinje
+Number of elements is 65623
+Done!
+",
+
+						   timeout => 100,
+
+						  },
+						 ],
+				description => "A simple script that will load the purkinje cell and return a python list",
+			       },
+
+
 
 
 			       {

@@ -295,8 +295,23 @@ PyObject * ChildSymbolsToDictList(char *pcPath)
       
       // First we set the name to the dict
       
-      // Converts the regular string into a python string object
-      ppoTmpName = PyString_FromString(pti->ppcNames[i]);
+      // Sets the name string ------------------------------------------------
+      if( pti->piSerials[i] )
+      {
+
+	SerialToString(pcName, phsleRoot, ppistRoot, pti->piSerials[i]);
+
+	ppoTmpName = PyString_FromString(pcName);
+	
+      }
+      else
+      {
+
+	// Converts the regular string into a python string object
+	ppoTmpName = PyString_FromString(pti->ppcNames[i]);
+	
+      }
+
 
       if (!PyString_Check(ppoTmpName))
       {
@@ -416,6 +431,9 @@ PyObject * AllChildSymbolsToList(struct Neurospaces *pneuro)
 {
 
   int i;
+  char pcName[1024];
+  struct PidinStack *ppistRoot = NULL;
+  struct symtab_HSolveListElement *phsleRoot = NULL;
   PyObject * ppoList = NULL;
   PyObject * ppoTmpDict = NULL;
   PyObject * ppoTmpSubDict = NULL;
@@ -426,6 +444,27 @@ PyObject * AllChildSymbolsToList(struct Neurospaces *pneuro)
   struct traversal_info * pti;
   double dX, dY, dZ;
 
+  //- Get the root context information for serial to name resolution
+  ppistRoot = PidinStackCalloc();
+
+  if (!ppistRoot)
+  {
+
+    return NULL;
+  }
+
+  PidinStackSetRooted(ppistRoot);
+
+  phsleRoot = PidinStackLookupTopSymbol(ppistRoot);
+
+  if( !phsleRoot )
+  {
+
+    PidinStackFree(ppistRoot);
+
+    return NULL;
+
+  }
 
   //- Start out with an empty list
 
@@ -440,7 +479,8 @@ PyObject * AllChildSymbolsToList(struct Neurospaces *pneuro)
   // Perform a child traversal along the given path
   pti = SelectTraversal("/**", 
 			TRAVERSAL_SELECT_WILDCARD, 
-			0, 0, pneuro);
+			2, 1,
+			pneuro);
 
   if( !pti )
   {
@@ -465,9 +505,23 @@ PyObject * AllChildSymbolsToList(struct Neurospaces *pneuro)
       }
       
       // First we set the name to the dict
-      
-      // Converts the regular string into a python string object
-      ppoTmpName = PyString_FromString(pti->ppcNames[i]);
+
+      // Sets the name string ------------------------------------------------
+      if( pti->piSerials[i] )
+      {
+
+	SerialToString(pcName, phsleRoot, ppistRoot, pti->piSerials[i]);
+
+	ppoTmpName = PyString_FromString(pcName);
+	
+      }
+      else
+      {
+
+	// Converts the regular string into a python string object
+	ppoTmpName = PyString_FromString(pti->ppcNames[i]);
+	
+      }
 
       if (!PyString_Check(ppoTmpName))
       {
@@ -547,10 +601,10 @@ PyObject * AllChildSymbolsToList(struct Neurospaces *pneuro)
 
       PyDict_SetItemString(ppoTmpDict, "coordinate", ppoTmpSubDict);
 
-    }
+      // After converting the string to a python string we append 
+      PyList_Append(ppoList, ppoTmpDict);
 
-    // After converting the string to a python string we append 
-    PyList_Append(ppoList, ppoTmpDict);
+    }
 
   }
 
@@ -585,7 +639,6 @@ PyObject * CoordinatesToList(char *pcPath, struct Neurospaces *pneuro)
 {
 
   int i;
-
   char pcName[1024];
   struct PidinStack *ppistRoot = NULL;
   struct symtab_HSolveListElement *phsleRoot = NULL;
@@ -676,11 +729,21 @@ PyObject * CoordinatesToList(char *pcPath, struct Neurospaces *pneuro)
       
       
 	// Sets the name string ------------------------------------------------
-	
-	SerialToString(pcName, phsleRoot, ppistRoot, pti->piSerials[i]);
+	if( pti->piSerials[i] )
+	{
 
-	ppoTmpName = PyString_FromString(pcName);
-	//	ppoTmpName = PyString_FromString(pti->ppcNames[i]);
+	  SerialToString(pcName, phsleRoot, ppistRoot, pti->piSerials[i]);
+
+	  ppoTmpName = PyString_FromString(pcName);
+	
+	}
+	else
+	{
+
+	  // Converts the regular string into a python string object
+	  ppoTmpName = PyString_FromString(pti->ppcNames[i]);
+	
+	}
 
 	if (!PyString_Check(ppoTmpName))
 	{
@@ -846,10 +909,34 @@ PyObject * ChildSymbolsToList(char *pcPath)
 {
 
   int i;
+  char pcName[1024];
+  struct PidinStack *ppistRoot = NULL;
+  struct symtab_HSolveListElement *phsleRoot = NULL;
   struct traversal_info * pti = NULL;
   PyObject * ppoSymbolList = NULL;
   PyObject * ppoTmpName = NULL;
 
+  //- Get the root context information for serial to name resolution
+  ppistRoot = PidinStackCalloc();
+
+  if (!ppistRoot)
+  {
+
+    return NULL;
+  }
+
+  PidinStackSetRooted(ppistRoot);
+
+  phsleRoot = PidinStackLookupTopSymbol(ppistRoot);
+
+  if( !phsleRoot )
+  {
+
+    PidinStackFree(ppistRoot);
+
+    return NULL;
+
+  }
 
   //- Start out with an empty list
 
@@ -884,9 +971,23 @@ PyObject * ChildSymbolsToList(char *pcPath)
       
       if ( !pti->ppcNames[i] )
 	continue;
-      
-      // Converts the regular string into a python string object
-      ppoTmpName = PyString_FromString(pti->ppcNames[i]);
+
+      // Sets the name string ------------------------------------------------
+      if( pti->piSerials[i] )
+      {
+
+	SerialToString(pcName, phsleRoot, ppistRoot, pti->piSerials[i]);
+
+	ppoTmpName = PyString_FromString(pcName);
+	
+      }
+      else
+      {
+
+	// Converts the regular string into a python string object
+	ppoTmpName = PyString_FromString(pti->ppcNames[i]);
+	
+      }
 
       if (!PyString_Check(ppoTmpName))
       {
@@ -939,12 +1040,36 @@ PyObject * ChildTypedSymbolsToList(char *pcPath)
 {
 
   int i;
+  char pcName[1024];
+  struct PidinStack *ppistRoot = NULL;
+  struct symtab_HSolveListElement *phsleRoot = NULL;
   struct traversal_info * pti = NULL;
   PyObject * ppoList = NULL;
   PyObject * ppoTmpName = NULL;
   PyObject * ppoTmpType = NULL;
   PyObject * ppoTmpTuple = NULL;
 
+  //- Get the root context information for serial to name resolution
+  ppistRoot = PidinStackCalloc();
+
+  if (!ppistRoot)
+  {
+
+    return NULL;
+  }
+
+  PidinStackSetRooted(ppistRoot);
+
+  phsleRoot = PidinStackLookupTopSymbol(ppistRoot);
+
+  if( !phsleRoot )
+  {
+
+    PidinStackFree(ppistRoot);
+
+    return NULL;
+
+  }
 
   //- Start out with an empty list
 
@@ -978,9 +1103,25 @@ PyObject * ChildTypedSymbolsToList(char *pcPath)
       
       if ( !pti->ppcNames[i] || !pti->ppcTypes[i] )
 	continue; // This might not be a good idea, no error reporting
-      
-      // Converts the regular string into a python string object
-      ppoTmpName = PyString_FromString(pti->ppcNames[i]);
+
+
+      // Sets the name string ------------------------------------------------
+      if( pti->piSerials[i] )
+      {
+
+	SerialToString(pcName, phsleRoot, ppistRoot, pti->piSerials[i]);
+
+	ppoTmpName = PyString_FromString(pcName);
+	
+      }
+      else
+      {
+
+	// Converts the regular string into a python string object
+	ppoTmpName = PyString_FromString(pti->ppcNames[i]);
+	
+      }
+
       ppoTmpType = PyString_FromString(pti->ppcTypes[i]);
       
 

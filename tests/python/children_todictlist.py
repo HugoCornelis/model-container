@@ -26,13 +26,13 @@ my_model_container.Read("cells/purkinje/edsjb1994.ndf")
 children = my_model_container.AllChildrenToDictList()
 
 
-pp = pprint.PrettyPrinter()
-print "List is: \n"
+#pp = pprint.PrettyPrinter()
+#print "List is: \n"
 
-pp.pprint(children)
+#pp.pprint(children)
 
 print "Top level child is: %s" % children[0]['name']
 print "Number of elements is %s" % len(children)
-
+#pdb.set_trace()
 print "Done!"
 

@@ -39,6 +39,6 @@ children = my_model_container.ChildrenToList('/')
 
 print "Top level child is: %s" % children[0]
 print "Number of elements is %s" % len(children)
-
+#pdb.set_trace()
 print "Done!"
 
