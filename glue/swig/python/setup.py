@@ -178,7 +178,7 @@ CLASSIFIERS = [
     'Topic :: Research :: Neuroscience',
 ]
 
-PACKAGE_FILES=find_files('neurospaces/model_containers')
+PACKAGE_FILES=find_files('neurospaces')
 
 OPTIONS={
     'sdist': {
