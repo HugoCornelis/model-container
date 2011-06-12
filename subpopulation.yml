@@ -1,5 +1,9 @@
 ---
 class_hierarchy:
+  population:
+    grammar:
+      components:
+        - Subpopulation
   subpopulation:
     allows:
       count_cells: population
