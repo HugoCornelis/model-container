@@ -3,20 +3,20 @@ $files = {
                                              {
                                                'expr' => undef,
                                                'value' => '1',
-                                               'text' => '	if ($token_text =~ /ARRAY/)
-',
-                                               'fname' => './hierarchy/instrumentor',
-                                               'type' => 'user',
-                                               'line' => '1866'
-                                             },
-                                             {
-                                               'expr' => undef,
-                                               'value' => '1',
                                                'text' => '    my $definitions = shift;
 ',
                                                'fname' => './hierarchy/instrumentor',
                                                'type' => 'user',
-                                               'line' => 129
+                                               'line' => 128
+                                             },
+                                             {
+                                               'expr' => undef,
+                                               'value' => '1',
+                                               'text' => '    if ($option_classes)
+',
+                                               'fname' => './hierarchy/instrumentor',
+                                               'type' => 'user',
+                                               'line' => '3150'
                                              }
                                            ]
          };
@@ -39,4 +39,4 @@ $expr_list = [
                }
              ];
 $eval_saved_text = undef;
-$main_win_geometry = '1272x941+0+0';
+$main_win_geometry = '1272x820+0+0';

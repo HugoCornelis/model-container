@@ -1,0 +1,1011 @@
+---
+annotations:
+  piSymbolType2Biolevel:
+    default: -1
+    order: type_number
+    type: plain
+grammar_rules:
+  specific_description:
+    a_allocator_constructor:
+      parts: []
+      semantic: |
+        #line
+        
+        		    $$ = ParserContextGetActual((PARSERCONTEXT *)pacParserContext);
+    b_reference_constructor:
+      parts:
+        - specific_description
+        - ChildSectionOptionalInputOptionalParameters
+      semantic: |
+        #line
+        		    //- link children
+        
+        		    if ($2)
+        		    {
+        			SymbolAddChild(&$1specific_to_base, $2);
+        		    }
+        
+        		    //- reset actual symbol
+        
+        		    ParserContextSetActual
+        			((PARSERCONTEXT *)pacParserContext,
+        			 &$1specific_to_base);
+        
+        		    //- put symbol description on stack
+        
+        		    $$ = $1;
+    c_hardcoding_constructor:
+      parts:
+        - specific_description
+        - specific_component
+      semantic: |
+        #line
+        		    //- add component to current section list
+        
+        		    SymbolAddChild(&$1specific_to_base, $2);
+        
+        		    //- reset actual symbol
+        
+        		    ParserContextSetActual
+        			((PARSERCONTEXT *)pacParserContext,
+        			 &$1specific_to_base);
+        
+        		    //- push current description on stack
+        
+        		    $$ = $1;
+    d_parameter_constructor:
+      parts:
+        - specific_description
+        - Parameters
+      semantic: |
+        #line
+        		    //- link parameters
+        
+        		    SymbolParameterLinkAtEnd(&$1specific_to_base, $2);
+        
+        		    //- reset actual symbol
+        
+        		    ParserContextSetActual
+        			((PARSERCONTEXT *)pacParserContext,
+        			 &$1specific_to_base);
+        
+        		    //- put symbol on stack
+        
+        		    $$ = $1;
+    e_parametercache_constructor:
+      parts:
+        - specific_description
+        - CachedParameters
+      semantic: |
+        #line
+        		    //- link parameters
+        
+        		    SymbolAddToForwardReferencers(&$1specific_to_base, $2);
+        
+        		    //- reset actual symbol
+        
+        		    ParserContextSetActual
+        			((PARSERCONTEXT *)pacParserContext,
+        			 &$1specific_to_base);
+        
+        		    //- put symbol on stack
+        
+        		    $$ = $1;
+  specific_end:
+    parts:
+      - EndPushedPidin
+      - specific_token
+    semantic: "#line\n"
+  specific_front:
+    parts:
+      - specific_front1
+      - specific_front2
+    semantic: |
+      #line
+      
+      		    //- prepare struct for symbol table
+      
+      		    $$ = $1;
+      
+      		    //- set actual symbol
+      
+      		    ParserContextSetActual
+      			((PARSERCONTEXT *)pacParserContext,
+      			 &$$specific_to_base);
+      
+      		    //- assign name to symbol
+      
+      		    SymbolSetName(&$$specific_to_base, $2);
+  specific_front1:
+    parts:
+      - specific_token
+    semantic: |
+      #line
+      
+      		    //- prepare struct for symbol table
+      
+      		    $$ = specific_allocator();
+      
+      		    //- set actual symbol
+      
+      		    ParserContextSetActual
+      			((PARSERCONTEXT *)pacParserContext,
+      			 &$$specific_to_base);
+  specific_front2:
+    parts:
+      - IdentifierOptionIndexPushedPidin
+    semantic: |
+      #line
+      
+      		    //- put identifier on stack
+      
+      		    $$ = $1;
+  specific_section:
+    parts:
+      - specific_front
+      - '	InputOutputRelations'
+      - '	OptionalItemInputRelations'
+      - '	specific_description'
+      - specific_end
+    semantic: |
+      #line
+      		    //- link input/output relations
+      
+      		    SymbolAssignBindableIO(&$4specific_to_base, $2);
+      
+      		    //- bind I/O relations
+      
+      		    SymbolAssignInputs(&$4specific_to_base, $3);
+      
+      		    //- put finished section info on stack
+      
+      		    $$ = $4;
+grammar_symbols:
+  GateKineticBackward:
+    components:
+      - GateKineticPart
+    specific_allocator: GateKineticCalloc
+    specific_token:
+      lexical: TOKEN_GATE_KINETIC_B
+    typing:
+      base: phsle
+      id: pidin
+      spec: pgatk
+      to_base: ->bio.ioh.iol.hsle
+  GateKineticForward:
+    components:
+      - GateKineticPart
+    specific_allocator: GateKineticCalloc
+    specific_token:
+      lexical: TOKEN_GATE_KINETIC_A
+    typing:
+      base: phsle
+      id: pidin
+      spec: pgatk
+      to_base: ->bio.ioh.iol.hsle
+  GateKineticPart:
+    components:
+      - GateKineticPart
+    specific_allocator: GateKineticCalloc
+    specific_token:
+      lexical: TOKEN_GATE_KINETIC_PART
+    typing:
+      base: phsle
+      id: pidin
+      spec: pgatk
+      to_base: ->bio.ioh.iol.hsle
+name: symbols
+object_methods:
+  add_child: 2
+  all_serials_to_parent_get: 3
+  all_serials_to_parent_set: 4
+  all_successors_get: 5
+  all_successors_set: 6
+  assign_bindable_i_o: 7
+  assign_inputs: 8
+  assign_parameters: 9
+  collect_mandatory_parameter_values: 10
+  count_cells: 11
+  count_connections: 12
+  count_segments: 13
+  count_spike_generators: 14
+  count_spike_receivers: 15
+  create_alias: 16
+  delete_child: 17
+  get_cached_delay: 18
+  get_cached_post: 19
+  get_cached_pre: 20
+  get_cached_weight: 21
+  get_child_from_input: 22
+  get_children: 23
+  get_delay: 24
+  get_inputs: 25
+  get_modifiable_parameter: 26
+  get_name: 27
+  get_options: 28
+  get_parameter: 29
+  get_pidin: 30
+  get_post: 31
+  get_pre: 32
+  get_prototype: 33
+  get_symbol: 34
+  get_type: 35
+  get_weight: 36
+  has_bindable_i_o: 37
+  has_equation: 38
+  has_m_g_block_g_m_a_x: 39
+  has_nernst_erev: 40
+  linearize: 41
+  lookup_hierarchical: 42
+  lookup_serial_i_d: 43
+  mesher_on_length: 44
+  parameter_link_at_end: 45
+  parameter_resolve_value: 46
+  parameter_scale_value: 47
+  print: 48
+  reduce: 49
+  resolve_input: 50
+  resolve_parameter_functional_input: 51
+  set_at_x_y_z: 52
+  set_name: 53
+  set_namespace: 54
+  set_options: 55
+  set_parameter_context: 56
+  set_parameter_double: 57
+  set_parameter_may_be_copy_string: 58
+  set_parameter_string: 59
+  set_prototype: 60
+  set_type: 61
+  traverse: 62
+  traverse_segments: 63
+  traverse_spike_generators: 64
+  traverse_spike_receivers: 65
+object_methods_custom_code:
+  add_child:
+    simple: 1
+  all_serials_to_parent_get:
+    simple: 1
+  all_serials_to_parent_set:
+    simple: 1
+  all_successors_get:
+    simple: 1
+  all_successors_set:
+    simple: 1
+  assign_bindable_i_o:
+    simple: 1
+  assign_inputs:
+    simple: 1
+  assign_parameters:
+    simple: 1
+  collect_mandatory_parameter_values:
+    simple: 1
+  count_cells:
+    simple: 1
+  count_connections:
+    simple: 1
+  count_segments:
+    simple: 1
+  count_spike_generators:
+    simple: 1
+  count_spike_receivers:
+    simple: 1
+  create_alias:
+    simple: 1
+  delete_child:
+    simple: 1
+  get_cached_delay:
+    simple: 1
+  get_cached_post:
+    simple: 1
+  get_cached_pre:
+    simple: 1
+  get_cached_weight:
+    simple: 1
+  get_child_from_input:
+    simple: 1
+  get_children:
+    simple: 1
+  get_delay:
+    simple: 1
+  get_inputs:
+    simple: 1
+  get_modifiable_parameter:
+    simple: 1
+  get_name:
+    simple: 1
+  get_options:
+    simple: 1
+  get_parameter:
+    simple: 1
+  get_pidin:
+    simple: 1
+  get_post:
+    simple: 1
+  get_pre:
+    simple: 1
+  get_prototype:
+    simple: 1
+  get_symbol:
+    simple: 1
+  get_type:
+    simple: 1
+  get_weight:
+    simple: 1
+  has_bindable_i_o:
+    simple: 1
+  has_equation:
+    simple: 1
+  has_m_g_block_g_m_a_x:
+    simple: 1
+  has_nernst_erev:
+    simple: 1
+  linearize:
+    simple: 1
+  lookup_hierarchical:
+    pre: |+2
+      
+      
+          //- if outrunning this context
+      
+          if (PidinStackNumberOfEntries(ppist) < iLevel)
+          {
+      	//- cannot be, return failure
+      
+      	return(NULL);
+          }
+      
+          //- if no next name in pidin stack
+      
+          if (!PidinStackElementPidin(ppist,iLevel))
+          {
+      	//- return given element
+      
+      	return(phsle);
+          }
+
+  lookup_serial_i_d:
+    simple: 1
+  mesher_on_length:
+    simple: 1
+  parameter_link_at_end:
+    simple: 1
+  parameter_resolve_value:
+    simple: 1
+  parameter_scale_value:
+    simple: 1
+  print:
+    post_I_was_wong_here:
+      print: "\n\tPrintIndent(iIndent,pfile);\n"
+    pre: |+2
+      
+      
+          //- print name of symbol
+      
+          PrintIndent(iIndent,pfile);
+          fprintf
+      	(pfile,"Name, index (%s,%i)\n",SymbolName(phsle), -1);
+      
+          //- print type of symbol
+      
+          PrintIndent(iIndent,pfile);
+          fprintf(pfile,"Type (%s)\n",SymbolHSLETypeDescribe(phsle->iType));
+
+  reduce:
+    simple: 1
+  resolve_input:
+    simple: 1
+  resolve_parameter_functional_input:
+    simple: 1
+  set_at_x_y_z:
+    simple: 1
+  set_name:
+    simple: 1
+  set_namespace:
+    simple: 1
+  set_options:
+    simple: 1
+  set_parameter_context:
+    simple: 1
+  set_parameter_double:
+    simple: 1
+  set_parameter_may_be_copy_string:
+    simple: 1
+  set_parameter_string:
+    simple: 1
+  set_prototype:
+    simple: 1
+  set_type:
+    simple: 1
+  traverse:
+    simple: 1
+  traverse_segments:
+    simple: 1
+  traverse_spike_generators:
+    simple: 1
+  traverse_spike_receivers:
+    simple: 1
+object_methods_prefix: symbol
+object_methods_return_types:
+  add_child:
+    default: FALSE
+    selector: .uSelector.iFunc
+    type: int
+  all_serials_to_parent_get:
+    default: TRUE
+    selector: .uSelector.iFunc
+    type: int
+  all_serials_to_parent_set:
+    default: TRUE
+    selector: .uSelector.iFunc
+    type: int
+  all_successors_get:
+    default: TRUE
+    selector: .uSelector.iFunc
+    type: int
+  all_successors_set:
+    default: TRUE
+    selector: .uSelector.iFunc
+    type: int
+  assign_bindable_i_o:
+    default: FALSE
+    selector: .uSelector.iFunc
+    type: int
+  assign_inputs:
+    default: FALSE
+    selector: .uSelector.iFunc
+    type: int
+  assign_parameters:
+    default: FALSE
+    selector: .uSelector.iFunc
+    type: int
+  collect_mandatory_parameter_values:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  count_cells:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  count_connections:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  count_segments:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  count_spike_generators:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  count_spike_receivers:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  create_alias:
+    default: NULL
+    selector: .uSelector.phsleFunc
+    type: struct symtab_HSolveListElement *
+  delete_child:
+    default: FALSE
+    selector: .uSelector.iFunc
+    type: int
+  get_cached_delay:
+    default: DBL_MAX
+    selector: .uSelector.dFunc
+    type: double
+  get_cached_post:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  get_cached_pre:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  get_cached_weight:
+    default: DBL_MAX
+    selector: .uSelector.dFunc
+    type: double
+  get_child_from_input:
+    default: NULL
+    selector: .uSelector.phsleFunc
+    type: struct symtab_HSolveListElement *
+  get_children:
+    default: NULL
+    selector: .uSelector.piohcFunc
+    type: IOHContainer *
+  get_delay:
+    default: DBL_MAX
+    selector: .uSelector.dFunc
+    type: double
+  get_inputs:
+    default: NULL
+    selector: .uSelector.piocFunc
+    type: struct symtab_IOContainer *
+  get_modifiable_parameter:
+    default: NULL
+    selector: .uSelector.pparFunc
+    type: struct symtab_Parameters *
+  get_name:
+    default: NULL
+    selector: .uSelector.pcFunc
+    type: char *
+  get_options:
+    default: FALSE
+    selector: .uSelector.iFunc
+    type: int
+  get_parameter:
+    default: NULL
+    selector: .uSelector.pparFunc
+    type: struct symtab_Parameters *
+  get_pidin:
+    default: NULL
+    selector: .uSelector.pidinFunc
+    type: struct symtab_IdentifierIndex *
+  get_post:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  get_pre:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  get_prototype:
+    default: NULL
+    selector: .uSelector.phsleFunc
+    type: struct symtab_HSolveListElement *
+  get_symbol:
+    default: NULL
+    selector: .uSelector.phsleFunc
+    type: struct symtab_HSolveListElement *
+  get_type:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  get_weight:
+    default: DBL_MAX
+    selector: .uSelector.dFunc
+    type: double
+  has_bindable_i_o:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  has_equation:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  has_m_g_block_g_m_a_x:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  has_nernst_erev:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  linearize:
+    default: 0
+    selector: .uSelector.iFunc
+    type: int
+  lookup_hierarchical:
+    default: NULL
+    selector: .uSelector.phsleFunc
+    type: struct symtab_HSolveListElement *
+  lookup_serial_i_d:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  mesher_on_length:
+    default: -1
+    selector: .uSelector.iFunc
+    type: int
+  parameter_link_at_end:
+    default: FALSE
+    selector: .uSelector.iFunc
+    type: int
+  parameter_resolve_value:
+    default: DBL_MAX
+    selector: .uSelector.dFunc
+    type: double
+  parameter_scale_value:
+    default: DBL_MAX
+    selector: .uSelector.dFunc
+    type: double
+  print:
+    default: TRUE
+    selector: .uSelector.iFunc
+    type: int
+  reduce:
+    default: TRUE
+    selector: .uSelector.iFunc
+    type: int
+  resolve_input:
+    default: NULL
+    selector: .uSelector.ppistFunc
+    type: struct PidinStack *
+  resolve_parameter_functional_input:
+    default: NULL
+    selector: .uSelector.phsleFunc
+    type: struct symtab_HSolveListElement *
+  set_at_x_y_z:
+    default: FALSE
+    selector: .uSelector.iFunc
+    type: int
+  set_name:
+    default: FALSE
+    selector: .uSelector.iFunc
+    type: int
+  set_namespace:
+    default: FALSE
+    selector: .uSelector.iFunc
+    type: int
+  set_options:
+    default: FALSE
+    selector: .uSelector.iFunc
+    type: int
+  set_parameter_context:
+    default: NULL
+    selector: .uSelector.pparFunc
+    type: struct symtab_Parameters *
+  set_parameter_double:
+    default: NULL
+    selector: .uSelector.pparFunc
+    type: struct symtab_Parameters *
+  set_parameter_may_be_copy_string:
+    default: NULL
+    selector: .uSelector.pparFunc
+    type: struct symtab_Parameters *
+  set_parameter_string:
+    default: NULL
+    selector: .uSelector.pparFunc
+    type: struct symtab_Parameters *
+  set_prototype:
+    default: FALSE
+    selector: .uSelector.iFunc
+    type: int
+  set_type:
+    default: FALSE
+    selector: .uSelector.iFunc
+    type: int
+  traverse:
+    default: 1
+    selector: .uSelector.iFunc
+    type: int
+  traverse_segments:
+    default: 1
+    selector: .uSelector.iFunc
+    type: int
+  traverse_spike_generators:
+    default: 1
+    selector: .uSelector.iFunc
+    type: int
+  traverse_spike_receivers:
+    default: 1
+    selector: .uSelector.iFunc
+    type: int
+object_methods_signatures:
+  add_child:
+    calling: '(phsle, phsleChild)'
+    prototype: '(struct symtab_HSolveListElement *phsle, struct symtab_HSolveListElement *phsleChild)'
+  all_serials_to_parent_get:
+    calling: |
+      (phsle
+      	 , piInvisible
+      	 , piPrincipal
+      #ifdef TREESPACES_SUBSET_MECHANISM
+      	 , piMechanism
+      #endif
+      #ifdef TREESPACES_SUBSET_SEGMENT
+      	 , piSegment
+      #endif
+      	    )
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       int *piInvisible,
+       int *piPrincipal
+      #ifdef TREESPACES_SUBSET_MECHANISM
+       , int *piMechanism
+      #endif
+      #ifdef TREESPACES_SUBSET_SEGMENT
+       , int *piSegment
+      #endif
+      )
+  all_serials_to_parent_set:
+    calling: |
+      (phsle
+      	 , iInvisible
+      	 , iPrincipal
+      #ifdef TREESPACES_SUBSET_MECHANISM
+      	 , iMechanism
+      #endif
+      #ifdef TREESPACES_SUBSET_SEGMENT
+      	 , iSegment
+      #endif
+      	    )
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       int iInvisible,
+       int iPrincipal
+      #ifdef TREESPACES_SUBSET_MECHANISM
+       , int iMechanism
+      #endif
+      #ifdef TREESPACES_SUBSET_SEGMENT
+       , int iSegment
+      #endif
+      )
+  all_successors_get:
+    calling: |
+      (phsle
+      	 , piInvisible
+      	 , piPrincipal
+      #ifdef TREESPACES_SUBSET_MECHANISM
+      	 , piMechanism
+      #endif
+      #ifdef TREESPACES_SUBSET_SEGMENT
+      	 , piSegment
+      #endif
+      	    )
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       int *piInvisible,
+       int *piPrincipal
+      #ifdef TREESPACES_SUBSET_MECHANISM
+       , int *piMechanism
+      #endif
+      #ifdef TREESPACES_SUBSET_SEGMENT
+       , int *piSegment
+      #endif
+      )
+  all_successors_set:
+    calling: |
+      (phsle
+      	 , iInvisible
+      	 , iPrincipal
+      #ifdef TREESPACES_SUBSET_MECHANISM
+      	 , iMechanism
+      #endif
+      #ifdef TREESPACES_SUBSET_SEGMENT
+      	 , iSegment
+      #endif
+      	    )
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       int iInvisible,
+       int iPrincipal
+      #ifdef TREESPACES_SUBSET_MECHANISM
+       , int iMechanism
+      #endif
+      #ifdef TREESPACES_SUBSET_SEGMENT
+       , int iSegment
+      #endif
+      )
+  assign_bindable_i_o:
+    calling: '(phsle, pioc)'
+    prototype: '(struct symtab_HSolveListElement *phsle, struct symtab_IOContainer *pioc)'
+  assign_inputs:
+    calling: '(phsle, pio)'
+    prototype: '(struct symtab_HSolveListElement * phsle, struct symtab_InputOutput *pio)'
+  assign_parameters:
+    calling: '(phsle, ppar)'
+    prototype: '(struct symtab_HSolveListElement *phsle, struct symtab_Parameters *ppar)'
+  collect_mandatory_parameter_values:
+    calling: '(phsle, ppist)'
+    prototype: '(struct symtab_HSolveListElement *phsle,struct PidinStack *ppist)'
+  count_cells:
+    calling: '(phsle, ppist)'
+    prototype: '(struct symtab_HSolveListElement *phsle,struct PidinStack *ppist)'
+  count_connections:
+    calling: '(phsle, ppist)'
+    prototype: '(struct symtab_HSolveListElement *phsle,struct PidinStack *ppist)'
+  count_segments:
+    calling: '(phsle, ppist)'
+    prototype: '(struct symtab_HSolveListElement *phsle,struct PidinStack *ppist)'
+  count_spike_generators:
+    calling: '(phsle, ppist)'
+    prototype: '(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)'
+  count_spike_receivers:
+    calling: '(phsle, ppist)'
+    prototype: '(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)'
+  create_alias:
+    calling: '(phsle, pcNamespace, pidin)'
+    prototype: '(struct symtab_HSolveListElement *phsle, char *pcNamespace, struct symtab_IdentifierIndex *pidin)'
+  delete_child:
+    calling: '(phsle, phsleChild)'
+    prototype: '(struct symtab_HSolveListElement *phsle, struct symtab_HSolveListElement *phsleChild)'
+  get_cached_delay:
+    calling: (phsle)
+    prototype: (struct symtab_HSolveListElement * phsle)
+  get_cached_post:
+    calling: (phsle)
+    prototype: (struct symtab_HSolveListElement * phsle)
+  get_cached_pre:
+    calling: (phsle)
+    prototype: (struct symtab_HSolveListElement * phsle)
+  get_cached_weight:
+    calling: (phsle)
+    prototype: (struct symtab_HSolveListElement * phsle)
+  get_child_from_input:
+    calling: '(phsle, pio)'
+    prototype: '(struct symtab_HSolveListElement *phsle, struct symtab_InputOutput *pio)'
+  get_children:
+    calling: (pioh)
+    prototype: (struct symtab_IOHierarchy *pioh)
+    typer:
+      name: '&pioh->iol.hsle'
+  get_delay:
+    calling: '(phsle, ppist)'
+    prototype: '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)'
+  get_inputs:
+    calling: (phsle)
+    prototype: (struct symtab_HSolveListElement *phsle)
+  get_modifiable_parameter:
+    calling: '(phsle, pcName, ppist)'
+    prototype: '(struct symtab_HSolveListElement *phsle, char *pcName, struct PidinStack *ppist)'
+  get_name:
+    calling: (phsle)
+    prototype: (struct symtab_HSolveListElement *phsle)
+  get_options:
+    calling: (phsle)
+    prototype: (struct symtab_HSolveListElement *phsle)
+  get_parameter:
+    calling: '(phsle, ppist, pcName)'
+    prototype: '(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, char *pcName)'
+  get_pidin:
+    calling: (phsle)
+    prototype: (struct symtab_HSolveListElement *phsle)
+  get_post:
+    calling: '(phsle, iTarget)'
+    prototype: '(struct symtab_HSolveListElement * phsle, int iTarget)'
+  get_pre:
+    calling: '(phsle, iSource)'
+    prototype: '(struct symtab_HSolveListElement * phsle, int iSource)'
+  get_prototype:
+    calling: (phsle)
+    prototype: (struct symtab_HSolveListElement *phsle)
+  get_symbol:
+    calling: (phsle)
+    prototype: (struct symtab_HSolveListElement *phsle)
+  get_type:
+    calling: (phsle)
+    prototype: (struct symtab_HSolveListElement *phsle)
+  get_weight:
+    calling: '(phsle, ppist)'
+    prototype: '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)'
+  has_bindable_i_o:
+    calling: '(phsle, pc, i)'
+    prototype: '(struct symtab_HSolveListElement * phsle, char *pc, int i)'
+  has_equation:
+    calling: '(phsle, ppist)'
+    prototype: '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)'
+  has_m_g_block_g_m_a_x:
+    calling: '(phsle, ppist)'
+    prototype: '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)'
+  has_nernst_erev:
+    calling: '(phsle, ppist)'
+    prototype: '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist)'
+  linearize:
+    calling: '(phsle, ppist)'
+    prototype: '(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)'
+  lookup_hierarchical:
+    calling: '(phsle, ppist, iLevel, bAll)'
+    prototype: '(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist, int iLevel, int bAll)'
+  lookup_serial_i_d:
+    calling: '(phsle, ppist, phsleSerial, ppistSerial)'
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       struct PidinStack *ppist,
+       struct symtab_HSolveListElement *phsleSerial,
+       struct PidinStack *ppistSerial)
+  mesher_on_length:
+    calling: '(phsle, ppist, dLength)'
+    prototype: '(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, double dLength)'
+  parameter_link_at_end:
+    calling: '(phsle, ppar)'
+    prototype: '(struct symtab_HSolveListElement *phsle, struct symtab_Parameters *ppar)'
+  parameter_resolve_value:
+    calling: '(phsle, ppist, pcName)'
+    prototype: '(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist, char *pcName)'
+  parameter_scale_value:
+    calling: '(phsle, ppist, dValue, ppar)'
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       struct PidinStack *ppist,
+       double dValue,
+       struct symtab_Parameters *ppar)
+  print:
+    calling: '(phsle, TRUE, iIndent, pfile)'
+    prototype: '(struct symtab_HSolveListElement *phsle,int iIndent,FILE *pfile)'
+  reduce:
+    calling: '(phsle, ppist)'
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       struct PidinStack *ppist)
+  resolve_input:
+    calling: '(phsle, ppist, pcName, iPosition)'
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       struct PidinStack *ppist,
+       char *pcName,
+       int iPosition)
+  resolve_parameter_functional_input:
+    calling: '(phsle, ppist, pcParameter, pcInput, iPosition)'
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       struct PidinStack *ppist,
+       char *pcParameter,
+       char *pcInput,
+       int iPosition)
+  set_at_x_y_z:
+    calling: '(phsle, x, y, z)'
+    prototype: '(struct symtab_HSolveListElement *phsle,double x,double y,double z)'
+  set_name:
+    calling: '(phsle, pidin)'
+    prototype: '(struct symtab_HSolveListElement *phsle, struct symtab_IdentifierIndex *pidin)'
+  set_namespace:
+    calling: '(phsle, pc)'
+    prototype: '(struct symtab_HSolveListElement *phsle, char *pc)'
+  set_options:
+    calling: '(phsle, iOptions)'
+    prototype: '(struct symtab_HSolveListElement *phsle, int iOptions)'
+  set_parameter_context:
+    calling: '(phsle, pcName, ppistValue/* , ppist */)'
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       char *pcName,
+       struct PidinStack *ppistValue)
+  set_parameter_double:
+    calling: '(phsle, pcName, dNumber/* , ppist */)'
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       char *pcName,
+       double dNumber)
+  set_parameter_may_be_copy_string:
+    calling: '(phsle, pcName, pcValue/* , ppist */)'
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       char *pcName,
+       char *pcValue,
+       int iFlags)
+  set_parameter_string:
+    calling: '(phsle, pcName, pcValue/* , ppist */)'
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       char *pcName,
+       char *pcValue)
+  set_prototype:
+    calling: '(phsle, phsleProto)'
+    prototype: '(struct symtab_HSolveListElement *phsle, struct symtab_HSolveListElement *phsleProto)'
+  set_type:
+    calling: '(phsle, iType)'
+    prototype: '(struct symtab_HSolveListElement *phsle, int iType)'
+  traverse:
+    calling: '(ptstr, phsle)'
+    prototype: '(struct TreespaceTraversal *ptstr, struct symtab_HSolveListElement *phsle)'
+  traverse_segments:
+    calling: '(phsle, ppist, pfProcesor, pfFinalizer, pvUserdata)'
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       struct PidinStack *ppist,
+       TreespaceTraversalProcessor *pfProcesor,
+       TreespaceTraversalProcessor *pfFinalizer,
+       void *pvUserdata)
+  traverse_spike_generators:
+    calling: '(phsle, ppist, pfProcesor, pfFinalizer, pvUserdata)'
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       struct PidinStack *ppist,
+       TreespaceTraversalProcessor *pfProcesor,
+       TreespaceTraversalProcessor *pfFinalizer,
+       void *pvUserdata)
+  traverse_spike_receivers:
+    calling: '(phsle, ppist, pfProcesor, pfFinalizer, pvUserdata)'
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       struct PidinStack *ppist,
+       TreespaceTraversalProcessor *pfProcesor,
+       TreespaceTraversalProcessor *pfFinalizer,
+       void *pvUserdata)
+typing:
+  typer:
+    member: iType
+    name: phsle
+    type: struct symtab_HSolveListElement *

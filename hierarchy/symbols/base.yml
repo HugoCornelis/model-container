@@ -1,0 +1,1116 @@
+---
+class_hierarchy:
+  algorithm_symbol:
+    allows:
+      create_alias: algorithm_symbol
+      get_name: algorithm_symbol
+      get_parameter: algorithm_symbol
+      get_pidin: algorithm_symbol
+      parameter_resolve_value: algorithm_symbol
+      traverse: algorithm_symbol
+    description: a symbol that represents the fact that an algorithm has modified or inspected the model in the symbol table
+    isa: symbol
+    name: symtab_AlgorithmSymbol
+    parameters: {}
+  attachment:
+    allows:
+      collect_mandatory_parameter_values: attachment
+      create_alias: attachment
+      get_type: attachment
+      set_type: attachment
+    description: 'a possible connection start or end point, without the connection'
+    grammar:
+      components: []
+      disabled: to complicated for the moment
+      specific_allocator: AttachmentCalloc
+      specific_token:
+        class: attachment
+        lexical: TOKEN_ATTACHMENT
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: patta
+        to_base: ->bio.ioh.iol.hsle
+    isa: bio_comp
+    name: symtab_Attachment
+    parameters: {}
+  axon_hillock:
+    allows:
+      create_alias: axon_hillock
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_SEGMENT
+    description: a axon hillock
+    grammar:
+      components:
+        - Segment
+        - VSegment
+      specific_allocator: AxonHillockCalloc
+      specific_token:
+        class: axon_hillock
+        lexical: TOKEN_AXON_HILLOCK
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: paxhi
+        to_base: ->segr.bio.ioh.iol.hsle
+    isa: segmenter
+    name: symtab_AxonHillock
+    parameters: {}
+  base:
+    allows: {}
+    description: 'base symbol, for all components that should be accessible in the symbol table, possibly the identification numbers are external to this symbol'
+    isa: root
+    name: symtab_Base
+  bio_comp:
+    allows:
+      assign_parameters: bio_component
+      count_spike_generators: bio_component
+      count_spike_receivers: bio_component
+      create_alias: bio_component
+      get_child_from_input: bio_component
+      get_modifiable_parameter: bio_component
+      get_name: bio_component
+      get_options: bio_component
+      get_parameter: bio_component
+      get_pidin: bio_component
+      get_prototype: bio_component
+      lookup_hierarchical: bio_component
+      lookup_serial_i_d: bio_component
+      parameter_link_at_end: bio_component
+      parameter_resolve_value: bio_component
+      print: bio_component
+      reduce: bio_component
+      resolve_input: bio_component
+      resolve_parameter_functional_input: bio_component
+      set_at_x_y_z: bio_component
+      set_name: bio_component
+      set_namespace: bio_component
+      set_options: bio_component
+      set_parameter_context: bio_component
+      set_parameter_double: bio_component
+      set_parameter_may_be_copy_string: bio_component
+      set_parameter_string: bio_component
+      set_prototype: bio_component
+      traverse: bio_component
+      traverse_spike_generators: bio_component
+      traverse_spike_receivers: bio_component
+    description: 'a component with children, shared variables and parameters'
+    isa: iohier
+    name: symtab_BioComponent
+  cached_connection:
+    allows:
+      get_cached_delay: cached_connection
+      get_cached_post: cached_connection
+      get_cached_pre: cached_connection
+      get_cached_weight: cached_connection
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_CELL
+    description: 'a connection in a projection index, alien typed and with alien identification numbers'
+    isa: root
+    parameters:
+      DELAY:
+        description: connection delay
+      POST: connection post synaptic serial identifier
+      PRE: connection pre synaptic serial identifier
+      WEIGHT: connection weight
+  cell:
+    allows:
+      create_alias: cell
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_CELL
+    description: 'a cell, presumably a neuron'
+    dimensions:
+      - movable
+    grammar:
+      components:
+        - AxonHillock
+        - Segment
+        - VSegment
+      specific_allocator: CellCalloc
+      specific_token:
+        class: cell
+        lexical: TOKEN_CELL
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pcell
+        to_base: ->segr.bio.ioh.iol.hsle
+    isa: segmenter
+    name: symtab_Cell
+    parameters: {}
+  channel:
+    allows:
+      collect_mandatory_parameter_values: channel
+      create_alias: channel
+      get_parameter: channel
+      has_equation: channel
+      has_m_g_block_g_m_a_x: channel
+      has_nernst_erev: channel
+      parameter_scale_value: channel
+      reduce: channel
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_MECHANISM
+    description: a ion conductance through a cell membrane
+    dimensions:
+      - mechanism
+    grammar:
+      components:
+        - Attachment
+        - EquationExponential
+        - HHGate
+      specific_allocator: ChannelCalloc
+      specific_description:
+        add: |2
+          		TOKEN_TABLEFILE
+          		TOKEN_STRING
+          		{
+          #line
+          		    //- remove ending '"' from string
+          
+          		    $2->pcString[$2->iLength - 1] = '\0';
+          
+          		    //- put channel description on stack
+          
+          		    $$ = ParserContextGetActual((PARSERCONTEXT *)pacParserContext);
+          
+          		    //- fill in table parameters
+          
+          		    ChannelSetTableParameters
+          			($$,
+          			 (PARSERCONTEXT *)pacParserContext,
+          			 &$2->pcString[1]);
+          
+          		    //- reset actual symbol
+          
+          		    ParserContextSetActual
+          			((PARSERCONTEXT *)pacParserContext,
+          			 &$$->bio.ioh.iol.hsle);
+          
+          		    //! memory leak : $2
+          		}
+      specific_token:
+        class: channel
+        lexical: TOKEN_CHANNEL
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pchan
+        to_base: ->bio.ioh.iol.hsle
+    isa: bio_comp
+    name: symtab_Channel
+    parameters:
+      CHANNEL_TYPE:
+        description: 'defines the channel type (ChannelActInact: channel with activation and inactivation gates, ChannelAct: channel with activation gate, ChannelActConc: channel with activation and concentration gates)'
+        translation_steps:
+          modeling: derived
+      Erev:
+        description: channel reversal potential
+        translation_steps:
+          simulation: initial_value
+      G: 'actual channel conductance, normally a solved variable'
+      G_MAX:
+        description: maximal conductance density when all channels are in the open state
+        translation_steps:
+          simulation: initial_value
+      I: 'actual channel current, normally a solved variable'
+  concentration_gate_kinetic:
+    allows:
+      create_alias: concentration_gate_kinetic
+      get_parameter: concentration_gate_kinetic
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_MECHANISM
+    description: a description of the kinetics of a channel gate that is concentration dependent
+    grammar:
+      components: []
+      specific_allocator: ConcentrationGateKineticCalloc
+      specific_token:
+        class: concentration_gate_kinetic
+        lexical: TOKEN_CONCENTRATION_GATE_KINETIC
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pcgatk
+        to_base: ->bio.ioh.iol.hsle
+    isa: bio_comp
+    name: symtab_ConcentrationGateKinetic
+    parameters:
+      Base: 'basal level, A in EDS1994'
+      HH_NUMBER_OF_TABLE_ENTRIES: number of table entries in the gate kinetic
+      Tau: 'time constant, B in EDS1994'
+  connection:
+    allows:
+      all_serials_to_parent_get: connection
+      all_serials_to_parent_set: connection
+      all_successors_get: connection
+      all_successors_set: connection
+      get_delay: connection
+      get_parameter: connection
+      get_post: connection
+      get_pre: connection
+      get_weight: connection
+      parameter_resolve_value: connection
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_CELL
+    description: 'a regular connection in the symbol table, alien typed and with alien identification numbers'
+    isa: root
+    name: symtab_Connection
+    parameters:
+      DELAY: connection delay
+      POST: connection post synaptic serial identifier
+      PRE: connection pre synaptic serial identifier
+      WEIGHT: connection weight
+  connection_symbol:
+    allows:
+      get_delay: connection_symbol
+      get_post: connection_symbol
+      get_pre: connection_symbol
+      get_weight: connection_symbol
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_CELL
+    description: 'a regular connection in the symbol table, self typed and with its own identification numbers'
+    grammar:
+      components: []
+      specific_allocator: ConnectionSymbolCalloc
+      specific_token:
+        class: connection_symbol
+        lexical: TOKEN_CONNECTION
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pconsy
+        to_base: ->bio.ioh.iol.hsle
+    isa: bio_comp
+    name: symtab_ConnectionSymbol
+    parameters:
+      DELAY: connection delay
+      POST: connection post synaptic symbol
+      PRE: connection pre synaptic symbol
+      WEIGHT: connection weight
+  contour_point:
+    allows:
+      create_alias: contour_point
+      get_parameter: contour_point
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_ATOMIC
+    description: 'a single point in 3D space, presumably from an EM trace'
+    grammar:
+      components: []
+      specific_allocator: ContourPointCalloc
+      specific_token:
+        class: contour_point
+        lexical: TOKEN_CONTOUR_POINT
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pcpnt
+        to_base: ->bio.ioh.iol.hsle
+    isa: bio_comp
+    name: symtab_ContourPoint
+    parameters:
+      THICKNESS: thickness of the slice originating the contour
+  e_m_contour:
+    allows:
+      count_points: e_m_contour
+      create_alias: e_m_contour
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_ATOMIC
+    description: 'a spatial contour, presumably representing an EM trace'
+    grammar:
+      components:
+        - ContourPoint
+      specific_allocator: EMContourCalloc
+      specific_token:
+        class: e_m_contour
+        lexical: TOKEN_EM_CONTOUR
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pemc
+        to_base: ->bio.ioh.iol.hsle
+    isa: bio_comp
+    name: symtab_EMContour
+    parameters: {}
+  equation_exponential:
+    allows:
+      collect_mandatory_parameter_values: equation_exponential
+      create_alias: equation_exponential
+    description: an exponential equation (or an alpha function)
+    grammar:
+      components: []
+      specific_allocator: EquationExponentialCalloc
+      specific_token:
+        class: equation_exponential
+        lexical: TOKEN_EQUATION_EXPONENTIAL
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: peqe
+        to_base: ->bio.ioh.iol.hsle
+    isa: bio_comp
+    name: symtab_EquationExponential
+    parameters:
+      TAU1: first time constant
+      TAU2: second time constant
+  fiber:
+    allows:
+      create_alias: fiber
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_CELL
+    description: an axonal fiber that fires action potentials
+    grammar:
+      components: []
+      specific_allocator: FiberCalloc
+      specific_token:
+        class: fiber
+        lexical: TOKEN_FIBER
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pfibr
+        to_base: ->segr.bio.ioh.iol.hsle
+    isa: segmenter
+    name: symtab_Fiber
+    parameters:
+      RATE: 'average firing frequence, bind it to the threshold of a spikegenerator'
+      REFRACTORY: absolute refractory period
+  gate_kinetic:
+    allows:
+      create_alias: gate_kinetic
+      get_parameter: gate_kinetic
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_MECHANISM
+    description: 'a description of the kinetics of a gate, A/B representation'
+    grammar:
+      components: []
+      specific_allocator: GateKineticCalloc
+      specific_token:
+        class: gate_kinetic
+        lexical: TOKEN_GATE_KINETIC
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pgatk
+        to_base: ->bio.ioh.iol.hsle
+    isa: bio_comp
+    name: symtab_GateKinetic
+    parameters:
+      HH_AB_Add_Num: '1: multiplier'
+      HH_AB_Div_E: '6: denormalized time constant'
+      HH_AB_Factor_Flag: '3: choose between nominator or denominator, 1 means nominator, -1'
+      HH_AB_Mult: '2: multiplier membrane dependence, 0.0 for no dependence'
+      HH_AB_Offset: '4: nominator or denominator offset'
+      HH_AB_OffsetM: '4: nominator or denominator offset'
+      HH_AB_Offset_E: '5: membrane offset'
+      HH_NUMBER_OF_TABLE_ENTRIES: number of table entries in the gate kinetic
+      'table[0]': First entry when a tabulated representation is available
+  group:
+    allows:
+      count_segments: segmenter
+      create_alias: group
+      traverse_segments: segmenter
+    description: a heterogeneous group of components
+    dimensions:
+      - movable
+    grammar:
+      components:
+        - Attachment
+        - AxonHillock
+        - Cell
+        - Channel
+        - ConcentrationGateKinetic
+        - EquationExponential
+        - Fiber
+        - GateKinetic
+        - GateKineticBackward
+        - GateKineticForward
+        - GateKineticPart
+        - Group
+        - HHGate
+        - Izhikevich
+        - Network
+        - Pool
+        - Population
+        - Projection
+        - Segment
+        - VSegment
+      specific_allocator: GroupCalloc
+      specific_token:
+        class: group
+        lexical: TOKEN_GROUP
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pgrup
+        to_base: ->bio.ioh.iol.hsle
+    isa: bio_comp
+    name: symtab_Group
+    parameters: {}
+  grouped_parameters:
+    allows: {}
+    description: a group of parameters
+    grammar:
+      components: []
+      specific_allocator: GroupedParametersCalloc
+      specific_token:
+        class: grouped_parameters
+        lexical: TOKEN_GROUPED_PARAMETERS
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pgrpp
+        to_base: ->bio.ioh.iol.hsle
+    isa: bio_comp
+    name: symtab_GroupedParameters
+    parameters: {}
+  h_h_gate:
+    allows:
+      create_alias: h_h_gate
+      get_parameter: h_h_gate
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_MECHANISM
+    description: a channel gate with hodgkin huxley alike kinetics
+    grammar:
+      components:
+        - ConcentrationGateKinetic
+        - GateKinetic
+        - GateKineticBackward
+        - GateKineticForward
+        - GateKineticPart
+      specific_allocator: HHGateCalloc
+      specific_token:
+        class: h_h_gate
+        lexical: TOKEN_HH_GATE
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pgathh
+        to_base: ->bio.ioh.iol.hsle
+    isa: bio_comp
+    name: symtab_HHGate
+    parameters:
+      HH_NUMBER_OF_TABLE_ENTRIES: number of table entries in each of the gates
+      POWER: gate power
+      state: 'current state, normally a solved variable'
+      state_init: 'initial value, commonly forward over backward steady states'
+  invisible:
+    description: 'an entry that has been inserted during memory optimization, and is generally invisible to the user'
+    isa: symbol
+    name: symtab_Invisible
+    parameters: {}
+  iohier:
+    allows:
+      add_child: i_o_hierarchy
+      delete_child: i_o_hierarchy
+      get_children: i_o_hierarchy
+      lookup_hierarchical: i_o_hierarchy
+      print: i_o_hierarchy
+      traverse: i_o_hierarchy
+    description: a component with shared variables and children
+    isa: iol
+    name: symtab_IOHierarchy
+  iol:
+    allows:
+      assign_bindable_i_o: i_o_list
+      assign_inputs: i_o_list
+      get_inputs: i_o_list
+      has_bindable_i_o: i_o_list
+      resolve_input: i_o_list
+    description: a component with shared variables that can be bound
+    isa: symbol
+    name: symtab_IOList
+  izhikevich:
+    allows:
+      create_alias: izhikevich
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_CELL
+    description: implementation of the izhikevich simple neuron model
+    grammar:
+      components: []
+      specific_allocator: IzhikevichCalloc
+      specific_token:
+        class: izhikevich
+        lexical: TOKEN_IZHIKEVICH
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pizhi
+        to_base: ->segr.bio.ioh.iol.hsle
+    isa: segmenter
+    name: symtab_Izhikevich
+    parameters:
+      IHZI_A: A izhikevich simple neuron model parameter
+      IHZI_B: B izhikevich simple neuron model parameter
+      IHZI_C: C izhikevich simple neuron model parameter
+      IHZI_D: D izhikevich simple neuron model parameter
+  network:
+    allows:
+      count_cells: network
+      count_connections: network
+      create_alias: network
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_NETWORK
+    description: a set of populations connected with projections
+    dimensions:
+      - movable
+    grammar:
+      components:
+        - Cell
+        - Population
+        - Projection
+        - Network
+      specific_allocator: NetworkCalloc
+      specific_token:
+        class: network
+        lexical: TOKEN_NETWORK
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pnetw
+        to_base: ->segr.bio.ioh.iol.hsle
+    isa: segmenter
+    name: symtab_Network
+    parameters: {}
+  pool:
+    allows:
+      create_alias: pool
+      get_parameter: pool
+      parameter_scale_value: pool
+      reduce: pool
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_MECHANISM
+    description: 'a concentration pool, exponential decay'
+    dimensions:
+      - mechanism
+    grammar:
+      components: []
+      specific_allocator: PoolCalloc
+      specific_token:
+        class: pool
+        lexical: TOKEN_POOL
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: ppool
+        to_base: ->bio.ioh.iol.hsle
+    isa: bio_comp
+    name: symtab_Pool
+    parameters:
+      BASE: base concentration level
+      BETA: fixed beta (use the FIXED function to avoid scaling)
+      DIA: 'concentration pool diameter, normally the same as the segment diameter'
+      LENGTH: 'concentration pool length, normally the same as the segment length'
+      TAU: concentration pool time constant
+      THICK: concentration pool thickness
+      VAL: ion valency
+      concen: 'actual concentration value, normally a solved variable'
+      concen_init: initial concentration level
+  population:
+    allows:
+      count_cells: population
+      create_alias: population
+      get_parameter: population
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_POPULATION
+    description: a set of cells
+    dimensions:
+      - movable
+    grammar:
+      components:
+        - Cell
+        - Randomvalue
+      specific_allocator: PopulationCalloc
+      specific_token:
+        class: population
+        lexical: TOKEN_POPULATION
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: ppopu
+        to_base: ->segr.bio.ioh.iol.hsle
+    isa: segmenter
+    name: symtab_Population
+    parameters:
+      EXTENT_X: coordinate of the last cell minus coordinate of the first cell
+      EXTENT_Y: coordinate of the last cell minus coordinate of the first cell
+      EXTENT_Z: coordinate of the last cell minus coordinate of the first cell
+  projection:
+    allows:
+      count_connections: projection
+      create_alias: projection
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_POPULATION
+    description: 'a projection, with source and target populations'
+    grammar:
+      components:
+        - VConnectionSymbol
+        - Projection
+      specific_allocator: ProjectionCalloc
+      specific_token:
+        class: projection
+        lexical: TOKEN_PROJECTION
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pproj
+        to_base: ->bio.ioh.iol.hsle
+    isa: bio_comp
+    name: symtab_Projection
+    parameters:
+      SOURCE: source population
+      TARGET: target population
+  pulse_gen:
+    allows:
+      create_alias: pulse_gen
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_MECHANISM
+    description: an object that can generate a variety of pulse patterns
+    dimensions:
+      - signal
+    grammar:
+      components: []
+      specific_allocator: PulseGenCalloc
+      specific_token:
+        class: pulse_gen
+        lexical: TOKEN_PULSE_GEN
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: ppulsegen
+        to_base: ->bio.ioh.iol.hsle
+    isa: bio_comp
+    name: symtab_PulseGen
+    parameters:
+      BASELEVEL: baseline level
+      DELAY1: delay of pulse1
+      DELAY2: delay of pulse2
+      LEVEL1: level of pulse1
+      LEVEL2: level of pulse2
+      TRIGMODE: 'Trigger mode, 0 - free run, 1 - ext trig, 2 - ext gate'
+      WIDTH1: width of pulse1
+      WIDTH2: width of pulse2
+  randomvalue:
+    allows:
+      create_alias: randomvalue
+    description: a component that produces a different random value each time it is consulted
+    grammar:
+      components:
+        - Attachment
+      specific_allocator: RandomvalueCalloc
+      specific_token:
+        class: randomvalue
+        lexical: TOKEN_RANDOMVALUE
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pranv
+        to_base: ->bio.ioh.iol.hsle
+    isa: bio_comp
+    name: symtab_Randomvalue
+    parameters:
+      LENGTH: 'length, for visualization purposes only'
+      MAXIMUM: maximum value the random variable can take
+      MINIMUM: minimum value the random variable can take
+  root:
+    allows: {}
+    description: 'root symbol, completely generic, allows nothing, has no parameters'
+    isa: ~
+    name: CoreRoot
+  root_symbol:
+    allows:
+      add_child: root_symbol
+      delete_child: root_symbol
+      get_name: root_symbol
+      get_pidin: root_symbol
+      lookup_hierarchical: root_symbol
+      traverse: root_symbol
+      traverse_spike_generators: root_symbol
+      traverse_spike_receivers: root_symbol
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_NERVOUS_SYSTEM
+    description: 'the root of a set of imported files, private or public models'
+    isa: symbol
+    name: symtab_RootSymbol
+    parameters: {}
+  segment:
+    allows:
+      create_alias: segment
+      get_parameter: segment
+      reduce: segment
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_SEGMENT
+    description: a single linear cylindrical segment of a neuron
+    grammar:
+      components:
+        - Attachment
+        - Pool
+        - Channel
+      specific_allocator: SegmentCalloc
+      specific_token:
+        class: segment
+        lexical: TOKEN_SEGMENT
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: psegment
+        to_base: ->segr.bio.ioh.iol.hsle
+    isa: segmenter
+    name: symtab_Segment
+    parameters:
+      BRANCHPOINT: '1 if this is a branch point, 0 if not, DBL_MAX if unknown (a very high value)'
+      CM: specific capacitance of this segment
+      RA: specific axial resistance of this segment
+      RM: specific membrane resistance of this segment
+      SOMATOPETAL_BRANCHPOINTS: number of branchpoints on the path toward the soma
+      SOMATOPETAL_DISTANCE: somatopetal distance of the segment
+      TAU: 'time constant of the segment, CM * RM'
+      Vm: 'membrane potential, normally a solved variable'
+      Vm_init: initial membrane potential
+  segmenter:
+    allows:
+      count_segments: segmenter
+      get_parameter: segmenter
+      linearize: segmenter
+      mesher_on_length: segmenter
+      parameter_scale_value: segmenter
+      traverse_segments: segmenter
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_SEGMENT
+    description: a cable based component that allows segmentation of self or/and its children
+    isa: bio_comp
+    name: symtab_Segmenter
+    parameters:
+      DIA: segment diameter
+      LENGTH: segment length (calculated automatically if not set)
+      PARENT: 'parent segment, somatopetal'
+      SEGMENTER_BASE: base symbol of segmentation
+      SURFACE: 'surface of the segment (calculated automatically if not set, you can set it to add spine surface)'
+      TOTALSURFACE: total surface of all segments in the segmenter (calculated automatically)
+      rel_X: spatial extent of the segment in the X direction
+      rel_Y: spatial extent of the segment in the Y direction
+      rel_Z: spatial extent of the segment in the Z direction
+  symbol:
+    allows:
+      all_serials_to_parent_get: base_symbol
+      all_serials_to_parent_set: base_symbol
+      all_successors_get: base_symbol
+      all_successors_set: base_symbol
+      get_symbol: base_symbol
+    description: symbol that maintains its own identification numbers
+    isa: base
+    name: symtab_HSolveListElement
+    parameters:
+      ROTATE_ANGLE: relative coordinate transformation
+      ROTATE_AXIS_X: relative coordinate transformation
+      ROTATE_AXIS_Y: relative coordinate transformation
+      ROTATE_AXIS_Z: relative coordinate transformation
+      ROTATE_CENTER_X: relative coordinate transformation
+      ROTATE_CENTER_Y: relative coordinate transformation
+      ROTATE_CENTER_Z: relative coordinate transformation
+      X: coordinate relative to parent
+      Y: coordinate relative to parent
+      Z: coordinate relative to parent
+  traversable_algorithm:
+    allows:
+      traverse: traversable_algorithm
+    description: a symbol that represents an algorithm that generates components of the model
+    isa: algorithm_symbol
+    name: symtab_AlgorithmSymbol
+    parameters: {}
+  v_connection:
+    allows:
+      traverse: v_connection
+    description: a vector of connections with alien typing
+    isa: vector
+    name: symtab_VConnection
+    parameters: {}
+  v_connection_symbol:
+    allows:
+      create_alias: v_connection_symbol
+    description: a vector of connections with their own type information
+    grammar:
+      components:
+        - ConnectionSymbol
+      specific_allocator: VConnectionSymbolCalloc
+      specific_token:
+        class: v_connection
+        lexical: TOKEN_CONNECTION_GROUP
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pvconsy
+        to_base: ->vect.bio.ioh.iol.hsle
+    isa: vector
+    name: symtab_VConnectionSymbol
+    parameters: {}
+  v_contour:
+    allows:
+      create_alias: v_contour
+    description: a vector of spatial contours
+    grammar:
+      components:
+        - EMContour
+      specific_allocator: VContourCalloc
+      specific_token:
+        class: v_contour
+        lexical: TOKEN_CONTOUR_GROUP
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pvcont
+        to_base: ->vect.bio.ioh.iol.hsle
+    isa: vector
+    name: symtab_VContour
+    parameters: {}
+  v_segment:
+    allows:
+      count_segments: v_segment
+      create_alias: v_segment
+      traverse_segments: v_segment
+    description: a vector of segments
+    dimensions:
+      - movable
+    grammar:
+      components:
+        - Segment
+        - VSegment
+      specific_allocator: VSegmentCalloc
+      specific_section:
+        parts:
+          - specific_front
+          - '	InputOutputRelations'
+          - '	OptionalItemInputRelations'
+          - '	specific_description'
+          - |-
+            {
+            		    //- get current context
+            
+            		    struct PidinStack *ppist
+            			= ParserContextGetPidinContext
+            			  ((PARSERCONTEXT *)pacParserContext);
+            
+            		    //- recompute relative coordinates to absolute coordinates
+            
+            		    VSegmentRelative2Absolute($4, ppist);
+            		}
+          - specific_end
+        semantic: |
+          #line
+          		    //- link input/output relations
+          
+          		    SymbolAssignBindableIO(&$4specific_to_base, $2);
+          
+          		    //- bind I/O relations
+          
+          		    SymbolAssignInputs(&$4specific_to_base, $3);
+          
+          		    //- put finished section info on stack
+          
+          		    $$ = $4;
+      specific_token:
+        class: v_segment
+        lexical: TOKEN_SEGMENT_GROUP
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pvsegm
+        to_base: ->vect.bio.ioh.iol.hsle
+    isa: vector
+    name: symtab_VSegment
+    parameters: {}
+  vector:
+    description: a homogeneous group of components (all children have the same type)
+    isa: bio_comp
+    name: symtab_Vector
+    parameters: {}
+grammar_symbols:
+  GateKineticBackward:
+    components:
+      - GateKineticPart
+    specific_allocator: GateKineticCalloc
+    specific_token:
+      lexical: TOKEN_GATE_KINETIC_B
+    typing:
+      base: phsle
+      id: pidin
+      spec: pgatk
+      to_base: ->bio.ioh.iol.hsle
+  GateKineticForward:
+    components:
+      - GateKineticPart
+    specific_allocator: GateKineticCalloc
+    specific_token:
+      lexical: TOKEN_GATE_KINETIC_A
+    typing:
+      base: phsle
+      id: pidin
+      spec: pgatk
+      to_base: ->bio.ioh.iol.hsle
+  GateKineticPart:
+    components:
+      - GateKineticPart
+    specific_allocator: GateKineticCalloc
+    specific_token:
+      lexical: TOKEN_GATE_KINETIC_PART
+    typing:
+      base: phsle
+      id: pidin
+      spec: pgatk
+      to_base: ->bio.ioh.iol.hsle
+tokens:
+  absolute:
+    lexical: TOKEN_ABSOLUTE
+  algorithm:
+    class: algorithm_symbol
+    lexical: TOKEN_ALGORITHM
+    purpose: physical
+  alias:
+    lexical: TOKEN_ALIAS
+    purpose: structure
+  alpha_equation:
+    lexical: TOKEN_ALPHA_EQUATION
+  attributes:
+    lexical: TOKEN_ATTRIBUTES
+  bindables:
+    lexical: TOKEN_BINDABLES
+    purpose: structure
+  bindings:
+    lexical: TOKEN_BINDINGS
+    purpose: structure
+  child:
+    lexical: TOKEN_CHILD
+    purpose: structure
+  current_symbol:
+    lexical: TOKEN_CURRENT_SYMBOL
+    text: .
+  cylindrical:
+    lexical: TOKEN_CYLINDRICAL
+  dereference:
+    lexical: TOKEN_DEREFERENCE
+    text: '->'
+  end:
+    lexical: TOKEN_END
+  events:
+    lexical: TOKEN_EVENTS
+  file:
+    lexical: TOKEN_FILE
+  forwardparameters:
+    lexical: TOKEN_FORWARDPARAMETERS
+    purpose: structure
+  generates:
+    lexical: TOKEN_GENERATES
+  has:
+    lexical: TOKEN_HAS
+  hierarchicalseperator:
+    lexical: TOKEN_HIERARCHICALSEPERATOR
+    text: /
+  identifier:
+    lexical: TOKEN_IDENTIFIER
+    text: ''
+    type: pcIdentifier
+  import:
+    lexical: TOKEN_IMPORT
+    purpose: file_structure
+  input:
+    lexical: TOKEN_INPUT
+  ioselect:
+    lexical: TOKEN_IOSELECT
+    text: '@'
+  meters:
+    lexical: TOKEN_METERS
+  namespaceseperator:
+    lexical: TOKEN_NAMESPACESEPERATOR
+    text: '::'
+  ncd:
+    lexical: TOKEN_NCD
+  ndf:
+    lexical: TOKEN_NDF
+  ned:
+    lexical: TOKEN_NED
+  neuron:
+    lexical: TOKEN_NEURON
+    purpose: physical
+  neurospaces:
+    lexical: TOKEN_NEUROSPACES
+  nmd:
+    lexical: TOKEN_NMD
+  nnd:
+    lexical: TOKEN_NND
+  number:
+    lexical: TOKEN_NUMBER
+    text: ''
+    type: dNumber
+  options:
+    lexical: TOKEN_OPTIONS
+  origin:
+    lexical: TOKEN_ORIGIN
+    text: ''
+  output:
+    lexical: TOKEN_OUTPUT
+  parameter:
+    lexical: TOKEN_PARAMETER
+    purpose: structure
+  parameters:
+    lexical: TOKEN_PARAMETERS
+    purpose: structure
+  parent_symbol:
+    lexical: TOKEN_PARENT_SYMBOL
+    text:
+      - ..
+      - '^'
+  private_models:
+    lexical: TOKEN_PRIVATE_MODELS
+    purpose: file_structure
+  public_models:
+    lexical: TOKEN_PUBLIC_MODELS
+    purpose: file_structure
+  receives:
+    lexical: TOKEN_RECEIVES
+  relative:
+    lexical: TOKEN_RELATIVE
+  seconds:
+    lexical: TOKEN_SECONDS
+  shebanger:
+    lexical: TOKEN_SHEBANGER
+    text: ''
+  siemens:
+    lexical: TOKEN_SIEMENS
+  spherical:
+    lexical: TOKEN_SPHERICAL
+  string:
+    lexical: TOKEN_STRING
+    text: ''
+    type: pstring
+  tablefile:
+    lexical: TOKEN_TABLEFILE
+    text: ''
+  units:
+    lexical: TOKEN_UNITS
+  version:
+    lexical: TOKEN_VERSION
+  voltage:
+    lexical: TOKEN_VOLTAGE

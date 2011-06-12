@@ -348,8 +348,8 @@ clean-local:
 
 TESTS = /usr/local/bin/neurospaces_harness
 
-hierarchy/output/symbols/.sentinel: $(srcdir)/hierarchy/symbols.yml $(srcdir)/hierarchy/instrumentor neurospaces/config.h
-	$(srcdir)/hierarchy/instrumentor --null-checks $(srcdir)/hierarchy/symbols.yml --output hierarchy/output
+hierarchy/output/symbols/.sentinel: $(srcdir)/hierarchy/symbols $(srcdir)/hierarchy/instrumentor neurospaces/config.h
+	$(srcdir)/hierarchy/instrumentor --null-checks $(srcdir)/hierarchy/symbols --output hierarchy/output
 
 hierarchy/output/algorithm_instances/.sentinel: $(srcdir)/hierarchy/algorithminstances $(srcdir)/hierarchy/instrumentor neurospaces/config.h
 	$(srcdir)/hierarchy/instrumentor --null-checks $(srcdir)/hierarchy/algorithminstances --output hierarchy/output
