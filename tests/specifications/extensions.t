@@ -98,9 +98,11 @@ my $test
 #  				 \'create_alias\' => \'segment\',
 # ' | patch -p0 ";
 
-						    system "patch <subpopulation.patch -p0";
+# 						    system "patch <subpopulation.patch -p0";
 
-						    print "subpopulations created\n";
+						    system "cp subpopulation.yml hierarchy/symbols";
+
+						    print "subpopulation definition inserted\n";
 
 						    system "make clean && make";
 						},
@@ -169,7 +171,9 @@ my $test
 #  				 \'create_alias\' => \'segment\',
 # ' | patch -p0 -R ";
 
-						   system "patch <subpopulation.patch -p0 -R";
+# 						   system "patch <subpopulation.patch -p0 -R";
+
+						   system "rm hierarchy/symbols/subpopulation.yml";
 
 						   print "subpopulations removed\n";
 
