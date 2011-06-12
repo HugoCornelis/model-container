@@ -3154,13 +3154,24 @@ options:
 
     # read type definitions and relations
 
-    my $definitions = do $ARGV[0];
+    my $definitions;
+
+    if ($ARGV[0] =~ /\.ya?ml$/)
+    {
+	use YAML;
+
+	$definitions = YAML::LoadFile($ARGV[0]);
+    }
+    else
+    {
+	$definitions = do $ARGV[0];
+    }
 
     # create the output target directory
 
     if (!defined $option_output)
     {
-	$option_output = "/tmp/hierarchy";
+	die "$0: option_output must be provided";
     }
 
     {
