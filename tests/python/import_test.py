@@ -19,7 +19,6 @@ add_package_path('model-container')
 
 # sys.path.append(nmc_path)
 
-pdb.set_trace()
 print "Importing model_container_base"
 import neurospaces.model_container.model_container_base
 
