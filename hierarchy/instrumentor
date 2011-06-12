@@ -3154,17 +3154,42 @@ options:
 
     # read type definitions and relations
 
-    my $definitions = do $ARGV[0];
+    my $definition_filenames
+	= [
+	   (-d $ARGV[0]
+	    ? (sort split '\n', `find $ARGV[0]/*.yml`)
+	    : $ARGV[0]),
+	  ];
+
+    use YAML;
+
+    use Data::Utilities;
+
+    my $all_definitions = {};
+
+    foreach my $definition_filename (@$definition_filenames)
+    {
+	if ($definition_filename =~ /\.ya?ml$/)
+	{
+	    my $new_definitions = YAML::LoadFile($definition_filename);
+
+	    my $merged_definitions = Data::Merger::merger($all_definitions, $new_definitions);
+	}
+	else
+	{
+	    $all_definitions = do $definition_filename;
+	}
+    }
 
     # create the output target directory
 
     if (!defined $option_output)
     {
-	$option_output = "/tmp/hierarchy";
+	die "$0: option_output must be provided";
     }
 
     {
-	my $target_directory = [ split '/', "$option_output/$definitions->{name}", ];
+	my $target_directory = [ split '/', "$option_output/$all_definitions->{name}", ];
 
 	foreach my $directory_index (0 .. $#$target_directory)
 	{
@@ -3175,127 +3200,127 @@ options:
 	    `mkdir 2>/dev/null "$directory"`;
 	}
 
-	print "Creating directory $option_output/$definitions->{name}/annotations\n";
+	print "Creating directory $option_output/$all_definitions->{name}/annotations\n";
 
-	`mkdir 2>/dev/null "$option_output/$definitions->{name}/annotations"`;
+	`mkdir 2>/dev/null "$option_output/$all_definitions->{name}/annotations"`;
 
 	# assign type numbers
 
-	assign_type_numbers($definitions);
+	assign_type_numbers($all_definitions);
 
 	# construct grammar non-terminal symbols
 
-	assign_grammar_symbols($definitions);
+	assign_grammar_symbols($all_definitions);
 
 	# assign terminal token names if any
 
-	assign_token_names($definitions);
+	assign_token_names($all_definitions);
     }
 
     # build indices to speedup processing
 
-    build_indices($definitions);
+    build_indices($all_definitions);
 
     {
 	# generate vtable for each class.
 
-	generate_vtables($definitions);
+	generate_vtables($all_definitions);
 
 	# generate vtable definition (ENTRY_.*).
 
-	generate_vtable_structure($definitions);
+	generate_vtable_structure($all_definitions);
 
 	# generate Symbol.* callees.
 
-	generate_callees($definitions);
+	generate_callees($all_definitions);
 
 	# generate the type defines
 
-	generate_type_defines($definitions);
+	generate_type_defines($all_definitions);
 
 	# generate the instanceof() relationships
 
-	generate_instanceof_relationships($definitions);
+	generate_instanceof_relationships($all_definitions);
 
 	# generate dimension relationships
 
-	generate_dimension_relationships($definitions);
+	generate_dimension_relationships($all_definitions);
 
 	# generate run-time casters
 
-	generate_runtime_casters($definitions);
+	generate_runtime_casters($all_definitions);
 
 	# generate the type descriptions
 
-	generate_textual_descriptions($definitions);
+	generate_textual_descriptions($all_definitions);
 
 	# generate the annotations
 
-	generate_annotations($definitions);
+	generate_annotations($all_definitions);
 
 	# dump debug log of class hierarchy
 
-	dump_annotated_class_hierarchy($definitions);
+	dump_annotated_class_hierarchy($all_definitions);
     }
 
     {
-	`mkdir 2>/dev/null "$option_output/$definitions->{name}/grammar"`;
+	`mkdir 2>/dev/null "$option_output/$all_definitions->{name}/grammar"`;
 
 	# generate the lexical header
 
-	generate_lexical_header($definitions);
+	generate_lexical_header($all_definitions);
 
 	# generate source files for the lexical analyzer
 
-	generate_lexical_sources($definitions);
+	generate_lexical_sources($all_definitions);
 
 	# generate the tokens for the lexical analyzer
 
-	generate_lexical_tokens($definitions);
+	generate_lexical_tokens($all_definitions);
 
     }
 
     {
-	`mkdir 2>/dev/null "$option_output/$definitions->{name}/grammar"`;
+	`mkdir 2>/dev/null "$option_output/$all_definitions->{name}/grammar"`;
 
 	# generate the grammar header
 
-	generate_grammar_header($definitions);
+	generate_grammar_header($all_definitions);
 
 	# generate any symbol types and rules
 
-	generate_grammar_anysymbol_types($definitions);
+	generate_grammar_anysymbol_types($all_definitions);
 
-	generate_grammar_anysymbol_rules($definitions);
+	generate_grammar_anysymbol_rules($all_definitions);
 
 	# generate specific symbol types and rules
 
-	generate_grammar_specific_symbol_types($definitions);
+	generate_grammar_specific_symbol_types($all_definitions);
 
-	generate_grammar_specific_symbol_rules($definitions);
+	generate_grammar_specific_symbol_rules($all_definitions);
 
 	# generate specific section types and rules (1)
 
-	generate_grammar_specific_section_types($definitions);
+	generate_grammar_specific_section_types($all_definitions);
 
-	generate_grammar_specific_section_rules($definitions);
+	generate_grammar_specific_section_rules($all_definitions);
 
 	# generate specific section types and rules (2)
 
-	generate_grammar_specific_section_2_rules($definitions);
+	generate_grammar_specific_section_2_rules($all_definitions);
 
 	# generate specific property typenames
 
-	generate_grammar_specific_parameter_typenames($definitions);
+	generate_grammar_specific_parameter_typenames($all_definitions);
 
 	# dump debug log of grammar
 
-	dump_annotated_symbol_rules($definitions);
+	dump_annotated_symbol_rules($all_definitions);
     }
 
     # generate the sentinel file for make
 
-    generate_sentinels($definitions);
+    generate_sentinels($all_definitions);
 
 }
 

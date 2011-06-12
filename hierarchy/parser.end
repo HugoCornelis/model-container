@@ -1235,29 +1235,44 @@ AlgorithmListPush
 			       $5,
 			       palgs);
 
-			AlgorithmSymbolSetAlgorithmInstance(palgs, palgi);
+			if (palgi)
+			{
+			    AlgorithmSymbolSetAlgorithmInstance(palgs, palgi);
 
-			ParserContextPushAlgorithmState(palgs);
-			ParserContextPushAlgorithmState(palgi);
-			ParserContextPushAlgorithmState($3);
-			ParserContextPushAlgorithmState($4);
-			ParserContextPushAlgorithmState(NULL);
+			    ParserContextPushAlgorithmState(palgs);
+			    ParserContextPushAlgorithmState(palgi);
+			    ParserContextPushAlgorithmState($3);
+			    ParserContextPushAlgorithmState($4);
+			    ParserContextPushAlgorithmState(NULL);
 
-			ParserContextPushAlgorithmState(PARSERSTATE_ALGORITHM);
+			    ParserContextPushAlgorithmState(PARSERSTATE_ALGORITHM);
 
-			//- insert algorithm instance in the symbol table
+			    //- insert algorithm instance in the symbol table
 
-			//t I prefer to move this code to the
-			//t AlgorithmListPush non-terminal, but that
-			//t does not work because
-			//t ParserContextGetActual() sometimes returns
-			//t NULL overthere, don't know why.
+			    //t I prefer to move this code to the
+			    //t AlgorithmListPush non-terminal, but that
+			    //t does not work because
+			    //t ParserContextGetActual() sometimes returns
+			    //t NULL overthere, don't know why.
 
-			struct symtab_HSolveListElement *phsleActual
-			    = ParserContextGetActual((PARSERCONTEXT *)pacParserContext);
+			    struct symtab_HSolveListElement *phsleActual
+				= ParserContextGetActual((PARSERCONTEXT *)pacParserContext);
 
-			SymbolAddChild(phsleActual, &palgs->hsle);
+			    SymbolAddChild(phsleActual, &palgs->hsle);
+			}
+			else
+			{
+			    NeurospacesError
+				((PARSERCONTEXT *)pacParserContext,
+				 "AlgorithmListPush",
+				 " Failed to import algorithm (%s)",
+				 $3);
 
+/* 			    ParserContextPushAlgorithmState(NULL); */
+
+/* 			    ParserContextPushAlgorithmState(PARSERSTATE_ALGORITHM); */
+
+			}
 		    }
 		}
 	;

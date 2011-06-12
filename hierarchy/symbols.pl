@@ -527,61 +527,46 @@ my $class_hierarchy
 				 concen_init => 'initial concentration level',
 				},
 		 },
-
-
-
-
-
          pulse_gen => {
-                 allows => {
-                             'create_alias' => 'pulse_gen',
-#                              'parameter_scale_value' => 'pulse_gen',
-                            },
-                  annotations => {
-                                  'piSymbolType2Biolevel' => 'BIOLEVEL_MECHANISM',
-                                 },
-                  description => 'an object that can generate a variety of pulse patterns',
-                  dimensions => [
-#                                  'mechanism',
-				 'experiment',
-                                ],
-                  grammar => {
-                              components => [],
-                              specific_allocator => 'PulseGenCalloc',
-                              specific_token => {
-                                                 class => 'pulse_gen',
-                                                 lexical => 'TOKEN_PULSE_GEN',
-                                                 purpose => 'physical',
-                                                },
-                              typing => {
-                                         base => 'phsle',
-                                         id => 'pidin',
-                                         spec => 'ppulsegen',
-                                         to_base => '->bio.ioh.iol.hsle',
-                                        },
-                             },
-                  isa => 'bio_comp',
-                  name => 'symtab_PulseGen',
-                  parameters => {
-				 LEVEL1 => 'level of pulse1',
-				 LEVEL2 => 'level of pulse2',
-				 WIDTH1 => 'width of pulse1',
-				 WIDTH2 => 'width of pulse2',
-				 DELAY1 => 'delay of pulse1',
-				 DELAY2 => 'delay of pulse2',
-				 BASELEVEL => 'baseline level',
-				 TRIGMODE => 'Trigger mode, 0 - free run, 1 - ext trig, 2 - ext gate',
-                                },
-                 },
-        
-
-
-
-
-
+		       allows => {
+				  'create_alias' => 'pulse_gen',
+				 },
+		       annotations => {
+				       'piSymbolType2Biolevel' => 'BIOLEVEL_MECHANISM',
+				      },
+		       description => 'an object that can generate a variety of pulse patterns',
+		       dimensions => [
+				      'signal',
+				     ],
+		       grammar => {
+				   components => [],
+				   specific_allocator => 'PulseGenCalloc',
+				   specific_token => {
+						      class => 'pulse_gen',
+						      lexical => 'TOKEN_PULSE_GEN',
+						      purpose => 'physical',
+						     },
+				   typing => {
+					      base => 'phsle',
+					      id => 'pidin',
+					      spec => 'ppulsegen',
+					      to_base => '->bio.ioh.iol.hsle',
+					     },
+				  },
+		       isa => 'bio_comp',
+		       name => 'symtab_PulseGen',
+		       parameters => {
+				      LEVEL1 => 'level of pulse1',
+				      LEVEL2 => 'level of pulse2',
+				      WIDTH1 => 'width of pulse1',
+				      WIDTH2 => 'width of pulse2',
+				      DELAY1 => 'delay of pulse1',
+				      DELAY2 => 'delay of pulse2',
+				      BASELEVEL => 'baseline level',
+				      TRIGMODE => 'Trigger mode, 0 - free run, 1 - ext trig, 2 - ext gate',
+				     },
+		      },
 	),
-
-
 
 	# biological with segments
 
