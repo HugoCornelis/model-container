@@ -3195,7 +3195,7 @@ options:
 	   )
 	  ];
 
-    print Dumper($subsystem_name, $definition_filenames);
+    print YAML::Dump( { subsystem => { name => $subsystem_name, filenames => $definition_filenames, }, }, );
 
     use YAML;
 
