@@ -1,0 +1,113 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+NEUROSPACES NDF
+// VERSION 0.1
+PUBLIC_MODELS
+	GROUP cal1
+		PARAMETERS
+			PARAMETER ( DIA = 24e-4 ),
+			PARAMETER ( LENGTH = 24e-4 ),
+		END PARAMETERS
+		POOL substrate_somaCa
+			BINDABLES
+				OUTPUT concen
+			END BINDABLES
+			PARAMETERS
+				PARAMETER ( concen_init = 0.1e-3 ),
+// 				PARAMETER ( VAL = 2.0 ),
+				PARAMETER ( DIA =  ..->DIA ),
+				PARAMETER ( LENGTH =  ..->LENGTH ),
+// 				PARAMETER ( THICK = 6.0e-7 ),
+				PARAMETER ( "UNITS" = 1e-3 ),
+			END PARAMETERS
+		END POOL
+		POOL substrate_somaCabuf
+			BINDABLES
+				OUTPUT concen
+			END BINDABLES
+			PARAMETERS
+				PARAMETER ( concen_init = 0.003 ),
+// 				PARAMETER ( VAL = 2.0 ),
+				PARAMETER ( DIA =  ..->DIA ),
+				PARAMETER ( LENGTH =  ..->LENGTH ),
+// 				PARAMETER ( THICK = 6.0e-7 ),
+				PARAMETER ( "UNITS" = 1e-3 ),
+			END PARAMETERS
+		END POOL
+		POOL product_somabuf
+			BINDABLES
+				OUTPUT concen
+			END BINDABLES
+			PARAMETERS
+				PARAMETER ( concen_init = 0.153 ),
+				PARAMETER ( Ctot = 0.153 ),
+// 				PARAMETER ( VAL = 2.0 ),
+				PARAMETER ( DIA =  ..->DIA ),
+				PARAMETER ( LENGTH =  ..->LENGTH ),
+// 				PARAMETER ( THICK = 6.0e-7 ),
+// 				PARAMETER ( "UNITS" = 1e-3 ),
+			END PARAMETERS
+		END POOL
+		REACTION somacabufrxn
+			BINDABLES
+				INPUT concen, OUTPUT concen
+			END BINDABLES
+			BINDINGS
+                		INPUT ("substrate") ../substrate_somaCa->concen,
+				INPUT ("substrate") ../substrate_somaCabuf->concen,
+				INPUT ("product") ../product_somabuf->concen,
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( FORWARD_RATE = 1e2 ),
+				PARAMETER ( BACKWARD_RATE = 0.5 ),
+			END PARAMETERS
+		END REACTION
+	END GROUP
+
+// //chemesis2.0
+// //cal1.g
+
+// float PI=3.14159
+// float somarad=12e-4
+// float somalen=24e-4
+// float areaout=2*PI*somarad*somalen
+// float volume=PI*somarad*somarad*somalen
+
+// create neutral cell
+// ce cell
+// /* create pools of molecules */
+// create rxnpool somaCa
+// setfield somaCa Cinit 0.1e-3 vol {volume} SAout {areaout} radius {somarad} units 1e-3
+// create rxnpool somaCabuf
+// setfield somaCabuf Cinit 0.003 vol {volume} SAout {areaout} radius {somarad} units 1e-3 
+// create conservepool somabuf
+// setfield somabuf Ctot 0.153 Cinit 0.153 volume {volume}
+
+// /* create reaction */
+// create reaction somacabufrxn
+// setfield somacabufrxn kf 1e2 kb 0.5
+
+// /* messages from substrates and product to reaction */
+// addmsg somaCa somacabufrxn SUBSTRATE Conc
+// addmsg somabuf somacabufrxn SUBSTRATE Conc
+// addmsg somaCabuf somacabufrxn PRODUCT Conc
+
+// /* messages from reaction to substrates and products */
+// addmsg somacabufrxn somaCa RXN2 kbprod kfsubs
+// addmsg somacabufrxn somaCabuf RXN2 kfsubs kbprod
+
+// /* conserve pool messages */
+// addmsg somaCabuf somabuf CONC Conc
+
+// include cal1graph.g
+
+// setclock 0 0.002
+// setclock 1 0.1
+
+// setfield somaCa Cinit 0.001
+// reset
+
+// step 1000
+
+END PUBLIC_MODELS
+

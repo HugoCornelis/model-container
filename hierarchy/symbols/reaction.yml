@@ -1,0 +1,32 @@
+---
+class_hierarchy:
+  group:
+    grammar:
+      components:
+        - Reaction
+  reaction:
+    allows:
+      create_alias: group
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_MECHANISM
+    description: a reaction between different molecule concentration pools
+    dimensions:
+      - mechanism
+    grammar:
+      components:
+        - Group
+      specific_allocator: GroupCalloc
+      specific_token:
+        class: reaction
+        lexical: TOKEN_REACTION
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pgrup
+        to_base: ->bio.ioh.iol.hsle
+    isa: group
+    name: symtab_Group
+    parameters:
+       FORWARD_RATE: forward reaction rate, from substrate(s) to product.
+       BACKWARD_RATE: backward reaction rate, from product to substrate(s).

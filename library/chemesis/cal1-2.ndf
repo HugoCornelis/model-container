@@ -1,0 +1,99 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+NEUROSPACES NDF
+// VERSION 0.1
+PUBLIC_MODELS
+	REACTION cal1
+		PARAMETERS
+			PARAMETER ( DIA = 24e-4 ),
+			PARAMETER ( LENGTH = 24e-4 ),
+		END PARAMETERS
+		PARAMETERS
+			PARAMETER ( FORWARD_RATE = 1e2 ),
+			PARAMETER ( BACKWARD_RATE = 0.5 ),
+		END PARAMETERS
+		BINDABLES
+			INPUT substrate, INPUT product
+		END BINDABLES
+		BINDINGS
+               		INPUT somaCa->concen,
+			INPUT somaCabuf->concen,
+			INPUT somabuf->concen,
+		END BINDINGS
+		SUBSTRATE substrates
+			BINDABLES
+				OUTPUT concen
+			END BINDABLES
+			POOL somaCa
+				BINDABLES
+					OUTPUT concen
+				END BINDABLES
+				PARAMETERS
+					PARAMETER ( concen_init = 0.1e-3 ),
+//					PARAMETER ( VAL = 2.0 ),
+					PARAMETER ( DIA =  ..->DIA ),
+					PARAMETER ( LENGTH =  ..->LENGTH ),
+//					PARAMETER ( THICK = 6.0e-7 ),
+					PARAMETER ( UNITS = 1e-3 ),
+				END PARAMETERS
+			END POOL
+			BINDABLES
+				OUTPUT concen
+			END BINDABLES
+			POOL somaCabuf
+				BINDABLES
+					OUTPUT concen
+				END BINDABLES
+				PARAMETERS
+					PARAMETER ( concen_init = 0.003 ),
+//					PARAMETER ( VAL = 2.0 ),
+					PARAMETER ( DIA =  ..->DIA ),
+					PARAMETER ( LENGTH =  ..->LENGTH ),
+//					PARAMETER ( THICK = 6.0e-7 ),
+					PARAMETER ( UNITS = 1e-3 ),
+				END PARAMETERS
+			END POOL
+		END SUBSTRATE
+		PRODUCT products
+			POOL somabuf
+				BINDABLES
+					OUTPUT concen
+				END BINDABLES
+				PARAMETERS
+					PARAMETER ( concen_init = 0.153 ),
+					PARAMETER ( Ctot = 0.153 ),
+//					PARAMETER ( VAL = 2.0 ),
+					PARAMETER ( DIA =  ..->DIA ),
+					PARAMETER ( LENGTH =  ..->LENGTH ),
+//					PARAMETER ( THICK = 6.0e-7 ),
+//					PARAMETER ( UNITS = 1e-3 ),
+				END PARAMETERS
+			END POOL
+		END PRODUCT
+// 		REACTION somacabufrxn
+// 			BINDABLES
+// 				INPUT substrate, INPUT product
+// 			END BINDABLES
+// 			BINDINGS
+//                 		INPUT somaCa->substrate,
+// 				INPUT somaCabuf->substrate,
+// 				INPUT somabuf->product,
+// 			END BINDINGS
+// 			PARAMETERS
+// 				PARAMETER ( forward = 1e2 ),
+// 				PARAMETER ( backward = 0.5 ),
+// 			END PARAMETERS
+// 		END REACTION
+	END REACTION
+/* messages from substrates and product to reaction */
+addmsg somaCa somacabufrxn SUBSTRATE Conc
+addmsg somabuf somacabufrxn SUBSTRATE Conc
+addmsg somaCabuf somacabufrxn PRODUCT Conc
+/* messages from reaction to substrates and products */
+addmsg somacabufrxn somaCa RXN2 kbprod kfsubs
+addmsg somacabufrxn somaCabuf RXN2 kfsubs kbprod
+/* conserve pool messages */
+addmsg somaCabuf somabuf CONC Conc
+
+END PUBLIC_MODELS
+

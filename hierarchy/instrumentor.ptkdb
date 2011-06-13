@@ -3,6 +3,15 @@ $files = {
                                              {
                                                'expr' => undef,
                                                'value' => '1',
+                                               'text' => '	my $token = $tokens->{$token_name};
+',
+                                               'fname' => './hierarchy/instrumentor',
+                                               'type' => 'user',
+                                               'line' => '112'
+                                             },
+                                             {
+                                               'expr' => undef,
+                                               'value' => '1',
                                                'text' => '    my $definitions = shift;
 ',
                                                'fname' => './hierarchy/instrumentor',
@@ -12,11 +21,38 @@ $files = {
                                              {
                                                'expr' => undef,
                                                'value' => '1',
+                                               'text' => '    foreach my $symbol_name (sort keys %$grammar_symbols)
+',
+                                               'fname' => './hierarchy/instrumentor',
+                                               'type' => 'user',
+                                               'line' => '75'
+                                             },
+                                             {
+                                               'expr' => undef,
+                                               'value' => '1',
                                                'text' => '    if ($option_classes)
 ',
                                                'fname' => './hierarchy/instrumentor',
                                                'type' => 'user',
-                                               'line' => '3150'
+                                               'line' => 3166
+                                             },
+                                             {
+                                               'expr' => undef,
+                                               'value' => '1',
+                                               'text' => '	my $names = [];
+',
+                                               'fname' => './hierarchy/instrumentor',
+                                               'type' => 'user',
+                                               'line' => 2539
+                                             },
+                                             {
+                                               'expr' => undef,
+                                               'value' => '1',
+                                               'text' => '	if (!defined $grammar_symbol->{specific_token})
+',
+                                               'fname' => './hierarchy/instrumentor',
+                                               'type' => 'user',
+                                               'line' => '79'
                                              }
                                            ]
          };
@@ -35,6 +71,22 @@ $expr_list = [
                },
                {
                  'expr' => '$method',
+                 'depth' => -1
+               },
+               {
+                 'expr' => '$symbol_name',
+                 'depth' => -1
+               },
+               {
+                 'expr' => '$token_name',
+                 'depth' => -1
+               },
+               {
+                 'expr' => '$tokens->{group}',
+                 'depth' => -1
+               },
+               {
+                 'expr' => '$tokens->{reaction}',
                  'depth' => -1
                }
              ];
