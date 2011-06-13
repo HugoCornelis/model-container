@@ -50,12 +50,12 @@ PUBLIC_MODELS
 		END POOL
 		REACTION somacabufrxn
 			BINDABLES
-				INPUT substrate, INPUT product
+				INPUT concen, OUTPUT concen
 			END BINDABLES
 			BINDINGS
-                		INPUT ("substrate") ../somaCa->concen,
-				INPUT ("substrate") ../somaCabuf->concen,
-				INPUT ("product") ../somabuf->concen,
+                		INPUT ("substrate") ../substrate_somaCa->concen,
+				INPUT ("substrate") ../substrate_somaCabuf->concen,
+				INPUT ("product") ../product_somabuf->concen,
 			END BINDINGS
 			PARAMETERS
 				PARAMETER ( FORWARD_RATE = 1e2 ),
