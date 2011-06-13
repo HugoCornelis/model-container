@@ -195,11 +195,12 @@ class ModelContainer:
 
         phsle = nmc_base.PidinStackLookupTopSymbol(ppist)
 
+        nmc_base.PidinStackFree(ppist)
+
         if phsle is None:
 
-            return None
+            raise Exception("Can't set parameter, symbol %s doesn't exist" % path)
 
-        nmc_base.PidinStackFree(ppist)
 
         if isinstance(value, (int, long, float, complex)):
             
