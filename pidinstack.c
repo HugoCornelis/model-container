@@ -1536,7 +1536,7 @@ PidinStackParse(char *pc)
 
 	    //- if this is a selector operator
 
-	    if (&pc[iPos] == IDENTIFIER_SELECTOR_CHAR)
+	    if (pc[iPos] == IDENTIFIER_SELECTOR_CHAR)
 	    {
 		//- register as selector
 

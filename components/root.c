@@ -163,7 +163,7 @@ RootSymbolGetName(struct symtab_RootSymbol *proot)
 {
     //- return name
 
-    return(IdinName(SymbolGetPidin(proot)));
+    return(IdinName(SymbolGetPidin(&proot->hsle)));
 }
 
 
