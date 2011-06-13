@@ -3144,6 +3144,25 @@ my $test
 						 ],
 				description => "syntax of cells/izhikevich.ndf",
 			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'chemesis/cal1.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (chemesis/cal1.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/chemesis/cal1.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of chemesis/cal1.ndf",
+			       },
 			      ],
        description => "general syntax of library files",
        name => 'parsing.t',
