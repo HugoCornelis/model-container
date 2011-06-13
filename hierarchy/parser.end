@@ -414,6 +414,41 @@ FixedItemInputRelations	/* <pio> */
 ItemInputRelations	/* <pio> */
 	:
 		TOKEN_INPUT
+		'('
+		TOKEN_STRING
+		')'
+		FieldOrIOHierarchical
+		{
+#line
+		    //- allocate I/O relation
+
+		    struct symtab_InputOutput
+			*pio = InputOutputNewForType(INPUT_TYPE_INPUT);
+
+		    //- remove ending '"'
+
+		    $3->pcString[$3->iLength - 1] = '\0';
+
+		    //! allocates one to much
+
+		    char *pc = calloc(sizeof(char), $3->iLength);
+
+		    strcpy(pc, &$3->pcString[1]);
+
+		    //- store idin
+
+		    pio->pidinField = $5;
+
+		    //- set TOKEN_INPUT flag for root idin $5
+
+		    IdinSetFlags($5, FLAG_IDENTINDEX_INPUTROOT);
+
+		    //- put io list on stack
+
+		    $$ = pio;
+		}
+	|
+		TOKEN_INPUT
 		FieldOrIOHierarchical
 		{
 #line
@@ -429,6 +464,48 @@ ItemInputRelations	/* <pio> */
 		    //- set TOKEN_INPUT flag for root idin $2
 
 		    IdinSetFlags($2, FLAG_IDENTINDEX_INPUTROOT);
+
+		    //- put io list on stack
+
+		    $$ = pio;
+		}
+	|
+		ItemInputRelations
+		','
+		TOKEN_INPUT
+		'('
+		TOKEN_STRING
+		')'
+		FieldOrIOHierarchical
+		{
+#line
+		    //- allocate I/O relation
+
+		    struct symtab_InputOutput *pio
+			= InputOutputNewForType(INPUT_TYPE_INPUT);
+
+		    //- remove ending '"'
+
+		    $5->pcString[$5->iLength - 1] = '\0';
+
+		    //! allocates one to much
+
+		    char *pc = calloc(sizeof(char), $5->iLength);
+
+		    strcpy(pc, &$5->pcString[1]);
+
+		    //- set TOKEN_INPUT flag for root idin $7
+
+		    IdinSetFlags($7, FLAG_IDENTINDEX_INPUTROOT);
+
+		    //- store idin
+
+		    pio->pidinField = $7;
+
+		    //- link input relations into list
+
+		    pio->pioFirst = $1->pioFirst;
+		    $1->pioNext = pio;
 
 		    //- put io list on stack
 
@@ -703,7 +780,7 @@ ParameterValue	/* <ppar> */
 
 		    $1->pcString[$1->iLength - 1] = '\0';
 
-		    //! allocates to much
+		    //! allocates one to much
 
 		    char *pc = calloc(sizeof(char), $1->iLength);
 
