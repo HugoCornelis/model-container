@@ -48,19 +48,9 @@ struct symtab_InputOutput
 
     int iType;
 
-    // optional name of prototype
+    /// optional name of prototype
 
-    /// \note check if this can be used for connections
-
-    //char *pcPrototype;
-
-    /// flags, see below
-
-    int iFlags;
-
-/*     /// related symbol */
-
-/*     struct symtab_HSolveListElement *phsle; */
+    char *pc;
 };
 
 
