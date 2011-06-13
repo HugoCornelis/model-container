@@ -46,11 +46,14 @@ struct symtab_InputOutput
 
     /// type of input (0 means invalid)
 
+    // \todo figure out whether it would be better to split this
+    // struct in separate input and output structs.
+
     int iType;
 
-    /// optional name of prototype
+    /// optional type name for an input (iType == 1)
 
-    char *pc;
+    char *pcType;
 };
 
 
