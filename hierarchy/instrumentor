@@ -305,11 +305,19 @@ sub dump_annotated_class_hierarchy
 
     use Data::Dumper;
 
-    my $file = IO::File->new(">$option_output/$definitions->{name}/dump_annotated_class_hierarchy");
+    my $file_perl = IO::File->new(">$option_output/$definitions->{name}/dump_annotated_class_hierarchy");
 
-    print $file Dumper($definitions);
+    print $file_perl Dumper($definitions);
 
-    $file->close();
+    $file_perl->close();
+
+    my $file_yaml = IO::File->new(">$option_output/$definitions->{name}/dump_annotated_class_hierarchy.yml");
+
+    use YAML;
+
+    print $file_yaml YAML::Dump($definitions);
+
+    $file_yaml->close();
 }
 
 
@@ -319,11 +327,19 @@ sub dump_annotated_symbol_rules
 
     use Data::Dumper;
 
-    my $file = IO::File->new(">$option_output/$definitions->{name}/grammar/dump_annotated_symbol_rules");
+    my $file_perl = IO::File->new(">$option_output/$definitions->{name}/grammar/dump_annotated_symbol_rules");
 
-    print $file Dumper($definitions);
+    print $file_perl Dumper($definitions);
 
-    $file->close();
+    $file_perl->close();
+
+    use YAML;
+
+    my $file_yaml = IO::File->new(">$option_output/$definitions->{name}/grammar/dump_annotated_symbol_rules.yml");
+
+    print $file_yaml YAML::Dump($definitions);
+
+    $file_yaml->close();
 }
 
 
@@ -3154,12 +3170,32 @@ options:
 
     # read type definitions and relations
 
+    $ARGV[0] =~ /.*\/(.+)$/;
+
+    my $subsystem_name = $1;
+
+    my $subsystem_directory = "/etc/neurospaces/model-container/$subsystem_name";
+
     my $definition_filenames
 	= [
-	   (-d $ARGV[0]
-	    ? (sort split '\n', `find $ARGV[0]/*.yml`)
-	    : $ARGV[0]),
+	   map
+	   {
+	       (-d $_
+		? (sort split '\n', `find $_/*.yml`)
+		: $_)
+	   }
+	   (
+	    # read all definitions for this subsystem
+
+	    $ARGV[0],
+
+	    # and its contributed extensions
+
+	    $subsystem_directory,
+	   )
 	  ];
+
+    print Dumper($subsystem_name, $definition_filenames);
 
     use YAML;
 
@@ -3169,16 +3205,18 @@ options:
 
     foreach my $definition_filename (@$definition_filenames)
     {
+	my $new_definitions;
+
 	if ($definition_filename =~ /\.ya?ml$/)
 	{
-	    my $new_definitions = YAML::LoadFile($definition_filename);
-
-	    my $merged_definitions = Data::Merger::merger($all_definitions, $new_definitions);
+	    $new_definitions = YAML::LoadFile($definition_filename);
 	}
 	else
 	{
-	    $all_definitions = do $definition_filename;
+	    $new_definitions = do $definition_filename;
 	}
+
+	my $merged_definitions = Data::Merger::merger($all_definitions, $new_definitions);
     }
 
     # create the output target directory
