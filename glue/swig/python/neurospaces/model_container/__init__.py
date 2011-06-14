@@ -228,7 +228,7 @@ class ModelContainer:
             # If this is a string we treat it differently depending
             # on the type of string. Should be no reason to have a
             # numberical string.
-            if self._IsNumber(str):
+            if self._IsNumber(value):
 
                 nmc_base.SymbolSetParameterDouble(phsle, parameter, float(value))
             
