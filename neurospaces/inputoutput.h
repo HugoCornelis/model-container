@@ -46,21 +46,14 @@ struct symtab_InputOutput
 
     /// type of input (0 means invalid)
 
+    // \todo figure out whether it would be better to split this
+    // struct in separate input and output structs.
+
     int iType;
 
-    // optional name of prototype
+    /// optional type name for an input (iType == 1)
 
-    /// \note check if this can be used for connections
-
-    //char *pcPrototype;
-
-    /// flags, see below
-
-    int iFlags;
-
-/*     /// related symbol */
-
-/*     struct symtab_HSolveListElement *phsle; */
+    char *pcType;
 };
 
 
