@@ -184,6 +184,24 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
+    def _IsNumber(self, s):
+        """!
+        @brief helper method, detects if a string is a number
+
+        int, long and float
+        """
+        try:
+            
+            float(s) 
+            
+        except ValueError:
+
+            return False
+
+        return True
+
+#---------------------------------------------------------------------------
+
     def SetParameter(self, path, parameter, value):
         """!
         @brief Sets a parameter value to a symbol in the model container.
@@ -201,14 +219,19 @@ class ModelContainer:
 
             raise Exception("Can't set parameter, symbol %s doesn't exist" % path)
 
-
         if isinstance(value, (int, long, float, complex)):
             
             nmc_base.SymbolSetParameterDouble(phsle, parameter, value)
 
         elif isinstance(value, str):
 
-            pass
+            # If this is a string we treat it differently depending
+            # on the type of string. Should be no reason to have a
+            # numberical string.
+            if self._IsNumber(value):
+
+                nmc_base.SymbolSetParameterDouble(phsle, parameter, float(value))
+            
 
         else:
 
