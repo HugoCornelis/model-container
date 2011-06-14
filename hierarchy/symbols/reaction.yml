@@ -15,6 +15,7 @@ class_hierarchy:
     grammar:
       components:
         - Group
+        - Pool
       specific_allocator: GroupCalloc
       specific_token:
         class: reaction

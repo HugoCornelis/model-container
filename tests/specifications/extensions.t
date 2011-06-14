@@ -215,9 +215,9 @@ my $test
 						preparer =>
 						sub
 						{
-						    system "mkdir -p /etc/neurospaces/model-container/symbols";
+						    system "sudo mkdir -p /etc/neurospaces/model-container/symbols";
 
-						    system "cp subpopulation.yml /etc/neurospaces/model-container/symbols";
+						    system "sudo cp subpopulation.yml /etc/neurospaces/model-container/symbols";
 
 						    print "subpopulation definition added to the custom extensions directory\n";
 
@@ -230,7 +230,7 @@ my $test
 					       reparer =>
 					       sub
 					       {
-						   system "rm /etc/neurospaces/model-container/symbols/subpopulation.yml";
+						   system "sudo rm /etc/neurospaces/model-container/symbols/subpopulation.yml";
 
 						   print "subpopulations removed\n";
 
