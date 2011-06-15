@@ -7,7 +7,16 @@ $files = {
 ',
                                              'fname' => 'hierarchy/types_2_html',
                                              'type' => 'user',
-                                             'line' => 54
+                                             'line' => 42
+                                           },
+                                           {
+                                             'expr' => undef,
+                                             'value' => '1',
+                                             'text' => '	if ($parameters and %$parameters)
+',
+                                             'fname' => 'hierarchy/types_2_html',
+                                             'type' => 'user',
+                                             'line' => '148'
                                            }
                                          ]
          };
@@ -19,7 +28,15 @@ $expr_list = [
                {
                  'expr' => '$_',
                  'depth' => -1
+               },
+               {
+                 'expr' => '$type',
+                 'depth' => -1
+               },
+               {
+                 'expr' => '$parameters',
+                 'depth' => -1
                }
              ];
 $eval_saved_text = undef;
-$main_win_geometry = '1592x1115+0+0';
+$main_win_geometry = '1592x820+0+0';

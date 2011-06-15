@@ -383,8 +383,8 @@ html-upload-prepare:
 # $Format: "	( cd tests && ./tests_2_html --header '<img src=\"ns-main-logo-dark2-notext-32x32.jpg\" alt=\"Main Neurospaces logo\"> ${package}, ${label}, ${email} <hr>' --introduction introduction.html )" $
 	( cd tests && ./tests_2_html --header '<img src="ns-main-logo-dark2-notext-32x32.jpg" alt="Main Neurospaces logo"> neurospaces 0.1675 Thu, 27 Dec 2007 15:58:18 -0600 hugo<hr>' --introduction introduction.html )
 	tar cfh - tests/html | ( cd html/htdocs/neurospaces_project/neurospaces && tar vxf - )
-	hierarchy/types_2_html >html/htdocs/neurospaces_project/neurospaces/algorithminstances.html hierarchy/algorithminstances
-	hierarchy/types_2_html >html/htdocs/neurospaces_project/neurospaces/symbols.html hierarchy/symbols
+	hierarchy/types_2_html >html/htdocs/neurospaces_project/neurospaces/algorithminstances.html hierarchy/output/algorithm_instances//dump_annotated_class_hierarchy
+	hierarchy/types_2_html >html/htdocs/neurospaces_project/neurospaces/symbols.html hierarchy/output/symbols/dump_annotated_class_hierarchy
 
 html-upload: html-upload-prepare
 	scp -pr html/htdocs/* hcornelis,neurospaces@web.sourceforge.net:/home/groups/n/ne/neurospaces/htdocs/
