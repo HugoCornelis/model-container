@@ -235,6 +235,15 @@ class NMCModule(Extension):
 
 
 
+        if sys.platform == "darwin":
+
+            arch = autodetect()
+            
+            if arch == 'i386':
+
+                os.environ['ARCHFLAGS'] = "-arch i386"
+
+
         self._library_files = library_files
         self._library_paths = library_paths
 
