@@ -194,7 +194,7 @@ OPTIONS={
 
 PLATFORMS=["Unix", "Lunix", "MacOS X"]
 
-PY_MODULES=['neurospaces.model_container']
+PY_MODULES=['neurospaces', 'neurospaces.model_container']
 
 
 CMDCLASS = None
