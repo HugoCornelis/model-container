@@ -12,7 +12,7 @@ from distutils.command.install_data import install_data
 # import the cbi module. We use this since the check
 # for the compiled swig nmc_base gives an error
 # if we import from nmc.__cbi__
-cbi = imp.load_source('__cbi__', './neurospaces/model_container/__cbi__.py')
+cbi = imp.load_source('__cbi__', os.path.join('neurospaces', 'model_container', '__cbi__.py'))
 
 #
 # API for the platform class http://docs.python.org/library/platform.html
@@ -144,7 +144,10 @@ def find_files(root_directory, file_types=_file_types):
 
 
 library_files=[]
-#library_files = find_files('../../../library', ['.ndf'])
+
+if os.path.exists.isdir('/usr/local/neurospaces/models/library'):
+    
+    library_files = find_files('/usr/local/neurospaces/models/library', ['.ndf'])
 
 
 home_dir = os.getenv('USERPROFILE') or os.getenv('HOME')
@@ -205,7 +208,7 @@ else:
 
 
 
-DATA_FILES=[('/usr/local/neurospaces/models/library/', library_files)]
+DATA_FILES=library_files
 
 #
 # compile: gcc -g -DPRE_PROTO_TRAVERSAL -I/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6
@@ -271,7 +274,7 @@ class NMCModule(Extension):
 
     def get_swig_opts(self):
 
-        return ["-DPRE_PROTO_TRAVERSAL", "-I../../..", "-outdir", "neurospaces/model_container"]
+        return ["-DPRE_PROTO_TRAVERSAL", "-I../../..", "-outdir", os.path.join('neurospaces', 'model_container')]
 
     def get_library_dirs(self):
 
