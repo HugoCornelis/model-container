@@ -1,7 +1,0 @@
-nmc.i
-setup.py
-nmc/__cbi__.py
-nmc/__init__.py
-nmc/errors.py
-nmc/nmc_base.py
-nmc/symbols.py

@@ -271,7 +271,7 @@ class NMCModule(Extension):
 
     def get_swig_opts(self):
 
-        return ["-DPRE_PROTO_TRAVERSAL", "-I../../.. -outdir neurospaces/model_container -v"]
+        return ["-DPRE_PROTO_TRAVERSAL", "-I../../..", "-outdir", "neurospaces/model_container"]
 
     def get_library_dirs(self):
 
