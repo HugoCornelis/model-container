@@ -145,7 +145,7 @@ def find_files(root_directory, file_types=_file_types):
 
 library_files=[]
 
-if os.path.exists.isdir('/usr/local/neurospaces/models/library'):
+if os.path.isdir('/usr/local/neurospaces/models/library'):
     
     library_files = find_files('/usr/local/neurospaces/models/library', ['.ndf'])
 
@@ -426,7 +426,8 @@ setup(
     keywords=KEYWORDS,
     url=URL,
     packages=['neurospaces.model_container'],
-    package_data={'neurospaces.model_container' : PACKAGE_FILES},
+    package_data={'neurospaces' : [os.path.join('neurospaces','__init__.py')],
+                  'neurospaces.model_container' : PACKAGE_FILES},
 #     package_dir={'' : ''},
     classifiers=CLASSIFIERS,
     options=OPTIONS,
