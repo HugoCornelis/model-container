@@ -1,4 +1,4 @@
-static char *pcVersionTime="(10/09/02) Thursday, September 2, 2010 10:51:28 cornelis";
+static char *pcVersionTime="(11/07/10) Sunday, July 10, 2011 18:07:51 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -105,6 +105,7 @@ static char *pcVersionTime="(10/09/02) Thursday, September 2, 2010 10:51:28 corn
 #include "neurospaces/algorithmset.h"
 #include "neurospaces/parsersupport.h"
 #include "neurospaces/querymachine.h"
+#include "neurospaces/solverinfo.h"
 #include "neurospaces/symbols.h"
 
 

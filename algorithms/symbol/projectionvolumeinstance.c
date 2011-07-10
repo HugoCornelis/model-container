@@ -73,7 +73,7 @@ struct ProjectionVolumeOptions_type
 
     /*m pre synaptic part: context */
 
-    char *ppistPre;
+    struct PidinStack *ppistPre;
 
     /*m post synaptic part: component name */
 
@@ -81,7 +81,7 @@ struct ProjectionVolumeOptions_type
 
     /*m post synaptic part: context */
 
-    char *ppistPost;
+    struct PidinStack *ppistPost;
 
     /*m source type : box or ellipse */
 
