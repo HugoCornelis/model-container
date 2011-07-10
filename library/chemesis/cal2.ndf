@@ -1,0 +1,142 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+NEUROSPACES NDF
+// VERSION 0.1
+PRIVATE_MODELS
+	GROUP cal1
+		PARAMETERS
+			PARAMETER ( DIA = 24e-4 ),
+			PARAMETER ( LENGTH = 24e-4 ),
+		END PARAMETERS
+		POOL substrate_somaCa
+			BINDABLES
+				OUTPUT concen
+			END BINDABLES
+			PARAMETERS
+				PARAMETER ( concen_init = 0.1e-3 ),
+// 				PARAMETER ( VAL = 2.0 ),
+				PARAMETER ( DIA =  ..->DIA ),
+				PARAMETER ( LENGTH =  ..->LENGTH ),
+// 				PARAMETER ( THICK = 6.0e-7 ),
+				PARAMETER ( "UNITS" = 1e-3 ),
+			END PARAMETERS
+		END POOL
+		POOL substrate_somaCabuf
+			BINDABLES
+				OUTPUT concen
+			END BINDABLES
+			PARAMETERS
+				PARAMETER ( concen_init = 0.003 ),
+// 				PARAMETER ( VAL = 2.0 ),
+				PARAMETER ( DIA =  ..->DIA ),
+				PARAMETER ( LENGTH =  ..->LENGTH ),
+// 				PARAMETER ( THICK = 6.0e-7 ),
+				PARAMETER ( "UNITS" = 1e-3 ),
+			END PARAMETERS
+		END POOL
+		POOL product_somabuf
+			BINDABLES
+				OUTPUT concen
+			END BINDABLES
+			PARAMETERS
+				PARAMETER ( concen_init = 0.153 ),
+				PARAMETER ( Ctot = 0.153 ),
+// 				PARAMETER ( VAL = 2.0 ),
+				PARAMETER ( DIA =  ..->DIA ),
+				PARAMETER ( LENGTH =  ..->LENGTH ),
+// 				PARAMETER ( THICK = 6.0e-7 ),
+// 				PARAMETER ( "UNITS" = 1e-3 ),
+			END PARAMETERS
+		END POOL
+		REACTION somacabufrxn
+			BINDABLES
+				INPUT concen, OUTPUT concen
+			END BINDABLES
+			BINDINGS
+                		INPUT ("substrate") ../substrate_somaCa->concen,
+				INPUT ("substrate") ../substrate_somaCabuf->concen,
+				INPUT ("product") ../product_somabuf->concen,
+			END BINDINGS
+			PARAMETERS
+				PARAMETER ( FORWARD_RATE = 1e2 ),
+				PARAMETER ( BACKWARD_RATE = 0.5 ),
+			END PARAMETERS
+		END REACTION
+	END GROUP
+
+// //chemesis2.0
+// //cabuf.g
+// function cabuf (pool, Cainit, cabufinit, buftot, rad, len)
+// float rad, len
+// float Cainit, cabufinit, buftot
+// str pool
+
+//     float PI=3.14159
+//     float areaout=2*PI*rad*len
+//     float areaside=PI*rad*rad
+//     float volume=areaside*len
+
+//     /* create pools of molecules */
+//     create rxnpool {pool}Ca
+//     setfield {pool}Ca Cinit {Cainit} vol {volume} SAout {areaout} SAside {areaside} radius {rad} len {len} units 1e-3
+//     create rxnpool {pool}Cabuf
+//     setfield {pool}Cabuf Cinit {cabufinit} vol {volume} SAout {areaout} SAside {areaside} radius {rad} len {len} units 1e-3 
+//     create conservepool {pool}buf
+//     setfield {pool}buf Ctot {buftot} volume {volume}
+
+//     /* create reaction */
+//     create reaction {pool}cabufrxn
+//     setfield {pool}cabufrxn kf 1e2 kb 0.5
+
+//     /* messages from substrates and product to reaction */
+//     addmsg {pool}Ca {pool}cabufrxn SUBSTRATE Conc
+//     addmsg {pool}buf {pool}cabufrxn SUBSTRATE Conc
+//     addmsg {pool}Cabuf {pool}cabufrxn PRODUCT Conc
+
+//     /* messages from reaction to substrates and products */
+//     addmsg {pool}cabufrxn {pool}Ca RXN2 kbprod kfsubs
+//     addmsg {pool}cabufrxn {pool}Cabuf RXN2 kfsubs kbprod
+
+//     /* conserve pool messages */
+//     addmsg {pool}Cabuf {pool}buf CONC Conc
+
+// end
+
+END PRIVATE_MODELS
+
+PUBLIC_MODELS
+
+	SEGMENT soma
+		PARAMETERS
+			PARAMETER ( rel_X = 2e-4 ),
+			PARAMETER ( rel_Y = 0.000e-6 ),
+			PARAMETER ( rel_Z = 0.000e-6 ),
+			PARAMETER ( DIA = 8e-4 ),
+		END PARAMETERS
+
+		CHILD cal1 cal1
+		END CHILD
+
+	END SEGMENT
+
+	SEGMENT dend
+		PARAMETERS
+			PARAMETER ( PARENT = ^/soma ),
+			PARAMETER ( rel_X = 2e-4 ),
+			PARAMETER ( rel_Y = 0e-6 ),
+			PARAMETER ( rel_Z = 0e-6 ),
+			PARAMETER ( DIA = 4e-4 ),
+		END PARAMETERS
+
+		PARAMETERS
+			PARAMETER ( diffusion_constant = 6e-9 ),
+// 			PARAMETER ( "UNITS" = 1e-3 ),
+		END PARAMETERS
+
+		CHILD cal1 cal1
+		END CHILD
+
+	END SEGMENT
+
+END PUBLIC_MODELS
+
