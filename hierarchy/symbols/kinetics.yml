@@ -1,0 +1,27 @@
+---
+class_hierarchy:
+  kinetics:
+    allows:
+      create_alias: group
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_MECHANISM
+    description: a group of chemical reactions and diffusion between different molecule concentration pools
+    dimensions:
+      - mechanism
+    grammar:
+      components:
+        - Group
+        - Pool
+        - Reaction
+      specific_allocator: GroupCalloc
+      specific_token:
+        class: kinetics
+        lexical: TOKEN_KINETICS
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pgrup
+        to_base: ->bio.ioh.iol.hsle
+    isa: group
+    name: symtab_Group
