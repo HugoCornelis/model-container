@@ -8,7 +8,7 @@ PUBLIC_MODELS
 			PARAMETER ( DIA = 24e-4 ),
 			PARAMETER ( LENGTH = 24e-4 ),
 		END PARAMETERS
-		POOL substrate_somaCa
+		POOL somaCa
 			BINDABLES
 				OUTPUT concen
 			END BINDABLES
@@ -21,7 +21,7 @@ PUBLIC_MODELS
 				PARAMETER ( "UNITS" = 1e-3 ),
 			END PARAMETERS
 		END POOL
-		POOL substrate_somaCabuf
+		POOL somaCabuf
 			BINDABLES
 				OUTPUT concen
 			END BINDABLES
@@ -34,10 +34,13 @@ PUBLIC_MODELS
 				PARAMETER ( "UNITS" = 1e-3 ),
 			END PARAMETERS
 		END POOL
-		POOL product_somabuf
+		POOL somabuf
 			BINDABLES
 				OUTPUT concen
 			END BINDABLES
+			BINDINGS
+				INPUT ../somaCabuf->concen,
+			END BINDINGS
 			PARAMETERS
 				PARAMETER ( concen_init = 0.153 ),
 				PARAMETER ( Ctot = 0.153 ),
@@ -53,9 +56,9 @@ PUBLIC_MODELS
 				INPUT concen, OUTPUT concen
 			END BINDABLES
 			BINDINGS
-                		INPUT ("substrate") ../substrate_somaCa->concen,
-				INPUT ("substrate") ../substrate_somaCabuf->concen,
-				INPUT ("product") ../product_somabuf->concen,
+                		INPUT ("substrate") ../somaCa->concen,
+				INPUT ("substrate") ../somaCabuf->concen,
+				INPUT ("product") ../somabuf->concen,
 			END BINDINGS
 			PARAMETERS
 				PARAMETER ( FORWARD_RATE = 1e2 ),
