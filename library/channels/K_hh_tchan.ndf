@@ -1,0 +1,67 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+PRIVATE_MODELS
+  GATE_KINETIC "A_32_32"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = -0.01 ),
+      PARAMETER ( HH_AB_Offset_E = 0.06 ),
+      PARAMETER ( HH_AB_Add_Den = -1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = -10000 ),
+      PARAMETER ( HH_AB_Add_Num = -600 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "A_32_32" "A_inserted_32"
+  END CHILD
+  GATE_KINETIC "B_33_33"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = 0.08 ),
+      PARAMETER ( HH_AB_Offset_E = 0.07 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 125 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "B_33_33" "B_inserted_33"
+  END CHILD
+  HH_GATE "HH_activation_31_31"
+    PARAMETERS
+      PARAMETER ( POWER = 4 ),
+      PARAMETER ( state_init = -1 ),
+    END PARAMETERS
+    CHILD "A_32_32" "A"
+    END CHILD
+    CHILD "B_33_33" "B"
+    END CHILD
+  END HH_GATE
+  CHILD "HH_activation_31_31" "HH_activation_inserted_31"
+  END CHILD
+  CHANNEL "K_hh_tchan_30_30"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    PARAMETERS
+      PARAMETER ( G_MAX = 
+        GENESIS2
+          (
+              PARAMETER ( scale = 1 ),
+              PARAMETER ( value = 3.6e-07 ),
+          ), ),
+      PARAMETER ( Erev = -0.082 ),
+    END PARAMETERS
+    CHILD "HH_activation_31_31" "HH_activation"
+    END CHILD
+  END CHANNEL
+  CHILD "K_hh_tchan_30_30" "K_hh_tchan_inserted_30"
+  END CHILD
+END PRIVATE_MODELS
+PUBLIC_MODELS
+  CHILD "K_hh_tchan_30_30" "K_hh_tchan"
+  END CHILD
+END PUBLIC_MODELS

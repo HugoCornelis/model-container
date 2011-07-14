@@ -3182,6 +3182,177 @@ my $test
 						 ],
 				description => "syntax of chemesis/cal2.ndf",
 			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'cells/BDK5cell2-nolib.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (cells/BDK5cell2-nolib.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/BDK5cell2-nolib.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of cells/BDK5cell2-nolib.ndf",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'cells/RScell-nolib.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (cells/RScell-nolib.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/RScell-nolib.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of cells/RScell-nolib.ndf",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'cells/RScell-nolib.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (cells/RScell-nolib.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/RScell-nolib.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of cells/RScell-nolib.ndf",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'simplecell-nolib.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (cells/simplecell-nolib.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/simplecell-nolib.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of cells/simplecell-nolib.ndf",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'cells/traub91-nolib.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (cells/traub91-nolib.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/traub91-nolib.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of cells/traub91-nolib.ndf",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'cells/traub94-nolib.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (cells/traub94-nolib.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/traub94-nolib.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of cells/traub94-nolib.ndf",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'cells/traub95-nolib.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (cells/traub95-nolib.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/traub95-nolib.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of cells/traub95-nolib.ndf",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'channels/K_hh_tchan.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (channels/K_hh_tchan.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/channels/K_hh_tchan.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of channels/K_hh_tchan.ndf",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'channels/Na_hh_tchan.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (channels/Na_hh_tchan.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/channels/Na_hh_tchan.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of channels/Na_hh_tchan.ndf",
+			       },
 			      ],
        description => "general syntax of library files",
        name => 'parsing.t',

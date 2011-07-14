@@ -1,0 +1,105 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+PRIVATE_MODELS
+  GATE_KINETIC "A_25_25"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = -0.01 ),
+      PARAMETER ( HH_AB_Offset_E = 0.045 ),
+      PARAMETER ( HH_AB_Add_Den = -1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = -100000 ),
+      PARAMETER ( HH_AB_Add_Num = -4500 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "A_25_25" "A_inserted_25"
+  END CHILD
+  GATE_KINETIC "B_26_26"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = 0.018 ),
+      PARAMETER ( HH_AB_Offset_E = 0.07 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 4000 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "B_26_26" "B_inserted_26"
+  END CHILD
+  HH_GATE "HH_activation_24_24"
+    PARAMETERS
+      PARAMETER ( POWER = 3 ),
+      PARAMETER ( state_init = -1 ),
+    END PARAMETERS
+    CHILD "A_25_25" "A"
+    END CHILD
+    CHILD "B_26_26" "B"
+    END CHILD
+  END HH_GATE
+  CHILD "HH_activation_24_24" "HH_activation_inserted_24"
+  END CHILD
+  GATE_KINETIC "A_28_28"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = 0.02 ),
+      PARAMETER ( HH_AB_Offset_E = 0.07 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 70 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "A_28_28" "A_inserted_28"
+  END CHILD
+  GATE_KINETIC "B_29_29"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = -0.01 ),
+      PARAMETER ( HH_AB_Offset_E = 0.04 ),
+      PARAMETER ( HH_AB_Add_Den = 1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 1000 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "B_29_29" "B_inserted_29"
+  END CHILD
+  HH_GATE "HH_inactivation_27_27"
+    PARAMETERS
+      PARAMETER ( POWER = 1 ),
+      PARAMETER ( state_init = -1 ),
+    END PARAMETERS
+    CHILD "A_28_28" "A"
+    END CHILD
+    CHILD "B_29_29" "B"
+    END CHILD
+  END HH_GATE
+  CHILD "HH_inactivation_27_27" "HH_inactivation_inserted_27"
+  END CHILD
+  CHANNEL "Na_hh_tchan_23_23"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    PARAMETERS
+      PARAMETER ( G_MAX = 
+        GENESIS2
+          (
+              PARAMETER ( scale = 1 ),
+              PARAMETER ( value = 1.2e-06 ),
+          ), ),
+      PARAMETER ( Erev = 0.045 ),
+    END PARAMETERS
+    CHILD "HH_activation_24_24" "HH_activation"
+    END CHILD
+    CHILD "HH_inactivation_27_27" "HH_inactivation"
+    END CHILD
+  END CHANNEL
+  CHILD "Na_hh_tchan_23_23" "Na_hh_tchan_inserted_23"
+  END CHILD
+END PRIVATE_MODELS
+PUBLIC_MODELS
+  CHILD "Na_hh_tchan_23_23" "Na_hh_tchan"
+  END CHILD
+END PUBLIC_MODELS

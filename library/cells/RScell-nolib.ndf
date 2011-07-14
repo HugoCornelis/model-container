@@ -1,0 +1,329 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+PRIVATE_MODELS
+  GATE_KINETIC "A_7_7"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = -0.004 ),
+      PARAMETER ( HH_AB_Offset_E = 0.05 ),
+      PARAMETER ( HH_AB_Add_Den = -1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = -320000 ),
+      PARAMETER ( HH_AB_Add_Num = -16000 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "A_7_7" "A_inserted_7"
+  END CHILD
+  GATE_KINETIC "B_8_8"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = 0.005 ),
+      PARAMETER ( HH_AB_Offset_E = 0.023 ),
+      PARAMETER ( HH_AB_Add_Den = -1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 280000 ),
+      PARAMETER ( HH_AB_Add_Num = 6440 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "B_8_8" "B_inserted_8"
+  END CHILD
+  HH_GATE "HH_activation_6_6"
+    PARAMETERS
+      PARAMETER ( POWER = 3 ),
+      PARAMETER ( state_init = -1 ),
+    END PARAMETERS
+    CHILD "A_7_7" "A"
+    END CHILD
+    CHILD "B_8_8" "B"
+    END CHILD
+  END HH_GATE
+  CHILD "HH_activation_6_6" "HH_activation_inserted_6"
+  END CHILD
+  GATE_KINETIC "A_10_10"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = 0.018 ),
+      PARAMETER ( HH_AB_Offset_E = 0.056 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 128 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "A_10_10" "A_inserted_10"
+  END CHILD
+  GATE_KINETIC "B_11_11"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = -0.005 ),
+      PARAMETER ( HH_AB_Offset_E = 0.033 ),
+      PARAMETER ( HH_AB_Add_Den = 1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 4000 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "B_11_11" "B_inserted_11"
+  END CHILD
+  HH_GATE "HH_inactivation_9_9"
+    PARAMETERS
+      PARAMETER ( POWER = 1 ),
+      PARAMETER ( state_init = -1 ),
+    END PARAMETERS
+    CHILD "A_10_10" "A"
+    END CHILD
+    CHILD "B_11_11" "B"
+    END CHILD
+  END HH_GATE
+  CHILD "HH_inactivation_9_9" "HH_inactivation_inserted_9"
+  END CHILD
+  CHANNEL "Na_pyr_dp_5_5"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    PARAMETERS
+      PARAMETER ( Erev = 0.05 ),
+    END PARAMETERS
+    CHILD "HH_activation_6_6" "HH_activation"
+    END CHILD
+    CHILD "HH_inactivation_9_9" "HH_inactivation"
+    END CHILD
+  END CHANNEL
+  CHILD "Na_pyr_dp_5_5" "Na_pyr_dp_5_26"
+    BINDINGS
+      INPUT ..->I,
+    END BINDINGS
+  END CHILD
+  CHILD "Na_pyr_dp_5_26" "Na_pyr_dp_inserted_26"
+  END CHILD
+  GATE_KINETIC "A_14_14"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = -0.005 ),
+      PARAMETER ( HH_AB_Offset_E = 0.048 ),
+      PARAMETER ( HH_AB_Add_Den = -1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = -32000 ),
+      PARAMETER ( HH_AB_Add_Num = -1536 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "A_14_14" "A_inserted_14"
+  END CHILD
+  GATE_KINETIC "B_15_15"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = 0.04 ),
+      PARAMETER ( HH_AB_Offset_E = 0.053 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 500 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "B_15_15" "B_inserted_15"
+  END CHILD
+  HH_GATE "HH_activation_13_13"
+    PARAMETERS
+      PARAMETER ( POWER = 4 ),
+      PARAMETER ( state_init = -1 ),
+    END PARAMETERS
+    CHILD "A_14_14" "A"
+    END CHILD
+    CHILD "B_15_15" "B"
+    END CHILD
+  END HH_GATE
+  CHILD "HH_activation_13_13" "HH_activation_inserted_13"
+  END CHILD
+  CHANNEL "Kdr_pyr_dp_12_12"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    PARAMETERS
+      PARAMETER ( Erev = -0.09 ),
+    END PARAMETERS
+    CHILD "HH_activation_13_13" "HH_activation"
+    END CHILD
+  END CHANNEL
+  CHILD "Kdr_pyr_dp_12_12" "Kdr_pyr_dp_12_27"
+    BINDINGS
+      INPUT ..->I,
+    END BINDINGS
+  END CHILD
+  CHILD "Kdr_pyr_dp_12_27" "Kdr_pyr_dp_inserted_27"
+  END CHILD
+  GATE_KINETIC "A_18_18"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = -0.009 ),
+      PARAMETER ( HH_AB_Offset_E = 0.03 ),
+      PARAMETER ( HH_AB_Add_Den = -1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = -100 ),
+      PARAMETER ( HH_AB_Add_Num = -3 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "A_18_18" "A_inserted_18"
+  END CHILD
+  GATE_KINETIC "B_19_19"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = 0.009 ),
+      PARAMETER ( HH_AB_Offset_E = 0.03 ),
+      PARAMETER ( HH_AB_Add_Den = -1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 100 ),
+      PARAMETER ( HH_AB_Add_Num = 3 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "B_19_19" "B_inserted_19"
+  END CHILD
+  HH_GATE "HH_activation_17_17"
+    PARAMETERS
+      PARAMETER ( POWER = 1 ),
+      PARAMETER ( state_init = -1 ),
+    END PARAMETERS
+    CHILD "A_18_18" "A"
+    END CHILD
+    CHILD "B_19_19" "B"
+    END CHILD
+  END HH_GATE
+  CHILD "HH_activation_17_17" "HH_activation_inserted_17"
+  END CHILD
+  CHANNEL "KM_pyr_dp_16_16"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    PARAMETERS
+      PARAMETER ( Erev = -0.09 ),
+    END PARAMETERS
+    CHILD "HH_activation_17_17" "HH_activation"
+    END CHILD
+  END CHANNEL
+  CHILD "KM_pyr_dp_16_16" "KM_pyr_dp_16_28"
+    BINDINGS
+      INPUT ..->I,
+    END BINDINGS
+  END CHILD
+  CHILD "KM_pyr_dp_16_28" "KM_pyr_dp_inserted_28"
+  END CHILD
+  EQUATION_EXPONENTIAL "eq2_21_21"
+    PARAMETERS
+      PARAMETER ( TAU1 = ..->TAU1 ),
+      PARAMETER ( TAU2 = ..->TAU2 ),
+    END PARAMETERS
+  END EQUATION_EXPONENTIAL
+  CHILD "eq2_21_21" "eq2_inserted_21"
+  END CHILD
+  ATTACHMENT "synapse_22_22"
+  END ATTACHMENT
+  CHILD "synapse_22_22" "synapse_inserted_22"
+  END CHILD
+  CHANNEL "Ex_channel_20_20"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    PARAMETERS
+      PARAMETER ( G_MAX = 
+        GENESIS2
+          (
+              PARAMETER ( scale = 1 ),
+              PARAMETER ( value = 5e-08 ),
+          ), ),
+      PARAMETER ( TAU2 = 0.003 ),
+      PARAMETER ( TAU1 = 0.003 ),
+      PARAMETER ( Erev = 0.045 ),
+    END PARAMETERS
+    CHILD "eq2_21_21" "eq2"
+    END CHILD
+    CHILD "synapse_22_22" "synapse"
+    END CHILD
+  END CHANNEL
+  CHILD "Ex_channel_20_20" "Ex_channel_20_29"
+    BINDINGS
+      INPUT ..->I,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( G_MAX = 50 ),
+    END PARAMETERS
+  END CHILD
+  CHILD "Ex_channel_20_29" "Ex_channel_inserted_29"
+  END CHILD
+  ATTACHMENT "spike_23_23"
+    PARAMETERS
+      PARAMETER ( output_amp = "1" ),
+      PARAMETER ( REFRACTORY = 0.01 ),
+      PARAMETER ( THRESHOLD = 0 ),
+    END PARAMETERS
+  END ATTACHMENT
+  CHILD "spike_23_23" "spike_23_30"
+  END CHILD
+  CHILD "spike_23_30" "spike_inserted_30"
+  END CHILD
+  SEGMENT "compartment_4_4"
+    PARAMETERS
+      PARAMETER ( RA = 0.3 ),
+      PARAMETER ( RM = 0.33333 ),
+      PARAMETER ( CM = 0.00999999 ),
+      PARAMETER ( INJECT = 0 ),
+      PARAMETER ( LENGTH = 0.0001 ),
+      PARAMETER ( DIA = 2e-06 ),
+      PARAMETER ( ELEAK = -0.07 ),
+    END PARAMETERS
+  END SEGMENT
+  CHILD "compartment_4_4" "soma_4_25"
+    BINDINGS
+      INPUT Na_pyr_dp->Vm,
+      INPUT Kdr_pyr_dp->Vm,
+      INPUT KM_pyr_dp->Vm,
+      INPUT Ex_channel->Vm,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( ELEAK = -0.08 ),
+      PARAMETER ( Vm_init = -0.07 ),
+      PARAMETER ( RM = 2.2 ),
+      PARAMETER ( CM = 0.01 ),
+      PARAMETER ( SURFACE = 3.46361e-08 ),
+      PARAMETER ( rel_Z = 0.000105 ),
+      PARAMETER ( rel_Y = 0 ),
+      PARAMETER ( rel_X = 0 ),
+      PARAMETER ( LENGTH = 0.000105 ),
+      PARAMETER ( DIA = 0.000105 ),
+      PARAMETER ( RA = 2.5 ),
+    END PARAMETERS
+    CHILD "Na_pyr_dp_inserted_26" "Na_pyr_dp"
+    END CHILD
+    CHILD "Kdr_pyr_dp_inserted_27" "Kdr_pyr_dp"
+    END CHILD
+    CHILD "KM_pyr_dp_inserted_28" "KM_pyr_dp"
+    END CHILD
+    CHILD "Ex_channel_inserted_29" "Ex_channel"
+    END CHILD
+    CHILD "spike_inserted_30" "spike"
+    END CHILD
+  END CHILD
+  CHILD "soma_4_25" "soma_inserted_25"
+  END CHILD
+  GROUP "cell_24_24"
+    FORWARDPARAMETERS
+      PARAMETER ( NAME_0 = "/cell/soma/Ex_channel->G_MAX" ),
+      PARAMETER ( VALUE_0 = 0.3 ),
+      PARAMETER ( NAME_1 = "/cell/soma/KM_pyr_dp->G_MAX" ),
+      PARAMETER ( VALUE_1 = 5 ),
+      PARAMETER ( NAME_2 = "/cell/soma/Kdr_pyr_dp->G_MAX" ),
+      PARAMETER ( VALUE_2 = 100 ),
+      PARAMETER ( NAME_3 = "/cell/soma/Na_pyr_dp->G_MAX" ),
+      PARAMETER ( VALUE_3 = 516 ),
+    END FORWARDPARAMETERS
+    CHILD "soma_inserted_25" "soma"
+    END CHILD
+  END GROUP
+  CHILD "cell_24_24" "cell_inserted_24"
+  END CHILD
+END PRIVATE_MODELS
+PUBLIC_MODELS
+  CHILD "cell_24_24" "cell"
+  END CHILD
+END PUBLIC_MODELS
