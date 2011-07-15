@@ -3227,25 +3227,6 @@ my $test
 					      '-p',
 					      '-q',
 					      '-R',
-					      'cells/RScell-nolib.ndf',
-					     ],
-				command => './neurospacesparse',
-				command_tests => [
-						  {
-						   description => "Is neurospaces startup successful (cells/RScell-nolib.ndf) ?",
-						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/RScell-nolib.ndf.', ],
-						   timeout => 5,
-						  },
-						 ],
-				description => "syntax of cells/RScell-nolib.ndf",
-			       },
-			       {
-				arguments => [
-					      '-v',
-					      '1',
-					      '-p',
-					      '-q',
-					      '-R',
 					      'cells/simplecell-nolib.ndf',
 					     ],
 				command => './neurospacesparse',
