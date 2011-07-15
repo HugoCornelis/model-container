@@ -3246,7 +3246,7 @@ my $test
 					      '-p',
 					      '-q',
 					      '-R',
-					      'simplecell-nolib.ndf',
+					      'cells/simplecell-nolib.ndf',
 					     ],
 				command => './neurospacesparse',
 				command_tests => [
