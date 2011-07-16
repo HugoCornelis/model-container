@@ -405,7 +405,7 @@ static int SerialSegmentPrintInfo
 	    (pfile,
 	     "%i\tSegment (%s,%i) with parent at %i (%s,%i)\n",
 	     i,
-	     SegmentName(sersegmentVariables.psymsersegment[i].psegment),
+	     SymbolName(&sersegmentVariables.psymsersegment[i].psegment->segr.bio.ioh.iol.hsle),
 	     SegmentIndex(sersegmentVariables.psymsersegment[i].psegment),
 	     sersegmentVariables.psymsersegment[i].iParent,
 	     sersegmentVariables.psymsersegment[i].iParent != -1

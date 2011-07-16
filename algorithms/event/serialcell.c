@@ -329,7 +329,7 @@ static int SerialCellPrintInfo
 	    (pfile,
 	     "%i\tCell (%s,%i) at %i with %i segments\n",
 	     i,
-	     CellName(sercellVariables.psymsercell[i].pcell),
+	     SymbolName(&sercellVariables.psymsercell[i].pcell->segr.bio.ioh.iol.hsle),
 	     CellIndex(sercellVariables.psymsercell[i].pcell),
 	     sercellVariables.psymsercell[i].iFirstSegment,
 	     sercellVariables.psymsercell[i].iSegments);

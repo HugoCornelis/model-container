@@ -368,7 +368,7 @@ static int SerialNetworkPrintInfo
 	     "\tcells (%i,%i), populations (%i,%i), \n"
 	     "\tconnections (%i,%i), projections (%i,%i)\n",
 	     i,
-	     NetworkName(sernetwVariables.psymsernetw[i].pnetw),
+	     SymbolName(&sernetwVariables.psymsernetw[i].pnetw->segr.bio.ioh.iol.hsle),
 	     NetworkIndex(sernetwVariables.psymsernetw[i].pnetw),
 	     sernetwVariables.psymsernetw[i].iFirstCell,
 	     sernetwVariables.psymsernetw[i].iCells,
