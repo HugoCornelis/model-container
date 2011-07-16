@@ -775,6 +775,10 @@ sub register_engine
 	    {
 		$solverinfo = $solver_registry->solver_heccer_register($engine_backend, $context, $engine_name);
 	    }
+	    elsif ($engine->backend() =~ /chemesis/i)
+	    {
+		$solverinfo = $solver_registry->solver_chemesis3_register($engine_backend, $context, $engine_name);
+	    }
 	    else
 	    {
 		die "$0: Neurospaces::register_engine() for $modelname with an unknown solver type $engine_backend";

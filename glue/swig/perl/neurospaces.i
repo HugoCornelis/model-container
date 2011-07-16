@@ -167,9 +167,32 @@ struct symtab_Invisible;
 %inline %{
 
 
+struct simobj_DES;
+struct simobj_Chemesis3;
 struct simobj_Heccer;
-struct DES;
 
+
+struct SolverInfo *
+solver_chemesis3_register
+(struct SolverRegistry *psr, struct simobj_Chemesis3 *pch3, struct PidinStack *ppist, char *pcSolver);
+
+struct SolverInfo *
+solver_chemesis3_register
+(struct SolverRegistry *psr, struct simobj_Chemesis3 *pch3, struct PidinStack *ppist, char *pcSolver)
+{
+    return(SolverRegistryAddFromContext(psr, pch3, ppist, pcSolver));
+}
+
+struct SolverInfo *
+solver_des_register
+(struct SolverRegistry *psr, struct simobj_DES *pdes, struct PidinStack *ppist, char *pcSolver);
+
+struct SolverInfo *
+solver_des_register
+(struct SolverRegistry *psr, struct simobj_DES *pdes, struct PidinStack *ppist, char *pcSolver)
+{
+    return(SolverRegistryAddFromContext(psr, pdes, ppist, pcSolver));
+}
 
 struct SolverInfo *
 solver_heccer_register
@@ -180,17 +203,6 @@ solver_heccer_register
 (struct SolverRegistry *psr, struct simobj_Heccer *pheccer, struct PidinStack *ppist, char *pcSolver)
 {
     return(SolverRegistryAddFromContext(psr, pheccer, ppist, pcSolver));
-}
-
-struct SolverInfo *
-solver_des_register
-(struct SolverRegistry *psr, struct DES *pdes, struct PidinStack *ppist, char *pcSolver);
-
-struct SolverInfo *
-solver_des_register
-(struct SolverRegistry *psr, struct DES *pdes, struct PidinStack *ppist, char *pcSolver)
-{
-    return(SolverRegistryAddFromContext(psr, pdes, ppist, pcSolver));
 }
 
 static
