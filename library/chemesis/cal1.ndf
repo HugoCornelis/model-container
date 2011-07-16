@@ -13,7 +13,7 @@ PUBLIC_MODELS
 				OUTPUT concen
 			END BINDABLES
 			PARAMETERS
-				PARAMETER ( concen_init = 0.1e-3 ),
+				PARAMETER ( concen_init = 0.001 ),
 // 				PARAMETER ( VAL = 2.0 ),
 				PARAMETER ( DIA =  ..->DIA ),
 				PARAMETER ( LENGTH =  ..->LENGTH ),

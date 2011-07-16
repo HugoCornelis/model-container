@@ -307,21 +307,36 @@ PoolGetVolume
 	double dThickness
 	    = SymbolParameterResolveValue(&ppool->bio.ioh.iol.hsle, ppist, "THICK");
 
-	if (dDiaSegment == DBL_MAX
-	    || dThickness == DBL_MAX)
+	if (dDiaSegment == DBL_MAX)
 	{
 	    return(DBL_MAX);
 	}
 
-	double dDiaPool = 2 * dThickness;
+	//- if no thickness has been defined
 
-	double d = dDiaSegment - dDiaPool;
+	if (dThickness == DBL_MAX)
+	{
+	    //- take for volume the entire volume of the segment
 
-	double d1 = dDiaSegment * dDiaSegment * dDiaSegment;
+	    dResult = M_PI * dDiaSegment * dDiaSegment * dDiaSegment / 6.0;
+	}
 
-	double d2 = d * d * d;
+	//- if a thickness has been defined
 
-	dResult = (d1 - d2) * M_PI / 6.0;
+	else
+	{
+	    //- calculate the volume of the shell
+
+	    double dDiaPool = 2 * dThickness;
+
+	    double dInner = dDiaSegment - dDiaPool;
+
+	    double d1 = dDiaSegment * dDiaSegment * dDiaSegment;
+
+	    double d2 = dInner * dInner * dInner;
+
+	    dResult = (d1 - d2) * M_PI / 6.0;
+	}
 
 /* 	dResult */
 /* 	    = (( */
@@ -344,11 +359,25 @@ PoolGetVolume
 	    = SymbolParameterResolveValue(&ppool->bio.ioh.iol.hsle, ppist, "THICK");
 
 	if (dDiaSegment == DBL_MAX
-	    || dLengthSegment == DBL_MAX
-	    || dThickness == DBL_MAX)
+	    || dLengthSegment == DBL_MAX)
 	{
 	    return(DBL_MAX);
 	}
+
+	//- if no thickness has been defined
+
+	if (dThickness == DBL_MAX)
+	{
+	    //- take for volume the entire volume of the segment
+
+	    dResult = M_PI * dDiaSegment * dDiaSegment * dLengthSegment / 4;
+	}
+
+	//- if a thickness has been defined
+
+	else
+	{
+	    //- calculate the volume of the shell
 
 /* 	if (thick>0.0) { */
 /* 		d=dia-2*thick; */
@@ -367,15 +396,15 @@ PoolGetVolume
 /* 	} */
 /* 	return(volume); */
 
-	double dDiaPool = 2 * dThickness;
+	    double dDiaPool = 2 * dThickness;
 
-	double d = dDiaSegment - dDiaPool;
+	    double d = dDiaSegment - dDiaPool;
 
-	double d1 = dDiaSegment * dDiaSegment;
+	    double d1 = dDiaSegment * dDiaSegment;
 
-	double d2 = d * d;
+	    double d2 = d * d;
 
-	dResult = dLengthSegment * (d1 - d2) * M_PI / 4.0;
+	    dResult = dLengthSegment * (d1 - d2) * M_PI / 4.0;
 
 /* 	dResult */
 /* 	    = (( */
@@ -385,6 +414,7 @@ PoolGetVolume
 /* 	       * dLengthSegment */
 /* 	       * M_PI */
 /* 	       / 4.0); */
+	}
     }
 
     //- return result

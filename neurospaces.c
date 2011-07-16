@@ -1,4 +1,4 @@
-static char *pcVersionTime="(11/07/10) Sunday, July 10, 2011 18:07:51 hugo";
+static char *pcVersionTime="(11/07/16) Saturday, July 16, 2011 19:16:52 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -943,7 +943,14 @@ NeurospacesImport
 
 	    sprintf(pcCommand, "perl <%s >%s -pe 's(<neurospaces type=\"ndf\"/>)(#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n)gi; s(->)(--##--)gi; s(</(input|output)>)(, )gi; s(<namespace>)()gi; s(</namespace>)()gi; s(</file>)()gi; s(<filename>)(\")gi; s(</filename>)(\")gi; s(<prototype>)()gi; s(</prototype>)()gi; s/<parameter>/parameter ( /gi; s|</parameter>| ), |gi; s|<function>\\s*<name>([^<]*)</name>| = $1 (|gi; s|</function>|), |gi; s(</value>)()gi; s(<value>)( = )gi; s(</string>)()gi; s(<string>)( = )gi; s(<name>)()gi; s(</name>)(); s(</)( end )gi; s((<|>))()gi; s(\\/\\/)(//)gi; s(--##--)(->)gi; '", pcQualified, pcTemp);
 
-	    system(pcCommand);
+	    if (system(pcCommand) == -1)
+	    {
+		NeurospacesError
+		    (pacRootContext,
+		     "NeurospacesImport()",
+		     "Error converting %s to XML\n",
+		     pcQualified);
+	    }
 
 	    pcToParse = pcTemp;
 	}
