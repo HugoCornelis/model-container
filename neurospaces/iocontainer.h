@@ -194,7 +194,19 @@ static inline
 struct symtab_InputOutput *
 IOContainerGetRelations(struct symtab_IOContainer *pioc)
 {
-    return(pioc->pio);
+    // \todo this needs to be cleaned up.  The only valid return is
+    // pioc->pio, but it returns the last in the list.  Likely this is
+    // a bug in the NDF parser.
+
+    return(pioc->pio
+	   ? (pioc->pio->pioFirst
+	      ? pioc->pio->pioFirst
+	      : pioc->pio)
+	   : pioc->pio);
+
+/*     return(pioc->pio); */
+
+/*     return(pioc->pio->pioFirst); */
 }
 
 
