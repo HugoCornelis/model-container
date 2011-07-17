@@ -498,6 +498,10 @@ ItemInputRelations	/* <pio> */
 
 		    strcpy(pc, &$5->pcString[1]);
 
+		    //- store type
+
+		    pio->pcType = pc;
+
 		    //- set TOKEN_INPUT flag for root idin $7
 
 		    IdinSetFlags($7, FLAG_IDENTINDEX_INPUTROOT);
