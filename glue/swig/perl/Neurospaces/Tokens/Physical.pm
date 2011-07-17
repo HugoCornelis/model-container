@@ -33,6 +33,18 @@ sub create
 
     my $backend = eval "SwiggableNeurospaces::$allocator()";
 
+    # if it does not have its own allocator we fall back on the group
+    # type, this is a hack to get access to the chemesis3 tokens.
+
+    if (not $backend)
+    {
+	$type = 'group';
+
+	$allocator = ucfirst($type) . "Calloc";
+
+	$backend = eval "SwiggableNeurospaces::$allocator()";
+    }
+
     # assign name
 
     #t bug: $name not newly allocated in C space, gets overwritten
