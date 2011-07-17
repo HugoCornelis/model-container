@@ -57,8 +57,8 @@ PUBLIC_MODELS
 			END BINDABLES
 			BINDINGS
                 		INPUT ("substrate") ../somaCa->concen,
-				INPUT ("substrate") ../somaCabuf->concen,
-				INPUT ("product") ../somabuf->concen,
+				INPUT ("substrate") ../somabuf->concen,
+				INPUT ("product") ../somaCabuf->concen,
 			END BINDINGS
 			PARAMETERS
 				PARAMETER ( FORWARD_RATE = 1e2 ),
