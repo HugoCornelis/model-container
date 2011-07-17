@@ -246,20 +246,21 @@ object_methods:
   reduce: 49
   resolve_input: 50
   resolve_parameter_functional_input: 51
-  set_at_x_y_z: 52
-  set_name: 53
-  set_namespace: 54
-  set_options: 55
-  set_parameter_context: 56
-  set_parameter_double: 57
-  set_parameter_may_be_copy_string: 58
-  set_parameter_string: 59
-  set_prototype: 60
-  set_type: 61
-  traverse: 62
-  traverse_segments: 63
-  traverse_spike_generators: 64
-  traverse_spike_receivers: 65
+  resolve_typed_input: 52
+  set_at_x_y_z: 53
+  set_name: 54
+  set_namespace: 55
+  set_options: 56
+  set_parameter_context: 57
+  set_parameter_double: 58
+  set_parameter_may_be_copy_string: 59
+  set_parameter_string: 60
+  set_prototype: 61
+  set_type: 62
+  traverse: 63
+  traverse_segments: 64
+  traverse_spike_generators: 65
+  traverse_spike_receivers: 66
 object_methods_custom_code:
   add_child:
     simple: 1
@@ -395,6 +396,8 @@ object_methods_custom_code:
   resolve_input:
     simple: 1
   resolve_parameter_functional_input:
+    simple: 1
+  resolve_typed_input:
     simple: 1
   set_at_x_y_z:
     simple: 1
@@ -626,6 +629,10 @@ object_methods_return_types:
     default: NULL
     selector: .uSelector.phsleFunc
     type: struct symtab_HSolveListElement *
+  resolve_typed_input:
+    default: NULL
+    selector: .uSelector.ppistFunc
+    type: struct PidinStack *
   set_at_x_y_z:
     default: FALSE
     selector: .uSelector.iFunc
@@ -933,6 +940,14 @@ object_methods_signatures:
        struct PidinStack *ppist,
        char *pcParameter,
        char *pcInput,
+       int iPosition)
+  resolve_typed_input:
+    calling: '(phsle, ppist, pcName, pcType, iPosition)'
+    prototype: |-
+      (struct symtab_HSolveListElement *phsle,
+       struct PidinStack *ppist,
+       char *pcName,
+       char *pcType,
        int iPosition)
   set_at_x_y_z:
     calling: '(phsle, x, y, z)'

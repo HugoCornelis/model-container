@@ -91,6 +91,14 @@ IOListResolveInput
 (struct symtab_IOList *piol, struct PidinStack *ppist, char *pcName, int i);
 
 
+#ifndef SWIG
+static inline
+#endif
+struct PidinStack *
+IOListResolveTypedInput
+(struct symtab_IOList *piol, struct PidinStack *ppist, char *pcName, char *pcType, int i);
+
+
 // prototype functions
 
 /* struct symtab_IOList * IOListCalloc(void); */
@@ -207,6 +215,21 @@ IOListResolveInput
 (struct symtab_IOList *piol, struct PidinStack *ppist, char *pcName, int i)
 {
     return(IOContainerResolve(piol->piocInputs, ppist, pcName, i));
+}
+
+
+/// 
+/// find element that is attached to the given input
+/// 
+
+#ifndef SWIG
+static inline
+#endif
+struct PidinStack *
+IOListResolveTypedInput
+(struct symtab_IOList *piol, struct PidinStack *ppist, char *pcName, char *pcType, int i)
+{
+    return(IOContainerTypedResolve(piol->piocInputs, ppist, pcName, pcType, i));
 }
 
 

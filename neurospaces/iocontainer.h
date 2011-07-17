@@ -94,7 +94,15 @@ struct PidinStack *
 IOContainerResolve
 (struct symtab_IOContainer * pioc,
  struct PidinStack *ppist,
- char *pc,
+ char *pcName,
+ int iPosition);
+
+struct PidinStack * 
+IOContainerTypedResolve
+(struct symtab_IOContainer * pioc,
+ struct PidinStack *ppist,
+ char *pcName,
+ char *pcType,
  int iPosition);
 
 int 

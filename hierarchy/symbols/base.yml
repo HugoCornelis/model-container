@@ -84,6 +84,7 @@ class_hierarchy:
       reduce: bio_component
       resolve_input: bio_component
       resolve_parameter_functional_input: bio_component
+      resolve_typed_input: bio_component
       set_at_x_y_z: bio_component
       set_name: bio_component
       set_namespace: bio_component

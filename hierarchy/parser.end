@@ -435,6 +435,10 @@ ItemInputRelations	/* <pio> */
 
 		    strcpy(pc, &$3->pcString[1]);
 
+		    //- store type
+
+		    pio->pcType = pc;
+
 		    //- store idin
 
 		    pio->pidinField = $5;

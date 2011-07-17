@@ -235,7 +235,7 @@ IOContainerNewFromList(char *ppcParameters[], int piTypes[])
 /// 
 /// \arg pioc I/O relations
 /// \arg ppist symbol stack with context
-/// \arg pc name of input
+/// \arg pcName name of input
 /// \arg iPosition number of inputs with given name to skip
 /// 
 /// \return struct PidinStack *
@@ -249,7 +249,7 @@ struct PidinStack *
 IOContainerResolve
 (struct symtab_IOContainer * pioc,
  struct PidinStack *ppist,
- char *pc,
+ char *pcName,
  int iPosition)
 {
     //- set default result : not found
@@ -268,7 +268,77 @@ IOContainerResolve
     {
 	//- if input name matches
 
-	if (strcmp(InputOutputFieldName(pio), pc) == 0)
+	if (strcmp(InputOutputFieldName(pio), pcName) == 0)
+	{
+	    //- decrement position counter
+
+	    i--;
+
+	    //- if counter underflow
+
+	    if (i < 0)
+	    {
+		//- symbolic resolve
+
+		ppistResult = InputOutputResolve(pio, ppist);
+
+		//- break loop
+
+		break;
+	    }
+	}
+
+	//- go to next input
+
+	pio = pio->pioNext;
+    }
+
+    //- return result
+
+    return(ppistResult);
+}
+
+
+/// 
+/// \arg pioc I/O relations
+/// \arg ppist symbol stack with context
+/// \arg pcName name of input
+/// \arg pcType type of input
+/// \arg iPosition number of inputs with given name to skip
+/// 
+/// \return struct PidinStack *
+/// 
+///	Context attached to this input.
+/// 
+/// \brief find element that is attached to the given input
+/// 
+
+struct PidinStack *
+IOContainerTypedResolve
+(struct symtab_IOContainer * pioc,
+ struct PidinStack *ppist,
+ char *pcName,
+ char *pcType,
+ int iPosition)
+{
+    //- set default result : not found
+
+    struct PidinStack * ppistResult = NULL;
+
+    //- init position counter
+
+    int i = iPosition;
+
+    //- loop over inputs of symbol
+
+    struct symtab_InputOutput * pio = IOContainerGetRelations(pioc);
+
+    while (pio)
+    {
+	//- if input name matches
+
+	if (strcmp(InputOutputFieldName(pio), pcName) == 0
+	    && strcmp(InputOutputTypeName(pio), pcType) == 0)
 	{
 	    //- decrement position counter
 

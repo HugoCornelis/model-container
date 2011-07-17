@@ -349,3 +349,36 @@ InputOutputResolve
 }
 
 
+/// 
+/// \arg pio input/output to get field name for.
+/// 
+/// \return char * : name of input/output field, NULL for failure.
+/// 
+/// \brief get name of input/output field.
+///
+/// \details 
+/// 
+///	Return value is pointer to symbol table read only data.
+/// 
+/// \note  
+/// 
+///	Use InputOutputHierarchicalName() to get a complete input/output 
+///	description, this function only returns the field name.
+/// 
+
+char * InputOutputTypeName(struct symtab_InputOutput *pio)
+{
+    //- set default result : no name
+
+    char *pcResult = NULL;
+
+    //- set result from type name
+
+    pcResult = pio->pcType;
+
+    //- return result
+
+    return(pcResult);
+}
+
+

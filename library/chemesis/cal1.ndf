@@ -43,7 +43,7 @@ PUBLIC_MODELS
 			END BINDINGS
 			PARAMETERS
 				PARAMETER ( concen_init = 0.153 ),
-				PARAMETER ( Ctot = 0.153 ),
+				PARAMETER ( concen_total = 0.153 ),
 // 				PARAMETER ( VAL = 2.0 ),
 				PARAMETER ( DIA =  ..->DIA ),
 				PARAMETER ( LENGTH =  ..->LENGTH ),

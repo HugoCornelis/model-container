@@ -181,6 +181,10 @@ struct PidinStack *
 BioComponentResolveInput
 (struct symtab_BioComponent *pbio, struct PidinStack *ppist, char *pcName, int i);
 
+struct PidinStack *
+BioComponentResolveTypedInput
+(struct symtab_BioComponent *pbio, struct PidinStack *ppist, char *pcName, char *pcType, int iPosition);
+
 struct symtab_HSolveListElement *
 BioComponentResolveParameterFunctionalInput
 (struct symtab_BioComponent *pbio,

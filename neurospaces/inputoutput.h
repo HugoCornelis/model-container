@@ -93,6 +93,8 @@ struct PidinStack *
 InputOutputResolve
 (struct symtab_InputOutput *pio, struct PidinStack *ppist);
 
+char * InputOutputTypeName(struct symtab_InputOutput *pio);
+
 
 #endif
 
