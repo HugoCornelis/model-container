@@ -32,11 +32,12 @@ perldir = $(prefix)/glue/swig/perl
 
 nobase_perl_HEADERS = \
 	Neurospaces.pm \
-	Neurospaces/Query.pm \
-	Neurospaces/Traversal.pm \
-	Neurospaces/Tokens/Physical.pm \
+	Neurospaces/Bindings.pm \
+	Neurospaces/Components.pm \
 	Neurospaces/Integrators/Commands.pm \
-	Neurospaces/Components.pm
+	Neurospaces/Query.pm \
+	Neurospaces/Tokens/Physical.pm \
+	Neurospaces/Traversal.pm
 
 perl_DATA = SwiggableNeurospaces.pm SwiggableNeurospaces.$(PERLLIB_EXTENSION) 
 
