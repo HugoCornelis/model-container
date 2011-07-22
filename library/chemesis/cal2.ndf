@@ -8,11 +8,14 @@ PRIVATE_MODELS
 			PARAMETER ( DIA = 24e-4 ),
 			PARAMETER ( LENGTH = 24e-4 ),
 		END PARAMETERS
-		POOL somaCa
+
+		POOL Ca
 			BINDABLES
 				OUTPUT concen
 			END BINDABLES
 			PARAMETERS
+				PARAMETER ( "species" = ../../../Ca ),
+
 				PARAMETER ( concen_init = 0.1e-3 ),
 // 				PARAMETER ( VAL = 2.0 ),
 				PARAMETER ( DIA =  ..->DIA ),
@@ -21,7 +24,7 @@ PRIVATE_MODELS
 				PARAMETER ( "UNITS" = 1e-3 ),
 			END PARAMETERS
 		END POOL
-		POOL somaCabuf
+		POOL Cabuf
 			BINDABLES
 				OUTPUT concen
 			END BINDABLES
@@ -34,16 +37,16 @@ PRIVATE_MODELS
 				PARAMETER ( "UNITS" = 1e-3 ),
 			END PARAMETERS
 		END POOL
-		POOL somabuf
+		POOL buf
 			BINDABLES
 				OUTPUT concen
 			END BINDABLES
 			BINDINGS
-				INPUT ../somaCabuf->concen,
+				INPUT ../Cabuf->concen,
 			END BINDINGS
 			PARAMETERS
 				PARAMETER ( concen_init = 0.153 ),
-				PARAMETER ( Ctot = 0.153 ),
+				PARAMETER ( concen_total = 0.153 ),
 // 				PARAMETER ( VAL = 2.0 ),
 				PARAMETER ( DIA =  ..->DIA ),
 				PARAMETER ( LENGTH =  ..->LENGTH ),
@@ -51,14 +54,14 @@ PRIVATE_MODELS
 // 				PARAMETER ( "UNITS" = 1e-3 ),
 			END PARAMETERS
 		END POOL
-		REACTION somacabufrxn
+		REACTION cabufrxn
 			BINDABLES
 				INPUT concen, OUTPUT concen
 			END BINDABLES
 			BINDINGS
-                		INPUT ("substrate") ../somaCa->concen,
-				INPUT ("substrate") ../somaCabuf->concen,
-				INPUT ("product") ../somabuf->concen,
+                		INPUT ("substrate") ../Ca->concen,
+				INPUT ("substrate") ../Cabuf->concen,
+				INPUT ("product") ../buf->concen,
 			END BINDINGS
 			PARAMETERS
 				PARAMETER ( FORWARD_RATE = 1e2 ),
@@ -109,37 +112,49 @@ END PRIVATE_MODELS
 
 PUBLIC_MODELS
 
-	SEGMENT soma
-		PARAMETERS
-			PARAMETER ( rel_X = 2e-4 ),
-			PARAMETER ( rel_Y = 0.000e-6 ),
-			PARAMETER ( rel_Z = 0.000e-6 ),
-			PARAMETER ( DIA = 8e-4 ),
-		END PARAMETERS
+	GROUP cal2
 
-		CHILD cal1 cal1
-		END CHILD
+		SPECIES Ca
+			PARAMETERS
+				PARAMETER ( VALENCY = 2 ),
+			END PARAMETERS
+		END SPECIES
 
-	END SEGMENT
+		SEGMENT soma
+			PARAMETERS
+				PARAMETER ( rel_X = 2e-4 ),
+				PARAMETER ( rel_Y = 0.000e-6 ),
+				PARAMETER ( rel_Z = 0.000e-6 ),
+				PARAMETER ( DIA = 8e-4 ),
+			END PARAMETERS
 
-	SEGMENT dend
-		PARAMETERS
-			PARAMETER ( PARENT = ^/soma ),
-			PARAMETER ( rel_X = 2e-4 ),
-			PARAMETER ( rel_Y = 0e-6 ),
-			PARAMETER ( rel_Z = 0e-6 ),
-			PARAMETER ( DIA = 4e-4 ),
-		END PARAMETERS
+			CHILD cal1 cal1
+			END CHILD
 
-		PARAMETERS
-			PARAMETER ( diffusion_constant = 6e-9 ),
-// 			PARAMETER ( "UNITS" = 1e-3 ),
-		END PARAMETERS
+		END SEGMENT
 
-		CHILD cal1 cal1
-		END CHILD
+		SEGMENT dend
+			PARAMETERS
+				PARAMETER ( PARENT = ^/soma ),
+				PARAMETER ( rel_X = 2e-4 ),
+				PARAMETER ( rel_Y = 0e-6 ),
+				PARAMETER ( rel_Z = 0e-6 ),
+				PARAMETER ( DIA = 4e-4 ),
+			END PARAMETERS
 
-	END SEGMENT
+			PARAMETERS
+				PARAMETER ( species[0] = ../Ca ),
+				PARAMETER ( diffusion_constant[0] = 6e-9 ),
+//				PARAMETER ( "UNITS" = 1e-3 ),
+			END PARAMETERS
+
+			CHILD cal1 cal1
+			END CHILD
+
+		END SEGMENT
+
+	END GROUP
 
 END PUBLIC_MODELS
+
 

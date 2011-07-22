@@ -439,11 +439,14 @@ class_hierarchy:
         - Group
         - HHGate
         - Izhikevich
+        - Kinetics
         - Network
         - Pool
         - Population
         - Projection
+        - Reaction
         - Segment
+        - Species
         - VSegment
       specific_allocator: GroupCalloc
       specific_token:

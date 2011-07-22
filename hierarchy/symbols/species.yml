@@ -1,0 +1,29 @@
+---
+class_hierarchy:
+  group:
+    grammar:
+      components:
+        - Species
+  species:
+    allows:
+      create_alias: group
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_MECHANISM
+    description: a ion or molecule description, a species
+    dimensions:
+      - mechanism
+    grammar:
+      specific_allocator: GroupCalloc
+      specific_token:
+        class: species
+        lexical: TOKEN_SPECIES
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pgrup
+        to_base: ->bio.ioh.iol.hsle
+    isa: group
+    name: symtab_Group
+    parameters:
+       VALENCY: charge of a single ion or molecule.
