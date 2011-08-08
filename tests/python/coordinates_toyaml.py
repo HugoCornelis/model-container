@@ -30,9 +30,10 @@ children = my_model_container.CoordinatesToList('/**')
 #pp = pprint.PrettyPrinter()
 #print "List is: ",
 
-#pp.pprint(children)
-print "Top level child is: %s" % children[0]['name']
-print "Number of elements is %s" % len(children)
-#pdb.set_trace()
-print "Done!"
+import yaml
+
+output = yaml.dump(children)
+
+print output
+
 
