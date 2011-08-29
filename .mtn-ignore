@@ -32,8 +32,9 @@ Makefile$
 ^glue/swig/python/model_container_wrap.c$
 ^hierarchy/output
 ^html/htdocs/neurospaces_project/neurospaces/
-^installed$
+installed$
 ^installed/
+missing$
 ^neurospacesparse$
 ^output
 ^parser.c$

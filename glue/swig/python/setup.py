@@ -12,7 +12,14 @@ from distutils.command.install_data import install_data
 # import the cbi module. We use this since the check
 # for the compiled swig nmc_base gives an error
 # if we import from nmc.__cbi__
-cbi = imp.load_source('__cbi__', os.path.join('neurospaces', 'model_container', '__cbi__.py'))
+#cbi = imp.load_source('__cbi__', os.path.join('neurospaces', 'model_container', '__cbi__.py'))
+
+import neurospaces.model_container.__cbi__ as cbi
+from neurospaces.model_container.__cbi__ import PackageInfo
+
+_package_info = PackageInfo()
+
+
 
 #
 # API for the platform class http://docs.python.org/library/platform.html
@@ -153,8 +160,8 @@ if os.path.isdir('/usr/local/neurospaces/models/library'):
 home_dir = os.getenv('USERPROFILE') or os.getenv('HOME')
 
 #-------------------------------------------------------------------------------
-NAME = cbi.GetPackageName()
-VERSION = cbi.GetVersion()
+NAME = _package_info.GetName()
+VERSION = _package_info.GetVersion()
 AUTHOR = cbi.__author__
 AUTHOR_EMAIL = cbi.__email__
 LICENSE = cbi.__license__
