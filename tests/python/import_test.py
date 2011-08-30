@@ -21,7 +21,7 @@ import pdb
 #pdb.set_trace()
 
 sys.path.append('/Users/mando/neurospaces_project/model-container/source/snapshots/0/glue/swig/python')
-pdb.set_trace()
+
 print "Importing model_container_base"
 import neurospaces.model_container.model_container_base
 
