@@ -9,10 +9,10 @@ import pprint
 import yaml
 import sys
 
-my_path = os.path.join(os.environ['HOME'], 'neurospaces_project', 'model-container', 'source',
-                       'snapshots', '0', 'glue', 'swig', 'python')
 
-sys.path.append(my_path)
+from test_library import add_package_path
+
+add_package_path('model-container')
 
 import neurospaces.model_container as nmc
 

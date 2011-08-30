@@ -5,11 +5,10 @@ Test for parameter operations
 import os
 import sys
 
-root_path = os.environ['HOME'] + "/neurospaces_project/model-container/source/snapshots/0"
 
-my_path = root_path + "/glue/swig/python/"
+from test_library import add_package_path
 
-sys.path.append(my_path)
+add_package_path('model-container')
 
 import neurospaces.model_container as nmc
 
