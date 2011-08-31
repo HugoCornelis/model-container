@@ -38,12 +38,17 @@ try:
 
 except ImportError:
 
-    print "Model Container package is not installed."
+    print "Neurospaces packages are not installed."
 
     sys.exit(0)
     
 
 package_manager = PackageManager(verbose=False)
 
-package_manager.Uninstall('model-container')
+try:
+    
+    package_manager.Uninstall('model-container')
 
+except Exception, e:
+
+    print "Can't uninstall model container: %s" % e
