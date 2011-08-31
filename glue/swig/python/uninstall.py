@@ -38,7 +38,9 @@ try:
 
 except ImportError:
 
-    sys.exit("Model Container package is not installed.")
+    print "Model Container package is not installed."
+
+    sys.exit(0)
     
 
 package_manager = PackageManager(verbose=False)
