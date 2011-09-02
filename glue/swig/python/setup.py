@@ -155,6 +155,7 @@ if os.path.isdir('/usr/local/neurospaces/models/library'):
 
 home_dir = os.getenv('USERPROFILE') or os.getenv('HOME')
 
+
 #-------------------------------------------------------------------------------
 NAME = _package_info.GetName()
 VERSION = _package_info.GetVersion()
@@ -277,7 +278,30 @@ class NMCModule(Extension):
 
     def get_swig_opts(self):
 
-        return ["-DPRE_PROTO_TRAVERSAL", "-I../../..", "-outdir", os.path.join('neurospaces', 'model_container')]
+        include_dirs = self.get_include_dirs()
+
+        opts = []
+
+        opts.append("-DPRE_PROTO_TRAVERSAL")
+
+        opts.append("-I%s" % os.path.join(home_dir,
+                                          'neurospaces_project',
+                                          'model-container',
+                                          'source',
+                                          'snapshots',
+                                          '0',
+                                          'glue',
+                                          'swig',
+                                          'python'
+                                          ))
+
+        opts.extend(["-I%s" % d for d in include_dirs])
+
+        opts.extend(["-outdir", os.path.join('neurospaces', 'model_container')])
+
+        return opts
+
+#        return ["-DPRE_PROTO_TRAVERSAL", *include_dirs, "-outdir", os.path.join('neurospaces', 'model_container')]
 
     def get_library_dirs(self):
 
