@@ -334,7 +334,7 @@ class NMCModule(Extension):
 
             if this_path is None:
 
-                raise Exception("Can't find path to headers for %s, can't build extension\n")
+                raise Exception("Can't find path to headers for %s, can't build extension\n" % inc_file)
 
             else:
 
@@ -427,10 +427,17 @@ _include_paths = [_developer_dir,
                  "../../..",
                  "/usr/local/include/model-container/" ]
 
-nmc_module=NMCModule(library_paths=_library_paths,
-                     library_files=_library_files,
-                     include_paths=_include_paths,
-                     include_files=_include_files)
+try:
+    
+    nmc_module=NMCModule(library_paths=_library_paths,
+                         library_files=_library_files,
+                         include_paths=_include_paths,
+                         include_files=_include_files)
+
+except Exception, e:
+
+    sys.exit(e)
+    
 
 EXT_MODULES=[
     nmc_module,
