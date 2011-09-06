@@ -47,7 +47,7 @@ package_manager = PackageManager(verbose=False)
 
 try:
     
-    package_manager.Uninstall('model-container')
+    package_manager.uninstall('model-container')
 
 except Exception, e:
 
