@@ -420,7 +420,7 @@ class NMCModule(Extension):
 
 home_dir = os.getenv('USERPROFILE') or os.getenv('HOME')
 
-_developer_dir = os.path.join(home_dir,
+_model_container_dir = os.path.join(home_dir,
                              'neurospaces_project',
                              'model-container',
                              'source',
@@ -429,19 +429,20 @@ _developer_dir = os.path.join(home_dir,
                              )
 
 _library_files = ["libneurospacesread.a", "libsymbol_algorithms.a", "libevent_algorithms.a" ]
-_library_paths = [_developer_dir,
-                 os.path.join(_developer_dir, 'algorithms', 'symbol'),
-                 os.path.join(_developer_dir, 'algorithms', 'event'),
+_library_paths = [_model_container_dir,
+                 os.path.join(_model_container_dir, 'algorithms', 'symbol'),
+                 os.path.join(_model_container_dir, 'algorithms', 'event'),
                  "../../..",
                  "../../../algorithms/symbol/",
                  "../../../algorithms/event/",
                  "/usr/local/lib/model-container"]
 
 _include_files = ["neurospaces/neurospaces.h", "all_callees_headers.h"]
-_include_paths = [_developer_dir,
-                 os.path.join(_developer_dir, 'hierarchy', 'output', 'symbols'),
-                 "../../..",
-                 "/usr/local/include/model-container/" ]
+_include_paths = [_model_container_dir,
+                  os.path.join( _model_container_dir, 'neurospaces')
+                  os.path.join(_model_container_dir, 'hierarchy', 'output', 'symbols'),
+                  "../../..",
+                  "/usr/local/include/model-container/" ]
 
 try:
     
