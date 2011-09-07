@@ -16,6 +16,7 @@ Makefile$
 ^docs/man
 ^docs/rtf
 ^docs/model-container
+egg-info$
 ^elc-temp$
 ^glue/swig/perl/SwiggableNeurospaces.dylib$
 ^glue/swig/perl/SwiggableNeurospaces.pm$
