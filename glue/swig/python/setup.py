@@ -439,7 +439,7 @@ _library_paths = [_model_container_dir,
 
 _include_files = ["neurospaces/neurospaces.h", "all_callees_headers.h"]
 _include_paths = [_model_container_dir,
-                  os.path.join( _model_container_dir, 'neurospaces')
+                  os.path.join( _model_container_dir, 'neurospaces'),
                   os.path.join(_model_container_dir, 'hierarchy', 'output', 'symbols'),
                   "../../..",
                   "/usr/local/include/model-container/" ]
