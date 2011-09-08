@@ -12,7 +12,7 @@ my_path = os.path.join(os.environ['HOME'], 'neurospaces_project', 'model-contain
 
 sys.path.append(my_path)
 
-import neurospaces.model_container as nmc
+import model_container as nmc
 
 my_model_container = nmc.ModelContainer(None)
 

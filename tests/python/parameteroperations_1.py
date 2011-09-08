@@ -3,6 +3,7 @@
 Test for parameter operations
 """
 import os
+import pdb
 import sys
 
 
@@ -10,7 +11,7 @@ from test_library import add_package_path
 
 add_package_path('model-container')
 
-import neurospaces.model_container as nmc
+import model_container as nmc
 
 my_model_container = nmc.ModelContainer(None)
 

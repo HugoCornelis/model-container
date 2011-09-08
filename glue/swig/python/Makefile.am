@@ -41,8 +41,8 @@ clean-local:
 CLEANFILES = \
 	$(srcdir)/model_container_wrap.c \
 	$(srcdir)/model_container_wrap.o \
-	$(srcdir)/neurospaces/model_container/_model_container_base.so \
-	$(srcdir)/neurospaces/model_container/model_container_base.py \
+	$(srcdir)/model_container/_model_container_base.so \
+	$(srcdir)/model_container/model_container_base.py \
 	$(srcdir)/model_container_base.py 
 
 

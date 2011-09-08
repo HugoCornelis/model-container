@@ -22,13 +22,14 @@ except ImportError:
     
     def find_packages():
 
-        return ['neurospaces', 'neurospaces.model_container']
+        return ['model_container']
 
 
 # import the cbi module. We use this since the check
 # for the compiled swig nmc_base gives an error
 # if we import from nmc.__cbi__
-cbi = imp.load_source('__cbi__', os.path.join('neurospaces', 'model_container', '__cbi__.py'))
+
+cbi = imp.load_source('__cbi__', os.path.join('model_container', '__cbi__.py'))
 
 _package_info = cbi.PackageInfo()
 
@@ -200,7 +201,7 @@ CLASSIFIERS = [
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
 
-PACKAGE_FILES=find_files('neurospaces')
+PACKAGE_FILES=find_files('model_container')
 
 OPTIONS={
     'sdist': {
@@ -216,7 +217,7 @@ OPTIONS={
 
 PLATFORMS=["Unix", "Lunix", "MacOS X"]
 
-PY_MODULES=['neurospaces', 'neurospaces.model_container']
+PY_MODULES=['model_container']
 
 
 CMDCLASS = None
@@ -272,7 +273,7 @@ class NMCModule(Extension):
         self._include_files = include_files
         self._include_paths = include_paths
 
-        self.name = "neurospaces.model_container._model_container_base"
+        self.name = "model_container._model_container_base"
         self.sources = ["model_container.i"]
         self.swig_opts = self.get_swig_opts()
         self.extra_compile_args = self.get_extra_compile_args()
@@ -299,6 +300,8 @@ class NMCModule(Extension):
 
         opts.append("-DPRE_PROTO_TRAVERSAL")
 
+        # This is an absolute path so it's probably a good idea to
+        # get rid of these.
         opts.append("-I%s" % os.path.join(home_dir,
                                           'neurospaces_project',
                                           'model-container',
@@ -312,7 +315,7 @@ class NMCModule(Extension):
 
         opts.extend(["-I%s" % d for d in include_dirs])
 
-        opts.extend(["-outdir", os.path.join('neurospaces', 'model_container')])
+        opts.extend(["-outdir", os.path.join('model_container')])
 
         return opts
 
@@ -475,11 +478,11 @@ setup(
     license=LICENSE,
     keywords=KEYWORDS,
     url=URL,
-    packages=find_packages(),
-    package_data={'neurospaces' : [os.path.join('neurospaces','__init__.py')],
-                  'neurospaces.model_container' : PACKAGE_FILES},
+    packages=['model_container'],
+    package_data={'model_container' : PACKAGE_FILES},
     classifiers=CLASSIFIERS,
     options=OPTIONS,
     platforms=PLATFORMS,
 )
+
 

@@ -26,11 +26,8 @@ egg-info$
 ^glue/swig/python/swiggable_neurospaces_wrap.c$
 ^glue/swig/python_old/SwiggableNeurospaces.py$
 ^glue/swig/python_old/swiggable_neurospaces_wrap.c$
-^glue/swig/python/nmc/nmc_base.py$
-^glue/swig/python/nmc/_nmc_base.so$
-^glue/swig/python/nmc_wrap.c$
-^glue/swig/python/neurospaces/model_container/model_container_base.py$
-^glue/swig/python/model_container_wrap.c$
+model_container_base.py$
+model_container_wrap.c$
 ^hierarchy/output
 ^html/htdocs/neurospaces_project/neurospaces/
 installed$
@@ -68,5 +65,6 @@ tar.gz$
 \.log$
 _BUILD$
 .pkg$
-^build$
-^dist$
+build$
+dist$
+MANIFEST$
