@@ -257,16 +257,6 @@ class NMCModule(Extension):
                 include_files=None, include_paths=None):
 
 
-
-        if sys.platform == "darwin":
-
-            arch = autodetect()
-            
-            if arch == 'i386':
-
-                os.environ['ARCHFLAGS'] = "-arch i386"
-
-
         self._library_files = library_files
         self._library_paths = library_paths
 
@@ -278,7 +268,17 @@ class NMCModule(Extension):
         self.swig_opts = self.get_swig_opts()
         self.extra_compile_args = self.get_extra_compile_args()
         self.libraries = self.get_libraries()
-        
+
+
+        if sys.platform == "darwin":
+
+            arch = autodetect()
+            
+            if arch == 'i386':
+
+                os.environ['ARCHFLAGS'] = self.get_mac_arch_flags()
+
+
         Extension.__init__(self,
                            self.name,
                            sources=self.sources,
@@ -399,7 +399,73 @@ class NMCModule(Extension):
         return ["neurospacesread", "event_algorithms",
                 "symbol_algorithms", "ncurses", "readline"]
 
-    def get_mac_architectures(self, file):
+    def get_mac_arch_flags(self):
+
+        lib_dirs = self.get_library_dirs()
+        
+        libraries = self.get_libraries()
+
+        exe_archs = self.get_mac_architecture(sys.executable)
+
+        
+        if exe_archs is None:
+
+            return "-arch i386"
+
+        num_exe_archs = len(exe_archs)
+        
+        if num_exe_archs == 1:
+
+            return "-arch %s" % "".join(exe_archs)
+
+        # if we have more than one arch in the executable then
+        # we check the libraries to make sure we match
+        # up the archs
+
+        lib_archs = []
+        
+        for lib in libraries:
+
+            for lib_dir in lib_dirs:
+
+                lib_file = "%s/lib%s.a" % (lib_dir, lib)
+
+                if os.path.isfile(lib_file):
+
+                    archs = self.get_mac_architecture(lib_file)
+
+                    lib_archs.append(tuple(archs))
+        
+                    break
+
+        least_archs = None
+
+        for arch in lib_archs:
+
+            if least_archs is None:
+
+                least_archs = arch
+
+            else:
+
+                if len(arch) < len(least_archs):
+
+                    least_archs = arch
+
+        intel_archs = ['i486', 'i586', 'i686']
+
+        common_archs = []
+
+        for a in least_archs:
+
+            if a in exe_archs:
+
+                common_archs.append(a)
+
+        return "-arch %s" % " -arch ".join(common_archs)
+                
+                
+    def get_mac_architecture(self, file):
         """
         Returns string identifiers for the architecures present in the
         given file.
