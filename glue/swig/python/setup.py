@@ -179,8 +179,8 @@ VERSION = _package_info.GetVersion()
 AUTHOR = cbi.__author__
 AUTHOR_EMAIL = cbi.__email__
 LICENSE = cbi.__license__
-URL = cbi.__url__
-DOWNLOAD_URL = cbi.__download_url__
+URL = "http://pypi.python.org/pypi/model-container"
+DOWNLOAD_URL = "http://pypi.python.org/pypi/model-container"
 DESCRIPTION="The Model Container is used as an abstraction layer on top of a simulator and deals with biological entities and end-user concepts instead of mathematical equations."
 LONG_DESCRIPTION=cbi.__description__
 
