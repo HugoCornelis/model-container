@@ -357,14 +357,27 @@ class ModelContainer:
     def Read(self, filename):
         """!
         @brief read an NDF model file
+
+        Due to the need for the C swig code to read string literals
+        unicode strings are converted to ascii.
         """
 
-        #if not os.path.isfile(filename):
+        ndf_filename = filename
 
-            # Make my own exception? check for the ndf suffix?
-         #   raise Exception("%s is not a valid file or does not exist" % (filename))
+        if isinstance(filename, unicode):
+
+            try:
+
+                ndf_filename = str(filename)
+                
+            except UnicodeEncodeError:
+
+                print "Can't read in '%s', error processing unicode" % filename
+                
+                raise
+                
         
-        result = nmc_base.NeurospacesRead(self._nmc_core, 2, [ "python", filename ] )
+        result = nmc_base.NeurospacesRead(self._nmc_core, 2, [ "python", ndf_filename ] )
 
         # exception on bad result?
 
