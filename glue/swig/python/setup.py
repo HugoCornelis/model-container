@@ -504,7 +504,8 @@ _library_paths = [_model_container_dir,
 
 _include_files = [os.path.join('neurospaces','neurospaces.h'),
                   os.path.join('hierarchy', 'output', 'symbols','all_callees_headers.h'),
-                  'all_callees_headers.h',
+                  'callee_add_child.h',
+#                  'all_callees_headers.h',
                   ]
 _include_paths = [_model_container_dir,
                   os.path.join( _model_container_dir, 'neurospaces'),
