@@ -510,8 +510,12 @@ _include_files = [os.path.join('neurospaces','neurospaces.h'),
 _include_paths = [_model_container_dir,
                   os.path.join( _model_container_dir, 'neurospaces'),
                   os.path.join(_model_container_dir, 'hierarchy', 'output', 'symbols'),
+                  os.path.join('/','usr','local','neurospaces','instrumentor','hierarchy','output','symbols'),
+                  os.path.join('/','usr','local','include','neurospaces'),
                   "../../..",
-                  "/usr/local/include/model-container/" ]
+                  "../../../hierarchy/output/symbols",
+                  "/usr/local/include/model-container/" ,
+                  ]
 
 try:
     
