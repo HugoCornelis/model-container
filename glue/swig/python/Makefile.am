@@ -18,6 +18,11 @@
 ##############################################################################
 
 
+EXTRA_DIST = \
+	clean.py \
+	setup.py \
+	uninstall.py 
+
 SUBDIRS = 
 
 setup: setup.py
