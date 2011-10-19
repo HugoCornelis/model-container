@@ -489,8 +489,16 @@ class NMCModule(Extension):
         
 #-------------------------------------------------------------------------------
 
+home_dir = ''
 
-home_dir = os.getenv('USERPROFILE') or os.getenv('HOME')
+if os.getenv('USER') == 'root':
+
+    home_dir = os.path.expanduser("~%s" % os.getenv('SUDO_USER'))
+
+else:
+    
+    home_dir = os.getenv('HOME') or os.getenv('USERPROFILE')
+
 
 _model_container_dir = os.path.join(home_dir,
                              'neurospaces_project',
