@@ -369,10 +369,17 @@ class NMCModule(Extension):
         for d in dirs:
 
             full_path = os.path.join(d, file)
+
+            print "Checking for required file '%s': " % full_path,
             
             if os.path.isfile(full_path):
 
+                print "Present"
                 return d
+            
+            else:
+                
+                print "Missing"
 
         return None
 
