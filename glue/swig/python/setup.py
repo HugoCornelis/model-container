@@ -374,7 +374,7 @@ class NMCModule(Extension):
             
             if os.path.isfile(full_path):
 
-                print "Present"
+                print "Present\n"
                 return d
             
             else:
@@ -517,11 +517,11 @@ _include_files = [os.path.join('neurospaces','neurospaces.h'),
 _include_paths = [_model_container_dir,
                   os.path.join( _model_container_dir, 'neurospaces'),
                   os.path.join(_model_container_dir, 'hierarchy', 'output', 'symbols'),
+                  "../../..",
+                  "../../../hierarchy/output/symbols",
                   os.path.join('/','usr','local','neurospaces','instrumentor','hierarchy','output','symbols'),
                   os.path.join('/','usr','local','include','neurospaces'),
                   os.path.join('/','usr','local','include'),
-                  "../../..",
-                  "../../../hierarchy/output/symbols",
                   "/usr/local/include/model-container/" ,
                   ]
 
