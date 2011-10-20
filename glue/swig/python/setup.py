@@ -465,6 +465,10 @@ class NMCModule(Extension):
 
                 common_archs.append(a)
 
+        if len(common_archs) == 0:
+
+            raise Exception("No common archs between python executable and linked libraries.")
+
         return "-arch %s" % " -arch ".join(common_archs)
                 
                 
