@@ -153,6 +153,171 @@ PoolGetBeta
 
 
 /// 
+/// \arg ppool pool to get volume for.
+/// \arg ppist context of pool.
+/// 
+/// \return double : pool volume, DBL_MAX for failure.
+/// 
+/// \brief get volume of pool.
+/// 
+
+static
+double
+PoolGetCrossSectionArea
+(struct symtab_Pool *ppool, struct PidinStack *ppist)
+{
+    //- set default result : failure
+
+    double dResult = DBL_MAX;
+
+    //- by default we assume we are not working with a pool embedded
+    //- in a spherical segment.
+
+    int iSpherical = 0;
+
+    //- if parent compartment can be found
+
+    struct PidinStack *ppistComp
+	= SymbolFindParentSegment(&ppool->bio.ioh.iol.hsle, ppist);
+
+    double dDiaFromParent = DBL_MAX;
+
+    if (ppistComp)
+    {
+	struct symtab_HSolveListElement *phsleComp
+	    = PidinStackLookupTopSymbol(ppistComp);
+
+	if (phsleComp)
+	{
+	    //- set spherical flag for pool calculations
+
+	    if (SegmenterIsSpherical((struct symtab_Segmenter *)phsleComp, ppistComp))
+	    {
+		iSpherical = 1;
+	    }
+
+	    dDiaFromParent
+		= SymbolParameterResolveValue(phsleComp, ppistComp, "DIA");
+	}
+
+	PidinStackFree(ppistComp);
+
+    }
+
+    //- if spherical pool
+
+    if (iSpherical)
+    {
+	double dDiaSegment
+	    = SymbolParameterResolveValue(&ppool->bio.ioh.iol.hsle, ppist, "DIA");
+
+	//t not really sure if this is correct...
+
+	if (dDiaSegment == DBL_MAX)
+	{
+	    dDiaSegment = dDiaFromParent;
+	}
+
+	double dThickness
+	    = SymbolParameterResolveValue(&ppool->bio.ioh.iol.hsle, ppist, "THICK");
+
+	if (dDiaSegment == DBL_MAX)
+	{
+	    return(DBL_MAX);
+	}
+
+	//- if no thickness has been defined
+
+	if (dThickness == DBL_MAX)
+	{
+	    //- take for volume the entire volume of the segment
+
+	    dResult = M_PI * dDiaSegment * dDiaSegment * dDiaSegment / 6.0;
+	}
+
+	//- if a thickness has been defined
+
+	else
+	{
+	    //- calculate the volume of the shell
+
+	    double dDiaPool = 2 * dThickness;
+
+	    double dInner = dDiaSegment - dDiaPool;
+
+	    double d1 = dDiaSegment * dDiaSegment * dDiaSegment;
+
+	    double d2 = dInner * dInner * dInner;
+
+	    dResult = (d1 - d2) * M_PI / 6.0;
+	}
+
+/* 	dResult */
+/* 	    = (( */
+/* 		   3 * dDiaSegment * dDiaSegment * dDiaPool */
+/* 		   - 3 * dDiaSegment * dDiaPool * dDiaPool */
+/* 		   + dDiaPool * dDiaPool * dDiaPool */
+/* 		   ) */
+/* 	       * M_PI */
+/* 	       / 6.0); */
+
+	//- this needs a further check
+
+	dResult = DBL_MAX;
+
+	fprintf(stderr, "*** Warning: calculation of pool flux areas through spherical compartments is not implemented, signaling this error by returning DBL_MAX for this area\n");
+    }
+    else
+    {
+	double dDiaSegment
+	    = SymbolParameterResolveValue(&ppool->bio.ioh.iol.hsle, ppist, "DIA");
+
+	double dLengthSegment
+	    = SymbolParameterResolveValue(&ppool->bio.ioh.iol.hsle, ppist, "LENGTH");
+
+	double dThickness
+	    = SymbolParameterResolveValue(&ppool->bio.ioh.iol.hsle, ppist, "THICK");
+
+	if (dDiaSegment == DBL_MAX
+	    || dLengthSegment == DBL_MAX)
+	{
+	    return(DBL_MAX);
+	}
+
+	//- if no thickness has been defined
+
+	if (dThickness == DBL_MAX)
+	{
+	    //- calculate circular area
+
+	    dResult = M_PI * dDiaSegment * dDiaSegment / 4;
+	}
+
+	//- if a thickness has been defined
+
+	else
+	{
+	    //- differentiate the area of the inner and outer circles
+
+	    double dDiaPool = 2 * dThickness;
+
+	    double d = dDiaSegment - dDiaPool;
+
+	    double d1 = dDiaSegment * dDiaSegment;
+
+	    double d2 = d * d;
+
+	    dResult = (d1 - d2) * M_PI / 4.0;
+	}
+    }
+
+    //- return result
+
+    return(dResult);
+}
+
+
+/// 
 /// \arg ppool symbol to get parameter for.
 /// \arg ppist context of given symbol.
 /// \arg pcName name of parameter.
@@ -193,6 +358,23 @@ PoolGetParameter
 	    pparResult
 		= SymbolSetParameterDouble
 		  (&ppool->bio.ioh.iol.hsle, "BETA", dBeta);
+
+	    pparResult->iFlags |= FLAG_PARA_DERIVED;
+	}
+
+	//- if area through which diffusion takes place
+
+	else if (0 == strcmp(pcName, "FLUX_CROSS_SECTION_AREA"))
+	{
+	    //- get cross section area
+
+	    double dArea = PoolGetCrossSectionArea(ppool, ppist);
+
+	    //- set volume of pool, value should be ignored.
+
+	    pparResult
+		= SymbolSetParameterDouble
+		  (&ppool->bio.ioh.iol.hsle, "FLUX_CROSS_SECTION_AREA", dArea);
 
 	    pparResult->iFlags |= FLAG_PARA_DERIVED;
 	}
