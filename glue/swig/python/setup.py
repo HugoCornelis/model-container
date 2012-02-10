@@ -568,7 +568,7 @@ setup(
     license=LICENSE,
     keywords=KEYWORDS,
     url=URL,
-    packages=['model_container'],
+    packages=['model_container', 'model_container.loader', 'model_container.loader.asc'],
     package_data={'model_container' : PACKAGE_FILES},
     classifiers=CLASSIFIERS,
     options=OPTIONS,
