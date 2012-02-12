@@ -1236,6 +1236,87 @@ PublicModelsEnumerated
 			}
 		    }
 		}
+	|
+		PublicModelsEnumerated
+
+		/* export model from private models	*/
+
+		TOKEN_CHILD
+			"WITH_PROTOTYPE"
+			Identifier
+			"WITH_NAME"
+			Identifier
+			OptionalItemParameters
+			OptionalItemCachedParameters
+			OptionalChildSectionOptionalInputOptionalParameters
+		TOKEN_END TOKEN_CHILD
+		{
+#line
+		    //v alias target
+
+		    struct symtab_HSolveListElement *phsleProto = NULL;
+
+		    //- if private model lookup not disabled by the options
+
+		    if (!(((PARSERCONTEXT *)pacParserContext)
+			  ->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_PRIVATE_LOOKUP))
+		    {
+			//- lookup private model, set as alias target
+
+			phsleProto
+			    = ParserLookupPrivateModel
+			      (/*(PARSERCONTEXT *)pacParserContext,*/$4);
+
+			//- if symbol found
+
+			if (phsleProto)
+			{
+			    struct symtab_HSolveListElement *phsle
+				= SymbolCreateAlias(phsleProto, NULL, IdinNewFromChars($6));
+
+			    //- set parameters
+
+			    SymbolAssignParameters(phsle, $7);
+
+			    //- link parameter caches
+
+			    if ($8)
+			    {
+				SymbolAddToForwardReferencers(phsle, $8);
+			    }
+
+			    //- link children
+
+			    if ($9)
+			    {
+				SymbolAddChild(phsle, $9);
+
+				//- reset actual symbol
+
+				ParserContextSetActual
+				    ((PARSERCONTEXT *)pacParserContext, phsle);
+			    }
+
+			    //- add model
+
+			    ParserAddPublicModel
+				((PARSERCONTEXT *)pacParserContext, phsle);
+			}
+
+			//- else
+
+			else
+			{
+			    //- give error msg
+
+			    NeurospacesError
+				((PARSERCONTEXT *)pacParserContext,
+				 "PublicModelsEnumerated",
+				 "PrivateModel Symbol(%s) not found.",
+				 $4 ? $4 : "NULL");
+			}
+		    }
+		}
 	;
 
 
