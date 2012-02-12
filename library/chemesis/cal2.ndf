@@ -4,17 +4,16 @@ NEUROSPACES NDF
 // VERSION 0.1
 PRIVATE_MODELS
 	KINETICS cal1
-		PARAMETERS
-			PARAMETER ( DIA = 24e-4 ),
-			PARAMETER ( LENGTH = 24e-4 ),
-		END PARAMETERS
+		BINDABLES
+			OUTPUT Ca->concen,
+		END BINDABLES
 
 		POOL Ca
 			BINDABLES
 				OUTPUT concen
 			END BINDABLES
 			PARAMETERS
-				PARAMETER ( "species" = ../../../Ca ),
+				PARAMETER ( "species" = ../..->Ca ),
 
 				PARAMETER ( concen_init = 0.1e-3 ),
 // 				PARAMETER ( VAL = 2.0 ),
@@ -70,44 +69,6 @@ PRIVATE_MODELS
 		END REACTION
 	END KINETICS
 
-// //chemesis2.0
-// //cabuf.g
-// function cabuf (pool, Cainit, cabufinit, buftot, rad, len)
-// float rad, len
-// float Cainit, cabufinit, buftot
-// str pool
-
-//     float PI=3.14159
-//     float areaout=2*PI*rad*len
-//     float areaside=PI*rad*rad
-//     float volume=areaside*len
-
-//     /* create pools of molecules */
-//     create rxnpool {pool}Ca
-//     setfield {pool}Ca Cinit {Cainit} vol {volume} SAout {areaout} SAside {areaside} radius {rad} len {len} units 1e-3
-//     create rxnpool {pool}Cabuf
-//     setfield {pool}Cabuf Cinit {cabufinit} vol {volume} SAout {areaout} SAside {areaside} radius {rad} len {len} units 1e-3 
-//     create conservepool {pool}buf
-//     setfield {pool}buf Ctot {buftot} volume {volume}
-
-//     /* create reaction */
-//     create reaction {pool}cabufrxn
-//     setfield {pool}cabufrxn kf 1e2 kb 0.5
-
-//     /* messages from substrates and product to reaction */
-//     addmsg {pool}Ca {pool}cabufrxn SUBSTRATE Conc
-//     addmsg {pool}buf {pool}cabufrxn SUBSTRATE Conc
-//     addmsg {pool}Cabuf {pool}cabufrxn PRODUCT Conc
-
-//     /* messages from reaction to substrates and products */
-//     addmsg {pool}cabufrxn {pool}Ca RXN2 kbprod kfsubs
-//     addmsg {pool}cabufrxn {pool}Cabuf RXN2 kfsubs kbprod
-
-//     /* conserve pool messages */
-//     addmsg {pool}Cabuf {pool}buf CONC Conc
-
-// end
-
 END PRIVATE_MODELS
 
 PUBLIC_MODELS
@@ -129,6 +90,11 @@ PUBLIC_MODELS
 			END PARAMETERS
 
 			CHILD cal1 cal1
+				PARAMETERS
+					PARAMETER ( DIA = 4e-4 ),
+					PARAMETER ( LENGTH = 2e-4 ),
+				END PARAMETERS
+
 			END CHILD
 
 		END SEGMENT
@@ -142,13 +108,24 @@ PUBLIC_MODELS
 				PARAMETER ( DIA = 4e-4 ),
 			END PARAMETERS
 
-			PARAMETERS
-				PARAMETER ( species[0] = ../Ca ),
-				PARAMETER ( diffusion_constant[0] = 6e-9 ),
-//				PARAMETER ( "UNITS" = 1e-3 ),
-			END PARAMETERS
+/* 			PARAMETERS */
+/* 				PARAMETER ( species[0] = ../Ca ), */
+/* 				PARAMETER ( diffusion_constant[0] = 6e-9 ), */
+/* //				PARAMETER ( "UNITS" = 1e-3 ), */
+/* 			END PARAMETERS */
 
 			CHILD cal1 cal1
+				BINDINGS
+					INPUT ..->Ca,
+				END BINDINGS
+
+				PARAMETERS
+					PARAMETER ( DIA = 2e-4 ),
+					PARAMETER ( LENGTH = 2e-4 ),
+
+					PARAMETER ( PARENT = ../../soma/cal1 ),
+					PARAMETER ( diffusion_constant = 6e-9 ),
+				END PARAMETERS
 			END CHILD
 
 		END SEGMENT
