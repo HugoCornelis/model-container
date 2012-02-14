@@ -285,6 +285,75 @@ ChildSectionFront	/* <phsle> */
 			$$ = NULL;
 		    }
 		}
+	|
+		TOKEN_CHILD
+		"WITH_PROTOTYPE"
+		Identifier
+		"WITH_NAME"
+		IdentifierOptionIndex
+		{
+#line
+		    //v prototype symbol
+
+		    struct symtab_HSolveListElement *phslePrototype = NULL;
+
+		    //- if public model lookup not disabled by the options
+
+		    if (!(((PARSERCONTEXT *)pacParserContext)
+			  ->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_PUBLIC_LOOKUP))
+		    {
+			//- if lookup prototype
+
+			phslePrototype = ParserLookupPrivateModel($3);
+
+			if (!phslePrototype)
+			{
+			    phslePrototype = ParserLookupPublicModel($3);
+			}
+
+			if (!phslePrototype)
+			{
+			    NeurospacesError
+				((PARSERCONTEXT *)pacParserContext,
+				 "ChildSectionFront",
+				 "Private Model (%s) not found.",
+				 $3);
+
+			    $$ = NULL;
+			}
+			else if (!instanceof_bio_comp(phslePrototype))
+			{
+			    NeurospacesError
+				((PARSERCONTEXT *)pacParserContext,
+				 "ChildSectionFront",
+				 "Private Model (%s) is not a bio component.",
+				 $3);
+
+			    $$ = NULL;
+			}
+			else
+			{
+			    //- allocate id for new symbol
+
+			    struct symtab_IdentifierIndex *pidin = IdinCalloc();
+
+			    IdinSetName(pidin, $3);
+
+			    //- new symbol is alias for prototype
+
+			    $$ = SymbolCreateAlias(phslePrototype, NULL, $5);
+			}
+		    }
+		    else
+		    {
+			//! so for this particular case, NULL does not
+			//! signal an error, could become complicated in
+			//! the future, perhaps another solution is
+			//! needed with dummy symbols or something ?
+
+			$$ = NULL;
+		    }
+		}
 	;
 
 ChildSectionEnd
