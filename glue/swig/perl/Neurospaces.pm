@@ -343,6 +343,10 @@ sub import_qualified_filename
 
     my $namespace = shift;
 
+    # qualify the filename
+
+    my $qualified = SwiggableNeurospaces::ParserContextQualifyFilename(undef, $filename);
+
     # get root parser context
 
     my $backend = $self->backend();
@@ -351,7 +355,7 @@ sub import_qualified_filename
 
     # import the file
 
-    my $result = SwiggableNeurospaces::ParserImport($pac, $filename, $namespace);
+    my $result = SwiggableNeurospaces::ParserImport($pac, $qualified, $filename, $namespace);
 
     # return: success of operation
 

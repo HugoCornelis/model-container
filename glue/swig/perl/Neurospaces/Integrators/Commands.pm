@@ -19,6 +19,8 @@ our $g3_commands
        'morphology_summarize_help',
        'ndf_load',
        'ndf_load_help',
+       'ndf_load_library',
+       'ndf_load_library_help',
        'ndf_save',
        'ndf_save_help',
        'xml_load',
@@ -67,6 +69,35 @@ sub morphology_summarize_help
     print "synopsis: morphology_summarize <modelname>\n";
 
     return "*** Ok: morphology_summarize_help";
+}
+
+
+sub ndf_load_library
+{
+    my $namespace = shift;
+
+    my $filename = shift;
+
+    my $success = $GENESIS3::model_container->import_qualified_filename($filename, $namespace);
+
+    if ($success)
+    {
+	return "*** Ok: ndf_load_library $namespace $filename";
+    }
+    else
+    {
+	return "*** Error: ndf_load_library $namespace $filename";
+    }
+}
+
+
+sub ndf_load_library_help
+{
+    print "description: load an ndf file into a namespace and reconstruct the model it describes within that namespace.\n";
+
+    print "synopsis: ndf_load_library <filename.ndf>\n";
+
+    return "*** Ok";
 }
 
 
