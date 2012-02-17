@@ -346,8 +346,7 @@ int ParserAlgorithmDisable
 (PARSERCONTEXT *pacContext,
  struct AlgorithmInstance *palgi,
  char *pcName,
- char *pcInstance,
- char *pcInit);
+ char *pcInstance);
 
 int
 ParserAlgorithmHandle
@@ -355,15 +354,13 @@ ParserAlgorithmHandle
  struct symtab_HSolveListElement *phsle,
  struct AlgorithmInstance *palgi,
  char *pcName,
- char *pcInstance,
- char *pcInit);
+ char *pcInstance);
 
 struct AlgorithmInstance *
 ParserAlgorithmImport
 (PARSERCONTEXT *pacContext,
  char *pcName,
  char *pcInstance,
- char *pcInit,
  struct symtab_Parameters *ppar,
  struct symtab_AlgorithmSymbol *palgs);
 

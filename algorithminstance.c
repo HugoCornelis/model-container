@@ -85,7 +85,6 @@ struct AlgorithmInstance * AlgorithmInstanceCalloc/* (void) */
 
 /// 
 /// \arg pcName name of algorithm to import
-/// \arg pcInit init string for algorithm
 /// 
 /// \return int : success of operation
 /// 

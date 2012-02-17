@@ -70,7 +70,6 @@ AlgorithmSetInstantiateAlgorithm
  PARSERCONTEXT *pacContext,
  char *pcName,
  char *pcInstance,
- char *pcInit,
  struct symtab_Parameters *ppar,
  struct symtab_AlgorithmSymbol *palgs);
 

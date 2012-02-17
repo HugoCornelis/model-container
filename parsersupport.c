@@ -1920,7 +1920,6 @@ int ParserMessage
 /// \arg palgi algorithm instance to disable.
 /// \arg pcName name of algorithm to import
 /// \arg pcInstance name of algorithm instance to create
-/// \arg pcInit init string of algorithm, only for diag's
 /// 
 /// \return int : success of operation
 /// 
@@ -1935,8 +1934,7 @@ int ParserAlgorithmDisable
 (PARSERCONTEXT *pacContext,
  struct AlgorithmInstance *palgi,
  char *pcName,
- char *pcInstance,
- char *pcInit)
+ char *pcInstance)
 {
     //- set default result : failure
 
@@ -1986,7 +1984,6 @@ int ParserAlgorithmDisable
 /// \arg palgi algorithm instance that should handle given symbol.
 /// \arg pcName name of algorithm to import
 /// \arg pcInstance name of algorithm instance to create
-/// \arg pcInit init string of algorithm
 /// 
 /// \return int : success of operation
 /// 
@@ -1999,8 +1996,7 @@ ParserAlgorithmHandle
  struct symtab_HSolveListElement *phsle,
  struct AlgorithmInstance *palgi,
  char *pcName,
- char *pcInstance,
- char *pcInit)
+ char *pcInstance)
 {
     //- set default result : ok
 
@@ -2062,7 +2058,6 @@ ParserAlgorithmHandle
 /// \arg pacContext parser context
 /// \arg pcName name of algorithm class to import
 /// \arg pcInstance name of algorithm instance to create
-/// \arg pcInit init string of algorithm
 /// \arg ppar algorithm instantiation parameters.
 /// \arg palgs algorithm symbol.
 /// 
@@ -2082,7 +2077,6 @@ ParserAlgorithmImport
 (PARSERCONTEXT *pacContext,
  char *pcName,
  char *pcInstance,
- char *pcInit,
  struct symtab_Parameters *ppar,
  struct symtab_AlgorithmSymbol *palgs)
 {
@@ -2098,7 +2092,6 @@ ParserAlgorithmImport
 	   pacContext,
 	   pcName,
 	   pcInstance,
-	   pcInit,
 	   ppar,
 	   palgs);
 
@@ -2112,10 +2105,9 @@ ParserAlgorithmImport
 	    (pacContext,
 	     LEVEL_GLOBALMSG_ALGORITHMIMPORT,
 	     "ParserAlgorithmImport()",
-	     "Import Algorithm(%s -> %s(%s))",
+	     "Import Algorithm(%s -> %s)",
 	     pcName,
-	     pcInstance,
-	     pcInit);
+	     pcInstance);
     }
 
     //- else
@@ -2128,20 +2120,18 @@ ParserAlgorithmImport
 	    (pacContext,
 	     LEVEL_GLOBALMSG_ALGORITHMIMPORT,
 	     "ParserAlgorithmImport()",
-	     "Failed Import Algorithm(%s -> %s(%s))",
+	     "Failed Import Algorithm(%s -> %s)",
 	     pcName,
-	     pcInstance,
-	     pcInit);
+	     pcInstance);
 
 	//- signal error to neurospaces
 
 	NeurospacesError
 	    (pacContext,
 	     "ParserAlgorithmImport()",
-	     "Failed Import Algorithm(%s -> %s(%s))",
+	     "Failed Import Algorithm(%s -> %s)",
 	     pcName,
-	     pcInstance,
-	     pcInit);
+	     pcInstance);
 
     }
 

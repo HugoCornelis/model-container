@@ -92,7 +92,6 @@ void AlgorithmSetFree(AlgorithmSet *pas)
 /// \arg pas set of algorithms
 /// \arg pcName name of algorithm class to import
 /// \arg pcInstance name of algorithm instance to create
-/// \arg pcInit init string for algorithm
 /// \arg ppar algorithm instantiation parameters.
 /// \arg palgs algorithm symbol.
 /// 
@@ -109,7 +108,6 @@ AlgorithmSetInstantiateAlgorithm
  PARSERCONTEXT *pacContext,
  char *pcName,
  char *pcInstance,
- char *pcInit,
  struct symtab_Parameters *ppar,
  struct symtab_AlgorithmSymbol *palgs)
 {

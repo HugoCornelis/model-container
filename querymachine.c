@@ -144,6 +144,7 @@ QueryMachineSymbolGenerator(char *,int);
 
 static QueryHandler QueryHandlerAlgorithmClass;
 static QueryHandler QueryHandlerAlgorithmInstance;
+static QueryHandler QueryHandlerAlgorithmInstantiate;
 static QueryHandler QueryHandlerAlgorithmSet;
 static QueryHandler QueryHandlerAllocations;
 static QueryHandler QueryHandlerBiogroup2Biolevel;
@@ -236,6 +237,17 @@ static QueryHandlerAssociation pquhasTable[] =
     {
 	"algorithminstance",
 	QueryHandlerAlgorithmInstance,
+#ifdef USE_READLINE
+	-1,
+	NULL,
+#endif
+    },
+
+    /// algorithminstantiate
+
+    {
+	"algorithminstantiate",
+	QueryHandlerAlgorithmInstantiate,
 #ifdef USE_READLINE
 	-1,
 	NULL,
@@ -2617,6 +2629,36 @@ static int QueryHandlerAlgorithmClass
 /// 
 
 static int QueryHandlerAlgorithmInstance
+(char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
+{
+    //- set result : delegate
+
+    int bResult = TRUE;
+
+    char *pcName = &pcLine[iLength];
+
+    if (pcName[0] != '\0')
+    {
+	pcName++;
+    }
+
+    bResult = AlgorithmSetInstancePrint(pneuro->psym->pas, pcName, stdout);
+
+    //- return result
+
+    return(bResult);
+}
+
+
+/// 
+/// \arg std. QueryHandler args
+/// 
+/// \return int : QueryHandler return value
+/// 
+/// \brief Print algorithm info.
+/// 
+
+static int QueryHandlerAlgorithmInstantiate
 (char *pcLine, int iLength, struct Neurospaces *pneuro, void *pvData)
 {
     //- set result : delegate

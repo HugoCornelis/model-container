@@ -90,7 +90,6 @@ struct symtab_Algorithm * AlgorithmCalloc(void)
 
 /// 
 /// \arg pcName name of algorithm to import
-/// \arg pcInit init string for algorithm
 /// 
 /// \return int : success of operation
 /// 
@@ -163,7 +162,6 @@ AlgorithmDisable
 
 /// 
 /// \arg pcName name of algorithm to import
-/// \arg pcInit init string for algorithm
 /// 
 /// \return struct symtab_Algorithm * 
 /// 
@@ -181,7 +179,7 @@ AlgorithmDisable
 
 struct symtab_Algorithm *
 AlgorithmImport
-(HSolveList *phsl,char *pcName,PARSERCONTEXT *pacContext,char *pcInit)
+(HSolveList *phsl, char *pcName, PARSERCONTEXT *pacContext)
 {
     //- set default result : failure
 
@@ -189,7 +187,7 @@ AlgorithmImport
 
     //- lookup algorithm in imported list
 
-    palgResult = AlgorithmLookup(phsl,pcName);
+    palgResult = AlgorithmLookup(phsl, pcName);
 
     //- if not found
 
@@ -197,7 +195,7 @@ AlgorithmImport
     {
 	//- try to load algorithm
 
-	palgResult = AlgorithmLoad(phsl,pcName);
+	palgResult = AlgorithmLoad(phsl, pcName);
     }
 
     //- if algorithm found or loaded
@@ -207,7 +205,7 @@ AlgorithmImport
 	//- if initialize algorithm with init string
 
 	if (palgResult->ppfAlgorithmHandlers->pfInit
-	    (palgResult,pcName,pacContext,pcInit))
+	    (palgResult, pcName, NULL, pacContext))
 	{
 	    //- set flag : algorithm active
 
@@ -370,7 +368,7 @@ char * AlgorithmName(struct symtab_Algorithm *palg)
 /// \brief init algorithms
 /// 
 
-int AlgorithmsInit(HSolveList *phslAlgorithms,struct Symbols *pisSymbols)
+int AlgorithmsInit(HSolveList *phslAlgorithms, struct Symbols *pisSymbols)
 {
     //- set default result : ok
 
@@ -433,7 +431,7 @@ int AlgorithmsInit(HSolveList *phslAlgorithms,struct Symbols *pisSymbols)
     //- initialize serial population algorithm
 
     bResult = palgSerialPopulation->ppfAlgorithmHandlers->pfInit
-	(palgSerialPopulation,"SerialPopulation",NULL,pisSymbols);
+	(palgSerialPopulation, "SerialPopulation", NULL, pisSymbols);
 
     if (bResult)
     {
@@ -443,7 +441,7 @@ int AlgorithmsInit(HSolveList *phslAlgorithms,struct Symbols *pisSymbols)
     //- initialize serial connection algorithm
 
     bResult = palgSerialConnection->ppfAlgorithmHandlers->pfInit
-	(palgSerialConnection,"SerialConnection",NULL,pisSymbols);
+	(palgSerialConnection, "SerialConnection", NULL, pisSymbols);
 
     if (bResult)
     {
@@ -453,7 +451,7 @@ int AlgorithmsInit(HSolveList *phslAlgorithms,struct Symbols *pisSymbols)
     //- initialize serial projection algorithm
 
     bResult = palgSerialProjection->ppfAlgorithmHandlers->pfInit
-	(palgSerialProjection,"SerialProjection",NULL,pisSymbols);
+	(palgSerialProjection, "SerialProjection", NULL, pisSymbols);
 
     if (bResult)
     {
@@ -463,7 +461,7 @@ int AlgorithmsInit(HSolveList *phslAlgorithms,struct Symbols *pisSymbols)
     //- initialize serial network algorithm
 
     bResult = palgSerialNetwork->ppfAlgorithmHandlers->pfInit
-	(palgSerialNetwork,"SerialNetwork",NULL,pisSymbols);
+	(palgSerialNetwork, "SerialNetwork", NULL, pisSymbols);
 
     if (bResult)
     {
@@ -473,7 +471,7 @@ int AlgorithmsInit(HSolveList *phslAlgorithms,struct Symbols *pisSymbols)
     //- initialize serial cell algorithm
 
     bResult = palgSerialCell->ppfAlgorithmHandlers->pfInit
-	(palgSerialCell,"SerialCell",NULL,pisSymbols);
+	(palgSerialCell, "SerialCell", NULL, pisSymbols);
 
     if (bResult)
     {
@@ -483,7 +481,7 @@ int AlgorithmsInit(HSolveList *phslAlgorithms,struct Symbols *pisSymbols)
     //- initialize serial segment algorithm
 
     bResult = palgSerialSegment->ppfAlgorithmHandlers->pfInit
-	(palgSerialSegment,"SerialSegment",NULL,pisSymbols);
+	(palgSerialSegment, "SerialSegment", NULL, pisSymbols);
 
     if (bResult)
     {

@@ -160,10 +160,10 @@ SpinesInstanceSymbolHandler
 (struct AlgorithmInstance *palgi, struct ParserContext *pac);
 
 static int SpinesSegmentProcessor
-(struct TreespaceTraversal *ptstr,void *pvUserdata);
+(struct TreespaceTraversal *ptstr, void *pvUserdata);
 
 static int SpinesSegmentRecorder
-(struct TreespaceTraversal *ptstr,void *pvUserdata);
+(struct TreespaceTraversal *ptstr, void *pvUserdata);
 
 static
 int
@@ -317,10 +317,6 @@ SpinesInstanceNew
 	     psi->so.fSpineFrequency);
     }
 
-    // go to next arg
-
-    //pcInit = &pcArg[1];
-
     //- initialize spine count
 
     psi->sv.iPhysicalSpines = 0;
@@ -429,7 +425,7 @@ SpinesInstanceNew
 static
 int
 SpinesSegmentProcessor
-(struct TreespaceTraversal *ptstr,void *pvUserdata)
+(struct TreespaceTraversal *ptstr, void *pvUserdata)
 {
     //- set default result : ok
 

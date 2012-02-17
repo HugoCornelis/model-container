@@ -30,6 +30,36 @@ our $g3_commands
       ];
 
 
+sub createmap
+{
+    my $prototype = shift;
+
+    my $target = shift;
+
+    my $positionX = shift;
+
+    my $positionY = shift;
+
+    my $deltaX = shift;
+
+    my $deltaY = shift;
+
+    GENESIS3::Commands::querymachine("algorithminstantiate Grid3D createmap_$target $prototype $positionX $positionY 0 $deltaX $deltaY 0");
+
+    return "*** Ok: createmap";
+}
+
+
+sub createmap_help
+{
+    print "description: instantiate a prototype model many time in a two dimensional array with the given dimensions.\n";
+
+    print "synopsis: createmap <prototype> <target> <positionX> <positionY> <deltaX> <deltaY>\n";
+
+    return "*** Ok: createmap_help";
+}
+
+
 sub morphology_list_spine_heads
 {
     my $modelname = shift;

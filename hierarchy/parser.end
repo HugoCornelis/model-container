@@ -1385,7 +1385,6 @@ AlgorithmListPush
 			      ((PARSERCONTEXT *)pacParserContext,
 			       $3,
 			       $4,
-			       NULL,
 			       $5,
 			       palgs);
 
@@ -1397,7 +1396,6 @@ AlgorithmListPush
 			    ParserContextPushAlgorithmState(palgi);
 			    ParserContextPushAlgorithmState($3);
 			    ParserContextPushAlgorithmState($4);
-			    ParserContextPushAlgorithmState(NULL);
 
 			    ParserContextPushAlgorithmState(PARSERSTATE_ALGORITHM);
 
@@ -1421,11 +1419,6 @@ AlgorithmListPush
 				 "AlgorithmListPush",
 				 " Failed to import algorithm (%s)",
 				 $3);
-
-/* 			    ParserContextPushAlgorithmState(NULL); */
-
-/* 			    ParserContextPushAlgorithmState(PARSERSTATE_ALGORITHM); */
-
 			}
 		    }
 		}
@@ -1448,7 +1441,6 @@ AlgorithmListPop
 		    {
 			//- pop algorithm info
 
-			char *pcInit = (char *)ParserContextPopAlgorithmState();
 			char *pcInstance = (char *)ParserContextPopAlgorithmState();
 			char *pcName = (char *)ParserContextPopAlgorithmState();
 			struct AlgorithmInstance *palgi
@@ -1472,11 +1464,10 @@ AlgorithmListPop
 				 ((PARSERCONTEXT *)pacParserContext),
 				 palgi,
 				 pcName,
-				 pcInstance,
-				 pcInit);
+				 pcInstance);
 			}
 
-			//t I could free pcName, pcInstance and pcInit here ?
+			//t I could free pcName, pcInstance here ?
 
 /* 			//- insert algorithm instance in the symbol table */
 
@@ -1518,8 +1509,7 @@ AlgorithmListPop
 			    ((PARSERCONTEXT *)pacParserContext,
 			     palgi,
 			     pcName,
-			     pcInstance,
-			     pcInit);
+			     pcInstance);
 		    }
 
 		    //- sanity check : 

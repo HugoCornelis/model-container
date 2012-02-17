@@ -53,7 +53,7 @@ struct symtab_Algorithm;
 
 typedef
 int AlgorithmHandler
-    (struct symtab_Algorithm *palg,char *pcName,void *pvGlobal,void *pvData);
+    (struct symtab_Algorithm *palg, char *pcName, void *pvGlobal, void *pvData);
 
 typedef
 int AlgorithmSymbolHandler
@@ -141,7 +141,7 @@ AlgorithmDisable
 (HSolveList *phsl,char *pcName,PARSERCONTEXT *pacContext);
 
 struct symtab_Algorithm * AlgorithmImport
-(HSolveList *phsl,char *pcName,PARSERCONTEXT *pacContext,char *pcInit);
+(HSolveList *phsl,char *pcName,PARSERCONTEXT *pacContext);
 
 void AlgorithmInit(struct symtab_Algorithm *palg);
 
