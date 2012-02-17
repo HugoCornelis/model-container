@@ -2182,26 +2182,29 @@ int PidinStackString(struct PidinStack *ppist, char *pc, int iSize)
 
     pc[0] = '\0';
 
-    //- if rooted pidinstack and not namespaced idin
+    //- if namespaced stack
 
     if (PidinStackIsNamespaced(ppist))
     {
-	//- print root symbol
+	//- print namespace symbol
 
 	iCount = snprintf(&pc[iIndex], iSize, "%s", IDENTIFIER_NAMESPACE_STRING);
 	iIndex += iCount;
 	iSize -= iCount;
     }
 
-    //- if rooted pidinstack and not namespaced idin
+    //- if rooted pidinstack and not namespaced pidinstack
 
     if (PidinStackIsRooted(ppist))
     {
-	//- print root symbol
+	if (!PidinStackIsNamespaced(ppist))
+	{
+	    //- print root symbol
 
-	iCount = snprintf(&pc[iIndex], iSize, "%s", SYMBOL_ROOT);
-	iIndex += iCount;
-	iSize -= iCount;
+	    iCount = snprintf(&pc[iIndex], iSize, "%s", SYMBOL_ROOT);
+	    iIndex += iCount;
+	    iSize -= iCount;
+	}
     }
 
     for (i = 1 ; i < PidinStackNumberOfEntries(ppist) ; i++)
@@ -2225,11 +2228,14 @@ int PidinStackString(struct PidinStack *ppist, char *pc, int iSize)
 	    }
 	    else
 	    {
-		iCount
-		    = snprintf
-			(&pc[iIndex], iSize, "%s", IDENTIFIER_CHILD_STRING);
-		iIndex += iCount;
-		iSize -= iCount;
+		if (!IdinIsNamespaced(pidin))
+		{
+		    iCount
+			= snprintf
+			  (&pc[iIndex], iSize, "%s", IDENTIFIER_CHILD_STRING);
+		    iIndex += iCount;
+		    iSize -= iCount;
+		}
 	    }
 	}
 
@@ -2278,11 +2284,14 @@ int PidinStackString(struct PidinStack *ppist, char *pc, int iSize)
 	    }
 	    else
 	    {
-		iCount
-		    = snprintf
-			(&pc[iIndex], iSize, "%s", IDENTIFIER_CHILD_STRING);
-		iIndex += iCount;
-		iSize -= iCount;
+		if (!IdinIsNamespaced(pidin))
+		{
+		    iCount
+			= snprintf
+			  (&pc[iIndex], iSize, "%s", IDENTIFIER_CHILD_STRING);
+		    iIndex += iCount;
+		    iSize -= iCount;
+		}
 	    }
 	}
 

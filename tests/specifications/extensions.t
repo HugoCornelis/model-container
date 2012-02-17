@@ -20,7 +20,6 @@ my $test
 						   description => "Is neurospaces startup successful (1) ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/populations/subpopulation.ndf.', ],
 						   timeout => 5,
-						   write => undef,
 						  },
 
 						  #t complete these tests:
@@ -195,7 +194,6 @@ my $test
 						   description => "Is neurospaces startup successful (2) ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/tests/populations/subpopulation.ndf.', ],
 						   timeout => 5,
-						   write => undef,
 						  },
 
 						  #t complete these tests:

@@ -323,29 +323,29 @@ Ca_concen input 3: ../CaT/I, child not defined in this context
 						  {
 						   description => "Can we find the spikegenerator in the Golgi namespace ?",
 						   read => "
-- ::/Golgi::/G::/Golgi/Golgi_soma/spikegen
+- ::Golgi::G::/Golgi/Golgi_soma/spikegen
 ",
 						   write => "expand ::Golgi::G::/Golgi/**/spikegen",
 						  },
 						  {
 						   description => "Can we find the soma in the Golgi namespace ?",
 						   read => "
-- ::/Golgi::/G::/Golgi/Golgi_soma",
+- ::Golgi::G::/Golgi/Golgi_soma",
 						   write => "expand ::Golgi::G::/Golgi/*",
 						  },
 						  {
 						   description => "Can we find the channels in the Golgi namespace ?",
 						   read => "
-- ::/Golgi::/G::/Golgi/Golgi_soma/spikegen
-- ::/Golgi::/G::/Golgi/Golgi_soma/Ca_pool
-- ::/Golgi::/G::/Golgi/Golgi_soma/CaHVA
-- ::/Golgi::/G::/Golgi/Golgi_soma/H
-- ::/Golgi::/G::/Golgi/Golgi_soma/InNa
-- ::/Golgi::/G::/Golgi/Golgi_soma/KA
-- ::/Golgi::/G::/Golgi/Golgi_soma/KDr
-- ::/Golgi::/G::/Golgi/Golgi_soma/Moczyd_KC
-- ::/Golgi::/G::/Golgi/Golgi_soma/mf_AMPA
-- ::/Golgi::/G::/Golgi/Golgi_soma/pf_AMPA
+- ::Golgi::G::/Golgi/Golgi_soma/spikegen
+- ::Golgi::G::/Golgi/Golgi_soma/Ca_pool
+- ::Golgi::G::/Golgi/Golgi_soma/CaHVA
+- ::Golgi::G::/Golgi/Golgi_soma/H
+- ::Golgi::G::/Golgi/Golgi_soma/InNa
+- ::Golgi::G::/Golgi/Golgi_soma/KA
+- ::Golgi::G::/Golgi/Golgi_soma/KDr
+- ::Golgi::G::/Golgi/Golgi_soma/Moczyd_KC
+- ::Golgi::G::/Golgi/Golgi_soma/mf_AMPA
+- ::Golgi::G::/Golgi/Golgi_soma/pf_AMPA
 ",
 						   write => "expand ::Golgi::G::/Golgi/Golgi_soma/*",
 						  }
