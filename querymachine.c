@@ -1846,7 +1846,7 @@ QueryHandlerExpand
 ///
 /// \details 
 /// 
-///	export <names> <info|ndf|xml> <filename> <wildcard> <symbol>
+///	export <flags> <info|ndf|xml> <filename> <wildcard> <symbol>
 /// 
 
 static
@@ -2655,7 +2655,7 @@ static int QueryHandlerAlgorithmInstance
 /// 
 /// \return int : QueryHandler return value
 /// 
-/// \brief Print algorithm info.
+/// \brief Instantiate an algorithm interactively.
 /// 
 
 static int QueryHandlerAlgorithmInstantiate
@@ -2665,14 +2665,305 @@ static int QueryHandlerAlgorithmInstantiate
 
     int bResult = TRUE;
 
-    char *pcName = &pcLine[iLength];
+/*     GENESIS3::Commands::querymachine("algorithminstantiate Grid3D createmap_$target $prototype $positionX $positionY 0 $deltaX $deltaY 0"); */
 
-    if (pcName[0] != '\0')
+    //- get algorithm name
+
+    char pcSeparator[] = " \t,;\n";
+
+    if (!strpbrk(&pcLine[iLength + 1], pcSeparator))
     {
-	pcName++;
+	fprintf(stdout, "prototype symbol not specified on the commandl line\n");
+
+	return(FALSE);
     }
 
-    bResult = AlgorithmSetInstancePrint(pneuro->psym->pas, pcName, stdout);
+    char *pcName = &pcLine[iLength + 1];
+
+    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+    pcLine[iLength] = '\0';
+
+    if (!strpbrk(&pcLine[iLength + 1], pcSeparator))
+    {
+	fprintf(stdout, "instance name not specified on command line\n");
+
+	return(FALSE);
+    }
+
+    //- get instance name
+
+    char *pcInstance = &pcLine[iLength + 1];
+
+    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+    pcLine[iLength] = '\0';
+
+    struct symtab_Parameters *ppar = NULL;
+
+    struct symtab_AlgorithmSymbol *palgs = NULL;
+
+    if (0 == strcmp(pcName, "Grid3D"))
+    {
+	//- get target name
+
+	char *pcTarget = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	//- get prototype name
+
+	char *pcPrototype = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	//- get x count
+
+	char *pcXCount = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dXCount = strtod(pcXCount, NULL);
+
+	//- get y count
+
+	char *pcYCount = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dYCount = strtod(pcYCount, NULL);
+
+	//- get z count
+
+	char *pcZCount = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dZCount = strtod(pcZCount, NULL);
+
+	//- get x distance
+
+	char *pcXDistance = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dXDistance = strtod(pcXDistance, NULL);
+
+	//- get y distance
+
+	char *pcYDistance = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dYDistance = strtod(pcYDistance, NULL);
+
+	//- get z distance
+
+	char *pcZDistance = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	if (iLength >= 0)
+	{
+	    pcLine[iLength] = '\0';
+	}
+
+	double dZDistance = strtod(pcZDistance, NULL);
+
+	//! see also the ns-sli for other examples of the usage of this function
+
+	struct symtab_ParContainer *pparcAlgorithm
+	    = ParContainerNewFromList
+	      (/* ParameterNewFromString("INSTANCE_NAME", pcInstanceTemplate), */
+		ParameterNewFromString("PROTOTYPE", pcPrototype),
+		ParameterNewFromNumber("X_DISTANCE", dXDistance),
+		ParameterNewFromNumber("Y_DISTANCE", dYDistance),
+		ParameterNewFromNumber("Z_DISTANCE", dZDistance),
+		ParameterNewFromNumber("X_COUNT", dXCount),
+		ParameterNewFromNumber("Y_COUNT", dYCount),
+		ParameterNewFromNumber("Z_COUNT", dZCount),
+		NULL);
+
+	ppar = pparcAlgorithm->ppars;
+    }
+
+    //- preparation, in the parser this happens with a push
+
+    struct AlgorithmInstance *palgi = NULL;
+
+    if (1)
+    {
+	//- import & init algorithm
+
+	//t error checking
+
+	struct symtab_AlgorithmSymbol *palgs
+	    = AlgorithmSymbolCalloc();
+
+	AlgorithmSymbolAssignParameters(palgs, ppar);
+
+	palgi
+	    = ParserAlgorithmImport
+	      (pneuro->pacRootContext,
+	       pcName,
+	       pcInstance,
+	       ppar,
+	       palgs);
+
+	if (palgi)
+	{
+	    AlgorithmSymbolSetAlgorithmInstance(palgs, palgi);
+
+/* 	ParserContextPushAlgorithmState(palgs); */
+/* 	ParserContextPushAlgorithmState(palgi); */
+/* 	ParserContextPushAlgorithmState($3); */
+/* 	ParserContextPushAlgorithmState($4); */
+
+/* 	ParserContextPushAlgorithmState(PARSERSTATE_ALGORITHM); */
+
+	    //- insert algorithm instance in the symbol table
+
+	    //t I prefer to move this code to the
+	    //t AlgorithmListPush non-terminal, but that
+	    //t does not work because
+	    //t ParserContextGetActual() sometimes returns
+	    //t NULL overthere, don't know why.
+
+	    struct symtab_HSolveListElement *phsleActual
+		= ParserContextGetActual(pneuro->pacRootContext);
+
+	    SymbolAddChild(phsleActual, &palgs->hsle);
+	}
+	else
+	{
+	    NeurospacesError
+		(pneuro->pacRootContext,
+		 "AlgorithmListPush",
+		 " Failed to import algorithm (%s)",
+		 pcName);
+	}
+    }
+
+    //- handling, in the parser this happens with a pop
+
+    if (1)
+    {
+	//- while algorithms on context stack
+
+/* 	while ((pvState = ParserContextPopAlgorithmState()) */
+/* 	       != PARSERSTATE_START_ALGORITHMS) */
+	{
+	    //- pop algorithm info
+
+/* 	    char *pcInstance = (char *)ParserContextPopAlgorithmState(); */
+/* 	    char *pcName = (char *)ParserContextPopAlgorithmState(); */
+/* 	    struct AlgorithmInstance *palgi */
+/* 		= (struct AlgorithmInstance *) */
+/* 		  ParserContextPopAlgorithmState(); */
+
+/* 	    struct symtab_AlgorithmSymbol *palgs */
+/* 		= (struct symtab_AlgorithmSymbol *) */
+/* 		  ParserContextPopAlgorithmState(); */
+
+	    //- if algorithm handlers are not disabled by the options
+
+	    if (!(pneuro->pacRootContext->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_ALGORITHM_HANDLING))
+	    {
+		//- call algorithm on current symbol
+
+		ParserAlgorithmHandle
+		    (pneuro->pacRootContext,
+		     ParserContextGetActual(pneuro->pacRootContext),
+		     palgi,
+		     pcName,
+		     pcInstance);
+	    }
+
+	    //t I could free pcName, pcInstance here ?
+
+/* 			//- insert algorithm instance in the symbol table */
+
+/* 			//t I prefer to move this code to the */
+/* 			//t AlgorithmListPush non-terminal, but that */
+/* 			//t does not work because */
+/* 			//t ParserContextGetActual() sometimes returns */
+/* 			//t NULL overthere, don't know why. */
+
+/* 			//t it looks like that the symbol that should */
+/* 			//t go into phsleActual is allocated to late, ie */
+/* 			//t in .*Description, and AlgorithmListPush is */
+/* 			//t called for in .*Front.  But, in .*Front the */
+/* 			//t type of the symbol to be allocated is */
+/* 			//t already known, so it is possible to allocate */
+/* 			//t the correct symbol type, and put it in */
+/* 			//t phsleActual. */
+
+/* 			struct symtab_HSolveListElement *phsleActual */
+/* 			    = ParserContextGetActual((PARSERCONTEXT *)pacParserContext); */
+
+/* 			SymbolAddChild(phsleActual, &palgs->hsle); */
+
+/* 			int iResult = ParserAddModel((PARSERCONTEXT *)pacParserContext, &palgs->hsle); */
+
+/* 			if (!iResult) */
+/* 			{ */
+/* 			    NeurospacesError */
+/* 				((PARSERCONTEXT *)pacParserContext, */
+/* 				 "AlgorithmListPush", */
+/* 				 "Error inserting algorithm instance (%s) in symbol table (class %s).", */
+/* 				 $3, */
+/* 				 $5); */
+/* 			} */
+
+	    //- disable the algorithm
+
+	    ParserAlgorithmDisable
+		(pneuro->pacRootContext,
+		 palgi,
+		 pcName,
+		 pcInstance);
+	}
+
+/* 	//- sanity check :  */
+/* 	//- pvState should be PARSERSTATE_START_ALGORITHMS here */
+
+/* 	if (pvState != PARSERSTATE_START_ALGORITHMS) */
+/* 	{ */
+/* 	    NeurospacesError */
+/* 		((PARSERCONTEXT *)pacParserContext, */
+/* 		 "AlgorithmListPop", */
+/* 		 " Internal error :" */
+/* 		 " non-terminal AlgorithmListPop encounters" */
+/* 		 " messed up algorithm stack\n" */
+/* 		 " Internal error : Expecting" */
+/* 		 " PARSERSTATE_START_ALGORITHMS (== %i)," */
+/* 		 " encountered %i\n\n", */
+/* 		 PARSERSTATE_START_ALGORITHMS, */
+
+/* 		 //t gives a warning on 64bit machines. */
+
+/* 		 (int)pvState); */
+
+/* 	    //- dump core  */
+/* 	    //- (should contain interesting info to be examined) */
+
+/* 	    *(int *)NULL = 0xdeadbeaf; */
+/* 	} */
+    }
 
     //- return result
 

@@ -13,6 +13,8 @@ use Neurospaces;
 
 our $g3_commands
     = [
+       'createmap',
+       'createmap_help',
        'morphology_list_spine_heads',
        'morphology_list_spine_heads_help',
        'morphology_summarize',
@@ -44,7 +46,11 @@ sub createmap
 
     my $deltaY = shift;
 
-    GENESIS3::Commands::querymachine("algorithminstantiate Grid3D createmap_$target $prototype $positionX $positionY 0 $deltaX $deltaY 0");
+    my $instance_name = "createmap_$target";
+
+    $instance_name =~ s(/)(_)g;
+
+    GENESIS3::Commands::querymachine("algorithminstantiate Grid3D $instance_name $target $prototype $positionX $positionY 0 $deltaX $deltaY 0");
 
     return "*** Ok: createmap";
 }
