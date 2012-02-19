@@ -1386,6 +1386,17 @@ ExporterLibrarySelector
 
     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
 
+/*     //- if the symbol was generated from an algorithm */
+
+/*     if (phsle->palgi) */
+/*     { */
+/* 	//- don't process */
+
+/* 	iResult = TSTR_SELECTOR_FAILURE; */
+
+/* 	return(iResult); */
+/*     } */
+
     //- get traversal data
 
     struct exporter_data *pexd

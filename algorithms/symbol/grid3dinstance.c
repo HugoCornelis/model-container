@@ -419,6 +419,8 @@ Grid3DAddComponents
 
 		phsleNew = SymbolCreateAlias(pg3i->g3v.phsleProto, NULL, pidin);
 
+		phsleNew->palgi = &pg3i->algi;
+
 		//- set coordinates
 
 		/// \todo have to use parameter caches in case we are using invible subsets ?

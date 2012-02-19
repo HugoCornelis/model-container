@@ -2699,6 +2699,8 @@ static int QueryHandlerAlgorithmInstantiate
 
     pcLine[iLength] = '\0';
 
+    pcInstance = strdup(pcInstance);
+
     struct symtab_Parameters *ppar = NULL;
 
     struct symtab_AlgorithmSymbol *palgs = NULL;
@@ -2706,6 +2708,8 @@ static int QueryHandlerAlgorithmInstantiate
     char *pcTarget = NULL;
 
     struct PidinStack pistTmp = pneuro->pacRootContext->pist;
+
+    struct AlgorithmInstance *palgi = NULL;
 
     if (0 == strcmp(pcName, "Grid3D"))
     {
@@ -2807,16 +2811,13 @@ static int QueryHandlerAlgorithmInstantiate
 
     //- preparation, in the parser this happens with a push
 
-    struct AlgorithmInstance *palgi = NULL;
-
     if (1)
     {
 	//- import & init algorithm
 
 	//t error checking
 
-	struct symtab_AlgorithmSymbol *palgs
-	    = AlgorithmSymbolCalloc();
+	palgs = AlgorithmSymbolCalloc();
 
 	//t pparc is lost, memory leak
 
