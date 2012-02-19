@@ -2721,6 +2721,13 @@ static int QueryHandlerAlgorithmInstantiate
 
 	pcLine[iLength] = '\0';
 
+	while (pcTarget[0] == '/' || pcTarget == ':')
+	{
+	    pcTarget++;
+	}
+
+	pcTarget = strdup(pcTarget);
+
 	//- get prototype name
 
 	char *pcPrototype = &pcLine[iLength + 1];
@@ -2995,6 +3002,8 @@ static int QueryHandlerAlgorithmInstantiate
     }
 
     pneuro->pacRootContext->pist = pistTmp;
+
+    SymbolRecalcAllSerials(NULL, NULL);
 
     //- return result
 
