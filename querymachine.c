@@ -2703,11 +2703,15 @@ static int QueryHandlerAlgorithmInstantiate
 
     struct symtab_AlgorithmSymbol *palgs = NULL;
 
+    char *pcTarget = NULL;
+
+    struct PidinStack pistTmp = pneuro->pacRootContext->pist;
+
     if (0 == strcmp(pcName, "Grid3D"))
     {
 	//- get target name
 
-	char *pcTarget = &pcLine[iLength + 1];
+	pcTarget = &pcLine[iLength + 1];
 
 	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
 
@@ -2814,6 +2818,8 @@ static int QueryHandlerAlgorithmInstantiate
 	struct symtab_AlgorithmSymbol *palgs
 	    = AlgorithmSymbolCalloc();
 
+	//t pparc is lost, memory leak
+
 	AlgorithmSymbolAssignParameters(palgs, ppar);
 
 	palgi
@@ -2843,6 +2849,28 @@ static int QueryHandlerAlgorithmInstantiate
 	    //t ParserContextGetActual() sometimes returns
 	    //t NULL overthere, don't know why.
 
+	    struct PidinStack *ppistRoot = PidinStackParse("/");
+
+	    struct symtab_HSolveListElement *phsleRoot = PidinStackLookupTopSymbol(ppistRoot);
+
+	    struct symtab_Network *pnetwTarget = NetworkCalloc();
+
+	    struct symtab_IdentifierIndex *pidinTarget
+		= IdinNewFromChars(pcTarget);
+
+	    SymbolSetName(&pnetwTarget->segr.bio.ioh.iol.hsle, pidinTarget);
+
+	    SymbolAddChild(phsleRoot, &pnetwTarget->segr.bio.ioh.iol.hsle);
+
+	    struct PidinStack *ppistNetwork
+		= PidinStackDuplicate(ppistRoot);
+
+	    PidinStackPushSymbol(ppistNetwork, &pnetwTarget->segr.bio.ioh.iol.hsle);
+
+	    pneuro->pacRootContext->pist = *ppistNetwork;
+
+	    ParserContextSetActual(pneuro->pacRootContext, &pnetwTarget->segr.bio.ioh.iol.hsle);
+
 	    struct symtab_HSolveListElement *phsleActual
 		= ParserContextGetActual(pneuro->pacRootContext);
 
@@ -2860,7 +2888,7 @@ static int QueryHandlerAlgorithmInstantiate
 
     //- handling, in the parser this happens with a pop
 
-    if (1)
+    if (palgi)
     {
 	//- while algorithms on context stack
 
@@ -2964,6 +2992,8 @@ static int QueryHandlerAlgorithmInstantiate
 /* 	    *(int *)NULL = 0xdeadbeaf; */
 /* 	} */
     }
+
+    pneuro->pacRootContext->pist = pistTmp;
 
     //- return result
 

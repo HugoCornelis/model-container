@@ -9,6 +9,7 @@ use strict;
 
 
 use Neurospaces;
+use Neurospaces::Components;
 
 
 our $g3_commands
@@ -38,19 +39,64 @@ sub createmap
 
     my $target = shift;
 
-    my $positionX = shift;
+    my $countX = shift;
 
-    my $positionY = shift;
+    my $countY = shift;
 
     my $deltaX = shift;
 
     my $deltaY = shift;
 
+    if ($prototype =~ /(.*)::(.*)/)
+    {
+	my $namespaces = $1;
+
+	my $component_name = $2;
+
+	my $backend = $GENESIS3::model_container->backend();
+
+	my $sym = $backend->swig_psym_get();
+
+	my $context_prototype = SwiggableNeurospaces::PidinStackParse($prototype);
+
+	my $symbol_prototype = $sym->SymbolsLookupHierarchical($context_prototype);
+
+# 	bless $symbol_prototype, 'Neurospaces::Components::Network';
+
+	if ($component_name =~ m(^/))
+	{
+	    $component_name =~ s(^/)();
+	}
+
+	print "creating a new private component with name $component_name\n";
+
+	my $pidin = SwiggableNeurospaces::IdinCallocUnique($component_name);
+
+	my $alias = $symbol_prototype->SymbolCreateAlias($namespaces, $pidin);
+
+	my $root_context = SwiggableNeurospaces::PidinStackParse("::/");
+
+	my $root_symbol = $root_context->PidinStackLookupTopSymbol();
+
+	if (!$root_symbol)
+	{
+	    return "*** Error: Cannot get a private root context (has a model been loaded ?)";
+	}
+
+	my $success = $root_symbol->SymbolAddChild($alias);
+
+	# 	my $private_model = $symbol_prototype->alias($namespaces, $component_name, "network", "Neurospaces::Components::Network");
+
+# 	$GENESIS3::model_container->insert_private($alias);
+
+	$prototype = $component_name;
+    }
+
     my $instance_name = "createmap_$target";
 
     $instance_name =~ s(/)(_)g;
 
-    GENESIS3::Commands::querymachine("algorithminstantiate Grid3D $instance_name $target $prototype $positionX $positionY 0 $deltaX $deltaY 0");
+    GENESIS3::Commands::querymachine("algorithminstantiate Grid3D $instance_name $target $prototype $countX $countY 1 $deltaX $deltaY 0");
 
     return "*** Ok: createmap";
 }

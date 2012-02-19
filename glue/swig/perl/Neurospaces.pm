@@ -345,17 +345,22 @@ sub import_qualified_filename
 
     # qualify the filename
 
+    my $result;
+
     my $qualified = SwiggableNeurospaces::ParserContextQualifyFilename(undef, $filename);
 
-    # get root parser context
+    if ($qualified)
+    {
+	# get root parser context
 
-    my $backend = $self->backend();
+	my $backend = $self->backend();
 
-    my $pac = $backend->swig_pacRootContext_get();
+	my $pac = $backend->swig_pacRootContext_get();
 
-    # import the file
+	# import the file
 
-    my $result = SwiggableNeurospaces::ParserImport($pac, $qualified, $filename, $namespace);
+	$result = SwiggableNeurospaces::ParserImport($pac, $qualified, $filename, $namespace);
+    }
 
     # return: success of operation
 
@@ -407,7 +412,7 @@ sub insert_public
 
     my $component = shift;
 
-#     print "insert_private\n";
+#     print "insert_public\n";
 
     my $root_context = SwiggableNeurospaces::PidinStackParse("/");
 
