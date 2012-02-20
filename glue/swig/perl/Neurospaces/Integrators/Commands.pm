@@ -68,8 +68,6 @@ sub createmap
 	    $component_name =~ s(^/)();
 	}
 
-	print "creating a new private component with name $component_name\n";
-
 	my $pidin = SwiggableNeurospaces::IdinCallocUnique($component_name);
 
 	my $alias = $symbol_prototype->SymbolCreateAlias($namespaces, $pidin);
@@ -97,6 +95,8 @@ sub createmap
     $instance_name =~ s(/)(_)g;
 
     GENESIS3::Commands::querymachine("algorithminstantiate Grid3D $instance_name $target $prototype $countX $countY 1 $deltaX $deltaY 0");
+
+    print "created a new private component with name $target\n";
 
     return "*** Ok: createmap";
 }

@@ -2857,32 +2857,67 @@ static int QueryHandlerAlgorithmInstantiate
 	    //t ParserContextGetActual() sometimes returns
 	    //t NULL overthere, don't know why.
 
-	    struct PidinStack *ppistRoot = PidinStackParse("/");
+/* 	    struct PidinStack *ppistRoot = PidinStackParse("/"); */
 
-	    struct symtab_HSolveListElement *phsleRoot = PidinStackLookupTopSymbol(ppistRoot);
+/* 	    struct symtab_HSolveListElement *phsleRoot = PidinStackLookupTopSymbol(ppistRoot); */
 
-	    struct symtab_Network *pnetwTarget = NetworkCalloc();
+	    struct symtab_Population *ppopuTarget = PopulationCalloc();
+
+	    struct PidinStack *ppistTarget = PidinStackParse(pcTarget);
+
+/* 	    struct symtab_IdentifierIndex *pidinTarget */
+/* 		= IdinNewFromChars(pcTarget); */
+
+	    struct PidinStack *ppistParent = PidinStackDuplicate(ppistTarget);
 
 	    struct symtab_IdentifierIndex *pidinTarget
-		= IdinNewFromChars(pcTarget);
+		= PidinStackPop(ppistParent);
 
-	    SymbolSetName(&pnetwTarget->segr.bio.ioh.iol.hsle, pidinTarget);
+	    struct symtab_HSolveListElement *phsleParent
+		= PidinStackLookupTopSymbol(ppistParent);
 
-	    SymbolAddChild(phsleRoot, &pnetwTarget->segr.bio.ioh.iol.hsle);
+	    if (phsleParent)
+	    {
+		SymbolSetName(&ppopuTarget->segr.bio.ioh.iol.hsle, pidinTarget);
 
-	    struct PidinStack *ppistNetwork
-		= PidinStackDuplicate(ppistRoot);
+		SymbolAddChild(phsleParent, &ppopuTarget->segr.bio.ioh.iol.hsle);
 
-	    PidinStackPushSymbol(ppistNetwork, &pnetwTarget->segr.bio.ioh.iol.hsle);
+/* 		struct PidinStack *ppistNetwork */
+/* 		    = PidinStackDuplicate(ppistRoot); */
 
-	    pneuro->pacRootContext->pist = *ppistNetwork;
+		PidinStackPop(ppistTarget);
 
-	    ParserContextSetActual(pneuro->pacRootContext, &pnetwTarget->segr.bio.ioh.iol.hsle);
+		PidinStackLookupTopSymbol(ppistTarget);
 
-	    struct symtab_HSolveListElement *phsleActual
-		= ParserContextGetActual(pneuro->pacRootContext);
+/* 		PidinStackPushSymbol(ppistTarget, &ppopuTarget->segr.bio.ioh.iol.hsle); */
 
-	    SymbolAddChild(phsleActual, &palgs->hsle);
+		pneuro->pacRootContext->pist = *ppistTarget;
+
+		ParserContextSetActual(pneuro->pacRootContext, &ppopuTarget->segr.bio.ioh.iol.hsle);
+
+		struct symtab_HSolveListElement *phsleActual
+		    = ParserContextGetActual(pneuro->pacRootContext);
+
+		SymbolAddChild(phsleActual, &palgs->hsle);
+	    }
+	    else
+	    {
+		//- let's make things simple here, but really incorrect
+
+		palgi = NULL;
+
+		NeurospacesError
+		    (pneuro->pacRootContext,
+		     "AlgorithmListPush",
+		     " Failed to import algorithm (%s),"
+		     " Cannot find parent of model component (%s)",
+		     pcName,
+		     pcTarget);
+	    }
+
+	    PidinStackFree(ppistTarget);
+
+	    PidinStackFree(ppistParent);
 	}
 	else
 	{
