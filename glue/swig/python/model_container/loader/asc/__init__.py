@@ -27,7 +27,6 @@ class UnknownTokenError(Exception):
         return "Line #%s, Found token: %s" % (self.lineno, self.token)
 
 
-
 class ParseError(Exception):
     """ This exception is for use to be thrown when an unknown token is
         encountered in the token stream. It hols the line number and the
@@ -43,7 +42,7 @@ class ParseError(Exception):
 
 _reserved_symbols = ['(', '\"', ')', ';', '|']
 
-#************************* Begin ACSParser  ************************************
+#************************* Begin ASCParser  ************************************
 class ASCParser:
     """
 
@@ -145,8 +144,8 @@ class ASCParser:
 
         if self.curr_position < self.num_chars:
 
-            self.curr_position++
-            
+            self.curr_position = self.curr_position + 1
+
             return self.text[ self.curr_position ]
  
 #-------------------------------------------------------------------------------
