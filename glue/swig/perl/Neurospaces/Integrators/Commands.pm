@@ -30,6 +30,8 @@ our $g3_commands
        'xml_load_help',
        'xml_save',
        'xml_save_help',
+       'volumeconnect',
+       'volumeconnect_help',
       ];
 
 
@@ -284,5 +286,68 @@ sub xml_save_help
 
     return "*** Ok";
 }
+
+
+sub volumeconnect
+{
+    my $projection = shift;
+
+    my $pre = shift;
+
+    my $post = shift;
+
+    my $source_type = shift;
+
+    my $source_x1 = shift;
+
+    my $source_y1 = shift;
+
+    my $source_z1 = shift;
+
+    my $source_x2 = shift;
+
+    my $source_y2 = shift;
+
+    my $source_z2 = shift;
+
+    my $destination_type = shift;
+
+    my $destination_x1 = shift;
+
+    my $destination_y1 = shift;
+
+    my $destination_z1 = shift;
+
+    my $destination_x2 = shift;
+
+    my $destination_y2 = shift;
+
+    my $destination_z2 = shift;
+
+    my $probability = shift;
+
+    my $instance_name = "projectionvolume_$projection";
+
+    $instance_name =~ s(/)(_)g;
+
+    GENESIS3::Commands::querymachine("algorithminstantiate ProjectionVolume $instance_name $projection $pre $post $source_type $source_x1 $source_y1 $source_z1 $source_x2 $source_y2 $source_z2 $destination_type $destination_x1 $destination_y1 $destination_z1 $destination_x2 $destination_y2 $destination_z2 $probability");
+
+    print "created a new projection with name $projection\n";
+
+    return "*** Ok: volumeconnect";
+}
+
+
+sub volumeconnect_help
+{
+    print "description: instantiate a projection, see the G-2 volumeconnect for more information about this command.\n";
+
+    print "synopsis: volumeconnect <projection> <pre> <post> <source_type> <source_x1> <source_y1> <source_z1> <source_x2> <source_y2> <source_z2> <destination_type> <destination_x1> <destination_y1> <destination_z1> <destination_x2> <destination_y2> <destination_z2> <probability>\n";
+
+    return "*** Ok: volumeconnect_help";
+}
+
+
+1;
 
 

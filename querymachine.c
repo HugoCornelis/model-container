@@ -3055,7 +3055,10 @@ static int QueryHandlerAlgorithmInstantiate
 
 	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
 
-	pcLine[iLength] = '\0';
+	if (iLength >= 0)
+	{
+	    pcLine[iLength] = '\0';
+	}
 
 	double dProbability = strtod(pcProbability, NULL);
 
