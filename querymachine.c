@@ -2701,11 +2701,7 @@ static int QueryHandlerAlgorithmInstantiate
 
     pcInstance = strdup(pcInstance);
 
-    struct symtab_Parameters *ppar = NULL;
-
     struct symtab_AlgorithmSymbol *palgs = NULL;
-
-    char *pcTarget = NULL;
 
     struct PidinStack pistTmp = pneuro->pacRootContext->pist;
 
@@ -2715,13 +2711,13 @@ static int QueryHandlerAlgorithmInstantiate
     {
 	//- get target name
 
-	pcTarget = &pcLine[iLength + 1];
+	char *pcTarget = &pcLine[iLength + 1];
 
 	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
 
 	pcLine[iLength] = '\0';
 
-	while (pcTarget[0] == '/' || pcTarget == ':')
+	while (pcTarget[0] == '/' || pcTarget[0] == ':')
 	{
 	    pcTarget++;
 	}
@@ -2813,7 +2809,7 @@ static int QueryHandlerAlgorithmInstantiate
 		ParameterNewFromNumber("Z_COUNT", dZCount),
 		NULL);
 
-	ppar = pparcAlgorithm->ppars;
+	struct symtab_Parameters *ppar = pparcAlgorithm->ppars;
 
 	//- import & init algorithm
 
@@ -2884,6 +2880,306 @@ static int QueryHandlerAlgorithmInstantiate
 	    }
 
 	    PidinStackFree(ppistTarget);
+
+	    PidinStackFree(ppistParent);
+	}
+	else
+	{
+	    NeurospacesError
+		(pneuro->pacRootContext,
+		 "QueryHandlerAlgorithmInstantiate",
+		 " Failed to import algorithm (%s)",
+		 pcName);
+	}
+    }
+    else if (0 == strcmp(pcName, "ProjectionVolume"))
+    {
+	//- get projection name
+
+	char *pcProjection = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	while (pcProjection[0] == '/' || pcProjection[0] == ':')
+	{
+	    pcProjection++;
+	}
+
+	pcProjection = strdup(pcProjection);
+
+	//- get pre name
+
+	char *pcPre = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	pcPre = strdup(pcPre);
+
+	//- get post name
+
+	char *pcPost = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	pcPost = strdup(pcPost);
+
+	//- get source type
+
+	char *pcSourceType = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	pcSourceType = strdup(pcSourceType);
+
+	//- get source region
+
+	char *pcSourceX1 = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dSourceX1 = strtod(pcSourceX1, NULL);
+
+	char *pcSourceY1 = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dSourceY1 = strtod(pcSourceY1, NULL);
+
+	char *pcSourceZ1 = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dSourceZ1 = strtod(pcSourceZ1, NULL);
+
+	char *pcSourceX2 = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dSourceX2 = strtod(pcSourceX2, NULL);
+
+	char *pcSourceY2 = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dSourceY2 = strtod(pcSourceY2, NULL);
+
+	char *pcSourceZ2 = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dSourceZ2 = strtod(pcSourceZ2, NULL);
+
+	//- get target type
+
+	char *pcTargetType = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	pcTargetType = strdup(pcTargetType);
+
+	//- get target region
+
+	char *pcTargetX1 = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dTargetX1 = strtod(pcTargetX1, NULL);
+
+	char *pcTargetY1 = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dTargetY1 = strtod(pcTargetY1, NULL);
+
+	char *pcTargetZ1 = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dTargetZ1 = strtod(pcTargetZ1, NULL);
+
+	char *pcTargetX2 = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dTargetX2 = strtod(pcTargetX2, NULL);
+
+	char *pcTargetY2 = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dTargetY2 = strtod(pcTargetY2, NULL);
+
+	char *pcTargetZ2 = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dTargetZ2 = strtod(pcTargetZ2, NULL);
+
+	//- define probability
+
+	char *pcProbability = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dProbability = strtod(pcProbability, NULL);
+
+	//- these ones still hardcoded
+
+	double dWeight = 0.0;
+
+	char *pcDelayType = "FIXED";
+
+	double dFixedDelay = 0.0;
+	double dVelocity = 0.0;
+
+	double dRandomSeed = 0.0;
+
+	//! see also the ns-sli for other examples of the usage of this function
+
+	struct symtab_ParContainer *pparcAlgorithm
+	    = ParContainerNewFromList
+	      (/* ParameterNewFromString("INSTANCE_NAME", pcInstanceTemplate), */
+		  ParameterNewFromString("PROJECTION_NAME", pcProjection),
+		  ParameterNewFromNumber("RANDOMSEED", dRandomSeed),
+		  ParameterNewFromNumber("PROBABILITY", dProbability),
+		  ParameterNewFromString("PRE_CONTEXT", pcPre),
+		  ParameterNewFromString("POST_CONTEXT", pcPost),
+
+		  ParameterNewFromString("SOURCE_TYPE", pcSourceType),
+
+		  ParameterNewFromNumber("SOURCE_X1", dSourceX1),
+		  ParameterNewFromNumber("SOURCE_Y1", dSourceY1),
+		  ParameterNewFromNumber("SOURCE_Z1", dSourceZ1),
+
+		  ParameterNewFromNumber("SOURCE_X2", dSourceX2),
+		  ParameterNewFromNumber("SOURCE_Y2", dSourceY2),
+		  ParameterNewFromNumber("SOURCE_Z2", dSourceZ2),
+
+		  ParameterNewFromString("DESTINATION_TYPE", pcTargetType),
+
+		  ParameterNewFromNumber("DESTINATION_X1", dTargetX1),
+		  ParameterNewFromNumber("DESTINATION_Y1", dTargetY1),
+		  ParameterNewFromNumber("DESTINATION_Z1", dTargetZ1),
+
+		  ParameterNewFromNumber("DESTINATION_X2", dTargetX2),
+		  ParameterNewFromNumber("DESTINATION_Y2", dTargetY2),
+		  ParameterNewFromNumber("DESTINATION_Z2", dTargetZ2),
+
+		  ParameterNewFromNumber("WEIGHT", dWeight),
+
+		  ParameterNewFromString("DELAY_TYPE", pcDelayType),
+
+		  ParameterNewFromNumber("FIXED_DELAY", dFixedDelay),
+		  ParameterNewFromNumber("VELOCITY", dVelocity),
+		  NULL);
+
+	struct symtab_Parameters *ppar = pparcAlgorithm->ppars;
+
+	//- import & init algorithm
+
+	//t error checking
+
+	palgs = AlgorithmSymbolCalloc();
+
+	//t pparc is lost, memory leak
+
+	AlgorithmSymbolAssignParameters(palgs, ppar);
+
+	palgi
+	    = ParserAlgorithmImport
+	      (pneuro->pacRootContext,
+	       pcName,
+	       pcInstance,
+	       ppar,
+	       palgs);
+
+	if (palgi)
+	{
+	    AlgorithmSymbolSetAlgorithmInstance(palgs, palgi);
+
+	    struct symtab_Projection *pprojProjection = ProjectionCalloc();
+
+	    struct PidinStack *ppistProjection = PidinStackParse(pcProjection);
+
+	    struct PidinStack *ppistParent = PidinStackDuplicate(ppistProjection);
+
+	    struct symtab_IdentifierIndex *pidinProjection
+		= PidinStackPop(ppistParent);
+
+	    struct symtab_HSolveListElement *phsleParent
+		= PidinStackLookupTopSymbol(ppistParent);
+
+	    if (phsleParent)
+	    {
+		SymbolSetName(&pprojProjection->bio.ioh.iol.hsle, pidinProjection);
+
+		SymbolAddChild(phsleParent, &pprojProjection->bio.ioh.iol.hsle);
+
+		PidinStackPop(ppistProjection);
+
+		PidinStackLookupTopSymbol(ppistProjection);
+
+		pneuro->pacRootContext->pist = *ppistProjection;
+
+		ParserContextSetActual(pneuro->pacRootContext, &pprojProjection->bio.ioh.iol.hsle);
+
+		struct symtab_HSolveListElement *phsleActual
+		    = ParserContextGetActual(pneuro->pacRootContext);
+
+		SymbolAddChild(phsleActual, &palgs->hsle);
+	    }
+	    else
+	    {
+		//- let's make things simple here, but really incorrect
+
+		palgi = NULL;
+
+		NeurospacesError
+		    (pneuro->pacRootContext,
+		     "QueryHandlerAlgorithmInstantiate",
+		     " Failed to import algorithm (%s),"
+		     " Cannot find parent of model component (%s)",
+		     pcName,
+		     pcProjection);
+	    }
+
+	    PidinStackFree(ppistProjection);
 
 	    PidinStackFree(ppistParent);
 	}
@@ -4484,11 +4780,11 @@ QueryMachineNeuroConnectionTraverser
 
 	if (subsetof_cached_connection(iType))
 	{
-	  CachedConnectionPrint(pconn, TRUE, 8, stdout);
+	    CachedConnectionPrint(pconn, TRUE, 8, stdout);
 	}
 	else if (subsetof_connection(iType))
 	{
-	  ConnectionPrint(pconn, TRUE, 8, stdout);
+	    ConnectionPrint(pconn, TRUE, 8, stdout);
 	}
 
 	//- increment serial count
