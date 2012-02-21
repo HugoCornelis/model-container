@@ -2814,12 +2814,7 @@ static int QueryHandlerAlgorithmInstantiate
 		NULL);
 
 	ppar = pparcAlgorithm->ppars;
-    }
 
-    //- preparation, in the parser this happens with a push
-
-    if (1)
-    {
 	//- import & init algorithm
 
 	//t error checking
@@ -2842,31 +2837,9 @@ static int QueryHandlerAlgorithmInstantiate
 	{
 	    AlgorithmSymbolSetAlgorithmInstance(palgs, palgi);
 
-/* 	ParserContextPushAlgorithmState(palgs); */
-/* 	ParserContextPushAlgorithmState(palgi); */
-/* 	ParserContextPushAlgorithmState($3); */
-/* 	ParserContextPushAlgorithmState($4); */
-
-/* 	ParserContextPushAlgorithmState(PARSERSTATE_ALGORITHM); */
-
-	    //- insert algorithm instance in the symbol table
-
-	    //t I prefer to move this code to the
-	    //t AlgorithmListPush non-terminal, but that
-	    //t does not work because
-	    //t ParserContextGetActual() sometimes returns
-	    //t NULL overthere, don't know why.
-
-/* 	    struct PidinStack *ppistRoot = PidinStackParse("/"); */
-
-/* 	    struct symtab_HSolveListElement *phsleRoot = PidinStackLookupTopSymbol(ppistRoot); */
-
 	    struct symtab_Population *ppopuTarget = PopulationCalloc();
 
 	    struct PidinStack *ppistTarget = PidinStackParse(pcTarget);
-
-/* 	    struct symtab_IdentifierIndex *pidinTarget */
-/* 		= IdinNewFromChars(pcTarget); */
 
 	    struct PidinStack *ppistParent = PidinStackDuplicate(ppistTarget);
 
@@ -2882,14 +2855,9 @@ static int QueryHandlerAlgorithmInstantiate
 
 		SymbolAddChild(phsleParent, &ppopuTarget->segr.bio.ioh.iol.hsle);
 
-/* 		struct PidinStack *ppistNetwork */
-/* 		    = PidinStackDuplicate(ppistRoot); */
-
 		PidinStackPop(ppistTarget);
 
 		PidinStackLookupTopSymbol(ppistTarget);
-
-/* 		PidinStackPushSymbol(ppistTarget, &ppopuTarget->segr.bio.ioh.iol.hsle); */
 
 		pneuro->pacRootContext->pist = *ppistTarget;
 
@@ -2908,7 +2876,7 @@ static int QueryHandlerAlgorithmInstantiate
 
 		NeurospacesError
 		    (pneuro->pacRootContext,
-		     "AlgorithmListPush",
+		     "QueryHandlerAlgorithmInstantiate",
 		     " Failed to import algorithm (%s),"
 		     " Cannot find parent of model component (%s)",
 		     pcName,
@@ -2923,7 +2891,7 @@ static int QueryHandlerAlgorithmInstantiate
 	{
 	    NeurospacesError
 		(pneuro->pacRootContext,
-		 "AlgorithmListPush",
+		 "QueryHandlerAlgorithmInstantiate",
 		 " Failed to import algorithm (%s)",
 		 pcName);
 	}
@@ -2933,107 +2901,27 @@ static int QueryHandlerAlgorithmInstantiate
 
     if (palgi)
     {
-	//- while algorithms on context stack
+	//- if algorithm handlers are not disabled by the options
 
-/* 	while ((pvState = ParserContextPopAlgorithmState()) */
-/* 	       != PARSERSTATE_START_ALGORITHMS) */
+	if (!(pneuro->pacRootContext->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_ALGORITHM_HANDLING))
 	{
-	    //- pop algorithm info
+	    //- call algorithm on current symbol
 
-/* 	    char *pcInstance = (char *)ParserContextPopAlgorithmState(); */
-/* 	    char *pcName = (char *)ParserContextPopAlgorithmState(); */
-/* 	    struct AlgorithmInstance *palgi */
-/* 		= (struct AlgorithmInstance *) */
-/* 		  ParserContextPopAlgorithmState(); */
-
-/* 	    struct symtab_AlgorithmSymbol *palgs */
-/* 		= (struct symtab_AlgorithmSymbol *) */
-/* 		  ParserContextPopAlgorithmState(); */
-
-	    //- if algorithm handlers are not disabled by the options
-
-	    if (!(pneuro->pacRootContext->pneuro->pnsc->nso.iFlags & NSOFLAG_DISABLE_ALGORITHM_HANDLING))
-	    {
-		//- call algorithm on current symbol
-
-		ParserAlgorithmHandle
-		    (pneuro->pacRootContext,
-		     ParserContextGetActual(pneuro->pacRootContext),
-		     palgi,
-		     pcName,
-		     pcInstance);
-	    }
-
-	    //t I could free pcName, pcInstance here ?
-
-/* 			//- insert algorithm instance in the symbol table */
-
-/* 			//t I prefer to move this code to the */
-/* 			//t AlgorithmListPush non-terminal, but that */
-/* 			//t does not work because */
-/* 			//t ParserContextGetActual() sometimes returns */
-/* 			//t NULL overthere, don't know why. */
-
-/* 			//t it looks like that the symbol that should */
-/* 			//t go into phsleActual is allocated to late, ie */
-/* 			//t in .*Description, and AlgorithmListPush is */
-/* 			//t called for in .*Front.  But, in .*Front the */
-/* 			//t type of the symbol to be allocated is */
-/* 			//t already known, so it is possible to allocate */
-/* 			//t the correct symbol type, and put it in */
-/* 			//t phsleActual. */
-
-/* 			struct symtab_HSolveListElement *phsleActual */
-/* 			    = ParserContextGetActual((PARSERCONTEXT *)pacParserContext); */
-
-/* 			SymbolAddChild(phsleActual, &palgs->hsle); */
-
-/* 			int iResult = ParserAddModel((PARSERCONTEXT *)pacParserContext, &palgs->hsle); */
-
-/* 			if (!iResult) */
-/* 			{ */
-/* 			    NeurospacesError */
-/* 				((PARSERCONTEXT *)pacParserContext, */
-/* 				 "AlgorithmListPush", */
-/* 				 "Error inserting algorithm instance (%s) in symbol table (class %s).", */
-/* 				 $3, */
-/* 				 $5); */
-/* 			} */
-
-	    //- disable the algorithm
-
-	    ParserAlgorithmDisable
+	    ParserAlgorithmHandle
 		(pneuro->pacRootContext,
+		 ParserContextGetActual(pneuro->pacRootContext),
 		 palgi,
 		 pcName,
 		 pcInstance);
 	}
 
-/* 	//- sanity check :  */
-/* 	//- pvState should be PARSERSTATE_START_ALGORITHMS here */
+	//- disable the algorithm
 
-/* 	if (pvState != PARSERSTATE_START_ALGORITHMS) */
-/* 	{ */
-/* 	    NeurospacesError */
-/* 		((PARSERCONTEXT *)pacParserContext, */
-/* 		 "AlgorithmListPop", */
-/* 		 " Internal error :" */
-/* 		 " non-terminal AlgorithmListPop encounters" */
-/* 		 " messed up algorithm stack\n" */
-/* 		 " Internal error : Expecting" */
-/* 		 " PARSERSTATE_START_ALGORITHMS (== %i)," */
-/* 		 " encountered %i\n\n", */
-/* 		 PARSERSTATE_START_ALGORITHMS, */
-
-/* 		 //t gives a warning on 64bit machines. */
-
-/* 		 (int)pvState); */
-
-/* 	    //- dump core  */
-/* 	    //- (should contain interesting info to be examined) */
-
-/* 	    *(int *)NULL = 0xdeadbeaf; */
-/* 	} */
+	ParserAlgorithmDisable
+	    (pneuro->pacRootContext,
+	     palgi,
+	     pcName,
+	     pcInstance);
     }
 
     pneuro->pacRootContext->pist = pistTmp;
