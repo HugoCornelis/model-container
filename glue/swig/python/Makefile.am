@@ -17,15 +17,15 @@
 ##'
 ##############################################################################
 
-nobase_dist_python_DATA = \
+
+EXTRA_DIST = \
+	model_container.i \
 	model_container/__cbi__.py \
 	model_container/__init__.py \
 	model_container/errors.py \
 	model_container/symbols.py \
 	model_container/loader/__init__.py \
-	model_container/loader/asc/__init__.py 
-
-EXTRA_DIST = \
+	model_container/loader/asc/__init__.py \
 	clean.py \
 	setup.py \
 	uninstall.py 

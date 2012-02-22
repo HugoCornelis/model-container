@@ -345,6 +345,7 @@ clean-local:
 	$(RM) -rf $(top_srcdir)/*_BUILD
 	$(RM) -f $(top_srcdir)/build_*.log
 	$(RM) $(top_srcdir)/model-container*.tar.gz
+	$(RM) -rf $(top_srcdir)/model-container-*
 
 TESTS = /usr/local/bin/neurospaces_harness
 
