@@ -3,6 +3,7 @@ set env NEUROSPACES_NMC_PROJECT_MODELS = /home/cornelis/EM/models
 set args -q cells/purkinje/edsjb1994.ndf
 set args -q tests/networks/spiker4.ndf
 set args -q cells/RScell-nolib.ndf
+set args -q legacy/networks/network.ndf
 file ./neurospacesparse
 break parsererror
 echo .gdbinit: Done .gdbinit\n

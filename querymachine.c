@@ -2902,11 +2902,6 @@ static int QueryHandlerAlgorithmInstantiate
 
 	pcLine[iLength] = '\0';
 
-	while (pcProjection[0] == '/' || pcProjection[0] == ':')
-	{
-	    pcProjection++;
-	}
-
 	pcProjection = strdup(pcProjection);
 
 	//- get pre name
@@ -3158,9 +3153,9 @@ static int QueryHandlerAlgorithmInstantiate
 
 		PidinStackLookupTopSymbol(ppistProjection);
 
-		pneuro->pacRootContext->pist = *ppistProjection;
+		pneuro->pacRootContext->pist = *ppistParent;
 
-		ParserContextSetActual(pneuro->pacRootContext, &pprojProjection->bio.ioh.iol.hsle);
+		ParserContextSetActual(pneuro->pacRootContext, phsleParent);
 
 		struct symtab_HSolveListElement *phsleActual
 		    = ParserContextGetActual(pneuro->pacRootContext);
