@@ -79,9 +79,9 @@ class ASCParser:
         if not text is None:
 
             self.text = text
-
+        
         elif not file is None:
-
+            
             if os.path.isfile(file):
                 
                 f = open(file,'rb')
@@ -119,22 +119,30 @@ class ASCParser:
         
         while not token_found:
 
-            ch = self._next_char(self)
+            ch = self._next_char()
 
-            if ch.isspace():
+            if ch is None:
 
-                if len(token) > 0:
+                return None
 
-                    token_found = True
-                    
-                # keep going if we have white space
-                continue
-                
             elif ch in _reserved_symbols:
 
                 token_found = True
 
-            token += ch
+                token = ch
+                
+            elif ch.isspace():
+                    
+                if len(token) > 0:
+                    
+                    token_found = True
+                
+                # keep going if we have white space
+                continue
+                
+            else:
+                                    
+                token += ch
 
         return token
     
@@ -142,12 +150,33 @@ class ASCParser:
 
     def _next_char(self):
 
+        self.curr_position = self.curr_position + 1
+        
         if self.curr_position < self.num_chars:
 
-            self.curr_position = self.curr_position + 1
-
             return self.text[ self.curr_position ]
- 
+
+        else:
+
+            # We're done
+            return None
+
+#-------------------------------------------------------------------------------
+
+    def _peek(self):
+        """
+        See the next character
+        """
+        if self.curr_position + 1 < self.num_chars:
+
+            return self.text[ self.curr_position + 1 ]
+
+        else:
+
+            # We're done
+            return None
+        
+
 #-------------------------------------------------------------------------------
 
     def _morphology(self):

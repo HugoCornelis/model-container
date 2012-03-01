@@ -1,0 +1,37 @@
+#! /usr/bin/env python
+import os
+import pdb
+import sys
+
+from test_library import add_package_path
+
+add_package_path('model-container')
+
+from model_container.loader.asc import ASCParser
+
+asc = ASCParser(file=os.path.join('tests','python','asc_files','e1cb4a1.asc'))
+
+
+token = ""
+tokens = 0
+
+while True:
+
+        
+    token = asc.next()
+
+    if token == "Color":
+
+        pdb.set_trace()
+        
+    if token is None:
+
+        break
+
+    else:
+
+        tokens = tokens + 1
+        
+        print "Token %d is %s" % (tokens,token)
+
+print "Done!"
