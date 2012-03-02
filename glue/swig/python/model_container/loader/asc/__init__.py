@@ -109,7 +109,7 @@ class ASCParser:
 
 #-------------------------------------------------------------------------------
 
-    def next(self):
+    def next(self, return_newline=False):
 
         token_found = False
 
@@ -130,10 +130,9 @@ class ASCParser:
                 token_found = True
 
                 token = ch
-                
-            elif ch.isspace() or self._peek() in _reserved_symbols:
-
             
+            elif ch.isspace() or self._peek() in _reserved_symbols or self._peek() == '\n':
+
                 if len(token) > 0:
 
                     if self._peek() in _reserved_symbols:
@@ -141,6 +140,13 @@ class ASCParser:
                         token += ch
                         
                     token_found = True
+
+                elif return_newline and ch == '\n':
+
+                    token_found = True
+
+                    token = ch
+                
                 
                 # keep going if we have white space
                 continue
