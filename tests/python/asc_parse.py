@@ -29,6 +29,6 @@ while True:
 
         tokens = tokens + 1
         
-print "File e1cb4a1.asc has %d tokens" % (tokens)
+        print "Token %d is %s" % (tokens,token)
 
 print "Done!"
