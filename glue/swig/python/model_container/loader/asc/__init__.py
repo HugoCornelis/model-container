@@ -131,10 +131,15 @@ class ASCParser:
 
                 token = ch
                 
-            elif ch.isspace():
-                    
+            elif ch.isspace() or self._peek() in _reserved_symbols:
+
+            
                 if len(token) > 0:
-                    
+
+                    if self._peek() in _reserved_symbols:
+
+                        token += ch
+                        
                     token_found = True
                 
                 # keep going if we have white space

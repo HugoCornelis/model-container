@@ -20,10 +20,7 @@ while True:
         
     token = asc.next()
 
-    if token == "Color":
 
-        pdb.set_trace()
-        
     if token is None:
 
         break
