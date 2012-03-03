@@ -67,6 +67,22 @@ struct ProjectionVolumeOptions_type
 
     double dProbability;
 
+    /*m source population: component name */
+
+    char *pcSource;
+
+    /*m source population: context */
+
+    struct PidinStack *ppistSource;
+
+    /*m target population: component name */
+
+    char *pcTarget;
+
+    /*m target population: context */
+
+    struct PidinStack *ppistTarget;
+
     /*m pre synaptic part: component name */
 
     char *pcPre;
@@ -327,6 +343,46 @@ ProjectionVolumeInstanceNew
 	//- scan probability value
 
 	ppvi->pro.dProbability = SymbolParameterResolveValue(&palgs->hsle, ppist, "PROBABILITY");
+
+	//- scan source population: component name
+
+	struct symtab_Parameters *pparSource
+	    = SymbolFindParameter(&palgs->hsle, ppist, "SOURCE");
+
+	if (pparSource)
+	{
+	    ppvi->pro.pcSource = ParameterGetString(pparSource);
+	}
+
+	//- scan source population: context
+
+	struct symtab_Parameters *pparSourceContext
+	    = SymbolFindParameter(&palgs->hsle, ppist, "SOURCE_CONTEXT");
+
+	if (pparSourceContext)
+	{
+	    ppvi->pro.ppistSource = PidinStackParse(ParameterGetString(pparSourceContext));
+	}
+
+	//- scan target population: component name
+
+	struct symtab_Parameters *pparTarget
+	    = SymbolFindParameter(&palgs->hsle, ppist, "TARGET");
+
+	if (pparTarget)
+	{
+	    ppvi->pro.pcTarget = ParameterGetString(pparTarget);
+	}
+
+	//- scan target population: context
+
+	struct symtab_Parameters *pparTargetContext
+	    = SymbolFindParameter(&palgs->hsle, ppist, "TARGET_CONTEXT");
+
+	if (pparTargetContext)
+	{
+	    ppvi->pro.ppistTarget = PidinStackParse(ParameterGetString(pparTargetContext));
+	}
 
 	//- scan presynaptic part: component name
 
@@ -1146,10 +1202,60 @@ static int ProjectionVolumeInstancePrintInfo
 
     fprintf
 	(pfile,
+	 "    ProjectionVolumeInstance_source: %s\n",
+	 ppvi->pro.pcSource
+	 ? ppvi->pro.pcSource
+	 : "(none)");
+
+    if (ppvi->pro.ppistSource)
+    {
+	char pc[1000];
+
+	PidinStackString(ppvi->pro.ppistSource, pc, sizeof(pc));
+
+	fprintf
+	    (pfile,
+	     "    ProjectionVolumeInstance_source_context: %s\n",
+	     pc);
+    }
+
+    fprintf
+	(pfile,
+	 "    ProjectionVolumeInstance_target: %s\n",
+	 ppvi->pro.pcTarget
+	 ? ppvi->pro.pcTarget
+	 : "(none)");
+
+    if (ppvi->pro.ppistTarget)
+    {
+	char pc[1000];
+
+	PidinStackString(ppvi->pro.ppistPre, pc, sizeof(pc));
+
+	fprintf
+	    (pfile,
+	     "    ProjectionVolumeInstance_target_context: %s\n",
+	     pc);
+    }
+
+    fprintf
+	(pfile,
 	 "    ProjectionVolumeInstance_pre: %s\n",
 	 ppvi->pro.pcPre
 	 ? ppvi->pro.pcPre
 	 : "(none)");
+
+    if (ppvi->pro.ppistPre)
+    {
+	char pc[1000];
+
+	PidinStackString(ppvi->pro.ppistPre, pc, sizeof(pc));
+
+	fprintf
+	    (pfile,
+	     "    ProjectionVolumeInstance_pre_context: %s\n",
+	     pc);
+    }
 
     fprintf
 	(pfile,
@@ -1157,6 +1263,18 @@ static int ProjectionVolumeInstancePrintInfo
 	 ppvi->pro.pcPost
 	 ? ppvi->pro.pcPost
 	 : "(none)");
+
+    if (ppvi->pro.ppistPost)
+    {
+	char pc[1000];
+
+	PidinStackString(ppvi->pro.ppistPre, pc, sizeof(pc));
+
+	fprintf
+	    (pfile,
+	     "    ProjectionVolumeInstance_post_context: %s\n",
+	     pc);
+    }
 
     fprintf
 	(pfile,
@@ -1238,15 +1356,29 @@ ProjectionVolumeInstanceSymbolHandler
 	    && instanceof_projection(ppvi->prv.phsleProjection))
 	{
 	    struct symtab_Parameters *pparSource = NULL;
-	    struct symtab_Parameters *pparTarget = NULL;
+
+	    if (ppvi->pro.pcSource)
+	    {
+		pparSource = ParameterNewFromString("SOURCE", ppvi->pro.pcSource);
+	    }
+	    else if (ppvi->pro.ppistSource)
+	    {
+		struct symtab_IdentifierIndex *pidinSource
+		    = PidinStackToPidinQueue(ppvi->pro.ppistSource);
+
+		pparSource = ParameterNewFromPidinQueue("SOURCE", pidinSource, TYPE_PARA_SYMBOLIC);
+	    }
 
 	    //- get source and target population
 
-	    /// \todo need to check performance issues in these routines
+	    if (!pparSource)
+	    {
+		/// \todo need to check performance issues in these routines
 
-	    pparSource
-		= SymbolFindParameter
-		  (ppvi->prv.phsleProjection, ppvi->prv.ppistProjection, "SOURCE");
+		pparSource
+		    = SymbolFindParameter
+		      (ppvi->prv.phsleProjection, ppvi->prv.ppistProjection, "SOURCE");
+	    }
 
 	    if (pparSource)
 	    {
@@ -1258,9 +1390,26 @@ ProjectionVolumeInstanceSymbolHandler
 		    = PidinStackLookupTopSymbol(ppvi->prv.ppistSource);
 	    }
 
-	    pparTarget
-		= SymbolFindParameter
-		  (ppvi->prv.phsleProjection, ppvi->prv.ppistProjection, "TARGET");
+	    struct symtab_Parameters *pparTarget = NULL;
+
+	    if (ppvi->pro.pcTarget)
+	    {
+		pparTarget = ParameterNewFromString("SOURCE", ppvi->pro.pcTarget);
+	    }
+	    else if (ppvi->pro.ppistTarget)
+	    {
+		struct symtab_IdentifierIndex *pidinTarget
+		    = PidinStackToPidinQueue(ppvi->pro.ppistTarget);
+
+		pparTarget = ParameterNewFromPidinQueue("SOURCE", pidinTarget, TYPE_PARA_SYMBOLIC);
+	    }
+
+	    if (!pparTarget)
+	    {
+		pparTarget
+		    = SymbolFindParameter
+		      (ppvi->prv.phsleProjection, ppvi->prv.ppistProjection, "TARGET");
+	    }
 
 	    if (pparTarget)
 	    {
@@ -1277,11 +1426,11 @@ ProjectionVolumeInstanceSymbolHandler
 	    if (ppvi->prv.phsleSource
 		&& ppvi->prv.phsleTarget
 		&& (instanceof_population(ppvi->prv.phsleSource)
-		    || instanceof_cell(ppvi->prv.phsleSource))
+		    || instanceof_cell(ppvi->prv.phsleSource)
+		    || strcmp(SymbolGetName(ppvi->prv.phsleSource), "/") == 0)
 		&& (instanceof_population(ppvi->prv.phsleTarget)
-		    || instanceof_cell(ppvi->prv.phsleTarget))
-		|| (strcmp(SymbolGetName(ppvi->prv.phsleSource), "/") == 0
-		    && strcmp(SymbolGetName(ppvi->prv.phsleSource), "/") == 0))
+		    || instanceof_cell(ppvi->prv.phsleTarget)
+		    || strcmp(SymbolGetName(ppvi->prv.phsleSource), "/") == 0))
 	    {
 		//- lookup global cache
 

@@ -2904,6 +2904,26 @@ static int QueryHandlerAlgorithmInstantiate
 
 	pcProjection = strdup(pcProjection);
 
+	//- get source name
+
+	char *pcSource = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	pcSource = strdup(pcSource);
+
+	//- get target name
+
+	char *pcTarget = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	pcTarget = strdup(pcTarget);
+
 	//- get pre name
 
 	char *pcPre = &pcLine[iLength + 1];
@@ -3076,8 +3096,10 @@ static int QueryHandlerAlgorithmInstantiate
 		  ParameterNewFromString("PROJECTION_NAME", pcProjection),
 		  ParameterNewFromNumber("RANDOMSEED", dRandomSeed),
 		  ParameterNewFromNumber("PROBABILITY", dProbability),
-		  ParameterNewFromString("PRE_CONTEXT", pcPre),
-		  ParameterNewFromString("POST_CONTEXT", pcPost),
+		  ParameterNewFromString("SOURCE_CONTEXT", pcSource),
+		  ParameterNewFromString("TARGET_CONTEXT", pcTarget),
+		  ParameterNewFromString("PRE", pcPre),
+		  ParameterNewFromString("POST", pcPost),
 
 		  ParameterNewFromString("SOURCE_TYPE", pcSourceType),
 

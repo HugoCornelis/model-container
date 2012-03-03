@@ -292,6 +292,10 @@ sub volumeconnect
 {
     my $projection = shift;
 
+    my $source = shift;
+
+    my $target = shift;
+
     my $pre = shift;
 
     my $post = shift;
@@ -330,7 +334,7 @@ sub volumeconnect
 
     $instance_name =~ s(/)(_)g;
 
-    GENESIS3::Commands::querymachine("algorithminstantiate ProjectionVolume $instance_name $projection $pre $post $source_type $source_x1 $source_y1 $source_z1 $source_x2 $source_y2 $source_z2 $destination_type $destination_x1 $destination_y1 $destination_z1 $destination_x2 $destination_y2 $destination_z2 $probability");
+    GENESIS3::Commands::querymachine("algorithminstantiate ProjectionVolume $instance_name $projection $source $target $pre $post $source_type $source_x1 $source_y1 $source_z1 $source_x2 $source_y2 $source_z2 $destination_type $destination_x1 $destination_y1 $destination_z1 $destination_x2 $destination_y2 $destination_z2 $probability");
 
     print "created a new projection with name $projection\n";
 
