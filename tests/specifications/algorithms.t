@@ -141,6 +141,8 @@ report:
     ProjectionVolumeInstance_projection: GABAB
     ProjectionVolumeInstance_randomseed: 1212.000000
     ProjectionVolumeInstance_probability: 1.000000
+    ProjectionVolumeInstance_source: \\(none\\)
+    ProjectionVolumeInstance_target: \\(none\\)
     ProjectionVolumeInstance_pre: spikegen
     ProjectionVolumeInstance_post: GABAB
     ProjectionVolumeInstance_weight: 9.000000
@@ -165,6 +167,8 @@ report:
     ProjectionVolumeInstance_projection: GABAA
     ProjectionVolumeInstance_randomseed: 1212.000000
     ProjectionVolumeInstance_probability: 1.000000
+    ProjectionVolumeInstance_source: \\(none\\)
+    ProjectionVolumeInstance_target: \\(none\\)
     ProjectionVolumeInstance_pre: spikegen
     ProjectionVolumeInstance_post: GABAA
     ProjectionVolumeInstance_weight: 45.000000
@@ -189,6 +193,8 @@ report:
     ProjectionVolumeInstance_projection: ForwardProjection
     ProjectionVolumeInstance_randomseed: 1212.000000
     ProjectionVolumeInstance_probability: 1.000000
+    ProjectionVolumeInstance_source: \\(none\\)
+    ProjectionVolumeInstance_target: \\(none\\)
     ProjectionVolumeInstance_pre: spikegen
     ProjectionVolumeInstance_post: pf_AMPA
     ProjectionVolumeInstance_weight: 45.000000
@@ -213,6 +219,8 @@ report:
     ProjectionVolumeInstance_projection: AMPA
     ProjectionVolumeInstance_randomseed: 1212.000000
     ProjectionVolumeInstance_probability: 0.306100
+    ProjectionVolumeInstance_source: \\(none\\)
+    ProjectionVolumeInstance_target: \\(none\\)
     ProjectionVolumeInstance_pre: spikegen
     ProjectionVolumeInstance_post: mf_AMPA
     ProjectionVolumeInstance_weight: 6.000000
@@ -237,6 +245,8 @@ report:
     ProjectionVolumeInstance_projection: NMDA
     ProjectionVolumeInstance_randomseed: 1212.000000
     ProjectionVolumeInstance_probability: 0.306100
+    ProjectionVolumeInstance_source: \\(none\\)
+    ProjectionVolumeInstance_target: \\(none\\)
     ProjectionVolumeInstance_pre: spikegen
     ProjectionVolumeInstance_post: mf_NMDA
     ProjectionVolumeInstance_weight: 4.000000
@@ -261,6 +271,8 @@ report:
     ProjectionVolumeInstance_projection: GolgiComponent
     ProjectionVolumeInstance_randomseed: 1212.000000
     ProjectionVolumeInstance_probability: 1.000000
+    ProjectionVolumeInstance_source: \\(none\\)
+    ProjectionVolumeInstance_target: \\(none\\)
     ProjectionVolumeInstance_pre: spikegen
     ProjectionVolumeInstance_post: mf_AMPA
     ProjectionVolumeInstance_weight: 0.000000
@@ -477,6 +489,8 @@ report:
     ProjectionVolumeInstance_projection: GABAB
     ProjectionVolumeInstance_randomseed: 1212.000000
     ProjectionVolumeInstance_probability: 1.000000
+    ProjectionVolumeInstance_source: \\(none\\)
+    ProjectionVolumeInstance_target: \\(none\\)
     ProjectionVolumeInstance_pre: spikegen
     ProjectionVolumeInstance_post: GABAB
     ProjectionVolumeInstance_weight: 9.000000
@@ -493,6 +507,8 @@ report:
     ProjectionVolumeInstance_projection: GABAA
     ProjectionVolumeInstance_randomseed: 1212.000000
     ProjectionVolumeInstance_probability: 1.000000
+    ProjectionVolumeInstance_source: \\(none\\)
+    ProjectionVolumeInstance_target: \\(none\\)
     ProjectionVolumeInstance_pre: spikegen
     ProjectionVolumeInstance_post: GABAA
     ProjectionVolumeInstance_weight: 45.000000
@@ -509,6 +525,8 @@ report:
     ProjectionVolumeInstance_projection: ForwardProjection
     ProjectionVolumeInstance_randomseed: 1212.000000
     ProjectionVolumeInstance_probability: 1.000000
+    ProjectionVolumeInstance_source: \\(none\\)
+    ProjectionVolumeInstance_target: \\(none\\)
     ProjectionVolumeInstance_pre: spikegen
     ProjectionVolumeInstance_post: pf_AMPA
     ProjectionVolumeInstance_weight: 45.000000
@@ -525,6 +543,8 @@ report:
     ProjectionVolumeInstance_projection: AMPA
     ProjectionVolumeInstance_randomseed: 1212.000000
     ProjectionVolumeInstance_probability: 0.306100
+    ProjectionVolumeInstance_source: \\(none\\)
+    ProjectionVolumeInstance_target: \\(none\\)
     ProjectionVolumeInstance_pre: spikegen
     ProjectionVolumeInstance_post: mf_AMPA
     ProjectionVolumeInstance_weight: 6.000000
@@ -541,6 +561,8 @@ report:
     ProjectionVolumeInstance_projection: NMDA
     ProjectionVolumeInstance_randomseed: 1212.000000
     ProjectionVolumeInstance_probability: 0.306100
+    ProjectionVolumeInstance_source: \\(none\\)
+    ProjectionVolumeInstance_target: \\(none\\)
     ProjectionVolumeInstance_pre: spikegen
     ProjectionVolumeInstance_post: mf_NMDA
     ProjectionVolumeInstance_weight: 4.000000
@@ -557,6 +579,8 @@ report:
     ProjectionVolumeInstance_projection: GolgiComponent
     ProjectionVolumeInstance_randomseed: 1212.000000
     ProjectionVolumeInstance_probability: 1.000000
+    ProjectionVolumeInstance_source: \\(none\\)
+    ProjectionVolumeInstance_target: \\(none\\)
     ProjectionVolumeInstance_pre: spikegen
     ProjectionVolumeInstance_post: mf_AMPA
     ProjectionVolumeInstance_weight: 0.000000
