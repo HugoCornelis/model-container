@@ -16,6 +16,8 @@ our $g3_commands
     = [
        'createmap',
        'createmap_help',
+       'insert_alias',
+       'insert_alias_help',
        'morphology_list_spine_heads',
        'morphology_list_spine_heads_help',
        'morphology_summarize',
@@ -111,6 +113,28 @@ sub createmap_help
     print "synopsis: createmap <prototype> <target> <positionX> <positionY> <deltaX> <deltaY>\n";
 
     return "*** Ok: createmap_help";
+}
+
+
+sub insert_alias
+{
+    my $source = shift;
+
+    my $target = shift;
+
+    GENESIS3::Commands::querymachine("insert $source $target");
+
+    return "*** Ok: insert_alias";
+}
+
+
+sub insert_alias_help
+{
+    print "description: insert a new public model component based on an existing private one.\n";
+
+    print "synopsis: insert_alias <source> <target>\n";
+
+    return "*** Ok: insert_alias_help";
 }
 
 

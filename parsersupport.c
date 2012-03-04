@@ -1442,8 +1442,8 @@ ParserImport
 
     if (!pifToParse)
     {
-	/// \note I first add the file to the symbol table, this also gets around
-	/// \note circular dependencies. 
+	/// \note I first add the file to the symbol table to avoid
+	/// circular dependencies.
 
 	//- if add file to symbol table
 

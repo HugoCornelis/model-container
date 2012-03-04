@@ -2124,10 +2124,10 @@ QueryHandlerInsert
     struct symtab_HSolveListElement *phsleAlias
 	= SymbolCreateAlias(phsleSource, NULL, pidinNew);
 
-    //- disable traversals of the alias
+/*     //- disable traversals of the alias */
 
-    SymbolSetOptions
-	(phsleAlias, (SymbolGetOptions(phsleAlias) | BIOCOMP_OPTION_NO_PROTOTYPE_TRAVERSAL));
+/*     SymbolSetOptions */
+/* 	(phsleAlias, (SymbolGetOptions(phsleAlias) | BIOCOMP_OPTION_NO_PROTOTYPE_TRAVERSAL)); */
 
     //- link the alias into the symbol table
 

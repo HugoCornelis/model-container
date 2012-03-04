@@ -708,9 +708,9 @@ int
 ImportedFileSetFilenames
 (struct ImportedFile *pif, char *pcQualified, char *pcRelative)
 {
-    pif->pcQualified = pcQualified;
+    pif->pcQualified = strdup(pcQualified);
 
-    pif->pcRelative = pcRelative;
+    pif->pcRelative = strdup(pcRelative);
 
     return(1);
 }

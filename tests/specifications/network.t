@@ -20,7 +20,6 @@ my $test
 						   description => "Is neurospaces startup successful ?",
 						   read => [ '-re', './neurospacesparse: No errors for .+?/legacy/networks/network-test.ndf.', ],
 						   timeout => 100,
-						   write => undef,
 						  },
 						  {
 						   description => "What is the xpower of the delayed rectifier channel in the first Golgi cell ?",

@@ -376,6 +376,12 @@ sub input_2_solverinfo
 }
 
 
+=pod
+
+Add the given component to the root of the private models.
+
+=cut
+
 sub insert_private
 {
     my $model_container = shift;
@@ -405,6 +411,12 @@ sub insert_private
     }
 }
 
+
+=pod
+
+Add the given component to the root of the public models.
+
+=cut
 
 sub insert_public
 {

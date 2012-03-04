@@ -20,7 +20,7 @@
 
 
 #include <stdio.h>
-
+#include <string.h>
 
 #include "neurospaces/dependencyfile.h"
 #include "neurospaces/exporter.h"
@@ -211,7 +211,7 @@ int
 DependencyFileSetNameSpace
 (struct DependencyFile *pdf, char *pc)
 {
-    pdf->pcNamespace = pc;
+    pdf->pcNamespace = strdup(pc);
 }
 
 
