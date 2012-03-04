@@ -318,6 +318,10 @@ sub volumeconnect
 
     my $projection = shift;
 
+    my $projection_source = shift;
+
+    my $projection_target = shift;
+
     my $source = shift;
 
     my $target = shift;
@@ -378,7 +382,7 @@ sub volumeconnect
 
     $instance_name =~ s(/)(_)g;
 
-    GENESIS3::Commands::querymachine("algorithminstantiate ProjectionVolume $instance_name $network $projection $source $target $pre $post $source_type $source_x1 $source_y1 $source_z1 $source_x2 $source_y2 $source_z2 $destination_type $destination_x1 $destination_y1 $destination_z1 $destination_x2 $destination_y2 $destination_z2 $weight_indicator $weight $delay_indicator $delay_type $delay $velocity_indicator $velocity $probability $randomseed");
+    GENESIS3::Commands::querymachine("algorithminstantiate ProjectionVolume $instance_name $network $projection $projection_source $projection_target $source $target $pre $post $source_type $source_x1 $source_y1 $source_z1 $source_x2 $source_y2 $source_z2 $destination_type $destination_x1 $destination_y1 $destination_z1 $destination_x2 $destination_y2 $destination_z2 $weight_indicator $weight $delay_indicator $delay_type $delay $velocity_indicator $velocity $probability $randomseed");
 
     print "
 created a new projection with name $projection\n";
@@ -391,7 +395,7 @@ sub volumeconnect_help
 {
     print "description: instantiate a projection, see the G-2 volumeconnect for more information about this command.\n";
 
-    print "synopsis: volumeconnect <projection> <source population> <target population> <pre> <post> <source_type> <source_x1> <source_y1> <source_z1> <source_x2> <source_y2> <source_z2> <destination_type> <destination_x1> <destination_y1> <destination_z1> <destination_x2> <destination_y2> <destination_z2> 'weight' <weight> 'delay' <delay-type> <delay> 'velocity' <velocity> <probability> <randomseed>\n";
+    print "synopsis: volumeconnect <projection> <projection source> <projection target> <source population> <target population> <pre> <post> <source_type> <source_x1> <source_y1> <source_z1> <source_x2> <source_y2> <source_z2> <destination_type> <destination_x1> <destination_y1> <destination_z1> <destination_x2> <destination_y2> <destination_z2> 'weight' <weight> 'delay' <delay-type> <delay> 'velocity' <velocity> <probability> <randomseed>\n";
 
     return "*** Ok: volumeconnect_help";
 }

@@ -2914,6 +2914,26 @@ static int QueryHandlerAlgorithmInstantiate
 
 	pcProjection = strdup(pcProjection);
 
+	//- get projection source name
+
+	char *pcProjectionSource = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	pcProjectionSource = strdup(pcProjectionSource);
+
+	//- get projection target name
+
+	char *pcProjectionTarget = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	pcProjectionTarget = strdup(pcProjectionTarget);
+
 	//- get source name
 
 	char *pcSource = &pcLine[iLength + 1];
@@ -3233,6 +3253,8 @@ static int QueryHandlerAlgorithmInstantiate
 		{
 		    struct symtab_Projection *pprojProjection = ProjectionCalloc();
 
+		    phsleProjection = &pprojProjection->bio.ioh.iol.hsle;
+
 		    struct symtab_IdentifierIndex *pidinProjection
 			= PidinStackPop(ppistProjection);
 
@@ -3247,6 +3269,15 @@ static int QueryHandlerAlgorithmInstantiate
 /* 		PidinStackPop(ppistProjection); */
 
 /* 		PidinStackLookupTopSymbol(ppistProjection); */
+
+		struct symtab_ParContainer *pparcProjection
+		    = ParContainerNewFromList
+		      (
+			  ParameterNewFromPidinQueue("SOURCE", PidinStackToPidinQueue(PidinStackParse(pcProjectionSource)), TYPE_PARA_SYMBOLIC),
+			  ParameterNewFromPidinQueue("TARGET", PidinStackToPidinQueue(PidinStackParse(pcProjectionTarget)), TYPE_PARA_SYMBOLIC),
+			  NULL);
+
+		SymbolAssignParameters(phsleProjection, pparcProjection->ppars);
 
 		pneuro->pacRootContext->pist = *ppistNetwork;
 
@@ -6908,7 +6939,7 @@ static int QueryHandlerPrintSpikeReceiverCount
     {
 	//- diag's
 
-	fprintf(stdout, "symbol not found\n");
+	fprintf(stdout, "projection symbol not found\n");
     }
 
     //- free stacks
@@ -7149,7 +7180,7 @@ static int QueryHandlerPrintSpikeSenderCount
     {
 	//- diag's
 
-	fprintf(stdout, "symbol not found\n");
+	fprintf(stdout, "projection symbol not found\n");
     }
 
     //- free stacks
