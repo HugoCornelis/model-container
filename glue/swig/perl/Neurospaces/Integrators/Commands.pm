@@ -314,6 +314,8 @@ sub xml_save_help
 
 sub volumeconnect
 {
+    my $network = shift;
+
     my $projection = shift;
 
     my $source = shift;
@@ -352,15 +354,34 @@ sub volumeconnect
 
     my $destination_z2 = shift;
 
+    my $weight_indicator = shift;
+
+    my $weight = shift;
+
+    my $delay_indicator = shift;
+
+    my $delay_type = shift;
+
+    my $delay = shift;
+
+    my $velocity_indicator = shift;
+
+    my $velocity = shift;
+
     my $probability = shift;
 
-    my $instance_name = "projectionvolume_$projection";
+    my $randomseed = shift;
+
+# volumeconnect /network /network/ForwardProjection /network/Granules /network/Golgis spikegen mf_AMPA box -1e10 -1e10 -1e10 1e10 1e10 1e10 box -0.0025 -0.0003 -0.0025 0.0025 0.0003 0.0025 weight 45.0 delay radial velocity 0.5 1.0 1212.0
+
+    my $instance_name = "projectionvolume_${network}_${projection}";
 
     $instance_name =~ s(/)(_)g;
 
-    GENESIS3::Commands::querymachine("algorithminstantiate ProjectionVolume $instance_name $projection $source $target $pre $post $source_type $source_x1 $source_y1 $source_z1 $source_x2 $source_y2 $source_z2 $destination_type $destination_x1 $destination_y1 $destination_z1 $destination_x2 $destination_y2 $destination_z2 $probability");
+    GENESIS3::Commands::querymachine("algorithminstantiate ProjectionVolume $instance_name $network $projection $source $target $pre $post $source_type $source_x1 $source_y1 $source_z1 $source_x2 $source_y2 $source_z2 $destination_type $destination_x1 $destination_y1 $destination_z1 $destination_x2 $destination_y2 $destination_z2 $weight_indicator $weight $delay_indicator $delay_type $delay $velocity_indicator $velocity $probability $randomseed");
 
-    print "created a new projection with name $projection\n";
+    print "
+created a new projection with name $projection\n";
 
     return "*** Ok: volumeconnect";
 }

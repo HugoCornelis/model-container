@@ -2894,6 +2894,16 @@ static int QueryHandlerAlgorithmInstantiate
     }
     else if (0 == strcmp(pcName, "ProjectionVolume"))
     {
+	//- get network name
+
+	char *pcNetwork = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	pcNetwork = strdup(pcNetwork);
+
 	//- get projection name
 
 	char *pcProjection = &pcLine[iLength + 1];
@@ -3064,6 +3074,56 @@ static int QueryHandlerAlgorithmInstantiate
 
 	double dTargetZ2 = strtod(pcTargetZ2, NULL);
 
+	char *pcWeightIndicator = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	char *pcWeight = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dWeight = strtod(pcWeight, NULL);
+
+	char *pcDelayIndicator = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	char *pcDelayType = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	pcDelayType = strdup(pcDelayType);
+
+	char *pcDelay = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dDelay = strtod(pcDelay, NULL);
+
+	char *pcVelocityIndicator = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	char *pcVelocity = &pcLine[iLength + 1];
+
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	pcLine[iLength] = '\0';
+
+	double dVelocity = strtod(pcVelocity, NULL);
+
 	//- define probability
 
 	char *pcProbability = &pcLine[iLength + 1];
@@ -3077,16 +3137,20 @@ static int QueryHandlerAlgorithmInstantiate
 
 	double dProbability = strtod(pcProbability, NULL);
 
-	//- these ones still hardcoded
+	//- define random seed
 
-	double dWeight = 0.0;
+	char *pcRandomSeed = &pcLine[iLength + 1];
 
-	char *pcDelayType = "FIXED";
+	iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
 
-	double dFixedDelay = 0.0;
-	double dVelocity = 0.0;
+	if (iLength >= 0)
+	{
+	    pcLine[iLength] = '\0';
+	}
 
-	double dRandomSeed = 0.0;
+	double dRandomSeed = strtod(pcRandomSeed, NULL);
+
+	double dFixedDelay = dDelay;
 
 	//! see also the ns-sli for other examples of the usage of this function
 
@@ -3153,31 +3217,40 @@ static int QueryHandlerAlgorithmInstantiate
 	{
 	    AlgorithmSymbolSetAlgorithmInstance(palgs, palgi);
 
-	    struct symtab_Projection *pprojProjection = ProjectionCalloc();
-
 	    struct PidinStack *ppistProjection = PidinStackParse(pcProjection);
 
-	    struct PidinStack *ppistParent = PidinStackDuplicate(ppistProjection);
+	    struct symtab_HSolveListElement *phsleProjection
+		= PidinStackLookupTopSymbol(ppistProjection);
 
-	    struct symtab_IdentifierIndex *pidinProjection
-		= PidinStackPop(ppistParent);
+	    struct PidinStack *ppistNetwork = PidinStackParse(pcNetwork);
 
-	    struct symtab_HSolveListElement *phsleParent
-		= PidinStackLookupTopSymbol(ppistParent);
+	    struct symtab_HSolveListElement *phsleNetwork
+		= PidinStackLookupTopSymbol(ppistNetwork);
 
-	    if (phsleParent)
+	    if (phsleNetwork)
 	    {
-		SymbolSetName(&pprojProjection->bio.ioh.iol.hsle, pidinProjection);
+		if (!phsleProjection)
+		{
+		    struct symtab_Projection *pprojProjection = ProjectionCalloc();
 
-		SymbolAddChild(phsleParent, &pprojProjection->bio.ioh.iol.hsle);
+		    struct symtab_IdentifierIndex *pidinProjection
+			= PidinStackPop(ppistProjection);
 
-		PidinStackPop(ppistProjection);
+		    SymbolSetName(&pprojProjection->bio.ioh.iol.hsle, pidinProjection);
 
-		PidinStackLookupTopSymbol(ppistProjection);
+		    struct symtab_HSolveListElement *phsleParent
+			= PidinStackLookupTopSymbol(ppistProjection);
 
-		pneuro->pacRootContext->pist = *ppistParent;
+		    SymbolAddChild(phsleParent, &pprojProjection->bio.ioh.iol.hsle);
+		}
 
-		ParserContextSetActual(pneuro->pacRootContext, phsleParent);
+/* 		PidinStackPop(ppistProjection); */
+
+/* 		PidinStackLookupTopSymbol(ppistProjection); */
+
+		pneuro->pacRootContext->pist = *ppistNetwork;
+
+		ParserContextSetActual(pneuro->pacRootContext, phsleNetwork);
 
 		struct symtab_HSolveListElement *phsleActual
 		    = ParserContextGetActual(pneuro->pacRootContext);
@@ -3201,7 +3274,7 @@ static int QueryHandlerAlgorithmInstantiate
 
 	    PidinStackFree(ppistProjection);
 
-	    PidinStackFree(ppistParent);
+	    PidinStackFree(ppistNetwork);
 	}
 	else
 	{

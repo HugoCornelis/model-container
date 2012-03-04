@@ -758,7 +758,7 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
     //- if #cached different from #stack
 
-    if (iCached != iEntries)
+    if (iCached < iEntries)
     {
 	struct symtab_HSolveListElement *phsleMinor = NULL;
 	struct symtab_HSolveListElement *phsle = NULL;
@@ -903,7 +903,7 @@ PidinStackLookupTopSymbol(struct PidinStack *ppist)
 
     //- if #cached different from #stack
 
-    if (iCached != iEntries)
+    if (iCached < iEntries)
     {
 	struct symtab_HSolveListElement *phsleMinor = NULL;
 	struct symtab_HSolveListElement *phsle = NULL;
