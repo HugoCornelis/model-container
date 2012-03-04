@@ -391,7 +391,7 @@ sub volumeconnect_help
 {
     print "description: instantiate a projection, see the G-2 volumeconnect for more information about this command.\n";
 
-    print "synopsis: volumeconnect <projection> <source population> <target population> <pre> <post> <source_type> <source_x1> <source_y1> <source_z1> <source_x2> <source_y2> <source_z2> <destination_type> <destination_x1> <destination_y1> <destination_z1> <destination_x2> <destination_y2> <destination_z2> <probability>\n";
+    print "synopsis: volumeconnect <projection> <source population> <target population> <pre> <post> <source_type> <source_x1> <source_y1> <source_z1> <source_x2> <source_y2> <source_z2> <destination_type> <destination_x1> <destination_y1> <destination_z1> <destination_x2> <destination_y2> <destination_z2> 'weight' <weight> 'delay' <delay-type> <delay> 'velocity' <velocity> <probability> <randomseed>\n";
 
     return "*** Ok: volumeconnect_help";
 }
