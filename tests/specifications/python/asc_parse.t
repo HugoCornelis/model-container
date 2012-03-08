@@ -15,6 +15,7 @@ my $test
 						  {
 						   description => "Can we parse tokens in an asc file ?",
 						   read => 'File e1cb4a1.asc has 25982 tokens
+With 3912 lines
 Done!',
 						   timeout => 15,
 						   write => undef,

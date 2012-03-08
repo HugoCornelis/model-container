@@ -30,5 +30,6 @@ while True:
         tokens = tokens + 1
         
 print "File e1cb4a1.asc has %d tokens" % (tokens)
+print "With %d lines" % (asc.get_line_number())
 
 print "Done!"

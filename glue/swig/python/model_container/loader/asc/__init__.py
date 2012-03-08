@@ -81,7 +81,7 @@ class ASCParser:
             self.text = text
         
         elif not file is None:
-            
+           
             if os.path.isfile(file):
                 
                 f = open(file,'rb')
@@ -100,12 +100,20 @@ class ASCParser:
 
 
         self.num_chars = len(self.text)
+
+        self.line_number = 1
         
 #-------------------------------------------------------------------------------        
 
     def parse(self):
 
         pass
+
+#-------------------------------------------------------------------------------
+
+    def get_line_number(self):
+
+        return self.line_number
 
 #-------------------------------------------------------------------------------
 
@@ -121,6 +129,10 @@ class ASCParser:
 
             ch = self._next_char()
 
+            if ch == '\n':
+
+                self.line_number += 1
+                
             if ch is None:
 
                 return None
