@@ -491,7 +491,7 @@ pkg-osx:
 	nspkg-osx 
 
 
-#perldir = $(prefix)/glue/swig/perl
+#perldir = @PMDIR@
 
 #nobase_perl_DATA = @PERL_EMBED_DATA@
 
