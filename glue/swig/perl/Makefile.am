@@ -28,7 +28,7 @@ dist-hook:
 	$(INSTALL) -d $(distdir)/tests
 	cp $(srcdir)/tests/*.pm $(distdir)/tests
 
-perldir = $(prefix)/glue/swig/perl
+perldir = @PMDIR@
 
 nobase_perl_HEADERS = \
 	Neurospaces.pm \
