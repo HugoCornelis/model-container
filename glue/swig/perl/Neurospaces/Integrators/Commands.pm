@@ -378,6 +378,51 @@ sub volumeconnect
 
 # volumeconnect /network /network/ForwardProjection /network/Granules /network/Golgis spikegen mf_AMPA box -1e10 -1e10 -1e10 1e10 1e10 1e10 box -0.0025 -0.0003 -0.0025 0.0025 0.0003 0.0025 weight 45.0 delay radial velocity 0.5 1.0 1212.0
 
+    my $library_RSNet_simple = YAML::Load('---
+- volumeconnect
+  name: RSNet-simple
+  network: /RSNet
+  projection: /RSNet/projection12
+  projection_source: ../population1
+  projection_target: ../population2
+  source: /RSNet/population1
+  target: /RSNet/population2
+  pre: spike
+  post: Ex_channel
+  regions:
+    - format: box
+      point1:
+        x: -1e10
+        y: -1e10
+        z: -1e10
+      point2:
+        x: 1e10
+        y: 1e10
+        z: 1e10
+    - format: box
+      point1:
+        x: -5.0
+        y: -5.0
+        z: -5.0
+      point2:
+        x: 5.0
+        y: 5.0
+        z: 5.0
+  weight: 45.0
+  delay:
+    format: radial
+    velocity: 0.5
+  distribution:
+    probability: 1.0
+    randomseed: 1212.0
+    randomgenerator: G-2
+');
+
+    my $library
+	= {
+	   'RSNet-simple' => $library_RSNet_simple,
+	  };
+
     my $instance_name = "projectionvolume_${network}_${projection}";
 
     $instance_name =~ s(/)(_)g;
