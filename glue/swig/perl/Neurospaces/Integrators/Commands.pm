@@ -379,7 +379,7 @@ sub volumeconnect
 # volumeconnect /network /network/ForwardProjection /network/Granules /network/Golgis spikegen mf_AMPA box -1e10 -1e10 -1e10 1e10 1e10 1e10 box -0.0025 -0.0003 -0.0025 0.0025 0.0003 0.0025 weight 45.0 delay radial velocity 0.5 1.0 1212.0
 
     my $library_RSNet_simple = YAML::Load('---
-- volumeconnect
+volumeconnect:
   name: RSNet-simple
   network: /RSNet
   projection: /RSNet/projection12
