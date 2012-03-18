@@ -203,7 +203,7 @@ sub ndf_load_library_help
 {
     print "description: load an ndf file into a namespace and reconstruct the model it describes within that namespace.\n";
 
-    print "synopsis: ndf_load_library <filename.ndf>\n";
+    print "synopsis: ndf_load_library <namespace> <filename.ndf>\n";
 
     return "*** Ok";
 }
