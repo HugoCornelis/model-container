@@ -519,6 +519,44 @@ ProjectionVolumeInstanceNew
 
 	iDestinationRegions++;
 
+	//- scan destination hole type
+
+	struct symtab_Parameters *pparDestinationHoleType
+	    = SymbolFindParameter(&palgs->hsle, ppist, "DESTINATION_HOLE_TYPE");
+
+	if (pparDestinationHoleType)
+	{
+	    char *pcDestinationHoleType = ParameterGetString(pparDestinationHoleType);
+
+	    if (strncmp(pcDestinationHoleType, "box", strlen("box")) == 0)
+	    {
+		ppvi->pro.pD3Destination[iDestinationRegions].iShape = 0;
+	    }
+	    else if (strncmp(pcDestinationHoleType, "ellipse", strlen("ellipse")) == 0)
+	    {
+		ppvi->pro.pD3Destination[iDestinationRegions].iShape = 1;
+	    }
+	    else
+	    {
+		ppvi->pro.pD3Destination[iDestinationRegions].iShape = -1;
+	    }
+
+	    //- scan destination coordinates, go to next arg
+
+	    ppvi->pro.pD3Destination[iDestinationRegions].D3Corner1.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_HOLE_X1");
+	    ppvi->pro.pD3Destination[iDestinationRegions].D3Corner1.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_HOLE_Y1");
+	    ppvi->pro.pD3Destination[iDestinationRegions].D3Corner1.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_HOLE_Z1");
+
+	    ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_HOLE_X2");
+	    ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_HOLE_Y2");
+	    ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_HOLE_Z2");
+
+	    if (pparDestinationHoleType)
+	    {
+		iDestinationRegions++;
+	    }
+	}
+
 	ppvi->pro.iDestinationRegions = iDestinationRegions;
 
 	//- scan weight
