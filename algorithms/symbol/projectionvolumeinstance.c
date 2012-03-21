@@ -127,7 +127,8 @@ struct ProjectionVolumeOptions_type
 
     /*m delay / velocity value */
 
-    union {
+    union
+    {
 	double dFixed;
 	double dVelocity;
     } uDelay;
@@ -607,6 +608,31 @@ struct ProjectionVolumeInstanceAddConnectionGroups_data
 };
 
 
+static int
+WithinRegion(struct D3Position *pD3, struct D3Position *pD3Corner1, struct D3Position *pD3Corner2)
+{
+    //- default result: no
+
+    int iResult = 0;
+
+    if (pD3Corner1->dx < pD3->dx
+	&& pD3->dx <= pD3Corner2->dx
+	&& pD3Corner1->dy < pD3->dy
+	&& pD3->dy <= pD3Corner2->dy
+	&& pD3Corner1->dz < pD3->dz
+	&& pD3->dz <= pD3Corner2->dz)
+    {
+	//- set result: yes
+
+	iResult = 1;
+    }
+
+    //- return result
+
+    return(iResult);
+}
+
+
 static int 
 ProjectionVolumeSpikeGeneratorProcessor
 (struct TreespaceTraversal *ptstr, void *pvUserdata)
@@ -715,16 +741,11 @@ ProjectionVolumeSpikeGeneratorProcessor
 
     if (1)
     {
-	//- if position in boundaries
+	//- if position within boundary
 
 	/// \todo query speed up using index on generators
 
-	if (ppiac->ppvi->pro.D3Source1.dx < ppiac->D3Generator.dx 
-	    && ppiac->D3Generator.dx <= ppiac->ppvi->pro.D3Source2.dx
-	    && ppiac->ppvi->pro.D3Source1.dy < ppiac->D3Generator.dy 
-	    && ppiac->D3Generator.dy <= ppiac->ppvi->pro.D3Source2.dy
-	    && ppiac->ppvi->pro.D3Source1.dz < ppiac->D3Generator.dz 
-	    && ppiac->D3Generator.dz <= ppiac->ppvi->pro.D3Source2.dz)
+	if (WithinRegion(&ppiac->D3Generator, &ppiac->ppvi->pro.D3Source1, &ppiac->ppvi->pro.D3Source2))
 	{
 	    //- fill in current spike generator
 
@@ -873,22 +894,25 @@ ProjectionVolumeSpikeReceiverProcessor
 
     if (1)
     {
-	//- if diff with presynaptic part in receiving volume
-
 	/// \todo query speed up using index on receivers
 
 	struct D3Position D3Diff;
+
+	//- subtract positions (implements the G-2 'relative' option).
 
 	D3Diff.dx = ppiac->D3Receiver.dx - ppiac->D3Generator.dx;
 	D3Diff.dy = ppiac->D3Receiver.dy - ppiac->D3Generator.dy;
 	D3Diff.dz = ppiac->D3Receiver.dz - ppiac->D3Generator.dz;
 
-	if (ppiac->ppvi->pro.D3Destination1.dx < D3Diff.dx 
-	    && D3Diff.dx <= ppiac->ppvi->pro.D3Destination2.dx
-	    && ppiac->ppvi->pro.D3Destination1.dy < D3Diff.dy 
-	    && D3Diff.dy <= ppiac->ppvi->pro.D3Destination2.dy
-	    && ppiac->ppvi->pro.D3Destination1.dz < D3Diff.dz 
-	    && D3Diff.dz <= ppiac->ppvi->pro.D3Destination2.dz)
+	//- if diff with presynaptic part in receiving volume
+
+	if (WithinRegion(&D3Diff, &ppiac->ppvi->pro.D3Destination1, &ppiac->ppvi->pro.D3Destination2))
+/* 	if (ppiac->ppvi->pro.D3Destination1.dx < D3Diff.dx  */
+/* 	    && D3Diff.dx <= ppiac->ppvi->pro.D3Destination2.dx */
+/* 	    && ppiac->ppvi->pro.D3Destination1.dy < D3Diff.dy  */
+/* 	    && D3Diff.dy <= ppiac->ppvi->pro.D3Destination2.dy */
+/* 	    && ppiac->ppvi->pro.D3Destination1.dz < D3Diff.dz  */
+/* 	    && D3Diff.dz <= ppiac->ppvi->pro.D3Destination2.dz) */
 	{
 	    //- fill in current spike receiver
 
