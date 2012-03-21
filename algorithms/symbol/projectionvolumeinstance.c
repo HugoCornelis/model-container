@@ -43,6 +43,28 @@
 #include "projectionvolumeinstance.h"
 
 
+/// \struct volumar regions
+
+struct D3Region
+{
+    /// shape type
+
+    int iShape;
+
+    /// mask type: external (a hole) or internal
+
+    int iMask;
+
+    /// first point
+
+    struct D3Position D3Corner1;
+
+    /// second point
+
+    struct D3Position D3Corner2;
+};
+
+
 /// \struct projection algorithm private data: projection options
 
 struct ProjectionVolumeOptions_type
@@ -99,23 +121,29 @@ struct ProjectionVolumeOptions_type
 
     struct PidinStack *ppistPost;
 
-    /*m source type : box or ellipse */
+    /// source
 
-    int iSourceType;
+    struct D3Region D3Source;
 
-    /*m source coordinates */
+/*     /*m source type : box or ellipse * */
 
-    struct D3Position D3Source1;
-    struct D3Position D3Source2;
+/*     int iSourceType; */
 
-    /*m destination type : box or ellipse */
+/*     /*m source coordinates * */
 
-    int iDestinationType;
+/*     struct D3Position D3Source1; */
+/*     struct D3Position D3Source2; */
 
-    /*m destination coordinates */
+    struct D3Region D3Destination;
 
-    struct D3Position D3Destination1;
-    struct D3Position D3Destination2;
+/*     /*m destination type : box or ellipse * */
+
+/*     int iDestinationType; */
+
+/*     /*m destination coordinates * */
+
+/*     struct D3Position D3Destination1; */
+/*     struct D3Position D3Destination2; */
 
     /*m weight */
 
@@ -434,26 +462,26 @@ ProjectionVolumeInstanceNew
 
 	if (strncmp(pcSourceType, "box", strlen("box")) == 0)
 	{
-	    ppvi->pro.iSourceType = 0;
+	    ppvi->pro.D3Source.iShape = 0;
 	}
 	else if (strncmp(pcSourceType, "ellipse", strlen("ellipse")) == 0)
 	{
-	    ppvi->pro.iSourceType = 1;
+	    ppvi->pro.D3Source.iShape = 1;
 	}
 	else
 	{
-	    ppvi->pro.iSourceType = -1;
+	    ppvi->pro.D3Source.iShape = -1;
 	}
 
 	//- scan source coordinates, go to next arg
 
-	ppvi->pro.D3Source1.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_X1");
-	ppvi->pro.D3Source1.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Y1");
-	ppvi->pro.D3Source1.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Z1");
+	ppvi->pro.D3Source.D3Corner1.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_X1");
+	ppvi->pro.D3Source.D3Corner1.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Y1");
+	ppvi->pro.D3Source.D3Corner1.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Z1");
 
-	ppvi->pro.D3Source2.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_X2");
-	ppvi->pro.D3Source2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Y2");
-	ppvi->pro.D3Source2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Z2");
+	ppvi->pro.D3Source.D3Corner2.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_X2");
+	ppvi->pro.D3Source.D3Corner2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Y2");
+	ppvi->pro.D3Source.D3Corner2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Z2");
 
 	//- scan destination type
 
@@ -464,26 +492,26 @@ ProjectionVolumeInstanceNew
 
 	if (strncmp(pcDestinationType, "box", strlen("box")) == 0)
 	{
-	    ppvi->pro.iDestinationType = 0;
+	    ppvi->pro.D3Destination.iShape = 0;
 	}
 	else if (strncmp(pcDestinationType, "ellipse", strlen("ellipse")) == 0)
 	{
-	    ppvi->pro.iDestinationType = 1;
+	    ppvi->pro.D3Destination.iShape = 1;
 	}
 	else
 	{
-	    ppvi->pro.iDestinationType = -1;
+	    ppvi->pro.D3Destination.iShape = -1;
 	}
 
 	//- scan destination coordinates, go to next arg
 
-	ppvi->pro.D3Destination1.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_X1");
-	ppvi->pro.D3Destination1.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Y1");
-	ppvi->pro.D3Destination1.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Z1");
+	ppvi->pro.D3Destination.D3Corner1.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_X1");
+	ppvi->pro.D3Destination.D3Corner1.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Y1");
+	ppvi->pro.D3Destination.D3Corner1.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Z1");
 
-	ppvi->pro.D3Destination2.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_X2");
-	ppvi->pro.D3Destination2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Y2");
-	ppvi->pro.D3Destination2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Z2");
+	ppvi->pro.D3Destination.D3Corner2.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_X2");
+	ppvi->pro.D3Destination.D3Corner2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Y2");
+	ppvi->pro.D3Destination.D3Corner2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Z2");
 
 	//- scan weight
 
@@ -609,18 +637,22 @@ struct ProjectionVolumeInstanceAddConnectionGroups_data
 
 
 static int
-WithinRegion(struct D3Position *pD3, struct D3Position *pD3Corner1, struct D3Position *pD3Corner2)
+WithinRegion(struct D3Region *pD3Region, struct D3Position *pD3Point)
 {
+    struct D3Position *pD3Corner1 = &pD3Region->D3Corner1;
+
+    struct D3Position *pD3Corner2 = &pD3Region->D3Corner2;
+
     //- default result: no
 
     int iResult = 0;
 
-    if (pD3Corner1->dx < pD3->dx
-	&& pD3->dx <= pD3Corner2->dx
-	&& pD3Corner1->dy < pD3->dy
-	&& pD3->dy <= pD3Corner2->dy
-	&& pD3Corner1->dz < pD3->dz
-	&& pD3->dz <= pD3Corner2->dz)
+    if (pD3Corner1->dx < pD3Point->dx
+	&& pD3Point->dx <= pD3Corner2->dx
+	&& pD3Corner1->dy < pD3Point->dy
+	&& pD3Point->dy <= pD3Corner2->dy
+	&& pD3Corner1->dz < pD3Point->dz
+	&& pD3Point->dz <= pD3Corner2->dz)
     {
 	//- set result: yes
 
@@ -745,7 +777,7 @@ ProjectionVolumeSpikeGeneratorProcessor
 
 	/// \todo query speed up using index on generators
 
-	if (WithinRegion(&ppiac->D3Generator, &ppiac->ppvi->pro.D3Source1, &ppiac->ppvi->pro.D3Source2))
+	if (WithinRegion(&ppiac->ppvi->pro.D3Source, &ppiac->D3Generator))
 	{
 	    //- fill in current spike generator
 
@@ -906,7 +938,7 @@ ProjectionVolumeSpikeReceiverProcessor
 
 	//- if diff with presynaptic part in receiving volume
 
-	if (WithinRegion(&D3Diff, &ppiac->ppvi->pro.D3Destination1, &ppiac->ppvi->pro.D3Destination2))
+	if (WithinRegion(&ppiac->ppvi->pro.D3Destination, &D3Diff))
 /* 	if (ppiac->ppvi->pro.D3Destination1.dx < D3Diff.dx  */
 /* 	    && D3Diff.dx <= ppiac->ppvi->pro.D3Destination2.dx */
 /* 	    && ppiac->ppvi->pro.D3Destination1.dy < D3Diff.dy  */
