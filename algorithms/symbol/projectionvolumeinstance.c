@@ -655,16 +655,46 @@ WithinRegion(struct D3Region *pD3Region, struct D3Position *pD3Point)
 
     int iResult = 0;
 
-    if (pD3Corner1->dx < pD3Point->dx
-	&& pD3Point->dx <= pD3Corner2->dx
-	&& pD3Corner1->dy < pD3Point->dy
-	&& pD3Point->dy <= pD3Corner2->dy
-	&& pD3Corner1->dz < pD3Point->dz
-	&& pD3Point->dz <= pD3Corner2->dz)
-    {
-	//- set result: yes
+    //- if within box
 
-	iResult = 1;
+    if (pD3Region->iShape == 0)
+    {
+	if (pD3Corner1->dx < pD3Point->dx
+	    && pD3Point->dx <= pD3Corner2->dx
+	    && pD3Corner1->dy < pD3Point->dy
+	    && pD3Point->dy <= pD3Corner2->dy
+	    && pD3Corner1->dz < pD3Point->dz
+	    && pD3Point->dz <= pD3Corner2->dz)
+	{
+	    //- set result: yes
+
+	    iResult = 1;
+	}
+    }
+
+    //- if within sphere
+
+    else if (pD3Region->iShape == 1)
+    {
+	if (pD3Corner2->dx == 0. || pD3Corner2->dy == 0. || pD3Corner2->dz == 0.)
+	{
+	    return 0;
+	}
+
+/// copied from G-2
+
+#define sqr(x) ((x)*(x))
+
+	if ((sqr(pD3Point->dx - pD3Corner1->dx) / sqr(pD3Corner2->dx) +
+	     sqr(pD3Point->dy - pD3Corner1->dy) / sqr(pD3Corner2->dy) +
+	     sqr(pD3Point->dz - pD3Corner1->dz) / sqr(pD3Corner2->dz)) <= 1.0)
+	{
+	    return 1;
+	}
+	else
+	{
+	    return 0;
+	}
     }
 
     //- return result
