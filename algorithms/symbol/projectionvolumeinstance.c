@@ -123,27 +123,15 @@ struct ProjectionVolumeOptions_type
 
     /// source
 
-    struct D3Region D3Source;
+    int iSourceRegions;
 
-/*     /*m source type : box or ellipse * */
+    struct D3Region *pD3Source;
 
-/*     int iSourceType; */
+    /// destination
 
-/*     /*m source coordinates * */
+    int iDestinationRegions;
 
-/*     struct D3Position D3Source1; */
-/*     struct D3Position D3Source2; */
-
-    struct D3Region D3Destination;
-
-/*     /*m destination type : box or ellipse * */
-
-/*     int iDestinationType; */
-
-/*     /*m destination coordinates * */
-
-/*     struct D3Position D3Destination1; */
-/*     struct D3Position D3Destination2; */
+    struct D3Region *pD3Destination;
 
     /*m weight */
 
@@ -453,6 +441,18 @@ ProjectionVolumeInstanceNew
 	    ppvi->pro.ppistPost = PidinStackParse(ParameterGetString(pparPostContext));
 	}
 
+	//- allocation for source regions
+
+#define MAX_REGIONS 5
+
+	ppvi->pro.pD3Source = (struct D3Region *)calloc(MAX_REGIONS, sizeof(struct D3Region));
+
+	int iSourceRegions = 0;
+
+	ppvi->pro.pD3Destination = (struct D3Region *)calloc(MAX_REGIONS, sizeof(struct D3Region));
+
+	int iDestinationRegions = 0;
+
 	//- scan source type
 
 	struct symtab_Parameters *pparSourceType
@@ -462,26 +462,30 @@ ProjectionVolumeInstanceNew
 
 	if (strncmp(pcSourceType, "box", strlen("box")) == 0)
 	{
-	    ppvi->pro.D3Source.iShape = 0;
+	    ppvi->pro.pD3Source[iSourceRegions].iShape = 0;
 	}
 	else if (strncmp(pcSourceType, "ellipse", strlen("ellipse")) == 0)
 	{
-	    ppvi->pro.D3Source.iShape = 1;
+	    ppvi->pro.pD3Source[iSourceRegions].iShape = 1;
 	}
 	else
 	{
-	    ppvi->pro.D3Source.iShape = -1;
+	    ppvi->pro.pD3Source[iSourceRegions].iShape = -1;
 	}
 
 	//- scan source coordinates, go to next arg
 
-	ppvi->pro.D3Source.D3Corner1.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_X1");
-	ppvi->pro.D3Source.D3Corner1.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Y1");
-	ppvi->pro.D3Source.D3Corner1.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Z1");
+	ppvi->pro.pD3Source[iSourceRegions].D3Corner1.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_X1");
+	ppvi->pro.pD3Source[iSourceRegions].D3Corner1.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Y1");
+	ppvi->pro.pD3Source[iSourceRegions].D3Corner1.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Z1");
 
-	ppvi->pro.D3Source.D3Corner2.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_X2");
-	ppvi->pro.D3Source.D3Corner2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Y2");
-	ppvi->pro.D3Source.D3Corner2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Z2");
+	ppvi->pro.pD3Source[iSourceRegions].D3Corner2.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_X2");
+	ppvi->pro.pD3Source[iSourceRegions].D3Corner2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Y2");
+	ppvi->pro.pD3Source[iSourceRegions].D3Corner2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Z2");
+
+	iSourceRegions++;
+
+	ppvi->pro.iSourceRegions = iSourceRegions;
 
 	//- scan destination type
 
@@ -492,26 +496,30 @@ ProjectionVolumeInstanceNew
 
 	if (strncmp(pcDestinationType, "box", strlen("box")) == 0)
 	{
-	    ppvi->pro.D3Destination.iShape = 0;
+	    ppvi->pro.pD3Destination[iDestinationRegions].iShape = 0;
 	}
 	else if (strncmp(pcDestinationType, "ellipse", strlen("ellipse")) == 0)
 	{
-	    ppvi->pro.D3Destination.iShape = 1;
+	    ppvi->pro.pD3Destination[iDestinationRegions].iShape = 1;
 	}
 	else
 	{
-	    ppvi->pro.D3Destination.iShape = -1;
+	    ppvi->pro.pD3Destination[iDestinationRegions].iShape = -1;
 	}
 
 	//- scan destination coordinates, go to next arg
 
-	ppvi->pro.D3Destination.D3Corner1.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_X1");
-	ppvi->pro.D3Destination.D3Corner1.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Y1");
-	ppvi->pro.D3Destination.D3Corner1.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Z1");
+	ppvi->pro.pD3Destination[iDestinationRegions].D3Corner1.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_X1");
+	ppvi->pro.pD3Destination[iDestinationRegions].D3Corner1.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Y1");
+	ppvi->pro.pD3Destination[iDestinationRegions].D3Corner1.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Z1");
 
-	ppvi->pro.D3Destination.D3Corner2.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_X2");
-	ppvi->pro.D3Destination.D3Corner2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Y2");
-	ppvi->pro.D3Destination.D3Corner2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Z2");
+	ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_X2");
+	ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Y2");
+	ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Z2");
+
+	iDestinationRegions++;
+
+	ppvi->pro.iDestinationRegions = iDestinationRegions;
 
 	//- scan weight
 
@@ -777,7 +785,7 @@ ProjectionVolumeSpikeGeneratorProcessor
 
 	/// \todo query speed up using index on generators
 
-	if (WithinRegion(&ppiac->ppvi->pro.D3Source, &ppiac->D3Generator))
+	if (WithinRegion(&ppiac->ppvi->pro.pD3Source[0], &ppiac->D3Generator))
 	{
 	    //- fill in current spike generator
 
@@ -938,13 +946,7 @@ ProjectionVolumeSpikeReceiverProcessor
 
 	//- if diff with presynaptic part in receiving volume
 
-	if (WithinRegion(&ppiac->ppvi->pro.D3Destination, &D3Diff))
-/* 	if (ppiac->ppvi->pro.D3Destination1.dx < D3Diff.dx  */
-/* 	    && D3Diff.dx <= ppiac->ppvi->pro.D3Destination2.dx */
-/* 	    && ppiac->ppvi->pro.D3Destination1.dy < D3Diff.dy  */
-/* 	    && D3Diff.dy <= ppiac->ppvi->pro.D3Destination2.dy */
-/* 	    && ppiac->ppvi->pro.D3Destination1.dz < D3Diff.dz  */
-/* 	    && D3Diff.dz <= ppiac->ppvi->pro.D3Destination2.dz) */
+	if (WithinRegion(&ppiac->ppvi->pro.pD3Destination[0], &D3Diff))
 	{
 	    //- fill in current spike receiver
 
