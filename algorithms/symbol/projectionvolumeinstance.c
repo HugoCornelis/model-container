@@ -645,7 +645,7 @@ struct ProjectionVolumeInstanceAddConnectionGroups_data
 
 
 static int
-WithinRegion(struct D3Region *pD3Region, struct D3Position *pD3Point)
+WithinThisRegion(struct D3Region *pD3Region, struct D3Position *pD3Point)
 {
     struct D3Position *pD3Corner1 = &pD3Region->D3Corner1;
 
@@ -694,6 +694,38 @@ WithinRegion(struct D3Region *pD3Region, struct D3Position *pD3Point)
 	else
 	{
 	    return 0;
+	}
+    }
+
+    //- return result
+
+    return(iResult);
+}
+
+
+static int
+WithinAllRegions(int iRegions, struct D3Region *pD3Region, struct D3Position *pD3Point)
+{
+    //- set default result: no
+
+    int iResult = 0;
+
+    //- loop over all regions
+
+    int i;
+
+    for (i = 0 ; i < iRegions ; i++)
+    {
+	if (WithinThisRegion(&pD3Region[i], pD3Point))
+	{
+	    if (pD3Region[i].iMask == 1)
+	    {
+		return(0);
+	    }
+	    else
+	    {
+		iResult = 1;
+	    }
 	}
     }
 
@@ -815,7 +847,9 @@ ProjectionVolumeSpikeGeneratorProcessor
 
 	/// \todo query speed up using index on generators
 
-	if (WithinRegion(&ppiac->ppvi->pro.pD3Source[0], &ppiac->D3Generator))
+	int iWithin = WithinAllRegions(1, ppiac->ppvi->pro.pD3Source, &ppiac->D3Generator);
+
+	if (iWithin)
 	{
 	    //- fill in current spike generator
 
@@ -976,7 +1010,9 @@ ProjectionVolumeSpikeReceiverProcessor
 
 	//- if diff with presynaptic part in receiving volume
 
-	if (WithinRegion(&ppiac->ppvi->pro.pD3Destination[0], &D3Diff))
+	int iWithin = WithinAllRegions(1, ppiac->ppvi->pro.pD3Destination, &D3Diff);
+
+	if (iWithin)
 	{
 	    //- fill in current spike receiver
 
