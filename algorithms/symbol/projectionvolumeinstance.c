@@ -847,7 +847,9 @@ ProjectionVolumeSpikeGeneratorProcessor
 
 	/// \todo query speed up using index on generators
 
-	int iWithin = WithinAllRegions(1, ppiac->ppvi->pro.pD3Source, &ppiac->D3Generator);
+	int iWithin
+	    = WithinAllRegions
+	      (ppiac->ppvi->pro.iSourceRegions, ppiac->ppvi->pro.pD3Source, &ppiac->D3Generator);
 
 	if (iWithin)
 	{
@@ -1010,7 +1012,9 @@ ProjectionVolumeSpikeReceiverProcessor
 
 	//- if diff with presynaptic part in receiving volume
 
-	int iWithin = WithinAllRegions(1, ppiac->ppvi->pro.pD3Destination, &D3Diff);
+	int iWithin
+	    = WithinAllRegions
+	      (ppiac->ppvi->pro.iDestinationRegions, ppiac->ppvi->pro.pD3Destination, &D3Diff);
 
 	if (iWithin)
 	{
