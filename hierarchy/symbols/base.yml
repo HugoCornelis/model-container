@@ -279,7 +279,7 @@ class_hierarchy:
       specific_allocator: ConnectionSymbolCalloc
       specific_token:
         class: connection_symbol
-        lexical: TOKEN_CONNECTION
+        lexical: TOKEN_CONNECTION_SYMBOL
         purpose: physical
       typing:
         base: phsle
