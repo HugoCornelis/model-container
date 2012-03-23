@@ -9798,8 +9798,10 @@ static int QueryHandlerSetParameterConcept
 	{
 	    //- parse the reference
 
+	    //! strdup() makes this useful from a scripting language.
+
 	    struct PidinStack *ppistValue
-		= PidinStackParse(pcValue);
+		= PidinStackParse(strdup(pcValue));
 
 	    //- set parameter value
 
