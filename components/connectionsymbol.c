@@ -498,6 +498,10 @@ ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy, int iSource)
     {
 	iResult = iPre;
     }
+    else
+    {
+	fprintf(stderr, "*** Warning: connectionsymbol with an invalid presynaptic identifier\n");
+    }
 
     //- return result
 
