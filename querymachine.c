@@ -9796,11 +9796,14 @@ static int QueryHandlerSetParameterConcept
 
 	else if (strcmp("symbolic", pcType) == 0)
 	{
-	    /// \todo convert to list of pidins
+	    //- parse the reference
 
-	    /// \todo use list of pidins to store the parameter
+	    struct PidinStack *ppistValue
+		= PidinStackParse(pcValue);
 
-	    fprintf(stdout, "parameter type %s not supported yet\n", pcType);
+	    //- set parameter value
+
+	    ppar = SymbolSetParameterContext(phsleBase, pcName, ppistValue);
 	}
 
 	//- else for a function
