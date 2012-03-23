@@ -859,7 +859,7 @@ class_hierarchy:
       specific_allocator: VConnectionSymbolCalloc
       specific_token:
         class: v_connection
-        lexical: TOKEN_CONNECTION_GROUP
+        lexical: TOKEN_CONNECTION_SYMBOL_GROUP
         purpose: physical
       typing:
         base: phsle

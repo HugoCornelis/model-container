@@ -2590,7 +2590,6 @@ END PUBLIC_MODELS
 							},
 						       ],
 				      description => "reading of $ndf after exporting it",
-				      disabled => ($ndf eq "networks/input.ndf" ? "export of $ndf does not work correctly, connection vectors and connection symbol vectors are messed up." : 0),
 				     },
 				    );
 				}
