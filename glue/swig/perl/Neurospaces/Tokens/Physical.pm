@@ -11,6 +11,20 @@ use strict;
 use Neurospaces;
 
 
+sub identifier_perl_to_xml
+{
+    my $identifier = shift;
+
+    my $result = $identifier;
+
+    $result =~ s/^([a-z])/\u$1/;
+
+    $result =~ s/_([a-z0-9])/\u$1/g;
+
+    return $result;
+}
+
+
 sub create
 {
     my $type = shift;
@@ -29,7 +43,13 @@ sub create
 
     # calloc the type
 
-    my $allocator = ucfirst($type) . "Calloc";
+    my $ctype = identifier_perl_to_xml($type);
+
+#     print STDERR "Mapped $type to $ctype for symbol allocation\n";
+
+    my $allocator = $ctype . "Calloc";
+
+#     my $allocator = ucfirst($type) . "Calloc";
 
     my $backend = eval "SwiggableNeurospaces::$allocator()";
 

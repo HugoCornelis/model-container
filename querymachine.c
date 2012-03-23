@@ -9727,11 +9727,13 @@ static int QueryHandlerSetParameterConcept
 	    return(FALSE);
 	}
 
-	char pcName[1000];
+	char pcName2[1000];
 
-	strncpy(pcName, pcInit, pcArg - pcInit);
+	strncpy(pcName2, pcInit, pcArg - pcInit);
 
-	pcName[pcArg - pcInit] = '\0';
+	pcName2[pcArg - pcInit] = '\0';
+
+	char *pcName = strdup(pcName2);
 
 	//- get parameter type
 
