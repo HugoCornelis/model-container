@@ -247,6 +247,29 @@ sub component_2_serial
 }
 
 
+sub component_type
+{
+    my $self = shift;
+
+    my $component = shift;
+
+    my $context = SwiggableNeurospaces::PidinStackParse($component);
+
+    my $symbol = $context->PidinStackLookupTopSymbol();
+
+    if ($symbol)
+    {
+	my $result = $symbol->SymbolDescribeNDF();
+
+	return $result;
+    }
+    else
+    {
+	return "symbol not found";
+    }
+}
+
+
 sub delete_component
 {
     my $self = shift;

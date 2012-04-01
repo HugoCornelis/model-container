@@ -58,9 +58,7 @@ extern int iTotalAllocatedSymbols;
     (ppc_symbols_short_descriptions[(iType)])
 
 
-/// \def
 /// \def test type(phsle) == struct symtab_HSolveListElement * at compile time
-/// \def
 
 #define CompileTimeTestSymbol(phsle)					\
 do {									\
@@ -69,9 +67,7 @@ do {									\
 } while (0)
 
 
-/// \def
 /// \def get next symbol in list
-/// \def
 
 #define SymbolContainerNext(phsle)					\
 ({									\
@@ -80,9 +76,7 @@ do {									\
 })
 
 
-/// \def
 /// \def test if valid result after iteration
-/// \def
 
 #define SymbolIterateValid(phsle)					\
 ({									\
@@ -91,9 +85,7 @@ do {									\
 })
 
 
-/// \def
 /// \def set solver info
-/// \def
 
 #define SymbolSetFlags(phsle,iF)					\
 ({									\
@@ -102,36 +94,15 @@ do {									\
 })
 
 
-/* /// \def give index of HSLE struct, should always be -1, 0 now for */
-/* /// \def compatibility, but will be changed some time. */
-
-/* #define SymbolIndex(phsle) (-1) */
-
-/* #define SymbolIndex(phsle)						\ */
-/* ({									\ */
-/*     struct symtab_IdentifierIndex *pidin				\ */
-/* 	= SymbolGetPidin(phsle);					\ */
-/*     pidin ? IdinIndex(pidin) : -1;					\ */
-/* }) */
-
-
 /// \def give name of HSLE struct, NULL for none
 
 #define SymbolName SymbolGetName
 
-/* #define SymbolName(phsle)						\ */
-/* ({									\ */
-/*     struct symtab_IdentifierIndex *pidin				\ */
-/* 	= SymbolGetPidin(phsle);					\ */
-/*     pidin ? IdinName(pidin) : NULL;					\ */
-/* }) */
 
-
-
-/* #ifndef SWIG */
-/* static inline */
-/* #endif */
-/* int SymbolGetFlags(struct symtab_HSolveListElement *phsle); */
+#ifndef SWIG
+static inline
+#endif
+char * SymbolDescribeNDF(struct symtab_HSolveListElement *phsle);
 
 
 #include <stdlib.h>
@@ -143,17 +114,13 @@ do {									\
 
 
 
-/* ///  */
-/* /// get flags of symbol. */
-/* ///  */
-
-/* #ifndef SWIG */
-/* static inline */
-/* #endif */
-/* int SymbolGetFlags(struct symtab_HSolveListElement *phsle) */
-/* { */
-/*     return(phsle->iFlags); */
-/* } */
+#ifndef SWIG
+static inline
+#endif
+char * SymbolDescribeNDF(struct symtab_HSolveListElement *phsle)
+{
+    return(SymbolHSLETypeDescribeNDF(phsle->iType));
+}
 
 
 #include "inputoutput.h"
