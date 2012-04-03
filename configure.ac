@@ -42,11 +42,11 @@ AM_INIT_AUTOMAKE(model-container, 0.0.0-alpha)
 
 dnl Check for perl on our system.
 dnl Call to AC_SUBST(PERL) is implicit
-AC_PATH_PROGS([PERL], [perl] [perl5], [false])
-if test "x$PERL" = xfalse
-then
-  AC_MSG_ERROR([Perl not found; check your \$PATH.])
-fi
+dnl AC_PATH_PROGS([PERL], [perl] [perl5], [false])
+dnl if test "x$PERL" = xfalse
+dnl then
+dnl   AC_MSG_ERROR([Perl not found; check your \$PATH.])
+dnl fi
  
 # N.B. ${var#pattern} will not work with some shells, such as
 # Solaris 10's /bin/sh :-(
@@ -61,37 +61,37 @@ fi
 #   pmdir_relative_path=`echo "${installsitelib}" | sed -e "s!^$siteprefix/!!"`
 #
 # but this is cleaner:
-pmdir_relative_path=`\
-  $PERL -MConfig \
-        -wle '($_ = $Config{installsitelib})
-              =~ s!^\Q$Config{siteprefix}/!!; \
-              print'`
+dnl pmdir_relative_path=`\
+dnl   $PERL -MConfig \
+dnl         -wle '($_ = $Config{installsitelib})
+dnl               =~ s!^\Q$Config{siteprefix}/!!; \
+dnl               print'`
  
-AC_ARG_WITH(
-    [pmdir],
-    AS_HELP_STRING(
-      [--with-pmdir=DIR],
-      [Install Perl modules in DIR]),
-    [PMDIR=${withval}],
-    [PMDIR='${prefix}'/"$pmdir_relative_path"])
-AC_CONFIG_COMMANDS_POST([[
-  eval pmdir="$PMDIR"
-  cat <<EOF
+dnl AC_ARG_WITH(
+dnl     [pmdir],
+dnl     AS_HELP_STRING(
+dnl       [--with-pmdir=DIR],
+dnl       [Install Perl modules in DIR]),
+dnl     [PMDIR=${withval}],
+dnl     [PMDIR='${prefix}'/"$pmdir_relative_path"])
+dnl AC_CONFIG_COMMANDS_POST([[
+dnl   eval pmdir="$PMDIR"
+dnl   cat <<EOF
  
-# Perl modules will be installed to $PMDIR
-EOF
-  if [ "$pmdir" != "$PMDIR" ]; then
-    cat <<EOF
-# which will expand to
-#
-#   $pmdir
-#
-# unless you override the value of prefix at make-time.
-EOF
-    echo
-  fi
-]])
-AC_SUBST([PMDIR])
+dnl # Perl modules will be installed to $PMDIR
+dnl EOF
+dnl   if [ "$pmdir" != "$PMDIR" ]; then
+dnl     cat <<EOF
+dnl # which will expand to
+dnl #
+dnl #   $pmdir
+dnl #
+dnl # unless you override the value of prefix at make-time.
+dnl EOF
+dnl     echo
+dnl   fi
+dnl ]])
+dnl AC_SUBST([PMDIR])
 
 
 
@@ -539,6 +539,29 @@ case "$host_os" in
         ;;
     esac
 
+
+
+    #-- Here we determine the install path for perl modules --
+    AC_MSG_CHECKING([Checking the perl module installation path])	
+    pmdir_relative_path=`\
+      $PERL -MConfig \
+        -wle '($_ = $Config{installsitelib})
+              =~ s!^\Q$Config{siteprefix}/!!; \
+              print'`
+ 
+    AC_ARG_WITH(
+      [pmdir],
+    AS_HELP_STRING(
+      [--with-pmdir=DIR],
+      [Install Perl modules in DIR]),
+      [PMDIR=${withval}],
+      [PMDIR="$pmdir_relative_path"])
+
+    AC_SUBST([PMDIR])
+    AC_MSG_RESULT([ $PMDIR ])
+    # --- End perl module directory selection --------------
+
+
     # This is to get rid of the annoying error that occurs when
     # you use two arch flags.occur By default these commands produce a -arch for both
     # architectures.
@@ -701,7 +724,7 @@ case "$host_os" in
     esac 
 
 
-    AC_MSG_RESULT([done.])
+    AC_MSG_RESULT([done setting Mac OSX settings.])
     dnl }}} end MAC OS X settings
     ;;
 
@@ -720,6 +743,26 @@ case "$host_os" in
     dnl Check for some needed programs.
     AC_CHECK_PROGS(PERL, perl5 perl)
     AC_SUBST(PERL)
+
+    #-- Here we determine the install path for perl modules --
+    AC_MSG_CHECKING([Checking the perl module installation path])	
+    pmdir_relative_path=`\
+      $PERL -MConfig \
+        -wle '($_ = $Config{installsitelib})
+              =~ s!^\Q$Config{siteprefix}/!!; \
+              print'`
+ 
+    AC_ARG_WITH(
+      [pmdir],
+    AS_HELP_STRING(
+      [--with-pmdir=DIR],
+      [Install Perl modules in DIR]),
+      [PMDIR=${withval}],
+      [PMDIR='${prefix}'/"$pmdir_relative_path"])
+
+    AC_SUBST([PMDIR])
+    AC_MSG_RESULT([ $PMDIR ])
+    # --- End perl module directory selection --------------
 
     dnl Need to have the compilation fail if swig and perl are not found at all.
     AC_CHECK_PROGS(SWIG, swig)
