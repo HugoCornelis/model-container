@@ -20,6 +20,7 @@
 
 EXTRA_DIST = \
 	model_container.i \
+	traversal.i \
 	model_container/__cbi__.py \
 	model_container/__init__.py \
 	model_container/errors.py \
