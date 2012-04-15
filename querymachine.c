@@ -7313,6 +7313,24 @@ static int QueryHandlerPrintSymbolParameters
 		{
 		    bResult = 0;
 		}
+
+		//- else
+
+		else
+		{
+		    //- diag's
+
+		    fprintf(stdout, "export failed\n");
+		}
+	    }
+
+	    //- else
+
+	    else
+	    {
+		//- diag's
+
+		fprintf(stdout, "symbol is not a biocomponent\n");
 	    }
 	}
 
