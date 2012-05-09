@@ -46,7 +46,7 @@ _reserved_symbols = ['(', '\"', ')', ';', '|']
 class ASCParser:
     """
 
-
+    Comment -> ^; token...token \n
     Goal -> Morphology
     Comment -> ; chars \n
     Morphology -> Section Blocks 
@@ -64,13 +64,14 @@ class ASCParser:
     Split -> Values
     
     """
-    def __init__(self, text=None, file=None, model_container=None):
+    def __init__(self, text=None, file=None, verbose=False, model_container=None):
 
         self.collection = {}
-        self.model_container = None
+        self.verbose = verbose
+        self.model_container = model_container
 
         self.num_chars = -1
-        self.curr_position = 0
+        self.curr_position = -1 # This will get incremented by 1 right off the bat
         self.curr_char = ''
         self.curr_token = ""
 
@@ -102,18 +103,46 @@ class ASCParser:
         self.num_chars = len(self.text)
 
         self.line_number = 1
+        self.token_count = 0
         
 #-------------------------------------------------------------------------------        
 
     def parse(self):
 
-        pass
+        token = None
+        
+        while True:
+
+            token = self.next()
+
+            if token is None:
+
+                break
+
+            elif token == ";":
+
+                # We parse out a comment line
+
+                self._comment()
+                
+                
+            elif token == "(":
+                
+                # start of on or a set of blocks
+
+                self._block()
 
 #-------------------------------------------------------------------------------
 
     def get_line_number(self):
 
         return self.line_number
+
+#-------------------------------------------------------------------------------
+
+    def get_token_count(self):
+
+        return self.token_count
 
 #-------------------------------------------------------------------------------
 
@@ -124,7 +153,7 @@ class ASCParser:
         token = ""
 
         ch = ''
-        
+
         while not token_found:
 
             ch = self._next_char()
@@ -142,6 +171,8 @@ class ASCParser:
                 token_found = True
 
                 token = ch
+
+                self.token_count += 1
             
             elif ch.isspace() or self._peek() in _reserved_symbols or self._peek() == '\n':
 
@@ -153,12 +184,15 @@ class ASCParser:
                         
                     token_found = True
 
+                    self.token_count += 1
+
                 elif return_newline and ch == '\n':
 
                     token_found = True
 
                     token = ch
-                
+                    
+                    self.token_count += 1
                 
                 # keep going if we have white space
                 continue
@@ -167,6 +201,7 @@ class ASCParser:
                                     
                 token += ch
 
+        
         return token
     
 #-------------------------------------------------------------------------------
@@ -184,6 +219,21 @@ class ASCParser:
             # We're done
             return None
 
+
+#-------------------------------------------------------------------------------
+
+    def _comment(self):
+
+        token = None
+
+        if self.verbose:
+
+            print "Parsing comment on line %d" % self.get_line_number()
+            
+        while token != '\n':
+
+            token = self.next(return_newline=True)
+        
 #-------------------------------------------------------------------------------
 
     def _peek(self):
