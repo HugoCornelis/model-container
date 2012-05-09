@@ -28,6 +28,7 @@ Done!',
 				arguments => [
 					     ],
 				command => 'tests/python/asc_parse_2.py',
+				disabled => "working on this",
 				command_tests => [
 						  {
 						   description => "Can we parse tokens in an asc file with the top level api ?",

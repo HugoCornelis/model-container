@@ -27,6 +27,19 @@ class UnknownTokenError(Exception):
         return "Line #%s, Found token: %s" % (self.lineno, self.token)
 
 
+class UnknownTokenError(Exception):
+    """ This exception is for use to be thrown when an unknown token is
+        encountered in the token stream. It hols the line number and the
+        offending token.
+    """
+    def __init__(self, expected, token, lineno):
+        self.token = token
+        self.lineno = lineno
+        self.expected = expected
+ 
+    def __str__(self):
+        return "Line #%s, Found token: %s, expected %s" % (self.lineno,self.token,self.expected)
+
 class ParseError(Exception):
     """ This exception is for use to be thrown when an unknown token is
         encountered in the token stream. It hols the line number and the
@@ -40,6 +53,21 @@ class ParseError(Exception):
         return "Error on line #%s, at: %s" % (self.lineno, self.token)
 
 
+
+class ParseError(Exception):
+    """ This exception is for use to be thrown when an unknown token is
+        encountered in the token stream. It hols the line number and the
+        offending token.
+    """
+    def __init__(self, error_msg, token, lineno):
+        self.token = token
+        self.lineno = lineno
+        self.error_msg = error_msg
+ 
+    def __str__(self):
+        return "Error on line #%s, at %s: %s" % (self.lineno, self.token, self.error_msg)
+
+
 _reserved_symbols = ['(', '\"', ')', ';', '|']
 
 #************************* Begin ASCParser  ************************************
@@ -49,8 +77,8 @@ class ASCParser:
     Comment -> ^; token...token \n
     Goal -> Morphology
     Comment -> ; chars \n
-    Morphology -> Section Blocks 
-    Section -> ( 'Section' )
+    Morphology -> Sections Blocks 
+    Sections -> ( 'Sections' ) Blocks
     Blocks -> ( Block ) ... ( Block )
     Block -> Contour | Dendrite | Tree
     Contour -> ( Name Color ( 'CellBody' ) Values ) '; End of Contour'
@@ -110,14 +138,14 @@ class ASCParser:
     def parse(self):
 
         token = None
-        
+
         while True:
-
+            
             token = self.next()
-
+        
             if token is None:
 
-                break
+                raise ParseError("Nothing to parse", "(null)", self.get_line_number())
 
             elif token == ";":
 
@@ -128,9 +156,9 @@ class ASCParser:
                 
             elif token == "(":
                 
-                # start of on or a set of blocks
+                # start of a block or a set of blocks
 
-                self._block()
+                self._morphology()
 
 #-------------------------------------------------------------------------------
 
@@ -253,21 +281,68 @@ class ASCParser:
 #-------------------------------------------------------------------------------
 
     def _morphology(self):
+        """
+           Morphology -> Section Blocks
+    
+        Morphology starts off knowing that the first token is
+        '(' and nothing else. We check for the sections token, then
+        the blocks.
+        """
 
-        pass
-
+        # now we parse the sections and blocks
+        self._sections()
+        
 #-------------------------------------------------------------------------------
 
-    def _section(self):
+    def _sections(self):
+        """
+        Sections -> ( 'Sections' ) Blocks
 
-        pass
 
+        Processes the Sections header and passes it off to process blocks
+        """
+        token = None
+
+        token = self.next()
+
+        if token != "Sections":
+
+            raise UnknownTokenError("Sections", token, self.get_line_number())
+
+        else:
+
+            if self.verbose:
+
+                print "Found 'Sections' block"
+                
+        token = self.next()
+
+        if token != ')':
+
+            raise ParseError("Error Morphology, no closing parenthesis for 'Sections'", token, self.get_line_number())
+
+        # now parse blocks
+        
+        self._blocks()
 
 #-------------------------------------------------------------------------------
 
     def _blocks(self):
+        """
+        Blocks -> ( Block ) ... ( Block )
 
-        pass
+        Here we process a block, or a number of blocks.
+        """
+
+        token = self.next()
+
+        if token == '(':
+
+            self._block()
+
+        else:
+
+            raise ParseError("Expected block", token, self.get_line_number())
 
 
 #-------------------------------------------------------------------------------

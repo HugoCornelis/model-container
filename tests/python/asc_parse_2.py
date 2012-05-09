@@ -9,7 +9,7 @@ add_package_path('model-container')
 
 from model_container.loader.asc import ASCParser
 
-asc = ASCParser(file=os.path.join('tests','python','asc_files','e1cb4a1.asc'))
+asc = ASCParser(verbose=True, file=os.path.join('tests','python','asc_files','e1cb4a1.asc'))
 
 
 try:
