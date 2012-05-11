@@ -77,8 +77,8 @@ class ASCParser:
     Comment -> ^; token...token \n
     Goal -> Morphology
     Comment -> ; chars \n
-    Morphology -> Sections Blocks 
-    Sections -> ( 'Sections' ) Blocks
+    Morphology -> [Sections] Blocks 
+    Sections -> ( 'Sections' ) 
     Blocks -> ( Block ) ... ( Block )
     Block -> Contour | Dendrite | Tree
     Contour -> ( Name Color ( 'CellBody' ) Values ) '; End of Contour'
