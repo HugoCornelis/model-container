@@ -24,7 +24,7 @@ class UnknownTokenError(Exception):
         self.lineno = lineno
  
     def __str__(self):
-        return "Line #%s, Found token: %s" % (self.lineno, self.token)
+        return "Line #%s, Found token: '%s'" % (self.lineno, self.token)
 
 
 class UnknownTokenError(Exception):
@@ -38,7 +38,7 @@ class UnknownTokenError(Exception):
         self.expected = expected
  
     def __str__(self):
-        return "Line #%s, Found token: %s, expected %s" % (self.lineno,self.token,self.expected)
+        return "Line #%s, Found token: '%s', expected '%s'" % (self.lineno,self.token,self.expected)
 
 class ParseError(Exception):
     """ This exception is for use to be thrown when an unknown token is
@@ -50,7 +50,7 @@ class ParseError(Exception):
         self.lineno = lineno
  
     def __str__(self):
-        return "Error on line #%s, at: %s" % (self.lineno, self.token)
+        return "Error on line #%s, at: '%s'" % (self.lineno, self.token)
 
 
 
@@ -65,7 +65,7 @@ class ParseError(Exception):
         self.error_msg = error_msg
  
     def __str__(self):
-        return "Error on line #%s, at %s: %s" % (self.lineno, self.token, self.error_msg)
+        return "Error on line #%s, at '%s': %s" % (self.lineno, self.token, self.error_msg)
 
 
 _reserved_symbols = ['(', '\"', ')', ';', '|']
@@ -92,10 +92,11 @@ class ASCParser:
     Split -> Values
     
     """
-    def __init__(self, text=None, file=None, verbose=False, model_container=None):
+    def __init__(self, text=None, file=None, verbose=False, parse_only=False, model_container=None):
 
         self.collection = {}
         self.verbose = verbose
+        self.parse_only = parse_only
         self.model_container = model_container
 
         self.num_chars = -1
@@ -136,29 +137,34 @@ class ASCParser:
 #-------------------------------------------------------------------------------        
 
     def parse(self):
+        """
+        Here we just run blocks to parse through all the blocks
+        in the file.
+        """
+        self._blocks()
 
-        token = None
+#        token = None
 
-        while True:
+#         while True:
             
-            token = self.next()
+#             token = self.next()
         
-            if token is None:
+#             if token is None:
 
-                raise ParseError("Nothing to parse", "(null)", self.get_line_number())
+#                 raise ParseError("Nothing to parse", "(null)", self.get_line_number())
 
-            elif token == ";":
+#             elif token == ";":
 
-                # We parse out a comment line
+#                 # We parse out a comment line
 
-                self._comment()
+#                 self._comment()
                 
                 
-            elif token == "(":
+#             elif token == "(":
                 
-                # start of a block or a set of blocks
+#                 # start of a block or a set of blocks
 
-                self._morphology()
+#                 self._morphology()
 
 #-------------------------------------------------------------------------------
 
@@ -229,6 +235,7 @@ class ASCParser:
                                     
                 token += ch
 
+        self.curr_token = token
         
         return token
     
@@ -296,18 +303,17 @@ class ASCParser:
 
     def _sections(self):
         """
-        Sections -> ( 'Sections' ) Blocks
+        Should start off with Sections as the current token. This method just
+        parses to the second parens.
 
-
-        Processes the Sections header and passes it off to process blocks
+        Parses:
+            Sections -> ( 'Sections' ) 
         """
         token = None
 
-        token = self.next()
+        if self.curr_token != "Sections":
 
-        if token != "Sections":
-
-            raise UnknownTokenError("Sections", token, self.get_line_number())
+            raise UnknownTokenError("Sections", self.curr_token, self.get_line_number())
 
         else:
 
@@ -321,9 +327,6 @@ class ASCParser:
 
             raise ParseError("Error Morphology, no closing parenthesis for 'Sections'", token, self.get_line_number())
 
-        # now parse blocks
-        
-        self._blocks()
 
 #-------------------------------------------------------------------------------
 
@@ -334,23 +337,69 @@ class ASCParser:
         Here we process a block, or a number of blocks.
         """
 
-        token = self.next()
+        token = None
 
-        if token == '(':
+        while True:
+            
+            token = self.next()
 
-            self._block()
+            if token is None:
+                # we're done
+                break
+            
+            elif token == '(':
 
-        else:
+                self._block()
 
-            raise ParseError("Expected block", token, self.get_line_number())
+            elif token == ';':
+
+                self._comment()
+            
+            else:
+
+                raise ParseError("Expected block", token, self.get_line_number())
 
 
 #-------------------------------------------------------------------------------
 
     def _block(self):
+        """
 
-        pass
+        This method starts off with the initial '(' already parsed.
 
+        Parses:
+            Sections -> ( 'Sections' )
+            Contour -> ( Name Color ( 'CellBody' ) Values ) '; End of Contour'
+            Color -> ( 'Color' string ) ; string
+            Dendrite -> ( Name Color ( 'Dendrite' ) Values|Splits )
+            Splits -> ( Split ... Split )
+            ImageCoords -> (ImageCoords)
+        """
+
+        token = self.next()
+
+
+        if token == 'ImageCoords':
+
+            while token != ')':
+                
+                token = self.next()
+
+        elif token == "Sections":
+
+            self._sections()
+
+        elif token == '\"':
+            
+            # here we parse the name and determine which
+            # name we have in quotes
+            _name = self._name()
+
+        else:
+            
+            raise ParseError("Invalid block", token, self.get_line_number())
+
+            
 
 #-------------------------------------------------------------------------------
 
@@ -369,8 +418,45 @@ class ASCParser:
 #-------------------------------------------------------------------------------
 
     def _name(self):
+        """
+        Returns everything within the quotes. Handy for multipart names
+        
+        Parses:
+            Name -> \" string \" 
+        """
 
-        pass
+        name_parts = []
+        
+        if self.curr_token != '\"':
+
+            raise ParseError("Attempting to parse name without starting quote",
+                             self.curr_token, self.line_number)
+
+        else:
+
+            token = self.next()
+
+            name_parts.append(token)
+            
+            while token != '\"':
+
+                token = self.next()
+
+                name_parts.append(token)
+
+
+            if len(name_parts) > 1:
+
+                return ' '.join(name_parts)
+
+            elif len(name_parts) == 1:
+
+                return name_parts[0]
+
+            else:
+
+                raise ParseError("Can't parse name",
+                                 self.curr_token, self.line_number)
 
 
 #-------------------------------------------------------------------------------
@@ -378,7 +464,6 @@ class ASCParser:
     def _values(self):
 
         pass
-
 
 #-------------------------------------------------------------------------------
 
