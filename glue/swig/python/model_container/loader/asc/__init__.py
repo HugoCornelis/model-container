@@ -81,7 +81,7 @@ class ASCParser:
     Sections -> ( 'Sections' ) 
     Blocks -> ( Block ) ... ( Block )
     Block -> Contour | Dendrite | Tree
-    Contour -> ( Name Color ( 'CellBody' ) Values ) '; End of Contour'
+    CellBody -> ( Name Color ( 'CellBody' ) Values ) '; End of Contour'    
     Color -> ( 'Color' string ) ; string
     Name -> \" string \" 
     Values -> Value Value ... Value
@@ -103,6 +103,10 @@ class ASCParser:
         self.curr_position = -1 # This will get incremented by 1 right off the bat
         self.curr_char = ''
         self.curr_token = ""
+        
+        self.curr_name = None
+        self.curr_color = None
+        self.curr_block = None
 
         self.text = ""
 
@@ -268,7 +272,27 @@ class ASCParser:
         while token != '\n':
 
             token = self.next(return_newline=True)
+
+#-------------------------------------------------------------------------------
+
+    def _metadata(self):
+
+        token = None
+
+        metadata = []
         
+        if self.verbose:
+
+            print "Parsing metadata on line %d" % self.get_line_number()
+            
+        while token != '\n':
+            
+            token = self.next(return_newline=True)
+
+            metadata.append(token)
+
+        return ' '.join(metadata)
+    
 #-------------------------------------------------------------------------------
 
     def _peek(self):
@@ -309,6 +333,11 @@ class ASCParser:
         Parses:
             Sections -> ( 'Sections' ) 
         """
+
+        if self.verbose:
+
+            print "Parsing Sections block at line %d" % (self.get_line_number())
+        
         token = None
 
         if self.curr_token != "Sections":
@@ -369,38 +398,53 @@ class ASCParser:
 
         Parses:
             Sections -> ( 'Sections' )
-            Contour -> ( Name Color ( 'CellBody' ) Values ) '; End of Contour'
+            CellBody -> ( Name Color ( 'CellBody' ) Values ) '; End of Contour'
             Color -> ( 'Color' string ) ; string
             Dendrite -> ( Name Color ( 'Dendrite' ) Values|Splits )
             Splits -> ( Split ... Split )
             ImageCoords -> (ImageCoords)
         """
-
+        token = None
+        
         token = self.next()
 
+        # Parse name if a name is present
+        if token == '\"':
+            
+            # here we parse the name and determine which
+            # name we have in quotes
+            self.curr_name = self._name()
 
         if token == 'ImageCoords':
 
-            while token != ')':
-                
-                token = self.next()
+            self._imagecoords()
 
         elif token == "Sections":
 
             self._sections()
 
-        elif token == '\"':
-            
-            # here we parse the name and determine which
-            # name we have in quotes
-            _name = self._name()
+        elif token == '(':
+
+            self._sub_block()
 
         else:
             
             raise ParseError("Invalid block", token, self.get_line_number())
 
-            
+#-------------------------------------------------------------------------------
 
+    def _sub_block(self):
+        """
+        Here we parse any blocks that are within a block
+
+        Type -> ( ['CellBody' | 'Dendrite'] )
+        Color -> ( 'Color' string ) ; string
+        """
+
+        pass
+
+
+        
 #-------------------------------------------------------------------------------
 
     def _contour(self):
@@ -414,7 +458,27 @@ class ASCParser:
 
         pass
 
+#-------------------------------------------------------------------------------
 
+    def _imagecoords(self):
+
+        if self.verbose:
+
+            print "Parsing ImageCoords block at line %d" % (self.get_line_number())
+            
+        token = None
+        
+        while token != ')':
+                
+            token = self.next()
+
+        # here we remove the trailing comment
+
+        if self.curr_token == ';':
+
+            self._comment()
+        
+                
 #-------------------------------------------------------------------------------
 
     def _name(self):
@@ -458,6 +522,18 @@ class ASCParser:
                 raise ParseError("Can't parse name",
                                  self.curr_token, self.line_number)
 
+
+#-------------------------------------------------------------------------------
+
+    def _cell_body(self):
+        """
+
+        Parses:
+
+            
+        """
+        
+        
 
 #-------------------------------------------------------------------------------
 
