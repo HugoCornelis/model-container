@@ -24,7 +24,7 @@ class UnknownTokenError(Exception):
         self.lineno = lineno
  
     def __str__(self):
-        return "Line #%s, Found token: '%s'" % (self.lineno, self.token)
+        return "Unknown Token, line #%s, Found token: '%s'" % (self.lineno, self.token)
 
 
 class UnknownTokenError(Exception):
@@ -38,7 +38,7 @@ class UnknownTokenError(Exception):
         self.expected = expected
  
     def __str__(self):
-        return "Line #%s, Found token: '%s', expected '%s'" % (self.lineno,self.token,self.expected)
+        return "Unknown Token, line #%s, Found token: '%s', expected '%s'" % (self.lineno,self.token,self.expected)
 
 class ParseError(Exception):
     """ This exception is for use to be thrown when an unknown token is
@@ -50,7 +50,7 @@ class ParseError(Exception):
         self.lineno = lineno
  
     def __str__(self):
-        return "Error on line #%s, at: '%s'" % (self.lineno, self.token)
+        return "Parse error on line #%s, at: '%s'" % (self.lineno, self.token)
 
 
 
@@ -65,7 +65,7 @@ class ParseError(Exception):
         self.error_msg = error_msg
  
     def __str__(self):
-        return "Error on line #%s, at '%s': %s" % (self.lineno, self.token, self.error_msg)
+        return "Parse error on line #%s, at '%s': %s" % (self.lineno, self.token, self.error_msg)
 
 
 _reserved_symbols = ['(', '\"', ')', ';', '|']
@@ -106,7 +106,7 @@ class ASCParser:
         
         self.curr_name = None
         self.curr_color = None
-        self.curr_block = None
+        self.curr_block_type = None
 
         self.text = ""
 
@@ -410,22 +410,29 @@ class ASCParser:
 
         # Parse name if a name is present
         if token == '\"':
-            
+
             # here we parse the name and determine which
             # name we have in quotes
             self.curr_name = self._name()
 
-        if token == 'ImageCoords':
+            # now it's safe to get the next token
+            token = self.next()
+
+
+        # Parse out all sub blocks
+        if token == '(':
+
+            while self.curr_token == '(':
+                
+                self._sub_block()
+
+        elif token == 'ImageCoords':
 
             self._imagecoords()
 
         elif token == "Sections":
 
             self._sections()
-
-        elif token == '(':
-
-            self._sub_block()
 
         else:
             
@@ -441,10 +448,29 @@ class ASCParser:
         Color -> ( 'Color' string ) ; string
         """
 
-        pass
+        if self.curr_token != '(':
+
+            raise UnknownTokenError("(", self.curr_token, self.get_line_number())
+            
+        token = self.next()
+
+        if token == "Color":
+
+            self._color()
+
+        elif token == "CellBody":
+
+            self._cell_body()
+
+        elif token == "Dendrite":
+
+            self._dendrite()
+
+        else:
+
+            raise ParseError("Invalid Sub-block", token, self.get_line_number())
 
 
-        
 #-------------------------------------------------------------------------------
 
     def _contour(self):
@@ -456,8 +482,33 @@ class ASCParser:
 
     def _color(self):
 
-        pass
+        if self.curr_token != 'Color':
 
+            raise UnknownTokenError('Color', token, self.get_line_number())
+
+
+        token = self.next()
+
+        # not sure if i should have a check for the type here
+        # the next token should be the Color in string form
+
+        self.curr_color = token
+
+        if self.verbose:
+
+            print "- Color is %s" % self.curr_color
+
+        token = self.next()
+
+        if token != ')':
+
+            raise UnknownTokenError(')', token, self.get_line_number())
+
+        else:
+            
+            # leave off on the next token for parsing
+            self.next()
+            
 #-------------------------------------------------------------------------------
 
     def _imagecoords(self):
@@ -490,6 +541,8 @@ class ASCParser:
         """
 
         name_parts = []
+
+        block_name = None
         
         if self.curr_token != '\"':
 
@@ -506,22 +559,28 @@ class ASCParser:
 
                 token = self.next()
 
-                name_parts.append(token)
-
+                if token != '\"':
+                    
+                    name_parts.append(token)
 
             if len(name_parts) > 1:
 
-                return ' '.join(name_parts)
+                 block_name = ' '.join(name_parts)
 
             elif len(name_parts) == 1:
 
-                return name_parts[0]
+                block_name = name_parts[0]
 
             else:
 
                 raise ParseError("Can't parse name",
                                  self.curr_token, self.line_number)
 
+            if self.verbose:
+
+                print "- Block name is \"%s\"" % block_name
+
+            return block_name
 
 #-------------------------------------------------------------------------------
 
@@ -530,23 +589,113 @@ class ASCParser:
 
         Parses:
 
-            
+            CellBody)
         """
-        
-        
 
+        if self.curr_token != 'CellBody':
+
+            raise UnknownTokenError('CellBody', self.curr_token, self.get_line_number())
+
+
+        self.curr_block_type = self.curr_token
+
+
+        if self.verbose:
+
+            print "- Type is CellBody"
+            
+        token = self.next()
+
+        if token != ')':
+
+            raise UnknownTokenError(')', token, self.get_line_number())
+
+        else:
+            # leave it off on the next token
+            self.next()
+
+        # Now we parse for values
+
+        self._values()
+        
 #-------------------------------------------------------------------------------
 
     def _values(self):
+        """
+        Leaves off on '(' if not present, then method bails and does no work
 
-        pass
+        Parses:
+            Values -> Value Value ... Value
+        """
+        if self.curr_token != '(':
+
+            # return, possible to have a cellbody with no values
+            return
+            
+
+        if self.verbose:
+
+            print "- Parsing '%s' Values" % self.curr_block_type
+            
+        while self.curr_token == '(':
+
+            self._value()
 
 #-------------------------------------------------------------------------------
 
     def _value(self):
+        """
+        
+        
+        Parses:
+            Value -> ( double double double double ) ; ID
+        """
 
-        pass
+        if self.curr_token != '(':
 
+            raise UnknownTokenError(')', self.curr_token, self.get_line_number())
+
+
+
+        token = self.next()
+
+        values = []
+        metadata = None
+        
+        while token != ')':
+
+            try:
+
+                values.append( float(token) )
+                
+            except ValueError:
+
+                raise ParseError("Invalid float '%s' present in value block" % token,
+                                 self.curr_token, self.get_line_number())
+
+            token = self.next()
+
+        if self.verbose:
+
+            print "-- Parsed values: %s" % ' '.join(map(str,values))
+            
+        # now collect the metadata
+
+        token = self.next()
+
+        if token == ';':
+
+            metadata = self._metadata()
+        
+#-------------------------------------------------------------------------------
+
+    def _is_float(self, s):
+        
+        try:
+            float(s)
+            return True
+        except ValueError:
+            return False
 
 #-------------------------------------------------------------------------------
 
@@ -558,8 +707,29 @@ class ASCParser:
 #-------------------------------------------------------------------------------
 
     def _dendrite(self):
+        """
 
-        pass
+        Parses:
+
+            Dendrite)
+        """
+
+        if self.curr_token != 'Dendrite':
+
+            raise UnknownTokenError('Dendrite', self.curr_token, self.get_line_number())
+            
+        self.curr_block_type = self.curr_token
+
+        if self.verbose:
+
+            print "- Type is Dendrite"
+
+        token = self.next()
+
+        if token != ')':
+
+            raise UnknownTokenError(')', token, self.get_line_number())
+
 
 
 #-------------------------------------------------------------------------------
