@@ -9,7 +9,7 @@ add_package_path('model-container')
 
 from model_container.loader.asc import ASCParser
 
-asc = ASCParser(verbose=True, file=os.path.join('tests','python','asc_files','e1cb4a1.asc'))
+asc = ASCParser(verbose=True, file=os.path.join('tests','python','asc_files','finchL1_slow.ASC'))
 
 
 try:
@@ -19,6 +19,7 @@ try:
 except Exception, e:
 
     print "Error occured: %s" % e
+
 
 print "\n*********************************"
 print "File e1cb4a1.asc has %d tokens" % (asc.get_token_count())
