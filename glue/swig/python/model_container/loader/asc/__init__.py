@@ -77,10 +77,10 @@ class ASCParser:
     Comment -> ^; token...token \n
     Goal -> Morphology
     Comment -> ; chars \n
-    Morphology -> [Sections] Blocks 
+    Morphology -> Blocks 
     Sections -> ( 'Sections' ) 
     Blocks -> ( Block ) ... ( Block )
-    Block -> Contour | Dendrite | Tree
+    Block -> Sections | Contour | Dendrite | Tree | ImageCoords
     CellBody -> ( Name Color ( 'CellBody' ) Values ) '; End of Contour'    
     Color -> ( 'Color' string ) ; string
     Name -> \" string \" 
@@ -108,6 +108,8 @@ class ASCParser:
         self.curr_color = None
         self.curr_block_type = None
 
+        self.level = 0
+        
         self.text = ""
 
         if not text is None:
@@ -149,6 +151,7 @@ class ASCParser:
 
 #        token = None
 
+        # Really only one loop should go to completion
 #         while True:
             
 #             token = self.next()
@@ -291,6 +294,11 @@ class ASCParser:
 
             metadata.append(token)
 
+        # This stops on the newline, so we need to get next token to get
+        # a real token.
+
+        self.next()
+        
         return ' '.join(metadata)
     
 #-------------------------------------------------------------------------------
@@ -313,15 +321,36 @@ class ASCParser:
 
     def _morphology(self):
         """
-           Morphology -> Section Blocks
+           Morphology -> Section] Blocks
     
         Morphology starts off knowing that the first token is
         '(' and nothing else. We check for the sections token, then
         the blocks.
         """
 
-        # now we parse the sections and blocks
-        self._sections()
+        token = None
+
+        token = self.next()
+
+        if token != "Sections":
+
+            raise UnknownTokenError("Sections", token, self.get_line_number())
+
+        else:
+
+            if self.verbose:
+
+                print "Found 'Sections' block"
+                
+        token = self.next()
+
+        if token != ')':
+
+            raise ParseError("Error Morphology, no closing parenthesis for 'Sections'", token, self.get_line_number())
+
+        # now parse blocks
+        
+        self._blocks()
         
 #-------------------------------------------------------------------------------
 
@@ -378,6 +407,10 @@ class ASCParser:
             
             elif token == '(':
 
+                # if the block finishes and leaves off on a ')'
+                # it should be ok. If it does not this will throw an
+                # exception. The next iteration of the loop will parse it out.
+                
                 self._block()
 
             elif token == ';':
@@ -437,6 +470,11 @@ class ASCParser:
         else:
             
             raise ParseError("Invalid block", token, self.get_line_number())
+
+
+        if self.curr_token != ')':
+
+            raise UnknownTokenError(")", self.curr_token, self.get_line_number())
 
 #-------------------------------------------------------------------------------
 
@@ -508,6 +546,13 @@ class ASCParser:
             
             # leave off on the next token for parsing
             self.next()
+
+        # just check to see if there is metadata at the end of it and if so
+        # we parse it
+
+        if self.curr_token == ';':
+
+            self._metadata()
             
 #-------------------------------------------------------------------------------
 
