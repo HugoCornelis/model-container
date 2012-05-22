@@ -108,7 +108,7 @@ class ASCParser:
         self.curr_color = None
         self.curr_block_type = None
 
-        self.level = 0
+        self.level = -1
         
         self.text = ""
 
@@ -677,15 +677,25 @@ class ASCParser:
             # return, possible to have a cellbody with no values
             return
             
+        else:
 
+            # increase level
+            self.level += 1
+            
         if self.verbose:
 
-            print "- Parsing '%s' Values" % self.curr_block_type
+            print "- Parsing '%s' Values at level %d" % (self.curr_block_type, self.level)
+
+
             
         while self.curr_token == '(':
 
             self._value()
 
+
+        # decrease level
+        self.level -= 1
+        
 #-------------------------------------------------------------------------------
 
     def _value(self):
@@ -704,8 +714,16 @@ class ASCParser:
 
         token = self.next()
 
+
+        # if we go another level in then we call the values method
+        if token == '(':
+
+            self._values()
+
+            
         values = []
         metadata = None
+
         
         while token != ')':
 
@@ -731,6 +749,8 @@ class ASCParser:
         if token == ';':
 
             metadata = self._metadata()
+
+#        pdb.set_trace()
         
 #-------------------------------------------------------------------------------
 
@@ -776,6 +796,14 @@ class ASCParser:
             raise UnknownTokenError(')', token, self.get_line_number())
 
 
+        else:
+            # leave it off on the next token
+            self.next()
+
+        # Now we parse for values
+
+        self._values()
+        
 
 #-------------------------------------------------------------------------------
 
