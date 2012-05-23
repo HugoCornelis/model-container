@@ -16,7 +16,7 @@ import sys
 
 class UnknownTokenError(Exception):
     """ This exception is for use to be thrown when an unknown token is
-        encountered in the token stream. It hols the line number and the
+        encountered in the token stream. It holds the line number and the
         offending token.
     """
     def __init__(self, token, lineno):
@@ -219,9 +219,11 @@ class ASCParser:
 
                 if len(token) > 0:
 
-                    if self._peek() in _reserved_symbols:
+                    if self._peek() in _reserved_symbols or self._peek() == '\n':
 
-                        token += ch
+                        if not ch == '\n':
+                            
+                            token += ch
                         
                     token_found = True
 
@@ -239,7 +241,7 @@ class ASCParser:
                 continue
                 
             else:
-                                    
+
                 token += ch
 
         self.curr_token = token
@@ -617,7 +619,7 @@ class ASCParser:
                 block_name = name_parts[0]
 
             else:
-
+                pdb.set_trace()
                 raise ParseError("Can't parse name",
                                  self.curr_token, self.line_number)
 
@@ -665,6 +667,40 @@ class ASCParser:
         
 #-------------------------------------------------------------------------------
 
+#     def _values(self):
+#         """
+#         Leaves off on '(' if not present, then method bails and does no work
+
+#         Parses:
+#             Values -> Value Value ... Value
+#         """
+#         if self.curr_token != '(':
+
+#             # return, possible to have a cellbody with no values
+#             return
+            
+#         else:
+
+#             # increase level
+#             self.level += 1
+            
+#         if self.verbose:
+
+#             print "- Parsing '%s' Values at level %d" % (self.curr_block_type, self.level)
+
+
+        
+#         while self.curr_token == '(':
+
+#             self._value()
+
+
+#         # decrease level
+#         self.level -= 1
+
+
+
+
     def _values(self):
         """
         Leaves off on '(' if not present, then method bails and does no work
@@ -687,14 +723,30 @@ class ASCParser:
             print "- Parsing '%s' Values at level %d" % (self.curr_block_type, self.level)
 
 
+        while True:
+
+            if self.curr_token == '(':
+
+                self._value()
+
+            elif self.curr_token == 'Normal':
+
+                self._split()
+
+            elif self.curr_token == ')':
+
+                break
             
-        while self.curr_token == '(':
+            else:
 
-            self._value()
+                pdb.set_trace()
 
-
+                raise ParseError("Can't parse value in '%s'" % self.curr_block_type,
+                                 self.curr_token, self.line_number)
+            
         # decrease level
         self.level -= 1
+        
         
 #-------------------------------------------------------------------------------
 
@@ -731,11 +783,11 @@ class ASCParser:
 
                 values.append( float(token) )
                 
-            except ValueError:
+            except ValueError, e:
 
-                raise ParseError("Invalid float '%s' present in value block" % token,
+                raise ParseError("Invalid float '%s' present in value block: %s" % (token,e),
                                  self.curr_token, self.get_line_number())
-
+            
             token = self.next()
 
         if self.verbose:
@@ -815,12 +867,48 @@ class ASCParser:
 #-------------------------------------------------------------------------------
 
     def _split(self):
+        """
 
-        pass
+        Parses:
 
+            Normal |
+        """
 
-        
-        
+        if self.curr_token != 'Normal':
+
+            # should never get here but need to make sure
+            
+            raise UnknownTokenError('Normal', self.curr_token, self.get_line_number())
+            
+        self.curr_block_type = self.curr_token
+
+        if self.verbose:
+
+            print "-- Split in dendrite"
+
+        token = self.next()
+
+#         if token != '|':
+
+#             raise ParseError("Invalid split, no '|' present",
+#                              self.curr_token, self.line_number)
+
+        if token == '|':
+            
+            # Now we parse to leave off on the next value
+
+            token = self.next()
+
+            if token != '(':
+
+                raise ParseError("Invalid split, no value is present after '|'",
+                                 self.curr_token, self.line_number)
+        elif token == ')':
+
+            # if this ends here then we do some method to store the values we got.
+            
+            return
+
 
 
 

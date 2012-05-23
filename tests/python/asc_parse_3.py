@@ -22,7 +22,7 @@ except Exception, e:
 
 
 print "\n*********************************"
-print "File e1cb4a1.asc has %d tokens" % (asc.get_token_count())
+print "File finchL1_slow.ASC has %d tokens" % (asc.get_token_count())
 print "With %d lines" % (asc.get_line_number())
 
 print "Done!"
