@@ -221,7 +221,7 @@ class ASCParser:
 
                     if self._peek() in _reserved_symbols or self._peek() == '\n':
 
-                        if not ch == '\n':
+                        if not ch.isspace():
                             
                             token += ch
                         
@@ -619,7 +619,7 @@ class ASCParser:
                 block_name = name_parts[0]
 
             else:
-                pdb.set_trace()
+
                 raise ParseError("Can't parse name",
                                  self.curr_token, self.line_number)
 
@@ -738,8 +738,6 @@ class ASCParser:
                 break
             
             else:
-
-                pdb.set_trace()
 
                 raise ParseError("Can't parse value in '%s'" % self.curr_block_type,
                                  self.curr_token, self.line_number)
