@@ -721,8 +721,7 @@ class ASCParser:
         if self.verbose:
 
             print "- Parsing '%s' Values at level %d" % (self.curr_block_type, self.level)
-
-
+            
         while True:
 
             if self.curr_token == '(':
@@ -770,9 +769,12 @@ class ASCParser:
 
             self._values()
 
-            
         values = []
         metadata = None
+
+        if self.line_number == 357:
+            pass
+            #pdb.set_trace()
 
         
         while token != ')':
@@ -800,7 +802,6 @@ class ASCParser:
 
             metadata = self._metadata()
 
-#        pdb.set_trace()
         
 #-------------------------------------------------------------------------------
 
@@ -869,17 +870,17 @@ class ASCParser:
 
         Parses:
 
-            Normal |
+            Normal [|]
         """
 
+        metadata = None
+        
         if self.curr_token != 'Normal':
 
             # should never get here but need to make sure
             
             raise UnknownTokenError('Normal', self.curr_token, self.get_line_number())
             
-        self.curr_block_type = self.curr_token
-
         if self.verbose:
 
             print "-- Split in dendrite"
@@ -897,16 +898,22 @@ class ASCParser:
 
             token = self.next()
 
+            print "Token after pipe is %s at line %d" % (token, self.get_line_number())
+
             if token != '(':
 
                 raise ParseError("Invalid split, no value is present after '|'",
                                  self.curr_token, self.line_number)
         elif token == ')':
 
-            # if this ends here then we do some method to store the values we got.
-            
-            return
+            # here we are at the end of a split, so we
+            # parse out the end parens, and any metadata
 
+            token = self.next()
+
+            if token == ';':
+
+                metadata = self._metadata()
 
 
 
