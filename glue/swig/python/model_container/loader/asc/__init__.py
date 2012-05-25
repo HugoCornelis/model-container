@@ -412,8 +412,11 @@ class ASCParser:
                 # if the block finishes and leaves off on a ')'
                 # it should be ok. If it does not this will throw an
                 # exception. The next iteration of the loop will parse it out.
+                self.level += 1
                 
                 self._block()
+                
+                self.level -= 1
 
             elif token == ';':
 
@@ -713,14 +716,9 @@ class ASCParser:
             # return, possible to have a cellbody with no values
             return
             
-        else:
-
-            # increase level
-            self.level += 1
-            
         if self.verbose:
 
-            print "- Parsing '%s' Values at level %d" % (self.curr_block_type, self.level)
+            print "- Level %d of '%s', parsing values" % (self.level, self.curr_block_type)
             
         while True:
 
@@ -728,23 +726,25 @@ class ASCParser:
 
                 self._value()
 
-            elif self.curr_token == 'Normal':
+            elif self.curr_token == 'Normal' or self.curr_token == '|':
 
-                self._split()
+                self._splits()
 
             elif self.curr_token == ')':
 
+#                token = self.next()
+
                 break
-            
+                    
             else:
 
                 raise ParseError("Can't parse value in '%s'" % self.curr_block_type,
                                  self.curr_token, self.line_number)
+
+        if self.verbose:
             
-        # decrease level
-        self.level -= 1
-        
-        
+            print "- Level %d of %s, done parsing values" % (self.level, self.curr_block_type)
+            
 #-------------------------------------------------------------------------------
 
     def _value(self):
@@ -767,14 +767,14 @@ class ASCParser:
         # if we go another level in then we call the values method
         if token == '(':
 
+            self.level += 1
+            
             self._values()
+            
+            self.level -= 1
 
         values = []
         metadata = None
-
-        if self.line_number == 357:
-            pass
-            #pdb.set_trace()
 
         
         while token != ')':
@@ -859,9 +859,25 @@ class ASCParser:
 #-------------------------------------------------------------------------------
 
     def _splits(self):
+        """
+        Parses:
 
-        pass
+            Normal [|]
+            | <values>
+        """
+        token = None
+        
+        if self.curr_token == 'Normal':
 
+            self._split()
+
+        elif self.curr_token == '|':
+            # get next token and keep parsing values
+
+            token = self.next()
+            
+            self._values()
+            
 
 #-------------------------------------------------------------------------------
 
@@ -874,6 +890,7 @@ class ASCParser:
         """
 
         metadata = None
+        token = None
         
         if self.curr_token != 'Normal':
 
@@ -915,7 +932,10 @@ class ASCParser:
 
                 metadata = self._metadata()
 
+        else:
 
+            raise ParseError("Invalid split in '%s'" % self.curr_block_type,
+                             self.curr_token, self.line_number)
 
 
 #-------------------------------------------------------------------------------
