@@ -68,6 +68,10 @@ class ParseError(Exception):
         return "Parse error on line #%s, at '%s': %s" % (self.lineno, self.token, self.error_msg)
 
 
+class ParseFinished(Exception):
+    pass
+
+
 _reserved_symbols = ['(', '\"', ')', ';', '|']
 
 #************************* Begin ASCParser  ************************************
@@ -108,7 +112,9 @@ class ASCParser:
         self.curr_color = None
         self.curr_block_type = None
 
-        self.level = -1
+        self.split_types = ['Normal', 'Incomplete']
+
+        self.level = 0
         
         self.text = ""
 
@@ -139,7 +145,20 @@ class ASCParser:
 
         self.line_number = 1
         self.token_count = 0
-        
+
+
+#-------------------------------------------------------------------------------        
+
+    def _is_split_type(self, t):
+
+        for st in self.split_types:
+
+            if t == st:
+
+                return True
+
+        return False
+    
 #-------------------------------------------------------------------------------        
 
     def parse(self):
@@ -147,7 +166,15 @@ class ASCParser:
         Here we just run blocks to parse through all the blocks
         in the file.
         """
-        self._blocks()
+        try:
+            
+            self._blocks()
+
+        except ParseFinished:
+
+            if self.verbose:
+
+                print "Done parsing: %d lines with %d tokens" % (self.line_number, self.token_count)
 
 #        token = None
 
@@ -203,8 +230,12 @@ class ASCParser:
 
                 self.line_number += 1
                 
-            if ch is None:
+            if ch is None or len(ch) == 0:
 
+                self.curr_token = None
+
+                raise ParseFinished()
+                
                 return None
 
             elif ch in _reserved_symbols:
@@ -244,8 +275,16 @@ class ASCParser:
 
                 token += ch
 
+        if token == '(':
+
+            self.level += 1
+
+        elif token == ')':
+
+            self.level -=1
+
         self.curr_token = token
-        
+
         return token
     
 #-------------------------------------------------------------------------------
@@ -256,8 +295,13 @@ class ASCParser:
         
         if self.curr_position < self.num_chars:
 
-            return self.text[ self.curr_position ]
+            try:
+                
+                return self.text[ self.curr_position ]
 
+            except IndexError:
+
+                return None
         else:
 
             # We're done
@@ -300,7 +344,7 @@ class ASCParser:
         # a real token.
 
         self.next()
-        
+
         return ' '.join(metadata)
     
 #-------------------------------------------------------------------------------
@@ -400,7 +444,7 @@ class ASCParser:
         token = None
 
         while True:
-            
+                
             token = self.next()
 
             if token is None:
@@ -412,11 +456,9 @@ class ASCParser:
                 # if the block finishes and leaves off on a ')'
                 # it should be ok. If it does not this will throw an
                 # exception. The next iteration of the loop will parse it out.
-                self.level += 1
                 
                 self._block()
                 
-                self.level -= 1
 
             elif token == ';':
 
@@ -480,6 +522,10 @@ class ASCParser:
         if self.curr_token != ')':
 
             raise UnknownTokenError(")", self.curr_token, self.get_line_number())
+
+        elif self.curr_token is None:
+
+            return
 
 #-------------------------------------------------------------------------------
 
@@ -642,7 +688,7 @@ class ASCParser:
             CellBody)
         """
 
-        if self.curr_token != 'CellBody':
+        if self.curr_token != 'CellBody'   or self.curr_token is None:
 
             raise UnknownTokenError('CellBody', self.curr_token, self.get_line_number())
 
@@ -711,7 +757,7 @@ class ASCParser:
         Parses:
             Values -> Value Value ... Value
         """
-        if self.curr_token != '(':
+        if self.curr_token != '(' or self.curr_token is None:
 
             # return, possible to have a cellbody with no values
             return
@@ -719,14 +765,14 @@ class ASCParser:
         if self.verbose:
 
             print "- Level %d of '%s', parsing values" % (self.level, self.curr_block_type)
-            
+
         while True:
 
             if self.curr_token == '(':
 
                 self._value()
 
-            elif self.curr_token == 'Normal' or self.curr_token == '|':
+            elif self._is_split_type(self.curr_token) or self.curr_token == '|':
 
                 self._splits()
 
@@ -735,6 +781,11 @@ class ASCParser:
 #                token = self.next()
 
                 break
+
+            elif self.curr_token is None:
+                # we're done
+                # probably ugly to have this here
+                return
                     
             else:
 
@@ -744,7 +795,7 @@ class ASCParser:
         if self.verbose:
             
             print "- Level %d of %s, done parsing values" % (self.level, self.curr_block_type)
-            
+
 #-------------------------------------------------------------------------------
 
     def _value(self):
@@ -759,7 +810,10 @@ class ASCParser:
 
             raise UnknownTokenError(')', self.curr_token, self.get_line_number())
 
+        elif self.curr_token is None:
 
+            raise ParseError("Hit the end of file",
+                             self.curr_token, self.line_number)
 
         token = self.next()
 
@@ -767,17 +821,18 @@ class ASCParser:
         # if we go another level in then we call the values method
         if token == '(':
 
-            self.level += 1
             
             self._values()
-            
-            self.level -= 1
+
+            if self.curr_token is None:
+
+                return
 
         values = []
         metadata = None
 
         
-        while token != ')':
+        while self.curr_token != ')':
 
             try:
 
@@ -846,7 +901,10 @@ class ASCParser:
 
             raise UnknownTokenError(')', token, self.get_line_number())
 
+        elif self.curr_token is None:
 
+            return
+        
         else:
             # leave it off on the next token
             self.next()
@@ -867,7 +925,7 @@ class ASCParser:
         """
         token = None
         
-        if self.curr_token == 'Normal':
+        if self._is_split_type(self.curr_token):
 
             self._split()
 
@@ -892,15 +950,16 @@ class ASCParser:
         metadata = None
         token = None
         
-        if self.curr_token != 'Normal':
+        if not self._is_split_type(self.curr_token):
 
             # should never get here but need to make sure
             
-            raise UnknownTokenError('Normal', self.curr_token, self.get_line_number())
+            raise UnknownTokenError("Should be one of: %s" % ', '.join(self.split_types),
+                                    self.curr_token, self.get_line_number())
             
         if self.verbose:
 
-            print "-- Split in dendrite"
+            print "-- Split in dendrite of type '%s'" % self.curr_token
 
         token = self.next()
 
@@ -914,8 +973,6 @@ class ASCParser:
             # Now we parse to leave off on the next value
 
             token = self.next()
-
-            print "Token after pipe is %s at line %d" % (token, self.get_line_number())
 
             if token != '(':
 
