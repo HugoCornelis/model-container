@@ -145,6 +145,7 @@ class ASCParser:
 
         self.line_number = 1
         self.token_count = 0
+        self.quit_except = False
 
 
 #-------------------------------------------------------------------------------        
@@ -166,6 +167,8 @@ class ASCParser:
         Here we just run blocks to parse through all the blocks
         in the file.
         """
+        self.quit_except = True
+        
         try:
             
             self._blocks()
@@ -234,9 +237,13 @@ class ASCParser:
 
                 self.curr_token = None
 
-                raise ParseFinished()
-                
-                return None
+                if self.quit_except:
+                    
+                    raise ParseFinished()
+
+                else:
+                    
+                    return None
 
             elif ch in _reserved_symbols:
 
@@ -456,7 +463,7 @@ class ASCParser:
                 # if the block finishes and leaves off on a ')'
                 # it should be ok. If it does not this will throw an
                 # exception. The next iteration of the loop will parse it out.
-                
+
                 self._block()
                 
 
@@ -540,9 +547,9 @@ class ASCParser:
         if self.curr_token != '(':
 
             raise UnknownTokenError("(", self.curr_token, self.get_line_number())
-            
-        token = self.next()
 
+        token = self.next()
+        
         if token == "Color":
 
             self._color()
@@ -554,6 +561,10 @@ class ASCParser:
         elif token == "Dendrite":
 
             self._dendrite()
+
+        elif token == "Style":
+
+            self._style()
 
         else:
 
@@ -995,6 +1006,37 @@ class ASCParser:
                              self.curr_token, self.line_number)
 
 
+#-------------------------------------------------------------------------------
+
+    def _style(self):
+        """
+
+        """
+        
+        if token != 'Style':
+
+            raise UnknownTokenError('Style', token, self.get_line_number())
+
+
+        token = self.next()
+
+        block_style = token
+
+        token = self.next()
+
+        if token != ')':
+
+            raise ParseError("Invalid style block, no closing parens",
+                             self.curr_token, self.line_number)
+
+        token = self.next()
+
+
+        if token == ';':
+
+            metadata = self._metadata()
+        
+        
 #-------------------------------------------------------------------------------
 
 
