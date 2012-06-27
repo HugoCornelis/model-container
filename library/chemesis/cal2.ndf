@@ -125,6 +125,9 @@ PUBLIC_MODELS
 
 					PARAMETER ( PARENT = ../../soma/cal1 ),
 					PARAMETER ( diffusion_constant = 6e-9 ),
+
+//					intuitively should give the same as the above, but clearly doesn't...
+// 					PARAMETER ( PARENT = ../../dend->PARENT ),
 				END PARAMETERS
 			END CHILD
 
