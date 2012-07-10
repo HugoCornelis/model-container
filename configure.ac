@@ -226,120 +226,120 @@ AM_PATH_PYTHON(,[],[
    exit -1
 ])
 
-AC_MSG_CHECKING([Python prefix is ])
-  AC_MSG_RESULT(['$PYTHON_PREFIX'])
+dnl AC_MSG_CHECKING([Python prefix is ])
+dnl   AC_MSG_RESULT(['$PYTHON_PREFIX'])
 
-dnl
-dnl This is a forced fix to make sure a mac installation gets the proper
-dnl python executable. Unless the macpython installer was run, the autotools
-dnl python macro won't look for python in the proper path. 
-dnl 
-case "$host_os" in
-  darwin*)
+dnl dnl
+dnl dnl This is a forced fix to make sure a mac installation gets the proper
+dnl dnl python executable. Unless the macpython installer was run, the autotools
+dnl dnl python macro won't look for python in the proper path. 
+dnl dnl 
+dnl case "$host_os" in
+dnl   darwin*)
 
-    PYTHON_PREFIX='/Library/Frameworks/Python.framework/Versions/Current'
-    AC_SUBST(PYTHON_PREFIX)
+dnl     PYTHON_PREFIX='/Library/Frameworks/Python.framework/Versions/Current'
+dnl     AC_SUBST(PYTHON_PREFIX)
     
-    PYTHON=$PYTHON_PREFIX/bin/python
-    AC_SUBST(PYTHON)
+dnl     PYTHON=$PYTHON_PREFIX/bin/python
+dnl     AC_SUBST(PYTHON)
 
-    AC_CHECK_PROG(HAVE_PYTHON_CONFIG, python-config, "yes", "no",[$PYTHON_PREFIX/bin])
-    AC_MSG_CHECKING([python-config present])
-    AC_MSG_RESULT([$HAVE_PYTHON_CONFIG])
-  ;;
-  *)
+dnl     AC_CHECK_PROG(HAVE_PYTHON_CONFIG, python-config, "yes", "no",[$PYTHON_PREFIX/bin])
+dnl     AC_MSG_CHECKING([python-config present])
+dnl     AC_MSG_RESULT([$HAVE_PYTHON_CONFIG])
+dnl   ;;
+dnl   *)
 
-    AC_CHECK_PROG(HAVE_PYTHON_CONFIG, python-config, "yes", "no")
-    AC_MSG_CHECKING([python-config present])
-    AC_MSG_RESULT([$HAVE_PYTHON_CONFIG])
+dnl     AC_CHECK_PROG(HAVE_PYTHON_CONFIG, python-config, "yes", "no")
+dnl     AC_MSG_CHECKING([python-config present])
+dnl     AC_MSG_RESULT([$HAVE_PYTHON_CONFIG])
 
-  ;;
-esac
-
-
+dnl   ;;
+dnl esac
 
 
-if test "$HAVE_PYTHON_CONFIG" == "yes"; then
 
-  # This is to set the proper python-config for getting the 
-  # proper flags and prefixes
+
+dnl if test "$HAVE_PYTHON_CONFIG" == "yes"; then
+
+dnl   # This is to set the proper python-config for getting the 
+dnl   # proper flags and prefixes
 
   
-  AC_MSG_CHECKING([Python config location])
-  PYTHON_CONFIG=$PYTHON-config
-  AC_SUBST(PYTHON_CONFIG)
-  AC_MSG_RESULT([$PYTHON_CONFIG])
+dnl   AC_MSG_CHECKING([Python config location])
+dnl   PYTHON_CONFIG=$PYTHON-config
+dnl   AC_SUBST(PYTHON_CONFIG)
+dnl   AC_MSG_RESULT([$PYTHON_CONFIG])
 
 
-  AC_MSG_CHECKING([Python prefix is])
-  PYTHON_PREFIX=`$PYTHON_CONFIG --prefix`
-  AC_SUBST(PYTHON_PREFIX)
-  AC_MSG_RESULT([$PYTHON_PREFIX])
+dnl   AC_MSG_CHECKING([Python prefix is])
+dnl   PYTHON_PREFIX=`$PYTHON_CONFIG --prefix`
+dnl   AC_SUBST(PYTHON_PREFIX)
+dnl   AC_MSG_RESULT([$PYTHON_PREFIX])
 
 
-  AC_MSG_CHECKING([Python includes are])
-  PYTHON_INCLUDE=`$PYTHON_CONFIG --include`
-  AC_SUBST(PYTHON_INCLUDE)
-  AC_MSG_RESULT([$PYTHON_INCLUDE])
+dnl   AC_MSG_CHECKING([Python includes are])
+dnl   PYTHON_INCLUDE=`$PYTHON_CONFIG --include`
+dnl   AC_SUBST(PYTHON_INCLUDE)
+dnl   AC_MSG_RESULT([$PYTHON_INCLUDE])
 
 
-  AC_MSG_CHECKING([Python libs are])
-  PYTHON_LIBS=`$PYTHON_CONFIG --libs`
-  AC_SUBST(PYTHON_LIBS)
-  AC_MSG_RESULT([$PYTHON_LIBS])
+dnl   AC_MSG_CHECKING([Python libs are])
+dnl   PYTHON_LIBS=`$PYTHON_CONFIG --libs`
+dnl   AC_SUBST(PYTHON_LIBS)
+dnl   AC_MSG_RESULT([$PYTHON_LIBS])
 
 
-  AC_MSG_CHECKING([Python cflags are])
-  PYTHON_CFLAGS=`$PYTHON_CONFIG --cflags`
-  AC_SUBST(PYTHON_CFLAGS)
-  AC_MSG_RESULT([$PYTHON_CFLAGS])
+dnl   AC_MSG_CHECKING([Python cflags are])
+dnl   PYTHON_CFLAGS=`$PYTHON_CONFIG --cflags`
+dnl   AC_SUBST(PYTHON_CFLAGS)
+dnl   AC_MSG_RESULT([$PYTHON_CFLAGS])
 
 
-  AC_MSG_CHECKING([Python ldflags are])
-  PYTHON_LDFLAGS=`$PYTHON_CONFIG --ldflags`
-  AC_SUBST(PYTHON_LDFLAGS)
-  AC_MSG_RESULT([$PYTHON_LDFLAGS])
+dnl   AC_MSG_CHECKING([Python ldflags are])
+dnl   PYTHON_LDFLAGS=`$PYTHON_CONFIG --ldflags`
+dnl   AC_SUBST(PYTHON_LDFLAGS)
+dnl   AC_MSG_RESULT([$PYTHON_LDFLAGS])
 
-  AC_MSG_CHECKING([Python executable is])
-  PYTHON_EXE=$PYTHON_PREFIX/bin/python
-  AC_SUBST(PYTHON_EXE)
-  AC_MSG_RESULT([$PYTHON_EXE])
-
-
-else
-
-  # This is legacy to make sure that systems with python
-  # that do not have python-config can get the python info
-  # This has always been a bit error prone, particularly if the 
-  # user has more than one python version installed.
-
-  PYTHON_PREFIX=`echo $PYTHON | sed -e "s,[[^/]]*$,,;s,/$,,;s,^$,.,"`
-  PYTHON_PREFIX=`echo $PYTHON_PREFIX | sed -e "s,[[^/]]*$,,;s,/$,,;s,^$,.,"`
-  AC_SUBST(PYTHON_PREFIX)
+dnl   AC_MSG_CHECKING([Python executable is])
+dnl   PYTHON_EXE=$PYTHON_PREFIX/bin/python
+dnl   AC_SUBST(PYTHON_EXE)
+dnl   AC_MSG_RESULT([$PYTHON_EXE])
 
 
-  AC_MSG_CHECKING([Python prefix is])
-  AC_MSG_RESULT([$PYTHON_PREFIX])
+dnl else
+
+dnl   # This is legacy to make sure that systems with python
+dnl   # that do not have python-config can get the python info
+dnl   # This has always been a bit error prone, particularly if the 
+dnl   # user has more than one python version installed.
+
+dnl   PYTHON_PREFIX=`echo $PYTHON | sed -e "s,[[^/]]*$,,;s,/$,,;s,^$,.,"`
+dnl   PYTHON_PREFIX=`echo $PYTHON_PREFIX | sed -e "s,[[^/]]*$,,;s,/$,,;s,^$,.,"`
+dnl   AC_SUBST(PYTHON_PREFIX)
 
 
-  PYTHON_HEADERS='$(PYTHON_PREFIX)/include/python$(PYTHON_VERSION)'
-  AC_SUBST(PYTHON_HEADERS)
+dnl   AC_MSG_CHECKING([Python prefix is])
+dnl   AC_MSG_RESULT([$PYTHON_PREFIX])
 
-  AC_MSG_CHECKING([Python includes are])
-  PYTHON_INCLUDE='-I$(PYTHON_HEADERS)'
-  AC_SUBST(PYTHON_INCLUDE)
-  AC_MSG_RESULT([$PYTHON_INCLUDE])
 
-  AC_MSG_CHECKING([Python ldflags are])
-  PYTHON_LIBS='-L$(pyexecdir)/../config'
-  AC_SUBST(PYTHON_LIBS)
-  AC_MSG_RESULT([$PYTHON_LIBS])
+dnl   PYTHON_HEADERS='$(PYTHON_PREFIX)/include/python$(PYTHON_VERSION)'
+dnl   AC_SUBST(PYTHON_HEADERS)
+
+dnl   AC_MSG_CHECKING([Python includes are])
+dnl   PYTHON_INCLUDE='-I$(PYTHON_HEADERS)'
+dnl   AC_SUBST(PYTHON_INCLUDE)
+dnl   AC_MSG_RESULT([$PYTHON_INCLUDE])
+
+dnl   AC_MSG_CHECKING([Python ldflags are])
+dnl   PYTHON_LIBS='-L$(pyexecdir)/../config'
+dnl   AC_SUBST(PYTHON_LIBS)
+dnl   AC_MSG_RESULT([$PYTHON_LIBS])
 				
 
 
-  PYTHON_EXE='$(PYTHON_PREFIX)/bin/python'
-  AC_SUBST(PYTHON_EXE)
-fi
+dnl   PYTHON_EXE='$(PYTHON_PREFIX)/bin/python'
+dnl   AC_SUBST(PYTHON_EXE)
+dnl fi
 
 
 
