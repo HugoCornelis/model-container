@@ -328,7 +328,7 @@ ConnectionSymbolGetDelay(struct symtab_ConnectionSymbol *pconsy)
 
     //- set result
 
-    if (pparDelay != NULL)
+    if (pparDelay)
     {
 	double dDelay = ParameterResolveValue(pparDelay, NULL);
 
@@ -545,14 +545,22 @@ ConnectionSymbolGetWeight(struct symtab_ConnectionSymbol *pconsy)
     struct symtab_Parameters *pparWeight
 	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "WEIGHT");
 
-    //- set result
-
-    double dWeight = ParameterResolveValue(pparWeight, NULL);
-
-    if (dWeight != DBL_MAX)
+    if (pparWeight)
     {
-	dResult = dWeight;
+	//- set result
+
+	double dWeight = ParameterResolveValue(pparWeight, NULL);
+
+	if (dWeight != DBL_MAX)
+	{
+	    dResult = dWeight;
+	}
     }
+    else
+    {
+	fprintf(stderr, "*** Warning: request for WEIGHT but none found in connection %s\n", SymbolGetName(&pconsy->bio.ioh.iol.hsle));
+    }
+
 
     //- return result
 
