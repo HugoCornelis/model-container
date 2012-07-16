@@ -377,6 +377,13 @@ ConnectionSymbolGetPost(struct symtab_ConnectionSymbol *pconsy, int iTarget)
     struct symtab_Parameters *pparPost
 	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "POST");
 
+    if (!pparPost)
+    {
+	fprintf(stderr, "*** Warning: request for POST but none found in connection %s\n", SymbolGetName(&pconsy->bio.ioh.iol.hsle));
+
+	return(-1);
+    }
+
     //- convert target to context
 
     struct PidinStack *ppistRoot = PidinStackCalloc();
@@ -458,6 +465,13 @@ ConnectionSymbolGetPre(struct symtab_ConnectionSymbol *pconsy, int iSource)
 
     struct symtab_Parameters *pparPre
 	= SymbolGetParameter(&pconsy->bio.ioh.iol.hsle, NULL, "PRE");
+
+    if (!pparPre)
+    {
+	fprintf(stderr, "*** Warning: request for PRE but none found in connection %s\n", SymbolGetName(&pconsy->bio.ioh.iol.hsle));
+
+	return(-1);
+    }
 
     //- convert source to context
 
