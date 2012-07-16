@@ -328,11 +328,18 @@ ConnectionSymbolGetDelay(struct symtab_ConnectionSymbol *pconsy)
 
     //- set result
 
-    double dDelay = ParameterResolveValue(pparDelay, NULL);
-
-    if (dDelay != DBL_MAX)
+    if (pparDelay != NULL)
     {
-	dResult = dDelay;
+	double dDelay = ParameterResolveValue(pparDelay, NULL);
+
+	if (dDelay != DBL_MAX)
+	{
+	    dResult = dDelay;
+	}
+    }
+    else
+    {
+	fprintf(stderr, "*** Warning: request for DELAY but none found in connection %s\n", SymbolGetName(&pconsy->bio.ioh.iol.hsle));
     }
 
     //- return result
