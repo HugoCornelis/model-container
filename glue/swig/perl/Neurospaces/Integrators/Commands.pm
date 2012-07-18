@@ -314,67 +314,83 @@ sub xml_save_help
 
 sub volumeconnect
 {
-    my $network = shift;
+    my $network = shift || '';
 
-    my $projection = shift;
+    my $projection = shift || '';
 
-    my $projection_source = shift;
+    my $projection_source = shift || '';
 
-    my $projection_target = shift;
+    my $projection_target = shift || '';
 
-    my $source = shift;
+    my $source = shift || '';
 
-    my $target = shift;
+    my $target = shift || '';
 
-    my $pre = shift;
+    my $pre = shift || '';
 
-    my $post = shift;
+    my $post = shift || '';
 
-    my $source_type = shift;
+    my $source_type = shift || '';
 
-    my $source_x1 = shift;
+    my $source_x1 = shift || '';
 
-    my $source_y1 = shift;
+    my $source_y1 = shift || '';
 
-    my $source_z1 = shift;
+    my $source_z1 = shift || '';
 
-    my $source_x2 = shift;
+    my $source_x2 = shift || '';
 
-    my $source_y2 = shift;
+    my $source_y2 = shift || '';
 
-    my $source_z2 = shift;
+    my $source_z2 = shift || '';
 
-    my $destination_type = shift;
+    my $destination_type = shift || '';
 
-    my $destination_x1 = shift;
+    my $destination_x1 = shift || '';
 
-    my $destination_y1 = shift;
+    my $destination_y1 = shift || '';
 
-    my $destination_z1 = shift;
+    my $destination_z1 = shift || '';
 
-    my $destination_x2 = shift;
+    my $destination_x2 = shift || '';
 
-    my $destination_y2 = shift;
+    my $destination_y2 = shift || '';
 
-    my $destination_z2 = shift;
+    my $destination_z2 = shift || '';
 
-    my $weight_indicator = shift;
+    my $weight_indicator = shift || '';
 
-    my $weight = shift;
+    my $weight = shift || '';
 
-    my $delay_indicator = shift;
+    my $delay_indicator = shift || '';
 
-    my $delay_type = shift;
+    my $delay_type = shift || '';
 
-    my $delay = shift;
+    my $delay = shift || '';
 
-    my $velocity_indicator = shift;
+    my $velocity_indicator = shift || '';
 
-    my $velocity = shift;
+    my $velocity = shift || '';
 
-    my $probability = shift;
+    my $pcDestinationHoleFlag = shift || '';
 
-    my $randomseed = shift;
+    my $pcDestinationHoleType = shift || '';
+
+    my $dDestinationHoleX1 = shift || '';
+
+    my $dDestinationHoleY1 = shift || '';
+
+    my $dDestinationHoleZ1 = shift || '';
+
+    my $dDestinationHoleX2 = shift || '';
+
+    my $dDestinationHoleY2 = shift || '';
+
+    my $dDestinationHoleZ2 = shift || '';
+
+    my $probability = shift || '';
+
+    my $randomseed = shift || '';
 
 # volumeconnect /network /network/ForwardProjection /network/Granules /network/Golgis spikegen mf_AMPA box -1e10 -1e10 -1e10 1e10 1e10 1e10 box -0.0025 -0.0003 -0.0025 0.0025 0.0003 0.0025 weight 45.0 delay radial velocity 0.5 1.0 1212.0
 
@@ -427,7 +443,7 @@ volumeconnect:
 
     $instance_name =~ s(/)(_)g;
 
-    GENESIS3::Commands::querymachine("algorithminstantiate ProjectionVolume $instance_name $network $projection $projection_source $projection_target $source $target $pre $post $source_type $source_x1 $source_y1 $source_z1 $source_x2 $source_y2 $source_z2 $destination_type $destination_x1 $destination_y1 $destination_z1 $destination_x2 $destination_y2 $destination_z2 $weight_indicator $weight $delay_indicator $delay_type $delay $velocity_indicator $velocity $probability $randomseed");
+    GENESIS3::Commands::querymachine("algorithminstantiate ProjectionVolume $instance_name $network $projection $projection_source $projection_target $source $target $pre $post $source_type $source_x1 $source_y1 $source_z1 $source_x2 $source_y2 $source_z2 $destination_type $destination_x1 $destination_y1 $destination_z1 $destination_x2 $destination_y2 $destination_z2 $weight_indicator $weight $delay_indicator $delay_type $delay $velocity_indicator $velocity $pcDestinationHoleFlag $pcDestinationHoleType $dDestinationHoleX1 $dDestinationHoleY1 $dDestinationHoleZ1 $dDestinationHoleX2 $dDestinationHoleY2 $dDestinationHoleZ2 $probability $randomseed");
 
     print "
 created a new projection with name $projection\n";

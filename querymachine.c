@@ -3144,6 +3144,85 @@ static int QueryHandlerAlgorithmInstantiate
 
 	double dVelocity = strtod(pcVelocity, NULL);
 
+	//- hole options
+
+	char *pcHole = &pcLine[iLength + 1];
+
+	char *pcDestinationHoleType = NULL;
+	char *pcDestinationHoleX1 = NULL;
+	double dDestinationHoleX1 = DBL_MAX;
+	char *pcDestinationHoleY1 = NULL;
+	double dDestinationHoleY1 = DBL_MAX;
+	char *pcDestinationHoleZ1 = NULL;
+	double dDestinationHoleZ1 = DBL_MAX;
+	char *pcDestinationHoleX2 = NULL;
+	double dDestinationHoleX2 = DBL_MAX;
+	char *pcDestinationHoleY2 = NULL;
+	double dDestinationHoleY2 = DBL_MAX;
+	char *pcDestinationHoleZ2 = NULL;
+	double dDestinationHoleZ2 = DBL_MAX;
+
+	if (0 == strncasecmp(pcHole, "destination_hole", strlen("destination_hole")))
+	{
+	    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	    //- hole type
+
+	    pcDestinationHoleType = &pcLine[iLength + 1];
+
+	    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	    //- get destination_hole region
+
+	    pcDestinationHoleX1 = &pcLine[iLength + 1];
+
+	    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	    pcLine[iLength] = '\0';
+
+	    dDestinationHoleX1 = strtod(pcDestinationHoleX1, NULL);
+
+	    pcDestinationHoleY1 = &pcLine[iLength + 1];
+
+	    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	    pcLine[iLength] = '\0';
+
+	    dDestinationHoleY1 = strtod(pcDestinationHoleY1, NULL);
+
+	    pcDestinationHoleZ1 = &pcLine[iLength + 1];
+
+	    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	    pcLine[iLength] = '\0';
+
+	    dDestinationHoleZ1 = strtod(pcDestinationHoleZ1, NULL);
+
+	    pcDestinationHoleX2 = &pcLine[iLength + 1];
+
+	    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	    pcLine[iLength] = '\0';
+
+	    dDestinationHoleX2 = strtod(pcDestinationHoleX2, NULL);
+
+	    pcDestinationHoleY2 = &pcLine[iLength + 1];
+
+	    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	    pcLine[iLength] = '\0';
+
+	    dDestinationHoleY2 = strtod(pcDestinationHoleY2, NULL);
+
+	    pcDestinationHoleZ2 = &pcLine[iLength + 1];
+
+	    iLength += strpbrk(&pcLine[iLength + 1], pcSeparator) - &pcLine[iLength];
+
+	    pcLine[iLength] = '\0';
+
+	    dDestinationHoleZ2 = strtod(pcDestinationHoleZ2, NULL);
+	}
+
 	//- define probability
 
 	char *pcProbability = &pcLine[iLength + 1];
@@ -3212,6 +3291,17 @@ static int QueryHandlerAlgorithmInstantiate
 		  ParameterNewFromNumber("FIXED_DELAY", dFixedDelay),
 		  ParameterNewFromNumber("VELOCITY", dVelocity),
 		  NULL);
+
+	if (pcDestinationHoleType)
+	{
+	    ParContainerLinkAtEnd(pparcAlgorithm, ParameterNewFromString("DESTINATION_HOLE_TYPE", pcDestinationHoleType));
+	    ParContainerLinkAtEnd(pparcAlgorithm, ParameterNewFromNumber("DESTINATION_HOLE_X1", dDestinationHoleX1));
+	    ParContainerLinkAtEnd(pparcAlgorithm, ParameterNewFromNumber("DESTINATION_HOLE_Y1", dDestinationHoleY1));
+	    ParContainerLinkAtEnd(pparcAlgorithm, ParameterNewFromNumber("DESTINATION_HOLE_Z1", dDestinationHoleZ1));
+	    ParContainerLinkAtEnd(pparcAlgorithm, ParameterNewFromNumber("DESTINATION_HOLE_X2", dDestinationHoleX2));
+	    ParContainerLinkAtEnd(pparcAlgorithm, ParameterNewFromNumber("DESTINATION_HOLE_Y2", dDestinationHoleY2));
+	    ParContainerLinkAtEnd(pparcAlgorithm, ParameterNewFromNumber("DESTINATION_HOLE_Z2", dDestinationHoleZ2));
+	}
 
 	struct symtab_Parameters *ppar = pparcAlgorithm->ppars;
 
