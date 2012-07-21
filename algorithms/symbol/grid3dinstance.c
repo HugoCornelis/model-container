@@ -555,6 +555,23 @@ Grid3DInstanceSymbolHandler
 
     struct symtab_HSolveListElement *phsle = PidinStackLookupTopSymbol(ppist);
 
+    if (!phsle)
+    {
+	char pc[1000];
+
+	PidinStackString(ppist, pc, 1000);
+
+	NeurospacesError
+	    (pac,
+	     "Grid3DInstance",
+	     "(%s) Grid3DInstance symbol handler on"
+	     " cannot find component %s\n",
+	     AlgorithmInstanceGetName(palgi),
+	     pc);
+
+	return(0);
+    }
+
 /*     //- if population or network */
 
 /*     if (instanceof_population(phsle) || instanceof_network(phsle)) */

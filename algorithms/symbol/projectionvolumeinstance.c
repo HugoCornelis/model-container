@@ -483,6 +483,8 @@ ProjectionVolumeInstanceNew
 	ppvi->pro.pD3Source[iSourceRegions].D3Corner2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Y2");
 	ppvi->pro.pD3Source[iSourceRegions].D3Corner2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Z2");
 
+	ppvi->pro.pD3Source[iSourceRegions].iMask = 0;
+
 	iSourceRegions++;
 
 	ppvi->pro.iSourceRegions = iSourceRegions;
@@ -516,6 +518,8 @@ ProjectionVolumeInstanceNew
 	ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_X2");
 	ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Y2");
 	ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Z2");
+
+	ppvi->pro.pD3Destination[iDestinationRegions].iMask = 0;
 
 	iDestinationRegions++;
 
@@ -551,10 +555,9 @@ ProjectionVolumeInstanceNew
 	    ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_HOLE_Y2");
 	    ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_HOLE_Z2");
 
-	    if (pparDestinationHoleType)
-	    {
-		iDestinationRegions++;
-	    }
+	    ppvi->pro.pD3Destination[iDestinationRegions].iMask = 1;
+
+	    iDestinationRegions++;
 	}
 
 	ppvi->pro.iDestinationRegions = iDestinationRegions;
@@ -754,14 +757,25 @@ WithinAllRegions(int iRegions, struct D3Region *pD3Region, struct D3Position *pD
 
     for (i = 0 ; i < iRegions ; i++)
     {
+	//- if point within region
+
 	if (WithinThisRegion(&pD3Region[i], pD3Point))
 	{
+	    //- if the region is a hole
+
 	    if (pD3Region[i].iMask == 1)
 	    {
+		//- point must be excluded
+
 		return(0);
 	    }
+
+	    //- if the region is not a hole
+
 	    else
 	    {
+		//- point must be included
+
 		iResult = 1;
 	    }
 	}

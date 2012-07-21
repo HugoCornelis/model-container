@@ -4,6 +4,7 @@ set args -q cells/purkinje/edsjb1994.ndf
 set args -q tests/networks/spiker4.ndf
 set args -q cells/RScell-nolib.ndf
 set args -q legacy/networks/network.ndf
+set args -q networks/RSNet-2x2.ndf
 file ./neurospacesparse
 break parsererror
 echo .gdbinit: Done .gdbinit\n

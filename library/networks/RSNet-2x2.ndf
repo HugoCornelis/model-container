@@ -1,0 +1,74 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+NEUROSPACES NDF
+
+IMPORT
+
+  FILE rscell "cells/RScell-nolib2.ndf"
+
+END IMPORT
+
+PRIVATE_MODELS
+  ALIAS "rscell::/cell" rscell END ALIAS
+
+  POPULATION "cells_proto"
+    ALGORITHM "Grid3D" "createmap__RSNet_population"
+      PARAMETERS
+        PARAMETER ( Z_COUNT = 1 ),
+        PARAMETER ( Y_COUNT = 2 ),
+        PARAMETER ( X_COUNT = 2 ),
+        PARAMETER ( Z_DISTANCE = 0 ),
+        PARAMETER ( Y_DISTANCE = 0.002 ),
+        PARAMETER ( X_DISTANCE = 0.002 ),
+        PARAMETER ( PROTOTYPE = "rscell" ),
+      END PARAMETERS
+    END ALGORITHM
+  END POPULATION
+END PRIVATE_MODELS
+PUBLIC_MODELS
+  NETWORK "RSNet"
+    ALGORITHM "ProjectionVolume" "projectionvolume__RSNet__RSNet_projection"
+      PARAMETERS
+        PARAMETER ( VELOCITY = 0.5 ),
+        PARAMETER ( FIXED_DELAY = 0.004 ),
+        PARAMETER ( DELAY_TYPE = "fixed" ),
+        PARAMETER ( WEIGHT = 10 ),
+        PARAMETER ( DESTINATION_Z2 = 5e-07 ),
+        PARAMETER ( DESTINATION_Y2 = 0.0024 ),
+        PARAMETER ( DESTINATION_X2 = 0.0024 ),
+        PARAMETER ( DESTINATION_Z1 = 0 ),
+        PARAMETER ( DESTINATION_Y1 = 0 ),
+        PARAMETER ( DESTINATION_X1 = 0 ),
+        PARAMETER ( DESTINATION_TYPE = "ellipse" ),
+        PARAMETER ( SOURCE_Z2 = 1e+10 ),
+        PARAMETER ( SOURCE_Y2 = 1e+10 ),
+        PARAMETER ( SOURCE_X2 = 1e+10 ),
+        PARAMETER ( SOURCE_Z1 = -1e+10 ),
+        PARAMETER ( SOURCE_Y1 = -1e+10 ),
+        PARAMETER ( SOURCE_X1 = -1e+10 ),
+        PARAMETER ( SOURCE_TYPE = "box" ),
+        PARAMETER ( POST = "Ex_channel" ),
+        PARAMETER ( PRE = "spike" ),
+        PARAMETER ( PROBABILITY = 1 ),
+        PARAMETER ( RANDOMSEED = 1212 ),
+        PARAMETER ( PROJECTION_NAME = "rsnet_projection" ),
+        PARAMETER ( DESTINATION_HOLE_TYPE = "box" ),
+        PARAMETER ( DESTINATION_HOLE_X1 = -0.001 ),
+        PARAMETER ( DESTINATION_HOLE_Y1 = -0.001 ),
+        PARAMETER ( DESTINATION_HOLE_Z1 = -5e-07 ),
+        PARAMETER ( DESTINATION_HOLE_X2 = 0.001 ),
+        PARAMETER ( DESTINATION_HOLE_Y2 = 0.001 ),
+        PARAMETER ( DESTINATION_HOLE_Z2 = 5e-07 ),
+      END PARAMETERS
+    END ALGORITHM
+    PROJECTION "rsnet_projection"
+      PARAMETERS
+        PARAMETER ( TARGET = ../cells ),
+        PARAMETER ( SOURCE = ../cells ),
+      END PARAMETERS
+    END PROJECTION
+    CHILD cells_proto cells
+    END CHILD
+  END NETWORK
+END PUBLIC_MODELS
