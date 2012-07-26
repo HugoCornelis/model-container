@@ -16,6 +16,8 @@ our $g3_commands
     = [
        'createmap',
        'createmap_help',
+       'createprojection',
+       'createprojection_help',
        'insert_alias',
        'insert_alias_help',
        'morphology_list_spine_heads',
@@ -113,6 +115,151 @@ sub createmap_help
     print "synopsis: createmap <prototype> <target> <positionX> <positionY> <deltaX> <deltaY>\n";
 
     return "*** Ok: createmap_help";
+}
+
+
+sub createprojection
+{
+    my $configuration = shift;
+
+    my $root = $configuration->{root};
+
+    my $projection = $configuration->{projection}->{name};
+
+    my $projection_source
+	= (defined $configuration->{projection}->{source}
+	   ? $configuration->{projection}->{source}
+	   : $configuration->{source}->{context});
+
+    my $projection_target
+	= (defined $configuration->{projection}->{target}
+	   ? $configuration->{projection}->{target}
+	   : $configuration->{target}->{context});
+
+    my $source = $configuration->{source}->{context};
+
+    my $target = $configuration->{target}->{context};
+
+    my $pre = $configuration->{synapse}->{pre};
+
+    my $post = $configuration->{synapse}->{post};
+
+    my $source_type = $configuration->{source}->{include}->{type};
+
+    my $source_x1 = $configuration->{source}->{include}->{coordinates}->[0];
+    my $source_y1 = $configuration->{source}->{include}->{coordinates}->[1];
+    my $source_z1 = $configuration->{source}->{include}->{coordinates}->[2];
+    my $source_x2 = $configuration->{source}->{include}->{coordinates}->[3];
+    my $source_y2 = $configuration->{source}->{include}->{coordinates}->[4];
+    my $source_z2 = $configuration->{source}->{include}->{coordinates}->[5];
+
+    my $target_type = $configuration->{target}->{include}->{type};
+
+    my $target_x1 = $configuration->{target}->{include}->{coordinates}->[0];
+    my $target_y1 = $configuration->{target}->{include}->{coordinates}->[1];
+    my $target_z1 = $configuration->{target}->{include}->{coordinates}->[2];
+    my $target_x2 = $configuration->{target}->{include}->{coordinates}->[3];
+    my $target_y2 = $configuration->{target}->{include}->{coordinates}->[4];
+    my $target_z2 = $configuration->{target}->{include}->{coordinates}->[5];
+
+    my $weight_indicator = 'weight';
+
+    my $weight = $configuration->{synapse}->{weight}->{value};
+
+    my $delay_indicator = 'delay';
+
+    my $delay_type = $configuration->{synapse}->{delay}->{type} || 'fixed';
+
+    my $delay = $configuration->{synapse}->{delay}->{value};
+
+    my $velocity_indicator = 'velocity';
+
+    my $velocity = $configuration->{synapse}->{delay}->{velocity} || '';
+
+    my $pcDestinationHoleFlag
+	= (defined $configuration->{target}->{exclude}
+	   ? 'destination_hole'
+	   : undef);
+
+    my $pcDestinationHoleType = $configuration->{target}->{exclude}->{type};
+
+    my $dDestinationHoleX1 = $configuration->{target}->{exclude}->{coordinates}->[0];
+    my $dDestinationHoleY1 = $configuration->{target}->{exclude}->{coordinates}->[1];
+    my $dDestinationHoleZ1 = $configuration->{target}->{exclude}->{coordinates}->[2];
+    my $dDestinationHoleX2 = $configuration->{target}->{exclude}->{coordinates}->[3];
+    my $dDestinationHoleY2 = $configuration->{target}->{exclude}->{coordinates}->[4];
+    my $dDestinationHoleZ2 = $configuration->{target}->{exclude}->{coordinates}->[5];
+
+    my $probability = $configuration->{probability};
+
+    my $random_seed = $configuration->{random_seed};
+
+    my $arguments
+	= [
+	   $root,
+	   $projection,
+	   $projection_source,
+	   $projection_target,
+	   $source,
+	   $target,
+	   $pre,
+	   $post,
+	   $source_type,
+	   $source_x1,
+	   $source_y1,
+	   $source_z1,
+	   $source_x2,
+	   $source_y2,
+	   $source_z2,
+	   $target_type,
+	   $target_x1,
+	   $target_y1,
+	   $target_z1,
+	   $target_x2,
+	   $target_y2,
+	   $target_z2,
+	   $weight_indicator,
+	   $weight,
+	   $delay_indicator,
+	   $delay_type,
+	   $delay,
+	   $velocity_indicator,
+	   $velocity,
+	   ($pcDestinationHoleFlag
+	    ? ($pcDestinationHoleFlag,
+	       $pcDestinationHoleType,
+	       $dDestinationHoleX1,
+	       $dDestinationHoleY1,
+	       $dDestinationHoleZ1,
+	       $dDestinationHoleX2,
+	       $dDestinationHoleY2,
+	       $dDestinationHoleZ2,
+	      )
+	    : ()),
+	   $probability,
+	   $random_seed,
+	  ];
+
+    my $connected = volumeconnect(@$arguments);
+
+    if ($connected =~ /ok/i)
+    {
+	return "*** Ok: createprojection";
+    }
+    else
+    {
+	return "*** Error: createprojection";
+    }
+}
+
+
+sub createprojection_help
+{
+    print "description: create a projection, see the manuals for more information.\n";
+
+    print "synopsis: createprojection <properties>\n";
+
+    return "*** Ok: createprojection_help";
 }
 
 

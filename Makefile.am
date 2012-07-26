@@ -105,7 +105,16 @@ libneurospacesread_a_SOURCES = \
 	projectionquery.c \
 	psymbolserialstack.c \
 	psymbolstack.c \
-	querymachine.c \
+	querymachine1.c \
+	querymachine2.c \
+	querymachine3.c \
+	querymachine4.c \
+	querymachine5.c \
+	querymachine6.c \
+	querymachine7.c \
+	querymachine8.c \
+	querymachine9.c \
+	querymachine10.c \
 	selecttraversal.c \
 	solverinfo.c \
 	symbols.c \
@@ -455,7 +464,16 @@ libneurospacesread.so: libneurospacesread.a
 	psymbolserialstack.o \
 	psymbolstack.o \
 	pulsegen.o \
-	querymachine.o \
+	querymachine1.o \
+	querymachine2.o \
+	querymachine3.o \
+	querymachine4.o \
+	querymachine5.o \
+	querymachine6.o \
+	querymachine7.o \
+	querymachine8.o \
+	querymachine9.o \
+	querymachine10.o \
 	randomvalue.o \
 	root.o \
 	segment.o \
