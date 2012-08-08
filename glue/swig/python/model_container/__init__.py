@@ -407,6 +407,25 @@ class ModelContainer:
     def Lookup(self, name):
         pass
 
+#---------------------------------------------------------------------------
+
+    def Create(self, path, typ='segment'):
+
+        if typ == 'segment':
+
+            self.CreateSegment(path)
+
+        elif typ == 'compartment':
+
+            self.CreateCompartment(path)
+
+        elif typ == 'cell':
+
+            self.CreateCell(path)
+
+        else:
+
+            raise Exception("Invalid type: %s" % typ)
 
 #---------------------------------------------------------------------------
 
@@ -482,6 +501,8 @@ class ModelContainer:
     def ReadPython(self, filename):
         """!
         @brief read an NPY model file
+
+        Probably useless
         """
         
         if not os.path.isfile(filename):
@@ -497,6 +518,58 @@ class ModelContainer:
     def SetOutputFile(self,filename):
 
         self._output_file = filename
+
+#---------------------------------------------------------------------------
+
+    def VolumeConnect(self, network=None,
+                      projection=None, projection_target=None, projection_source=None,
+                      source=None, target=None,
+                      pre=None, post=None,
+                      source_type=None,
+                      source_x1=None, source_y1=None, source_z1=None,
+                      source_x2=None, source_y2=None, source_z2=None,
+                      weight_indicator=None, weight=None,
+                      delay_indicator=None, delay_type=None, delay=None,
+                      velocity_indicator=None, velocity=None,
+                      destination_hole_flag=None, destination_hole_type=None,
+                      destination_hole_x1=None, destination_hole_y1=None, destination_hole_z1=None,
+                      destination_hole_x2=None, destination_hole_y2=None, destination_hole_z2=None,
+                      probability=None, randomseed=None):
+        """!
+
+        Performs a volume connect on a network and projections.
+        """
+
+        instance_name = "projectionvolume_%s_%s" % (network, projection)
+
+        command = "algorithminstantiate ProjectionVolume %s %s %s %s %s \
+        %s %s %s %s %s \
+        %s %s %s \
+        %s %s %s \
+        %s %s %s %s \
+        %s %s %s \
+        %s %s %s %s %s \
+        %s %s \
+        %s %s \
+        %s %s %s \
+        %s %s %s \
+        %s %s" %
+        (instance_name, network, projection, projection_source, projection_target,
+         source, target, pre, post, source_type,
+         source_x1, source_y1, source_z1,
+         source_x2, source_y2, source_z2,
+         destination_type, destination_x1, destination_y1, destination_z1,
+         destination_x2, destination_y2, destination_z2,
+         weight_indicator, weight, delay_indicator, delay_type, delay,
+         velocity_indicator, velocity,
+         destination_hole_flag, destination_hole_type,
+         destination_hole_x1, destination_hole_y1, destination_hole_z1,
+         destination_hole_x2, destination_hole_y2, destination_hole_z2,
+         probability, randomseed)
+
+        result = nmc_base.QueryMachineHandle(self._nmc_core, command)
+
+        return result
 
 #*************************** End ModelContainer **************************
 
