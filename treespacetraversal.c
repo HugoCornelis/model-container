@@ -362,7 +362,7 @@ struct TreespaceTraversal * TstrCalloc(void)
 {
     //- allocate and return
 
-    return((struct TreespaceTraversal *)calloc(1,sizeof(struct TreespaceTraversal)));
+    return((struct TreespaceTraversal *)calloc(1, sizeof(struct TreespaceTraversal)));
 }
 
 

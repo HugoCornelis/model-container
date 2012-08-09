@@ -473,7 +473,7 @@ ProjectionVolumeInstanceNew
 	    ppvi->pro.pD3Source[iSourceRegions].iShape = -1;
 	}
 
-	//- scan source coordinates, go to next arg
+	//- set region parameters
 
 	ppvi->pro.pD3Source[iSourceRegions].D3Corner1.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_X1");
 	ppvi->pro.pD3Source[iSourceRegions].D3Corner1.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Y1");
@@ -482,6 +482,8 @@ ProjectionVolumeInstanceNew
 	ppvi->pro.pD3Source[iSourceRegions].D3Corner2.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_X2");
 	ppvi->pro.pD3Source[iSourceRegions].D3Corner2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Y2");
 	ppvi->pro.pD3Source[iSourceRegions].D3Corner2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "SOURCE_Z2");
+
+	//- mark the region as not a hole
 
 	ppvi->pro.pD3Source[iSourceRegions].iMask = 0;
 
@@ -509,7 +511,7 @@ ProjectionVolumeInstanceNew
 	    ppvi->pro.pD3Destination[iDestinationRegions].iShape = -1;
 	}
 
-	//- scan destination coordinates, go to next arg
+	//- set region parameters
 
 	ppvi->pro.pD3Destination[iDestinationRegions].D3Corner1.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_X1");
 	ppvi->pro.pD3Destination[iDestinationRegions].D3Corner1.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Y1");
@@ -518,6 +520,8 @@ ProjectionVolumeInstanceNew
 	ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_X2");
 	ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Y2");
 	ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_Z2");
+
+	//- mark the region as not a hole
 
 	ppvi->pro.pD3Destination[iDestinationRegions].iMask = 0;
 
@@ -545,7 +549,7 @@ ProjectionVolumeInstanceNew
 		ppvi->pro.pD3Destination[iDestinationRegions].iShape = -1;
 	    }
 
-	    //- scan destination coordinates, go to next arg
+	    //- set region parameters
 
 	    ppvi->pro.pD3Destination[iDestinationRegions].D3Corner1.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_HOLE_X1");
 	    ppvi->pro.pD3Destination[iDestinationRegions].D3Corner1.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_HOLE_Y1");
@@ -554,6 +558,8 @@ ProjectionVolumeInstanceNew
 	    ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dx = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_HOLE_X2");
 	    ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dy = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_HOLE_Y2");
 	    ppvi->pro.pD3Destination[iDestinationRegions].D3Corner2.dz = SymbolParameterResolveValue(&palgs->hsle, ppist, "DESTINATION_HOLE_Z2");
+
+	    //- mark the region as a hole
 
 	    ppvi->pro.pD3Destination[iDestinationRegions].iMask = 1;
 
