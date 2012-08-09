@@ -66,13 +66,9 @@
 #include "neurospaces/symbolvirtual_protos.h"
 
 
-#if __GNUC__ > 4
-
 #pragma GCC push_options
 
 #pragma GCC optimize ("O0")
-
-#endif
 
 
 /// 
@@ -868,10 +864,6 @@ extern int QueryHandlerAlgorithmInstantiate
     return(bResult);
 }
 
-#if __GNUC__ > 4
-
 #pragma GCC pop_options
-
-#endif
 
 
