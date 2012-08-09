@@ -106,7 +106,9 @@ libneurospacesread_a_SOURCES = \
 	psymbolserialstack.c \
 	psymbolstack.c \
 	querymachine1.c \
-	querymachine2.c \
+	querymachine2a.c \
+	querymachine2b.c \
+	querymachine2c.c \
 	querymachine3.c \
 	querymachine4.c \
 	querymachine5.c \
@@ -465,7 +467,9 @@ libneurospacesread.so: libneurospacesread.a
 	psymbolstack.o \
 	pulsegen.o \
 	querymachine1.o \
-	querymachine2.o \
+	querymachine2a.o \
+	querymachine2b.o \
+	querymachine2c.o \
 	querymachine3.o \
 	querymachine4.o \
 	querymachine5.o \
