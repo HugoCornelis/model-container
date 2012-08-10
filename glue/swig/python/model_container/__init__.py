@@ -460,6 +460,15 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
+    def CreateMap(self, protoype=None, target=None,
+                  countx=None, county=None,
+                  deltax=None, deltay=None):
+
+        pass
+        
+
+#---------------------------------------------------------------------------
+
     def PrintParameter(self, path, parameter):
         """!
         @brief Sends print commands to the query handler.
@@ -528,13 +537,16 @@ class ModelContainer:
                       source_type=None,
                       source_x1=None, source_y1=None, source_z1=None,
                       source_x2=None, source_y2=None, source_z2=None,
+                      destination_type=None,
+                      destination_x1=None, destination_y1=None, destination_z1=None,
+                      destination_x2=None, destination_y2=None, destination_z2=None,
                       weight_indicator=None, weight=None,
                       delay_indicator=None, delay_type=None, delay=None,
                       velocity_indicator=None, velocity=None,
                       destination_hole_flag=None, destination_hole_type=None,
                       destination_hole_x1=None, destination_hole_y1=None, destination_hole_z1=None,
                       destination_hole_x2=None, destination_hole_y2=None, destination_hole_z2=None,
-                      probability=None, randomseed=None):
+                      probability=None, random_seed=None):
         """!
 
         Performs a volume connect on a network and projections.
@@ -564,7 +576,7 @@ class ModelContainer:
         destination_hole_flag, destination_hole_type,
         destination_hole_x1, destination_hole_y1, destination_hole_z1,
         destination_hole_x2, destination_hole_y2, destination_hole_z2,
-        probability, randomseed)
+        probability, random_seed)
 
         result = nmc_base.QueryMachineHandle(self._nmc_core, command)
 
