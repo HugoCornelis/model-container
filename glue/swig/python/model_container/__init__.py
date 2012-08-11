@@ -460,7 +460,7 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
-    def CreateMap(self, protoype=None, target=None,
+    def CreateMap(self, prototype=None, target=None,
                   countx=None, county=None,
                   deltax=None, deltay=None):
 
@@ -474,7 +474,7 @@ class ModelContainer:
 
         import re
 
-        p = re.split("::", protoype)
+        p = re.split("::", prototype)
 
         if len(p) > 3 or len(p) < 2:
 
