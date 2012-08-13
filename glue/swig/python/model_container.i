@@ -65,15 +65,7 @@ struct symtab_Invisible;
 
 
 
-//- This is a dum dum function to make the dynaloader happy
-struct ProjectionQuery *
-ProjectionQueryCallocFromSolverRegistrations
-(struct SolverInfo *psiSolvers,int iSolvers)
-{
 
-  return NULL;
-
-}
 
 %}
 
