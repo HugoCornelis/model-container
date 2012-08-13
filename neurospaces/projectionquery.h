@@ -133,9 +133,9 @@ struct ProjectionQuery *
 ProjectionQueryCallocFromProjections
 (struct PidinStack **pppistProjections,int iProjections);
 
-struct ProjectionQuery *
-ProjectionQueryCallocFromSolverRegistrations
-(struct SolverInfo *psiSolvers,int iSolvers);
+/* struct ProjectionQuery * */
+/* ProjectionQueryCallocFromSolverRegistrations */
+/* (struct SolverInfo *psiSolvers,int iSolvers); */
 
 struct ProjectionQuery *ProjectionQueryClone(struct ProjectionQuery *ppq);
 

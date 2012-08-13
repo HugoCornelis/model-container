@@ -12,7 +12,8 @@ struct symtab_Invisible;
 
 
 #include "neurospaces/algorithminstance.h"
-#include "neurospaces/algorithmset.h"
+#include "neurospaces/biolevel.h"
+#include "neurospaces/cachedconnection.h"
 #include "neurospaces/components/algorithmsymbol.h"
 #include "neurospaces/components/attachment.h"
 #include "neurospaces/components/axonhillock.h"
@@ -20,17 +21,13 @@ struct symtab_Invisible;
 #include "neurospaces/components/cell.h"
 #include "neurospaces/components/channel.h"
 #include "neurospaces/components/connection.h"
-#include "neurospaces/components/contourpoint.h"
-#include "neurospaces/components/emcontour.h"
+#include "neurospaces/components/connectionsymbol.h"
 #include "neurospaces/components/equationexponential.h"
 #include "neurospaces/components/fiber.h"
 #include "neurospaces/components/gatekinetic.h"
 #include "neurospaces/components/group.h"
 #include "neurospaces/components/groupedparameters.h"
 #include "neurospaces/components/hhgate.h"
-#include "neurospaces/components/iohier.h"
-#include "neurospaces/components/iol.h"
-#include "neurospaces/components/izhikevich.h"
 #include "neurospaces/components/network.h"
 #include "neurospaces/components/pool.h"
 #include "neurospaces/components/population.h"
@@ -40,9 +37,9 @@ struct symtab_Invisible;
 #include "neurospaces/components/segmenter.h"
 #include "neurospaces/components/vector.h"
 #include "neurospaces/components/vectorconnectionsymbol.h"
-#include "neurospaces/components/vectorcontour.h"
 #include "neurospaces/components/vectorsegment.h"
 #include "neurospaces/dependencyfile.h"
+#include "neurospaces/exporter.h"
 #include "neurospaces/function.h"
 #include "neurospaces/idin.h"
 #include "neurospaces/importedfile.h"
@@ -53,17 +50,30 @@ struct symtab_Invisible;
 #include "neurospaces/parsersupport.h"
 #include "neurospaces/pidinstack.h"
 #include "neurospaces/positionD3.h"
+#include "neurospaces/projectionquery.h"
 #include "neurospaces/querymachine.h"
 #include "neurospaces/solverinfo.h"
 #include "neurospaces/symbols.h"
 #include "neurospaces/symboltable.h"
+#include "neurospaces/traversalinfo.h"
 #include "neurospaces/treespacetraversal.h"
+#include "neurospaces/workload.h"
 
 #include "neurospaces/symbolvirtual_protos.h"
-#include "hierarchy/output/symbols/all_callees_headers.h"
-#include "hierarchy/output/symbols/runtime_casters.h"
-#include "hierarchy/output/symbols/runtime_casters.c"
 
+#include "hierarchy/output/symbols/all_callees_headers.h"
+
+
+
+//- This is a dum dum function to make the dynaloader happy
+struct ProjectionQuery *
+ProjectionQueryCallocFromSolverRegistrations
+(struct SolverInfo *psiSolvers,int iSolvers)
+{
+
+  return NULL;
+
+}
 
 %}
 
@@ -156,7 +166,8 @@ struct symtab_Invisible;
 *------------------------------------------------------------------------*/
 
 %include "neurospaces/algorithminstance.h"
-%include "neurospaces/algorithmset.h"
+%include "neurospaces/biolevel.h"
+%include "neurospaces/cachedconnection.h"
 %include "neurospaces/components/algorithmsymbol.h"
 %include "neurospaces/components/attachment.h"
 %include "neurospaces/components/axonhillock.h"
@@ -164,49 +175,48 @@ struct symtab_Invisible;
 %include "neurospaces/components/cell.h"
 %include "neurospaces/components/channel.h"
 %include "neurospaces/components/connection.h"
-%include "neurospaces/components/contourpoint.h"
-%include "neurospaces/dependencyfile.h"
-%include "neurospaces/components/emcontour.h"
+%include "neurospaces/components/connectionsymbol.h"
 %include "neurospaces/components/equationexponential.h"
 %include "neurospaces/components/fiber.h"
-%include "neurospaces/function.h"
 %include "neurospaces/components/gatekinetic.h"
 %include "neurospaces/components/group.h"
 %include "neurospaces/components/groupedparameters.h"
 %include "neurospaces/components/hhgate.h"
+%include "neurospaces/components/network.h"
+%include "neurospaces/components/pool.h"
+%include "neurospaces/components/population.h"
+%include "neurospaces/components/projection.h"
+%include "neurospaces/components/randomvalue.h"
+%include "neurospaces/components/segment.h"
+%include "neurospaces/components/segmenter.h"
+%include "neurospaces/components/vector.h"
+%include "neurospaces/components/vectorconnectionsymbol.h"
+%include "neurospaces/components/vectorsegment.h"
+%include "neurospaces/dependencyfile.h"
+%include "neurospaces/exporter.h"
+%include "neurospaces/function.h"
 %include "neurospaces/idin.h"
 %include "neurospaces/importedfile.h"
 %include "neurospaces/inputoutput.h"
 %include "neurospaces/iocontainer.h"
-%include "neurospaces/components/izhikevich.h"
-%include "neurospaces/components/iohier.h"
-%include "neurospaces/components/iol.h"
-%include "neurospaces/components/network.h"
 %include "neurospaces/neurospaces.h"
 %include "neurospaces/parameters.h"
 %include "neurospaces/parsersupport.h"
 %include "neurospaces/pidinstack.h"
-%include "neurospaces/components/pool.h"
-%include "neurospaces/components/population.h"
 %include "neurospaces/positionD3.h"
-%include "neurospaces/components/projection.h"
+%include "neurospaces/projectionquery.h"
 %include "neurospaces/querymachine.h"
-%include "neurospaces/components/randomvalue.h"
-%include "neurospaces/components/segment.h"
-%include "neurospaces/components/segmenter.h"
 %include "neurospaces/solverinfo.h"
 %include "neurospaces/symbols.h"
 %include "neurospaces/symboltable.h"
 %include "neurospaces/treespacetraversal.h"
-%include "neurospaces/components/vector.h"
-%include "neurospaces/components/vectorconnectionsymbol.h"
-%include "neurospaces/components/vectorcontour.h"
-%include "neurospaces/components/vectorsegment.h"
+%include "neurospaces/workload.h"
+
 %include "neurospaces/symbolvirtual_protos.h"
 
-%include "hierarchy/output/symbols/runtime_casters.h"
-
 %include "hierarchy/output/symbols/all_callees_headers.i"
+%include "hierarchy/output/symbols/runtime_casters.i"
+
 
 
 
