@@ -23,34 +23,44 @@ sub input_add
 
     my $symbol = $context->PidinStackLookupTopSymbol();
 
-    my $binding = 
+    my $binding = SwiggableNeurospaces::InputOutputNewForType(SwiggableNeurospaces::INPUT_TYPE_INPUT);
 
-		    //- allocate I/O relation
+    $binding->swig_pcType_set($type);
 
-		    struct symtab_InputOutput
-			*pio = InputOutputNewForType(INPUT_TYPE_INPUT);
+    $binding->swig_pidinField_set($field);
 
-		    //- remove ending '"'
+    $field->IdinSetFlags(SwiggableNeurospaces::FLAG_IDENTINDEX_INPUTROOT);
 
-		    $3->pcString[$3->iLength - 1] = '\0';
+    #t still need to do something with $component
 
-		    //! allocates one to much
+####### equivalent C code
 
-		    char *pc = calloc(sizeof(char), $3->iLength);
+# 		    //- allocate I/O relation
 
-		    strcpy(pc, &$3->pcString[1]);
+# 		    struct symtab_InputOutput
+# 			*pio = InputOutputNewForType(INPUT_TYPE_INPUT);
 
-		    //- store type
+# 		    //- remove ending '"'
 
-		    pio->pcType = pc;
+# 		    $3->pcString[$3->iLength - 1] = '\0';
 
-		    //- store idin
+# 		    //! allocates one to much
 
-		    pio->pidinField = $5;
+# 		    char *pc = calloc(sizeof(char), $3->iLength);
 
-		    //- set TOKEN_INPUT flag for root idin $5
+# 		    strcpy(pc, &$3->pcString[1]);
 
-		    IdinSetFlags($5, FLAG_IDENTINDEX_INPUTROOT);
+# 		    //- store type
+
+# 		    pio->pcType = pc;
+
+# 		    //- store idin
+
+# 		    pio->pidinField = $5;
+
+# 		    //- set TOKEN_INPUT flag for root idin $5
+
+# 		    IdinSetFlags($5, FLAG_IDENTINDEX_INPUTROOT);
 
 }
 
