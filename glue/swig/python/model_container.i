@@ -64,9 +64,6 @@ struct symtab_Invisible;
 #include "hierarchy/output/symbols/all_callees_headers.h"
 
 
-
-
-
 %}
 
 /***************************************************
@@ -148,8 +145,11 @@ struct symtab_Invisible;
 ***************************************************/
 
 
-
-
+/*------------------------------------------------------------------------
+* This is a preload for some includes. Without it several casting functions
+* will fail to compile.
+*-------------------------------------------------------------------------*/
+%include "_model_container.i"
 
 /*------------------------------------------------------------------------
 * Grab the original header file so SWIG can import the prototypes and
@@ -207,7 +207,7 @@ struct symtab_Invisible;
 %include "neurospaces/symbolvirtual_protos.h"
 
 %include "hierarchy/output/symbols/all_callees_headers.i"
- //%include "hierarchy/output/symbols/runtime_casters.i"
+%include "hierarchy/output/symbols/runtime_casters.i"
 
 
 
