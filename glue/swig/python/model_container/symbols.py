@@ -36,7 +36,7 @@ class Symbol:
 
 #---------------------------------------------------------------------------
 
-    def __init__(self, path=None, model=None):
+    def __init__(self, model=None, path=None, typ=None):
         """!
         @brief Constructor
         """

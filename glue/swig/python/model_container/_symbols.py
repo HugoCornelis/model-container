@@ -36,7 +36,7 @@ class Symbol:
 
 #---------------------------------------------------------------------------
 
-    def __init__(self, model=None, path=None, typ=None):
+    def __init__(self, path=None, model=None):
         """!
         @brief Constructor
         """
@@ -48,6 +48,12 @@ class Symbol:
         self._path = path
 
         self._nmc_core = model
+
+        self.symbol = None
+
+        self.name = None
+        
+        
 
 #---------------------------------------------------------------------------
 
@@ -211,16 +217,49 @@ class Symbol:
 
         return result
 
+#---------------------------------------------------------------------------
+
+    def _ConvertType(self, t):
+
+        parts = t.split('_')
+
+        cparts = []
+        
+        for p in parts:
+
+            cparts.append(p.capitalize())
+
+            
+        return ''.join(cparts)
 
 #---------------------------------------------------------------------------
 
-    def _CreateNameAndSymbol(self,path):
+    def _CreateNameAndSymbol(self,path, typ):
         """!
         @brief Creates a name and context
         @returns result A tuple with a name and symbol 
 
         An internal helper method that creates a name and symbol
         """
+
+
+        c_type = self._ConvertType(typ)
+
+        allocator = ''.join(c_type, "Calloc")
+
+        my_symbol = eval("nmc_base.allocator()")
+
+
+        if my_symbol is None:
+
+            # shouldn't get here but just in case
+            # maybe change this to an exception later?
+            
+            allocator = "GroupCalloc"  
+
+            my_symbol = eval("nmc_base.allocator")
+
+            
 
         context = nmc_base.PidinStackParse(path)
         
