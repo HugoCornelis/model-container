@@ -30,6 +30,8 @@ syn_weight=10
 cond_vel=0.5
 prop_delay=sep_x / cond_vel
 
+my_model_container.CreateNetwork('/RSNet')
+
 my_model_container.CreateMap('::rscell::/cell', '/RSNet/population', nx, ny, sep_x, sep_y)
 
 volume_params = dict(network='/RSNet',

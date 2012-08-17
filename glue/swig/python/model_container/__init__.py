@@ -410,22 +410,35 @@ class ModelContainer:
 #---------------------------------------------------------------------------
 
     def Create(self, path, typ='segment'):
+        """
 
+        More open ended create method. Probably need to use an
+        eval method somewhere here to make it even more open ended. 
+        """
+        
+        result = None
+        
         if typ == 'segment':
 
-            self.CreateSegment(path)
+            result = self.CreateSegment(path)
 
         elif typ == 'compartment':
 
-            self.CreateCompartment(path)
+            result = self.CreateCompartment(path)
 
         elif typ == 'cell':
 
-            self.CreateCell(path)
+            result = self.CreateCell(path)
+
+        elif typ == 'network':
+
+            result = self.CreateNetwork(path)
 
         else:
 
             raise Exception("Invalid type: %s" % typ)
+
+        return result
 
 #---------------------------------------------------------------------------
 
@@ -433,7 +446,7 @@ class ModelContainer:
         """
         
         """
-        seg = symbols.Segment(path, self._nmc_core)
+        seg = symbols.Segment(path=path, model=self._nmc_core)
 
         # exception check?
 
@@ -445,18 +458,24 @@ class ModelContainer:
         """
 
         """
-        return CreateSegment(path)
+        return CreateSegment(path=path, model=self._nmc_core)
 
 
 #---------------------------------------------------------------------------
 
     def CreateCell(self, path):
 
-        cell = symbols.Cell(path)
+        cell = symbols.Cell(path=path, model=self._nmc_core)
 
         # exception check?
 
         return cell
+
+#---------------------------------------------------------------------------
+
+    def CreateNetwork(self, path):
+
+        network = symbols.Network(path=path, model=self._nmc_core)
 
 #---------------------------------------------------------------------------
 
@@ -482,17 +501,23 @@ class ModelContainer:
 
         if p[0] == '':
 
-            namespaces = p[1]
+            namespaces = "::%s" % p[1]
             component = p[2]
 
         else:
             # probably not necessary
-            namespaces = p[0]
+            namespaces = "::%s" % p[0]
             component = p[1]
 
-        context = nmc_base.PidinStackParse(prototype)
 
-        symbol = nmc_base.SymbolsLookupHierarchical(self._nmc_core.psym, context)
+        protoype_context = None
+
+        protoype_context = nmc_base.PidinStackParse(prototype)
+        pdb.set_trace()
+
+        prototype_symbol = None
+        
+        prototype_symbol = nmc_base.SymbolsLookupHierarchical(self._nmc_core.psym, prototype_context)
 
         component_name = re.split('/', component)[1]
 
@@ -500,7 +525,7 @@ class ModelContainer:
         
         pidin = nmc_base.IdinCallocUnique(component_name)
 
-        alias = nmc_base.SymbolCreateAlias(symbol, namespaces, pidin)
+        alias = nmc_base.SymbolCreateAlias(prototype_symbol, namespaces, pidin)
 
         root_context = nmc_base.PidinStackParse("::/")
 
