@@ -236,7 +236,7 @@ Done!
 				command => 'tests/python/symbols_1.py',
 				command_tests => [
 						  {
-						   description => "Can we create a parameter via a call to nmc.symbols ?",
+						   description => "Can we create a parameter via a call to model_container.symbols ?",
 						   read => 'Value is 100.000000
 Done!
 ',
@@ -244,7 +244,24 @@ Done!
 
 						  },
 						 ],
-				description => "A simple retrieval of a parameter created via nmc.symbols",
+				description => "A simple retrieval of a parameter created via model_container.symbols",
+			       },
+
+			       {
+				arguments => [
+					     ],
+				command => 'tests/python/symbols_2.py',
+				command_tests => [
+						  {
+						   description => "Can we create a parameter via a call to model_container.symbols ?",
+						   read => 'Value is 100.000000
+Done!
+',
+
+
+						  },
+						 ],
+				description => "A simple retrieval of a parameter created via model_container.symbols",
 			       },
 
 

@@ -535,9 +535,18 @@ class Cell(Symbol):
         Symbol.__init__(self, path, "cell", model)
 
 
-
-
-
 #*************************** End Cell ****************************
+
+
+#*************************** Network Cell ************************
+
+class Network(Symbol):
+
+    def __init__(self, path=None, model=None):
+
+        Symbol.__init__(self, path, "network", model)
+
+
+#*************************** Network Cell ************************
 
 
