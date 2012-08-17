@@ -47,7 +47,13 @@ class Symbol:
         
         self.path = path
 
-        self._nmc_core = model
+        try:
+            
+            self._nmc_core = model.GetCore()
+
+        except AttributeError:
+
+            self._nmc_core = model
 
         self.symbol = None
 
