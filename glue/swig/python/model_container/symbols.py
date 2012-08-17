@@ -36,7 +36,7 @@ class Symbol:
 
 #---------------------------------------------------------------------------
 
-    def __init__(self, model=None, path=None, typ=None):
+    def __init__(self, path=None, typ="segment", model=None):
         """!
         @brief Constructor
         """
@@ -45,9 +45,21 @@ class Symbol:
 
             raise errors.SymbolError("Cannot create symbol, no path given")
         
-        self._path = path
+        self.path = path
 
         self._nmc_core = model
+
+        self.symbol = None
+
+        self.name = None
+
+        self._CreateNameAndSymbol(path=path, typ=typ)
+        
+#---------------------------------------------------------------------------
+
+    def GetSymbol(self):
+
+        return self.symbol
 
 #---------------------------------------------------------------------------
 
@@ -56,19 +68,19 @@ class Symbol:
         @brief Returns the saved pathname in a python string
         @returns self._path The class variable that holds the path for the symbol
         """
-        return self._path
+        return self.path
 
 #---------------------------------------------------------------------------
 
-    def GetCore(self):
-        """!
-        @brief Returns the core object in the Symbol abstraction
+#     def GetCore(self):
+#         """!
+#         @brief Returns the core object in the Symbol abstraction
 
-        Returns the Hsolve list element pointer that is managed by
-        the object. Replaces the previous \"backend_object\",hopefully
-        is more clear :)
-        """
-        return self._core
+#         Returns the Hsolve list element pointer that is managed by
+#         the object. Replaces the previous \"backend_object\",hopefully
+#         is more clear :)
+#         """
+#         return self._core
 
 #---------------------------------------------------------------------------
 
@@ -211,10 +223,24 @@ class Symbol:
 
         return result
 
+#---------------------------------------------------------------------------
+
+    def _ConvertType(self, t):
+
+        parts = t.split('_')
+
+        cparts = []
+        
+        for p in parts:
+
+            cparts.append(p.capitalize())
+
+            
+        return ''.join(cparts)
 
 #---------------------------------------------------------------------------
 
-    def _CreateNameAndSymbol(self,path):
+    def _CreateNameAndSymbol(self, path, typ):
         """!
         @brief Creates a name and context
         @returns result A tuple with a name and symbol 
@@ -222,20 +248,97 @@ class Symbol:
         An internal helper method that creates a name and symbol
         """
 
-        context = nmc_base.PidinStackParse(path)
-        
-        name = nmc_base.PidinStackTop(context)
+        allocated_symbol = None
 
-        # Here we pop and return the top symbol, which would now be the parent
-        # symbol.
-        
-        nmc_base.PidinStackPop(context)
-        
-        top_symbol = nmc_base.PidinStackLookupTopSymbol(context)
+        path_parts = path.split('/', 1)
 
-        result = [name, top_symbol]
+        parent_path = path_parts[0]
+
+        name = path_parts[1]
+
+        c_type = self._ConvertType(typ)
+
+        allocator = ''.join([c_type, "Calloc()"])
+
+        allocate_command = "nmc_base.%s" % allocator
+
+        allocated_symbol = eval(allocate_command)
+
+
+        if allocated_symbol is None:
+
+            # shouldn't get here but just in case
+            # maybe change this to an exception later?
+            
+
+            allocated_symbol = eval("nmc_base.GroupCalloc()")
+
+            cast_command = "nmc_base.cast_group_2_symbol(allocated_symbol)"
+
+        else:
+
+            cast_command = "nmc_base.cast_%s_2_symbol(allocated_symbol)" % typ
+
         
-        return result
+        pidin = nmc_base.IdinCallocUnique(name)
+        
+
+        casted_allocated_symbol = eval(cast_command)
+
+        nmc_base.SymbolSetName(casted_allocated_symbol, pidin)
+
+        context = nmc_base.PidinStackParse(parent_path)
+
+        if context is None:
+
+            raise Exception("Symbol Error: Cannot create context out of path '%s' (does it exist?)" % parent_path)
+
+        parent = nmc_base.SymbolsLookupHierarchical(self._nmc_core.psym, context)
+
+        if parent is None:
+
+            raise Exception("Symbol Error: Cannot find parent symbol '%s'" % parent_path)
+
+
+        add_child_result = nmc_base.SymbolAddChild(parent, casted_allocated_symbol)
+
+        if add_child_result == 0:
+
+            raise Exception("Symbol Error: Can't add child symbol to '%s'" % path)
+
+
+        recalc_result = nmc_base.SymbolRecalcAllSerials(None,None)
+
+        if recalc_result == 0:
+
+            raise Exception("Symbol Error: Can't recalculate serials when creating '%s'" % path)
+
+
+        # set the attributes at the end
+        
+        self.path = path
+        
+        self.name = name
+
+        self.type = typ
+        
+        self.symbol = casted_allocated_symbol
+
+        self.context = context
+
+        
+#         name = nmc_base.PidinStackTop(context)
+
+#         # Here we pop and return the top symbol, which would now be the parent
+#         # symbol.
+        
+#         nmc_base.PidinStackPop(context)
+        
+#         top_symbol = nmc_base.PidinStackLookupTopSymbol(context)
+
+#         result = [name, top_symbol]
+        
+#         return result
 
 
 #*************************** End Symbol ****************************
@@ -257,27 +360,17 @@ class Segment(Symbol):
 
         @param path The complete path to the Segment object.
         """
-        Symbol.__init__(self, path, model)
-
-        name, top_symbol = self._CreateNameAndSymbol(path)
-
-        self._core = self.__AllocateSegment(name.pcIdentifier)
-
-        # Make our current symbol a child of the parent
-
-        if top_symbol is not None:
-            
-            nmc_base.SymbolAddChild(top_symbol, self.GetSymbol())
+        Symbol.__init__(self, path=path, typ="segment", model=model)
         
 
 #---------------------------------------------------------------------------
 
-    def GetSymbol(self):
-        """!
-        @brief Returns the core objects hsolve list element (symbol).
+#     def GetSymbol(self):
+#         """!
+#         @brief Returns the core objects hsolve list element (symbol).
 
-        """
-        return self._core.segr.bio.ioh.iol.hsle
+#         """
+#         return self._core.segr.bio.ioh.iol.hsle
 
 
 #---------------------------------------------------------------------------
@@ -387,25 +480,25 @@ class Segment(Symbol):
         
 #---------------------------------------------------------------------------
 
-    def __AllocateSegment(self,name):
-        """!
-        @brief Allocates and sets the name for a segment.
+#     def __AllocateSegment(self,name):
+#         """!
+#         @brief Allocates and sets the name for a segment.
 
-        Method is name mangled since it should never be called
-        outside of initialization.
-        """
+#         Method is name mangled since it should never be called
+#         outside of initialization.
+#         """
         
-        segment = nmc_base.SegmentCalloc()
+#         segment = nmc_base.SegmentCalloc()
 
-        if not segment:
+#         if not segment:
 
-            raise Exception("Error allocating the Segment")
+#             raise Exception("Error allocating the Segment")
 
-        idin = nmc_base.IdinCallocUnique(name)
+#         idin = nmc_base.IdinCallocUnique(name)
 
-        nmc_base.SymbolSetName(segment.segr.bio.ioh.iol.hsle, idin)
+#         nmc_base.SymbolSetName(segment.segr.bio.ioh.iol.hsle, idin)
         
-        return segment
+#         return segment
         
 
 # An alias
@@ -433,145 +526,12 @@ class Cell(Symbol):
 
         @param path The complete path to the Segment object.
         """
-        Symbol.__init__(self, path, model)
-
-        name, top_symbol = self._CreateNameAndSymbol(path)
-
-        self._core = self.__AllocateCell(name.pcIdentifier)
-
-        # Make our current symbol a child of the parent
-
-        if top_symbol is not None:
-            
-            nmc_base.SymbolAddChild(top_symbol, self.GetSymbol())
+        Symbol.__init__(self, path, "cell", model)
 
 
-
-#---------------------------------------------------------------------------
-
-    def GetSymbol(self):
-        """!
-        @brief Returns the core objects hsolve list element (symbol).
-
-        """
-        return self._core.segr.bio.ioh.iol.hsle
-
-#---------------------------------------------------------------------------
-
-    def __AllocateCell(self, name):
-        """!
-        @brief Allocates and sets the name for a segment.
-
-        Method is name mangled since it should never be called
-        outside of initialization.
-        """
-        
-        cell = nmc_base.CellCalloc()
-
-        if not cell:
-
-            raise Exception("Error allocating the Cell")
-
-        idin =  nmc_base.IdinCallocUnique(name)
-
-        nmc_base.SymbolSetName(cell.segr.bio.ioh.iol.hsle, idin)
-        
-        return cell
 
 
 
 #*************************** End Cell ****************************
 
 
-
-
-
-
-#     class Channel(Symbol):
-#         "ModelContainer.Channel constructor"
-#         def __init__(self, path):
-#             [ name, top_symbol ] = prepare(path)
-#             import Neurospaces
-#             channel = Neurospaces.Channel(name.pcIdentifier)
-#             if top_symbol == None:
-#                 print "Error: top_symbol is None"
-#             else:
-#                 SwiggableNeurospaces.SymbolAddChild(top_symbol, channel.backend.bio.ioh.iol.hsle)
-#             self.backend = channel
-        
-#         def parameter(self, name, value):
-#             self.backend.parameter(name, value)
-
-#     class GateKinetic(Symbol):
-#         "ModelContainer.GateKinetic constructor"
-#         def __init__(self, path):
-#             [ name, top_symbol ] = prepare(path)
-#             import Neurospaces
-#             gk = Neurospaces.GateKinetic(name.pcIdentifier)
-#             if top_symbol == None:
-#                 print "Error: top_symbol is None"
-#             else:
-#                 SwiggableNeurospaces.SymbolAddChild(top_symbol, gk.backend.bio.ioh.iol.hsle)
-#             self.backend = gk
-        
-#         def parameter(self, name, value):
-#             self.backend.parameter(name, value)
-
-
-
-
-# class ContourGroup(Symbol):
-#     "ContourGroup class"
-#     def __init__(self, name):
-#         group = SwiggableNeurospaces.VContourCalloc()
-#         SwiggableNeurospaces.SymbolSetName(group.vect.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
-#         self.backend = group
-
-#     def backend_object(self):
-#         return self.backend.vect.bio.ioh.iol.hsle
-
-# class ContourPoint(Symbol):
-#     "ContourPoint class"
-#     def __init__(self, name):
-#         point = SwiggableNeurospaces.ContourPointCalloc()
-#         SwiggableNeurospaces.SymbolSetName(point.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
-#         self.backend = point
-
-#     def backend_object(self):
-#         return self.backend.bio.ioh.iol.hsle
-
-# class EMContour(Symbol):
-#     "EMContour class"
-#     def __init__(self, name):
-#         contour = SwiggableNeurospaces.EMContourCalloc()
-#         SwiggableNeurospaces.SymbolSetName(contour.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
-#         self.backend = contour
-
-#     def backend_object(self):
-#         return self.backend.bio.ioh.iol.hsle
-
-# class Channel(Symbol):
-#     "Channel class"
-#     def __init__(self, name):
-#         channel = SwiggableNeurospaces.ChannelCalloc()
-#         SwiggableNeurospaces.SymbolSetName(channel.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
-#         self.backend = channel
-
-#     def backend_object(self):
-#         return self.backend.bio.ioh.iol.hsle
-
-#     def parameter(self, name, value):
-#         SwiggableNeurospaces.SymbolSetParameterDouble(self.backend.bio.ioh.iol.hsle, name, value)
-
-# class GateKinetic(Symbol):
-#     "GateKinetic class"
-#     def __init__(self, name):
-#         gk = SwiggableNeurospaces.GateKineticCalloc()
-#         SwiggableNeurospaces.SymbolSetName(gk.bio.ioh.iol.hsle, SwiggableNeurospaces.IdinCallocUnique(name))
-#         self.backend = gk
-
-#     def backend_object(self):
-#         return self.backend.bio.ioh.iol.hsle
-
-#     def parameter(self, name, value):
-#         SwiggableNeurospaces.SymbolSetParameterDouble(self.backend.bio.ioh.iol.hsle, name, value)

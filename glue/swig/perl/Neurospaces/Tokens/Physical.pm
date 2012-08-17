@@ -32,7 +32,7 @@ sub create
     my $model_container = shift;
 
     my $target_name = shift;
-
+print "--- type is $type, mc is $model_container, target name is $target_name\n";
     # figure out context and name
 
     $target_name =~ m((.*)/(.*));
@@ -40,7 +40,7 @@ sub create
     my $path = $1;
 
     my $name = $2;
-
+print "path is '$1', name is '$2'!!!\n\n";
     # calloc the type
 
     my $ctype = identifier_perl_to_xml($type);
@@ -68,7 +68,7 @@ sub create
     # assign name
 
     #t bug: $name not newly allocated in C space, gets overwritten
-
+print "name is '$name'!!!!";
     my $pidin = SwiggableNeurospaces::IdinCallocUnique($name);
 
 #     no strict "refs";
@@ -87,7 +87,7 @@ sub create
 	  };
 
     #t $model_container->create($parent, $target_name);
-
+print "******* Making a context out of path '$path'\n";
     my $context = SwiggableNeurospaces::PidinStackParse($path);
 
     if (!defined $context)
