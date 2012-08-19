@@ -41,6 +41,7 @@ struct symtab_Invisible;
 #include "neurospaces/dependencyfile.h"
 #include "neurospaces/exporter.h"
 #include "neurospaces/function.h"
+#include "neurospaces/hines_list.h"
 #include "neurospaces/idin.h"
 #include "neurospaces/importedfile.h"
 #include "neurospaces/inputoutput.h"
@@ -63,8 +64,107 @@ struct symtab_Invisible;
 
 #include "hierarchy/output/symbols/all_callees_headers.h"
 
+#include <Python.h>
 
 %}
+
+
+//------------------------- Start of Inline functons  ---------------------------
+%inline %{
+int PyCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespaces, 
+		char *pcComponent);
+
+
+int PyCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespaces, 
+		char *pcComponent)
+{
+
+  char pcErrorMsg[1024];
+  int iResult = 0;
+  struct PidinStack *ppistPrototype = NULL;
+  struct PidinStack *ppistNamespaces = NULL;
+  struct symtab_IdentifierIndex *pidinComponent = NULL;
+  struct PidinStack *ppistRoot = NULL;
+  struct symtab_HSolveListElement *phslePrototype = NULL;
+  struct symtab_HSolveListElement *phsleAlias = NULL;
+  struct symtab_HSolveListElement *phsleRoot = NULL;
+
+  ppistPrototype = PidinStackParse(pcPrototype);
+
+  if( !ppistPrototype )
+  {
+    //- Use snprint to make a better error string just in case
+
+    PyErr_SetString(PyExc_Exception, "Can't parse prototype");
+    return 0;
+
+  }
+
+
+  phslePrototype = SymbolsLookupHierarchical(pneuro->psym, ppistPrototype);
+
+  if( !phslePrototype )
+  {
+
+    PyErr_SetString(PyExc_Exception, "Can't get symbol from prototype context");
+    return 0;
+
+  }
+
+
+  pidinComponent = IdinCallocUnique(pcComponent);
+
+  if( !pidinComponent )
+  {
+
+    PyErr_SetString(PyExc_Exception, "Can't create unique identifier from component");
+    return 0;
+
+  }
+
+  phsleAlias = SymbolCreateAlias(phslePrototype, pcNamespaces, pidinComponent);
+
+  if( !phsleAlias )
+  {
+
+    PyErr_SetString(PyExc_Exception, "Can't create alias from component");
+    return 0;    
+
+  }
+
+
+  ppistRoot = PidinStackParse("::/");
+
+  phsleRoot = PidinStackLookupTopSymbol(ppistRoot);
+
+  if( !phsleRoot )
+  {
+
+    PyErr_SetString(PyExc_Exception, "Cannot get a private root context (has a model been loaded ?)");
+    return 0;        
+
+  }
+
+  
+  iResult = SymbolAddChild(phsleRoot, phsleAlias);
+
+  if( !iResult )
+  {
+
+    PyErr_SetString(PyExc_Exception, "Can't set alias");
+    return 0;        
+
+  }
+
+  return 1;
+
+}
+
+%}
+//------------------------- End of Inline functons  ---------------------------
+
+
+
 
 /***************************************************
 * End C code block
@@ -187,6 +287,7 @@ struct symtab_Invisible;
 %include "neurospaces/dependencyfile.h"
 %include "neurospaces/exporter.h"
 %include "neurospaces/function.h"
+%include "neurospaces/hines_list.h"
 %include "neurospaces/idin.h"
 %include "neurospaces/importedfile.h"
 %include "neurospaces/inputoutput.h"

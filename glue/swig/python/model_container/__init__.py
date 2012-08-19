@@ -509,35 +509,12 @@ class ModelContainer:
             namespaces = "::%s" % p[0]
             component = p[1]
 
-
-        protoype_context = None
-
-        protoype_context = nmc_base.PidinStackParse(prototype)
-        pdb.set_trace()
-
-        prototype_symbol = None
-        
-        prototype_symbol = nmc_base.SymbolsLookupHierarchical(self._nmc_core.psym, prototype_context)
-
         component_name = re.split('/', component)[1]
 
-        # Create an alias to the symbol
-        
-        pidin = nmc_base.IdinCallocUnique(component_name)
-
-        alias = nmc_base.SymbolCreateAlias(prototype_symbol, namespaces, pidin)
-
-        root_context = nmc_base.PidinStackParse("::/")
-
-        root_symbol = nmc_base.PidinStackLookupTopSymbol(root_symbol)
-
-        if root_context is None:
-
-            raise Exception("Cannot get a private root context in 'CreateMap' method. (has model been loaded?)")
-
-        success = nmc_base.SymbolAddChild(root_symbol, alias)
-
         prototype = component_name
+
+
+        nmc_base.PyCreateMap(self._nmc_core, prototype, namespaces, component_name)
 
 
         # now we run the query machine command
@@ -553,7 +530,86 @@ class ModelContainer:
                                                                             deltax,
                                                                             deltay)
 
-        nmc_base.QueryHandler(command)
+        nmc_base.QueryMachineHandle(self._nmc_core, command)
+
+
+
+
+
+#     def CreateMap(self, prototype=None, target=None,
+#                   countx=None, county=None,
+#                   deltax=None, deltay=None):
+
+#         """!
+#         @brief Imports a child into the current symbol from the given path
+#         """
+        
+#         if self._nmc_core is None:
+
+#             raise Exception("No model container defined for symbol '%s', can't perform child import for '%s'" % (self._path, path))
+
+#         import re
+
+#         p = re.split("::", prototype)
+
+#         if len(p) > 3 or len(p) < 2:
+
+#             raise Exception("The prototype '%s' is in invalid format" % prototype)
+
+#         if p[0] == '':
+
+#             namespaces = "::%s" % p[1]
+#             component = p[2]
+
+#         else:
+#             # probably not necessary
+#             namespaces = "::%s" % p[0]
+#             component = p[1]
+
+
+#         prototype_context = None
+        
+#         prototype_context = nmc_base.PidinStackParse(prototype)
+
+#         prototype_symbol = None
+        
+#         prototype_symbol = nmc_base.SymbolsLookupHierarchical(self._nmc_core.psym, prototype_context)
+
+#         component_name = re.split('/', component)[1]
+
+#         # Create an alias to the symbol
+        
+#         pidin = nmc_base.IdinCallocUnique(component_name)
+
+#         alias = nmc_base.SymbolCreateAlias(prototype_symbol, namespaces, pidin)
+
+#         root_context = nmc_base.PidinStackParse("::/")
+
+#         root_symbol = nmc_base.PidinStackLookupTopSymbol(root_symbol)
+
+#         if root_context is None:
+
+#             raise Exception("Cannot get a private root context in 'CreateMap' method. (has model been loaded?)")
+
+#         success = nmc_base.SymbolAddChild(root_symbol, alias)
+
+#         prototype = component_name
+
+
+#         # now we run the query machine command
+        
+#         instance_name = "createmap_%s" % target
+
+
+#         command = "algorithminstantiate Grid3D %s %s %s %s %s 1 %s %s 0" % (instance_name.replace('/','_'),
+#                                                                             target,
+#                                                                             prototype,
+#                                                                             countx,
+#                                                                             county,
+#                                                                             deltax,
+#                                                                             deltay)
+
+#         nmc_base.QueryHandler(command)
 
         
 #---------------------------------------------------------------------------
