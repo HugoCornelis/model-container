@@ -71,11 +71,11 @@ struct symtab_Invisible;
 
 //------------------------- Start of Inline functons  ---------------------------
 %inline %{
-int PyCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespaces, 
+int PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespaces, 
 		char *pcComponent);
 
 
-int PyCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespaces, 
+int PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespaces, 
 		char *pcComponent)
 {
 

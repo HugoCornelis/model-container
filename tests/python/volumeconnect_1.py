@@ -33,7 +33,7 @@ prop_delay=sep_x / cond_vel
 my_model_container.CreateNetwork('/RSNet')
 
 my_model_container.CreateMap('::rscell::/cell', '/RSNet/population', nx, ny, sep_x, sep_y)
-
+pdb.set_trace()
 volume_params = dict(network='/RSNet',
                      projection='/RSNet/projection',
                      projection_source='../population',
@@ -50,9 +50,9 @@ volume_params = dict(network='/RSNet',
                      source_y2='1e10',
                      source_z2='1e10',
                      destination_type='ellipse',
-                     destination_x1=0,
-                     destination_y1=0,
-                     destination_z1=0,
+                     destination_x1='',
+                     destination_y1='',
+                     destination_z1='',
                      destination_x2=sep_x * 1.2,
                      destination_y2=sep_y * 1.2,
                      destination_z2=sep_z * 0.5,

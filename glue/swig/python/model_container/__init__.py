@@ -513,8 +513,7 @@ class ModelContainer:
 
         prototype = component_name
 
-
-        nmc_base.PyCreateMap(self._nmc_core, prototype, namespaces, component_name)
+        nmc_base.PyBCreateMap(self._nmc_core, prototype, namespaces, component_name)
 
 
         # now we run the query machine command
@@ -529,6 +528,7 @@ class ModelContainer:
                                                                             county,
                                                                             deltax,
                                                                             deltay)
+
 
         nmc_base.QueryMachineHandle(self._nmc_core, command)
 
@@ -697,7 +697,8 @@ class ModelContainer:
         Performs a volume connect on a network and projections.
         """
 
-        instance_name = "projectionvolume_%s_%s" % (network, projection)
+        instance_name = "projectionvolume_%s_%s" % (network.replace('/', '_'),
+                                                    projection.replace('/', '_'))
 
         command = "algorithminstantiate ProjectionVolume %s %s %s %s %s \
         %s %s %s %s %s \
