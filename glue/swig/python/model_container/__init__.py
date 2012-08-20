@@ -675,6 +675,239 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
+    def CreateProjection(self, configuration=None, projection=None,
+                         projection_source=None, projection_target=None,
+                         source=None, target=None, pre=None, post=None,
+                         source_type=None,
+                         source_x1=None, source_y1, source_z1,
+                         source_x2=None, source_y2, source_z2,
+                         target_type=None,
+                         target_x1, target_y1, target_z1,
+                         target_x2, target_y2, target_z2,
+                         weight_indicator, weight,
+                         delay_indicator=None, delay_type=None, delay=None,
+                         destination_hole_flag=None, destination_hole_type=None,
+                         destination_hole_x1, destination_hole_x1, destination_hole_z1,
+                         destination_hole_x2, destination_hole_y2, destination_hole_z2,
+                         probability, random_seed):
+
+        """!
+
+        Creates a projection in the model container. If configuration is present it
+        will parse it and use the data from it. If not it will take it from arguments.
+
+        """
+        
+        if not configuration is None:
+
+            arguments = dict(network='',
+                             projection='',
+                             projection_source='',
+                             projection_target='',
+                             source='',
+                             target='',
+                             pre='',
+                             post='',
+                             source_type='',
+                             source_x1='',
+                             source_y1='',
+                             source_z1='',
+                             source_x2='',
+                             source_y2='',
+                             source_z2='',
+                             destination_type='',
+                             destination_x1='',
+                             destination_y1='',
+                             destination_z1='',
+                             destination_x2='',
+                             destination_y2='',
+                             destination_z2='',
+                             weight_indicator='',
+                             weight='',
+                             delay_indicator='',
+                             delay_type='',
+                             delay='',
+                             velocity_indicator='',
+                             velocity='',
+                             destination_hole_flag='',
+                             destination_hole_type='',
+                             destination_hole_x1='',
+                             destination_hole_y1='',
+                             destination_hole_z1='',
+                             destination_hole_x2='',
+                             destination_hole_y2='',
+                             destination_hole_z2='',
+                             probability='',
+                             random_seed='')
+
+            if configuration.has_key('root'): 
+
+                arguments['network'] = configuration['root']
+
+            elif configuration.has_key('network'):
+
+                arguments['network'] = configuration['network']
+
+
+            if configuration.has_key('probability'):
+
+                arguments['probability'] = configuration['probability']
+
+            if configuration.has_key('random_seed'):
+
+                arguments['random_seed'] = configuration['random_seed']
+
+
+            if configuration.has_key('projection'):
+
+                if configuration['projection'].has_key('source'):
+
+                    arguments['projection_source'] = configuration['projection']['source']
+
+                if configuration['projection'].has_key('target'):
+
+                    arguments['projection_target'] = configuration['projection']['target']
+
+
+            if configuration.has_key('source'):
+
+                source = configuration['source']
+                
+                if source.has_key('context'):
+
+                    arguments['projection_source'] = source['context']
+
+
+                if source.has_key('include'):
+
+                    include = source['include']
+
+                    if include.has_key('type'):
+
+                        arguments['source_type'] = include['type']
+
+                    if include.has_key('coordinates'):
+
+                        coords = include['coordinates']
+                        
+                        arguments['source_x1'] = coords[0]
+                        arguments['source_y1'] = coords[1]
+                        arguments['source_z1'] = coords[2]
+                        arguments['source_x2'] = coords[3]
+                        arguments['source_y2'] = coords[4]
+                        arguments['source_z2'] = coords[5]
+                    
+            if configuration.has_key('target'):
+
+                target = configuration['target']
+
+                if target.has_key('context'):
+
+                    arguments['projection_target'] = target['context']
+
+
+                if target.has_key('include'):
+
+                    include = target['include']
+
+                    if include.has_key('type'):
+
+                        arguments['target_type'] = include['type']
+
+                    if include.has_key('coordinates'):
+
+                        coords = include['coordinates']
+                        
+                        arguments['target_x1'] = coords[0]
+                        arguments['target_y1'] = coords[1]
+                        arguments['target_z1'] = coords[2]
+                        arguments['target_x2'] = coords[3]
+                        arguments['target_y2'] = coords[4]
+                        arguments['target_z2'] = coords[5]
+
+
+                if target.has_key('exclude'):
+
+                    exclude = configuration['exclude']
+
+                    arguments['destination_hole_flag'] = 'destination_hole'
+
+                    if exclude.has_key('type'):
+
+                        arguments['destination_hole_type'] = exclude['type']
+
+                    if exclude.has_key('coordinates'):
+
+                        coords = exclude['coordinates']
+                        
+                        arguments['destination_hole_x1'] = coords[0]
+                        arguments['destination_hole_y1'] = coords[1]
+                        arguments['destination_hole_z1'] = coords[2]
+                        arguments['destination_hole_x2'] = coords[3]
+                        arguments['destination_hole_y2'] = coords[4]
+                        arguments['destination_hole_z2'] = coords[5]
+            
+
+            if configuration.has_key('synapse'):
+
+                synapse = configuration['synapse']
+
+                if synapse.has_key('delay'):
+
+                    delay = synapse['delay']
+                    
+                    arguments['delay_indicator'] = 'delay'
+
+                    if delay.has_key('type'):
+                        
+                        arguments['delay_type'] = delay['type']
+
+                    else:
+
+                        arguments['delay_type'] = 'fixed'
+
+                    if delay.has_key('value'):
+                        
+                        arguments['delay'] = delay['value']
+
+                    
+                    if delay.has_key('velocity'):
+
+                        arguments['velocity_indicator'] = 'velocity' 
+
+                        arguments['velocity'] = delay['velocity']
+
+
+                if synapse.has_key('weight'):
+
+                    weight = synapse['weight']
+
+                    if weight.has_key('value'):
+
+                        arguments['weight_indicator'] = 'weight'
+
+                        arguments['weight'] = weight['value']
+
+
+                if synapse.has_key('pre'):
+
+                    arguments['pre'] = synapse['pre']
+
+                if synapse.has_key('post'):
+
+                    arguments['post'] = synapse['post']
+
+
+            self.VolumeConnect(**arguments)
+
+
+        else:
+            
+
+            pass
+            
+#---------------------------------------------------------------------------
+
     def VolumeConnect(self, network=None,
                       projection=None, projection_target=None, projection_source=None,
                       source=None, target=None,
