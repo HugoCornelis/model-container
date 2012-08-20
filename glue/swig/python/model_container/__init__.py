@@ -700,6 +700,7 @@ class ModelContainer:
         instance_name = "projectionvolume_%s_%s" % (network.replace('/', '_'),
                                                     projection.replace('/', '_'))
 
+# valid line: algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0
         command = "algorithminstantiate ProjectionVolume %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s" % (instance_name, network, projection,
                                                                                                                                                                                      projection_source, projection_target,
                                                                                                                                                                                      source, target, pre, post, source_type,
