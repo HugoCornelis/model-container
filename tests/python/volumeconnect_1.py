@@ -33,7 +33,7 @@ prop_delay=sep_x / cond_vel
 my_model_container.CreateNetwork('/RSNet')
 
 my_model_container.CreateMap('::rscell::/cell', '/RSNet/population', nx, ny, sep_x, sep_y)
-pdb.set_trace()
+
 volume_params = dict(network='/RSNet',
                      projection='/RSNet/projection',
                      projection_source='../population',

@@ -700,29 +700,20 @@ class ModelContainer:
         instance_name = "projectionvolume_%s_%s" % (network.replace('/', '_'),
                                                     projection.replace('/', '_'))
 
-        command = "algorithminstantiate ProjectionVolume %s %s %s %s %s \
-        %s %s %s %s %s \
-        %s %s %s \
-        %s %s %s \
-        %s %s %s %s \
-        %s %s %s \
-        %s %s %s %s %s \
-        %s %s \
-        %s %s \
-        %s %s %s \
-        %s %s %s \
-        %s %s" % (instance_name, network, projection, projection_source, projection_target,
-        source, target, pre, post, source_type,
-        source_x1, source_y1, source_z1,
-        source_x2, source_y2, source_z2,
-        destination_type, destination_x1, destination_y1, destination_z1,
-        destination_x2, destination_y2, destination_z2,
-        weight_indicator, weight, delay_indicator, delay_type, delay,
-        velocity_indicator, velocity,
-        destination_hole_flag, destination_hole_type,
-        destination_hole_x1, destination_hole_y1, destination_hole_z1,
-        destination_hole_x2, destination_hole_y2, destination_hole_z2,
-        probability, random_seed)
+        command = "algorithminstantiate ProjectionVolume %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s" % (instance_name, network, projection,
+                                                                                                                                                                                     projection_source, projection_target,
+                                                                                                                                                                                     source, target, pre, post, source_type,
+                                                                                                                                                                                     source_x1, source_y1, source_z1,
+                                                                                                                                                                                     source_x2, source_y2, source_z2,
+                                                                                                                                                                                     destination_type, destination_x1, destination_y1, destination_z1,
+                                                                                                                                                                                     destination_x2, destination_y2, destination_z2,
+                                                                                                                                                                                     weight_indicator, weight, delay_indicator, delay_type, delay,
+                                                                                                                                                                                     velocity_indicator, velocity,
+                                                                                                                                                                                     destination_hole_flag, destination_hole_type,
+                                                                                                                                                                                     destination_hole_x1, destination_hole_y1, destination_hole_z1,
+                                                                                                                                                                                     destination_hole_x2, destination_hole_y2, destination_hole_z2,
+                                                                                                                                                                                     probability, random_seed)
+
 
         result = nmc_base.QueryMachineHandle(self._nmc_core, command)
 
