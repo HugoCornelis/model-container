@@ -354,7 +354,7 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
     
-    def Read(self, filename):
+    def Read(self, filename=None, namespace=None):
         """!
         @brief read an NDF model file
 
@@ -362,25 +362,54 @@ class ModelContainer:
         unicode strings are converted to ascii.
         """
 
-        ndf_filename = filename
+        if not namespace is None:
 
-        if isinstance(filename, unicode):
+            self.NDFLoadLibrary(filename, namespace)
 
-            try:
+        else:
 
-                ndf_filename = str(filename)
+
+            ndf_filename = filename
+
+            if isinstance(filename, unicode):
+
+                try:
+
+                    ndf_filename = str(filename)
                 
-            except UnicodeEncodeError:
+                except UnicodeEncodeError:
 
-                print "Can't read in '%s', error processing unicode" % filename
+                    print "Can't read in '%s', error processing unicode" % filename
                 
-                raise
+                    raise
                 
         
-        result = nmc_base.NeurospacesRead(self._nmc_core, 2, [ "python", ndf_filename ] )
+            result = nmc_base.NeurospacesRead(self._nmc_core, 2, [ "python", ndf_filename ] )
 
-        # exception on bad result?
+            if result == 0:
 
+                raise Exception("Error reading NDF file '%s'" % filename)
+            
+#---------------------------------------------------------------------------
+
+    def NDFLoadLibrary(self, filename=None, namespace=None):
+
+        qualified = nmc_base.ParserContextQualifyFilename(None, filename)
+
+        if not qualified is None:
+
+            result = nmc_base.ParserImport(self._nmc_core.pacRootContext,
+                                           qualified,
+                                           filename,
+                                           namespace)
+
+            if result == 0:
+
+                raise Exception("Can't perform NDF load library on '%s' with namespace '%s'" % (filename, namespace))
+
+        else:
+
+            raise Exception("Can't find qualified filename for '%s' with namespace '%s'" % (filename, namespace))
 
 #---------------------------------------------------------------------------
     
@@ -675,21 +704,7 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
-    def CreateProjection(self, configuration=None, projection=None,
-                         projection_source=None, projection_target=None,
-                         source=None, target=None, pre=None, post=None,
-                         source_type=None,
-                         source_x1=None, source_y1, source_z1,
-                         source_x2=None, source_y2, source_z2,
-                         target_type=None,
-                         target_x1, target_y1, target_z1,
-                         target_x2, target_y2, target_z2,
-                         weight_indicator, weight,
-                         delay_indicator=None, delay_type=None, delay=None,
-                         destination_hole_flag=None, destination_hole_type=None,
-                         destination_hole_x1, destination_hole_x1, destination_hole_z1,
-                         destination_hole_x2, destination_hole_y2, destination_hole_z2,
-                         probability, random_seed):
+    def CreateProjection(self, configuration=None):
 
         """!
 
@@ -697,7 +712,7 @@ class ModelContainer:
         will parse it and use the data from it. If not it will take it from arguments.
 
         """
-        
+
         if not configuration is None:
 
             arguments = dict(network='',
@@ -812,21 +827,21 @@ class ModelContainer:
 
                     if include.has_key('type'):
 
-                        arguments['target_type'] = include['type']
+                        arguments['destination_type'] = include['type']
 
                     if include.has_key('coordinates'):
 
                         coords = include['coordinates']
                         
-                        arguments['target_x1'] = coords[0]
-                        arguments['target_y1'] = coords[1]
-                        arguments['target_z1'] = coords[2]
-                        arguments['target_x2'] = coords[3]
-                        arguments['target_y2'] = coords[4]
-                        arguments['target_z2'] = coords[5]
+                        arguments['destination_x1'] = coords[0]
+                        arguments['destination_y1'] = coords[1]
+                        arguments['destination_z1'] = coords[2]
+                        arguments['destination_x2'] = coords[3]
+                        arguments['destination_y2'] = coords[4]
+                        arguments['destination_z2'] = coords[5]
 
 
-                if target.has_key('exclude'):
+                if configuration.has_key('exclude'):
 
                     exclude = configuration['exclude']
 
@@ -896,7 +911,6 @@ class ModelContainer:
                 if synapse.has_key('post'):
 
                     arguments['post'] = synapse['post']
-
 
             self.VolumeConnect(**arguments)
 

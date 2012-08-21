@@ -17,7 +17,7 @@ import model_container as nmc
 my_model_container = nmc.ModelContainer(None)
 
 
-my_model_container.Read("cells/RScell-nolib2.ndf")
+my_model_container.Read(filename="cells/RScell-nolib2.ndf", namespace="rscell")
 
 nx= 2 # number of cells nx*ny
 ny=2
@@ -42,25 +42,21 @@ config = {'root' : '/RSNet',
                            'target' : '../population',
                            },
           'source' : { 'context' : '/RSNet/population',
-                       { 'include' : { 'type' : 'box',
+                       'include' : { 'type' : 'box',
                                        'coordinates' : [-1e10, -1e10, -1e10, 1e10, 1e10, 1e10],
                                        
-                                       },
-                         
-                         
+                                     },
                        },
+                       
 
           'target' : { 'context' : '/RSNet/population',
                        'include' : { 'type' : 'ellipse',
                                      'coordinates' : [0, 0, 0, sep_x *1.2, sep_y * 1.2, sep_z * 0.5]
-                                     }
-                       'exclude' : 'destination_hole',
-                                   { 'type' : 'box',
-                                     'coordinates' : [sep_x * 0.5, sep_y * 0.5, sep_z * 0.5, sep_x * 0.5, sep_y * 0.5, sep_z * 05],
                                      },
+                       'exclude' : 'destination_hole',
+                                   'type' : 'box',
+                                   'coordinates' : [sep_x * 0.5, sep_y * 0.5, sep_z * 0.5, sep_x * 0.5, sep_y * 0.5, sep_z * 05],                       
                        
-                       
-                           
                        },
 
           'synapse' : { 'pre' : 'spike',
@@ -70,10 +66,11 @@ config = {'root' : '/RSNet',
                                      },
                         'delay' : { 'delay_indicator' : 'delay',
                                     'delay_type' : 'fixed',
-                                    'value' : prop_delay
+                                    'value' : prop_delay,
+                                    'velocity' : '',
                                     }
                         
-                        }
+                        },
             'probability' : 1.0,
             'random_seed' : 1212.0
           
@@ -82,6 +79,6 @@ config = {'root' : '/RSNet',
 
 
 # use keyword expansion to pass dict as arguments
-my_model_container.CreateMap(configuration=config)
+my_model_container.CreateProjection(configuration=config)
 
 print "Done!"

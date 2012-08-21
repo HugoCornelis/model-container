@@ -17,7 +17,7 @@ import model_container as nmc
 my_model_container = nmc.ModelContainer(None)
 
 
-my_model_container.Read("cells/RScell-nolib2.ndf")
+my_model_container.Read("cells/RScell-nolib2.ndf", "rsnet")
 
 nx= 2 # number of cells nx*ny
 ny=2
