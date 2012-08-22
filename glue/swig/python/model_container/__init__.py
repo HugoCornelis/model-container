@@ -540,15 +540,21 @@ class ModelContainer:
 
         component_name = re.split('/', component)[1]
 
-        prototype = component_name
+#        prototype = component_name
 
-        nmc_base.PyBCreateMap(self._nmc_core, prototype, namespaces, component_name)
+        try:
 
+            nmc_base.PyBCreateMap(self._nmc_core, prototype, namespaces, component_name)
+
+        except Exception, e:
+
+            details = "createmap failed with prototype '%s', namespace '%s' and component '%s'" % (prototype, namespace,component_name)
+            
+            raise Exception("%s, %s" % (e, details))
 
         # now we run the query machine command
         
         instance_name = "createmap_%s" % target
-
 
         command = "algorithminstantiate Grid3D %s %s %s %s %s 1 %s %s 0" % (instance_name.replace('/','_'),
                                                                             target,
