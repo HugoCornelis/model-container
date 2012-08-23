@@ -506,6 +506,7 @@ class ModelContainer:
 
         network = symbols.Network(path=path, model=self._nmc_core)
 
+        return network
 #---------------------------------------------------------------------------
 
     def CreateMap(self, prototype=None, target=None,
@@ -558,7 +559,7 @@ class ModelContainer:
 
         command = "algorithminstantiate Grid3D %s %s %s %s %s 1 %s %s 0" % (instance_name.replace('/','_'),
                                                                             target,
-                                                                            prototype,
+                                                                            component_name, #prototype,
                                                                             countx,
                                                                             county,
                                                                             deltax,

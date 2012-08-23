@@ -45,6 +45,10 @@ uninstall-hook:
 
 all: setup
 
+debug:
+	CFLAGS="-g -O0" $(PYTHON) setup.py build
+	$(PYTHON) setup.py build_py
+
 clean-local:
 	$(RM) `find . -name "*.pyc"`
 	$(PYTHON) clean.py
