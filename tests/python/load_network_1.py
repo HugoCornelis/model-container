@@ -29,7 +29,7 @@ prop_delay=sep_x / cond_vel
 my_model_container = nmc.ModelContainer(None)
 
 
-my_model_container.Read("cells/RScell-nolib2.ndf", "rsnet")
+my_model_container.Read("cells/RScell-nolib2.ndf", "rscell")
 
 
 network = my_model_container.CreateNetwork('/RSNet')
@@ -37,7 +37,6 @@ network = my_model_container.CreateNetwork('/RSNet')
 my_model_container.CreateMap('::rscell::/cell', '/RSNet/population', nx, ny, sep_x, sep_y)
 
 my_model_container.Query("expand /**")
-my_model_container.Query("printinfo /RSNet")
 
 
 print "Done!"
