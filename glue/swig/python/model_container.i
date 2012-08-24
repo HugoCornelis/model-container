@@ -73,6 +73,55 @@ struct symtab_Invisible;
 %inline %{
 PyObject * PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespaces, 
 		char *pcComponent);
+PyObject * PyBNDFLoadLibrary(struct Neurospaces *pneuro, char *pcNamespace, char *pcFilename);
+
+
+
+PyObject * PyBNDFLoadLibrary(struct Neurospaces *pneuro, char *pcNamespace, char *pcFilename)
+{
+
+  char pcErrorMsg[1024];
+  char *pcQualified = NULL;
+  struct ParserContext *pacRootContext = NULL;
+  int iResult = 0;
+
+
+  pcQualified = ParserContextQualifyFilename(NULL, pcFilename);
+
+  if(pcQualified)
+  {
+    
+    pacRootContext = pneuro->pacRootContext;
+    
+    iResult = ParserImport(pacRootContext, pcQualified, pcFilename, pcNamespace);
+    
+    if(iResult == 0)
+    {
+
+      snprintf(pcErrorMsg, 1024, "NDF load library error: Can't do Parser Import for '%s' with namespace '%s'", pcQualified, pcNamespace);
+      PyErr_SetString(PyExc_Exception, pcErrorMsg);
+      return NULL;       
+
+    }
+    else
+    {
+
+      Py_RETURN_NONE;
+
+    }
+
+  }
+
+
+  snprintf(pcErrorMsg, 1024, "NDF load library error: Can't get qualifying filename for '%s' with namespace '%s'", pcFilename, pcNamespace);
+
+  PyErr_SetString(PyExc_Exception, pcErrorMsg);
+  return NULL; 
+
+} 
+
+
+
 
 
 PyObject * PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespaces, 

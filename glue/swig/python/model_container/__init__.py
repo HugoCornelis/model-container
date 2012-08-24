@@ -390,30 +390,13 @@ class ModelContainer:
 
             if result == 0:
 
-                raise Exception("Error reading NDF file '%s'" % filename)
+                raise Exception("Error reading NDF file '%s', does it exist or is the path wrong?" % filename)
             
 #---------------------------------------------------------------------------
 
     def NDFLoadLibrary(self, filename=None, namespace=None):
 
-        qualified = nmc_base.ParserContextQualifyFilename(None, filename)
-
-        if not qualified is None:
-
-        
-
-            result = nmc_base.ParserImport(self._nmc_core.pacRootContext,
-                                           qualified,
-                                           filename,
-                                           namespace)
-
-            if result == 0:
-
-                raise Exception("Can't perform NDF load library on '%s' with namespace '%s'" % (filename, namespace))
-            
-        else:
-
-            raise Exception("Can't find qualified filename for '%s' with namespace '%s'" % (filename, namespace))
+        nmc_base.PyBNDFLoadLibrary(self._nmc_core, namespace, filename)
 
 #---------------------------------------------------------------------------
     
@@ -511,6 +494,7 @@ class ModelContainer:
         network = symbols.Network(path=path, model=self._nmc_core)
 
         return network
+    
 #---------------------------------------------------------------------------
 
     def CreateMap(self, prototype=None, target=None,
@@ -576,7 +560,7 @@ class ModelContainer:
                                                                             deltax,
                                                                             deltay)
 
-        pdb.set_trace()
+
         nmc_base.QueryMachineHandle(self._nmc_core, command)
 
 
