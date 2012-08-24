@@ -553,7 +553,7 @@ class ModelContainer:
 
             result = nmc_base.PyBCreateMap(self._nmc_core, prototype, namespaces, component_name)
 
-            details = "createmap failed with prototype '%s', namespace '%s' and component '%s'" % (prototype, namespaces,component_name)
+            details = "low level createmap failed with prototype '%s', namespace '%s' and component '%s'" % (prototype, namespaces,component_name)
 
         except Exception, e:
 
