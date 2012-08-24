@@ -11,27 +11,71 @@ use Neurospaces;
 package Neurospaces::Bindings;
 
 
-sub input_add
+sub io_2_list
+{
+    my $inputs = shift;
+
+    my $result;
+
+    # loop over the given inputs
+
+    foreach my $input (@$inputs)
+    {
+	my $field = $input->{field};
+
+	my $type = $input->{type};
+
+	# create and initialize the binding
+
+	my $binding = SwiggableNeurospaces::InputOutputNewForType(SwiggableNeurospaces::INPUT_TYPE_INPUT);
+
+	$binding->swig_pcType_set($type);
+
+	my $pidin = IdinNewFromChars($field);
+
+	$pidin->IdinSetFlags(SwiggableNeurospaces::FLAG_IDENTINDEX_INPUTROOT);
+
+	$binding->swig_pidinField_set($pidin);
+
+	# add the binding to the list
+
+	if (!$result)
+	{
+	    $result = $binding;
+	}
+	else
+	{
+	    $binding->swig_pioFirst_set($result->swig_pioFirst_get());
+
+	    $binding->swig_pioNext_set($result);
+
+	    $result = $binding;
+	}
+    }
+
+    # return result
+
+    return($result);
+}
+
+
+sub assign_inputs
 {
     my $component = shift;
 
-    my $field = shift;
+    my $inputs = shift;
 
-    my $type = shift;
+    # create an io list from the given inputs
+
+    my $bindings = io_2_list($inputs);
+
+    # add it to the component
 
     my $context = SwiggableNeurospaces::PidinStackParse($component);
 
     my $symbol = $context->PidinStackLookupTopSymbol();
 
-    my $binding = SwiggableNeurospaces::InputOutputNewForType(SwiggableNeurospaces::INPUT_TYPE_INPUT);
-
-    $binding->swig_pcType_set($type);
-
-    $binding->swig_pidinField_set($field);
-
-    $field->IdinSetFlags(SwiggableNeurospaces::FLAG_IDENTINDEX_INPUTROOT);
-
-    #t still need to do something with $component
+    $symbol->SymbolAssignInputs($bindings);
 
 ####### equivalent C code
 
@@ -62,6 +106,30 @@ sub input_add
 
 # 		    IdinSetFlags($5, FLAG_IDENTINDEX_INPUTROOT);
 
+}
+
+
+sub assign_bindable_IO
+{
+    my $component = shift;
+
+    my $ios = shift;
+
+    # create an io list from the given inputs
+
+    my $bindings = io_2_list($ios);
+
+    # convert the io list to a bindables container
+
+    my $bindables = SwiggableNeurospaces::IOContainerNewFromIO($bindings);
+
+    # add the container to the component
+
+    my $context = SwiggableNeurospaces::PidinStackParse($component);
+
+    my $symbol = $context->PidinStackLookupTopSymbol();
+
+    $symbol->SymbolAssignBindableIO($bindables);
 }
 
 
