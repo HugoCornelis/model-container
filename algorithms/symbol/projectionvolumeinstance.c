@@ -1580,14 +1580,14 @@ ProjectionVolumeInstanceSymbolHandler
 
 	    if (ppvi->pro.pcTarget)
 	    {
-		pparTarget = ParameterNewFromString("SOURCE", ppvi->pro.pcTarget);
+		pparTarget = ParameterNewFromString("TARGET", ppvi->pro.pcTarget);
 	    }
 	    else if (ppvi->pro.ppistTarget)
 	    {
 		struct symtab_IdentifierIndex *pidinTarget
 		    = PidinStackToPidinQueue(ppvi->pro.ppistTarget);
 
-		pparTarget = ParameterNewFromPidinQueue("SOURCE", pidinTarget, TYPE_PARA_SYMBOLIC);
+		pparTarget = ParameterNewFromPidinQueue("TARGET", pidinTarget, TYPE_PARA_SYMBOLIC);
 	    }
 
 	    if (!pparTarget)
