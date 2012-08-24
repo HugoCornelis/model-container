@@ -25,6 +25,10 @@ except ImportError:
         return ['model_container']
 
 
+#!!! command for overiding cflags
+#!!! CFLAGS="-g -O0" python setup.py build 
+
+
 # import the cbi module. We use this since the check
 # for the compiled swig nmc_base gives an error
 # if we import from nmc.__cbi__

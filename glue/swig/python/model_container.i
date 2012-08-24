@@ -71,11 +71,11 @@ struct symtab_Invisible;
 
 //------------------------- Start of Inline functons  ---------------------------
 %inline %{
-int PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespaces, 
+PyObject * PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespaces, 
 		char *pcComponent);
 
 
-int PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespaces, 
+PyObject * PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespaces, 
 		char *pcComponent)
 {
 
@@ -95,8 +95,10 @@ int PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespac
   {
     //- Use snprint to make a better error string just in case
 
-    PyErr_SetString(PyExc_Exception, "Can't parse prototype");
-    return 0;
+    snprintf(pcErrorMsg, 1024, "Can't parse prototype '%s'", pcPrototype);
+
+    PyErr_SetString(PyExc_Exception, pcErrorMsg);
+    return NULL;
 
   }
 
@@ -106,8 +108,10 @@ int PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespac
   if( !phslePrototype )
   {
 
-    PyErr_SetString(PyExc_Exception, "Can't get symbol from prototype context");
-    return 0;
+    snprintf(pcErrorMsg, 1024, "Can't get symbol from prototype context for '%s'", pcPrototype);
+
+    PyErr_SetString(PyExc_Exception, pcErrorMsg);
+    return NULL; 
 
   }
 
@@ -117,8 +121,10 @@ int PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespac
   if( !pidinComponent )
   {
 
-    PyErr_SetString(PyExc_Exception, "Can't create unique identifier from component");
-    return 0;
+    snprintf(pcErrorMsg, 1024, "Can't create unique identifier from component '%s'", pcComponent);
+
+    PyErr_SetString(PyExc_Exception, pcErrorMsg);
+    return NULL;
 
   }
 
@@ -127,8 +133,10 @@ int PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespac
   if( !phsleAlias )
   {
 
-    PyErr_SetString(PyExc_Exception, "Can't create alias from component");
-    return 0;    
+    snprintf(pcErrorMsg, 1024, "Can't create alias from component '%s'", pcComponent);
+
+    PyErr_SetString(PyExc_Exception, pcErrorMsg);
+    return NULL;    
 
   }
 
@@ -141,7 +149,7 @@ int PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespac
   {
 
     PyErr_SetString(PyExc_Exception, "Cannot get a private root context (has a model been loaded ?)");
-    return 0;        
+    return NULL;        
 
   }
 
@@ -151,12 +159,15 @@ int PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespac
   if( !iResult )
   {
 
-    PyErr_SetString(PyExc_Exception, "Can't set alias");
-    return 0;        
+    snprintf(pcErrorMsg, 1024, "Can't alias of '%s' as child", pcPrototype);
+
+
+    PyErr_SetString(PyExc_Exception, pcErrorMsg);
+    return NULL;        
 
   }
 
-  return 1;
+  Py_RETURN_NONE;
 
 }
 

@@ -59,6 +59,8 @@ class ModelContainer:
 
         self.library_path = None
 
+        self._empty_model_loaded = False
+        
         if not self.CheckEnvironment():
 
             raise errors.LibraryPathError()
@@ -75,7 +77,7 @@ class ModelContainer:
             # We need to load a an empty model to prevent it from
             # giving an error when looking up the root
             self.Read("utilities/empty_model.ndf")
-            
+                
         else:
 
             # isinstance typing should be ok here since
@@ -368,7 +370,6 @@ class ModelContainer:
 
         else:
 
-
             ndf_filename = filename
 
             if isinstance(filename, unicode):
@@ -383,7 +384,8 @@ class ModelContainer:
                 
                     raise
                 
-        
+            # The "python" string is there just to keep the config parser happy since it expects
+            # the executable at arg[0]
             result = nmc_base.NeurospacesRead(self._nmc_core, 2, [ "python", ndf_filename ] )
 
             if result == 0:
@@ -398,6 +400,8 @@ class ModelContainer:
 
         if not qualified is None:
 
+        
+
             result = nmc_base.ParserImport(self._nmc_core.pacRootContext,
                                            qualified,
                                            filename,
@@ -406,7 +410,7 @@ class ModelContainer:
             if result == 0:
 
                 raise Exception("Can't perform NDF load library on '%s' with namespace '%s'" % (filename, namespace))
-
+            
         else:
 
             raise Exception("Can't find qualified filename for '%s' with namespace '%s'" % (filename, namespace))
@@ -506,6 +510,7 @@ class ModelContainer:
 
         network = symbols.Network(path=path, model=self._nmc_core)
 
+        return network
 #---------------------------------------------------------------------------
 
     def CreateMap(self, prototype=None, target=None,
@@ -540,25 +545,38 @@ class ModelContainer:
 
         component_name = re.split('/', component)[1]
 
-        prototype = component_name
+        details = ""
+#        prototype = component_name
 
-        nmc_base.PyBCreateMap(self._nmc_core, prototype, namespaces, component_name)
 
+        try:
+
+            result = nmc_base.PyBCreateMap(self._nmc_core, prototype, namespaces, component_name)
+
+            details = "low level createmap failed with prototype '%s', namespace '%s' and component '%s'" % (prototype, namespaces,component_name)
+
+        except Exception, e:
+
+            
+            raise Exception("%s, %s" % (e, details))
+
+        if result == 0:
+
+            raise Exception("%s" % details)
 
         # now we run the query machine command
         
         instance_name = "createmap_%s" % target
 
-
         command = "algorithminstantiate Grid3D %s %s %s %s %s 1 %s %s 0" % (instance_name.replace('/','_'),
                                                                             target,
-                                                                            prototype,
+                                                                            component_name, #prototype,
                                                                             countx,
                                                                             county,
                                                                             deltax,
                                                                             deltay)
 
-
+        pdb.set_trace()
         nmc_base.QueryMachineHandle(self._nmc_core, command)
 
 
@@ -947,7 +965,6 @@ class ModelContainer:
         instance_name = "projectionvolume_%s_%s" % (network.replace('/', '_'),
                                                     projection.replace('/', '_'))
 
-# valid line: algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0
         command = "algorithminstantiate ProjectionVolume %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s" % (instance_name, network, projection,
                                                                                                                                                                                      projection_source, projection_target,
                                                                                                                                                                                      source, target, pre, post, source_type,
@@ -963,6 +980,9 @@ class ModelContainer:
                                                                                                                                                                                      probability, random_seed)
 
 
+# valid line: algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0
+        command = "algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0"
+ 
         result = nmc_base.QueryMachineHandle(self._nmc_core, command)
 
         return result
