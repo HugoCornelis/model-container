@@ -13,27 +13,44 @@ package Neurospaces::Bindings;
 
 sub io_2_list
 {
-    my $inputs = shift;
+    my $ios = shift;
 
     my $result;
 
-    # loop over the given inputs
+    # loop over the given ios
 
-    foreach my $input (@$inputs)
+    foreach my $io (@$ios)
     {
-	my $field = $input->{field};
+	my $field = $io->{field};
 
-	my $type = $input->{type};
+	my $type = $io->{type};
+
+	my $input_output = $io->{direction};
 
 	# create and initialize the binding
 
-	my $binding = SwiggableNeurospaces::InputOutputNewForType(SwiggableNeurospaces::INPUT_TYPE_INPUT);
+	my $binding;
+
+	if ($input_output =~ /in/i)
+	{
+	    $binding = SwiggableNeurospaces::InputOutputNewForType($SwiggableNeurospaces::INPUT_TYPE_INPUT);
+	}
+	elsif ($input_output =~ /out/i)
+	{
+	    $binding = SwiggableNeurospaces::InputOutputNewForType($SwiggableNeurospaces::INPUT_TYPE_OUTPUT);
+	}
+	else
+	{
+	    print STDERR "*** Error: $0: expecting 'in' or 'out' for input_output value, but it is not specified\n";
+
+	    return undef;
+	}
 
 	$binding->swig_pcType_set($type);
 
-	my $pidin = IdinNewFromChars($field);
+	my $pidin = SwiggableNeurospaces::IdinNewFromChars($field);
 
-	$pidin->IdinSetFlags(SwiggableNeurospaces::FLAG_IDENTINDEX_INPUTROOT);
+	$pidin->IdinSetFlags($SwiggableNeurospaces::FLAG_IDENTINDEX_INPUTROOT);
 
 	$binding->swig_pidinField_set($pidin);
 
