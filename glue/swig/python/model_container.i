@@ -157,7 +157,7 @@ PyObject * PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcN
   if( !phslePrototype )
   {
 
-    snprintf(pcErrorMsg, 1024, "Can't get symbol from prototype context for '%s'", pcPrototype);
+    snprintf(pcErrorMsg, 1024, "Can't get symbol from prototype context for '%s' in namespace '%s'", pcPrototype, pcNamespaces);
 
     PyErr_SetString(PyExc_Exception, pcErrorMsg);
     return NULL; 
