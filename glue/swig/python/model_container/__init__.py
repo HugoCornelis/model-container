@@ -715,47 +715,47 @@ class ModelContainer:
 
         """
 
-        if not configuration is None:
+        arguments = dict(network='',
+                         projection='',
+                         projection_source='',
+                         projection_target='',
+                         source='',
+                         target='',
+                         pre='',
+                         post='',
+                         source_type='',
+                         source_x1='',
+                         source_y1='',
+                         source_z1='',
+                         source_x2='',
+                         source_y2='',
+                         source_z2='',
+                         destination_type='',
+                         destination_x1='',
+                         destination_y1='',
+                         destination_z1='',
+                         destination_x2='',
+                         destination_y2='',
+                         destination_z2='',
+                         weight_indicator='',
+                         weight='',
+                         delay_indicator='',
+                         delay_type='',
+                         delay='',
+                         velocity_indicator='',
+                         velocity='',
+                         destination_hole_flag='',
+                         destination_hole_type='',
+                         destination_hole_x1='',
+                         destination_hole_y1='',
+                         destination_hole_z1='',
+                         destination_hole_x2='',
+                         destination_hole_y2='',
+                         destination_hole_z2='',
+                         probability='',
+                         random_seed='')
 
-            arguments = dict(network='',
-                             projection='',
-                             projection_source='',
-                             projection_target='',
-                             source='',
-                             target='',
-                             pre='',
-                             post='',
-                             source_type='',
-                             source_x1='',
-                             source_y1='',
-                             source_z1='',
-                             source_x2='',
-                             source_y2='',
-                             source_z2='',
-                             destination_type='',
-                             destination_x1='',
-                             destination_y1='',
-                             destination_z1='',
-                             destination_x2='',
-                             destination_y2='',
-                             destination_z2='',
-                             weight_indicator='',
-                             weight='',
-                             delay_indicator='',
-                             delay_type='',
-                             delay='',
-                             velocity_indicator='',
-                             velocity='',
-                             destination_hole_flag='',
-                             destination_hole_type='',
-                             destination_hole_x1='',
-                             destination_hole_y1='',
-                             destination_hole_z1='',
-                             destination_hole_x2='',
-                             destination_hole_y2='',
-                             destination_hole_z2='',
-                             probability='',
-                             random_seed='')
+        if not configuration is None:
 
             if configuration.has_key('root'): 
 
@@ -914,14 +914,74 @@ class ModelContainer:
 
                     arguments['post'] = synapse['post']
 
-            self.VolumeConnect(**arguments)
-
 
         else:
-            
 
-            pass
-            
+
+            if not network is None:
+
+                arguments['network'] = network
+
+            if not probability is None:
+
+                arguments['probability'] = probability
+
+            if not random_seed is None:
+
+                arguments['random_seed'] = random_seed
+                
+            if not source is None:
+
+                arguments['projection_source'] = source[0]
+                arguments['source_type'] = source[1]
+                arguments['source_x1'] = source[2]
+                arguments['source_y1'] = source[3]
+                arguments['source_z1'] = source[4]
+                arguments['source_x2'] = source[5]
+                arguments['source_y2'] = source[6]
+                arguments['source_z2'] = source[7]
+
+            if not target is None:
+
+                arguments['projection_target'] = source[0]
+                arguments['destination_type'] = source[1]
+                arguments['destination_x1'] = source[2]
+                arguments['destination_y1'] = source[3]
+                arguments['destination_z1'] = source[4]
+                arguments['destination_x2'] = source[5]
+                arguments['destination_y2'] = source[6]
+                arguments['destination_z2'] = source[7]
+
+
+            if not target_hole is None:
+
+                arguments['destination_hole_flag'] = 'destination_hole_flag'
+                arguments['destination_hole_type'] = source[0]
+                arguments['destination_hole_x1'] = source[1]
+                arguments['destination_hole_y1'] = source[2]
+                arguments['destination_hole_z1'] = source[3]
+                arguments['destination_hole_x2'] = source[4]
+                arguments['destination_hole_y2'] = source[5]
+                arguments['destination_hole_z2'] = source[6]
+
+            if not synapse is None:
+
+                arguments['delay_indicator'] = 'delay'
+                arguments['delay_type'] = synapse[0]
+                arguments['delay'] = synapse[1]
+                arguments['weight_indicator'] = 'weight'
+                arguments['weight'] = synapse[2]
+                arguments['velocity_indicator'] = 'velocity'
+                arguments['velocity'] = synapse[3]
+                arguments['pre'] = synapse[4]
+                arguments['post'] = synapse[5]
+
+
+
+
+
+        self.VolumeConnect(**arguments)
+
 #---------------------------------------------------------------------------
 
     def VolumeConnect(self, network=None,
