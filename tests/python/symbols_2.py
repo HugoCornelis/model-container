@@ -17,7 +17,7 @@ import model_container.symbols as symbols
 
 my_model_container = nmc.ModelContainer(None)
 
-seg = symbols.Segment("/test")
+seg = my_model_container.CreateSegment("/test")
 
 seg.SetParameter("TEST", 100.0)
 

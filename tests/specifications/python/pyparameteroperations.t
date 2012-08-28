@@ -28,6 +28,7 @@ my $test
 						  },
 						 ],
 				description => "A simple script that will load the purkinje cell and set a few parameters",
+				timeout => 5,
 			       },
 
 
@@ -226,6 +227,7 @@ Done!
 						  },
 						 ],
 				description => "A simple retrieval of a parameter and a set of that same parameter",
+				timeout => 5,
 			       },
 
 
@@ -240,6 +242,7 @@ Done!
 						   read => 'Value is 100.000000
 Done!
 ',
+						   timeout => 5,
 
 
 						  },
