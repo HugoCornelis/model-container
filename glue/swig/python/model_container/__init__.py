@@ -706,7 +706,8 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
-    def CreateProjection(self, configuration=None):
+    def CreateProjection(self, configuration=None, network=None, probability=1.0, random_seed=1212.0,
+                         source=None, target=None, target_hole=None, synapse=None):
 
         """!
 
@@ -835,12 +836,12 @@ class ModelContainer:
 
                         coords = include['coordinates']
                         
-                        arguments['destination_x1'] = coords[0]
-                        arguments['destination_y1'] = coords[1]
-                        arguments['destination_z1'] = coords[2]
-                        arguments['destination_x2'] = coords[3]
-                        arguments['destination_y2'] = coords[4]
-                        arguments['destination_z2'] = coords[5]
+                        arguments['destination_x1'] = '' if coords[0] == 0 else coords[0]
+                        arguments['destination_y1'] = '' if coords[1] == 0 else coords[1]
+                        arguments['destination_z1'] = '' if coords[2] == 0 else coords[2]
+                        arguments['destination_x2'] = '' if coords[3] == 0 else coords[3]
+                        arguments['destination_y2'] = '' if coords[4] == 0 else coords[4]
+                        arguments['destination_z2'] = '' if coords[5] == 0 else coords[5]
 
 
                 if configuration.has_key('exclude'):
