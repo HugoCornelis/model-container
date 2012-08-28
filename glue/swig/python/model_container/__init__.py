@@ -1027,7 +1027,7 @@ class ModelContainer:
 
 # valid line: algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0
         command = "algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0"
- 
+
         result = nmc_base.QueryMachineHandle(self._nmc_core, command)
 
         return result

@@ -24,6 +24,60 @@ my $test
 				description => "constructs a basic network and map",
 			       },
 
+			       {
+				arguments => [
+					     ],
+				command => "$::config->{core_directory}/tests/python/volumeconnect_1.py",
+				command_tests => [
+						  {
+						   description => "Can we load network and namespace via volumeconnect ?",
+						   read => "Done!
+",
+
+						   timeout => 5,
+						  },
+						 ],
+				description => "constructs a network and mapping with volumeconnect",
+			       },
+
+
+			       {
+				arguments => [
+					     ],
+				command => "$::config->{core_directory}/tests/python/createprojection_1.py",
+				command_tests => [
+						  {
+						   description => "Can we load network and namespace via createprojection ?",
+						   read => "Done!
+",
+
+						   timeout => 5,
+						  },
+						 ],
+				description => "constructs a network and mapping with createprojection",
+			       },
+
+
+			       {
+				arguments => [
+					     ],
+				command => "$::config->{core_directory}/tests/python/createprojection_2.py",
+				command_tests => [
+						  {
+						   description => "Can we load network and namespace via createprojection ?",
+						   read => "Done!
+",
+
+						   timeout => 5,
+						  },
+						 ],
+				description => "constructs a network and mapping with createprojection with tuples",
+			       },
+
+
+
+
+
 			      ],
        description => "Python basic network tests",
        name => 'python/network-basic.t',

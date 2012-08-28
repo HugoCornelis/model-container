@@ -47,5 +47,4 @@ my_model_container.CreateProjection(network='/RSNet',
 
 
 
-
 print "Done!"
