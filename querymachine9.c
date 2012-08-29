@@ -1302,6 +1302,21 @@ extern int QueryHandlerSetParameterConcept
 
 	//- else for a symbolic reference
 
+	else if (strcmp("string", pcType) == 0)
+	{
+	    //- parse the reference
+
+	    //! strdup() makes this useful from a scripting language.
+
+	    char *pc = strdup(pcValue);
+
+	    //- set parameter value
+
+	    ppar = SymbolSetParameterString(phsleBase, pcName, pc);
+	}
+
+	//- else for a symbolic reference
+
 	else if (strcmp("symbolic", pcType) == 0)
 	{
 	    //- parse the reference
