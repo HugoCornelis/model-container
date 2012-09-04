@@ -17,7 +17,7 @@ import model_container as nmc
 my_model_container = nmc.ModelContainer(None)
 
 
-my_model_container.Read(filename="cells/RScell-nolib2.ndf", namespace="rscell")
+my_model_container.NDFLoadLibrary(filename="cells/RScell-nolib2.ndf", namespace="rscell")
 
 nx= 2 # number of cells nx*ny
 ny=2
