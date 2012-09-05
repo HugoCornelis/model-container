@@ -350,6 +350,7 @@ TraversalInfoCollectorProcessor
     }
 
     if (pti->iFlagsInfo & TRAVERSAL_INFO_NAMES)
+/* 	&& subsetof_bio_comp(iType)) */
     {
 	//- copy name to result
 
