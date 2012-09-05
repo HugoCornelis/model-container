@@ -52,6 +52,7 @@
 //int yylex(YYSTYPE *lvalp,void *pacParserContext);
 int yylex();
 #include "neurospaces/algorithminstance.h"
+#include "neurospaces/components/membraneleak.h"
 #include "neurospaces/components/network.h"
 #include "neurospaces/parameters.h"
 #include "neurospaces/parsersupport.h"
