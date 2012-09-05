@@ -391,7 +391,7 @@ class ModelContainer:
             if result == 0:
 
                 raise Exception("Error reading NDF file '%s', does it exist or is the path wrong?" % filename)
-            
+
 #---------------------------------------------------------------------------
 
     def NDFLoadLibrary(self, filename=None, namespace=None):
