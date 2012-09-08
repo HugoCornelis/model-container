@@ -268,6 +268,48 @@ Done!
 			       },
 
 
+			       {
+				arguments => [
+					     ],
+				command => 'tests/python/parameteroperations_5.py',
+				command_tests => [
+						  {
+						   description => "Can we set and change parameters in the model container ?",
+						   read => 'Value of CM at the soma is 0.0164
+Setting the value of CM to 0
+Value of CM at the soma is 0.0
+Setting the value of CM to 5000
+Value of CM at the soma is 5000.0
+Done!
+',
+
+
+						  },
+						 ],
+				description => "Loads a model and sets and gets the values to see if it's been updated",
+			       },
+			       {
+				arguments => [
+					     ],
+				command => 'tests/python/parameteroperations_6.py',
+				command_tests => [
+						  {
+						   description => "Can we set and change parameters in the model container ?",
+						   read => 'Value of G_MAX at the soma is 1.79769313486e+308
+Setting the value of G_MAX to 0
+Value of G_MAX at the soma is 0.0
+Setting the value of G_MAX to 5000
+Value of G_MAX at the soma is 5000.0
+Done!
+',
+
+
+						  },
+						 ],
+				description => "Loads a model and sets and gets the values to see if it's been updated",
+			       },
+
+
 
 			      ],
        description => "parameter operations in python",
