@@ -26,8 +26,8 @@ our $g3_commands
        'morphology_summarize_help',
        'ndf_load',
        'ndf_load_help',
-       'ndf_load_library',
-       'ndf_load_library_help',
+       'ndf_load_namespace',
+       'ndf_load_namespace_help',
        'ndf_save',
        'ndf_save_help',
        'xml_load',
@@ -327,7 +327,7 @@ sub morphology_summarize_help
 }
 
 
-sub ndf_load_library
+sub ndf_load_namespace
 {
     my $namespace = shift;
 
@@ -337,22 +337,22 @@ sub ndf_load_library
 
     if ($success)
     {
-	return "*** Ok: ndf_load_library $namespace $filename";
+	return "*** Ok: ndf_load_namespace $namespace $filename";
     }
     else
     {
-	return "*** Error: ndf_load_library $namespace $filename";
+	return "*** Error: ndf_load_namespace $namespace $filename";
     }
 }
 
 
-sub ndf_load_library_help
+sub ndf_load_namespace_help
 {
     print "description: load an ndf file into a namespace and reconstruct the model it describes within that namespace.\n";
 
-    print "synopsis: ndf_load_library <namespace> <filename.ndf>\n";
+    print "synopsis: ndf_load_namespace <namespace> <filename.ndf>\n";
 
-    return "*** Ok";
+    return "*** Ok: ndf_load_namespace_help";
 }
 
 

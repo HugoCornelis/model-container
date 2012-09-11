@@ -63,6 +63,7 @@ libneurospacesread_a_SOURCES = \
 	components/iohier.c \
 	components/iol.c \
 	components/izhikevich.c \
+	components/membraneleak.c \
 	components/network.c \
 	components/pool.c \
 	components/population.c \
@@ -259,6 +260,7 @@ nobase_include_HEADERS = \
 	neurospaces/components/iohier.h \
 	neurospaces/components/iol.h \
 	neurospaces/components/izhikevich.h \
+	neurospaces/components/membraneleak.h \
 	neurospaces/components/network.h \
 	neurospaces/components/pool.h \
 	neurospaces/components/population.h \
@@ -447,6 +449,7 @@ libneurospacesread.so: libneurospacesread.a
 	iohier.o \
 	iol.o \
 	izhikevich.o \
+	membraneleak.o \
 	modelevent.o \
 	namespace.o \
 	network.o \

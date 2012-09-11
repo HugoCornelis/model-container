@@ -3334,6 +3334,25 @@ my $test
 						 ],
 				description => "syntax of channels/Na_hh_tchan.ndf",
 			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'utilities/membrane_leak.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (utilities/membrane_leak.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/utilities/membrane_leak.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of utilities/membrane_leak.ndf",
+			       },
 			      ],
        description => "general syntax of library files",
        name => 'parsing.t',

@@ -561,6 +561,40 @@ class_hierarchy:
       IHZI_B: B izhikevich simple neuron model parameter
       IHZI_C: C izhikevich simple neuron model parameter
       IHZI_D: D izhikevich simple neuron model parameter
+  membrane_leak:
+    allows:
+      collect_mandatory_parameter_values: membrane_leak
+      create_alias: membrane_leak
+    annotations:
+      piSymbolType2Biolevel: BIOLEVEL_MECHANISM
+    description: a fixed ion conductance through a cell membrane, often used to model a damaged membrane
+    dimensions:
+      - mechanism
+    grammar:
+      components: []
+      specific_allocator: MembraneLeakCalloc
+      specific_token:
+        class: membrane_leak
+        lexical: TOKEN_MEMBRANE_LEAK
+        purpose: physical
+      typing:
+        base: phsle
+        id: pidin
+        spec: pmeml
+        to_base: ->bio.ioh.iol.hsle
+    isa: bio_comp
+    name: symtab_MembraneLeak
+    parameters:
+      Erev:
+        description: channel reversal potential
+        translation_steps:
+          simulation: initial_value
+      G: 'actual channel conductance, normally a solved variable'
+      G_MAX:
+        description: maximal conductance density when all channels are in the open state
+        translation_steps:
+          simulation: initial_value
+      I: 'actual channel current, normally a solved variable'
   network:
     allows:
       count_cells: network
@@ -767,8 +801,9 @@ class_hierarchy:
     grammar:
       components:
         - Attachment
-        - Pool
         - Channel
+        - MembraneLeak
+        - Pool
       specific_allocator: SegmentCalloc
       specific_token:
         class: segment

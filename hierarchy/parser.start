@@ -28,6 +28,7 @@
     struct symtab_IdentifierIndex *pidin;
     struct symtab_InputOutput *pio;
     struct symtab_Izhikevich *pizhi;
+    struct symtab_MembraneLeak *pmeml;
     struct symtab_Network *pnetw;
     struct symtab_Parameters *ppar;
     struct symtab_Pool * ppool;
