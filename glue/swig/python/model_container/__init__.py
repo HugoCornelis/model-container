@@ -186,6 +186,29 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
+
+    def GetComponentType(self, path):
+        """
+
+        @brief Returns the type of symbol in the form of a string.
+        """
+        
+        context = nmc_base.PidinStackParse(path)
+
+        symbol = nmc_base.PidinStackLookupTopSymbol(context)
+
+        if not symbol:
+
+            raise Exception("Can't find component type for '%s', symbol not found:" % path)
+
+        else:
+
+            component_type = nmc_base.SymbolDescribeNDF(symbol)
+
+            return component_type
+
+#---------------------------------------------------------------------------
+
     def _IsNumber(self, s):
         """!
         @brief helper method, detects if a string is a number

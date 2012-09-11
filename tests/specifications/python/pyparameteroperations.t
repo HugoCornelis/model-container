@@ -309,7 +309,22 @@ Done!
 				description => "Loads a model and sets and gets the values to see if it's been updated",
 			       },
 
+			       {
+				arguments => [
+					     ],
+				command => 'tests/python/component_type_1.py',
+				command_tests => [
+						  {
+						   description => "Can we determine the symbol type for a symbol on the model container ?",
+						   read => 'The component type for /Purkinje/segments/soma is \'SEGMENT\'
+Done!
+',
 
+
+						  },
+						 ],
+				description => "Loads the purkinje cell and tells what type of symbol the soma is",
+			       },
 
 			      ],
        description => "parameter operations in python",
