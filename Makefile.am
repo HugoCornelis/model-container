@@ -49,6 +49,7 @@ libneurospacesread_a_SOURCES = \
 	components/biocomp.c \
 	components/cell.c \
 	components/channel.c \
+	components/commentsimple.c \
 	components/concentrationgatekinetic.c \
 	components/connection.c \
 	components/connectionsymbol.c \
@@ -246,6 +247,7 @@ nobase_include_HEADERS = \
 	neurospaces/components/biocomp.h \
 	neurospaces/components/cell.h \
 	neurospaces/components/channel.h \
+	neurospaces/components/commentsimple.h \
 	neurospaces/components/concentrationgatekinetic.h \
 	neurospaces/components/connection.h \
 	neurospaces/components/connectionsymbol.h \
@@ -428,6 +430,7 @@ libneurospacesread.so: libneurospacesread.a
 	cacheregistry.o \
 	cell.o \
 	channel.o \
+	commentsimple.o \
 	concentrationgatekinetic.o \
 	hhgate.o \
 	connection.o \

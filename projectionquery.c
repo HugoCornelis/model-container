@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include "neurospaces/cachedconnection.h"
+#include "neurospaces/components/commentsimple.h"
 #include "neurospaces/components/connection.h"
 #include "neurospaces/components/equationexponential.h"
 #include "neurospaces/components/izhikevich.h"

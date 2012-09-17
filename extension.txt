@@ -1,0 +1,35 @@
+-*- outline -*-
+
+* extend grammar
+** file hierarchy/symbols/base.yml
+*** annotations key is optional
+*** dimensions key is optional
+*** allows key enumerates all virtual methods implemented in the class
+*** isa key defines the ISA relationship
+*** name key identifies the structure to be used by the parser
+*** description key describes the component
+*** parameters key enumerates (exhaustively) all the parameters known to the component
+*** grammar key
+**** components key is an array of components that should be parsed as children
+**** 
+* implementation files
+** add files
+*** non-biological types
+**** based on components/commentsimple.c
+**** based on neurospaces/components/commentsimple.h
+*** biological types
+**** based on components/gatekinetic.c
+**** based on neurospaces/components/gatekinetic.h
+*** correct implementation files
+** add implementation files to Makefile.am.
+* update parser overhead files
+** hierarchy/parser.start
+** parser.decl
+** for some reason also always include the new header in projectionquery.c
+* script bindings
+** include the new header file in
+*** glue/swig/python/_model_container.i
+**** both #include and %include
+*** glue/swig/perl/neurospaces.i
+**** both #include and %include
+

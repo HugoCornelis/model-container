@@ -595,6 +595,26 @@ class_hierarchy:
         translation_steps:
           simulation: initial_value
       I: 'actual channel current, normally a solved variable'
+  comment_simple:
+    allows:
+      create_alias: comment_simple
+    description: a comment without images.
+    grammar:
+      components: []
+      specific_allocator: CommentSimpleCalloc
+      specific_token:
+        class: comment_simple
+        lexical: TOKEN_COMMENT_SIMPLE
+        purpose: user
+      typing:
+        base: phsle
+        id: pidin
+        spec: pcomms
+        to_base: ->hsle
+    isa: symbol
+    name: symtab_CommentSimple
+    parameters:
+      TEXT: 'the comment text'
   network:
     allows:
       count_cells: network
