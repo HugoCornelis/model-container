@@ -186,6 +186,12 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
+    def GetAllParameters(self, path):
+
+        return nmc_base.ParametersToDictFromPath(path)
+
+
+#---------------------------------------------------------------------------
 
     def GetComponentType(self, path):
         """

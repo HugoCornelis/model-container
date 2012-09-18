@@ -49,6 +49,13 @@ PyObject * ChildTypedSymbolsToList(char *pcPath);
 PyObject * CoordinatesToList(char *pcPath, struct Neurospaces *pneuro);
 
 PyObject * AllChildSymbolsToList(struct Neurospaces *pneuro);
+
+static int ParameterDictCollectRecursive(PyObject * ppoParameters, struct symtab_Parameters *ppar, struct PidinStack *ppist);
+
+PyObject * ParametersToDict(struct symtab_HSolveListElement * phsle, struct PidinStack *ppist);
+
+PyObject * ParametersToDictFromPath(char *pcPath);
+
 //------------------------------------------ End Prototypes ---------------------------
 
 
@@ -1179,6 +1186,158 @@ PyObject * ChildTypedSymbolsToList(char *pcPath)
   }
 
   return ppoList;
+}
+
+
+/*******************************************************************************
+ *
+ * This is modeled after the ParameterPrintInfoRecursive function in parameters.c
+ *
+ ******************************************************************************/
+static int ParameterDictCollectRecursive(PyObject * ppoParameters, struct symtab_Parameters *ppar, struct PidinStack *ppist)
+{
+
+  char *pcName = ParameterGetName(ppar);
+  double dTmp = -0.0;
+  char *pcTmp = NULL;
+  PyObject * ppoTmpDict = NULL;
+  PyObject * ppoTmp = NULL;
+  
+  if (ParameterIsNumber(ppar))
+  {
+
+    dTmp = ParameterResolveValue(ppar, ppist);
+
+    ppoTmp = PyFloat_FromDouble(dTmp);
+
+    PyDict_SetItemString(ppoParameters, pcName, ppoTmp);
+
+    return 1;
+
+  }
+  else if (ParameterIsString(ppar))
+  {
+    pcTmp = ParameterGetString(ppar);
+
+    ppoTmp = PyString_FromString(pcTmp);
+
+    PyDict_SetItemString(ppoParameters, pcName, ppoTmp);
+
+    return 1;
+  }
+  else if (ParameterIsField(ppar))
+  {
+
+
+    return 1;
+  }
+  else if (ParameterIsSymbolic(ppar))
+  {
+
+    return 1;
+  }
+  else if (ParameterIsAttribute(ppar))
+  {
+
+    return 1;
+  }
+  else if (ParameterIsFunction(ppar))
+  {
+
+    return 1;
+  }
+  else
+  {
+
+    //- This will be an error flag
+    return -1;
+    
+  }
+  
+  return 1;
+
+}
+
+
+
+PyObject * ParametersToDict(struct symtab_HSolveListElement *phsle, struct PidinStack *ppist)
+{
+
+  PyObject *ppoParameters = NULL;
+  char pcContext[1000];
+  char pcErrorMsg[2048];
+  struct symtab_HSolveListElement *phsleSymbol = phsle;
+  struct symtab_BioComponent *pbio = NULL;
+  struct symtab_Parameters *ppar = NULL;
+
+
+  //PidinStackString(ppist, pcContext, 1000);
+  
+  ppoParameters = PyDict_New();
+
+  if( !ppoParameters )
+  {
+    //    snprintf(pcErrorMsg, 2048, "Parameter Error: Can't allocate dictionary for '%s'", pcContext);
+    snprintf(pcErrorMsg, 2048, "Parameter Error: Can't allocate dictionary for");
+    PyErr_SetString(PyExc_MemoryError, pcErrorMsg);
+    return NULL;
+  }
+
+
+  pbio = (struct symtab_BioComponent *)phsleSymbol;
+
+  if(pbio)
+  {
+  
+    ppar = ParContainerIterateParameters(pbio->pparc);
+
+    while(ppar)
+    {
+      
+      ParameterDictCollectRecursive(ppoParameters, ppar, ppist);
+
+      ppar = ParContainerIterateParameters(pbio->pparc);
+
+    }
+
+
+  }
+
+  return ppoParameters;
+
+} // End Parameters to Dict
+
+
+
+PyObject * ParametersToDictFromPath(char *pcPath)
+{
+
+  struct symtab_HSolveListElement *phsle = NULL;
+  struct PidinStack *ppist = NULL;
+  char pcErrorMsg[2048];
+
+  ppist = PidinStackParse(pcPath);
+
+  if( !ppist )
+  {
+    snprintf(pcErrorMsg, 2048, "Can't get pidin stack for '%s'", pcPath);
+    PyErr_SetString(PyExc_MemoryError, pcErrorMsg);
+    return NULL;
+  }
+
+  phsle = PidinStackLookupTopSymbol(ppist);
+
+  if( !phsle )
+  {
+    snprintf(pcErrorMsg, 2048, "Can't find symbol for '%s'", pcPath);
+    PyErr_SetString(PyExc_Exception, pcErrorMsg);
+    return NULL;
+  }
+
+  PidinStackFree(ppist);
+  
+  return ParametersToDict(phsle, ppist);
+
 }
 
 //-----------------------------------------------------------------------------
