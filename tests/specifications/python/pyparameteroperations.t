@@ -326,6 +326,55 @@ Done!
 				description => "Loads the purkinje cell and tells what type of symbol the soma is",
 			       },
 
+			       {
+				arguments => [
+					     ],
+				command => 'tests/python/parameteroperations_7.py',
+				command_tests => [
+						  {
+						   description => "Can we retrieve parameters for the soma ?",
+						   read => 'Parameters for \'/Purkinje/segments/soma\' are:
+	DIA: 2.98e-05
+	LENGTH: 0.0
+	rel_Y: 0.0
+	rel_X: 0.0
+	rel_Z: 0.0
+Done!
+',
+
+
+						  },
+						 ],
+				description => "Returns all parameters from the soma in a python dict",
+			       },
+
+
+
+			       {
+				arguments => [
+					     ],
+				command => 'tests/python/parameteroperations_8.py',
+				command_tests => [
+						  {
+						   description => "Can we retrieve parameters from a segement ?",
+						   read => 'Parameters for \'/Purkinje/segments/main[0]\' are:
+	DIA: 7.72e-06
+	LENGTH: 1.44696878681e-05
+	Y: 9.447e-06
+	X: 5.557e-06
+	Z: 9.447e-06
+	rel_Y: 9.447e-06
+	rel_X: 5.557e-06
+	rel_Z: 9.447e-06
+Done!
+',
+
+
+						  },
+						 ],
+				description => "Returns all parameters from the soma in a python dict",
+			       },
+
 			      ],
        description => "parameter operations in python",
        name => 'python/pyparameteroperations.t',
