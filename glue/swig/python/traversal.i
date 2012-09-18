@@ -1271,14 +1271,13 @@ PyObject * ParametersToDict(struct symtab_HSolveListElement *phsle, struct Pidin
   struct symtab_Parameters *ppar = NULL;
 
 
-  //PidinStackString(ppist, pcContext, 1000);
+  PidinStackString(ppist, pcContext, 1000);
   
   ppoParameters = PyDict_New();
 
   if( !ppoParameters )
   {
-    //    snprintf(pcErrorMsg, 2048, "Parameter Error: Can't allocate dictionary for '%s'", pcContext);
-    snprintf(pcErrorMsg, 2048, "Parameter Error: Can't allocate dictionary for");
+    snprintf(pcErrorMsg, 2048, "Parameter Error: Can't allocate dictionary for '%s'", pcContext);
     PyErr_SetString(PyExc_MemoryError, pcErrorMsg);
     return NULL;
   }
@@ -1288,7 +1287,7 @@ PyObject * ParametersToDict(struct symtab_HSolveListElement *phsle, struct Pidin
 
   if(pbio)
   {
-  
+
     ppar = ParContainerIterateParameters(pbio->pparc);
 
     while(ppar)
@@ -1296,7 +1295,8 @@ PyObject * ParametersToDict(struct symtab_HSolveListElement *phsle, struct Pidin
       
       ParameterDictCollectRecursive(ppoParameters, ppar, ppist);
 
-      ppar = ParContainerIterateParameters(pbio->pparc);
+
+      ppar = ParContainerNextParameter(ppar);
 
     }
 
@@ -1315,6 +1315,7 @@ PyObject * ParametersToDictFromPath(char *pcPath)
   struct symtab_HSolveListElement *phsle = NULL;
   struct PidinStack *ppist = NULL;
   char pcErrorMsg[2048];
+  PyObject * ppoTmp = NULL;
 
   ppist = PidinStackParse(pcPath);
 
@@ -1334,9 +1335,11 @@ PyObject * ParametersToDictFromPath(char *pcPath)
     return NULL;
   }
 
+  ppoTmp = ParametersToDict(phsle, ppist);
+
   PidinStackFree(ppist);
   
-  return ParametersToDict(phsle, ppist);
+  return ppoTmp;
 
 }
 
