@@ -3353,6 +3353,25 @@ my $test
 						 ],
 				description => "syntax of utilities/membrane_leak.ndf",
 			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'utilities/simple_comment.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (utilities/simple_comment.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/utilities/simple_comment.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of utilities/simple_comment.ndf",
+			       },
 			      ],
        description => "general syntax of library files",
        name => 'parsing.t',

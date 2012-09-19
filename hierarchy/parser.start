@@ -11,6 +11,7 @@
     struct symtab_BioComponent *pbio;
     struct symtab_Cell *pcell;
     struct symtab_Channel *pchan;
+    struct symtab_CommentSimple *pcomms;
     struct symtab_ConcentrationGateKinetic *pcgatk;
     struct symtab_Connection *pconn;
     struct symtab_ConnectionSymbol *pconsy;

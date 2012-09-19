@@ -30,7 +30,7 @@
 
 /// \struct structure declarations
 
-struct descr_MembraneLeak;
+/* struct descr_MembraneLeak; */
 struct symtab_MembraneLeak;
 
 
