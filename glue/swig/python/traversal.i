@@ -1200,8 +1200,10 @@ static int ParameterDictCollectRecursive(PyObject * ppoParameters, struct symtab
   char *pcName = ParameterGetName(ppar);
   double dTmp = -0.0;
   char *pcTmp = NULL;
+  char pcTmpString[1024];
   PyObject * ppoTmpDict = NULL;
   PyObject * ppoTmp = NULL;
+  struct PidinStack *ppistTmp = NULL;
   
   if (ParameterIsNumber(ppar))
   {
@@ -1228,8 +1230,51 @@ static int ParameterDictCollectRecursive(PyObject * ppoParameters, struct symtab
   else if (ParameterIsField(ppar))
   {
 
+    pcTmp = ParameterGetFieldName(ppar);
+
+    ppistTmp = PidinStackCalloc();
+
+    PidinStackPushAll(ppistTmp, ppar->uValue.pidin);
+
+    PidinStackString(ppistTmp, pcTmpString, 1024);
+
+    PidinStackFree(ppistTmp);
+
+    ppistTmp = NULL;
+
+    //- We set the field and value as a sub dict
+    ppoTmpDict = PyDict_New();
+
+
+    //- Reuse the ppistTmp var for the value which is a pidinstack
+
+    ppistTmp = ParameterResolveToPidinStack(ppar, ppist);
+
+    if (ppistTmp)
+    {
+
+      PidinStackString(ppistTmp, pcTmpString, 1024);
+
+      PidinStackFree(ppistTmp);
+
+      ppoTmp = PyString_FromString(pcTmpString);
+
+    }
+    else
+    {
+
+      ppoTmp = PyString_FromString("'resolved value': (context cannot be resolved)");
+
+    }
+    
+    //- This sets the Field name and value as a subdict
+
+    PyDict_SetItemString(ppoTmpDict, pcTmp, ppoTmp);
+
+    PyDict_SetItemString(ppoParameters, pcName, ppoTmpDict);
 
     return 1;
+
   }
   else if (ParameterIsSymbolic(ppar))
   {
