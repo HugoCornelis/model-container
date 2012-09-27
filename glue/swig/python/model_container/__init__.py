@@ -589,8 +589,14 @@ class ModelContainer:
                                                                             deltax,
                                                                             deltay)
 
+        self.Query(command)
 
-        nmc_base.QueryMachineHandle(self._nmc_core, command)
+#         result = nmc_base.QueryMachineHandle(self._nmc_core, command)
+
+#         if result == 0:
+
+#             raise Exception("Query Error: Unrecognized command '%s'" % command)
+        
 
 
 
@@ -692,8 +698,12 @@ class ModelContainer:
         """!
         @brief submit querymachine commands to the model container
         """
-        nmc_base.QueryMachineHandle(self._nmc_core, command)
+        result = nmc_base.QueryMachineHandle(self._nmc_core, command)
 
+        if result == 0:
+
+            raise Exception("Query Error: Unrecognized command '%s'" % command)
+    
 #---------------------------------------------------------------------------
 
     def GetSerial(self, path):
@@ -733,6 +743,34 @@ class ModelContainer:
 
         self._output_file = filename
 
+#---------------------------------------------------------------------------
+
+    def ProjectionQuerySet(self, projection):
+        """!
+        Takes either a list of projections of a single projection.
+
+        """
+
+        # collect all projections
+        p = ''
+
+        if isinstance(projection, (list, tuple)):
+
+            p = ' '.join(projections)
+
+        elif isinstance(projection, str):
+
+            p = projections
+
+        else:
+
+            raise Exception("Argument must be a single string or a list of strings with projections")
+        
+        pq_command = "pqset c %s" % p
+
+        result = self.Query(pq_command)
+
+        
 #---------------------------------------------------------------------------
 
     def CreateProjection(self, configuration=None, network=None, probability=1.0, random_seed=1212.0,
@@ -1055,11 +1093,10 @@ class ModelContainer:
 
 
 # valid line: algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0
-        command = "algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0"
+#        command = "algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0"
 
-        result = nmc_base.QueryMachineHandle(self._nmc_core, command)
 
-        return result
+        self.Query(command)
 
 #*************************** End ModelContainer **************************
 
