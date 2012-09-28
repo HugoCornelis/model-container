@@ -700,9 +700,10 @@ class ModelContainer:
         """
         result = nmc_base.QueryMachineHandle(self._nmc_core, command)
 
-        if result == 0:
+# fix this after seeing if a passed command passes 0 or 1
+#         if result == 0:
 
-            raise Exception("Query Error: Unrecognized command '%s'" % command)
+#             raise Exception("Query Error: Unrecognized command '%s'" % command)
     
 #---------------------------------------------------------------------------
 
@@ -845,6 +846,10 @@ class ModelContainer:
 
             if configuration.has_key('projection'):
 
+                if configuration['projection'].has_key('name'):
+
+                    arguments['projection'] = configuration['projection']['name']
+
                 if configuration['projection'].has_key('source'):
 
                     arguments['projection_source'] = configuration['projection']['source']
@@ -862,6 +867,7 @@ class ModelContainer:
 
                     arguments['projection_source'] = source['context']
 
+                    arguments['source'] = source['context']
 
                 if source.has_key('include'):
 
@@ -890,6 +896,7 @@ class ModelContainer:
 
                     arguments['projection_target'] = target['context']
 
+                    arguments['target'] = target['context']
 
                 if target.has_key('include'):
 
@@ -1091,10 +1098,11 @@ class ModelContainer:
                                                                                                                                                                                      destination_hole_x2, destination_hole_y2, destination_hole_z2,
                                                                                                                                                                                      probability, random_seed)
 
-
 # valid line: algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0
 #        command = "algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0"
 
+# This is a valid line for a createprojection:
+# algorithminstantiate ProjectionVolume projectionvolume__RSNet__RSNet_projection /RSNet /RSNet/projection /RSNet/population /RSNet/population /RSNet/population /RSNet/population spike Ex_channel box -1e10 -1e10 -1e10 1e10 1e10 1e10 ellipse    0.0024 0.0024 5e-07 weight 10 delay fixed 0.004 velocity  destination_hole box -0.001 -0.001 -5e-07 0.001 0.001 5e-07 1.0 1212.0
 
         self.Query(command)
 
