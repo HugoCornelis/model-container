@@ -133,9 +133,6 @@ class ModelContainer:
 
         return library_exists
 
-            
-
-
 #---------------------------------------------------------------------------
 
     def GetCore(self):
@@ -143,6 +140,18 @@ class ModelContainer:
         @brief Returns the neurospaces core data struct.
         """
         return self._nmc_core
+
+
+#---------------------------------------------------------------------------
+
+    def InsertAlias(self, source, target):
+        """!
+        Sets an alias from source to target element
+        """
+
+        command = "insert %s %s" % (source, target) 
+        
+        self.Query(commmand)
 
 #---------------------------------------------------------------------------
 
