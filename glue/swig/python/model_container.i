@@ -74,9 +74,25 @@ struct symtab_Invisible;
 %inline %{
 PyObject * PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespaces, 
 		char *pcComponent);
+
 PyObject * PyBNDFLoadLibrary(struct Neurospaces *pneuro, char *pcNamespace, char *pcFilename);
 
 
+
+struct simobj_DES;
+struct simobj_Chemesis3;
+struct simobj_Heccer;
+
+PyObject * RegisterChemesis3Solver(struct Neurospaces *pneuro, struct simobj_Chemesis3 *pch3, 
+				   struct PidinStack *ppist, char *pcSolver);
+
+PyObject * RegisterDESSolver(struct Neurospaces *pneuro, struct simobj_DES *pdes, 
+			     struct PidinStack *ppist, char *pcSolver);
+
+PyObject * RegisterHeccerSolver(struct Neurospaces *pneuro, struct simobj_Heccer *pheccer, 
+				 struct PidinStack *ppist, char *pcSolver);
+
+//------------------------------------------------------------------------------
 
 PyObject * PyBNDFLoadLibrary(struct Neurospaces *pneuro, char *pcNamespace, char *pcFilename)
 {
@@ -122,8 +138,7 @@ PyObject * PyBNDFLoadLibrary(struct Neurospaces *pneuro, char *pcNamespace, char
 } 
 
 
-
-
+//------------------------------------------------------------------------------
 
 PyObject * PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcNamespaces, 
 		char *pcComponent)
@@ -220,6 +235,126 @@ PyObject * PyBCreateMap(struct Neurospaces *pneuro, char *pcPrototype, char *pcN
   Py_RETURN_NONE;
 
 }
+
+//------------------------------------------------------------------------------
+
+PyObject * RegisterChemesis3Solver(struct Neurospaces *pneuro, struct simobj_Chemesis3 *pch3, 
+				   struct PidinStack *ppist, char *pcSolver)
+{
+
+  struct SolverInfo * piResult = NULL;
+  char pcContext[1000];
+  char pcErrorMsg[2048];
+  struct SolverRegistry *psr = NULL;
+
+
+  if( !pneuro || !pneuro->psr )
+  {
+    PidinStackString(ppist, pcContext, 1000);
+
+    snprintf(pcErrorMsg, 2048, "Solver Registry Error: No solver registry has been allocated", 
+	     pcSolver, pcContext);
+    PyErr_SetString(PyExc_Exception, pcErrorMsg);
+    return NULL;
+  }
+
+  piResult = SolverRegistryAddFromContext(psr, (void*)pch3, ppist, pcSolver);
+
+  if( !piResult )
+  {
+
+    PidinStackString(ppist, pcContext, 1000);
+
+    snprintf(pcErrorMsg, 2048, "Solver Registry Error: Can't register '%s' with Chemesis3 solver '%s'", 
+	     pcSolver, pcContext);
+    PyErr_SetString(PyExc_MemoryError, pcErrorMsg);
+    return NULL;
+    
+  }
+
+  Py_RETURN_NONE;
+
+}
+
+//------------------------------------------------------------------------------
+
+PyObject * RegisterDESSolver(struct Neurospaces *pneuro, struct simobj_DES *pdes, 
+			     struct PidinStack *ppist, char *pcSolver)
+{
+
+  struct SolverInfo * piResult = NULL;
+  char pcContext[1000];
+  char pcErrorMsg[2048];
+  struct SolverRegistry *psr = NULL;
+
+  if( !pneuro || !pneuro->psr )
+  {
+    PidinStackString(ppist, pcContext, 1000);
+
+    snprintf(pcErrorMsg, 2048, "Solver Registry Error: No solver registry has been allocated", 
+	     pcSolver, pcContext);
+    PyErr_SetString(PyExc_Exception, pcErrorMsg);
+    return NULL;
+  }
+
+  piResult = SolverRegistryAddFromContext(psr, (void*)pdes, ppist, pcSolver);
+
+  if( !piResult )
+  {
+
+    PidinStackString(ppist, pcContext, 1000);
+
+    snprintf(pcErrorMsg, 2048, "Solver Registry Error: Can't register '%s' with DES solver '%s'", 
+	     pcSolver, pcContext);
+    PyErr_SetString(PyExc_MemoryError, pcErrorMsg);
+    return NULL;
+    
+  }
+
+  Py_RETURN_NONE;
+
+}
+
+//------------------------------------------------------------------------------
+
+PyObject * RegisterHeccerSolver(struct Neurospaces *pneuro, struct simobj_Heccer *pheccer, 
+				struct PidinStack *ppist, char *pcSolver)
+{
+
+  struct SolverInfo * piResult = NULL;
+  char pcContext[1000];
+  char pcErrorMsg[2048];
+  struct SolverRegistry *psr = NULL;
+
+  if( !pneuro || !pneuro->psr )
+  {
+    PidinStackString(ppist, pcContext, 1000);
+
+    snprintf(pcErrorMsg, 2048, "Solver Registry Error: No solver registry has been allocated", 
+	     pcSolver, pcContext);
+    PyErr_SetString(PyExc_Exception, pcErrorMsg);
+    return NULL;
+  }
+
+  piResult = SolverRegistryAddFromContext(psr, (void*)pheccer, ppist, pcSolver);
+
+  if( !piResult )
+  {
+
+    PidinStackString(ppist, pcContext, 1000);
+
+    snprintf(pcErrorMsg, 2048, "Solver Registry Error: Can't register '%s' with DES solver '%s'", 
+	     pcSolver, pcContext);
+    PyErr_SetString(PyExc_MemoryError, pcErrorMsg);
+    return NULL;
+    
+  }
+
+  Py_RETURN_NONE;
+
+}
+
+//------------------------------------------------------------------------------
 
 %}
 //------------------------- End of Inline functons  ---------------------------

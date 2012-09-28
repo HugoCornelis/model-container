@@ -755,6 +755,36 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
+    def RegisterSolver(self, modelname, solver, solver_type):
+
+
+        ppist = nmc_base.PidinStackParse(modelname)
+
+        if not ppist:
+
+            raise Exception("Can't parse modelname '%s'" % modelname)
+
+        solver_core = solver.GetCore()
+
+        if solver_type == 'heccer':
+
+            nmc_base.RegisterHeccerSolver(self._nmc_core, solver_core, ppist, modelname)
+
+        elif solver_type == 'chemesis3':
+
+            nmc_base.RegisterChemesis3Solver(self._nmc_core, solver_core, ppist, modelname)
+
+        elif solver_type == 'des':
+
+            nmc_base.RegisterDESSolver(self._nmc_core, solver_core, ppist, modelname)
+
+        else:
+
+            raise Exception("Can't register solver, invalid type '%s'" % solver_type)
+
+
+#---------------------------------------------------------------------------
+
     def ProjectionQuerySet(self, projection):
         """!
         Takes either a list of projections of a single projection.
