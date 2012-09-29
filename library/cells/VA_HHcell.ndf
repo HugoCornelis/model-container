@@ -1,0 +1,365 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+// MODEL DESCRIPTION:
+// 
+// The GENESIS implementation by David Beeman of the model cell that was
+// used as a benchmark for neural simulators in the review by Brette et al.
+// (2007).  This is a dual exponential conductance version of the the
+// Vogels and Abbott (2005) model with single compartment neurons having
+// Hodgkin-Huxley dynamics.
+// 
+// REFERENCES:
+// 
+// Brette R, Rudolph M, Carnevale T, Hines M, Beeman D, Bower JM, Diesmann M,
+// Morrison A, Goodman PH, Harris Jr FC, Zirpe M, Natschlager T, Pecevski D,
+// Ermentrout B, Djurfeldt M, Lansner A, Rochel O, Vieville T, Muller E,
+// Davison AP, El Boustani S, and Destexhe A (2007) Simulation of networks of
+// spiking neurons: a review of tools and strategies. J. Comput. Neurosci.
+// 23: 349-398.
+// 
+// Vogels TP, Abbott LF. (2005) Signal propagation and logic gating in
+// networks of integrate-and-fire neurons. J. Neurosci. 25: 10786-10795.
+
+NEUROSPACES NDF
+
+PRIVATE_MODELS
+  GATE_KINETIC "A_7_7"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = -0.004 ),
+      PARAMETER ( HH_AB_Offset_E = 0.05 ),
+      PARAMETER ( HH_AB_Add_Den = -1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = -320000 ),
+      PARAMETER ( HH_AB_Add_Num = -16000 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "A_7_7" "A_inserted_7"
+  END CHILD
+  GATE_KINETIC "B_8_8"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = 0.005 ),
+      PARAMETER ( HH_AB_Offset_E = 0.023 ),
+      PARAMETER ( HH_AB_Add_Den = -1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 280000 ),
+      PARAMETER ( HH_AB_Add_Num = 6440 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "B_8_8" "B_inserted_8"
+  END CHILD
+  HH_GATE "HH_activation_6_6"
+    PARAMETERS
+      PARAMETER ( POWER = 3 ),
+      PARAMETER ( state_init = -1 ),
+    END PARAMETERS
+    CHILD "A_7_7" "A"
+    END CHILD
+    CHILD "B_8_8" "B"
+    END CHILD
+  END HH_GATE
+  CHILD "HH_activation_6_6" "HH_activation_inserted_6"
+  END CHILD
+  GATE_KINETIC "A_10_10"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = 0.018 ),
+      PARAMETER ( HH_AB_Offset_E = 0.046 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 128 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "A_10_10" "A_inserted_10"
+  END CHILD
+  GATE_KINETIC "B_11_11"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = -0.005 ),
+      PARAMETER ( HH_AB_Offset_E = 0.023 ),
+      PARAMETER ( HH_AB_Add_Den = 1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 4000 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "B_11_11" "B_inserted_11"
+  END CHILD
+  HH_GATE "HH_inactivation_9_9"
+    PARAMETERS
+      PARAMETER ( POWER = 1 ),
+      PARAMETER ( state_init = -1 ),
+    END PARAMETERS
+    CHILD "A_10_10" "A"
+    END CHILD
+    CHILD "B_11_11" "B"
+    END CHILD
+  END HH_GATE
+  CHILD "HH_inactivation_9_9" "HH_inactivation_inserted_9"
+  END CHILD
+  CHANNEL "Na_traub_mod_5_5"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    PARAMETERS
+      PARAMETER ( G_MAX = 
+        GENESIS2
+          (
+              PARAMETER ( scale = 1 ),
+              PARAMETER ( value = 2e-05 ),
+          ), ),
+      PARAMETER ( Erev = 0.05 ),
+    END PARAMETERS
+    CHILD "HH_activation_6_6" "HH_activation"
+    END CHILD
+    CHILD "HH_inactivation_9_9" "HH_inactivation"
+    END CHILD
+  END CHANNEL
+  CHILD "Na_traub_mod_5_5" "Na_traub_mod_5_25"
+    BINDINGS
+      INPUT ..->I,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( G_MAX = 20000 ),
+    END PARAMETERS
+  END CHILD
+  CHILD "Na_traub_mod_5_25" "Na_traub_mod_inserted_25"
+  END CHILD
+  GATE_KINETIC "A_14_14"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = -0.005 ),
+      PARAMETER ( HH_AB_Offset_E = 0.048 ),
+      PARAMETER ( HH_AB_Add_Den = -1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = -32000 ),
+      PARAMETER ( HH_AB_Add_Num = -1536 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "A_14_14" "A_inserted_14"
+  END CHILD
+  GATE_KINETIC "B_15_15"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = 0.04 ),
+      PARAMETER ( HH_AB_Offset_E = 0.053 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 500 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "B_15_15" "B_inserted_15"
+  END CHILD
+  HH_GATE "HH_activation_13_13"
+    PARAMETERS
+      PARAMETER ( POWER = 4 ),
+      PARAMETER ( state_init = -1 ),
+    END PARAMETERS
+    CHILD "A_14_14" "A"
+    END CHILD
+    CHILD "B_15_15" "B"
+    END CHILD
+  END HH_GATE
+  CHILD "HH_activation_13_13" "HH_activation_inserted_13"
+  END CHILD
+  CHANNEL "K_traub_mod_12_12"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    PARAMETERS
+      PARAMETER ( G_MAX = 
+        GENESIS2
+          (
+              PARAMETER ( scale = 1 ),
+              PARAMETER ( value = 6e-06 ),
+          ), ),
+      PARAMETER ( Erev = -0.09 ),
+    END PARAMETERS
+    CHILD "HH_activation_13_13" "HH_activation"
+    END CHILD
+  END CHANNEL
+  CHILD "K_traub_mod_12_12" "K_traub_mod_12_26"
+    BINDINGS
+      INPUT ..->I,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( G_MAX = 6000 ),
+    END PARAMETERS
+  END CHILD
+  CHILD "K_traub_mod_12_26" "K_traub_mod_inserted_26"
+  END CHILD
+  EQUATION_EXPONENTIAL "eq2_17_17"
+    PARAMETERS
+      PARAMETER ( TAU1 = ..->TAU1 ),
+      PARAMETER ( TAU2 = ..->TAU2 ),
+    END PARAMETERS
+  END EQUATION_EXPONENTIAL
+  CHILD "eq2_17_17" "eq2_inserted_17"
+  END CHILD
+  ATTACHMENT "synapse_18_18"
+  END ATTACHMENT
+  CHILD "synapse_18_18" "synapse_inserted_18"
+  END CHILD
+  CHANNEL "Ex_channel_16_16"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    PARAMETERS
+      PARAMETER ( G_MAX = 
+        GENESIS2
+          (
+              PARAMETER ( scale = 1 ),
+              PARAMETER ( value = 1e-06 ),
+          ), ),
+      PARAMETER ( TAU2 = 0.001 ),
+      PARAMETER ( TAU1 = 0.005 ),
+      PARAMETER ( Erev = 0 ),
+    END PARAMETERS
+    CHILD "eq2_17_17" "eq2"
+    END CHILD
+    CHILD "synapse_18_18" "synapse"
+    END CHILD
+  END CHANNEL
+  CHILD "Ex_channel_16_16" "Ex_channel_16_27"
+    BINDINGS
+      INPUT ..->I,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( FREQUENCY = 0 ),
+      PARAMETER ( G_MAX = 1000 ),
+    END PARAMETERS
+  END CHILD
+  CHILD "Ex_channel_16_27" "Ex_channel_inserted_27"
+  END CHILD
+  EQUATION_EXPONENTIAL "eq2_20_20"
+    PARAMETERS
+      PARAMETER ( TAU1 = ..->TAU1 ),
+      PARAMETER ( TAU2 = ..->TAU2 ),
+    END PARAMETERS
+  END EQUATION_EXPONENTIAL
+  CHILD "eq2_20_20" "eq2_inserted_20"
+  END CHILD
+  ATTACHMENT "synapse_21_21"
+  END ATTACHMENT
+  CHILD "synapse_21_21" "synapse_inserted_21"
+  END CHILD
+  CHANNEL "Inh_channel_19_19"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    PARAMETERS
+      PARAMETER ( G_MAX = 
+        GENESIS2
+          (
+              PARAMETER ( scale = 1 ),
+              PARAMETER ( value = 1e-06 ),
+          ), ),
+      PARAMETER ( TAU2 = 0.001 ),
+      PARAMETER ( TAU1 = 0.01 ),
+      PARAMETER ( Erev = -0.08 ),
+    END PARAMETERS
+    CHILD "eq2_20_20" "eq2"
+    END CHILD
+    CHILD "synapse_21_21" "synapse"
+    END CHILD
+  END CHANNEL
+  CHILD "Inh_channel_19_19" "Inh_channel_19_28"
+    BINDINGS
+      INPUT ..->I,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( FREQUENCY = 0 ),
+      PARAMETER ( G_MAX = 1000 ),
+    END PARAMETERS
+  END CHILD
+  CHILD "Inh_channel_19_28" "Inh_channel_inserted_28"
+  END CHILD
+  ATTACHMENT "spike_22_22"
+    PARAMETERS
+      PARAMETER ( output_amp = "1" ),
+      PARAMETER ( REFRACTORY = 0.01 ),
+      PARAMETER ( THRESHOLD = 0 ),
+    END PARAMETERS
+  END ATTACHMENT
+  CHILD "spike_22_22" "spike_22_29"
+    PARAMETERS
+      PARAMETER ( REFRACTORY = 0.005 ),
+      PARAMETER ( THRESHOLD = 0 ),
+    END PARAMETERS
+  END CHILD
+  CHILD "spike_22_29" "spike_inserted_29"
+  END CHILD
+  SEGMENT "compartment_4_4"
+    PARAMETERS
+      PARAMETER ( RA = 0.3 ),
+      PARAMETER ( RM = 0.33333 ),
+      PARAMETER ( CM = 0.00999999 ),
+      PARAMETER ( INJECT = 0 ),
+      PARAMETER ( LENGTH = 0.0001 ),
+      PARAMETER ( DIA = 2e-06 ),
+      PARAMETER ( ELEAK = -0.07 ),
+    END PARAMETERS
+  END SEGMENT
+  CHILD "compartment_4_4" "soma_4_24"
+    BINDINGS
+      INPUT Na_traub_mod->Vm,
+      INPUT K_traub_mod->Vm,
+      INPUT Ex_channel->Vm,
+      INPUT Inh_channel->Vm,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( INJECT = 0 ),
+      PARAMETER ( ELEAK = -0.065 ),
+      PARAMETER ( Vm_init = -0.065 ),
+      PARAMETER ( RM = 2 ),
+      PARAMETER ( CM = 0.01 ),
+      PARAMETER ( SURFACE = 2e-08 ),
+      PARAMETER ( rel_Z = 0 ),
+      PARAMETER ( rel_Y = 0 ),
+      PARAMETER ( rel_X = 7.97885e-05 ),
+      PARAMETER ( LENGTH = 7.97885e-05 ),
+      PARAMETER ( DIA = 7.97885e-05 ),
+      PARAMETER ( RA = 0.3 ),
+    END PARAMETERS
+    CHILD "Na_traub_mod_inserted_25" "Na_traub_mod"
+      PARAMETERS
+        PARAMETER ( G_MAX = 1000 ),
+      END PARAMETERS
+    END CHILD
+    CHILD "K_traub_mod_inserted_26" "K_traub_mod"
+      PARAMETERS
+        PARAMETER ( G_MAX = 300 ),
+      END PARAMETERS
+    END CHILD
+    CHILD "Ex_channel_inserted_27" "Ex_channel"
+      PARAMETERS
+        PARAMETER ( G_MAX = 0.3 ),
+      END PARAMETERS
+    END CHILD
+    CHILD "Inh_channel_inserted_28" "Inh_channel"
+      PARAMETERS
+        PARAMETER ( G_MAX = 3.35 ),
+      END PARAMETERS
+    END CHILD
+    CHILD "spike_inserted_29" "spike"
+    END CHILD
+  END CHILD
+  CHILD "soma_4_24" "soma_inserted_24"
+  END CHILD
+  CELL "cell_23_23"
+    CHILD "soma_inserted_24" "soma"
+    END CHILD
+  END CELL
+  CHILD "cell_23_23" "cell_inserted_23"
+  END CHILD
+END PRIVATE_MODELS
+PUBLIC_MODELS
+  CHILD "cell_23_23" "cell"
+  END CHILD
+END PUBLIC_MODELS

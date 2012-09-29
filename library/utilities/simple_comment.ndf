@@ -34,11 +34,11 @@ PUBLIC_MODELS
 			PARAMETER ( DIA = 29.80e-6 )
 		END PARAMETERS
 
-		COMMENT_SIMPLE comment
-			PARAMETERS
-				PARAMETER ( TEXT = "this comment shows that comment parsing works correctly" )
-			END PARAMETERS
-		END COMMENT_SIMPLE
+// 		COMMENT_SIMPLE comment
+// 			PARAMETERS
+// 				PARAMETER ( TEXT = "this comment shows that comment parsing works correctly" )
+// 			END PARAMETERS
+// 		END COMMENT_SIMPLE
 
 	END SEGMENT
 
