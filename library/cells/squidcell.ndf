@@ -1,0 +1,379 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+// Model description:
+// 
+// 'squidcell' is based on the model of the squid giant axon segment
+// that was used in the original GENESIS 'Squid' tutorial by Mark Nelson
+// in 1989.  Recent versions of the tutorial scripts accompany the
+// GENESIS 2.3 distribution.  The 'cell' is a cylindrical segment with
+// length = diameter = 500 um, with the parameters that were
+// used in the original Hodgkin-Huxley model and the Squid tutorial.
+// The Hodgkin-Huxley Na and K channels are implemented as tabchannels.
+// Unlike the GENESIS 2 version, the G-3 NDF representation uses
+// SI units instead of physiological units, and sets the resting potential
+// to -0.070 volts, instead of zero.  This model will be used in future
+// G-3 versions of the Squid tutorial.
+
+NEUROSPACES NDF
+
+PRIVATE_MODELS
+  CELL "cell_single_block"
+    SEGMENT "soma"
+      BINDINGS
+        INPUT Na_hh_tchan->I,
+        INPUT K_hh_tchan->I,
+      END BINDINGS
+      PARAMETERS
+        PARAMETER ( INJECT = 0 ),
+        PARAMETER ( LENGTH = 0.0005 ),
+        PARAMETER ( DIA = 0.0005 ),
+        PARAMETER ( Vm_init = -0.07 ),
+        PARAMETER ( RA = 
+          GENESIS2
+            (
+                PARAMETER ( scale = 1 ),
+                PARAMETER ( value = 763.944 ),
+            ), ),
+        PARAMETER ( CM = 
+          GENESIS2
+            (
+                PARAMETER ( scale = 1 ),
+                PARAMETER ( value = 7.85398e-09 ),
+            ), ),
+        PARAMETER ( RM = 
+          GENESIS2
+            (
+                PARAMETER ( scale = 1 ),
+                PARAMETER ( value = 424409 ),
+            ), ),
+        PARAMETER ( ELEAK = -0.0594 ),
+      END PARAMETERS
+      CHANNEL "Na_hh_tchan"
+        BINDABLES
+          INPUT Vm,
+          OUTPUT G,
+          OUTPUT I,
+        END BINDABLES
+        BINDINGS
+          INPUT ..->Vm,
+        END BINDINGS
+        PARAMETERS
+          PARAMETER ( G_MAX = 
+            GENESIS2
+              (
+                  PARAMETER ( scale = 1 ),
+                  PARAMETER ( value = 0.000942477 ),
+              ), ),
+          PARAMETER ( Erev = 0.045 ),
+        END PARAMETERS
+        HH_GATE "HH_activation"
+            PARAMETERS
+            PARAMETER ( POWER = 3 ),
+            PARAMETER ( state_init = -1 ),
+          END PARAMETERS
+          GATE_KINETIC "A"
+            PARAMETERS
+              PARAMETER ( HH_AB_Div_E = -0.01 ),
+              PARAMETER ( HH_AB_Offset_E = 0.045 ),
+              PARAMETER ( HH_AB_Add_Den = -1 ),
+              PARAMETER ( HH_AB_Factor_Flag = -1 ),
+              PARAMETER ( HH_AB_Mult = -100000 ),
+              PARAMETER ( HH_AB_Add_Num = -4500 ),
+            END PARAMETERS
+          END GATE_KINETIC
+          GATE_KINETIC "B"
+            PARAMETERS
+              PARAMETER ( HH_AB_Div_E = 0.018 ),
+              PARAMETER ( HH_AB_Offset_E = 0.07 ),
+                PARAMETER ( HH_AB_Add_Den = 0 ),
+              PARAMETER ( HH_AB_Factor_Flag = -1 ),
+              PARAMETER ( HH_AB_Mult = 0 ),
+              PARAMETER ( HH_AB_Add_Num = 4000 ),
+            END PARAMETERS
+          END GATE_KINETIC
+        END HH_GATE
+  
+        HH_GATE "HH_inactivation"
+          PARAMETERS
+            PARAMETER ( POWER = 1 ),
+            PARAMETER ( state_init = -1 ),
+          END PARAMETERS
+          GATE_KINETIC "A"
+            PARAMETERS
+              PARAMETER ( HH_AB_Div_E = 0.02 ),
+              PARAMETER ( HH_AB_Offset_E = 0.07 ),
+              PARAMETER ( HH_AB_Add_Den = 0 ),
+              PARAMETER ( HH_AB_Factor_Flag = -1 ),
+              PARAMETER ( HH_AB_Mult = 0 ),
+              PARAMETER ( HH_AB_Add_Num = 70 ),
+            END PARAMETERS
+          END GATE_KINETIC
+          GATE_KINETIC "B"
+            PARAMETERS
+              PARAMETER ( HH_AB_Div_E = -0.01 ),
+              PARAMETER ( HH_AB_Offset_E = 0.04 ),
+                PARAMETER ( HH_AB_Add_Den = 1 ),
+              PARAMETER ( HH_AB_Factor_Flag = -1 ),
+              PARAMETER ( HH_AB_Mult = 0 ),
+              PARAMETER ( HH_AB_Add_Num = 1000 ),
+            END PARAMETERS
+          END GATE_KINETIC
+        END HH_GATE
+      END CHANNEL
+
+      CHANNEL "K_hh_tchan"
+        BINDABLES
+          INPUT Vm,
+          OUTPUT G,
+          OUTPUT I,
+        END BINDABLES
+        BINDINGS
+          INPUT ..->Vm,
+        END BINDINGS
+        PARAMETERS
+            PARAMETER ( G_MAX = 
+            GENESIS2
+              (
+                  PARAMETER ( scale = 1 ),
+                  PARAMETER ( value = 0.000282743 ),
+              ), ),
+          PARAMETER ( Erev = -0.082 ),
+        END PARAMETERS
+        HH_GATE "HH_activation"
+          PARAMETERS
+            PARAMETER ( POWER = 4 ),
+            PARAMETER ( state_init = -1 ),
+          END PARAMETERS
+          GATE_KINETIC "A"
+            PARAMETERS
+              PARAMETER ( HH_AB_Div_E = -0.01 ),
+              PARAMETER ( HH_AB_Offset_E = 0.06 ),
+              PARAMETER ( HH_AB_Add_Den = -1 ),
+              PARAMETER ( HH_AB_Factor_Flag = -1 ),
+              PARAMETER ( HH_AB_Mult = -10000 ),
+              PARAMETER ( HH_AB_Add_Num = -600 ),
+            END PARAMETERS
+          END GATE_KINETIC
+          GATE_KINETIC "B"
+            PARAMETERS
+              PARAMETER ( HH_AB_Div_E = 0.08 ),
+              PARAMETER ( HH_AB_Offset_E = 0.07 ),
+              PARAMETER ( HH_AB_Add_Den = 0 ),
+              PARAMETER ( HH_AB_Factor_Flag = -1 ),
+              PARAMETER ( HH_AB_Mult = 0 ),
+              PARAMETER ( HH_AB_Add_Num = 125 ),
+            END PARAMETERS
+          END GATE_KINETIC
+        END HH_GATE
+      END CHANNEL
+    END SEGMENT
+  END CELL
+
+  GATE_KINETIC "A_7_7"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = -0.01 ),
+      PARAMETER ( HH_AB_Offset_E = 0.045 ),
+      PARAMETER ( HH_AB_Add_Den = -1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = -100000 ),
+      PARAMETER ( HH_AB_Add_Num = -4500 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "A_7_7" "A_inserted_7"
+  END CHILD
+  GATE_KINETIC "B_8_8"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = 0.018 ),
+      PARAMETER ( HH_AB_Offset_E = 0.07 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 4000 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "B_8_8" "B_inserted_8"
+  END CHILD
+  HH_GATE "HH_activation_6_6"
+    PARAMETERS
+      PARAMETER ( POWER = 3 ),
+      PARAMETER ( state_init = -1 ),
+    END PARAMETERS
+    CHILD "A_7_7" "A"
+    END CHILD
+    CHILD "B_8_8" "B"
+    END CHILD
+  END HH_GATE
+  CHILD "HH_activation_6_6" "HH_activation_inserted_6"
+  END CHILD
+  GATE_KINETIC "A_10_10"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = 0.02 ),
+      PARAMETER ( HH_AB_Offset_E = 0.07 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 70 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "A_10_10" "A_inserted_10"
+  END CHILD
+  GATE_KINETIC "B_11_11"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = -0.01 ),
+      PARAMETER ( HH_AB_Offset_E = 0.04 ),
+      PARAMETER ( HH_AB_Add_Den = 1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 1000 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "B_11_11" "B_inserted_11"
+  END CHILD
+  HH_GATE "HH_inactivation_9_9"
+    PARAMETERS
+      PARAMETER ( POWER = 1 ),
+      PARAMETER ( state_init = -1 ),
+    END PARAMETERS
+    CHILD "A_10_10" "A"
+    END CHILD
+    CHILD "B_11_11" "B"
+    END CHILD
+  END HH_GATE
+  CHILD "HH_inactivation_9_9" "HH_inactivation_inserted_9"
+  END CHILD
+  CHANNEL "Na_hh_tchan_5_5"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    BINDINGS
+      INPUT ..->Vm,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( G_MAX = 
+        GENESIS2
+          (
+              PARAMETER ( scale = 1 ),
+              PARAMETER ( value = 0.000942477 ),
+          ), ),
+      PARAMETER ( Erev = 0.045 ),
+    END PARAMETERS
+    CHILD "HH_activation_6_6" "HH_activation"
+    END CHILD
+    CHILD "HH_inactivation_9_9" "HH_inactivation"
+    END CHILD
+  END CHANNEL
+  CHILD "Na_hh_tchan_5_5" "Na_hh_tchan_inserted_5"
+  END CHILD
+  GATE_KINETIC "A_14_14"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = -0.01 ),
+      PARAMETER ( HH_AB_Offset_E = 0.06 ),
+      PARAMETER ( HH_AB_Add_Den = -1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = -10000 ),
+      PARAMETER ( HH_AB_Add_Num = -600 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "A_14_14" "A_inserted_14"
+  END CHILD
+  GATE_KINETIC "B_15_15"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = 0.08 ),
+      PARAMETER ( HH_AB_Offset_E = 0.07 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 125 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "B_15_15" "B_inserted_15"
+  END CHILD
+  HH_GATE "HH_activation_13_13"
+    PARAMETERS
+      PARAMETER ( POWER = 4 ),
+      PARAMETER ( state_init = -1 ),
+    END PARAMETERS
+    CHILD "A_14_14" "A"
+    END CHILD
+    CHILD "B_15_15" "B"
+    END CHILD
+  END HH_GATE
+  CHILD "HH_activation_13_13" "HH_activation_inserted_13"
+  END CHILD
+  CHANNEL "K_hh_tchan_12_12"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    BINDINGS
+      INPUT ..->Vm,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( G_MAX = 
+        GENESIS2
+          (
+              PARAMETER ( scale = 1 ),
+              PARAMETER ( value = 0.000282743 ),
+          ), ),
+      PARAMETER ( Erev = -0.082 ),
+    END PARAMETERS
+    CHILD "HH_activation_13_13" "HH_activation"
+    END CHILD
+  END CHANNEL
+  CHILD "K_hh_tchan_12_12" "K_hh_tchan_inserted_12"
+  END CHILD
+  SEGMENT "soma_4_4"
+    BINDINGS
+      INPUT Na_hh_tchan->I,
+      INPUT K_hh_tchan->I,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( INJECT = 0 ),
+      PARAMETER ( LENGTH = 0.0005 ),
+      PARAMETER ( DIA = 0.0005 ),
+      PARAMETER ( Vm_init = -0.07 ),
+      PARAMETER ( RA = 
+        GENESIS2
+          (
+              PARAMETER ( scale = 1 ),
+              PARAMETER ( value = 763.944 ),
+          ), ),
+      PARAMETER ( CM = 
+        GENESIS2
+          (
+              PARAMETER ( scale = 1 ),
+              PARAMETER ( value = 7.85398e-09 ),
+          ), ),
+      PARAMETER ( RM = 
+        GENESIS2
+          (
+              PARAMETER ( scale = 1 ),
+              PARAMETER ( value = 424409 ),
+          ), ),
+      PARAMETER ( ELEAK = -0.0594 ),
+    END PARAMETERS
+    CHILD "Na_hh_tchan_5_5" "Na_hh_tchan"
+    END CHILD
+    CHILD "K_hh_tchan_12_12" "K_hh_tchan"
+    END CHILD
+  END SEGMENT
+  CHILD "soma_4_4" "soma_inserted_4"
+  END CHILD
+  GROUP "cell_3_3"
+    CHILD "soma_4_4" "soma"
+    END CHILD
+  END GROUP
+  CHILD "cell_3_3" "cell_inserted_3"
+  END CHILD
+END PRIVATE_MODELS
+PUBLIC_MODELS
+  CHILD "cell_3_3" "cell"
+  END CHILD
+
+  CHILD "cell_single_block" "cell_sb" END CHILD
+
+END PUBLIC_MODELS

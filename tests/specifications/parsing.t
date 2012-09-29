@@ -3372,6 +3372,120 @@ my $test
 						 ],
 				description => "syntax of utilities/simple_comment.ndf",
 			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'cells/RScell.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (cells/RScell.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/RScell.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of cells/RScell.ndf.ndf",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'cells/VA_HHcell.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (cells/VA_HHcell.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/VA_HHcell.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of cells/VA_HHcell.ndf",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'cells/baskcell.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (cells/baskcell.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/baskcell.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of cells/baskcell.ndf",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'cells/deep_pyrcell.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (cells/deep_pyrcell.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/deep_pyrcell.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of cells/deep_pyrcell.ndf",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'cells/simplecell.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (cells/simplecell.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/simplecell.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of cells/simplecell.ndf",
+			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'cells/squidcell.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (cells/squidcell.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/squidcell.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of cells/squidcell.ndf",
+			       },
 			      ],
        description => "general syntax of library files",
        name => 'parsing.t',

@@ -1,0 +1,406 @@
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+
+// Model information
+// -----------------
+// 
+// 'baskcell' is a very simple 'ad hoc' model of a fast spiking inhibitory
+// neocortical interneuron, such as a basket cell.  Parameter searches by
+// David Beeman (August 2008) using the GENESIS 2 'param' library produced
+// rough agreement with spike frequency vs. current injection measurements
+// of fast spking cells in cat visual cortex by Nowak, et al. (2003).
+// [J. Neurophysiol. 89:1541-1566.]
+// 
+// The 30 um soma contains fast sodium and delayed rectifier potassium
+// conductances, and an inhibitory GABA synaptic conductance.  The single
+// 200 x 2 um dendritic cylinder contains an excitatory AMPA synaptic
+// conductance.  The input resistance of the cell is 113 Mohm, with a
+// membrane time constant of 10 msec.
+// 
+// Voltage activated channel models
+// --------------------------------
+// 
+// GENESIS implementation by D. Beeman of the channel models described in
+// Alain Destexhe and Denis Par, Impact of network activity on the
+// integrative properties of neocortical pyramidal neurons in vivo.
+// Journal of Neurophysiology 81: 1531-1547, 1999
+// 
+// Some adjustments were made to represent the model in
+// 
+//    Destexhe A, Rudolph M, Fellous JM and Sejnowski TJ.
+//    Fluctuating synaptic conductances recreate in-vivo-like activity in
+//    neocortical neurons. Neuroscience 107: 13-24, 2001.
+// 
+//    Based on the NEURON demonstration 'FLUCT' by Alain Destexhe.
+//    http://cns.iaf.cnrs-gif.fr
+
+NEUROSPACES NDF
+
+PRIVATE_MODELS
+  GATE_KINETIC "A_38_38"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = -0.004 ),
+      PARAMETER ( HH_AB_Offset_E = 0.05 ),
+      PARAMETER ( HH_AB_Add_Den = -1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = -640000 ),
+      PARAMETER ( HH_AB_Add_Num = -32000 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "A_38_38" "A_inserted_38"
+  END CHILD
+  GATE_KINETIC "B_39_39"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = 0.005 ),
+      PARAMETER ( HH_AB_Offset_E = 0.023 ),
+      PARAMETER ( HH_AB_Add_Den = -1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 560000 ),
+      PARAMETER ( HH_AB_Add_Num = 12880 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "B_39_39" "B_inserted_39"
+  END CHILD
+  HH_GATE "HH_activation_37_37"
+    PARAMETERS
+      PARAMETER ( POWER = 3 ),
+      PARAMETER ( state_init = -1 ),
+    END PARAMETERS
+    CHILD "A_38_38" "A"
+    END CHILD
+    CHILD "B_39_39" "B"
+    END CHILD
+  END HH_GATE
+  CHILD "HH_activation_37_37" "HH_activation_inserted_37"
+  END CHILD
+  GATE_KINETIC "A_41_41"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = 0.018 ),
+      PARAMETER ( HH_AB_Offset_E = 0.046 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 256 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "A_41_41" "A_inserted_41"
+  END CHILD
+  GATE_KINETIC "B_42_42"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = -0.005 ),
+      PARAMETER ( HH_AB_Offset_E = 0.023 ),
+      PARAMETER ( HH_AB_Add_Den = 1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 8000 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "B_42_42" "B_inserted_42"
+  END CHILD
+  HH_GATE "HH_inactivation_40_40"
+    PARAMETERS
+      PARAMETER ( POWER = 1 ),
+      PARAMETER ( state_init = -1 ),
+    END PARAMETERS
+    CHILD "A_41_41" "A"
+    END CHILD
+    CHILD "B_42_42" "B"
+    END CHILD
+  END HH_GATE
+  CHILD "HH_inactivation_40_40" "HH_inactivation_inserted_40"
+  END CHILD
+  CHANNEL "Na_bask_36_36"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    PARAMETERS
+      PARAMETER ( G_MAX = 
+        GENESIS2
+          (
+              PARAMETER ( scale = 1 ),
+              PARAMETER ( value = 0 ),
+          ), ),
+      PARAMETER ( Erev = 0.05 ),
+    END PARAMETERS
+    CHILD "HH_activation_37_37" "HH_activation"
+    END CHILD
+    CHILD "HH_inactivation_40_40" "HH_inactivation"
+    END CHILD
+  END CHANNEL
+  CHILD "Na_bask_36_36" "Na_bask_36_55"
+    BINDINGS
+      INPUT ..->I,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( G_MAX = 0 ),
+    END PARAMETERS
+  END CHILD
+  CHILD "Na_bask_36_55" "Na_bask_inserted_55"
+  END CHILD
+  GATE_KINETIC "A_45_45"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = -0.005 ),
+      PARAMETER ( HH_AB_Offset_E = 0.048 ),
+      PARAMETER ( HH_AB_Add_Den = -1 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = -64000 ),
+      PARAMETER ( HH_AB_Add_Num = -3072 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "A_45_45" "A_inserted_45"
+  END CHILD
+  GATE_KINETIC "B_46_46"
+    PARAMETERS
+      PARAMETER ( HH_AB_Div_E = 0.04 ),
+      PARAMETER ( HH_AB_Offset_E = 0.053 ),
+      PARAMETER ( HH_AB_Add_Den = 0 ),
+      PARAMETER ( HH_AB_Factor_Flag = -1 ),
+      PARAMETER ( HH_AB_Mult = 0 ),
+      PARAMETER ( HH_AB_Add_Num = 1000 ),
+    END PARAMETERS
+  END GATE_KINETIC
+  CHILD "B_46_46" "B_inserted_46"
+  END CHILD
+  HH_GATE "HH_activation_44_44"
+    PARAMETERS
+      PARAMETER ( POWER = 4 ),
+      PARAMETER ( state_init = -1 ),
+    END PARAMETERS
+    CHILD "A_45_45" "A"
+    END CHILD
+    CHILD "B_46_46" "B"
+    END CHILD
+  END HH_GATE
+  CHILD "HH_activation_44_44" "HH_activation_inserted_44"
+  END CHILD
+  CHANNEL "Kdr_bask_43_43"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    PARAMETERS
+      PARAMETER ( G_MAX = 
+        GENESIS2
+          (
+              PARAMETER ( scale = 1 ),
+              PARAMETER ( value = 0 ),
+          ), ),
+      PARAMETER ( Erev = -0.09 ),
+    END PARAMETERS
+    CHILD "HH_activation_44_44" "HH_activation"
+    END CHILD
+  END CHANNEL
+  CHILD "Kdr_bask_43_43" "Kdr_bask_43_56"
+    BINDINGS
+      INPUT ..->I,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( G_MAX = 0 ),
+    END PARAMETERS
+  END CHILD
+  CHILD "Kdr_bask_43_56" "Kdr_bask_inserted_56"
+  END CHILD
+  EQUATION_EXPONENTIAL "eq2_51_51"
+    PARAMETERS
+      PARAMETER ( TAU1 = ..->TAU1 ),
+      PARAMETER ( TAU2 = ..->TAU2 ),
+    END PARAMETERS
+  END EQUATION_EXPONENTIAL
+  CHILD "eq2_51_51" "eq2_inserted_51"
+  END CHILD
+  ATTACHMENT "synapse_52_52"
+  END ATTACHMENT
+  CHILD "synapse_52_52" "synapse_inserted_52"
+  END CHILD
+  CHANNEL "GABA_bask_50_50"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    PARAMETERS
+      PARAMETER ( G_MAX = 
+        GENESIS2
+          (
+              PARAMETER ( scale = 1 ),
+              PARAMETER ( value = 0 ),
+          ), ),
+      PARAMETER ( TAU2 = 0.008 ),
+      PARAMETER ( TAU1 = 0.003 ),
+      PARAMETER ( Erev = -0.08 ),
+    END PARAMETERS
+    CHILD "eq2_51_51" "eq2"
+    END CHILD
+    CHILD "synapse_52_52" "synapse"
+    END CHILD
+  END CHANNEL
+  CHILD "GABA_bask_50_50" "GABA_bask_50_57"
+    BINDINGS
+      INPUT ..->I,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( G_MAX = 0 ),
+    END PARAMETERS
+  END CHILD
+  CHILD "GABA_bask_50_57" "GABA_bask_inserted_57"
+  END CHILD
+  ATTACHMENT "spike_35_35"
+    PARAMETERS
+      PARAMETER ( output_amp = "1" ),
+      PARAMETER ( REFRACTORY = 0.001 ),
+      PARAMETER ( THRESHOLD = 0 ),
+    END PARAMETERS
+  END ATTACHMENT
+  CHILD "spike_35_35" "spike_35_58"
+  END CHILD
+  CHILD "spike_35_58" "spike_inserted_58"
+  END CHILD
+  SEGMENT "compartment_4_4"
+    PARAMETERS
+      PARAMETER ( RA = 0.3 ),
+      PARAMETER ( RM = 0.33333 ),
+      PARAMETER ( CM = 0.00999999 ),
+      PARAMETER ( INJECT = 0 ),
+      PARAMETER ( LENGTH = 0.0001 ),
+      PARAMETER ( DIA = 2e-06 ),
+      PARAMETER ( ELEAK = -0.07 ),
+    END PARAMETERS
+  END SEGMENT
+  CHILD "compartment_4_4" "soma_4_54"
+    BINDINGS
+      INPUT Na_bask->Vm,
+      INPUT Kdr_bask->Vm,
+      INPUT GABA_bask->Vm,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( INJECT = 0 ),
+      PARAMETER ( ELEAK = -0.065 ),
+      PARAMETER ( Vm_init = -0.065 ),
+      PARAMETER ( RM = 0.7 ),
+      PARAMETER ( CM = 0.015 ),
+      PARAMETER ( SURFACE = 5.02655e-09 ),
+      PARAMETER ( rel_Z = 0 ),
+      PARAMETER ( rel_Y = 0 ),
+      PARAMETER ( rel_X = 4e-05 ),
+      PARAMETER ( LENGTH = 4e-05 ),
+      PARAMETER ( DIA = 4e-05 ),
+      PARAMETER ( RA = 0.7 ),
+    END PARAMETERS
+    CHILD "Na_bask_inserted_55" "Na_bask"
+      PARAMETERS
+        PARAMETER ( G_MAX = 1000 ),
+      END PARAMETERS
+    END CHILD
+    CHILD "Kdr_bask_inserted_56" "Kdr_bask"
+      PARAMETERS
+        PARAMETER ( G_MAX = 500 ),
+      END PARAMETERS
+    END CHILD
+    CHILD "GABA_bask_inserted_57" "GABA_bask"
+      PARAMETERS
+        PARAMETER ( G_MAX = 1 ),
+      END PARAMETERS
+    END CHILD
+    CHILD "spike_inserted_58" "spike"
+    END CHILD
+  END CHILD
+  CHILD "soma_4_54" "soma_inserted_54"
+  END CHILD
+  EQUATION_EXPONENTIAL "eq2_48_48"
+    PARAMETERS
+      PARAMETER ( TAU1 = ..->TAU1 ),
+      PARAMETER ( TAU2 = ..->TAU2 ),
+    END PARAMETERS
+  END EQUATION_EXPONENTIAL
+  CHILD "eq2_48_48" "eq2_inserted_48"
+  END CHILD
+  ATTACHMENT "synapse_49_49"
+  END ATTACHMENT
+  CHILD "synapse_49_49" "synapse_inserted_49"
+  END CHILD
+  CHANNEL "AMPA_bask_47_47"
+    BINDABLES
+      INPUT Vm,
+      OUTPUT G,
+      OUTPUT I,
+    END BINDABLES
+    PARAMETERS
+      PARAMETER ( G_MAX = 
+        GENESIS2
+          (
+              PARAMETER ( scale = 1 ),
+              PARAMETER ( value = 0 ),
+          ), ),
+      PARAMETER ( TAU2 = 0.003 ),
+      PARAMETER ( TAU1 = 0.003 ),
+      PARAMETER ( Erev = 0 ),
+    END PARAMETERS
+    CHILD "eq2_48_48" "eq2"
+    END CHILD
+    CHILD "synapse_49_49" "synapse"
+    END CHILD
+  END CHANNEL
+  CHILD "AMPA_bask_47_47" "AMPA_bask_47_60"
+    BINDINGS
+      INPUT ..->I,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( FREQUENCY = 0 ),
+      PARAMETER ( G_MAX = 0 ),
+    END PARAMETERS
+  END CHILD
+  CHILD "AMPA_bask_47_60" "AMPA_bask_inserted_60"
+  END CHILD
+  SEGMENT "compartment_4_4"
+    PARAMETERS
+      PARAMETER ( RA = 0.3 ),
+      PARAMETER ( RM = 0.33333 ),
+      PARAMETER ( CM = 0.00999999 ),
+      PARAMETER ( INJECT = 0 ),
+      PARAMETER ( LENGTH = 0.0001 ),
+      PARAMETER ( DIA = 2e-06 ),
+      PARAMETER ( ELEAK = -0.07 ),
+    END PARAMETERS
+  END SEGMENT
+  CHILD "compartment_4_4" "dend_4_59"
+    BINDINGS
+      INPUT AMPA_bask->Vm,
+    END BINDINGS
+    PARAMETERS
+      PARAMETER ( ELEAK = -0.065 ),
+      PARAMETER ( Vm_init = -0.065 ),
+      PARAMETER ( RM = 0.7 ),
+      PARAMETER ( CM = 0.015 ),
+      PARAMETER ( SURFACE = 1.25664e-09 ),
+      PARAMETER ( rel_Z = 0 ),
+      PARAMETER ( rel_Y = 0 ),
+      PARAMETER ( rel_X = 0.0002 ),
+      PARAMETER ( LENGTH = 0.0002 ),
+      PARAMETER ( DIA = 2e-06 ),
+      PARAMETER ( RA = 0.7 ),
+      PARAMETER ( PARENT = ../soma ),
+    END PARAMETERS
+    CHILD "AMPA_bask_inserted_60" "AMPA_bask"
+      PARAMETERS
+        PARAMETER ( G_MAX = 0.795775 ),
+      END PARAMETERS
+    END CHILD
+  END CHILD
+  CHILD "dend_4_59" "dend_inserted_59"
+  END CHILD
+  CELL "cell_53_53"
+    CHILD "soma_inserted_54" "soma"
+    END CHILD
+    CHILD "dend_inserted_59" "dend"
+    END CHILD
+  END CELL
+  CHILD "cell_53_53" "cell_inserted_53"
+  END CHILD
+END PRIVATE_MODELS
+PUBLIC_MODELS
+  CHILD "cell_53_53" "cell"
+  END CHILD
+END PUBLIC_MODELS
