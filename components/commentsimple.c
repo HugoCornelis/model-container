@@ -182,28 +182,28 @@ void CommentSimpleInit(struct symtab_CommentSimple *pcomms)
 
     pcomms->hsle.iType = HIERARCHY_TYPE_symbols_comment_simple;
 
-    //- create default bindables for the CommentSimple.
+/*     //- create default bindables for the CommentSimple. */
 
-    static char *ppcParameters[] = {
-	"TEXT",
-	NULL,
-    };
+/*     static char *ppcParameters[] = { */
+/* 	"TEXT", */
+/* 	NULL, */
+/*     }; */
 
-    static int piTypes[] = {
-	INPUT_TYPE_INPUT,
-	INPUT_TYPE_OUTPUT,
-	INPUT_TYPE_OUTPUT,
-	INPUT_TYPE_INVALID,
-    };
+/*     static int piTypes[] = { */
+/* 	INPUT_TYPE_INPUT, */
+/* 	INPUT_TYPE_OUTPUT, */
+/* 	INPUT_TYPE_OUTPUT, */
+/* 	INPUT_TYPE_INVALID, */
+/*     }; */
 
-    static struct symtab_IOContainer *piocCommentSimpleDefault = NULL;
+/*     static struct symtab_IOContainer *piocCommentSimpleDefault = NULL; */
 
-    if (!piocCommentSimpleDefault)
-    {
-	piocCommentSimpleDefault = IOContainerNewFromList(ppcParameters, piTypes);
-    }
+/*     if (!piocCommentSimpleDefault) */
+/*     { */
+/* 	piocCommentSimpleDefault = IOContainerNewFromList(ppcParameters, piTypes); */
+/*     } */
 
-    SymbolAssignBindableIO(&pcomms->hsle, piocCommentSimpleDefault);
+/*     SymbolAssignBindableIO(&pcomms->hsle, piocCommentSimpleDefault); */
 }
 
 
