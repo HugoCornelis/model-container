@@ -3486,6 +3486,25 @@ my $test
 						 ],
 				description => "syntax of cells/squidcell.ndf",
 			       },
+			       {
+				arguments => [
+					      '-v',
+					      '1',
+					      '-p',
+					      '-q',
+					      '-R',
+					      'cells/BDK5cell2.ndf',
+					     ],
+				command => './neurospacesparse',
+				command_tests => [
+						  {
+						   description => "Is neurospaces startup successful (cells/BDK5cell2.ndf) ?",
+						   read => [ '-re', './neurospacesparse: No errors for .+?/cells/BDK5cell2.ndf.', ],
+						   timeout => 5,
+						  },
+						 ],
+				description => "syntax of cells/BDK5cell2.ndf",
+			       },
 			      ],
        description => "general syntax of library files",
        name => 'parsing.t',
