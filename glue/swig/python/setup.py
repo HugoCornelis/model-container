@@ -217,7 +217,7 @@ OPTIONS={
         'license' : '%s/license.txt' % home_dir,
 
         }
-    }
+g    }
 
 PLATFORMS=["Unix", "Lunix", "MacOS X"]
 
@@ -499,13 +499,27 @@ class NMCModule(Extension):
 
 home_dir = ''
 
-if os.getenv('USER') == 'root':
 
-    home_dir = os.path.expanduser("~%s" % os.getenv('SUDO_USER'))
+if os.getenv('USER') == 'root' or os.getenv('LOGNAME') == 'root':
+
+    _user = os.getenv('SUDO_USER')
+
+    if _user is None:
+
+        _user = os.getenv('LOGNAME')
+        
+    home_dir = os.path.expanduser("~%s" % _user)
 
 else:
+
+    _home = os.getenv('HOME')
+
+    if _home is None:
+
+        _home = os.getenv('USERPROFILE')
     
-    home_dir = os.getenv('HOME') or os.getenv('USERPROFILE')
+    home_dir = _home
+
 
 
 _model_container_dir = os.path.join(home_dir,
