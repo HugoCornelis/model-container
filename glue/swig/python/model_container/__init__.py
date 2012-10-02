@@ -490,7 +490,11 @@ class ModelContainer:
 
         else:
 
-            raise Exception("Invalid type: %s" % typ)
+            # here we use a generic call to create a symbol of any type
+            # need to be careful, can't check for types or errors here.
+            result = symbols.Symbol(self, path, typ, self._nmc_core)
+            
+#            raise Exception("Invalid type: %s" % typ)
 
         return result
 
