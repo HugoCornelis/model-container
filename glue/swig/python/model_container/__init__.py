@@ -151,7 +151,7 @@ class ModelContainer:
 
         command = "insert %s %s" % (source, target) 
         
-        self.Query(commmand)
+        self.Query(command)
 
 #---------------------------------------------------------------------------
 
