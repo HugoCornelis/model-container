@@ -217,7 +217,7 @@ OPTIONS={
         'license' : '%s/license.txt' % home_dir,
 
         }
-g    }
+    }
 
 PLATFORMS=["Unix", "Lunix", "MacOS X"]
 
