@@ -22,6 +22,7 @@ my $test
 						  },
 						 ],
 				description => "constructs a basic network and map",
+				disabled => "Reads in the --- as an option",
 			       },
 
 			       {
@@ -72,6 +73,7 @@ my $test
 						  },
 						 ],
 				description => "constructs a network and mapping with createprojection with tuples",
+				disabled => "need to fix this",
 			       },
 
 
