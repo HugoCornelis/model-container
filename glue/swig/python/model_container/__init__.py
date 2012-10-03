@@ -17,6 +17,7 @@ __status__ = "Development"
 
 import os
 import pdb
+import re
 import sys
 
 try:
@@ -242,10 +243,51 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
-    def SetParameter(self, path, parameter, value):
+    def SetParameter(self, path, parameter, value, value_type=None):
+        """
+
+        """
+
+        _value_type = None
+
+        if not value_type is None:
+
+            _value_type = value_type
+
+        else:
+
+           if isinstance(value, (int, long, float, complex)):
+
+               _value_type = 'number'
+
+           elif isinstance(value, str):
+
+               if re.search("->", path):
+
+                   _value_type = 'field'
+
+               elif re.search('/', path):
+
+                   _value_type = 'symbolic'
+
+               else:
+
+                   _value_type = 'string'
+
+           else:
+
+               raise Exception("Can't set parameter '%s' on '%s' with value '%s', can't determine parameter type" % (parameter, path, value))
+
+        command = "setparameterconcept %s %s %s %s" % (path, parameter, _value_type, value)
+
+        self.Query(command)
+
+#---------------------------------------------------------------------------
+
+    def _SetParameter(self, path, parameter, value):
         """!
         @brief Sets a parameter value to a symbol in the model container.
-
+        @deprecated Doesn't work like it should, should use the query machine
         Not complete, only sets doubles at the moment.
         """
         
@@ -389,6 +431,10 @@ class ModelContainer:
 
         So far only sets numbers. The only examples present set numbers.
         """
+
+        parameter_type = None
+
+
 
         set_command = "setparameterconcept %s %s %s %s" % (path, parameter,
                                                            "number", str(value))
