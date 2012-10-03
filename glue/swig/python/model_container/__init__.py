@@ -271,7 +271,10 @@ class ModelContainer:
             if self._IsNumber(value):
 
                 nmc_base.SymbolSetParameterDouble(phsle, parameter, float(value))
-            
+
+            else:
+
+                nmc_base.SymbolSetParameterString(phsle, parameter, value)               
 
         else:
 
