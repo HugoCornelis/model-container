@@ -17,6 +17,8 @@ except ImportError, e:
 
 
 
+class SymbolError(Exception):
+    pass
 
 
 #*************************** Start Symbol **************************
@@ -233,7 +235,9 @@ class Symbol:
 
     def _ConvertType(self, t):
 
-        parts = t.split('_')
+        _type = t
+
+        parts = _type.split('_')
 
         cparts = []
         
@@ -254,6 +258,19 @@ class Symbol:
         An internal helper method that creates a name and symbol
         """
 
+        if typ == 'single_connection':
+
+            _type = 'connection_symbol'
+
+        elif typ == 'single_connection_group':
+
+            _type = 'connection_symbol_group'
+
+        else:
+
+            _type = typ
+            
+
         allocated_symbol = None
 
         path_parts = path.split('/', 1)
@@ -262,13 +279,19 @@ class Symbol:
 
         name = path_parts[1]
 
-        c_type = self._ConvertType(typ)
+        c_type = self._ConvertType(_type)
 
         allocator = ''.join([c_type, "Calloc()"])
 
         allocate_command = "nmc_base.%s" % allocator
 
-        allocated_symbol = eval(allocate_command)
+        try:
+            
+            allocated_symbol = eval(allocate_command)
+
+        except AttributeError, e:
+
+            raise SymbolError("Can't create '%s' of type '%s', '%s' is not a valid type" % (path, _type, _type))
 
 
         if allocated_symbol is None:
@@ -282,14 +305,19 @@ class Symbol:
             cast_command = "nmc_base.cast_group_2_symbol(allocated_symbol)"
 
         else:
+                
+                cast_command = "nmc_base.cast_%s_2_symbol(allocated_symbol)" % _type
 
-            cast_command = "nmc_base.cast_%s_2_symbol(allocated_symbol)" % typ
-
-        
+            
         pidin = nmc_base.IdinCallocUnique(name)
-        
 
-        casted_allocated_symbol = eval(cast_command)
+        try:
+            
+            casted_allocated_symbol = eval(cast_command)
+
+        except AttributeError, e:
+
+            raise SymbolError("Can't create '%s' of type '%s', no caster found" % (path, _type))
 
         nmc_base.SymbolSetName(casted_allocated_symbol, pidin)
 
@@ -297,27 +325,27 @@ class Symbol:
 
         if context is None:
 
-            raise Exception("Symbol Error: Cannot create context out of path '%s' (does it exist?)" % parent_path)
+            raise SymbolError("Cannot create context out of path '%s' (does it exist?)" % parent_path)
 
         parent = nmc_base.SymbolsLookupHierarchical(self._nmc_core.psym, context)
 
         if parent is None:
 
-            raise Exception("Symbol Error: Cannot find parent symbol '%s'" % parent_path)
+            raise SymbolError("Cannot find parent symbol '%s'" % parent_path)
 
 
         add_child_result = nmc_base.SymbolAddChild(parent, casted_allocated_symbol)
 
         if add_child_result == 0:
 
-            raise Exception("Symbol Error: Can't add child symbol to '%s'" % path)
+            raise SymbolError("Can't add child symbol to '%s'" % path)
 
 
         recalc_result = nmc_base.SymbolRecalcAllSerials(None,None)
 
         if recalc_result == 0:
 
-            raise Exception("Symbol Error: Can't recalculate serials when creating '%s'" % path)
+            raise SymbolError("Can't recalculate serials when creating '%s'" % path)
 
 
         # set the attributes at the end
@@ -326,7 +354,7 @@ class Symbol:
         
         self.name = name
 
-        self.type = typ
+        self.type = _type
         
         self.symbol = casted_allocated_symbol
 
