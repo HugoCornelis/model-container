@@ -261,12 +261,16 @@ class ModelContainer:
                _value_type = 'number'
 
            elif isinstance(value, str):
+               
+               if self._IsNumber(value):
 
-               if re.search("->", path):
+                   _value_type = 'number'
+                   
+               elif re.search("->", value):
 
                    _value_type = 'field'
 
-               elif re.search('/', path):
+               elif re.search('/', value):
 
                    _value_type = 'symbolic'
 
