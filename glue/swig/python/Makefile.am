@@ -37,7 +37,7 @@ setup: setup.py
 	$(PYTHON) setup.py build
 	$(PYTHON) setup.py build_py
 	$(PYTHON) setup.py bdist
-	$(PYTHON) setup.py bdist_egg
+	$(PYTHON) egg_build.py
 
 install-exec-hook:
 	$(PYTHON) setup.py install
