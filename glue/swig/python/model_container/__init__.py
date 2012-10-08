@@ -870,7 +870,7 @@ class ModelContainer:
         
 #---------------------------------------------------------------------------
 
-    def CreateProjection(self, configuration=None, network=None, probability=1.0, random_seed=1212.0,
+    def CreateProjection(self, configuration=None, network=None, projection=None, probability=1.0, random_seed=1212.0,
                          source=None, target=None, target_hole=None, synapse=None):
 
         """!
@@ -1093,64 +1093,132 @@ class ModelContainer:
 
                 arguments['network'] = network
 
+            else:
+
+                raise Exception("No argument given for 'network'")
+
+
+            if not projection is None:
+
+                arguments['projection'] = projection
+
+            else:
+
+                raise Exception("No argument given for 'projection'")
+
+
             if not probability is None:
 
                 arguments['probability'] = probability
 
+            else:
+
+                raise Exception("No argument given for 'probability'")
+
+
             if not random_seed is None:
 
                 arguments['random_seed'] = random_seed
+
+            else:
+
+                raise Exception("No argument given for 'random_seed'")
+
                 
             if not source is None:
 
-                arguments['projection_source'] = source[0]
-                arguments['source_type'] = source[1]
-                arguments['source_x1'] = source[2]
-                arguments['source_y1'] = source[3]
-                arguments['source_z1'] = source[4]
-                arguments['source_x2'] = source[5]
-                arguments['source_y2'] = source[6]
-                arguments['source_z2'] = source[7]
+                try:
+                    
+                    arguments['projection_source'] = source[0]
+                    arguments['source'] = source[0]
+                    arguments['source_type'] = source[1]
+                    arguments['source_x1'] = source[2]
+                    arguments['source_y1'] = source[3]
+                    arguments['source_z1'] = source[4]
+                    arguments['source_x2'] = source[5]
+                    arguments['source_y2'] = source[6]
+                    arguments['source_z2'] = source[7]
+
+                except Exception:
+
+                    raise Exception("Invalid source tuple: (source, source_type, source_x1, source_y1, source_z1, source_x2, source_y2, source_z2)")
+
+            else:
+
+                raise Exception("No argument given for 'source'")
+
 
             if not target is None:
 
-                arguments['projection_target'] = source[0]
-                arguments['destination_type'] = source[1]
-                arguments['destination_x1'] = source[2]
-                arguments['destination_y1'] = source[3]
-                arguments['destination_z1'] = source[4]
-                arguments['destination_x2'] = source[5]
-                arguments['destination_y2'] = source[6]
-                arguments['destination_z2'] = source[7]
+                try:
+                    
+                    arguments['projection_target'] = target[0]
+                    arguments['target'] = target[0]
+                    arguments['destination_type'] = target[1]
+                    arguments['destination_x1'] = target[2]
+                    arguments['destination_y1'] = target[3]
+                    arguments['destination_z1'] = target[4]
+                    arguments['destination_x2'] = target[5]
+                    arguments['destination_y2'] = target[6]
+                    arguments['destination_z2'] = target[7]
+
+                except Exception:
+
+                    raise Exception("Invalid target tuple: (target, destination_type, destination_x1, destination_y1, destination_z1, destination_x2, destination_y2, destination_z2)")
+
+            else:
+
+                raise Exception("No argument given for 'target'")
+
 
 
             if not target_hole is None:
 
-                arguments['destination_hole_flag'] = 'destination_hole_flag'
-                arguments['destination_hole_type'] = source[0]
-                arguments['destination_hole_x1'] = source[1]
-                arguments['destination_hole_y1'] = source[2]
-                arguments['destination_hole_z1'] = source[3]
-                arguments['destination_hole_x2'] = source[4]
-                arguments['destination_hole_y2'] = source[5]
-                arguments['destination_hole_z2'] = source[6]
+                try:
+                    
+                    arguments['destination_hole_flag'] = 'destination_hole_flag'
+                    arguments['destination_hole_type'] = target_hole[0]
+                    arguments['destination_hole_x1'] = target_hole[1]
+                    arguments['destination_hole_y1'] = target_hole[2]
+                    arguments['destination_hole_z1'] = target_hole[3]
+                    arguments['destination_hole_x2'] = target_hole[4]
+                    arguments['destination_hole_y2'] = target_hole[5]
+                    arguments['destination_hole_z2'] = target_hole[6]
+
+                except Exception:
+
+                    raise Exception("Invalid target_hole tuple: (destination_hole_flag, destination_hole_type, destination_hole_x1, destination_hole_y1, destination_hole_z1, destination_hole_x2, destination_hole_y2, destination_hole_z2)")
+
+            else:
+
+                raise Exception("No argument given for 'target_hole'")
 
             if not synapse is None:
 
-                arguments['delay_indicator'] = 'delay'
-                arguments['delay_type'] = synapse[0]
-                arguments['delay'] = synapse[1]
-                arguments['weight_indicator'] = 'weight'
-                arguments['weight'] = synapse[2]
-                arguments['velocity_indicator'] = 'velocity'
-                arguments['velocity'] = synapse[3]
-                arguments['pre'] = synapse[4]
-                arguments['post'] = synapse[5]
+                try:
+                    
+                    arguments['delay_indicator'] = 'delay'
+                    arguments['delay_type'] = synapse[0]
+                    arguments['delay'] = synapse[1]
+                    arguments['weight_indicator'] = 'weight'
+                    arguments['weight'] = synapse[2]
+                    arguments['velocity_indicator'] = 'velocity'
+                    arguments['velocity'] = synapse[3]
+                    arguments['pre'] = synapse[4]
+                    arguments['post'] = synapse[5]
+
+                except Exception:
+
+                    raise Exception("Invalid synapse tuple: (delay_type, delay, weight, velocity, pre, post)")
+
+            else:
+
+                raise Exception("No argument given for 'synapse'")
 
 
 
 
-
+        pdb.set_trace()
         self.VolumeConnect(**arguments)
 
 #---------------------------------------------------------------------------
@@ -1194,6 +1262,7 @@ class ModelContainer:
                                                                                                                                                                                      destination_hole_x2, destination_hole_y2, destination_hole_z2,
                                                                                                                                                                                      probability, random_seed)
 
+        pdb.set_trace()
 # valid line: algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0
 #        command = "algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0"
 

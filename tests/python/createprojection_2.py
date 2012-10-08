@@ -37,6 +37,7 @@ my_model_container.CreateMap('::rscell::/cell', '/RSNet/population', nx, ny, sep
 
 
 my_model_container.CreateProjection(network='/RSNet',
+                                    projection='/RSNet/projection',
                                     probability=1.0,
                                     random_seed=1212.0,
                                     source=('/RSNet/population', 'box', -1e10, -1e10, -1e10, 1e10, 1e10, 1e10),
@@ -44,7 +45,6 @@ my_model_container.CreateProjection(network='/RSNet',
                                     target_hole=('box', sep_x *0.5, sep_y * 0.5, sep_z * 0.5, sep_x * 05, sep_y * 0.5, sep_z * 0.5),
                                     synapse=('fixed', prop_delay, syn_weight, 0.5, 'spike', 'Ex_channel')
                                     )
-
 
 
 print "Done!"

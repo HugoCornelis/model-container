@@ -73,7 +73,6 @@ my $test
 						  },
 						 ],
 				description => "constructs a network and mapping with createprojection with tuples",
-				disabled => "need to fix this",
 			       },
 
 
