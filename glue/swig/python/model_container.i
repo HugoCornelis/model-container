@@ -92,6 +92,11 @@ PyObject * RegisterDESSolver(struct Neurospaces *pneuro, struct simobj_DES *pdes
 PyObject * RegisterHeccerSolver(struct Neurospaces *pneuro, struct simobj_Heccer *pheccer, 
 				 struct PidinStack *ppist, char *pcSolver);
 
+
+PyObject * GetSolverRegistryDict(struct Neurospaces *pneuro, char *pcPath);
+
+struct SolverInfo * GetSolverRegistry(struct Neurospaces *pneuro, char *pcPath);
+
 //------------------------------------------------------------------------------
 
 PyObject * PyBNDFLoadLibrary(struct Neurospaces *pneuro, char *pcNamespace, char *pcFilename)
@@ -355,6 +360,89 @@ PyObject * RegisterHeccerSolver(struct Neurospaces *pneuro, struct simobj_Heccer
 }
 
 //------------------------------------------------------------------------------
+
+struct SolverInfo * GetSolverRegistry(struct Neurospaces *pneuro, char *pcPath)
+{
+
+  struct PidinStack *ppist = NULL;
+  char pcContext[1000];
+  char pcErrorMsg[2048];
+  struct SolverInfo * psi = NULL;
+
+  ppist = PidinStackParse(pcPath);
+
+  if( !pneuro || !pneuro->psr )
+  {
+    PidinStackString(ppist, pcContext, 1000);
+
+    snprintf(pcErrorMsg, 2048, "Solver Registry Error: No solver registry has been allocated");
+    PyErr_SetString(PyExc_Exception, pcErrorMsg);
+    return NULL;
+  }
+
+
+  psi = SolverRegistryGet(pneuro->psr, ppist);
+
+  PidinStackFree(ppist);
+
+  if(!psi)
+  {
+    PidinStackString(ppist, pcContext, 1000);
+    snprintf(pcErrorMsg, 2048, "Solver Registry Error: No solver registered to '%s'", pcContext);
+    PyErr_SetString(PyExc_Exception, pcErrorMsg);
+    return NULL;  
+  }
+
+  
+  return psi;
+
+}
+
+//------------------------------------------------------------------------------
+
+PyObject * GetSolverRegistryDict(struct Neurospaces *pneuro, char *pcPath)
+{
+
+  PyObject *ppoSolverInfo = NULL;
+  PyObject *ppoTmp = NULL;
+  struct SolverInfo * psi = NULL;
+  char pcContext[1000];
+  char pcErrorMsg[2048];
+
+  psi = GetSolverRegistry(pneuro, pcPath);
+
+
+  if( !psi )
+  {
+    //- Shouldn't get here if there's an error but doing this anyway
+    snprintf(pcErrorMsg, 2048, "Solver Registry Error: No solver registered to '%s'", pcPath);
+    PyErr_SetString(PyExc_Exception, pcErrorMsg);
+    return NULL;  
+  }
+
+
+  ppoSolverInfo = PyDict_New();
+
+  if( !ppoSolverInfo )
+  {
+    snprintf(pcErrorMsg, 2048, "Solver Registry Error: Can't allocate silver info dictionary for '%s'", pcPath);
+    PyErr_SetString(PyExc_MemoryError, pcErrorMsg);
+    return NULL;
+  }
+
+
+  ppoTmp = PyString_FromString(psi->pcSolver);
+
+  PyDict_SetItemString(ppoSolverInfo, "solver", ppoTmp);  
+  
+  ppoTmp = NULL;
+
+  return ppoSolverInfo;
+
+}
+
+//------------------------------------------------------------------------------
+
 
 %}
 //------------------------- End of Inline functons  ---------------------------

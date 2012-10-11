@@ -760,11 +760,14 @@ class ModelContainer:
 
 #---------------------------------------------------------------------------
 
-    def Query(self, command):
+    def query(self, command):
         """!
         @brief submit querymachine commands to the model container
         """
         result = nmc_base.QueryMachineHandle(self._nmc_core, command)
+
+    # alias
+    Query = query
 
 # fix this after seeing if a passed command passes 0 or 1
 #         if result == 0:
@@ -773,7 +776,7 @@ class ModelContainer:
     
 #---------------------------------------------------------------------------
 
-    def GetSerial(self, path):
+    def get_serial(self, path):
         """
         @brief A simple method for retrieving a serial
         """
@@ -785,8 +788,17 @@ class ModelContainer:
 
         nmc_base.PidinStackFree(context)
 
-        return serial
+        if serial >= sys.maxint:
 
+            return None
+
+        else:
+            
+            return serial
+
+    # alias
+    GetSerial = get_serial
+    
 #---------------------------------------------------------------------------
 
     def ReadPython(self, filename):
@@ -839,7 +851,27 @@ class ModelContainer:
 
             raise Exception("Can't register solver, invalid type '%s'" % solver_type)
 
+#---------------------------------------------------------------------------
 
+    def OutputToSolverinfo(self, path, field):
+        """
+
+        """
+
+        solver_info = nmc_base.GetSolverRegistryDict(self._nmc_core, path)
+
+        serial = self.GetSerial(path)
+
+        if serial is None:
+
+            raise Exception("Can't get solver info for '%s', no solver registered" % path)
+
+        solver_info['serial'] = serial
+
+        solver_info['type'] = field
+
+        return solver_info
+        
 #---------------------------------------------------------------------------
 
     def ProjectionQuerySet(self, projection):
@@ -1218,7 +1250,6 @@ class ModelContainer:
 
 
 
-        pdb.set_trace()
         self.VolumeConnect(**arguments)
 
 #---------------------------------------------------------------------------
@@ -1262,7 +1293,6 @@ class ModelContainer:
                                                                                                                                                                                      destination_hole_x2, destination_hole_y2, destination_hole_z2,
                                                                                                                                                                                      probability, random_seed)
 
-        pdb.set_trace()
 # valid line: algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0
 #        command = "algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0"
 
