@@ -262,6 +262,8 @@ PyObject * RegisterChemesis3Solver(struct Neurospaces *pneuro, struct simobj_Che
     PyErr_SetString(PyExc_Exception, pcErrorMsg);
     return NULL;
   }
+  
+  psr = pneuro->psr;
 
   piResult = SolverRegistryAddFromContext(psr, (void*)pch3, ppist, pcSolver);
 
@@ -302,6 +304,8 @@ PyObject * RegisterDESSolver(struct Neurospaces *pneuro, struct simobj_DES *pdes
     return NULL;
   }
 
+  psr = pneuro->psr;
+
   piResult = SolverRegistryAddFromContext(psr, (void*)pdes, ppist, pcSolver);
 
   if( !piResult )
@@ -340,6 +344,8 @@ PyObject * RegisterHeccerSolver(struct Neurospaces *pneuro, struct simobj_Heccer
     PyErr_SetString(PyExc_Exception, pcErrorMsg);
     return NULL;
   }
+
+  psr = pneuro->psr;
 
   piResult = SolverRegistryAddFromContext(psr, (void*)pheccer, ppist, pcSolver);
 
