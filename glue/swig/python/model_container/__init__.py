@@ -104,6 +104,12 @@ class ModelContainer:
 
             nmc_base.ImportedFileSetRootImport(pif)
 
+
+
+        # some internal variables for keeping track of things
+        self._projections = []
+        self._pqset = False
+
 #---------------------------------------------------------------------------
 
     def CheckEnvironment(self):
@@ -874,13 +880,13 @@ class ModelContainer:
         
 #---------------------------------------------------------------------------
 
+
     def ProjectionQuerySet(self, projection):
         """!
         Takes either a list of projections of a single projection.
 
         """
-
-        # collect all projections
+        
         p = ''
 
         if isinstance(projection, (list, tuple)):
@@ -893,12 +899,34 @@ class ModelContainer:
 
         else:
 
-            raise Exception("Argument must be a single string or a list of strings with projections")
+            raise errors.ProjectionError("Argument must be a single string or a list of strings with projections")
         
         pq_command = "pqset c %s" % p
 
         result = self.Query(pq_command)
 
+#---------------------------------------------------------------------------
+
+    def SetAllProjectionQueries(self):
+        """
+
+        """
+
+        if self._pqset:
+
+            raise errors.ProjectionError("Projection queries have already been set")
+        
+        else:
+
+            if len(self._projections) < 1:
+                # if there are no projections stored then we just
+                # return, nothing to do. And no reason to flag it as
+                # set in case it gets projections later.
+                return
+                
+            self.ProjectionQuerySet(self._projections)
+
+            self._pqset = True
         
 #---------------------------------------------------------------------------
 
@@ -1251,6 +1279,8 @@ class ModelContainer:
 
 
         self.VolumeConnect(**arguments)
+
+        self._projections.append(projection)
 
 #---------------------------------------------------------------------------
 

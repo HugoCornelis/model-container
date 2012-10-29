@@ -5,6 +5,8 @@ This file contains custom exception error objects
 for use in reporting errors in nmc.
 """
 
+class ProjectionError(Exception):
+    pass
 
 #*************************** Begin NoOutputFilenameError ************************
 
