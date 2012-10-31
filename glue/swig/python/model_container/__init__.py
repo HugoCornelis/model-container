@@ -910,6 +910,7 @@ class ModelContainer:
     def SetAllProjectionQueries(self):
         """
 
+        This set of commands constructs the connection matrix.
         """
 
         if self._pqset:
@@ -927,7 +928,15 @@ class ModelContainer:
             self.ProjectionQuerySet(self._projections)
 
             self._pqset = True
-        
+
+#---------------------------------------------------------------------------
+
+    def ProjectionIndicesBuilt(self):
+        """
+
+        """
+        return self._pqset
+    
 #---------------------------------------------------------------------------
 
     def CreateProjection(self, configuration=None, network=None, projection=None, probability=1.0, random_seed=1212.0,
