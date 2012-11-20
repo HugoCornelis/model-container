@@ -37,6 +37,8 @@ except ImportError, e:
     sys.exit("Could not import the model container symbols module: %s" % e)
 
 
+# contains several of the default error messages
+import errors
 
 #************************* Begin ModelContainer **************************
 class ModelContainer:
