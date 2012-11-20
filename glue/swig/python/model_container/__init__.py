@@ -893,11 +893,11 @@ class ModelContainer:
 
         if isinstance(projection, (list, tuple)):
 
-            p = ' '.join(projections)
+            p = ' '.join(projection)
 
         elif isinstance(projection, str):
 
-            p = projections
+            p = projection
 
         else:
 
@@ -920,7 +920,7 @@ class ModelContainer:
             raise errors.ProjectionError("Projection queries have already been set")
         
         else:
-
+            
             if len(self._projections) < 1:
                 # if there are no projections stored then we just
                 # return, nothing to do. And no reason to flag it as
