@@ -2987,13 +2987,15 @@ int SymbolRecalcAllSerials
 
 int
 SymbolSetAlgorithmInstanceInfo
-(struct symtab_HSolveListElement *phsle,struct AlgorithmInstance *palgi)
+(struct symtab_HSolveListElement *phsle, struct AlgorithmInstance *palgi)
 {
     //- set default result : failure
 
     int bResult = FALSE;
 
-    if (!phsle->palgi)
+    //- if there is no algorithm info yet
+
+    if (!SymbolGetAlgorithmInstanceInfo(phsle))
     {
 	//- add algorithm info
 
@@ -3001,7 +3003,7 @@ SymbolSetAlgorithmInstanceInfo
 
 /* 	//- set flag for algorithm info */
 
-/* 	SymbolSetFlags(phsle,FLAGS_HSLE_ALGORITHM); */
+/* 	SymbolSetFlags(phsle, FLAGS_HSLE_ALGORITHM); */
 
 	//- set result : success
 
