@@ -183,7 +183,7 @@ struct symtab_HSolveListElement
 
 /* #define FLAGS_HSLE_SOLVER_INFO		4 */
 
-/* /// \def symbol has been created by algorithm */
+/* /// \def symbol has been created by an algorithm */
 
 /* #define FLAGS_HSLE_ALGORITHM		8 */
 
