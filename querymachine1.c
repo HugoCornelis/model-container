@@ -1818,15 +1818,31 @@ void QueryMachineInput(char *pcLine, int iReadline)
 
 	//- get input from user
 
-	fgets(pcLine, SIZE_COMMANDLINE, stdin);
-
-	//- remove pending newline, compatibility with readline
-
-	int iLength = strlen(pcLine);
-
-	if (pcLine[iLength - 1] == '\n')
+	if (NULL == fgets(pcLine, SIZE_COMMANDLINE, stdin))
 	{
-	    pcLine[iLength - 1] = '\0';
+	    if (!ferror(stdin))
+	    {
+		fprintf(stdout, "stream closed\n");
+	    }
+	    else
+	    {
+		fprintf(stdout, "error on stdin stream\n");
+
+		fprintf(stderr, "*** error on stdin\n");
+	    }
+
+	    iDone = TRUE;
+	}
+	else
+	{
+	    //- remove pending newline, compatibility with readline
+
+	    int iLength = strlen(pcLine);
+
+	    if (pcLine[iLength - 1] == '\n')
+	    {
+		pcLine[iLength - 1] = '\0';
+	    }
 	}
     }
 }

@@ -728,12 +728,12 @@ QueryHandlerExport
 	return(FALSE);
     }
 
-    if (IdinIsNamespaced(pidinWildcard))
-    {
-	fprintf(stdout, "wildcard expansion cannot be combined with namespaces.\n");
+/*     if (IdinIsNamespaced(pidinWildcard)) */
+/*     { */
+/* 	fprintf(stdout, "wildcard expansion cannot be combined with namespaces.\n"); */
 
-	return(FALSE);
-    }
+/* 	return(FALSE); */
+/*     } */
 
     int iSuccess = SymbolRecalcAllSerials(NULL, NULL);
 
