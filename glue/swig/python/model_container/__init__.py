@@ -993,7 +993,7 @@ class ModelContainer:
                          destination_hole_z2='',
                          probability='',
                          random_seed='')
-
+        pdb.set_trace()
         if not configuration is None:
 
             if configuration.has_key('root'): 
@@ -1250,7 +1250,7 @@ class ModelContainer:
 
                 try:
                     
-                    arguments['destination_hole_flag'] = 'destination_hole_flag'
+                    arguments['destination_hole_flag'] = 'destination_hole'
                     arguments['destination_hole_type'] = target_hole[0]
                     arguments['destination_hole_x1'] = target_hole[1]
                     arguments['destination_hole_y1'] = target_hole[2]
@@ -1291,7 +1291,7 @@ class ModelContainer:
 
 
 
-
+#        pdb.set_trace()
         self.VolumeConnect(**arguments)
 
         self._projections.append(projection)
@@ -1323,26 +1323,157 @@ class ModelContainer:
         instance_name = "projectionvolume_%s_%s" % (network.replace('/', '_'),
                                                     projection.replace('/', '_'))
 
-        command = "algorithminstantiate ProjectionVolume %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s" % (instance_name, network, projection,
-                                                                                                                                                                                     projection_source, projection_target,
-                                                                                                                                                                                     source, target, pre, post, source_type,
-                                                                                                                                                                                     source_x1, source_y1, source_z1,
-                                                                                                                                                                                     source_x2, source_y2, source_z2,
-                                                                                                                                                                                     destination_type, destination_x1, destination_y1, destination_z1,
-                                                                                                                                                                                     destination_x2, destination_y2, destination_z2,
-                                                                                                                                                                                     weight_indicator, weight, delay_indicator, delay_type, delay,
-                                                                                                                                                                                     velocity_indicator, velocity,
-                                                                                                                                                                                     destination_hole_flag, destination_hole_type,
-                                                                                                                                                                                     destination_hole_x1, destination_hole_y1, destination_hole_z1,
-                                                                                                                                                                                     destination_hole_x2, destination_hole_y2, destination_hole_z2,
-                                                                                                                                                                                     probability, random_seed)
+#         command = "algorithminstantiate ProjectionVolume %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s" % (instance_name, network, projection,
+#                                                                                                                                                                                      projection_source, projection_target,
+
+#                                                                                                                                                                                      source, target, pre, post, source_type,
+#                                                                                                                                                                                      source_x1, source_y1, source_z1,
+#                                                                                                                                                                                      source_x2, source_y2, source_z2,
+#                                                                                                                                                                                      destination_type, destination_x1, destination_y1, destination_z1,
+#                                                                                                                                                                                      destination_x2, destination_y2, destination_z2,
+#                                                                                                                                                                                      weight_indicator, weight, delay_indicator, delay_type, delay,
+#                                                                                                                                                                                      velocity_indicator, velocity,
+#                                                                                                                                                                                      destination_hole_flag, destination_hole_type,
+#                                                                                                                                                                                      destination_hole_x1, destination_hole_y1, destination_hole_z1,
+#                                                                                                                                                                                      destination_hole_x2, destination_hole_y2, destination_hole_z2,
+#                                                                                                                                                                                      probability, random_seed)
+
+
+#         command = "algorithminstantiate ProjectionVolume %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s" % (instance_name, network, projection,
+#                                                                                                                                                                                      projection_source, projection_target,
+
+#                                                                                                                                                                                      source, target, pre, post, source_type,
+#                                                                                                                                                                                      source_x1, source_y1, source_z1,
+#                                                                                                                                                                                      source_x2, source_y2, source_z2,
+#                                                                                                                                                                                      destination_type, destination_x1, destination_y1, destination_z1,
+#                                                                                                                                                                                      destination_x2, destination_y2, destination_z2,
+#                                                                                                                                                                                      weight_indicator, weight, delay_indicator, delay_type, delay,
+#                                                                                                                                                                                      velocity_indicator, velocity,
+#                                                                                                                                                                                      destination_hole_flag, destination_hole_type,
+#                                                                                                                                                                                      destination_hole_x1, destination_hole_y1, destination_hole_z1,
+#                                                                                                                                                                                      destination_hole_x2, destination_hole_y2, destination_hole_z2,
+#                                                                                                                                                                                      probability, random_seed)
+
+        declaration = [instance_name, network, projection, projection_source, projection_target]
+        declaration_string = ""
+        
+        if None in declaration:
+
+            raise Exception("Declaration error: instance_name, network, projection, projection_source, projection_target")
+
+        else:
+
+            declaration_string = ' '.join(declaration)
+
+
+        source_target_items = [source, target, pre, post, source_type]
+        source_target_string = ' '.join(map(str, source_target_items))
+        
+        if None in source_target_items:
+
+            raise Exception("Source Target declaration error: got '%s' should be 'source target pre post source_type'" % source_target_string)
+
+
+
+
+        
+        source_coords = [source_x1, source_y1, source_z1, source_x2, source_y2, source_z2,]
+        source_coords_string = ' '.join(map(str, source_coords))
+
+        if None in source_coords:
+
+            raise Exception("Source coordinates not declared properly: x1 y1 z1 x2 y2 z2")
+
+
+
+
+
+
+        destination_coords = [destination_type, destination_x1, destination_y1, destination_z1, destination_x2, destination_y2, destination_z2]
+        destination_coords_string = ' '.join(map(str, destination_coords))
+
+        if None in destination_coords:
+
+            raise Exception("Destination coordinates not declared properly: x1 y1 z1 x2 y2 z2")
+
+            
+
+
+
+        _weight = [weight_indicator, weight]
+        _weight_string = ' '.join(map(str, _weight))
+
+        if None in _weight:
+
+            raise Exception("Weight not declared properly: '%s' expecting weight_indicator weight" % _weight_string)
+
+
+
+
+        _delay = [delay_indicator, delay_type, delay]
+        _delay_string = ' '.join(map(str, _delay))
+
+        if None in _delay:
+
+            raise Exception("Delay not declared properly, should be: delay_indicator delay_type delay")
+
+
+
+
+        _velocity = [velocity_indicator, velocity]
+        _velocity_string = ' '.join(map(str, _velocity))
+
+        if None in _velocity:
+
+            raise Exception("Velocity not declared properly, should be: velocity_indicator, velocity")
+
+
+
+
+
+        _destination_type = [destination_hole_flag, destination_hole_type,]
+        _destination_type_string = ' '.join(map(str, _destination_type))
+
+        if None in _destination_type:
+
+            raise Exception("Destination not declared properly, should be: destination_hole_flag, destination_hole_type")
+
+
+
+
+        destination_hole_coords = [destination_hole_x1, destination_hole_y1, destination_hole_z1, destination_hole_x2, destination_hole_y2, destination_hole_z2]
+        destination_hole_coords_string = ' '.join(map(str, destination_coords))
+
+        if None in destination_hole_coords:
+
+            raise Exception("Destination hole coordinates not set properly, found '%s' should be format 'x1 y1 z1 x2 y2 z2'" % destination_hole_coords_string)
+
+
+
+        command = "algorithminstantiate ProjectionVolume %s %s %s %s %s %s %s %s %s %s %s" % (declaration_string, source_target_string, source_coords_string, destination_coords_string, _weight_string, _delay_string, _velocity_string, _destination_type_string, destination_hole_coords_string, probability, random_seed)
+
+#        pdb.set_trace()
 
 # valid line: algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0
 #        command = "algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0"
 
-# This is a valid line for a createprojection:
-# algorithminstantiate ProjectionVolume projectionvolume__RSNet__RSNet_projection /RSNet /RSNet/projection /RSNet/population /RSNet/population /RSNet/population /RSNet/population spike Ex_channel box -1e10 -1e10 -1e10 1e10 1e10 1e10 ellipse    0.0024 0.0024 5e-07 weight 10 delay fixed 0.004 velocity  destination_hole box -0.001 -0.001 -5e-07 0.001 0.001 5e-07 1.0 1212.0
 
+# This line is valid for rsnet-2x2-createprojection from the perl and python tests
+# algorithminstantiate ProjectionVolume projectionvolume__RSNet__RSNet_projection /RSNet /RSNet/projection /RSNet/population /RSNet/population /RSNet/population /RSNet/population spike Ex_channel box -1e10 -1e10 -1e10 1e10 1e10 1e10 ellipse    0.0024 0.0024 5e-07 weight 10 delay fixed 0.004 velocity  destination_hole box -0.001 -0.001 -5e-07 0.001 0.001 5e-07 1.0 1212.0
+#
+#
+# algorithminstantiate ProjectionVolume
+# projectionvolume__RSNet__RSNet_projection /RSNet /RSNet/projection /RSNet/population /RSNet/population
+# /RSNet/population /RSNet/population spike Ex_channel box
+# -1e10 -1e10 -1e10 1e10 1e10 1e10
+#! ellipse 0.0024 0.0024 5e-07 
+# weight 10
+# delay fixed 0.004
+#! velocity
+# destination_hole box
+# -0.001 -0.001 -5e-07 0.001 0.001 5e-07
+# 1.0
+# 1212.0
         self.Query(command)
 
 #*************************** End ModelContainer **************************
