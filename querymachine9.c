@@ -262,31 +262,31 @@ struct QM_fs_traversal_data
 };
 
 
-static int 
-QueryMachineForestspaceSelector
-(struct TreespaceTraversal *ptstr, void *pvUserdata)
-{
-    //- set default result : process children of this symbol
+/* static int  */
+/* QueryMachineForestspaceSelector */
+/* (struct TreespaceTraversal *ptstr, void *pvUserdata) */
+/* { */
+/*     //- set default result : process children of this symbol */
 
-    int iResult = TSTR_SELECTOR_PROCESS_CHILDREN;
+/*     int iResult = TSTR_SELECTOR_PROCESS_CHILDREN; */
 
-    //- set actual symbol
+/*     //- set actual symbol */
 
-    struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr);
+/*     struct symtab_HSolveListElement *phsle = (struct symtab_HSolveListElement *)TstrGetActual(ptstr); */
 
-/*     //- if tagged */
+/* /*     //- if tagged * */
 
-/*     if (SymbolGetFlags(phsle) & FLAGS_HSLE_TRAVERSAL != 0) */
-/*     { */
-/* 	//- do not process, continue with siblings */
+/* /*     if (SymbolGetFlags(phsle) & FLAGS_HSLE_TRAVERSAL != 0) * */
+/* /*     { * */
+/* /* 	//- do not process, continue with siblings * */
 
-/* //	iResult = SYMBOL_SELECTOR_PROCESS_SIBLING; */
-/*     } */
+/* /* //	iResult = SYMBOL_SELECTOR_PROCESS_SIBLING; * */
+/* /*     } * */
 
-    //- return result
+/*     //- return result */
 
-    return(iResult);
-}
+/*     return(iResult); */
+/* } */
 
 
 static void
