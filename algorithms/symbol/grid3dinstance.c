@@ -419,7 +419,9 @@ Grid3DAddComponents
 
 		phsleNew = SymbolCreateAlias(pg3i->g3v.phsleProto, NULL, pidin);
 
-		phsleNew->palgi = &pg3i->algi;
+		//- set algorithm info
+
+		SymbolSetAlgorithmInstanceInfo(phsleNew, &pg3i->algi);
 
 		//- set coordinates
 
