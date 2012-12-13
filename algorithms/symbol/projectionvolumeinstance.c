@@ -1274,6 +1274,10 @@ ProjectionVolumeInstanceAddConnectionGroups
 
     SymbolSetName(&pvconn->vect.bio.ioh.iol.hsle, pidin);
 
+    //- set algorithm info
+
+    SymbolSetAlgorithmInstanceInfo(&pvconn->vect.bio.ioh.iol.hsle, &ppvi->algi);
+
     //- process spike mapping elements and add connections
 
     piac.pvconn = pvconn;
