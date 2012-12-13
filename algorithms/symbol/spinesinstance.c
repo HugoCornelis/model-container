@@ -704,14 +704,14 @@ SpinesDoPhysicalAdjustments
 
 	if (!iInfo)
 	{
-	    if (SymbolSetAlgorithmInstanceInfo(&psegr->bio.ioh.iol.hsle, &psi->algi))
+/* 	    if (SymbolSetAlgorithmInstanceInfo(&psegr->bio.ioh.iol.hsle, &psi->algi)) */
 	    {
 		iInfo = 1;
 	    }
-	    else
-	    {
-		psi->sv.iPhysicalSpinesFailures++;
-	    }
+/* 	    else */
+/* 	    { */
+/* 		psi->sv.iPhysicalSpinesFailures++; */
+/* 	    } */
 	}
 
 	if (iInfo

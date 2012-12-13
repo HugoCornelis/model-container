@@ -624,7 +624,7 @@ END PUBLIC_MODELS
 						   },
 						   {
 						    comment => 'exported text differs with the original in the bindings of the channel inside the segment',
-						    description => "Can we export the model as NDF ?",
+						    description => "Can we export the model as NDF (1)?",
 						    read => '#!neurospacesparse
 // -*- NEUROSPACES -*-
 
@@ -784,7 +784,7 @@ END PUBLIC_MODELS
 						    timeout => 15,
 						   },
 						   {
-						    description => "Can we export the model as NDF ?",
+						    description => "Can we export the model as NDF (2)?",
 						    read => '#!neurospacesparse
 // -*- NEUROSPACES -*-
 
@@ -855,7 +855,7 @@ END PUBLIC_MODELS
 						    timeout => 15,
 						   },
 						   {
-						    description => "Can we export the model as NDF ?",
+						    description => "Can we export the model as NDF (3)?",
 						    read => '#!neurospacesparse
 // -*- NEUROSPACES -*-
 
@@ -938,7 +938,7 @@ END PUBLIC_MODELS
 						    timeout => 15,
 						   },
 						   {
-						    description => "Can we export the model as NDF ?",
+						    description => "Can we export the model as NDF (4)?",
 						    read => '#!neurospacesparse
 // -*- NEUROSPACES -*-
 
@@ -1121,7 +1121,7 @@ END PUBLIC_MODELS
 						    timeout => 15,
 						   },
 						   {
-						    description => "Can we export the model as NDF ?",
+						    description => "Can we export the model as NDF (5)?",
 						    read => '#!neurospacesparse
 // -*- NEUROSPACES -*-
 
@@ -1583,7 +1583,7 @@ END PUBLIC_MODELS
 						    timeout => 15,
 						   },
 						   {
-						    description => "Can we export the model as NDF ?",
+						    description => "Can we export the model as NDF (6)?",
 						    read => '#!neurospacesparse
 // -*- NEUROSPACES -*-
 
@@ -1769,7 +1769,7 @@ END PUBLIC_MODELS
 						    timeout => 15,
 						   },
 						   {
-						    description => "Can we export the model as NDF ?",
+						    description => "Can we export the model as NDF (7)?",
 						    read => '#!neurospacesparse
 // -*- NEUROSPACES -*-
 
@@ -2036,7 +2036,7 @@ report:
 						    write => 'algorithminstance',
 						   },
 						   {
-						    description => "Can we export the model as NDF ?",
+						    description => "Can we export the model as NDF (8)?",
 						    read => '#!neurospacesparse
 // -*- NEUROSPACES -*-
 
@@ -2567,7 +2567,7 @@ END PUBLIC_MODELS
 							 timeout => 15,
 							},
 							{
-							 description => "Can we export the model as NDF ?",
+							 description => "Can we export the model as NDF (9)?",
 							 wait => 1,
 							 write => "export no ndf /tmp/1.ndf /**",
 							},
