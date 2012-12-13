@@ -950,8 +950,8 @@ object_methods_signatures:
        char *pcType,
        int iPosition)
   set_at_x_y_z:
-    calling: '(phsle, x, y, z)'
-    prototype: '(struct symtab_HSolveListElement *phsle,double x,double y,double z)'
+    calling: '(phsle, dX, dY, dZ, iFlags)'
+    prototype: '(struct symtab_HSolveListElement *phsle, double dX, double dY, double dZ, int iFlags)'
   set_name:
     calling: '(phsle, pidin)'
     prototype: '(struct symtab_HSolveListElement *phsle, struct symtab_IdentifierIndex *pidin)'

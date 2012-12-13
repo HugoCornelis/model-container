@@ -427,7 +427,7 @@ Grid3DAddComponents
 
 		/// \todo have to use parameter caches in case we are using invible subsets ?
 
-		SymbolSetAtXYZ(phsleNew,x,y,z);
+		SymbolSetAtXYZ(phsleNew, x, y, z, 0);
 
 		//- add to population
 
