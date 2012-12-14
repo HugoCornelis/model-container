@@ -322,8 +322,7 @@ ExporterBindings
 ///
 /// \return int success of operation.
 ///
-/// \brief Export the symbols bound to this symbol.  The bound ones
-/// must be children of this symbol.
+/// \brief Export all the descendants of the given symbol?
 ///
 
 static
@@ -372,8 +371,12 @@ ExporterChildren
 ///
 /// \return int success of operation.
 ///
-/// \brief Export the symbols bound to this symbol.  The bound ones
-/// must be children of this symbol.
+/// \brief Export all the children of the given symbol.
+/// 
+/// \details All the children are exported as a library in a flat list
+/// with references.  The original names of the children are not
+/// maintained in the library, but they are maintained from a user
+/// perspective.
 ///
 
 static
@@ -437,6 +440,8 @@ ExporterChildrenForLibrary
 	       (void *)&exd,
 	       ExporterSymbolStopper,
 	       (void *)&exd);
+
+	//- export as a flat list: prevent prototype traversal
 
 	ptstr->iFlags |= TSTR_FLAG_NO_PROTOTYPE_TRAVERSAL;
 
