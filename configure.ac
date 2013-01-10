@@ -514,19 +514,40 @@ case "$host_os" in
     # These are settings specific to MAC OS X.
     #
     dnl {{{{
+
+
+    # Check for libtool to make executables
     AC_MSG_CHECKING([Using libtool for MAC OS X.])
-    AR=libtool
-    ARFLAGS='-static -c -o'
-    AC_SUBST(AR)
-    AC_SUBST(ARFLAGS)
-    AC_MSG_RESULT([$AR $ARFLAGS])
+    AC_CHECK_PROG(LIBTOOL_PRESENT, libtool, yes, no)
+
+    case $LIBTOOL_PRESENT in
+      yes*)
+
+        AR=libtool
+        ARFLAGS='-static -c -o'
+        AC_SUBST(AR)
+        AC_SUBST(ARFLAGS)
+        dnl AC_MSG_RESULT([$AR $ARFLAGS])
+
+      ;;
+      no*)
+
+        AC_ERROR([libtool for Mac OSX is not found. It's needed to make executables.])
+
+      ;;
+    esac
+
     
     dnl On the MAC we will only look for perl in the standard location for the Apple
     dnl native perl. 
-    AC_CHECK_PROG(PERL, perl, NULL, [/usr/bin/perl],[/usr/local/bin/perl /opt/local/bin/perl /sw/bin/perl])
-    AC_SUBST(PERL)
+    dnl OLD LINE: AC_CHECK_PROG(PERL, perl, NULL, [/usr/bin/perl],[/usr/local/bin/perl /opt/local/bin/perl /sw/bin/perl])
+    dnl AC_CHECK_PROG(PERL_PRESENT, perl,yes, no, [/usr/bin], [/usr/local/bin/perl /opt/local/bin/perl /sw/bin/perl])
+    dnl AC_SUBST(PERL_PRESENT)
 
-    AC_MSG_CHECKING([Checking the perl installation])
+    dnl Going to restrict the search for perl to use the mac standard location
+    AC_CHECK_PROGS(PERL, perl, [NULL], [/usr/bin])
+
+    dnl AC_MSG_CHECKING([Checking the perl installation])
     case $PERL in
       NULL*)
         echo ""
@@ -534,9 +555,16 @@ case "$host_os" in
         echo "Non standard versions of perl are known to cause problems."
         AC_ERROR([Perl for Mac OSX is not found.])
         ;;
-      *)
-        AC_MSG_RESULT([ $PERL ])
+        *)
+        dnl Ensure that ONLY the standard mac perl is used throughout.
+	PERL='/usr/bin/perl'
+        AC_SUBST(PERL)
         ;;
+dnl       *)
+
+dnl         AC_MSG_RESULT([ $PERL ])
+
+dnl         ;;
     esac
 
 
@@ -562,38 +590,74 @@ case "$host_os" in
     # --- End perl module directory selection --------------
 
 
+
+    
     # This is to get rid of the annoying error that occurs when
     # you use two arch flags.occur By default these commands produce a -arch for both
-    # architectures.
-    if test "$OSX_UNIVERSAL" == "yes"; then
+    # architectures. If now differentiates between OSX lion, which rejects the -fstack-protector
+    # flag on the standard build environment.
 
-      PERL_CCOPTS=`$PERL -MExtUtils::Embed -e ccopts`
+    case "$host_os" in
+
+	darwin11*) dnl This is Max OSX lion
+
+          if test "$OSX_UNIVERSAL" == "yes"; then
+
+            PERL_CCOPTS=`$PERL -MExtUtils::Embed -e ccopts | perl -pe 's/\-fstack\-protector//g'`
       
-      PERL_LDADD=`$PERL -MExtUtils::Embed -e ldopts`
+            PERL_LDADD=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-fstack\-protector//g'`
 
-      # When using libtool, you can't use arch arguments.
-      PERL_LDFLAGS=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
+            # When using libtool, you can't use arch arguments.
+            PERL_LDFLAGS=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g' | perl -pe 's/\-fstack\-protector//g'`
 
-    else
+          else
 
-      PERL_CCOPTS=`$PERL -MExtUtils::Embed -e ccopts | perl -pe 's/\-arch\s\S+\s//g'`
+            PERL_CCOPTS=`$PERL -MExtUtils::Embed -e ccopts | perl -pe 's/\-arch\s\S+\s//g' | perl -pe 's/\-fstack\-protector//g'`
     
-      PERL_LDADD=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
+            PERL_LDADD=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g' | perl -pe 's/\-fstack\-protector//g'`
 
-      PERL_LDFLAGS=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
+            PERL_LDFLAGS=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g' | perl -pe 's/\-fstack\-protector//g'`
 
-    fi
+          fi
+        ;;
+	
+	*) dnl all other Mac OSX versions
+
+          if test "$OSX_UNIVERSAL" == "yes"; then
+
+            PERL_CCOPTS=`$PERL -MExtUtils::Embed -e ccopts`
+      
+            PERL_LDADD=`$PERL -MExtUtils::Embed -e ldopts`
+
+            # When using libtool, you can't use arch arguments.
+            PERL_LDFLAGS=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
+
+          else
+
+            PERL_CCOPTS=`$PERL -MExtUtils::Embed -e ccopts | perl -pe 's/\-arch\s\S+\s//g'`
     
+            PERL_LDADD=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
+
+            PERL_LDFLAGS=`$PERL -MExtUtils::Embed -e ldopts | perl -pe 's/\-arch\s\S+\s//g'`
+
+          fi
+        ;;
+
+    esac
+
     AC_SUBST(PERL_CCOPTS)
     AC_SUBST(PERL_LDADD)
     AC_SUBST(PERL_LDFLAGS)
 
 
 
-    AC_CHECK_PROG(SWIG, swig, NULL, [/usr/bin/swig],[/usr/local/bin/swig /opt/local/bin/swig])
-    AC_SUBST(SWIG)
+    dnl OLD LINE:
+    dnl AC_CHECK_PROG(SWIG, swig, [NULL, [/usr/bin/swig],[/usr/local/bin/swig /opt/local/bin/swig])
+    dnl AC_SUBST(SWIG)
 
-    AC_MSG_CHECKING([Checking for swig])
+    AC_CHECK_PROGS(SWIG, swig, [NULL], [/usr/bin /usr/local/bin])
+
+    dnl AC_MSG_CHECKING([Checking for swig])
     case $SWIG in
       NULL*)
         echo ""
@@ -601,9 +665,9 @@ case "$host_os" in
         echo "Non standard versions of swig are known to cause problems."
         AC_ERROR([Swig for Mac OSX is not found.])
         ;;
-      *)
-        AC_MSG_RESULT([ $SWIG ])
-        ;;
+dnl       *)
+dnl         AC_MSG_RESULT([ yes ])
+dnl         ;;
     esac
 
 
