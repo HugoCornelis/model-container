@@ -499,7 +499,7 @@ options :
 		    {
 			# output source code
 
-			#! guessing turned on when need to turn executables into highligted source code.
+			#! guessing turned on when need to turn executables into highlighted source code.
 
 			my $guessing = `pwd` =~ /heccer/;
 
@@ -946,7 +946,7 @@ sub output_source
 	}
 	else
 	{
-	    die "source_type for $source_text_file cannot be determined";
+# 	    die "source_type for $source_text_file cannot be determined";
 	}
     }
 
@@ -958,9 +958,13 @@ sub output_source
     {
 	$result->{source_type} = "cpp";
     }
-    elsif ($source_profile =~ /perl/)
+    elsif ($source_profile =~ /perl/i)
     {
 	$result->{source_type} = "perl";
+    }
+    elsif ($source_profile =~ /python/i)
+    {
+	$result->{source_type} = "python";
     }
     else
     {
@@ -970,7 +974,7 @@ sub output_source
     # if this is a known source type
 
     if (defined $result->{source_type}
-	&& $result->{source_type} =~ m(cpp|perl))
+	&& $result->{source_type} =~ m(cpp|perl|python))
     {
 	# set result: where to find the source text
 
