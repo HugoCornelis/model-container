@@ -114,6 +114,10 @@ ExporterLibrarySelector
 
 static
 int
+ExporterRegisterName(char *pcNamespace, char *pcName);
+
+static
+int
 ExporterSymbol
 (struct symtab_HSolveListElement *phsle,
  struct PidinStack *ppist,
@@ -737,6 +741,71 @@ int ExporterModel(struct PidinStack *ppistWildcard, int iType, int iFlags, char 
 }
 
 
+/// 
+/// \arg pcNamespace namespace to use.
+/// \arg pcName name to register.
+/// 
+/// \return int number of registered names, -1 for failure.
+/// 
+/// \brief Register a unique name for use within a namespace.
+/// 
+/// Names must be unique within the given namespace or a failure is
+/// returned.
+/// 
+/// This function does its own memory allocation.  pcName is
+/// duplicated using strdup().
+///
+
+static
+int
+ExporterRegisterName(char *pcNamespace, char *pcName)
+{
+    //- namespaces are not supported yet
+
+    if (pcNamespace != NULL)
+    {
+	return(-1);
+    }
+
+    //- number of registered names
+
+    static int iNamesUsedCount = 0;
+
+    static int iNamesAllocatedCount = 0;
+
+    static char **ppcRegisteredNames = NULL;
+
+    //- allocate new memory if necessary
+
+    if (ppcRegisteredNames == NULL)
+    {
+	ppcRegisteredNames = (char **) realloc(ppcRegisteredNames, iNamesAllocatedCount + 10000);
+    }
+
+    if (ppcRegisteredNames == NULL)
+    {
+	return(-1);
+    }
+
+    iNamesAllocatedCount += 10000;
+
+    //- register the given name
+
+    ppcRegisteredNames[iNamesUsedCount] = strdup(pcName);
+
+    if (!ppcRegisteredNames[iNamesUsedCount])
+    {
+	return(-1);
+    }
+
+    iNamesUsedCount++;
+
+    //- return result
+
+    return(iNamesUsedCount);
+}
+
+
 static
 int
 ExporterSymbol
@@ -959,6 +1028,8 @@ ExporterLibraryFinalizer
 
 		    sprintf(pcName, "%s_%i_%i", SymbolName(&pbioPrototype->ioh.iol.hsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier);
 
+		    ExporterRegisterName(NULL, pcName);
+
 		    fprintf(pexd->pfile, "%s \"%s\"\n", pcToken, pcName);
 		}
 		else
@@ -972,6 +1043,8 @@ ExporterLibraryFinalizer
 /* 		sprintf(pcName, "%s_%i_0", SymbolName(&pbioPrototype->ioh.iol.hsle), iSerial); */
 
 		    sprintf(pcName, "%s_%i_%i", SymbolName(&pbioPrototype->ioh.iol.hsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier);
+
+		    ExporterRegisterName(NULL, pcName);
 
 		    fprintf(pexd->pfile, "<%s> <name>%s</name>\n", pcToken, pcName);
 		}
@@ -1089,6 +1162,8 @@ ExporterLibraryFinalizer
 
 		    }
 
+		    ExporterRegisterName(NULL, pcName);
+
 		    fprintf(pexd->pfile, "%s \"%s\" \"%s\"\n", pcToken, pcPrototype, pcName);
 		}
 		else
@@ -1117,6 +1192,8 @@ ExporterLibraryFinalizer
 
 			sprintf(pcName, "%s_%i_%i", SymbolName(&pbioTarget->ioh.iol.hsle), ppbioPrototypes[iPrototypes - 1]->ioh.iol.hsle.iAllocationIdentifier, /* iPrototypes - i */pbioTarget->ioh.iol.hsle.iAllocationIdentifier);
 		    }
+
+		    ExporterRegisterName(NULL, pcName);
 
 		    fprintf(pexd->pfile, "<%s> <prototype>%s</prototype> <name>%s</name>\n", pcToken, pcPrototype, pcName);
 		}
@@ -1557,6 +1634,8 @@ ExporterSymbolStarter
 
 		    strcpy(pcName, SymbolName(phsle));
 
+		    ExporterRegisterName(NULL, pcName);
+
 		    fprintf(pexd->pfile, "%s \"%s%s%s\" \"%s\"\n", pcToken, (pcNamespace ? pc : ""), (pcNamespace ? "/" : ""), pcPrototype, pcName);
 		}
 		else
@@ -1606,6 +1685,8 @@ ExporterSymbolStarter
 		    char pcName[1000];
 
 		    strcpy(pcName, SymbolName(phsle));
+
+		    ExporterRegisterName(NULL, pcName);
 
 		    fprintf(pexd->pfile, "<%s> %s<prototype>%s%s</prototype> <name>%s</name>\n", pcToken, (pcNamespace ? pc : ""), (pcNamespace ? "/" : ""), pcPrototype, pcName);
 		}
