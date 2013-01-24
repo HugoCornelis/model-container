@@ -1272,8 +1272,8 @@ class ModelContainer:
                 try:
                     arguments['pre'] = synapse[0]
                     arguments['post'] = synapse[1]
-                    arguments['delay'] = synapse[2]
-                    arguments['weight'] = synapse[3]                    
+                    arguments['weight'] = synapse[2]                    
+                    arguments['delay'] = synapse[3]
                     arguments['delay_indicator'] = 'delay'
                     arguments['delay_type'] = 'fixed'
                     arguments['weight_indicator'] = 'weight'
@@ -1386,8 +1386,12 @@ class ModelContainer:
 
 
 
-
-        destination_coords = [destination_type, destination_x1, destination_y1, destination_z1, destination_x2, destination_y2, destination_z2]
+        # !!Commented out the first set of coords. Seems that the first set in the rsnet example passes
+        # 0 for ungiven coords. In those cases it should just have a space as a default. If the three spaces
+        # for each expected coord are now there then it won't properly compute the coords when parsing
+        # the line!
+        #destination_coords = [destination_type, destination_x1, destination_y1, destination_z1, destination_x2, destination_y2, destination_z2]
+        destination_coords = [destination_type, '', '', '', destination_x2, destination_y2, destination_z2]
         destination_coords_string = ' '.join(map(str, destination_coords))
 
         if None in destination_coords:
@@ -1440,7 +1444,7 @@ class ModelContainer:
 
 
         destination_hole_coords = [destination_hole_x1, destination_hole_y1, destination_hole_z1, destination_hole_x2, destination_hole_y2, destination_hole_z2]
-        destination_hole_coords_string = ' '.join(map(str, destination_coords))
+        destination_hole_coords_string = ' '.join(map(str, destination_hole_coords))
 
         if None in destination_hole_coords:
 
@@ -1450,10 +1454,13 @@ class ModelContainer:
 
         command = "algorithminstantiate ProjectionVolume %s %s %s %s %s %s %s %s %s %s %s" % (declaration_string, source_target_string, source_coords_string, destination_coords_string, _weight_string, _delay_string, _velocity_string, _destination_type_string, destination_hole_coords_string, probability, random_seed)
 
-        command = "algorithminstantiate ProjectionVolume projectionvolume__RSNet__RSNet_projection /RSNet /RSNet/projection /RSNet/population /RSNet/population /RSNet/population /RSNet/population spike Ex_channel box -1e10 -1e10 -1e10 1e10 1e10 1e10 ellipse    0.0024 0.0024 5e-07 weight 10 delay fixed 0.004 velocity  destination_hole box -0.001 -0.001 -5e-07 0.001 0.001 5e-07 1.0 1212.0"
-        
 
-# valid line: algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0
+
+        #command = "algorithminstantiate ProjectionVolume projectionvolume__RSNet__RSNet_projection /RSNet /RSNet/projection /RSNet/population /RSNet/population /RSNet/population /RSNet/population spike Ex_channel box -10000000000.0 -10000000000.0 -10000000000.0 10000000000.0 10000000000.0 10000000000.0 ellipse    0.0024 0.0024 5e-07 weight 10 delay fixed 0.004 velocity  destination_hole box -0.001 -0.001 -5e-07 0.001 0.001 5e-07 1.0 1212.0"
+
+        
+# valid line for volume connect: algorithminstantiate Grid3D createmap__RSNet_population
+#        /RSNet/population cell 2 2 1 0.002 0.002 0
 #        command = "algorithminstantiate Grid3D createmap__RSNet_population /RSNet/population cell 2 2 1 0.002 0.002 0"
 
 
