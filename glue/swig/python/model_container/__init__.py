@@ -833,7 +833,12 @@ class ModelContainer:
 #---------------------------------------------------------------------------
 
     def RegisterSolver(self, modelname, solver, solver_type):
-        
+        """
+
+        This method takes a solver object (not plugin class)
+        and check the type to make sure it passes to the correct
+        registry function.
+        """
 
         ppist = nmc_base.PidinStackParse(modelname)
 
