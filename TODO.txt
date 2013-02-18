@@ -187,9 +187,9 @@ we have a memory leak.
 *** the other says the test cannot work in this configuration
 but it should work in different configuration (eg. routing table not
 good).
-** tests_2_html uses this information correctly.
+** neurospaces_harness_2_html uses this information correctly.
 
-* tests_2_html
+* neurospaces_harness_2_html
 produces tables that always have <pre> entries, even for 'comment',
 'disabled', etc.
 
@@ -244,7 +244,7 @@ and check if these are the same.
 
 * rename contour_point to em_contour_point
 
-* tests_2_html
+* neurospaces_harness_2_html
 Parse the arguments passed to the command, and hand them to
 source_2_html.
 
@@ -347,7 +347,7 @@ See developer TODOs.
 But need true instrumentation for that.  See developer TODO in
 symbols/hierarhcy.
 
-* tests_2_html
+* neurospaces_harness_2_html
 ** Htmlify the used description files
 and link them through the executed command lines, such that the tests
 and the model used for the test are linked.

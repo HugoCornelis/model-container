@@ -190,8 +190,6 @@ dist-hook:
 	$(srcdir)/install-sh -d $(distdir)/tests/html/specifications/code
 	cp -pR $(srcdir)/tests/command_extractor $(distdir)/tests
 	cp -pR $(srcdir)/tests/command_extractor.ptkdb $(distdir)/tests
-	cp -pR $(srcdir)/tests/tests_2_html $(distdir)/tests
-	cp -pR $(srcdir)/tests/tests_2_html.ptkdb $(distdir)/tests
 	cp -pR $(srcdir)/tests/tests.config $(distdir)/tests
 	cp -pR $(srcdir)/tests.config $(distdir)
 # get the logos right
@@ -204,11 +202,11 @@ dist-hook:
 	cp -pR $(srcdir)/hierarchy $(distdir)
 	rm -fr $(distdir)/hierarchy/output
 # prcs diff -k neurospaces.prj `prcs 2>/dev/null execute --not ".*\(directory\|symlink\)" neurospaces.prj | grep -v "neurospaces\.prj" | grep -v "purkinjespine" `
-# $Format: "	( cd $(distdir)/tests && chmod -R u+w . && ./tests_2_html --header '<img src=\"ns-main-logo-dark2-notext-32x32.jpg\" alt=\"Main Neurospaces logo\"> ${package}, ${label}, ${email} <hr>' --introduction introduction.html )" $
-	( cd $(distdir)/tests && chmod -R u+w . && ./tests_2_html --header '<img src="ns-main-logo-dark2-notext-32x32.jpg" alt="Main Neurospaces logo"> neurospaces 0.1675 Thu, 27 Dec 2007 15:58:18 -0600 hugo<hr>' --introduction introduction.html )
+# $Format: "	( cd $(distdir)/tests && chmod -R u+w . && neurospaces_harness_2_html --header '<img src=\"ns-main-logo-dark2-notext-32x32.jpg\" alt=\"Main Neurospaces logo\"> ${package}, ${label}, ${email} <hr>' --introduction introduction.html )" $
+	( cd $(distdir)/tests && chmod -R u+w . && neurospaces_harness_2_html --header '<img src="ns-main-logo-dark2-notext-32x32.jpg" alt="Main Neurospaces logo"> neurospaces 0.1675 Thu, 27 Dec 2007 15:58:18 -0600 hugo<hr>' --introduction introduction.html )
 
 #! this one breaks the distcheck, because automake makes dist dirs read-only
-#	cd $(distdir)/tests && ./tests_2_html
+#	cd $(distdir)/tests && neurospaces_harness_2_html
 
 #	find $(srcdir)/hierarchy -type f -regex '.*[^~]$$' -exec cp {} $(distdir) \;
 
@@ -396,8 +394,8 @@ test: check
 html-upload-prepare:
 	rm -fr html/htdocs/neurospaces_project/neurospaces
 	mkdir -p html/htdocs/neurospaces_project/neurospaces
-# $Format: "	( cd tests && ./tests_2_html --header '<img src=\"ns-main-logo-dark2-notext-32x32.jpg\" alt=\"Main Neurospaces logo\"> ${package}, ${label}, ${email} <hr>' --introduction introduction.html )" $
-	( cd tests && ./tests_2_html --header '<img src="ns-main-logo-dark2-notext-32x32.jpg" alt="Main Neurospaces logo"> neurospaces 0.1675 Thu, 27 Dec 2007 15:58:18 -0600 hugo<hr>' --introduction introduction.html )
+# $Format: "	( cd tests && neurospaces_harness_2_html --header '<img src=\"ns-main-logo-dark2-notext-32x32.jpg\" alt=\"Main Neurospaces logo\"> ${package}, ${label}, ${email} <hr>' --introduction introduction.html )" $
+	( cd tests && neurospaces_harness_2_html --header '<img src="ns-main-logo-dark2-notext-32x32.jpg" alt="Main Neurospaces logo"> neurospaces 0.1675 Thu, 27 Dec 2007 15:58:18 -0600 hugo<hr>' --introduction introduction.html )
 	tar cfh - tests/html | ( cd html/htdocs/neurospaces_project/neurospaces && tar vxf - )
 	hierarchy/types_2_html >html/htdocs/neurospaces_project/neurospaces/algorithminstances.html hierarchy/output/algorithm_instances//dump_annotated_class_hierarchy
 	hierarchy/types_2_html >html/htdocs/neurospaces_project/neurospaces/symbols.html hierarchy/output/symbols/dump_annotated_class_hierarchy
