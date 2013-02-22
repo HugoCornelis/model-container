@@ -597,9 +597,11 @@ dnl         ;;
     # architectures. If now differentiates between OSX lion, which rejects the -fstack-protector
     # flag on the standard build environment.
 
+    echo "This is host_os: $host_os"
+
     case "$host_os" in
 
-	darwin11*) dnl This is Max OSX lion
+	darwin11*|darwin12*) dnl This is Max OSX lion or OSX mountain lion
 
           if test "$OSX_UNIVERSAL" == "yes"; then
 
