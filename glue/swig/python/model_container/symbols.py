@@ -147,9 +147,6 @@ class Symbol:
         context = nmc_base.PidinStackParse(component)
         
         top = nmc_base.PidinStackLookupTopSymbol(context)
-#        pdb.set_trace()
-
-
 
         self.InsertChild(top)
         
@@ -296,13 +293,11 @@ class Symbol:
 
         if allocated_symbol is None:
 
-            # shouldn't get here but just in case
-            # maybe change this to an exception later?
-            
+            raise SymbolError("Can't allocate '%s' of type '%s'" % (path, _type))
 
-            allocated_symbol = eval("nmc_base.GroupCalloc()")
+            #allocated_symbol = eval("nmc_base.GroupCalloc()")
 
-            cast_command = "nmc_base.cast_group_2_symbol(allocated_symbol)"
+            #cast_command = "nmc_base.cast_group_2_symbol(allocated_symbol)"
 
         else:
                 
@@ -347,6 +342,29 @@ class Symbol:
 
             raise SymbolError("Can't recalculate serials when creating '%s'" % path)
 
+
+        # Here I want to do a verify. Since we use eval to allocate, there's no way
+        # to check the whole thing at a low level to see if it passed. Takes up a
+        # minimal amount of extra time to do but necessary.
+
+        verify_context = nmc_base.PidinStackParse(path)
+
+        if verify_context is None:
+
+            raise SymbolError("Can't verify context for '%s' of type '%s'" % (path, _type))
+
+        verify_symbol = nmc_base.PidinStackLookupTopSymbol(verify_context)
+
+        if verify_symbol is None:
+
+            nmc_base.PidinStackFree(verify_context)
+
+            raise SymbolError("Can't create symbol for '%s' of type '%s'" % (path, _type))            
+
+        nmc_base.PidinStackFree(verify_context)
+
+        #-- End verification --
+        
 
         # set the attributes at the end
         
@@ -576,5 +594,16 @@ class Network(Symbol):
 
 
 #*************************** Network Cell ************************
+
+#*************************** Projection ************************
+
+class Projection(Symbol):
+
+    def __init__(self, path=None, model=None):
+
+        Symbol.__init__(self, path, "projection", model)
+
+
+#***************************  Projection ************************
 
 
