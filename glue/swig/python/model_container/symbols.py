@@ -270,11 +270,18 @@ class Symbol:
 
         allocated_symbol = None
 
-        path_parts = path.split('/', 1)
+        path_parts = path.split('/')
 
-        parent_path = path_parts[0]
+        # kind of ugly but it works. May put this on three lines
+        # to mmake it neater. On a string like '/n_cells/projection/a'
+        # it will set parent_path to '/n_cells/parent_path'
+        parent_path = '/'.join(path.split('/')[0:len(path_parts)-1])
 
-        name = path_parts[1]
+        name = path_parts[-1]
+        
+#         parent_path = path_parts[0]
+
+#         name = path_parts[1]
 
         c_type = self._ConvertType(_type)
 
@@ -377,21 +384,6 @@ class Symbol:
         self.symbol = casted_allocated_symbol
 
         self.context = context
-
-        
-#         name = nmc_base.PidinStackTop(context)
-
-#         # Here we pop and return the top symbol, which would now be the parent
-#         # symbol.
-        
-#         nmc_base.PidinStackPop(context)
-        
-#         top_symbol = nmc_base.PidinStackLookupTopSymbol(context)
-
-#         result = [name, top_symbol]
-        
-#         return result
-
 
 #*************************** End Symbol ****************************
 
