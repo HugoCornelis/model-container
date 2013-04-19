@@ -655,13 +655,13 @@ class ModelContainer:
         
         instance_name = "createmap_%s" % target
 
-        command = "algorithminstantiate Grid3D %s %s %s %s %s 1 %s %s 0" % (instance_name.replace('/','_'),
-                                                                            target,
-                                                                            component_name, #prototype,
-                                                                            countx,
-                                                                            county,
-                                                                            deltax,
-                                                                            deltay)
+        command = "algorithminstantiate Grid3D %s %s %s %s %s 1 %s %s 0 " % (instance_name.replace('/','_'),
+                                                                             target,
+                                                                             component_name, #prototype,
+                                                                             countx,
+                                                                             county,
+                                                                             deltax,
+                                                                             deltay)
 
         self.Query(command)
 
