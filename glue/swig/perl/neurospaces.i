@@ -2472,7 +2472,7 @@ SV * swig_get_parameters(int iContext)
 
     if (!phsleRoot)
     {
-	return/* (NULL) */;
+	return &PL_sv_undef;
     }
 
     //- get context
