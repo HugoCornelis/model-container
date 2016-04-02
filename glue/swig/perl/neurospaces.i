@@ -2234,7 +2234,7 @@ SV * swig_get_children(int iContext)
 
 	printf("Unable to find this symbol, lookup failed (internal error).\n");
 
-	return;
+	return &PL_sv_undef;
     }
 
     char pcContext[1000];
@@ -2500,7 +2500,7 @@ SV * swig_get_parameters(int iContext)
 
 	printf("Unable to find this symbol, lookup failed (internal error).\n");
 
-	return;
+	return &PL_sv_undef;
     }
 
     char pcContext[1000];
@@ -2648,7 +2648,7 @@ SV * swig_get_visible_coordinates(int iContext, int iLevel, int iMode)
 
 	printf("Unable to find this symbol, lookup failed (internal error).\n");
 
-	return;
+	return &PL_sv_undef;
     }
 
     char pcContext[1000];
@@ -2707,7 +2707,7 @@ SV * swig_get_workload(int iContext, int iNodes, int iLevel)
 
 	printf("Unable to find this symbol, lookup failed (internal error).\n");
 
-	return;
+	return &PL_sv_undef;
     }
 
     char pcContext[1000];
