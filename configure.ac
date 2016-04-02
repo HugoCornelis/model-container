@@ -176,11 +176,14 @@ AC_CHECK_LIB(curses, main,[],[
    exit -1
 ])
 
-dnl Replace `main' with a function in -lfl:
-AC_CHECK_LIB(fl, main,[],[
-   echo "Error! lib flex is not installed."
-   exit -1
-])
+dnl see here for why this was commented out:
+dnl http://stackoverflow.com/questions/26064096/using-flex-the-lexical-analizer-on-os-x
+
+dnl dnl Replace `main' with a function in -lfl:
+dnl AC_CHECK_LIB(fl, main,[],[
+dnl    echo "Error! lib flex is not installed."
+dnl    exit -1
+dnl ])
 
 dnl Replace `main' with a function in -lhistory:
 dnl AC_CHECK_LIB(history, main,[echo "Found! lib history."],[
