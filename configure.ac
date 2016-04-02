@@ -902,6 +902,7 @@ AC_OUTPUT(Makefile \
 	algorithms/symbol/Makefile \
 	convertors/Makefile \
 	glue/swig/Makefile \
-	glue/swig/perl/Makefile
+	glue/swig/perl/Makefile \
+	glue/swig/python/Makefile 
 	)
 
