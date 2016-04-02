@@ -472,8 +472,10 @@ PyObject * GetSolverRegistryDict(struct Neurospaces *pneuro, char *pcPath)
 
 %import "typemaps.i"
 
-# Some of these may not be needed if typemaps.i is imported
-# need to check it later.
+/***************************************************
+ * Some of these may not be needed if typemaps.i is imported
+ * need to check it later.
+ ***************************************************/
 
 %typemap(out) int 
 {
