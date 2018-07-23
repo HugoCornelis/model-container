@@ -679,10 +679,10 @@ dnl         ;;
     PERLLIB_EXTENSION='dylib'
     AC_SUBST(PERLLIB_EXTENSION)
 
-    SWIGCOMPILELINKSFORPERL='-g -Wno-declaration-after-statement -DPRE_PROTO_TRAVERSAL -I$(top_builddir) -I$(top_builddir)/hierarchy/output/symbols -fPIC -dynamic $(PERL_CCOPTS)'
+    SWIGCOMPILELINKSFORPERL='-fdiagnostics-color=never -g -Wno-declaration-after-statement -DPRE_PROTO_TRAVERSAL -I$(top_builddir) -I$(top_builddir)/hierarchy/output/symbols -fPIC -dynamic $(PERL_CCOPTS)'
     AC_SUBST(SWIGCOMPILELINKSFORPERL)
 
-    SWIGCOMPILECOMMAND_PERL='gcc -Wno-declaration-after-statement $(SWIGCOMPILELINKSFORPERL) -c swiggable_neurospaces_wrap.c'
+    SWIGCOMPILECOMMAND_PERL='gcc -fdiagnostics-color=never -Wno-declaration-after-statement $(SWIGCOMPILELINKSFORPERL) -c swiggable_neurospaces_wrap.c'
     AC_SUBST(SWIGCOMPILECOMMAND_PERL)
 
 
@@ -691,11 +691,11 @@ dnl         ;;
     # the working one just yet.    
     if test "$OSX_UNIVERSAL" == "yes"; then 
 
-      SWIGLDLINKSFORPERL='-dynamic -undefined suppress -flat_namespace -L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms -L$(top_builddir)/algorithms/symbol -lsymbol_algorithms $(PERL_LDFLAGS)'
+      SWIGLDLINKSFORPERL='-fdiagnostics-color=never -dynamic -undefined suppress -flat_namespace -L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms -L$(top_builddir)/algorithms/symbol -lsymbol_algorithms $(PERL_LDFLAGS)'
 
     else
 
-      SWIGLDLINKSFORPERL='-L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms -L$(top_builddir)/algorithms/symbol -lsymbol_algorithms -lncurses -dylib -undefined suppress -flat_namespace $(PERL_LDFLAGS)'
+      SWIGLDLINKSFORPERL='-fdiagnostics-color=never -L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms -L$(top_builddir)/algorithms/symbol -lsymbol_algorithms -lncurses -dylib -undefined suppress -flat_namespace $(PERL_LDFLAGS)'
 
     fi
 
@@ -734,21 +734,21 @@ dnl         ;;
     PYTHONLIB_EXTENSION='so'
     AC_SUBST(PYTHONLIB_EXTENSION)
     
-    SWIGCOMPILELINKSFORPYTHON='-g -DPRE_PROTO_TRAVERSAL $(PYTHON_INCLUDE) -I${top_builddir} -I${top_builddir}/hierarchy/output/symbols -fPIC'
+    SWIGCOMPILELINKSFORPYTHON='-fdiagnostics-color=never -g -DPRE_PROTO_TRAVERSAL $(PYTHON_INCLUDE) -I${top_builddir} -I${top_builddir}/hierarchy/output/symbols -fPIC'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
 
 
-    SWIGCOMPILECOMMAND_PYTHON='gcc -Wno-declaration-after-statement $(SWIGCOMPILELINKSFORPYTHON) -c swiggable_neurospaces_wrap.c'
+    SWIGCOMPILECOMMAND_PYTHON='gcc -fdiagnostics-color=never -Wno-declaration-after-statement $(SWIGCOMPILELINKSFORPYTHON) -c swiggable_neurospaces_wrap.c'
     AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
 
 
     if test "$OSX_UNIVERSAL" == "yes"; then 
 
-      SWIGLDLINKSFORPYTHON='-dynamic -undefined suppress -flat_namespace -L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms -L$(top_builddir)/algorithms/symbol -lsymbol_algorithms -lncurses $(PYTHON_LDFLAGS)'
+      SWIGLDLINKSFORPYTHON='-fdiagnostics-color=never -dynamic -undefined suppress -flat_namespace -L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms -L$(top_builddir)/algorithms/symbol -lsymbol_algorithms -lncurses $(PYTHON_LDFLAGS)'
 
     else
 
-      SWIGLDLINKSFORPYTHON='$(PYTHON_LDFLAGS) -L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms -L$(top_builddir)/algorithms/symbol -lsymbol_algorithms -lncurses -lreadline -flat_namespace -undefined suppress -bundle -bundle_loader $(PYTHON_EXE)'
+      SWIGLDLINKSFORPYTHON='-fdiagnostics-color=never $(PYTHON_LDFLAGS) -L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms -L$(top_builddir)/algorithms/symbol -lsymbol_algorithms -lncurses -lreadline -flat_namespace -undefined suppress -bundle -bundle_loader $(PYTHON_EXE)'
 
     fi
 
@@ -853,16 +853,16 @@ dnl         ;;
     PERLLIB_EXTENSION='so'
     AC_SUBST(PERLLIB_EXTENSION)
 
-    SWIGCOMPILELINKSFORPERL='-g -DPRE_PROTO_TRAVERSAL -I$(top_builddir) -I$(top_builddir)/hierarchy/output/symbols 	-I$(top_builddir)/hierarchy/output/symbols/ -fPIC $(PERL_CCOPTS)'
+    SWIGCOMPILELINKSFORPERL='-fdiagnostics-color=never -g -DPRE_PROTO_TRAVERSAL -I$(top_builddir) -I$(top_builddir)/hierarchy/output/symbols 	-I$(top_builddir)/hierarchy/output/symbols/ -fPIC $(PERL_CCOPTS)'
     AC_SUBST(SWIGCOMPILELINKSFORPERL)
 
-    SWIGCOMPILECOMMAND_PERL='gcc -Wno-declaration-after-statement        $(SWIGCOMPILELINKSFORPERL) -c swiggable_neurospaces_wrap.c' 
+    SWIGCOMPILECOMMAND_PERL='gcc -fdiagnostics-color=never -Wno-declaration-after-statement        $(SWIGCOMPILELINKSFORPERL) -c swiggable_neurospaces_wrap.c' 
     AC_SUBST(SWIGCOMPILECOMMAND_PERL)
 
-    SWIGLDLINKSFORPERL='-g -shared swiggable_neurospaces_wrap.o 	-L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms 	-L$(top_builddir)/algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline'
+    SWIGLDLINKSFORPERL='-fdiagnostics-color=never -g -shared swiggable_neurospaces_wrap.o 	-L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms 	-L$(top_builddir)/algorithms/symbol 	-lsymbol_algorithms 	-lncurses'
     AC_SUBST(SWIGLDLINKSFORPERL)
 
-    SWIGLINKCOMMAND_PERL='gcc -Wno-declaration-after-statement        $(SWIGLDLINKSFORPERL)         -o SwiggableNeurospaces.$(PERLLIB_EXTENSION)'
+    SWIGLINKCOMMAND_PERL='gcc -fdiagnostics-color=never -Wno-declaration-after-statement        $(SWIGLDLINKSFORPERL)         -o SwiggableNeurospaces.$(PERLLIB_EXTENSION)'
     AC_SUBST(SWIGCOMPILECOMMAND_PERL)
 
 
@@ -872,21 +872,21 @@ dnl         ;;
     PYTHONLIB_EXTENSION='so'
     AC_SUBST(PYTHONLIB_EXTENSION)
 
-    SWIGCOMPILELINKSFORPYTHON='-g -Wno-declaration-after-statement -DPRE_PROTO_TRAVERSAL $(PYTHON_INCLUDE) -I${top_builddir} -I${top_builddir}/hierarchy/output/symbols -fPIC -Xlinker -export-dynamic'
+    SWIGCOMPILELINKSFORPYTHON='-fdiagnostics-color=never -g -Wno-declaration-after-statement -DPRE_PROTO_TRAVERSAL $(PYTHON_INCLUDE) -I${top_builddir} -I${top_builddir}/hierarchy/output/symbols -fPIC -Xlinker -export-dynamic'
     AC_SUBST(SWIGCOMPILELINKSFORPYTHON)
    
-    SWIGCOMPILECOMMAND_PYTHON='gcc $(SWIGCOMPILELINKSFORPYTHON) -c swiggable_neurospaces_wrap.c'
+    SWIGCOMPILECOMMAND_PYTHON='gcc -fdiagnostics-color=never $(SWIGCOMPILELINKSFORPYTHON) -c swiggable_neurospaces_wrap.c'
     AC_SUBST(SWIGCOMPILECOMMAND_PYTHON)
 
-    SWIGLDLINKSFORPYTHON='-L${top_builddir} -lneurospacesread -L${top_builddir}/algorithms/event -levent_algorithms -L${top_builddir}/algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-lhistory 	-lreadline 	-fPIC -Xlinker -export-dynamic $(PYTHON_LDFLAGS)'
+    SWIGLDLINKSFORPYTHON='-fdiagnostics-color=never -L${top_builddir} -lneurospacesread -L${top_builddir}/algorithms/event -levent_algorithms -L${top_builddir}/algorithms/symbol 	-lsymbol_algorithms 	-lncurses 	-fPIC -Xlinker -export-dynamic $(PYTHON_LDFLAGS)'
     AC_SUBST(SWIGLDLINKSFORPYTHON)
   
-    SWIGLINKCOMMAND_PYTHON='gcc -shared swiggable_neurospaces_wrap.o $(SWIGLDLINKSFORPYTHON)  -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
+    SWIGLINKCOMMAND_PYTHON='gcc -fdiagnostics-color=never -shared swiggable_neurospaces_wrap.o $(SWIGLDLINKSFORPYTHON)  -o _SwiggableNeurospaces.$(PYTHONLIB_EXTENSION)'
     AC_SUBST(SWIGLINKCOMMAND_PYTHON)
 
     # note: Must remember that the "-shared objectfile.o" part must be FIRST, otherwise it will silently
     # not link the symbols but give the appearance that it has completed successully. 
-    MODEL_CONTAINER_SWIGLINKCOMMAND_PYTHON='gcc -shared model_container_wrap.o $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/neurospaces/model_container/_model_container_base.so'
+    MODEL_CONTAINER_SWIGLINKCOMMAND_PYTHON='gcc -fdiagnostics-color=never -shared model_container_wrap.o $(SWIGLDLINKSFORPYTHON) -o $(srcdir)/neurospaces/model_container/_model_container_base.so'
     AC_SUBST(MODEL_CONTAINER_SWIGLINKCOMMAND_PYTHON)
 
     dnl }}} End of General Settings

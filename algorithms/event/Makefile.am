@@ -17,7 +17,7 @@
 ##'
 ##############################################################################
 
-AM_CFLAGS=-g3 -fPIC -Wmissing-prototypes -Wmissing-declarations -I$(srcdir)/../.. -DPRE_PROTO_TRAVERSAL @PERL_CCOPTS@ -I$(builddir)../..
+AM_CFLAGS=-fdiagnostics-color=never -g3 -fPIC -Wmissing-prototypes -Wmissing-declarations -I$(srcdir)/../.. -DPRE_PROTO_TRAVERSAL @PERL_CCOPTS@ -I$(builddir)../..
 
 noinst_LIBRARIES = libevent_algorithms.a
 

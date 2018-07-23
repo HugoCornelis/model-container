@@ -242,7 +242,7 @@ do {									\
 
 // parsing function itself
 
-int parserparse(void *);
+//int parserparse(void *);
 
 
 // support functios

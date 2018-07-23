@@ -90,7 +90,7 @@ int parsererror(PARSERCONTEXT *pacParserContext,char *pcError);
 //!	-> parsererror(char *)
 //!	-> parsererror(PARSERCONTEXT *, char *)
 
-#define parsererror(pcMsg) parsererror((PARSERCONTEXT *)pacParserContext,pcMsg)
+// #define parsererror(pcMsg) parsererror((PARSERCONTEXT *)pacParserContext,pcMsg)
 
 
 %}

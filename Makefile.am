@@ -28,7 +28,7 @@ dist_bin_SCRIPTS = bin/model-container
 LEX_OUTPUT_ROOT = lex.parser
 LFLAGS=-i -l -Pparser
 YFLAGS=-dv -p parser
-AM_CFLAGS=-g3 -fPIC -Wmissing-prototypes -Wmissing-declarations -Wno-declaration-after-statement -include neurospaces/config.h -DPRE_PROTO_TRAVERSAL @PERL_CCOPTS@ -I$(top_builddir)
+AM_CFLAGS=-fdiagnostics-color=never -g3 -fPIC -Wmissing-prototypes -Wmissing-declarations -Wno-declaration-after-statement -include neurospaces/config.h -DPRE_PROTO_TRAVERSAL @PERL_CCOPTS@ -I$(top_builddir)
 
 pkglib_LIBRARIES = libneurospacesread.a
 
@@ -409,6 +409,7 @@ internal-library:
 
 libneurospacesread.so: libneurospacesread.a
 	$(CC) \
+	-fdiagnostics-color=never \
 	-shared \
 	-fPIC \
 	`find algorithms -name "*.o" ` \

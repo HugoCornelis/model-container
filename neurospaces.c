@@ -1,4 +1,4 @@
-static char *pcVersionTime="(11/07/16) Saturday, July 16, 2011 19:16:52 hugo";
+static char *pcVersionTime="(17/01/21) Saturday, January 21, 2017 12:46:44 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -1003,7 +1003,7 @@ NeurospacesImport
 	/// \note a parameter, this induces a (very small) performance penalty
 	/// \note and is not clean either
 
-	int bFail = parserparse(pacRootContext);
+	    int bFail = ParserParse(pacRootContext, pneuro->pifRootImport);
 
 	//- remove pending lexical analyzer buffer
 

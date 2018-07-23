@@ -369,7 +369,7 @@ int IdinIsPrintable(struct symtab_IdentifierIndex *pidin)
 /*     if ((int)pidin & 1) */
 /* #endif */
 
-    if ((int)pidin & 1) 
+    if ((long int)pidin & 1) 
     {
 	return(FALSE);
     }

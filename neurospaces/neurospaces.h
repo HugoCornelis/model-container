@@ -177,7 +177,7 @@ extern
 #if  defined(__APPLE__) && defined(MAC_OS_X_VERSION_10_6)
 size_t 
 #else
-int
+size_t
 #endif
 parserleng;
 
