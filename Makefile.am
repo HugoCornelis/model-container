@@ -360,7 +360,7 @@ clean-local:
 	$(RM) $(top_srcdir)/model-container*.tar.gz
 	$(RM) -rf $(top_srcdir)/model-container-*
 
-TESTS = /usr/local/bin/neurospaces_harness
+TESTS = run_tests
 
 hierarchy/output/symbols/.sentinel: $(srcdir)/hierarchy/symbols $(srcdir)/hierarchy/instrumentor neurospaces/config.h
 	$(srcdir)/hierarchy/instrumentor --null-checks $(srcdir)/hierarchy/symbols --output hierarchy/output

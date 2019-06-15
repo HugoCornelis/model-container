@@ -1,0 +1,6 @@
+#!/usr/bin/perl -w
+
+system "/usr/local/bin/neurospaces_harness";
+
+
+
