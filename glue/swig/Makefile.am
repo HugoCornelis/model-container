@@ -19,7 +19,7 @@
 
 
 # Disabled compiling code in python_old since it's deprecated
-SUBDIRS = perl
+SUBDIRS = perl python
 
 
 #t the following rules are crap complete, would be good if a auto

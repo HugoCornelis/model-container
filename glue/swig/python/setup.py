@@ -405,7 +405,7 @@ class NMCModule(Extension):
     def get_libraries(self):
 
         return ["neurospacesread", "event_algorithms",
-                "symbol_algorithms", "ncurses", "readline"]
+                "symbol_algorithms", "ncurses"]
 
     def get_mac_arch_flags(self):
 

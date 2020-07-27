@@ -748,7 +748,7 @@ dnl         ;;
 
     else
 
-      SWIGLDLINKSFORPYTHON='-fdiagnostics-color=never $(PYTHON_LDFLAGS) -L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms -L$(top_builddir)/algorithms/symbol -lsymbol_algorithms -lncurses -lreadline -flat_namespace -undefined suppress -bundle -bundle_loader $(PYTHON_EXE)'
+      SWIGLDLINKSFORPYTHON='-fdiagnostics-color=never $(PYTHON_LDFLAGS) -L$(top_builddir) -lneurospacesread -L$(top_builddir)/algorithms/event -levent_algorithms -L$(top_builddir)/algorithms/symbol -lsymbol_algorithms -lncurses -flat_namespace -undefined suppress -bundle -bundle_loader $(PYTHON_EXE)'
 
     fi
 
