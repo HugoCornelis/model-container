@@ -1888,7 +1888,7 @@ int ParserMessage
     sprintf
 	(pc,
 	 "%i,%-12.12s,%i\t||",
-	 pacContext->iNestingLevel,
+	 pacContext->iNestingLevel - 1,
 	 ParserContextGetFilename(pacContext),
 	 ParserContextGetLineNumber(pacContext));
 
