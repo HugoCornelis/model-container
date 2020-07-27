@@ -1162,7 +1162,7 @@ void IdinPrint(struct symtab_IdentifierIndex *pidin, FILE *pfile)
 
     IdinFullName(pidin, pc);
 
-    fprintf(pfile, pc);
+    fprintf(pfile, "%s", pc);
 }
 
 

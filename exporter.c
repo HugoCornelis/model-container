@@ -22,6 +22,7 @@
 #include "neurospaces/defsym.h"
 #include "neurospaces/exporter.h"
 #include "neurospaces/importedfile.h"
+#include "neurospaces/parametercache.h"
 
 
 /// \struct data to describe how to export a model.

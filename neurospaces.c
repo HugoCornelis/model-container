@@ -1,4 +1,4 @@
-static char *pcVersionTime="(17/01/21) Saturday, January 21, 2017 12:46:44 hugo";
+static char *pcVersionTime="(20/07/27) Montag, Juli 27, 2020 07:09:54 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to

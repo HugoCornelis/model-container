@@ -34,6 +34,7 @@
 #include "neurospaces/parameters.h"
 #include "neurospaces/parsersupport.h"
 #include "neurospaces/pidinstack.h"
+#include "neurospaces/projectionquery.h"
 
 #include "neurospaces/symbolvirtual_protos.h"
 
@@ -1360,24 +1361,37 @@ static int ChannelTable_READ(struct symtab_Channel *pchan, char *pcFilename)
 	printf(" can't open file '%s'\n", pcFilename);
 	return(FALSE);
     }
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-result"
+
     /* read header: in versions 1-3 this was an integer, now it is a byte */
     for (i=0; i<4; i++) {
-	fread(&version, 1, 1, fp);
+        fread(&version, 1, 1, fp);
 	if (version>0) break;
     }
+
+#pragma GCC diagnostic pop
+
     if ((version<1)||((version==2)&&(ttype==CHANNEL_TYPE_CURRENT))||(version>4)) {
 	//Error();
 	printf(" can't read file '%s': wrong version #%d\n", pcFilename, version);
 	fclose(fp);
 	return(FALSE);
     }
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-result"
+
     if (version>=4) {
 	/* test for binary type */
-	fread(&v, dsize, 1, fp);
+        fread(&v, dsize, 1, fp);
 	doflip=(v!=4.0);
     } else {
 	doflip=0;
     }
+
+#pragma GCC diagnostic pop
 
     //- read type of channel
 
@@ -1794,6 +1808,9 @@ int     n=sizeof(int);
 int	val1, val2;
 char  	*pval1, *pval2;
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-result"
+
 	if (doflip) {
 	    fread(&(val1), n, 1, fp);
 	    pval1=(char *)(&(val1))+n-1;
@@ -1802,6 +1819,9 @@ char  	*pval1, *pval2;
 	} else {
 	    fread(&(val2), n, 1, fp);
 	}
+
+#pragma GCC diagnostic pop
+
 	return(val2);
 }
 
@@ -1812,6 +1832,9 @@ int     n=sizeof(double);
 double	val1, val2;
 char  	*pval1, *pval2;
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-result"
+
 	if (doflip) {
 	    fread(&(val1), n, 1, fp);
 	    pval1=(char *)(&(val1))+n-1;
@@ -1820,6 +1843,9 @@ char  	*pval1, *pval2;
 	} else {
 	    fread(&(val2), n, 1, fp);
 	}
+
+#pragma GCC diagnostic pop
+
 	return(val2);
 }
 

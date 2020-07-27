@@ -419,11 +419,11 @@ static int SerialConnectionPrintInfo
 /* 	     SymbolHSLETypeDescribe */
 /* 	     (serconnVariables.psymserconn[i] */
 /* 	      .pconn->deconn.phsleSource->iType), */
-	     pcTarget,
+	     pcTarget); // ,
 /* 	     SymbolHSLETypeDescribe */
 /* 	     (serconnVariables.psymserconn[i] */
 /* 	      .pconn->deconn.phsleTarget->iType)); */
-	     NULL);
+// 	     NULL);
     }
 
     //- return result

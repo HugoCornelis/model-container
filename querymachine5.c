@@ -191,7 +191,7 @@ QueryMachineNeuroConnectionCounter
 	//- give diag's
 
 	fprintf(stdout, "Non-connection at serial (%5.5i)\n", pqtd->iSerial);
-	fprintf(stdout, "--------------------------------\n", pqtd->iSerial);
+	fprintf(stdout, "--------------------------------\n"); // , pqtd->iSerial);
     }
 
     //- return result
@@ -671,7 +671,7 @@ extern int QueryHandlerPQLoad
 	double dDelay;
 	double dWeight;
 
-	fscanf(pfile, "%i,%i(%lf,%lf)\n", &iPre, &iPost, &dDelay, &dWeight);
+	(void) fscanf(pfile, "%i,%i(%lf,%lf)\n", &iPre, &iPost, &dDelay, &dWeight);
 
 /* 	//- store connection data */
 
@@ -832,7 +832,7 @@ QueryMachineNeuroConnectionStore
 	//- give diag's
 
 	fprintf(stdout, "Non-connection at serial (%5.5i)\n", pqtd->iSerial);
-	fprintf(stdout, "--------------------------------\n", pqtd->iSerial);
+	fprintf(stdout, "--------------------------------\n"); // , pqtd->iSerial);
     }
 
     //- return result
@@ -1514,7 +1514,7 @@ QueryMachineNeuroConnectionTraverser
 	//- give diag's
 
 	fprintf(stdout, "Non-connection at serial (%5.5i)\n", pqtd->iSerial);
-	fprintf(stdout, "--------------------------------\n", pqtd->iSerial);
+	fprintf(stdout, "--------------------------------\n"); // , pqtd->iSerial);
     }
 
     //- diag's

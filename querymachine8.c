@@ -517,7 +517,7 @@ QueryMachineConnectionCounter
 	//- give diag's
 
 	fprintf(stdout, "Non-connection at serial (%5.5i)\n", pqtd->iSerial);
-	fprintf(stdout, "--------------------------------\n", pqtd->iSerial);
+	fprintf(stdout, "--------------------------------\n"); // , pqtd->iSerial);
     }
 
     //- return result
@@ -1036,7 +1036,7 @@ extern int QueryHandlerResolveSolverID
 
 	    if (!psi)
 	    {
-		fprintf(stdout, "Could not find solver info\n", iSerialID);
+		fprintf(stdout, "Could not find solver info\n"); // , iSerialID);
 		return(FALSE);
 	    }
 
@@ -1152,7 +1152,7 @@ QueryHandlerSegmenterLinearize
 
 	    struct symtab_Segmenter *psegr = (struct symtab_Segmenter *)phsle;
 
-	    fprintf(stdout, "---\n", psegr->desegmenter.iSegments);
+	    fprintf(stdout, "---\n"); // , psegr->desegmenter.iSegments);
 	    fprintf(stdout, "Number of segments: %i\n", psegr->desegmenter.iSegments);
 	    fprintf(stdout, "Number of segments without parents: %i\n", psegr->desegmenter.iNoParents);
 	    fprintf(stdout, "Number of segment tips: %i\n", psegr->desegmenter.iTips);

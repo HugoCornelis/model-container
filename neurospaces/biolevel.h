@@ -159,6 +159,8 @@ extern char *ppcBiolevelgroup[];
 #define COUNT_BIOLEVELGROUP			((BIOLEVELGROUP_MECHANISM - BIOLEVELGROUP_NERVOUS_SYSTEM) / DIVIDER_BIOLEVELGROUP + 1)
 
 
+#include <string.h>
+
 
 /// 
 /// \arg iLevel biological level to get biogroup for.

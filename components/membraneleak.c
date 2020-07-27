@@ -27,6 +27,7 @@
 #include <string.h>
 
 #include "neurospaces/components/membraneleak.h"
+#include "neurospaces/components/segmenter.h"
 #include "neurospaces/function.h"
 #include "neurospaces/idin.h"
 #include "neurospaces/parameters.h"

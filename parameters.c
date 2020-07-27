@@ -723,7 +723,7 @@ ParameterPrintInfoRecursive
 	    }
 	    else
 	    {
-		fprintf(pfile, "'resolved value': (context cannot be resolved) ->%s\n", pc, "->", pcFieldName);
+		fprintf(pfile, "'resolved value': (context cannot be resolved) ->%s\n", pc); // , "->", pcFieldName);
 	    }
 	}
 
