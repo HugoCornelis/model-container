@@ -43,7 +43,7 @@ Done!',
 			       },
 			      ],
        description => "simple asc token parsing",
-       name => 'asc_parse.t',
+       name => 'python/asc_parse.t',
       };
 
 
