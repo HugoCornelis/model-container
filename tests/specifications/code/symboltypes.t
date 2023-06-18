@@ -11,11 +11,11 @@ my $test
 				command =>
 				sub
 				{
-				    my $self = shift;
+				    # my $self = shift;
 
-				    my $config = shift;
+				    # my $config = shift;
 
-				    my $directory = $config->{c_code}->{directory};
+				    my $directory = '.'; # $config->{c_code}->{directory};
 
 				    my $definitions_header = `cat "$directory/hierarchy/output/symbols/type_defines.h"`;
 
