@@ -1,4 +1,4 @@
-static char *pcVersionTime="(20/07/27) Montag, Juli 27, 2020 07:09:54 hugo";
+static char *pcVersionTime="(23/06/18) zo, jun 18, 23 16:04:09 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -98,7 +98,7 @@ static char *pcVersionTime="(20/07/27) Montag, Juli 27, 2020 07:09:54 hugo";
 
 
 #include "neurospaces/exporter.h"
-#include "neurospaces/lexsupport.h"
+/* #include "neurospaces/lexsupport.h" */
 #include "neurospaces/neurospaces.h"
 #include "neurospaces/hines_listlist.h"
 #include "neurospaces/importedfile.h"
