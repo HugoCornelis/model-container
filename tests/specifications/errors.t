@@ -293,14 +293,17 @@ value = 1.79769e+308
 							    'InserterInstance: \*\*\* Error: Inserter instance excitation cannot resolve NAME_SELECTOR parameter
 
 \[.+?/utilities/incomplete_inserter.ndf line 38, near ALGORITHM\]
+\[.+?/utilities/incomplete_inserter.ndf line 1, near ALGORITHM\]
 
 InserterInstance: \*\*\* Error: Inserter instance inhibition cannot resolve NAME_SELECTOR parameter
 
 \[.+?/utilities/incomplete_inserter.ndf line 46, near ALGORITHM\]
+\[.+?/utilities/incomplete_inserter.ndf line 1, near ALGORITHM\]
 
 InserterInstance: \*\*\* Error: Inserter instance spines cannot resolve NAME_SELECTOR parameter
 
 \[.+?/utilities/incomplete_inserter.ndf line 54, near ALGORITHM\]
+\[.+?/utilities/incomplete_inserter.ndf line 1, near ALGORITHM\]
 
 Inserter instance spines
 Inserter instance inhibition
