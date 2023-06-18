@@ -391,6 +391,8 @@ xs_initialize.c:
 
 test: check
 
+TESTS = run_harness.sh
+
 html-upload-prepare:
 	rm -fr html/htdocs/neurospaces_project/neurospaces
 	mkdir -p html/htdocs/neurospaces_project/neurospaces
