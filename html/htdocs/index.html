@@ -72,39 +72,28 @@ This web page reflects the status as for project version alpha of the Neurospace
     <p>
 
       The <a href="http://www.genesis-sim.org/GENESIS/">GEneral NEural
-      SImulation System</a>, GENESIS for short, started as a very
-      advanced software application for biologically accurate neuronal
-      modeling in the late eighties.  Besides being used as a neuronal
-      simulator it was also applied to various domains outside
-      computational neuroscience.  At present the software contains
-      ill-structured and duplicate code, inconsistencies prevent
-      automated regression testing and there is currently a general,
-      yet logical, lack of engagement in the neuroscience community to
-      further contribute and extend the source code of this
-      application (who wants to contribute if nobody else can tell
-      what is and what is not correct and respects the fundamental
-      design philosophy of the code ?).  One of the core problems
+      SImulation System</a>, GENESIS for short, started as an advanced
+      software application for biologically accurate neuronal modeling
+      in the late eighties.  Today it continues to be used for neuronal
+      simulations but it has also been applied to various domains outside
+      computational neuroscience.  However, with a history of over 30 years
+      the software architecture has become obsolete resulting in many
+      deficiencies such as duplicate code, no automated regression testing
+      Further extension of the source code proves to be extremely difficult.
+
+      One of the core problems
       responsible for this situation, is that GENESIS is a monolithic
       software system, implementing many different user-visible
       functions.
 
     <p>
 
-      The <em>Neurospaces project</em> is a departure from the
-      monolithic software system design.  It is a development center
-      for software components of computational neuroscience
-      simulators.  There are many advantages of developing independent
-      software components:
+      The <em>Neurospaces project</em> is a development center for
+      software components of computational neuroscience simulators.
+      Some of the advantages of developing independent software
+      components are:
 
     <ul>
-	<li>
-
-	  Interfacing to an individual component is obviously more
-	  simple than interfacing to a do-all monolithic system.  The
-	  compartmental solver developed for the Neurospaces project (<a
-	    href="#section-heccer">Heccer<a>) can be connected to Matlab
-	      fi.
-
 	<li>
 
 	  It simplifies the individual components and encourages other
@@ -118,6 +107,13 @@ This web page reflects the status as for project version alpha of the Neurospace
 	  there are also many integration tests.  The regression
 	  tester output can be found <a
 	  href="http://repo-genesis3.cbi.utsa.edu/tests/neurospaces_cron.stdout">here</a>.
+
+	<li>
+
+	  Interfacing to an individual component is more
+	  simple than interfacing to a do-all monolithic system.  As an example the
+	  compartmental solver developed for the Neurospaces project (<a
+	    href="#section-heccer">Heccer</a>) can be directly connected to Matlab.
 
 	<li>
 
@@ -136,19 +132,23 @@ This web page reflects the status as for project version alpha of the Neurospace
 
       <p>
 
-	The Neurospaces project embodies many software components that
-	all have been developed in full isolation.  The core of the
-	most important components is finished.  The current
-	development focus has shifted from component integration to
-	the support of specific use case with an emphasis on single
-	neuron modeling.
+	The Neurospaces project delivers many software components that
+	have first been developed in isolation, then possibly been integrated into a single simulator.
+	The core of the
+	important components was finished several years ago.
 
       <p>
 
-	This is a list of software components that have been developed
-	or are under construction:
+	The software components that have been developed:
 
       <ul>
+
+	<li>
+
+	  The <a href="#section-genesis-sli">Genesis Script Language
+	  Interface</a>: a scripting component that reads <a
+	  href="http://www.genesis-sim.org">Genesis 2</a> scripts and
+	  feeds them to the Neurospaces model container.
 
 	<li>
 
@@ -160,10 +160,10 @@ This web page reflects the status as for project version alpha of the Neurospace
 	  <a href="#section-heccer">Heccer</a>: a fast compartmental
 	  solver, a backend.
 
-	<li>
+	<!-- <li> -->
 
-	  <a href="#section-dash">Dash</a>: a second compartmental
-	  solver faster than Heccer, for simpler models.
+	<!--   <a href="#section-dash">Dash</a>: a second compartmental -->
+	<!--   solver faster than Heccer, for simpler models. -->
 
 	<li>
 
@@ -176,15 +176,16 @@ This web page reflects the status as for project version alpha of the Neurospace
 	  <a href="#section-exchange">The Exchange Module:</a>:
 	  provides the model-container with interfaces to XML based
 	  model descriptions such as <a
-	  href="http://www.neuroml.org/">NeuroML</a> and <a
-	  href="http://www.nineml.org/">NineML</a>.
+	  href="http://www.neuroml.org/">NeuroML</a>.
 
 	<li>
 
 	  <a href="#section-des">Discrete event system</a>: consists
 	  of a discrete event distributor and queuer.  This is used
 	  for abstract modeling of an action potential traveling
-	  inside an axon as a 'discrete event'.
+	  inside an axon as a 'discrete event'.  This component is
+	  optimized for networks of realistic neuronal models that
+	  have Hodgkin-Huxley channels and / or a neuronal morphology.
 
 	<li>
 
@@ -199,25 +200,14 @@ This web page reflects the status as for project version alpha of the Neurospace
 
 	<li>
 
-	  The <a href="#section-genesis-sli">Genesis Script Language
-	  Interface</a>: a scripting component that reads <a
-	  href="http://www.genesis-sim.org">Genesis 2</a> scripts and
-	  feeds them to the Neurospaces model container.
-
-	<li>
-
 	  The <a href="#section-geometry">Geometry Library</a> is a
 	  general purpose geometry library, with some essential
 	  geometrical operators, not commonly found in other
 	  geometrical libraries.
-
-	<li>
-
-	  Using the Geometry Library, a <a
-	  href="#section-reconstruct">Reconstruct Interface</a> has
-	  been written.  This interface supports the conversion of
-	  contours exported by the <a
-	  href="http://synapses.bu.edu/tools/index.htm">Reconstruct
+	  The <a href="#section-reconstruct">Reconstruct Interface</a>
+	  uses the Geometry Library to support the conversion of
+	  contours exported by
+	  the <a href="http://synapses.bu.edu/tools/index.htm">Reconstruct
 	  software</a> to the Neurospaces declarative NDF format.
 
 	<li>
@@ -242,25 +232,25 @@ This web page reflects the status as for project version alpha of the Neurospace
 	  convenient way.
 
       </ul>
-      <ul>
-	<li>
+<!--       <ul> -->
+<!-- 	<li> -->
 
-	  There is also a <a
-<!-- 	  href="http://neurospaces.blogspot.com/">Neurospaces blog</a> -->
-<!-- 	  and a <a -->
-<!-- 	  href="http://code.google.com/p/neurospaces/wiki/Index">wiki -->
-<!-- 	  at googlecode</a> -->
-	  for the Neurospaces project.
-<!-- , with -->
-<!-- 	  information for developers. -->
+<!-- 	  There is also a <a -->
+<!-- <\!-- 	  href="http://neurospaces.blogspot.com/">Neurospaces blog</a> -\-> -->
+<!-- <\!-- 	  and a <a -\-> -->
+<!-- <\!-- 	  href="http://code.google.com/p/neurospaces/wiki/Index">wiki -\-> -->
+<!-- <\!-- 	  at googlecode</a> -\-> -->
+<!-- 	  for the Neurospaces project. -->
+<!-- <\!-- , with -\-> -->
+<!-- <\!-- 	  information for developers. -\-> -->
 
-      </ul>
+<!--       </ul> -->
 
-      Together, these tools give the core for the upcoming <a
-      href="http://www.genesis-sim.org/GENESIS/G3/">GENESIS 3 GUI</a>.
-      Another alternative core for the GENESIS 3 GUI is <a
-      href="http://moose-g3.sourceforge.net/">Moose</a>, developed in
-      India by the group of Upi Bhalla.
+      <!-- Together, these tools give the core for the upcoming <a -->
+      <!-- href="http://www.genesis-sim.org/GENESIS/G3/">GENESIS 3 GUI</a>. -->
+      <!-- Another alternative core for the GENESIS 3 GUI is <a -->
+      <!-- href="http://moose-g3.sourceforge.net/">Moose</a>, developed in -->
+      <!-- India by the group of Upi Bhalla. -->
 
 <!--       <p> -->
 
@@ -271,24 +261,24 @@ This web page reflects the status as for project version alpha of the Neurospace
 
       <p>
 
-    </p><h2><a name="section-download">Download:</a></h2>
+    <!-- </p><h2><a name="section-download">Download:</a></h2> -->
 
-      The interactive shell, the model container, Heccer, SSP, the
-      Studio, and the Developer Package can be downloaded
-      <a href="http://sourceforge.net/project/showfiles.php?group_id=162899">
-        here</a>.  Other packages will be available for download soon.
+    <!--   The interactive shell, the model container, Heccer, SSP, the -->
+    <!--   Studio, and the Developer Package can be downloaded -->
+    <!--   <a href="http://sourceforge.net/project/showfiles.php?group_id=162899"> -->
+    <!--     here</a>.  Other packages will be available for download soon. -->
 
-      <p>
+    <!--   <p> -->
 
-	The source code of the latest version of available packages is
-	accessible in a source code repository.  More information can
-	be found <a
-	href="http://code.google.com/p/neurospaces/wiki/NeurospacesRepository">here</a>.
+    <!-- 	The source code of the latest version of available packages is -->
+    <!-- 	accessible in a source code repository.  More information can -->
+    <!-- 	be found <a -->
+    <!-- 	href="http://code.google.com/p/neurospaces/wiki/NeurospacesRepository">here</a>. -->
 
-      <p>
+    <!--   <p> -->
 
-	If you find the Neurospaces project interesting or useful, you
-	can always let us know.
+    <!-- 	If you find the Neurospaces project interesting or useful, you -->
+    <!-- 	can always let us know. -->
 
 
     </p><h2><a name="section-neurospaces">Neurospaces Model
@@ -1390,8 +1380,8 @@ $ neurospaces cells/purkinje/edsjb1994.ndf --traversal-symbol / --reporting-fiel
 
       <hr>
 <!--       &copy; -->
-      &#169; 1999-2016 -- All material on this website, including
-      figures and presentation, is copyrighted 1999-2016 by Hugo
+      &#169; 1999-2024 -- All material on this website, including
+      figures and presentation, is copyrighted 1999-2024 by Hugo
       Cornelis unless otherwise noted.  Please contact the author for
       more information.
 
@@ -1423,7 +1413,7 @@ $ neurospaces cells/purkinje/edsjb1994.ndf --traversal-symbol / --reporting-fiel
 
       <address><a href="mailto:hugo.cornelis@gmail.com"></a></address>
 <!-- Created: Thu Apr  6 11:31:32 CDT 2006 -->
-<!-- hhmts start -->Last modified: Sun Feb 21 09:52:44 CET 2016
+<!-- hhmts start -->Last modified: Sun Feb 21 09:52:44 CET 2024
 <!-- hhmts end -->
       <script type="text/javascript">
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
