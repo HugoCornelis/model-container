@@ -405,6 +405,9 @@ html-upload-prepare:
 html-upload: html-upload-prepare
 	scp -pr html/htdocs/* hcornelis,neurospaces@web.sourceforge.net:/home/groups/n/ne/neurospaces/htdocs/
 
+html-upload-index:
+	scp -pr html/htdocs/index.html hcornelis,neurospaces@web.sourceforge.net:/home/groups/n/ne/neurospaces/htdocs/
+
 internal-library:
 # $Format: "	tar cfz library-${package}-${label}.tar.gz library/"$
 	tar cfz library-model-container-alpha.tar.gz library/
