@@ -96,7 +96,7 @@ sub read_cmd_line
 	    "
 $0 <options>
 
-$0: configure the heccer solver.
+$0: thie script loads the model-container but does not do anything useful yet.
 
 options:
     --help               print usage information.
