@@ -26,9 +26,14 @@ dist_bin_SCRIPTS = bin/model-container
 
 #CC = g++
 LEX_OUTPUT_ROOT = lex.parser
-LFLAGS=-i -l -Pparser
-YFLAGS=-dv -p parser
-AM_CFLAGS=-fdiagnostics-color=never -g3 -fPIC -Wmissing-prototypes -Wmissing-declarations -Wno-declaration-after-statement -include neurospaces/config.h -DPRE_PROTO_TRAVERSAL @PERL_CCOPTS@ -I$(top_builddir)
+AM_LFLAGS=-i -l -Pparser
+# LFLAGS=-i -l -Pparser
+
+# note: automake does not recognize clustering on these options, -d -v is not equivalent to -dv
+AM_YFLAGS=-d -v
+YFLAGS=-p parser
+# YACC=bison
+AM_CFLAGS=-fdiagnostics-color=never -g3 -fPIC -Wmissing-prototypes -Wmissing-declarations -Wno-declaration-after-statement -include neurospaces/config.h -DPRE_PROTO_TRAVERSAL -I$(top_builddir) @PERL_CCOPTS@
 
 pkglib_LIBRARIES = libneurospacesread.a
 
