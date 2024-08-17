@@ -22,21 +22,16 @@ dnl //////////////////////////////////////////////////////////////////////////
 
 
 dnl Process this file with autoconf to produce a configure script.
-# $Format: "AC_INIT(${package}, ${major}.${minor}.${micro}-${label}, ${email})"$
-AC_INIT(model-container, 0.0.0-alpha, hugo.cornelis@gmail.com)
-dnl AC_REVISION($Id: configure.ac 1.40 Wed, 10 Oct 2007 16:57:00 -0500 hugo $)
+# $Format: "AC_INIT([${package}], [${major}.${minor}.${micro}-${label}], [${email}])"$
+AC_INIT([model-container], [0.0.0-alpha], [hugo.cornelis@gmail.com])
 
 dnl Obtain operating system information.
 AC_CANONICAL_TARGET
 
+AM_INIT_AUTOMAKE([subdir-objects])
 
 AC_CONFIG_SRCDIR([neurospaces.c])
-
 AC_CONFIG_HEADERS([neurospaces/config.h])
-
-# $Format: "AM_INIT_AUTOMAKE(${package}, ${major}.${minor}.${micro}-${label})"$
-AM_INIT_AUTOMAKE(model-container, 0.0.0-alpha)
-
 
 # see https://metacpan.org/source/ASPIERS/Stow-v2.1.2/configure.ac
 
@@ -162,6 +157,7 @@ dnl Checks for programs.
 AC_PROG_AWK
 AC_PROG_YACC
 AC_PROG_CC
+AC_PROG_LEX([noyywrap])
 AM_PROG_LEX
 #AC_ARG_PROGRAM
 AC_PROG_INSTALL
@@ -535,7 +531,7 @@ case "$host_os" in
       ;;
       no*)
 
-        AC_ERROR([libtool for Mac OSX is not found. It's needed to make executables.])
+        AC_MSG_ERROR([libtool for Mac OSX is not found. It's needed to make executables.])
 
       ;;
     esac
@@ -556,7 +552,7 @@ case "$host_os" in
         echo ""
         echo "Error, the standard version of perl for Mac OSX is not found."
         echo "Non standard versions of perl are known to cause problems."
-        AC_ERROR([Perl for Mac OSX is not found.])
+        AC_MSG_ERROR([Perl for Mac OSX is not found.])
         ;;
         *)
         dnl Ensure that ONLY the standard mac perl is used throughout.
@@ -668,7 +664,7 @@ dnl         ;;
         echo ""
         echo "Error, the standard version of swig for Mac OSX is not found."
         echo "Non standard versions of swig are known to cause problems."
-        AC_ERROR([Swig for Mac OSX is not found.])
+        AC_MSG_ERROR([Swig for Mac OSX is not found.])
         ;;
 dnl       *)
 dnl         AC_MSG_RESULT([ yes ])
@@ -896,13 +892,18 @@ esac
 dnl }}}
 
 
-AC_OUTPUT(Makefile \
+AC_CONFIG_FILES(Makefile \
 	algorithms/Makefile \
 	algorithms/event/Makefile \
 	algorithms/symbol/Makefile \
 	convertors/Makefile \
 	glue/swig/Makefile \
 	glue/swig/perl/Makefile \
-	glue/swig/python/Makefile 
+	glue/swig/python/Makefile
 	)
+
+# AC_CONFIG_COMMANDS (tag..., [cmds], [init-cmds])
+
+AC_OUTPUT
+
 
