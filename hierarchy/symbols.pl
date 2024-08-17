@@ -918,33 +918,33 @@ my $class_hierarchy
 		   parameters => {
 				 },
 		  },
-	v_contour => {
-		      allows => {
-				 'create_alias' => 'v_contour',
-				},
-		      description => 'a vector of spatial contours',
-		      grammar => {
-				  components => [
-						 'EMContour',
-						],
-				  specific_allocator => 'VContourCalloc',
-				  specific_token => {
-						     class => 'v_contour',
-						     lexical => 'TOKEN_CONTOUR_GROUP',
-						     purpose => 'physical',
-						    },
-				  typing => {
-					     base => 'phsle',
-					     id => 'pidin',
-					     spec => 'pvcont',
-					     to_base => '->vect.bio.ioh.iol.hsle',
-					    },
-				 },
-		      isa => 'vector',
-		      name => 'symtab_VContour',
-		      parameters => {
-				    },
-		     },
+	# v_contour => {
+	# 	      allows => {
+	# 			 'create_alias' => 'v_contour',
+	# 			},
+	# 	      description => 'a vector of spatial contours',
+	# 	      grammar => {
+	# 			  components => [
+	# 					 'EMContour',
+	# 					],
+	# 			  specific_allocator => 'VContourCalloc',
+	# 			  specific_token => {
+	# 					     class => 'v_contour',
+	# 					     lexical => 'TOKEN_CONTOUR_GROUP',
+	# 					     purpose => 'physical',
+	# 					    },
+	# 			  typing => {
+	# 				     base => 'phsle',
+	# 				     id => 'pidin',
+	# 				     spec => 'pvcont',
+	# 				     to_base => '->vect.bio.ioh.iol.hsle',
+	# 				    },
+	# 			 },
+	# 	      isa => 'vector',
+	# 	      name => 'symtab_VContour',
+	# 	      parameters => {
+	# 			    },
+	# 	     },
 	v_connection => {
 			 allows => {
 # 				    'create_alias' => 'v_connection',
@@ -1198,68 +1198,68 @@ my $class_hierarchy
        # geometrical types
 
        (
-	e_m_contour => {
-			allows => {
-				   'count_points' => 'e_m_contour',
-				   'create_alias' => 'e_m_contour',
-				  },
-			annotations => {
-					'piSymbolType2Biolevel' => 'BIOLEVEL_ATOMIC',
-				       },
-			description => 'a spatial contour, presumably representing an EM trace',
-			grammar => {
-				    components => [
-						   'ContourPoint',
-						  ],
-				    specific_allocator => 'EMContourCalloc',
-				    specific_token => {
-						       class => 'e_m_contour',
-						       lexical => 'TOKEN_EM_CONTOUR',
-						       purpose => 'physical',
-						      },
-				    typing => {
-					       base => 'phsle',
-					       id => 'pidin',
-					       spec => 'pemc',
-					       to_base => '->bio.ioh.iol.hsle',
-					      },
-				   },
-			isa => 'bio_comp',
-			name => 'symtab_EMContour',
-			parameters => {
-				      },
-		       },
-	contour_point => {
-			  allows => {
-				     'create_alias' => 'contour_point',
-				     'get_parameter' => 'contour_point',
-				    },
-			  annotations => {
-					  'piSymbolType2Biolevel' => 'BIOLEVEL_ATOMIC',
-					 },
-			  description => 'a single point in 3D space, presumably from an EM trace',
-			  grammar => {
-				      components => [
-						    ],
-				      specific_allocator => 'ContourPointCalloc',
-				      specific_token => {
-							 class => 'contour_point',
-							 lexical => 'TOKEN_CONTOUR_POINT',
-							 purpose => 'physical',
-							},
-				      typing => {
-						 base => 'phsle',
-						 id => 'pidin',
-						 spec => 'pcpnt',
-						 to_base => '->bio.ioh.iol.hsle',
-						},
-				     },
-			  isa => 'bio_comp',
-			  name => 'symtab_ContourPoint',
-			  parameters => {
-					 THICKNESS => 'thickness of the slice originating the contour',
-					},
-			 },
+	# e_m_contour => {
+	# 		allows => {
+	# 			   'count_points' => 'e_m_contour',
+	# 			   'create_alias' => 'e_m_contour',
+	# 			  },
+	# 		annotations => {
+	# 				'piSymbolType2Biolevel' => 'BIOLEVEL_ATOMIC',
+	# 			       },
+	# 		description => 'a spatial contour, presumably representing an EM trace',
+	# 		grammar => {
+	# 			    components => [
+	# 					   'ContourPoint',
+	# 					  ],
+	# 			    specific_allocator => 'EMContourCalloc',
+	# 			    specific_token => {
+	# 					       class => 'e_m_contour',
+	# 					       lexical => 'TOKEN_EM_CONTOUR',
+	# 					       purpose => 'physical',
+	# 					      },
+	# 			    typing => {
+	# 				       base => 'phsle',
+	# 				       id => 'pidin',
+	# 				       spec => 'pemc',
+	# 				       to_base => '->bio.ioh.iol.hsle',
+	# 				      },
+	# 			   },
+	# 		isa => 'bio_comp',
+	# 		name => 'symtab_EMContour',
+	# 		parameters => {
+	# 			      },
+	# 	       },
+	# contour_point => {
+	# 		  allows => {
+	# 			     'create_alias' => 'contour_point',
+	# 			     'get_parameter' => 'contour_point',
+	# 			    },
+	# 		  annotations => {
+	# 				  'piSymbolType2Biolevel' => 'BIOLEVEL_ATOMIC',
+	# 				 },
+	# 		  description => 'a single point in 3D space, presumably from an EM trace',
+	# 		  grammar => {
+	# 			      components => [
+	# 					    ],
+	# 			      specific_allocator => 'ContourPointCalloc',
+	# 			      specific_token => {
+	# 						 class => 'contour_point',
+	# 						 lexical => 'TOKEN_CONTOUR_POINT',
+	# 						 purpose => 'physical',
+	# 						},
+	# 			      typing => {
+	# 					 base => 'phsle',
+	# 					 id => 'pidin',
+	# 					 spec => 'pcpnt',
+	# 					 to_base => '->bio.ioh.iol.hsle',
+	# 					},
+	# 			     },
+	# 		  isa => 'bio_comp',
+	# 		  name => 'symtab_ContourPoint',
+	# 		  parameters => {
+	# 				 THICKNESS => 'thickness of the slice originating the contour',
+	# 				},
+	# 		 },
        ),
 
        # discrete & combinatorial types

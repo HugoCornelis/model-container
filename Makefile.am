@@ -58,8 +58,6 @@ libneurospacesread_a_SOURCES = \
 	components/concentrationgatekinetic.c \
 	components/connection.c \
 	components/connectionsymbol.c \
-	components/contourpoint.c \
-	components/emcontour.c \
 	components/equationexponential.c \
 	components/fiber.c \
 	components/gatekinetic.c \
@@ -82,7 +80,6 @@ libneurospacesread_a_SOURCES = \
 	components/vector.c \
 	components/vectorconnection.c \
 	components/vectorconnectionsymbol.c \
-	components/vectorcontour.c \
 	components/vectorsegment.c \
 	connectioncache.c \
 	coordinatecache.c \
@@ -133,6 +130,10 @@ libneurospacesread_a_SOURCES = \
 	treespacetraversal.c \
 	workload.c \
 	xs_initialize.c
+
+#	components/contourpoint.c
+#	components/emcontour.c
+#	components/vectorcontour.c
 
 neurospacesmodeldir=$(prefix)/neurospaces/models
 nobase_dist_neurospacesmodel_DATA=@MODEL_DESCRIPTION_FILES@ @MODEL_SWC_MORPHOLOGYFILES@ @MODEL_XML_FILES@ @MODEL_NPY_FILES@ @MODEL_NPL_FILES@ @MODEL_PROJECTIONCACHES@ @MODEL_GENESIS_MORPHOLOGYFILES@ @MODEL_GENESIS_TABFILES@ @MODEL_TEXFILES@ @MODEL_YAMLFILES@ @ALGORITHM_DATA@
@@ -254,8 +255,6 @@ nobase_include_HEADERS = \
 	neurospaces/components/concentrationgatekinetic.h \
 	neurospaces/components/connection.h \
 	neurospaces/components/connectionsymbol.h \
-	neurospaces/components/contourpoint.h \
-	neurospaces/components/emcontour.h \
 	neurospaces/components/equationexponential.h \
 	neurospaces/components/fiber.h \
 	neurospaces/components/gatekinetic.h \
@@ -278,7 +277,6 @@ nobase_include_HEADERS = \
 	neurospaces/components/vector.h \
 	neurospaces/components/vectorconnection.h \
 	neurospaces/components/vectorconnectionsymbol.h \
-	neurospaces/components/vectorcontour.h \
 	neurospaces/components/vectorsegment.h \
 	neurospaces/config.h \
 	neurospaces/connectioncache.h \
@@ -321,6 +319,10 @@ nobase_include_HEADERS = \
 	neurospaces/treespacetraversal.h \
 	neurospaces/vtable.h \
 	neurospaces/workload.h
+
+#	neurospaces/components/contourpoint.h
+#	neurospaces/components/emcontour.h
+#	neurospaces/components/vectorcontour.h
 
 BUILT_SOURCES = \
 	hierarchy/output/algorithm_instances/.sentinel \
@@ -504,12 +506,14 @@ libneurospacesread.so: libneurospacesread.a
 	vector.o \
 	vectorconnection.o \
 	vectorconnectionsymbol.o \
-	vectorcontour.o \
 	vectorsegment.o \
 	workload.o \
 	xs_initialize.o \
 	-o libneurospacesread.so
 
+#	contourpoint.o
+#	emcontour.o
+# 	vectorcontour.o
 
 TMP_DIR = tmp
 

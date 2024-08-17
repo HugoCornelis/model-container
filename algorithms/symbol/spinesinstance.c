@@ -960,22 +960,22 @@ SpinesInstanceSymbolHandler
 	SymbolRecalcAllSerials(phsle, ppist);
     }
 
-    //- if an em section
+    /* //- if an em section */
 
-    else if (instanceof_v_contour(phsle))
-    {
-	//- give feedback: not yet implemented
+    /* else if (instanceof_v_contour(phsle)) */
+    /* { */
+    /* 	//- give feedback: not yet implemented */
 
-	char pc[1000];
+    /* 	char pc[1000]; */
 
-	PidinStackString(&pac->pist, pc, 1000);
+    /* 	PidinStackString(&pac->pist, pc, 1000); */
 
-	NeurospacesError
-	    (pac,
-	     "SpinesInstance",
-	     "Spine algorithm handler on a contour group %s (not yet implemented)\n",
-	     pc);
-    }
+    /* 	NeurospacesError */
+    /* 	    (pac, */
+    /* 	     "SpinesInstance", */
+    /* 	     "Spine algorithm handler on a contour group %s (not yet implemented)\n", */
+    /* 	     pc); */
+    /* } */
 
     //- else
 
