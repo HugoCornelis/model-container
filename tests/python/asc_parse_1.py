@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 import os
 import pdb
 import sys
@@ -17,7 +17,7 @@ tokens = -1
 
 while True:
 
-        
+
     token = asc.next()
 
 
@@ -28,8 +28,8 @@ while True:
     else:
 
         tokens = tokens + 1
-        
-print "File e1cb4a1.asc has %d tokens" % (tokens)
-print "With %d lines" % (asc.get_line_number())
 
-print "Done!"
+print("File e1cb4a1.asc has %d tokens" % (tokens))
+print("With %d lines" % (asc.get_line_number()))
+
+print("Done!")
