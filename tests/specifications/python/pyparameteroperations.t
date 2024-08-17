@@ -377,6 +377,7 @@ Done!
 
 			      ],
        description => "parameter operations in python",
+       disabled => 'currently not maintaining the python interface',
        name => 'python/pyparameteroperations.t',
       };
 

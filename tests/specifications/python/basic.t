@@ -40,11 +40,12 @@ simulation finished
 			       },
 			      ],
        description => "various python bindings tests",
-       disabled => ((`python -c 'import Neurospaces ; print 1'` =~ /^1$/)
+       disabled_old => ((`python -c 'import Neurospaces ; print 1'` =~ /^1$/)
 		    ? ((`python -c 'import Heccer ; print 1'` =~ /^1$/)
 		       ? ''
 		       : 'Heccer.py cannot be loaded, probably the swig glue has not been built yet')
 		    : 'Neurospaces.py cannot be loaded, probably the swig glue has not been built yet'),
+       disabled => 'currently not maintaining the python interface',
        name => 'python/basic.t',
       };
 

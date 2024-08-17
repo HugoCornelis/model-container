@@ -81,6 +81,7 @@ my $test
 
 			      ],
        description => "Python basic network tests",
+       disabled => 'currently not maintaining the python interface',
        name => 'python/network-basic.t',
       };
 

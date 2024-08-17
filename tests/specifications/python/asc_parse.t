@@ -43,6 +43,7 @@ Done!',
 			       },
 			      ],
        description => "simple asc token parsing",
+       disabled => 'currently not maintaining the python interface',
        name => 'python/asc_parse.t',
       };
 

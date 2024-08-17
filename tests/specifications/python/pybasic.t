@@ -24,6 +24,7 @@ my $test
 			       },
 			      ],
        description => "Simple python functionality tests",
+       disabled => 'currently not maintaining the python interface',
        name => 'python/pybasic.t',
       };
 

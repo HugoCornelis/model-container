@@ -42,6 +42,7 @@ Done!
 
 			      ],
        description => "Simple python functionality tests",
+       disabled => 'currently not maintaining the python interface',
        name => 'python/import.t',
       };
 

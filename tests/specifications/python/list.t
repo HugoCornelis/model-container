@@ -70,6 +70,7 @@ Done!
 
 			      ],
        description => "Python list tests",
+       disabled => 'currently not maintaining the python interface',
        name => 'python/list.t',
       };
 
