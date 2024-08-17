@@ -1,4 +1,4 @@
-static char *pcVersionTime="(24/08/17) za, aug 17, 24 13:41:27 hugo";
+static char *pcVersionTime="(24/08/17) za, aug 17, 24 18:50:45 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -889,10 +889,55 @@ NeurospacesImport
 	    return(FALSE);
 	}
 
+	//- if this is an xml file
+
+	char *pcToParse = strdup(pcQualified);
+
+	int iLength = strlen(pcQualified);
+
+	if (strcmp(&pcQualified[iLength - 4], ".xml") == 0)
+	{
+	    // \todo not sure about the security risks
+
+	    static int iXMLParsedCount = 0;
+
+	    char pcTemp[L_tmpnam + 1];
+
+	    sprintf(pcTemp, "/tmp/model-%i.ndf", iXMLParsedCount);
+
+	    iXMLParsedCount++;
+
+	    char *pcTemp2 = strdup(pcTemp);
+
+	    char pcCommand[1000];
+
+	    //- convert the xml file to an ndf file
+
+	    sprintf(pcCommand, "perl <%s >%s -pe 's(<neurospaces type=\"ndf\"/>)(#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n)gi; s(->)(--##--)gi; s(</(input|output)>)(, )gi; s(<namespace>)()gi; s(</namespace>)()gi; s(</file>)()gi; s(<filename>)(\")gi; s(</filename>)(\")gi; s(<prototype>)()gi; s(</prototype>)()gi; s/<parameter>/parameter ( /gi; s|</parameter>| ), |gi; s|<function>\\s*<name>([^<]*)</name>| = $1 (|gi; s|</function>|), |gi; s(</value>)()gi; s(<value>)( = )gi; s(</string>)()gi; s(<string>)( = )gi; s(<name>)()gi; s(</name>)(); s(</)( end )gi; s((<|>))()gi; s(\\/\\/)(//)gi; s(--##--)(->)gi; '", pcQualified, pcTemp2);
+
+	    if (pnsc->nso.iVerbosity)
+	    {
+		fprintf(stderr,"%s: Executing '%s'.\n", pcAppl, pcCommand);
+	    }
+
+	    if (system(pcCommand) == -1)
+	    {
+		NeurospacesError
+		    (pacRootContext,
+		     "NeurospacesImport()",
+		     "Error converting %s from XML to NDF\n",
+		     pcQualified);
+	    }
+
+	    free(pcToParse);
+
+	    pcToParse = strdup(pcTemp2);
+	}
+
 	//- add the file to symbols
 
 	struct ImportedFile *pifFile
-	    = SymbolsAddImportedFile(pneuro->psym, pcQualified, pcRelative, pacRootContext);
+	    = SymbolsAddImportedFile(pneuro->psym, pcToParse, pcRelative, pacRootContext);
 
 	//- link imported file its symbols into parser context
 
@@ -915,47 +960,6 @@ NeurospacesImport
 
 	ParserSetContext(pacRootContext);
 	ParserSetRootContext(pacRootContext);
-
-	//- if this is an xml file
-
-	char *pcToParse = pcQualified;
-
-	int iLength = strlen(pcQualified);
-
-	if (strcmp(&pcQualified[iLength - 4], ".xml") == 0)
-	{
-	    // \todo not sure about the security risks
-
-	    char pcTemp[L_tmpnam + 1] = "/tmp/model.ndf";
-
-	    char *pcTemp2 = strdup(pcTemp);
-
-	    char pcCommand[1000];
-
-	    sprintf(pcCommand, "perl <%s >%s -pe 's(<neurospaces type=\"ndf\"/>)(#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n)gi; s(->)(--##--)gi; s(</(input|output)>)(, )gi; s(<namespace>)()gi; s(</namespace>)()gi; s(</file>)()gi; s(<filename>)(\")gi; s(</filename>)(\")gi; s(<prototype>)()gi; s(</prototype>)()gi; s/<parameter>/parameter ( /gi; s|</parameter>| ), |gi; s|<function>\\s*<name>([^<]*)</name>| = $1 (|gi; s|</function>|), |gi; s(</value>)()gi; s(<value>)( = )gi; s(</string>)()gi; s(<string>)( = )gi; s(<name>)()gi; s(</name>)(); s(</)( end )gi; s((<|>))()gi; s(\\/\\/)(//)gi; s(--##--)(->)gi; '", pcQualified, pcTemp2);
-
-	    if (pnsc->nso.iVerbosity)
-	    {
-		fprintf(stderr,"%s: Executing '%s'.\n", pcAppl, pcCommand);
-	    }
-
-	    if (system(pcCommand) == -1)
-	    {
-		NeurospacesError
-		    (pacRootContext,
-		     "NeurospacesImport()",
-		     "Error converting %s from XML to NDF\n",
-		     pcQualified);
-	    }
-
-	    strcpy(pcToParse, pcTemp2);
-	}
-
-	// \todo do the xml conversion here:
-	// if pcQualified ends with '.xml'
-	//   convert pcQualified to pcToParse
-	// else
-	//   pcToParse = pcQualified
 
 	//- open given file
 
@@ -1041,6 +1045,7 @@ NeurospacesImport
 	    }
 	}
 
+	free(pcToParse);
 	free(pcRelative);
 	free(pcQualified);
 
