@@ -76,6 +76,7 @@ CacheRegistryCalloc(int iSize)
 /// 
 /// \arg pcr cache registry.
 /// \arg iIdentifier cache identifier for lookup.
+/// \arg pvIdentifier cache identifier for lookup.
 /// 
 /// \return struct RegisteredCache *
 /// 
@@ -85,7 +86,7 @@ CacheRegistryCalloc(int iSize)
 /// 
 
 struct RegisteredCache *
-CacheRegistryLookup(struct CacheRegistry *pcr, int iIdentifier)
+CacheRegistryLookup(struct CacheRegistry *pcr, int iIdentifier, void *pvIdentifier)
 {
     //- set default result: failure
 
@@ -99,7 +100,8 @@ CacheRegistryLookup(struct CacheRegistry *pcr, int iIdentifier)
     {
 	//- if found
 
-	if (pcr->prc[i].iIdentifier == iIdentifier)
+	if (pcr->prc[i].iIdentifier == iIdentifier
+	    && pcr->prc[i].pvIdentifier == pvIdentifier)
 	{
 	    //- set result
 
@@ -121,6 +123,7 @@ CacheRegistryLookup(struct CacheRegistry *pcr, int iIdentifier)
 /// \arg pcr cache registry.
 /// \arg iType cache type.
 /// \arg iIdentifier cache identifier for lookup.
+/// \arg pvIdentifier cache identifier for lookup.
 /// \arg iSize cache size.
 /// \arg pvCache cache data.
 /// 
@@ -136,6 +139,7 @@ CacheRegistryRegisterCache
 (struct CacheRegistry *pcr,
  int iType,
  int iIdentifier,
+ void *pvIdentifier,
  int iSize,
  void *pvCache)
 {
@@ -146,7 +150,7 @@ CacheRegistryRegisterCache
     //- lookup the identifier in the cache
 
     struct RegisteredCache *prc
-	= CacheRegistryLookup(pcr, iIdentifier);
+	= CacheRegistryLookup(pcr, iIdentifier, pvIdentifier);
 
     if (prc)
     {

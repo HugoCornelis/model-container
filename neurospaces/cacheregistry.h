@@ -34,13 +34,14 @@ struct CacheRegistry *
 CacheRegistryCalloc(int iSize);
 
 struct RegisteredCache *
-CacheRegistryLookup(struct CacheRegistry *pcr, int iIdentifier);
+CacheRegistryLookup(struct CacheRegistry *pcr, int iIdentifier, void *pvIdentifier);
 
 struct RegisteredCache *
 CacheRegistryRegisterCache
 (struct CacheRegistry *pcr,
  int iType,
  int iIdentifier,
+ void *pvIdentifier,
  int iSize,
  void *pvCache);
 
@@ -59,6 +60,10 @@ struct RegisteredCache
     /// identifier: client specified
 
     int iIdentifier;
+
+    /// identifier: client specified
+
+    void *pvIdentifier;
 
     /// size: client specified
 

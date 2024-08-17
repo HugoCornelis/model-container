@@ -1631,7 +1631,7 @@ ProjectionVolumeInstanceSymbolHandler
 		/// \todo the cache identifier does not make sense yet
 
 		struct RegisteredCache *prc
-		    = CacheRegistryLookup(pcr, (int)pac);
+		    = CacheRegistryLookup(pcr, -1, pac);
 
 		//- if not set, create one
 
@@ -1668,7 +1668,7 @@ ProjectionVolumeInstanceSymbolHandler
 
 			//- register the coordinate cache as a global cache
 
-			CacheRegistryRegisterCache(pcr, 0, (int)pac, 0, pcc);
+			CacheRegistryRegisterCache(pcr, 0, -1, (void *)pac, 0, pcc);
 
 			//- this algorithm instance will use the cache from now on
 
