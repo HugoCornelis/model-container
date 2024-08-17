@@ -277,6 +277,7 @@ Parse Method : \(no info\)
 
 						  {
 						   description => "Have parsing states been reported ?",
+						   disabled => 'temporary disabled because of changes in bison',
 						   read => [
 							    '-re',
 							    'Reducing stack by rule(.|\n)*ParseStateDone(.|\n)*Reading a token: Now at end of input.',
