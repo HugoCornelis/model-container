@@ -217,10 +217,10 @@ ReplacerInstanceInsert
 	{
 	    //- link symbol to segment
 
-	    /// \todo a todo
+	    /// \todo this function does not exist yet.
 
-	    SymbolReplaceChild(phsle, phsleNew);
-    
+	    /* SymbolReplaceChild(phsle, phsleNew); */
+
 	    //- increment added symbol count
 
 	    pri->rv.iReplacedSymbols++;
