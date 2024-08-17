@@ -26,12 +26,12 @@ my $test
 						    description => "Can we export the model to an NDF file ?",
 						    read => 'neurospaces',
 						    wait => 1,
-						    write => "export no ndf /tmp/1.ndf /**",
+						    write => "export no ndf /tmp/nmda_1_exported.ndf /**",
 						   },
 						   {
 						    description => "Does the exported NDF file contain the correct model (1) ?",
 						    read => {
-							     application_output_file => '/tmp/1.ndf',
+							     application_output_file => '/tmp/nmda_1_exported.ndf',
 							     expected_output => '#!neurospacesparse
 // -*- NEUROSPACES -*-
 
@@ -108,13 +108,13 @@ END PUBLIC_MODELS
 						    description => "Can we export the model to an XML file ?",
 						    read => 'neurospaces',
 						    wait => 1,
-						    write => "export no xml /tmp/1.xml /**",
+						    write => "export no xml /tmp/nmda_1_exported.xml /**",
 						   },
 						   {
 						    comment => 'xml to html conversion fails when converting this test to html',
 						    description => "Does the exported XML file contain the correct model ?",
 						    read => {
-							     application_output_file => '/tmp/1.xml',
+							     application_output_file => '/tmp/nmda_1_exported.xml',
 							     expected_output => '<neurospaces type="ndf"/>
 
 <import>
@@ -204,12 +204,12 @@ END PUBLIC_MODELS
 						    description => "Can we export the model to an NDF file ?",
 						    read => 'neurospaces',
 						    wait => 1,
-						    write => "export no ndf /tmp/1.ndf /**",
+						    write => "export no ndf /tmp/hodgkin-huxley.ndf /**",
 						   },
 						   {
 						    description => "Does the exported NDF file contain the correct model (2) ?",
 						    read => {
-							     application_output_file => '/tmp/1.ndf',
+							     application_output_file => '/tmp/hodgkin-huxley.ndf',
 							     expected_output => '#!neurospacesparse
 // -*- NEUROSPACES -*-
 
@@ -240,13 +240,13 @@ END PUBLIC_MODELS
 						    description => "Can we export the model to an XML file ?",
 						    read => 'neurospaces',
 						    wait => 1,
-						    write => "export no xml /tmp/1.xml /**",
+						    write => "export no xml /tmp/hodgkin-huxley.xml /**",
 						   },
 						   {
 						    comment => 'xml to html conversion fails when converting this test to html',
 						    description => "Does the exported XML file contain the correct model ?",
 						    read => {
-							     application_output_file => '/tmp/1.xml',
+							     application_output_file => '/tmp/hodgkin-huxley.xml',
 							     expected_output => '<neurospaces type="ndf"/>
 
 <import>
@@ -291,13 +291,13 @@ END PUBLIC_MODELS
 						    description => "Can we export the model to an NDF file ?",
 						    read => 'neurospaces',
 						    wait => 1,
-						    write => "export no ndf /tmp/1.ndf /**",
+						    write => "export no ndf /tmp/nmda_2_exported.ndf /**",
 						   },
 						   {
 						    comment => 'exported text only differs in bindings of the original',
 						    description => "Does the exported NDF file contain the correct model (3) ?",
 						    read => {
-							     application_output_file => '/tmp/1.ndf',
+							     application_output_file => '/tmp/nmda_2_exported.ndf',
 							     expected_output => '#!neurospacesparse
 // -*- NEUROSPACES -*-
 
@@ -374,13 +374,13 @@ END PUBLIC_MODELS
 						    description => "Can we export the model to an XML file ?",
 						    read => 'neurospaces',
 						    wait => 1,
-						    write => "export no xml /tmp/1.xml /**",
+						    write => "export no xml /tmp/nmda_2_exported.xml /**",
 						   },
 						   {
 						    comment => 'xml to html conversion fails when converting this test to html',
 						    description => "Does the exported XML file contain the correct model ?",
 						    read => {
-							     application_output_file => '/tmp/1.xml',
+							     application_output_file => '/tmp/nmda_2_exported.xml',
 							     expected_output => '<neurospaces type="ndf"/>
 
 <import>
@@ -2549,7 +2549,11 @@ END PUBLIC_MODELS
 			       (
 				map
 				{
-				    my $ndf = $_;
+				    my $ndf_full = $_;
+
+				    $ndf_full =~ m(.*/(.*));
+
+				    my $ndf_short = $1;
 
 				    (
 				     {
@@ -2557,39 +2561,39 @@ END PUBLIC_MODELS
 						    '-q',
 						    '-v',
 						    '1',
-						    $ndf,
+						    $ndf_full,
 						   ],
 				      command => './neurospacesparse',
 				      command_tests => [
 							{
 							 description => "Is neurospaces startup successful ?",
-							 read => [ '-re', "./neurospacesparse: No errors for .+?/$ndf.", ],
+							 read => [ '-re', "./neurospacesparse: No errors for .+?/$ndf_full.", ],
 							 timeout => 15,
 							},
 							{
 							 description => "Can we export the model as NDF (9)?",
 							 wait => 1,
-							 write => "export no ndf /tmp/1.ndf /**",
+							 write => "export no ndf /tmp/$ndf_short /**",
 							},
 						       ],
-				      description => "export of $ndf before reading it back",
+				      description => "export of $ndf_full before reading it back",
 				     },
 				     {
 				      arguments => [
 						    '-q',
 						    '-v',
 						    '1',
-						    '/tmp/1.ndf',
+						    "/tmp/$ndf_short",
 						   ],
 				      command => './neurospacesparse',
 				      command_tests => [
 							{
 							 description => "Is neurospaces startup successful ?",
-							 read => "./neurospacesparse: No errors for /tmp/1.ndf.",
+							 read => "./neurospacesparse: No errors for /tmp/$ndf_short.",
 							 timeout => 15,
 							},
 						       ],
-				      description => "reading of $ndf after exporting it",
+				      description => "reading of $ndf_full after exporting it",
 				     },
 				    );
 				}
