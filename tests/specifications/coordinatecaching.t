@@ -234,6 +234,12 @@ cached coordinate z = 1e-08
 						  },
 						 ],
 				description => "EM contour coordinates",
+				disabled => 'EM contours have been disabled with commit commit 7144a5da54a897473c0b32dbdf4b19246f3b33d1
+Author: Hugo Cornelis <hugo.cornelis@gmail.com>
+Date:   Sat Aug 17 08:47:08 2024 +0200
+
+    Removed contour related symbols from the grammar.
+',
 			       },
 			      ],
        description => "coordinate caching",
