@@ -1098,9 +1098,9 @@ char * IdinName(struct symtab_IdentifierIndex *pidin)
 
 	static char pcName[30] = "";
 
-	/// \todo gives a warning on 64bit machines.
+	/// \todo (int) gives a warning on 64bit machines, this should be solved with a union with either an long int or a pointer..
 
-	sprintf(pcName,"CONN %i",(int)pidin);
+	sprintf(pcName,"CONN %li", (long int)pidin);
 
 	//- set result : illegal pidin (from connection ?)
 
