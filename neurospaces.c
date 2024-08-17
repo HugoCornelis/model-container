@@ -1,4 +1,4 @@
-static char *pcVersionTime="(23/06/18) zo, jun 18, 23 16:04:09 hugo";
+static char *pcVersionTime="(24/08/16) vr, aug 16, 24 18:01:33 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -89,16 +89,8 @@ static char *pcVersionTime="(23/06/18) zo, jun 18, 23 16:04:09 hugo";
 #include <unistd.h>
 
 
-#include <EXTERN.h>
-#include <perl.h>
-
-/// \note perl.h defines YYSTYPE, redefine it to void
-
-#define YYSTYPE void
-
-
 #include "neurospaces/exporter.h"
-/* #include "neurospaces/lexsupport.h" */
+#include "neurospaces/lexsupport.h"
 #include "neurospaces/neurospaces.h"
 #include "neurospaces/hines_listlist.h"
 #include "neurospaces/importedfile.h"
