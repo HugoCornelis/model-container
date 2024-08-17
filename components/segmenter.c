@@ -822,9 +822,11 @@ static int SegmenterSegmentOffspringIndexer(struct symtab_Segmenter *psegr)
 
     //- allocate structural analyzers
 
-    int *piChildren = (int *)calloc(iSegments, sizeof(int));
+    unsigned int uSegments = iSegments;
 
-    int **ppiChildren = (int **)calloc(iSegments, sizeof(int *));
+    int *piChildren = (int *)calloc(uSegments, sizeof(int));
+
+    int **ppiChildren = (int **)calloc(uSegments, sizeof(int *));
 
     //- analyze
 
