@@ -1,4 +1,4 @@
-static char *pcVersionTime="(24/08/16) vr, aug 16, 24 18:01:33 hugo";
+static char *pcVersionTime="(24/08/17) za, aug 17, 24 13:41:27 hugo";
 
 //
 // Neurospaces: a library which implements a global typed symbol table to
@@ -924,27 +924,31 @@ NeurospacesImport
 
 	if (strcmp(&pcQualified[iLength - 4], ".xml") == 0)
 	{
-	    // \todo let's take a risk here: for the moment way to
-	    // much work to implement this security free.
+	    // \todo not sure about the security risks
 
-	    char pcTemp[L_tmpnam + 1] = "";
+	    char pcTemp[L_tmpnam + 1] = "/tmp/model.ndf";
 
-	    char *pcTemp2 = tmpnam(pcTemp);
+	    char *pcTemp2 = strdup(pcTemp);
 
 	    char pcCommand[1000];
 
-	    sprintf(pcCommand, "perl <%s >%s -pe 's(<neurospaces type=\"ndf\"/>)(#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n)gi; s(->)(--##--)gi; s(</(input|output)>)(, )gi; s(<namespace>)()gi; s(</namespace>)()gi; s(</file>)()gi; s(<filename>)(\")gi; s(</filename>)(\")gi; s(<prototype>)()gi; s(</prototype>)()gi; s/<parameter>/parameter ( /gi; s|</parameter>| ), |gi; s|<function>\\s*<name>([^<]*)</name>| = $1 (|gi; s|</function>|), |gi; s(</value>)()gi; s(<value>)( = )gi; s(</string>)()gi; s(<string>)( = )gi; s(<name>)()gi; s(</name>)(); s(</)( end )gi; s((<|>))()gi; s(\\/\\/)(//)gi; s(--##--)(->)gi; '", pcQualified, pcTemp);
+	    sprintf(pcCommand, "perl <%s >%s -pe 's(<neurospaces type=\"ndf\"/>)(#!neurospacesparse\n// -*- NEUROSPACES -*-\n\nNEUROSPACES NDF\n\n)gi; s(->)(--##--)gi; s(</(input|output)>)(, )gi; s(<namespace>)()gi; s(</namespace>)()gi; s(</file>)()gi; s(<filename>)(\")gi; s(</filename>)(\")gi; s(<prototype>)()gi; s(</prototype>)()gi; s/<parameter>/parameter ( /gi; s|</parameter>| ), |gi; s|<function>\\s*<name>([^<]*)</name>| = $1 (|gi; s|</function>|), |gi; s(</value>)()gi; s(<value>)( = )gi; s(</string>)()gi; s(<string>)( = )gi; s(<name>)()gi; s(</name>)(); s(</)( end )gi; s((<|>))()gi; s(\\/\\/)(//)gi; s(--##--)(->)gi; '", pcQualified, pcTemp2);
+
+	    if (pnsc->nso.iVerbosity)
+	    {
+		fprintf(stderr,"%s: Executing '%s'.\n", pcAppl, pcCommand);
+	    }
 
 	    if (system(pcCommand) == -1)
 	    {
 		NeurospacesError
 		    (pacRootContext,
 		     "NeurospacesImport()",
-		     "Error converting %s to XML\n",
+		     "Error converting %s from XML to NDF\n",
 		     pcQualified);
 	    }
 
-	    pcToParse = pcTemp;
+	    strcpy(pcToParse, pcTemp2);
 	}
 
 	// \todo do the xml conversion here:
@@ -954,6 +958,11 @@ NeurospacesImport
 	//   pcToParse = pcQualified
 
 	//- open given file
+
+	if (pnsc->nso.iVerbosity)
+	{
+	    fprintf(stderr,"%s: Parsing '%s'.\n", pcAppl, pcToParse);
+	}
 
 	if ((inputfile = fopen(pcToParse, "r")) == NULL)
 	{
@@ -965,6 +974,9 @@ NeurospacesImport
 		 pcToParse);
 
 	    pneuro->iErrorCount++;
+
+	    free(pcToParse);
+	    free(pcQualified);
 
 	    /// \note huge memory leak.
 
@@ -990,12 +1002,11 @@ NeurospacesImport
 
 	//- parse the description file
 
-	/// \note I should call ParserParse() here, but because of bad design of 
+	/// \note I should call ParserParse() here, but because of bad design of
 	/// \note (f)lex, I would need to give the Neurospaces struct every time as
-	/// \note a parameter, this induces a (very small) performance penalty
-	/// \note and is not clean either
+	/// \note a parameter, this is not a clean way of doing things.
 
-	    int bFail = ParserParse(pacRootContext, pneuro->pifRootImport);
+	int bFail = ParserParse(pacRootContext, pneuro->pifRootImport);
 
 	//- remove pending lexical analyzer buffer
 
@@ -1029,6 +1040,9 @@ NeurospacesImport
 		fprintf(stderr,"%s: No errors for %s.\n", pcAppl, pcQualified);
 	    }
 	}
+
+	free(pcRelative);
+	free(pcQualified);
 
 	//- go to next file in parse command line args
 
