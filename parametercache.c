@@ -215,7 +215,7 @@ ParameterCacheExport
 
 	    PidinStackString(ppistSerial, pcSerial, 1000);
 
-	    char pcField[1000];
+	    char pcField[2000];
 
 	    sprintf(pcField, "%s->%s", pcSerial, ppar->pcIdentifier);
 
