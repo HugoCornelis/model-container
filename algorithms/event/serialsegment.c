@@ -403,10 +403,9 @@ static int SerialSegmentPrintInfo
 
 	fprintf
 	    (pfile,
-	     "%i\tSegment (%s,%i) with parent at %i (%s,%i)\n",
+	     "%i\tSegment (%s) with parent at %i (%s,%i)\n",
 	     i,
 	     SymbolName(&sersegmentVariables.psymsersegment[i].psegment->segr.bio.ioh.iol.hsle),
-	     SegmentIndex(sersegmentVariables.psymsersegment[i].psegment),
 	     sersegmentVariables.psymsersegment[i].iParent,
 	     sersegmentVariables.psymsersegment[i].iParent != -1
 	     ? SymbolName(&sersegmentVariables.psymsersegment[sersegmentVariables.psymsersegment[i].iParent].psegment->segr.bio.ioh.iol.hsle)

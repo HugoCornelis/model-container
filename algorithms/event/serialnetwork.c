@@ -364,12 +364,11 @@ static int SerialNetworkPrintInfo
 
 	fprintf
 	    (pfile,
-	     "%i\tNetwork (%s,%i), \n"
+	     "%i\tNetwork (%s), \n"
 	     "\tcells (%i,%i), populations (%i,%i), \n"
 	     "\tconnections (%i,%i), projections (%i,%i)\n",
 	     i,
 	     SymbolName(&sernetwVariables.psymsernetw[i].pnetw->segr.bio.ioh.iol.hsle),
-	     NetworkIndex(sernetwVariables.psymsernetw[i].pnetw),
 	     sernetwVariables.psymsernetw[i].iFirstCell,
 	     sernetwVariables.psymsernetw[i].iCells,
 	     sernetwVariables.psymsernetw[i].iFirstPopulation,
