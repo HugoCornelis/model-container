@@ -778,17 +778,17 @@ ExporterRegisterName(char *pcNamespace, char *pcName)
 
     //- allocate new memory if necessary
 
-    if (ppcRegisteredNames == NULL)
+    if (iNamesAllocatedCount == iNamesUsedCount)
     {
-	ppcRegisteredNames = (char **) realloc(ppcRegisteredNames, iNamesAllocatedCount + 10000);
-    }
+	ppcRegisteredNames = (char **) realloc(ppcRegisteredNames, (iNamesAllocatedCount + 10000) * sizeof(ppcRegisteredNames));
 
-    if (ppcRegisteredNames == NULL)
-    {
-	return(-1);
-    }
+	if (ppcRegisteredNames == NULL)
+	{
+	    return(-1);
+	}
 
-    iNamesAllocatedCount += 10000;
+	iNamesAllocatedCount += 10000;
+    }
 
     //- register the given name
 
