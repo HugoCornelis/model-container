@@ -4,12 +4,14 @@
 _MTN/
 analyzer.c
 analyzer.l
+components/.dirstamp
 glue/swig/perl/SwiggableNeurospaces.pm
 glue/swig/perl/swiggable_neurospaces_wrap.c
 glue/swig/python/build/
 glue/swig/python/model_container/model_container_base.py
 glue/swig/python/model_container_wrap.c
 hierarchy/output/
+html/htdocs
 neurospaces/config.h
 neurospaces/config.h.in
 neurospaces/stamp-h1
@@ -20,6 +22,7 @@ parser.output
 parser.rules
 parser.rules.numbered
 parser.y
+tests/html
 xs_initialize.c
 
 
