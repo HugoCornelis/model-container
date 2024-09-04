@@ -2391,7 +2391,7 @@ struct $typename_type * cast_${isa}_2_${type}(struct $typename_isa *p);\n\n";
 }
 
 
-sub generate_sentinels
+sub generate_sentinel
 {
     my $definitions = shift;
 
@@ -3350,7 +3350,7 @@ options:
 
     # generate the sentinel file for make
 
-    generate_sentinels($all_definitions);
+    generate_sentinel($all_definitions);
 
 }
 
