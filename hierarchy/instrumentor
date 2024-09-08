@@ -3130,7 +3130,7 @@ sub identifier_perl_to_xml
 }
 
 
-sub main
+sub parse_options
 {
     my $result
 	= GetOptions
@@ -3141,6 +3141,11 @@ sub main
 	     "static-inline!" => \$option_static_inline,
 	     "v|verbose+" => \$option_verbose,
 	    );
+
+    if (not $result)
+    {
+	$option_help = 1;
+    }
 
     if ($option_help)
     {
@@ -3160,13 +3165,32 @@ options:
 	exit 1;
     }
 
-    # read type definitions and relations
+    if (!defined $option_output)
+    {
+	die "$0: option_output must be provided";
+    }
+}
+
+
+sub main
+{
+    parse_options();
+
+    # create the output target directory
+
+    # this is the name of the directory containing the definitions
 
     $ARGV[0] =~ /.*\/(.+)$/;
 
+    # this is the subsystem name based on the name of the directory containing the definitions
+
     my $subsystem_name = $1;
 
+    # this is the directory with custom extensions to these definitions
+
     my $subsystem_directory = "/etc/neurospaces/model-container/$subsystem_name";
+
+    # determine all the directories with definitions
 
     my $definition_filenames
 	= [
@@ -3181,13 +3205,15 @@ options:
 
 	    $ARGV[0],
 
-	    # and its contributed extensions
+	    # and its extensions in the custom directory
 
 	    $subsystem_directory,
 	   )
 	  ];
 
     print YAML::Dump( { subsystem => { name => $subsystem_name, filenames => $definition_filenames, }, }, );
+
+    # read type definitions and relations
 
     use YAML;
 
@@ -3209,13 +3235,6 @@ options:
 	}
 
 	my $merged_definitions = Data::Merger::merger($all_definitions, $new_definitions);
-    }
-
-    # create the output target directory
-
-    if (!defined $option_output)
-    {
-	die "$0: option_output must be provided";
     }
 
     {
